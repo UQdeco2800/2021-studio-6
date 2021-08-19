@@ -4,10 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.npc.BulletFire;
+import com.deco2800.game.components.npc.BulletTimer;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.FireBulletTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -21,6 +25,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -89,6 +94,50 @@ public class NPCFactory {
     return ghostKing;
   }
 
+  public static Entity createLongRangeEnemy(Entity target, GameArea gameArea) {
+
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new FireBulletTask(1, 1));
+    Entity longRange  =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(new TextureRenderComponent("images/gunman.png"))
+                    .addComponent(new CombatStatsComponent(1, 1))
+                    .addComponent(aiComponent)
+                    .addComponent(new BulletTimer(target, gameArea));
+
+
+
+
+
+
+    return longRange;
+
+  }
+
+  public static Entity createLongRangeBase(Entity target) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent);
+
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    return npc;
+  }
+
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
@@ -111,6 +160,9 @@ public class NPCFactory {
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     return npc;
   }
+
+
+
 
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");

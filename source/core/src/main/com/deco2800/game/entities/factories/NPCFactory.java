@@ -21,6 +21,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -36,6 +37,25 @@ import com.deco2800.game.services.ServiceLocator;
 public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+
+  /**
+   * Creates a small enemy entity.
+   *
+   * @param target entity to chase
+   * @return entity
+   */
+  public static Entity createSmallEnemy(Entity target) {
+    Entity smallEnemy = createBaseNPC(target);
+    BaseEntityConfig config = configs.smallEnemy;
+
+    smallEnemy
+            .addComponent(new TextureRenderComponent("images/small_enemy.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+    smallEnemy.getComponent(TextureRenderComponent.class).scaleEntity();
+
+    return smallEnemy;
+  }
 
   /**
    * Creates a ghost entity.

@@ -149,7 +149,7 @@ public class ForestGameArea extends GameArea {
   private void spawnArchers() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 10; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);

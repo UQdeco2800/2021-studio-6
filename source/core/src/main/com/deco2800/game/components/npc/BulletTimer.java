@@ -26,7 +26,7 @@ public class BulletTimer extends Component {
     }
 
     void fire() {
-        gameArea.spawnEntity(BulletFactory.createBullet(this.entity, target));
+        gameArea.spawnEntity(BulletFactory.createBullet(this.entity, target, gameArea));
     }
 
 }

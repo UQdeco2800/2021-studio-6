@@ -2,3 +2,5 @@
 
 ### Gradle ###
 .gradle/
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite

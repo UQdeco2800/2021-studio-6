@@ -51,7 +51,6 @@ public class NPCFactory {
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(new TextureRenderComponent("images/placeholder.png"));
-
     return largeEnemy;
   }
 

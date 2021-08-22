@@ -6,8 +6,7 @@ import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * Task that does nothing other than waiting for a given time. Status is Finished
- * after the time has passed.
+ * FireBulletTask creates a task which triggers a fire event at fixed interval
  */
 public class FireBulletTask extends DefaultTask implements PriorityTask {
     private final GameTime timeSource;
@@ -37,6 +36,9 @@ public class FireBulletTask extends DefaultTask implements PriorityTask {
         endTime = timeSource.getTime() + (int)(duration * 1000);
     }
 
+    /**
+     * if the interval timer has been reached trigger fire event and reset timer
+     */
     @Override
     public void update() {
         if (timeSource.getTime() >= endTime) {

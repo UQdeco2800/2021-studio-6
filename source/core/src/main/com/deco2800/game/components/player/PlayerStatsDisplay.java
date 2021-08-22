@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
@@ -15,6 +15,7 @@ import com.deco2800.game.ui.UIComponent;
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
   private Image heartImage;
+  private Label woundLabel;
   private Label healthLabel;
 
   /**
@@ -25,6 +26,7 @@ public class PlayerStatsDisplay extends UIComponent {
     super.create();
     addActors();
 
+    entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
   }
 
@@ -43,12 +45,17 @@ public class PlayerStatsDisplay extends UIComponent {
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
     // Health text
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+    int wounds = entity.getComponent(PlayerCombatStatsComponent.class).getWoundState();
+    int health = entity.getComponent(PlayerCombatStatsComponent.class).getStateHealth();
+    CharSequence woundText = String.format("Wounds: %d", wounds);
     CharSequence healthText = String.format("Health: %d", health);
+    woundLabel = new Label(woundText, skin, "large");
     healthLabel = new Label(healthText, skin, "large");
 
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
+    table.add(heartImage).size(heartSideLength).pad(6);
+    table.add(woundLabel);
     stage.addActor(table);
   }
 
@@ -58,8 +65,17 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
-   * Updates the player's health on the ui.
-   * @param health player health
+   * Updates the player's wound state on the ui.
+   * @param wound player wound state
+   */
+  public void updatePlayerWoundUI(int wound) {
+    CharSequence text = String.format("Wounds: %d", wound);
+    woundLabel.setText(text);
+  }
+
+  /**
+   * Updates the player's state health on the ui.
+   * @param health player state health
    */
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("Health: %d", health);

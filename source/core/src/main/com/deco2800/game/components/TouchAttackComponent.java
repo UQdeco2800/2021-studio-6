@@ -61,7 +61,7 @@ public class TouchAttackComponent extends Component {
 
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-    CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    PlayerCombatStatsComponent targetStats = target.getComponent(PlayerCombatStatsComponent.class);
     if (targetStats != null) {
       targetStats.hit(combatStats);
     }

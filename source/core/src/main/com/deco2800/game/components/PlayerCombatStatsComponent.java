@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * health, attack, etc. Only the player character should have an instance of
  * this class registered. This class can be extended for more specific combat needs.
  */
-public class PlayerCombatStatsComponent extends CombatStatsComponent {
+public class PlayerCombatStatsComponent extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerCombatStatsComponent.class);
     private int baseAttack;

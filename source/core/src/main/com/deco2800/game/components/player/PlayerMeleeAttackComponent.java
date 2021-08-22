@@ -84,7 +84,7 @@ public class PlayerMeleeAttackComponent extends Component {
         if (closeToAttack && meleeAttackClicked && targetStats != null) {
             targetStats.hit(playerCombatStats);
 
-            // freezes enemy
+            // freezes enemy - will need to be replaced
             if (targetStats.isDead()) {
                 target.setEnabled(false);
             }

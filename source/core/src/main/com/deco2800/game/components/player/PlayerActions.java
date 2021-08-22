@@ -15,12 +15,14 @@ public class PlayerActions extends Component {
   private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
   private PhysicsComponent physicsComponent;
+  private PlayerMeleeAttackComponent playerMeleeAttackComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
 
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
+    playerMeleeAttackComponent = entity.getComponent(PlayerMeleeAttackComponent.class);
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
@@ -65,7 +67,8 @@ public class PlayerActions extends Component {
    * Makes the player attack.
    */
   void attack() {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
+//    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+//    attackSound.play();
+    playerMeleeAttackComponent.meleeAttackClicked(true);
   }
 }

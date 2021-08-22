@@ -4,27 +4,29 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PlayerAttackComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(PlayerAttackComponent.class);
+public class PlayerMeleeAttackComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(PlayerMeleeAttackComponent.class);
 
     private final FixtureDef fixtureDef;
     private Fixture fixture;
-    private CombatStatsComponent combatStats;
-    private PlayerAttackComponent playerAttackComponent;
+    private PlayerCombatStatsComponent playerCombatStats;
+    private PlayerMeleeAttackComponent playerAttackComponent;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
     short targetLayer = PhysicsLayer.NPC;
 
-    public PlayerAttackComponent() {
+    public PlayerMeleeAttackComponent() {
         fixtureDef = new FixtureDef();
     }
 
@@ -37,13 +39,15 @@ public class PlayerAttackComponent extends Component {
 
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         fixture = physBody.createFixture(fixtureDef);
+
+        // if sensor is false, NPC will not be able to collide with player's fixture
         setSensor(true);
 
         // event listeners to check if enemy is within range of melee attack
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
 
-        combatStats = entity.getComponent(CombatStatsComponent.class);
-        playerAttackComponent = entity.getComponent(PlayerAttackComponent.class);
+        playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
+        playerAttackComponent = entity.getComponent(PlayerMeleeAttackComponent.class);
     }
 
     /**
@@ -73,16 +77,18 @@ public class PlayerAttackComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
         if (targetStats != null) {
-            System.out.println("===============================");
-            System.out.println("ENEMY INSIDE RANGE");
             closeToAttack = true;
         }
 
-        //
-        if (closeToAttack && meleeAttackClicked) {
-            System.out.println("======================================");
-            System.out.println("CLICKED AND ENEMY IS INSIDE MELEE RANGE");
-            targetStats.hit(combatStats);
+        // enemy within range and player clicked melee attack button
+        if (closeToAttack && meleeAttackClicked && targetStats != null) {
+            targetStats.hit(playerCombatStats);
+
+            // freezes enemy
+            if (targetStats.isDead()) {
+                target.setEnabled(false);
+            }
+
             this.meleeAttackClicked = false;
         }
     }
@@ -102,7 +108,7 @@ public class PlayerAttackComponent extends Component {
      * @param size size of the box
      * @return self
      */
-    public PlayerAttackComponent setAsBox(Vector2 size) {
+    public PlayerMeleeAttackComponent setAsBox(Vector2 size) {
         return setAsBox(size, entity.getCenterPosition());
     }
 
@@ -114,7 +120,7 @@ public class PlayerAttackComponent extends Component {
      * @param alignY how to align y relative to entity
      * @return self
      */
-    public PlayerAttackComponent setAsBoxAligned(Vector2 size, AlignX alignX, AlignY alignY) {
+    public PlayerMeleeAttackComponent setAsBoxAligned(Vector2 size, AlignX alignX, AlignY alignY) {
         Vector2 position = new Vector2();
         switch (alignX) {
             case LEFT:
@@ -150,9 +156,9 @@ public class PlayerAttackComponent extends Component {
      * @param position position of the box center relative to the entity.
      * @return self
      */
-    public PlayerAttackComponent setAsBox(Vector2 size, Vector2 position) {
+    public PlayerMeleeAttackComponent setAsBox(Vector2 size, Vector2 position) {
         PolygonShape bbox = new PolygonShape();
-        bbox.setAsBox(size.x, size.y, position, 0f);
+        bbox.setAsBox(size.x / 2, size.y / 2, position, 0f);
         setShape(bbox);
         return this;
     }
@@ -164,7 +170,7 @@ public class PlayerAttackComponent extends Component {
      * @param friction friction, default = 0
      * @return self
      */
-    public PlayerAttackComponent setFriction(float friction) {
+    public PlayerMeleeAttackComponent setFriction(float friction) {
         if (fixture == null) {
             fixtureDef.friction = friction;
         } else {
@@ -180,7 +186,7 @@ public class PlayerAttackComponent extends Component {
      * @param isSensor true if sensor, false if not. default = false.
      * @return self
      */
-    public PlayerAttackComponent setSensor(boolean isSensor) {
+    public PlayerMeleeAttackComponent setSensor(boolean isSensor) {
         if (fixture == null) {
             fixtureDef.isSensor = isSensor;
         } else {
@@ -196,7 +202,7 @@ public class PlayerAttackComponent extends Component {
      *     0
      * @return self
      */
-    public PlayerAttackComponent setDensity(float density) {
+    public PlayerMeleeAttackComponent setDensity(float density) {
         if (fixture == null) {
             fixtureDef.density = density;
         } else {
@@ -211,7 +217,7 @@ public class PlayerAttackComponent extends Component {
      * @param restitution restitution is the 'bounciness' of an object, default = 0
      * @return self
      */
-    public PlayerAttackComponent setRestitution(float restitution) {
+    public PlayerMeleeAttackComponent setRestitution(float restitution) {
         if (fixture == null) {
             fixtureDef.restitution = restitution;
         } else {
@@ -226,7 +232,7 @@ public class PlayerAttackComponent extends Component {
      * @param shape shape, default = bounding box the same size as the entity
      * @return self
      */
-    public PlayerAttackComponent setShape(Shape shape) {
+    public PlayerMeleeAttackComponent setShape(Shape shape) {
         if (fixture == null) {
             fixtureDef.shape = shape;
         } else {
@@ -238,22 +244,6 @@ public class PlayerAttackComponent extends Component {
     /** @return Physics fixture of this collider. Null before created() */
     public Fixture getFixture() {
         return fixture;
-    }
-
-    /**
-     * Set the collider layer, used in collision logic
-     * @param layerMask Bitmask of {@link PhysicsLayer} this collider belongs to
-     * @return self
-     */
-    public PlayerAttackComponent setLayer(short layerMask) {
-        if (fixture == null) {
-            fixtureDef.filter.categoryBits = layerMask;
-        } else {
-            Filter filter = fixture.getFilterData();
-            filter.categoryBits = layerMask;
-            fixture.setFilterData(filter);
-        }
-        return this;
     }
 
     /**
@@ -277,10 +267,9 @@ public class PlayerAttackComponent extends Component {
 
     private Shape makeBoundingBox() {
         PolygonShape bbox = new PolygonShape();
-        Vector2 center = entity.getScale().scl(1f);
-        bbox.setAsBox(center.x, center.y, center, 0f);
+        Vector2 center = entity.getScale().scl(0.5f);
+        // width and height enlarge - this is the range of melee attack for player
+        bbox.setAsBox(center.x * 2, center.y * 2, center, 0f);
         return bbox;
     }
-
-
 }

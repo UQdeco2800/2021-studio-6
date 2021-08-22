@@ -19,6 +19,9 @@ public class CombatStatsComponent extends Component {
     setBaseAttack(baseAttack);
   }
 
+  public CombatStatsComponent() {
+  }
+
   /**
    * Returns true if the entity's has 0 health, otherwise false.
    *

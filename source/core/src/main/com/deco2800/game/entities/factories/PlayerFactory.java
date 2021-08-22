@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
+import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
@@ -39,6 +40,7 @@ public class PlayerFactory {
             .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
+            .addComponent(new PlayerMeleeAttackComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new PlayerCombatStatsComponent(stats.woundState, stats.baseAttack))

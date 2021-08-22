@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.BulletFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -23,6 +22,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_LONGRANGE = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -65,11 +65,11 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-//    spawnTrees();
+    spawnTrees();
     player = spawnPlayer();
-//    spawnGhosts();
-//    spawnGhostKing();
-    spawnArchers();
+    spawnGhosts();
+    spawnGhostKing();
+    spawnLongRangeEnemies();
 //    playMusic();
   }
 
@@ -146,20 +146,16 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
 
-  private void spawnArchers() {
+  private void spawnLongRangeEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
-
-//      Entity bullet = BulletFactory.createBullet(archer, player);
-
-
-//      spawnEntity(bullet);
     }
   }
+
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);

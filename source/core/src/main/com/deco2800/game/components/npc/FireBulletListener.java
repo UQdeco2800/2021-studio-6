@@ -7,24 +7,35 @@ import com.deco2800.game.entities.factories.BulletFactory;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
 /**
- * This class listens to events relevant to a ghost entity's state and plays the animation when one
- * of the events is triggered.
+ * This class listens for the fire event then spawns and fires a bullet from
+ * the entity to the target entity
  */
-public class BulletTimer extends Component {
+public class FireBulletListener extends Component {
     private Entity target;
     private GameArea gameArea;
 
-    public BulletTimer(Entity target, GameArea gameArea) {
+    /**
+     * Constructor sets a reference to the target entity and the gameArea
+     * @param target the target to fire at
+     * @param gameArea the gamearea to spawn the bullet in
+     */
+    public FireBulletListener(Entity target, GameArea gameArea) {
         this.target = target;
         this.gameArea = gameArea;
     }
 
+    /**
+     * Adds the fire listener to the entity
+     */
     @Override
     public void create() {
         super.create();
         entity.getEvents().addListener("fire", this::fire);
     }
 
+    /**
+     * 'fires' a bullet from the entity to the target
+     */
     void fire() {
         gameArea.spawnEntity(BulletFactory.createBullet(this.entity, target, gameArea));
     }

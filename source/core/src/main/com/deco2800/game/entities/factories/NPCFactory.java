@@ -6,8 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.npc.BulletFire;
-import com.deco2800.game.components.npc.BulletTimer;
+import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
@@ -94,13 +93,18 @@ public class NPCFactory {
     return ghostKing;
   }
 
+  /**
+   * Creates a long range enemy, fires bullet towards a target
+   * @param target the target entity to fire at
+   * @param gameArea the game area spawned in need for despawning bullets
+   * @return returns the long range enemy entity
+   */
   public static Entity createLongRangeEnemy(Entity target, GameArea gameArea) {
 
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new FireBulletTask(1, 1));
-    Entity longRange  =
-            new Entity()
+    return new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
@@ -109,34 +113,10 @@ public class NPCFactory {
                     .addComponent(new TextureRenderComponent("images/gunman.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
-                    .addComponent(new BulletTimer(target, gameArea));
-
-
-
-
-
-
-    return longRange;
-
+                    .addComponent(new FireBulletListener(target, gameArea));
   }
 
-  public static Entity createLongRangeBase(Entity target) {
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 3f, 4f));
-    Entity npc =
-            new Entity()
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new ColliderComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                    .addComponent(aiComponent);
 
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-    return npc;
-  }
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.

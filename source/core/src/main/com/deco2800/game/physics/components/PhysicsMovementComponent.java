@@ -18,8 +18,17 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private Vector2 targetPosition;
   private boolean movementEnabled = true;
 
+  /**
+   * Constructor to create component with default speed Vector(1, 1)
+   *
+   * **/
   public PhysicsMovementComponent() {}
 
+  /**
+   * Optional Constructor to configure speed of entity
+   *
+   * @param speed sets the speed of the entity
+   * **/
   public PhysicsMovementComponent(Vector2 speed) {
     maxSpeed = speed;
   }

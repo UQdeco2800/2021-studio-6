@@ -34,18 +34,14 @@ public abstract class GameArea implements Disposable {
     }
   }
 
+  /**
+   * Despawns and disposes an entity from the gameArea
+   * @param entity The entity to despawn
+   */
   public void despawnEntity(Entity entity) {
-    System.out.println("despawning " + entity + " " + areaEntities.indexOf(entity));
-    System.out.println(areaEntities);
-
-//    ServiceLocator.getPhysicsService().getPhysics().getWorld().;
-//    ServiceLocator.getEntityService().unregister(entity);
-//    entity.setEnabled(false);
-//    ServiceLocator.getEntityService();
     int entityIdx = areaEntities.indexOf(entity);
     Entity temp = areaEntities.remove(entityIdx);
     temp.dispose();
-//    System.out.println(areaEntities);
   }
 
   /**

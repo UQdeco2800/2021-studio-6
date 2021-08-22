@@ -1,6 +1,6 @@
 package com.deco2800.game.entities.factories;
 
-import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
@@ -36,12 +36,12 @@ public class PlayerFactory {
 
     Entity player =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
+            .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
+            .addComponent(new PlayerCombatStatsComponent(stats.woundState, stats.baseAttack))
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay());

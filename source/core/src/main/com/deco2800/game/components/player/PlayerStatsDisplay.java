@@ -46,7 +46,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Health text
     int wounds = entity.getComponent(PlayerCombatStatsComponent.class).getWoundState();
-    int health = entity.getComponent(PlayerCombatStatsComponent.class).getStateHealth();
+    int health = entity.getComponent(PlayerCombatStatsComponent.class).getHealth();
     CharSequence woundText = String.format("Wounds: %d", wounds);
     CharSequence healthText = String.format("Health: %d", health);
     woundLabel = new Label(woundText, skin, "large");

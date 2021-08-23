@@ -25,7 +25,7 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class PlayerFactory {
   private static final PlayerConfig stats =
-      FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+          FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
   /**
    * Create a player entity.
@@ -33,20 +33,20 @@ public class PlayerFactory {
    */
   public static Entity createPlayer() {
     InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForPlayer();
+            ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     Entity player =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new PlayerMeleeAttackComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-            .addComponent(new PlayerActions())
-            .addComponent(new PlayerCombatStatsComponent(stats.woundState, stats.baseAttack))
-            .addComponent(new InventoryComponent(stats.gold))
-            .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay());
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new PlayerMeleeAttackComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                    .addComponent(new PlayerActions())
+                    .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState, stats.baseRangedAttack, stats.defenceLevel))
+                    .addComponent(new InventoryComponent(stats.gold))
+                    .addComponent(inputComponent)
+                    .addComponent(new PlayerStatsDisplay());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

@@ -29,7 +29,7 @@ class TouchAttackComponentTest {
     Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
     entity.getEvents().trigger("collisionStart", entityFixture, targetFixture);
 
-    assertEquals(1, target.getComponent(PlayerCombatStatsComponent.class).getStateHealth());
+    assertEquals(1, target.getComponent(PlayerCombatStatsComponent.class).getHealth());
   }
 
   @Test
@@ -43,7 +43,7 @@ class TouchAttackComponentTest {
     Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
     entity.getEvents().trigger("collisionStart", entityFixture, targetFixture);
 
-    assertEquals(3, target.getComponent(PlayerCombatStatsComponent.class).getStateHealth());
+    assertEquals(3, target.getComponent(PlayerCombatStatsComponent.class).getHealth());
   }
 
   @Test
@@ -78,7 +78,7 @@ class TouchAttackComponentTest {
   Entity createTarget(short layer) {
     Entity target =
         new Entity()
-            .addComponent(new PlayerCombatStatsComponent(3, 0))
+            .addComponent(new PlayerCombatStatsComponent(3, 0, 3, 25, 0))
             .addComponent(new PhysicsComponent())
             .addComponent(new HitboxComponent().setLayer(layer));
     target.create();

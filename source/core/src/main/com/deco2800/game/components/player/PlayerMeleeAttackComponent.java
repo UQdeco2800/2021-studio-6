@@ -11,17 +11,24 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
-import com.deco2800.game.rendering.AnimationRenderComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * When entity is within range of enemy and melee attack button is clicked, damage is dealt
+ * to the NPC only.
+ *
+ * <p>Requires PlayerCombatStatsComponent, HitboxComponent on this entity.
+ *
+ * <p>Damage is only applied if target entity has a CombatStatsComponent. Knockback is only applied
+ * if target entity has a PhysicsComponent.
+ */
 public class PlayerMeleeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerMeleeAttackComponent.class);
 
     private final FixtureDef fixtureDef;
     private Fixture fixture;
     private PlayerCombatStatsComponent playerCombatStats;
-    private PlayerMeleeAttackComponent playerAttackComponent;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
     short targetLayer = PhysicsLayer.NPC;
@@ -47,7 +54,6 @@ public class PlayerMeleeAttackComponent extends Component {
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
 
         playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
-        playerAttackComponent = entity.getComponent(PlayerMeleeAttackComponent.class);
     }
 
     /**
@@ -61,11 +67,6 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
-
-//        if (playerAttackComponent.getFixture() != me) {
-//            // Not triggered by hitbox, ignore
-//            return;
-//        }
 
         // By default, should only try detect NPC layers only
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
@@ -164,22 +165,6 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     /**
-     * Set friction. This affects the object when touching other objects, but does not affect friction
-     * with the ground.
-     *
-     * @param friction friction, default = 0
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setFriction(float friction) {
-        if (fixture == null) {
-            fixtureDef.friction = friction;
-        } else {
-            fixture.setFriction(friction);
-        }
-        return this;
-    }
-
-    /**
      * Set whether this physics component is a sensor. Sensors don't collide with other objects but
      * still trigger collision events. See: https://www.iforce2d.net/b2dtut/sensors
      *
@@ -191,37 +176,6 @@ public class PlayerMeleeAttackComponent extends Component {
             fixtureDef.isSensor = isSensor;
         } else {
             fixture.setSensor(isSensor);
-        }
-        return this;
-    }
-
-    /**
-     * Set density
-     *
-     * @param density Density and size of the physics component determine the object's mass. default =
-     *     0
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setDensity(float density) {
-        if (fixture == null) {
-            fixtureDef.density = density;
-        } else {
-            fixture.setDensity(density);
-        }
-        return this;
-    }
-
-    /**
-     * Set restitution
-     *
-     * @param restitution restitution is the 'bounciness' of an object, default = 0
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setRestitution(float restitution) {
-        if (fixture == null) {
-            fixtureDef.restitution = restitution;
-        } else {
-            fixture.setRestitution(restitution);
         }
         return this;
     }
@@ -265,6 +219,11 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
+    /**
+     * Enlarge shape of fixture based on fixture size of entity
+     *
+     * @return enlarge fixture and places it on the center of the entity
+     */
     private Shape makeBoundingBox() {
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);

@@ -50,10 +50,20 @@ public class PlayerMeleeAttackComponent extends Component {
         // if sensor is false, NPC will not be able to collide with player's fixture
         setSensor(true);
 
-        // event listeners to check if enemy is within range of melee attack
+        // event listeners to check if enemy is within range of melee attack or not
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
+        entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
 
         playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
+    }
+
+    /**
+     * When player and enemy no longer in contact, reset variable closeToAttack. Only resets closeToAttack
+     * variable - there is a bug where player can click melee button before colliding with enemy and upon
+     * collision, enemy receives damage immediately
+     */
+    private void onEnemyFar(Fixture me, Fixture other) {
+        this.closeToAttack = false;
     }
 
     /**
@@ -85,7 +95,7 @@ public class PlayerMeleeAttackComponent extends Component {
         if (closeToAttack && meleeAttackClicked && targetStats != null) {
             targetStats.hit(playerCombatStats);
 
-            // freezes enemy - will need to be replaced
+            // freezes enemy - will need to be replaced to despawn enemy entity
             if (targetStats.isDead()) {
                 target.setEnabled(false);
             }
@@ -100,7 +110,11 @@ public class PlayerMeleeAttackComponent extends Component {
      * @param clicked is the melee button clicked by player
     * */
     public void meleeAttackClicked(boolean clicked) {
-        this.meleeAttackClicked = clicked;
+
+        if (closeToAttack) {
+            System.out.println("melee attack clicked true");
+            this.meleeAttackClicked = clicked;
+        }
     }
 
     /**

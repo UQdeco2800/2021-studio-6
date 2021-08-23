@@ -46,11 +46,10 @@ public class NPCFactory {
    */
   public static Entity createLargeEnemy(Entity target) {
     Entity largeEnemy = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
     Vector2 speed = new Vector2(1, 1);
 
     largeEnemy
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(new CombatStatsComponent(150, 50))
             .addComponent(new TextureRenderComponent("images/placeholder.png"))
             .addComponent(new PhysicsMovementComponent(speed));
     return largeEnemy;

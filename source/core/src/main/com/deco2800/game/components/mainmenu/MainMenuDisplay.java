@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -29,15 +30,17 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
     table.setFillParent(true);
+
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+                .getAsset("images/background-menu-screen.png", Texture.class));
 
-    TextButton startBtn = new TextButton("Start", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
+    title.setFillParent(true);
+    TextButton startBtn = new TextButton("Start", skin, "menu-button");
+    TextButton loadBtn = new TextButton("Load", skin, "menu-button");
+    TextButton settingsBtn = new TextButton("Settings", skin, "menu-button");
+    TextButton exitBtn = new TextButton("Exit", skin, "menu-button");
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -77,16 +80,17 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    table.add(title);
-    table.row();
-    table.add(startBtn).padTop(30f);
-    table.row();
-    table.add(loadBtn).padTop(15f);
-    table.row();
-    table.add(settingsBtn).padTop(15f);
-    table.row();
-    table.add(exitBtn).padTop(15f);
+    table.align(Align.center | Align.bottom);
+    table.padBottom(300f);
+    table.padRight(300f);
+    table.add(startBtn).padRight(50f);
 
+    // load button is removed until the save/load functionality has been added
+    //table.add(loadBtn).padRight(50f);
+    table.add(settingsBtn).padRight(50f);
+    table.add(exitBtn);
+
+    stage.addActor(title);
     stage.addActor(table);
   }
 

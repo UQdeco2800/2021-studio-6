@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.GdxGame.ScreenType;
@@ -53,13 +54,16 @@ public class SettingsMenuDisplay extends UIComponent {
     rootTable = new Table();
     rootTable.setFillParent(true);
 
-    rootTable.add(title).expandX().top().padTop(20f);
+    rootTable.align(Align.center | Align.bottom);
+    rootTable.add(title).expandX().bottom();
 
     rootTable.row().padTop(30f);
-    rootTable.add(settingsTable).expandX().expandY();
+    rootTable.add(settingsTable).expandX().bottom();
+
 
     rootTable.row();
-    rootTable.add(menuBtns).fillX();
+    rootTable.add(menuBtns).padTop(30f);
+    rootTable.padBottom(90f);
 
     stage.addActor(rootTable);
   }
@@ -69,23 +73,23 @@ public class SettingsMenuDisplay extends UIComponent {
     UserSettings.Settings settings = UserSettings.get();
 
     // Create components
-    Label fpsLabel = new Label("FPS Cap:", skin);
+    Label fpsLabel = new Label("FPS Cap:", skin, "white");
     fpsText = new TextField(Integer.toString(settings.fps), skin);
 
-    Label fullScreenLabel = new Label("Fullscreen:", skin);
+    Label fullScreenLabel = new Label("Fullscreen:", skin, "white");
     fullScreenCheck = new CheckBox("", skin);
     fullScreenCheck.setChecked(settings.fullscreen);
 
-    Label vsyncLabel = new Label("VSync:", skin);
+    Label vsyncLabel = new Label("VSync:", skin, "white");
     vsyncCheck = new CheckBox("", skin);
     vsyncCheck.setChecked(settings.vsync);
 
-    Label uiScaleLabel = new Label("ui Scale (Unused):", skin);
+    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, "white");
     uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
     uiScaleSlider.setValue(settings.uiScale);
-    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin);
+    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, "white");
 
-    Label displayModeLabel = new Label("Resolution:", skin);
+    Label displayModeLabel = new Label("Resolution:", skin, "white");
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
@@ -180,8 +184,8 @@ public class SettingsMenuDisplay extends UIComponent {
         });
 
     Table table = new Table();
-    table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
-    table.add(applyBtn).expandX().right().pad(0f, 0f, 15f, 15f);
+    table.add(exitBtn).left().pad(0f, 0f, 0f, 30f);
+    table.add(applyBtn).right().pad(0f, 30f, 0f, 0f);
     return table;
   }
 

@@ -449,7 +449,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: button-p
 		over: button-h
 	}
-	"menu-button": {
+	"menu-button-large": {
 		font: title,
 		fontColor: white,
 		downFontColor: white,
@@ -458,7 +458,25 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: menu-button-p
 		over: menu-button-h
 	}
-}
+	"menu-button-medium": {
+		font: font_large,
+		fontColor: white,
+		downFontColor: white,
+		overFontColor: gray
+		up: menu-button-c
+		down: menu-button-p
+		over: menu-button-h
+	}
+	"menu-button-small": {
+		font: font_small,
+		fontColor: white,
+		downFontColor: white,
+		overFontColor: gray
+		up: menu-button-c
+		down: menu-button-p
+		over: menu-button-h
+	}
+},
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: font

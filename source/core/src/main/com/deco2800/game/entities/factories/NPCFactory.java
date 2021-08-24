@@ -50,8 +50,9 @@ public class NPCFactory {
 
     largeEnemy
             .addComponent(new CombatStatsComponent(150, 50))
-            .addComponent(new TextureRenderComponent("images/placeholder.png"))
+            .addComponent(new TextureRenderComponent("images/large_enemy_pix.png"))
             .addComponent(new PhysicsMovementComponent(speed));
+
     return largeEnemy;
   }
 

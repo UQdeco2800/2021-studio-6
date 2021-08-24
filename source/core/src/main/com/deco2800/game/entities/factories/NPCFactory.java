@@ -47,8 +47,10 @@ public class NPCFactory {
   public static Entity createSmallEnemy(Entity target) {
     Entity smallEnemy = createBaseNPC(target);
     BaseEntityConfig config = configs.smallEnemy;
+    Vector2 speed = new Vector2(config.speed, config.speed);
 
     smallEnemy
+            .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(new TextureRenderComponent("images/small_enemy.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
@@ -66,12 +68,15 @@ public class NPCFactory {
   public static Entity createGhost(Entity target) {
     Entity ghost = createBaseNPC(target);
     BaseEntityConfig config = configs.ghost;
+    Vector2 ghost_speed = new Vector2(1, 1);
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+    ghost.addComponent(new PhysicsMovementComponent(ghost_speed));
 
     ghost
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))

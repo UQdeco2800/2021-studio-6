@@ -7,6 +7,11 @@
     "health": 100,
     "baseAttack": 25,
     "spookyFactor": 7
+  },
+  "smallEnemy": {
+    "health": 10,
+    "baseAttack": 5,
+    "speed": 2
   }
 }
 

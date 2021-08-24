@@ -20,6 +20,8 @@ public class MainMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
+  private Image background;
+  private static final float BACKGROUND_IMAGE_ASPECT = 9f / 16f;
 
   @Override
   public void create() {
@@ -31,12 +33,13 @@ public class MainMenuDisplay extends UIComponent {
     table = new Table();
     table.setFillParent(true);
 
-    Image title =
+    background =
         new Image(
             ServiceLocator.getResourceService()
                 .getAsset("images/background-menu-screen.png", Texture.class));
 
-    title.setFillParent(true);
+    resizeBackground();
+
     TextButton startBtn = new TextButton("Start", skin, "menu-button");
     TextButton loadBtn = new TextButton("Load", skin, "menu-button");
     TextButton settingsBtn = new TextButton("Settings", skin, "menu-button");
@@ -90,13 +93,23 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padRight(50f);
     table.add(exitBtn);
 
-    stage.addActor(title);
+    stage.addActor(background);
     stage.addActor(table);
   }
 
   @Override
   public void draw(SpriteBatch batch) {
     // draw is handled by the stage
+  }
+
+  public void resizeBackground() {
+      float stageWidth = stage.getWidth();
+      float stageHeight = stage.getHeight();
+      float backgroundWidth = stageWidth;
+      float backgroundHeight = stageWidth * BACKGROUND_IMAGE_ASPECT;
+      background.setWidth(backgroundWidth);
+      background.setHeight(backgroundHeight);
+      background.setPosition(stageWidth - backgroundWidth, stageHeight - backgroundHeight);
   }
 
   @Override

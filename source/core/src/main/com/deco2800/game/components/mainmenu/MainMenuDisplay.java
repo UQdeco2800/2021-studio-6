@@ -22,6 +22,8 @@ public class MainMenuDisplay extends UIComponent {
   private Table table;
   private Image background;
   private static final float BACKGROUND_IMAGE_ASPECT = 9f / 16f;
+  private static final float MENU_TABLE_HEIGHT_RATIO = 1f / 2f;
+  private static final float MENU_TABLE_RIGHT_OFFSET = 1f / 8f;
 
   @Override
   public void create() {
@@ -31,14 +33,13 @@ public class MainMenuDisplay extends UIComponent {
 
   private void addActors() {
     table = new Table();
-    table.setFillParent(true);
 
     background =
         new Image(
             ServiceLocator.getResourceService()
                 .getAsset("images/background-menu-screen.png", Texture.class));
 
-    resizeBackground();
+    resize((int) stage.getWidth(), (int) stage.getHeight());
 
     TextButton startBtn = new TextButton("Start", skin, "menu-button");
     TextButton loadBtn = new TextButton("Load", skin, "menu-button");
@@ -83,9 +84,7 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    table.align(Align.center | Align.bottom);
-    table.padBottom(300f);
-    table.padRight(300f);
+    table.align(Align.center);
     table.add(startBtn).padRight(50f);
 
     // load button is removed until the save/load functionality has been added
@@ -102,14 +101,18 @@ public class MainMenuDisplay extends UIComponent {
     // draw is handled by the stage
   }
 
-  public void resizeBackground() {
-      float stageWidth = stage.getWidth();
-      float stageHeight = stage.getHeight();
-      float backgroundWidth = stageWidth;
-      float backgroundHeight = stageWidth * BACKGROUND_IMAGE_ASPECT;
+  public void resize(int width, int height) {
+      float backgroundWidth = width;
+      float backgroundHeight = width * BACKGROUND_IMAGE_ASPECT;
       background.setWidth(backgroundWidth);
       background.setHeight(backgroundHeight);
-      background.setPosition(stageWidth - backgroundWidth, stageHeight - backgroundHeight);
+      background.setPosition(width - backgroundWidth, height - backgroundHeight);
+
+      float tableWidth = backgroundWidth - (backgroundWidth * MENU_TABLE_RIGHT_OFFSET);
+      float tableHeight = backgroundHeight * MENU_TABLE_HEIGHT_RATIO;
+      table.setWidth(tableWidth);
+      table.setHeight(tableHeight);
+      table.setPosition(width - backgroundWidth, height - backgroundHeight);
   }
 
   @Override

@@ -1,10 +1,8 @@
 package com.deco2800.game.ui.terminal.commands;
 
-import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.DialogueFactory;
+import com.deco2800.game.entities.factories.DialogueBoxFactory;
 import com.deco2800.game.services.ServiceLocator;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 
 import java.util.ArrayList;
 
@@ -22,7 +20,7 @@ public class PrintDialogueCommand implements Command{
         for (String arg: args) {
             dialogue.append(arg).append(" ");
         }
-        Entity dialogueText = DialogueFactory.createTextDialogue(dialogue.toString());
+        Entity dialogueText = DialogueBoxFactory.createTextDialogue(dialogue.toString());
         ServiceLocator.getEntityService().register(dialogueText);
         return true;
     }

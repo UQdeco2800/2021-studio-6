@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Factory to create a dialogue
  */
-public class DialogueFactory {
+public class DialogueBoxFactory {
     /**
      * Creates a text dialogue from a Dialogue
      * @param dialogue Dialogue object

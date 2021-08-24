@@ -4,6 +4,8 @@ package com.deco2800.game.components;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Component used to store information related to combat for the player such as
@@ -18,9 +20,11 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private int stateMax;
     private int defenceLevel;
     private final int woundMax = 3;
-    private int[] stateGates = new int[] {0, 5, 4, 10};
+    private final int[] stateGates = new int[] {0, 5, 4, 3};
     private final double[] attackModifiers = new double[] {0, 0.6, 0.9, 1};
-    private final double[] defenceModifiers = new double[] {1, 0.9, 0.8, 0};
+    private Timer regenTimer;
+    private boolean regenActive = false;
+    private boolean invincibleActive = false;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -160,11 +164,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     @Override
     public void setHealth(int health) {
         if (health > 0) {
-            if (health > getStateMax()) {
-                super.setHealth(getStateMax()); // event triggered in the supers set health
-            } else {
-                super.setHealth(health);
-            }
+            super.setHealth(Math.min(health, getStateMax())); // event triggered in the supers set health
         } else {
             super.setHealth(0);
             if (getWoundState() != 0) {
@@ -185,13 +185,65 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
 
     /**
      * Calculates taking damage from an enemy. Reduces health by
-     * enemy attack value but will include player's defence state when implemented.
+     * (enemy attack value - player defence value).
+     *
+     * Gives the player momentary invincibility after getting hit for 0.5
+     * seconds. Also starts player health regeneration if the player does not
+     * currently have full state health. If the player gets hit again before
+     * regenerating health, the previous regen is cancelled and reset.
      *
      * @param attacker Enemy attacker
      */
     public void hit(CombatStatsComponent attacker) {
-        int newHealth = getHealth() - ((int) Math.round(attacker.getBaseAttack() * defenceModifiers[this.defenceLevel]));
-        setHealth(newHealth);
+        if (!invincibleActive) {
+            if (regenActive) {
+                regenTimer.cancel();
+                regenActive = false;
+            }
+            int damage = attacker.getBaseAttack() - this.defenceLevel;
+            if (damage <= 0) {
+                damage = 1;
+            }
+            int newHealth = getHealth() - damage;
+            setHealth(newHealth);
+            if (getHealth() != getStateMax()) {
+                regenStart();
+            }
+            invincibleStart();
+        }
     }
+
+    /**
+     * Starts health regeneration that increases player's state health
+     * periodically until it reaches max, at which point it stops itself.
+     */
+    public void regenStart() {
+        regenActive = true;
+        regenTimer = new Timer(true);
+        regenTimer.schedule( new TimerTask() {
+            public void run() {
+                setHealth(getHealth() + 1);
+                if (getHealth() >= getStateMax()) {
+                    regenActive = false;
+                    cancel();
+                }
+            }
+        }, 5000, 5000);
+    }
+
+    /**
+     * Sets the invincibility check to momentarily prevent player damage
+     */
+    public void invincibleStart() {
+        invincibleActive = true;
+        Timer invincibleTimer = new Timer(true);
+        invincibleTimer.schedule(new TimerTask() {
+            public void run() {
+                invincibleActive = false;
+                cancel();
+            }
+        }, 500 );
+    }
+
 }
 

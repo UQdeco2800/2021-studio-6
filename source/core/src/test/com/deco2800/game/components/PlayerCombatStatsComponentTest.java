@@ -4,6 +4,8 @@ import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
@@ -151,7 +153,7 @@ public class PlayerCombatStatsComponentTest {
     }
 
     @Test
-    void shouldSetGetHit() {
+    void shouldSetGetHit() throws InterruptedException {
         PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
         CombatStatsComponent enemy = new CombatStatsComponent(100, 20);
         assertEquals(20, enemy.getBaseAttack());
@@ -161,12 +163,14 @@ public class PlayerCombatStatsComponentTest {
         assertEquals(2, combat.getWoundState());
 
         CombatStatsComponent enemy2 = new CombatStatsComponent(100, 1);
-
+        TimeUnit.SECONDS.sleep(2);
         combat.hit(enemy2);
         assertEquals(2, combat.getWoundState());
         assertEquals(combat.getStateMax() - 1, combat.getHealth());
 
+        TimeUnit.SECONDS.sleep(2);
         combat.hit(enemy);
+        TimeUnit.SECONDS.sleep(2);
         combat.hit(enemy);
         assertEquals(0, combat.getWoundState());
         assertTrue(combat.isDead());
@@ -174,21 +178,25 @@ public class PlayerCombatStatsComponentTest {
     }
 
     @Test
-    void shouldDefendHit() {
+    void shouldDefendHit() throws InterruptedException {
         PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(10, 20, 3, 25, 0);
-        CombatStatsComponent enemy = new CombatStatsComponent(100, 10);
+        CombatStatsComponent enemy = new CombatStatsComponent(100, 3);
 
         combat.hit(enemy);
         assertEquals(combat.getStateMax(), combat.getHealth());
         assertEquals(2, combat.getWoundState());
 
+        TimeUnit.SECONDS.sleep(2);
         combat.setWoundState(3);
-        combat.setHealth(10);
+        combat.setHealth(3);
         combat.setDefenceLevel(1);
+        assertEquals(3, combat.getHealth());
+        assertEquals(3, enemy.getBaseAttack());
         combat.hit(enemy);
         assertEquals(1, combat.getHealth());
         assertEquals(3, combat.getWoundState());
 
+        TimeUnit.SECONDS.sleep(2);
         combat.setHealth(10);
         combat.setDefenceLevel(2);
         combat.hit(enemy);

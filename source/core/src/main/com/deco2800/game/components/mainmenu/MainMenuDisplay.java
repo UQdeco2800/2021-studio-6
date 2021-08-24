@@ -37,7 +37,10 @@ public class MainMenuDisplay extends UIComponent {
     super.create();
     addActors();
   }
-  
+
+  /**
+   * Adds all the assets for the menu into the stage
+   */
   private void addActors() {
     table = new Table();
 
@@ -51,6 +54,7 @@ public class MainMenuDisplay extends UIComponent {
     TextButton settingsBtn = new TextButton("Settings", skin, "menu-button-large");
     TextButton exitBtn = new TextButton("Exit", skin, "menu-button-large");
 
+    // Adds all the text buttons into a list to be accessed elsewhere in the class
     menuButtons = new ArrayList<TextButton>();
     menuButtons.add(startBtn);
     menuButtons.add(loadBtn);
@@ -98,7 +102,6 @@ public class MainMenuDisplay extends UIComponent {
 
     table.align(Align.center);
     table.add(startBtn);
-
     // load button is removed until the save/load functionality has been added
     //table.add(loadBtn).padRight(50f);
     table.add(settingsBtn);
@@ -115,43 +118,72 @@ public class MainMenuDisplay extends UIComponent {
     // draw is handled by the stage
   }
 
+  /**
+   * Resizes all the menu assets based on the current stage size
+   * @param width - The current width of the stage
+   * @param height - The current height of the stage
+   */
   public void resize(int width, int height) {
 
-      float backgroundWidth = width;
-      float backgroundHeight = width * BACKGROUND_IMAGE_ASPECT;
-      float backgroundX = width - backgroundWidth;
-      float backgroundY = height - backgroundHeight;
-      boolean restrictedByHeight = (backgroundHeight > height) ? true : false;
+      // determine whether the height or width is the restricting factor for background size
+      boolean restrictedByHeight = (width * BACKGROUND_IMAGE_ASPECT > height) ? true : false;
 
-      if (restrictedByHeight) {
-          backgroundWidth = height * (1f / BACKGROUND_IMAGE_ASPECT);
-          backgroundHeight = height;
-          backgroundX = width/2 - backgroundWidth/2;
-          backgroundY = height/2 - backgroundHeight/2;
-      }
-
-      background.setWidth(backgroundWidth);
-      background.setHeight(backgroundHeight);
-      background.setPosition(backgroundX, backgroundY);
-
-      float tableWidth = backgroundWidth - (backgroundWidth * MENU_TABLE_RIGHT_OFFSET);
-      float tableHeight = backgroundHeight * MENU_TABLE_HEIGHT_RATIO;
-      float tableX = width - backgroundWidth;
-      float tableY = height - backgroundHeight;
-
-      if (restrictedByHeight) {
-          tableX = backgroundX;
-          tableY = backgroundY;
-      }
-
-      table.setWidth(tableWidth);
-      table.setHeight(tableHeight);
-      table.setPosition(tableX, tableY);
-
-      adjustMenuButtonsOnResize();
+      resizeBackground(width, height, restrictedByHeight);
+      resizeTable(width, height, restrictedByHeight);
+      adjustMenuButtonsFontSize();
   }
 
-  private void adjustMenuButtonsOnResize() {
+    /**
+     * Resizes the background based on the current stage width and height.
+     * @param width - The current width of the stage
+     * @param height - The current height of the stage
+     * @param restrictedByHeight - whether the height or width is the restricting factor for background size
+     */
+    private void resizeBackground(int width, int height, boolean restrictedByHeight) {
+        float backgroundWidth = width;
+        float backgroundHeight = width * BACKGROUND_IMAGE_ASPECT;
+        float backgroundX = width - backgroundWidth;
+        float backgroundY = height - backgroundHeight;
+
+        if (restrictedByHeight) {
+            backgroundWidth = height * (1f / BACKGROUND_IMAGE_ASPECT);
+            backgroundHeight = height;
+            backgroundX = width /2 - backgroundWidth/2;
+            backgroundY = height /2 - backgroundHeight/2;
+        }
+
+        background.setWidth(backgroundWidth);
+        background.setHeight(backgroundHeight);
+        background.setPosition(backgroundX, backgroundY);
+    }
+
+    /**
+     * Resizes the table containing the menu buttons based on the current stage width and height.
+     * @param width - The current width of the stage
+     * @param height - The current height of the stage
+     * @param restrictedByHeight - whether the height or width is the restricting factor for background size
+     */
+    private void resizeTable(int width, int height, boolean restrictedByHeight) {
+        float tableWidth = background.getWidth() - (background.getWidth() * MENU_TABLE_RIGHT_OFFSET);
+        float tableHeight = background.getHeight() * MENU_TABLE_HEIGHT_RATIO;
+        float tableX = width - background.getWidth();
+        float tableY = height - background.getHeight();
+
+        if (restrictedByHeight) {
+            tableX = background.getX();
+            tableY = background.getY();
+        }
+
+        table.setWidth(tableWidth);
+        table.setHeight(tableHeight);
+        table.setPosition(tableX, tableY);
+    }
+
+    /**
+     * Adjusts the menu button font size based on the size of the table containing the menu buttons
+     */
+    private void adjustMenuButtonsFontSize() {
+
       float tableWidth = table.getWidth();
 
       if (tableWidth < WIDTH_MAX_FOR_SMALL_FONT) {
@@ -163,6 +195,11 @@ public class MainMenuDisplay extends UIComponent {
       }
   }
 
+  /**
+   * Sets the style for all the buttons within the menu button table
+   * @param style - The LibGDX style to set the button to
+   * @param padding - The padding for each cell of the table
+   */
   private void changeMenuButtonStyles(String style, float padding) {
       for (TextButton menuButton : menuButtons) {
           Button.ButtonStyle newButtonStyle = skin.get( style, TextButton.TextButtonStyle.class );

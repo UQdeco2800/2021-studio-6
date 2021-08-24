@@ -60,7 +60,6 @@ public class SettingsMenuDisplay extends UIComponent {
     rootTable.row().padTop(30f);
     rootTable.add(settingsTable).expandX().bottom();
 
-
     rootTable.row();
     rootTable.add(menuBtns).padTop(30f);
     rootTable.padBottom(90f);

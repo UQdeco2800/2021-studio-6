@@ -66,6 +66,10 @@ public class TextDialogueBox extends UIComponent {
      * Advances dialogue and updates text display
      */
     public void advanceDialogue(){
+        if (!dialogue.hasNext()) {
+            entity.getEvents().trigger("closeDialogue");
+            return;
+        }
         displayText.setText(dialogue.next());
     }
 

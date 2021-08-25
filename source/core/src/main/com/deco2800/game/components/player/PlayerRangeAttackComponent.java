@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * a bullet will be created from player's entity position and launched towards coordinate where range button
  * is clicked in game area
  */
-public class PlayerRangeAttackListener extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackListener.class);
+public class PlayerRangeAttackComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackComponent.class);
     private Entity player;
     private GameArea gameArea;
 
@@ -21,7 +21,7 @@ public class PlayerRangeAttackListener extends Component {
      * Create listener on player specifically
      *
      */
-    public PlayerRangeAttackListener() {
+    public PlayerRangeAttackComponent() {
     }
 
     /**

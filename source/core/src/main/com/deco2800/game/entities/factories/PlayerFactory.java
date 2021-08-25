@@ -1,10 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.deco2800.game.components.PlayerCombatStatsComponent;
-import com.deco2800.game.components.player.InventoryComponent;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
-import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
@@ -46,7 +43,8 @@ public class PlayerFactory {
                     .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState, stats.baseRangedAttack, stats.defenceLevel))
                     .addComponent(new InventoryComponent(stats.gold))
                     .addComponent(inputComponent)
-                    .addComponent(new PlayerStatsDisplay());
+                    .addComponent(new PlayerStatsDisplay())
+                    .addComponent(new PlayerRangeAttackComponent());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

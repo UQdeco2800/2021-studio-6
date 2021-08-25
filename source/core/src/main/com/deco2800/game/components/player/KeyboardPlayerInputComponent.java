@@ -1,5 +1,7 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +17,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   public KeyboardPlayerInputComponent() {
     super(5);
+  }
+
+  @Override
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+      entity.getEvents().trigger("playerRangeAttack");
+      return true;
+    }
+    return false;
   }
 
   /**

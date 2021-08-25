@@ -37,7 +37,7 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+    "images/iso_grass_3.png", "images/safehouse.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -67,6 +67,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
+    spawnSafehouse();
 
     playMusic();
   }
@@ -116,6 +117,14 @@ public class ForestGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  private void spawnSafehouse() {
+    GridPoint2 center = new GridPoint2(15, 15);
+
+    Entity safehouse = ObstacleFactory.createSafehouse();
+    // Position is currently procedurally (kidding, just randomly) generated.
+    spawnEntityAt(safehouse, center, true, false);
   }
 
   private Entity spawnPlayer() {

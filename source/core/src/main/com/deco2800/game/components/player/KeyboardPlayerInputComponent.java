@@ -22,7 +22,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-      System.out.println("Mouse clicked");
+      entity.getEvents().trigger("playerRangeAttack");
+      return true;
     }
     return false;
   }
@@ -55,8 +56,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
         return true;
-      case Input.Buttons.LEFT:
-        System.out.println("mouse clicked");
       default:
         return false;
     }

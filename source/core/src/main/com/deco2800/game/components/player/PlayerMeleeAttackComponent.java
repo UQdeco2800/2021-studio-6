@@ -54,7 +54,18 @@ public class PlayerMeleeAttackComponent extends Component {
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
 
+
         playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
+    }
+
+    /**
+     * Listens and detects if NPC has died (health = 0) to allow entity of NPC to register
+     * for disposing outside of physics step
+     *
+     * @param entity which will be register or queued to be disposed of
+     */
+    private void registerDisposing(Entity entity) {
+        entity.toBeDisposed();
     }
 
     /**
@@ -88,6 +99,7 @@ public class PlayerMeleeAttackComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
         if (targetStats != null) {
+            System.out.println("Entity close " + target);
             closeToAttack = true;
         }
 
@@ -97,7 +109,8 @@ public class PlayerMeleeAttackComponent extends Component {
 
             // freezes enemy - will need to be replaced to despawn enemy entity
             if (targetStats.isDead()) {
-                target.setEnabled(false);
+                logger.info("An entity will be disposed of");
+                registerDisposing(targetStats.getEntity());
             }
 
             this.meleeAttackClicked = false;

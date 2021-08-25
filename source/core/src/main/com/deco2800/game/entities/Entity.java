@@ -199,6 +199,13 @@ public class Entity {
     return this;
   }
 
+  /**
+   * Register entity to be disposed of in physics engine - outside of stepping function
+   */
+  public void toBeDisposed() {
+    ServiceLocator.getPhysicsService().getPhysics().addToDisposeQueue(this);
+  }
+
   /** Dispose of the entity. This will dispose of all components on this entity. */
   public void dispose() {
     for (Component component : createdComponents) {

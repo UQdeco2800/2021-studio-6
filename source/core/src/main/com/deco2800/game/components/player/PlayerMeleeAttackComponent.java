@@ -99,7 +99,6 @@ public class PlayerMeleeAttackComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
         if (targetStats != null) {
-            System.out.println("Entity close " + target);
             closeToAttack = true;
         }
 

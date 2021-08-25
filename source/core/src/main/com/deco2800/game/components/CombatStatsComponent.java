@@ -25,7 +25,7 @@ public class CombatStatsComponent extends Component {
    * @return is player dead
    */
   public Boolean isDead() {
-    return health == 0;
+	  return health == 0;
   }
 
   /**
@@ -84,7 +84,12 @@ public class CombatStatsComponent extends Component {
     }
   }
 
-  public void hit(CombatStatsComponent attacker) {
+  /**
+   * The action of inflicting damage on another entity
+   *
+   * @param attacker is the amount of damage inflicted on the entity which reduces their health
+   */
+  public void hit(PlayerCombatStatsComponent attacker) {
     int newHealth = getHealth() - attacker.getBaseAttack();
     setHealth(newHealth);
   }

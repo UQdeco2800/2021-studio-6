@@ -1,7 +1,10 @@
 package com.deco2800.game.components.mainmenu;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -32,6 +35,10 @@ public class MainMenuDisplay extends UIComponent {
   private static final float PADDING_FOR_MEDIUM_FONT = 15;
   private static final float PADDING_FOR_LARGE_FONT = 25;
 
+  private TextureAtlas textureAtlas;
+  private Animation<TextureRegion> backgroundAnimation;
+  private float elapsedTime = 0f;
+
   @Override
   public void create() {
     super.create();
@@ -44,10 +51,9 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
 
-    background =
-        new Image(
-            ServiceLocator.getResourceService()
-                .getAsset("images/background-menu-screen.png", Texture.class));
+    textureAtlas = new TextureAtlas(Gdx.files.internal("images/title-screen.atlas"));
+    backgroundAnimation = new Animation(1f/3f, textureAtlas.getRegions());
+    background = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
 
     TextButton startBtn = new TextButton("Start", skin, "menu-button-large");
     TextButton loadBtn = new TextButton("Load", skin, "menu-button-large");
@@ -103,19 +109,29 @@ public class MainMenuDisplay extends UIComponent {
     table.align(Align.center);
     table.add(startBtn);
     // load button is removed until the save/load functionality has been added
-    //table.add(loadBtn).padRight(50f);
+    //table.add(loadBtn);
     table.add(settingsBtn);
     table.add(exitBtn);
 
     resize((int) stage.getWidth(), (int) stage.getHeight());
-
     stage.addActor(background);
     stage.addActor(table);
+
   }
 
   @Override
   public void draw(SpriteBatch batch) {
     // draw is handled by the stage
+  }
+
+  /**
+   * Renders the current menu screen related to the current time elapsed
+   * @param delta - the time that has elapsed
+   */
+  public void render(float delta) {
+      elapsedTime += delta;
+      Image nextBackgroundImage = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
+      background.setDrawable(nextBackgroundImage.getDrawable());
   }
 
   /**

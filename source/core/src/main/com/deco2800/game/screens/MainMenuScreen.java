@@ -44,6 +44,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
+    mainMenuDisplay.render(delta);
     ServiceLocator.getEntityService().update();
     renderer.render();
   }

@@ -12,12 +12,22 @@ import com.deco2800.game.services.ServiceLocator;
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+  // Speed Modification
+  private Vector2 MaxSpeed; // Metres per second
+  private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
 
   private PhysicsComponent physicsComponent;
   private PlayerMeleeAttackComponent playerMeleeAttackComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
+
+
+  /**
+   * Basic constructor for setting the initial player speed based on saved wound state
+   */
+  public PlayerActions (int woundState) {
+    MaxSpeed = new Vector2((float) woundState, (float) woundState);
+  }
 
   @Override
   public void create() {
@@ -26,6 +36,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("updateWound", this::speedModification);
   }
 
   @Override
@@ -38,10 +49,19 @@ public class PlayerActions extends Component {
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
+    Vector2 desiredVelocity = walkDirection.cpy().scl(MaxSpeed);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  }
+
+  /**
+   * Alters the players speed whenever wound state changes.
+   *
+   * @param woundState new woundState of the player
+   */
+  void speedModification(int woundState) {
+    MaxSpeed = new Vector2(woundSpeeds[woundState], woundSpeeds[woundState]);
   }
 
   /**

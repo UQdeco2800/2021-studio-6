@@ -123,9 +123,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * @param clicked is the melee button clicked by player
     * */
     public void meleeAttackClicked(boolean clicked) {
-
         if (closeToAttack) {
-            System.out.println("melee attack clicked true");
             this.meleeAttackClicked = clicked;
         }
     }

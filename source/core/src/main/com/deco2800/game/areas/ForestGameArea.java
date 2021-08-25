@@ -25,7 +25,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
+    "images/player_placeholders/BACK.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -120,13 +120,11 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnSafehouse() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 center = new GridPoint2(15, 15);
 
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity safehouse = ObstacleFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
-    spawnEntityAt(safehouse, randomPos, true, false);
+    spawnEntityAt(safehouse, center, true, false);
   }
 
   private Entity spawnPlayer() {

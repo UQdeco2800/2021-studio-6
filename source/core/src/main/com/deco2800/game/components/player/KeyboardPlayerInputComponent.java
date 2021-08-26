@@ -57,6 +57,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Input.Buttons.LEFT:
         System.out.println("mouse clicked");
+      case Keys.ESCAPE:
+        System.out.println("ESCAPE!");
       default:
         return false;
     }

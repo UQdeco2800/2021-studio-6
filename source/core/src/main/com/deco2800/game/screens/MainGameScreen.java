@@ -41,6 +41,9 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  // ============ Temporary variables to test pause/resume methods =============
+  private boolean paused = false;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -86,11 +89,17 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void pause() {
     logger.info("Game paused");
+
+    // This function runs when the ESC key is pressed, might use boolean
+    // to know if the game is pause, maybe use the GameTime.java methods
+    ServiceLocator.getTimeSource().setTimeScale(0f); // freeze timescale
+
   }
 
   @Override
   public void resume() {
     logger.info("Game resumed");
+    ServiceLocator.getTimeSource().setTimeScale(1f); // unfreeze timescale
   }
 
   @Override

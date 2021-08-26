@@ -1,5 +1,6 @@
 package com.deco2800.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
@@ -24,10 +25,14 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/box_boy_title.png"};
+  private static final String[] mainMenuTextures = {"images/background-menu-screen.png"};
+  private MainMenuDisplay mainMenuDisplay;
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
+
+    // Sets background to black
+    Gdx.gl.glClearColor(0/255f, 0/255f, 0/255f, 1);
 
     logger.debug("Initialising main menu screen services");
     ServiceLocator.registerInputService(new InputService());
@@ -43,6 +48,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
+    mainMenuDisplay.render(delta);
     ServiceLocator.getEntityService().update();
     renderer.render();
   }
@@ -50,6 +56,7 @@ public class MainMenuScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
+    mainMenuDisplay.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
@@ -96,7 +103,8 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
     Entity ui = new Entity();
-    ui.addComponent(new MainMenuDisplay())
+    mainMenuDisplay = new MainMenuDisplay();
+    ui.addComponent(mainMenuDisplay)
         .addComponent(new InputDecorator(stage, 10))
         .addComponent(new MainMenuActions(game));
     ServiceLocator.getEntityService().register(ui);

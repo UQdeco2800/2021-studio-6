@@ -3,9 +3,12 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BulletFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -22,10 +25,11 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/player_placeholders/BACK.png",
+    "images/player_placeholders/BACK.png", "images/player_placeholders/PROJECTILE.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -65,6 +69,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    spawnBullet();
     spawnGhosts();
     spawnGhostKing();
     spawnSafehouse();
@@ -129,8 +134,22 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
+
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+
+  private Entity spawnBullet() {
+    Array<Entity> bullets = new Array<>();
+    Entity newBullet = BulletFactory.createBullet();
+    Entity anotherNewBullet = BulletFactory.createBullet();
+    bullets.add(newBullet);
+    bullets.add(anotherNewBullet);
+    spawnEntity(newBullet);
+    spawnEntity(anotherNewBullet);
+
+    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+    return newBullet;
   }
 
   private void spawnGhosts() {
@@ -156,7 +175,7 @@ public class ForestGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(0f);
     music.play();
   }
 

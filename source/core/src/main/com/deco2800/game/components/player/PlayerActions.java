@@ -50,6 +50,10 @@ public class PlayerActions extends Component {
    * @param direction direction to move in
    */
   void walk(Vector2 direction) {
+
+    // when player walks, bullets produced will need to also follow
+    entity.getEvents().trigger("bulletsFollowPlayer");
+
     this.walkDirection = direction;
     moving = true;
   }

@@ -32,9 +32,8 @@ public class PlayerFactory {
     InputComponent inputComponent =
             ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
-    Entity player =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
+    Entity player = new Entity()
+            .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new PlayerMeleeAttackComponent())
@@ -45,6 +44,7 @@ public class PlayerFactory {
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
                     .addComponent(new PlayerRangeAttackComponent());
+
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

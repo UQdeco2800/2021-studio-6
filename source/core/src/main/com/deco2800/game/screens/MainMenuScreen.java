@@ -1,5 +1,6 @@
 package com.deco2800.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
@@ -29,6 +30,9 @@ public class MainMenuScreen extends ScreenAdapter {
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
+
+    // Sets background to black
+    Gdx.gl.glClearColor(0/255f, 0/255f, 0/255f, 1);
 
     logger.debug("Initialising main menu screen services");
     ServiceLocator.registerInputService(new InputService());

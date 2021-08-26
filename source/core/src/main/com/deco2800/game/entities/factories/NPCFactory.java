@@ -12,6 +12,7 @@ import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.GhostKingConfig;
+import com.deco2800.game.entities.configs.LargeEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -46,10 +47,13 @@ public class NPCFactory {
    */
   public static Entity createLargeEnemy(Entity target) {
     Entity largeEnemy = createBaseNPC(target);
-    Vector2 speed = new Vector2(1, 1);
+    LargeEnemyConfig config = configs.largeEnemy;
+
+    //Movement speed of large enemy
+    Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
     largeEnemy
-            .addComponent(new CombatStatsComponent(150, 50))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(new TextureRenderComponent("images/large_enemy_pix.png"))
             .addComponent(new PhysicsMovementComponent(speed));
 

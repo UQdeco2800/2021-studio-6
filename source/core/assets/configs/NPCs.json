@@ -8,5 +8,11 @@
     "baseAttack": 25,
     "spookyFactor": 7
   }
+  "largeEnemy": {
+	"health": 200,
+	"baseAttack": 50,
+	"speed_x": 1,
+	"speed_y": 1
+  }
 }
 

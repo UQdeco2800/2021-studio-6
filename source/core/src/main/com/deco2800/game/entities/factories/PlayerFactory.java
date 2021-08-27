@@ -33,7 +33,7 @@ public class PlayerFactory {
             ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     Entity player = new Entity()
-            .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
+            .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new PlayerMeleeAttackComponent())

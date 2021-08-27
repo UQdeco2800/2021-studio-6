@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -22,7 +23,8 @@ public class BulletFactory {
                 .addComponent(new TextureRenderComponent("images/player_placeholders/PROJECTILE.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
-                .addComponent(new ColliderComponent().setSensor(true));
+                .addComponent(new ColliderComponent().setSensor(true))
+                .addComponent(new BulletCollisionComponent());
 
         bullet.getComponent(TextureRenderComponent.class).scaleEntity();
         return bullet;

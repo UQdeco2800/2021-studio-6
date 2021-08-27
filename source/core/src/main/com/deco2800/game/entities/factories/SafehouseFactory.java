@@ -8,6 +8,8 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
+// Test commit
+
 public class SafehouseFactory {
     /**
      * Creates a Safehouse entity

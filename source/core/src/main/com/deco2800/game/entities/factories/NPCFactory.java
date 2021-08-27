@@ -104,16 +104,18 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new FireBulletTask(1, 1));
-    return new Entity()
+    Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                    .addComponent(new TextureRenderComponent("images/gunman.png"))
+                    .addComponent(new TextureRenderComponent("images/eye.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea));
+    longRange.setScale(new Vector2(2, 2));
+    return longRange;
   }
 
 

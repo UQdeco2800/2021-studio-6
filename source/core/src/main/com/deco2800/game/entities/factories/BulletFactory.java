@@ -26,15 +26,7 @@ public class BulletFactory {
      *  @param gameArea need to spawn the entity in (could instead implement a listener
      */
     public static Entity createBullet(Entity source, Entity target, GameArea gameArea) {
-            Entity bullet = new Entity()
-                                    .addComponent(new TextureRenderComponent("images/heart.png"))
-                                    .addComponent(new PhysicsComponent())
-                                    .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
-                                    .addComponent(new ColliderComponent())
-                                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                                    .addComponent(new CombatStatsComponent(1, 2))
-                                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
-                                    .addComponent(new BulletCollider(target, gameArea));
+
 
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;

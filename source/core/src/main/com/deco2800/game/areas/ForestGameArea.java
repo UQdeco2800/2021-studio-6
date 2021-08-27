@@ -39,7 +39,10 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-          "images/gunman.png"
+          "images/gunman.png",
+          "images/eye.png",
+          "images/blood_ball.png",
+          "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -122,7 +125,7 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(10, 10), false, false);
     return newPlayer;
   }
 

@@ -9,6 +9,10 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class SafehouseFactory {
+    /**
+     * Creates a Safehouse entity
+     * @return Safehouse entity of given width and height
+     */
     public static Entity createSafehouse() {
         Entity safehouse = new Entity()
                 .addComponent(new TextureRenderComponent("images/safehouse.png"))

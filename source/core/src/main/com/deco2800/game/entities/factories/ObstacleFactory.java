@@ -48,22 +48,6 @@ public class ObstacleFactory {
     return wall;
   }
 
-  /**
-   * Creates a Safehouse entity
-   * @return Safehouse entity of given width and height
-   */
-  public static Entity createSafehouse() {
-    Entity safehouse = new Entity()
-            .addComponent(new TextureRenderComponent("images/safehouse.png"))
-            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    safehouse.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    safehouse.getComponent(TextureRenderComponent.class).scaleEntity();
-    safehouse.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(safehouse, 0.5f, 0.2f);
-    return safehouse;
-  }
-
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

@@ -9,6 +9,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.SafehouseFactory;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -122,7 +123,7 @@ public class ForestGameArea extends GameArea {
   private void spawnSafehouse() {
     GridPoint2 center = new GridPoint2(15, 15);
 
-    Entity safehouse = ObstacleFactory.createSafehouse();
+    Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
     spawnEntityAt(safehouse, center, true, false);
   }

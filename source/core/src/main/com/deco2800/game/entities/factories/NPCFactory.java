@@ -9,9 +9,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.tasks.ChaseTask;
-import com.deco2800.game.components.tasks.FireBulletTask;
-import com.deco2800.game.components.tasks.WanderTask;
+import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.GhostKingConfig;
@@ -103,7 +101,8 @@ public class NPCFactory {
 
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    .addTask(new FireBulletTask(1, 1));
+                    .addTask(new DistanceFireBulletTask(target, 1, 10, 5f, 4f))
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
@@ -114,7 +113,7 @@ public class NPCFactory {
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea));
-    longRange.setScale(new Vector2(2, 2));
+    longRange.setScale(new Vector2(1.5f, 1.5f));
     return longRange;
   }
 

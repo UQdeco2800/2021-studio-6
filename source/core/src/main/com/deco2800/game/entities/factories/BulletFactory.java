@@ -48,7 +48,10 @@ public class BulletFactory {
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
                 .addComponent(new BulletCollider(target, gameArea));
-        bullet.setPosition(source.getPosition().x, source.getPosition().y);
+        //centers the bullet to the source
+        bullet.setPosition(
+                x1 - bullet.getScale().x / 2 + source.getScale().x / 2,
+                y1  - bullet.getScale().y / 2  + source.getScale().y / 2);
 
 
         bullet.getComponent(PhysicsMovementComponent.class).setTarget(newTarget);

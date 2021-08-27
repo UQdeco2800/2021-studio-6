@@ -11,8 +11,10 @@ import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
+import com.deco2800.game.rendering.lightingcomponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -27,7 +29,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private final Renderer renderer;
   private static final String[] mainMenuTextures = {"images/background-menu-screen.png"};
   private MainMenuDisplay mainMenuDisplay;
-
+  private lightingcomponent lc;
   public MainMenuScreen(GdxGame game) {
     this.game = game;
 
@@ -39,9 +41,10 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-
+    ServiceLocator.registerPhysicsService(new PhysicsService());
+    lc = new lightingcomponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
     renderer = RenderFactory.createRenderer();
-
+    ServiceLocator.getRenderService().register(lc);
     loadAssets();
     createUI();
   }

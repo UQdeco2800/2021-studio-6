@@ -1,5 +1,6 @@
 package com.deco2800.game.components.mainmenu;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,10 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import java.util.ArrayList;
 
@@ -39,11 +40,14 @@ public class MainMenuDisplay extends UIComponent {
   private Animation<TextureRegion> backgroundAnimation;
   private float elapsedTime = 0f;
 
+
   @Override
   public void create() {
     super.create();
     addActors();
+
   }
+
 
   /**
    * Adds all the assets for the menu into the stage
@@ -129,9 +133,11 @@ public class MainMenuDisplay extends UIComponent {
    * @param delta - the time that has elapsed
    */
   public void render(float delta) {
+
       elapsedTime += delta;
       Image nextBackgroundImage = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
       background.setDrawable(nextBackgroundImage.getDrawable());
+
   }
 
   /**

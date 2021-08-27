@@ -36,6 +36,7 @@ public class Renderer implements Disposable {
     DebugRenderer debugRenderer = new DebugRenderer();
     debugRenderer.setActive(false);
 
+
     init(
         camera,
         GAME_SCREEN_WIDTH,
@@ -95,14 +96,14 @@ public class Renderer implements Disposable {
     Matrix4 projMatrix = camera.getProjectionMatrix();
     batch.setProjectionMatrix(projMatrix);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+    stage.act();
+    stage.draw();
     batch.begin();
     renderService.render(batch);
     batch.end();
     debugRenderer.render(projMatrix);
 
-    stage.act();
-    stage.draw();
+
   }
 
   /**

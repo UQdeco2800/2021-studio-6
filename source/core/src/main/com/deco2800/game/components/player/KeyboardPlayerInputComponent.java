@@ -1,10 +1,9 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
 
@@ -14,18 +13,12 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+  // method requirement for player to execute long range attack
+  private final Vector2 RANGE_ATTACK = Vector2.Zero.cpy();
+  private IntSet downKeys = new IntSet(20);
 
   public KeyboardPlayerInputComponent() {
     super(5);
-  }
-
-  @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-      entity.getEvents().trigger("playerRangeAttack");
-      return true;
-    }
-    return false;
   }
 
   /**
@@ -36,6 +29,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
+    downKeys.add(keycode);
+    int numKeysPressed = downKeys.size;
+    System.out.println(numKeysPressed);
+
+    if (keycode == Keys.D) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT);
+    } else if (keycode == Keys.A) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT);
+    } else if (keycode == Keys.W) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.UP);
+    } else if (keycode == Keys.S) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN);
+    }
+
     switch (keycode) {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
@@ -56,9 +63,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
         return true;
+      case Keys.L:
+        entity.getEvents().trigger("rangeAttack", RANGE_ATTACK);
+        return true;
       default:
         return false;
     }
+
+
   }
 
   /**
@@ -69,6 +81,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
+    downKeys.remove(keycode);
     switch (keycode) {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);

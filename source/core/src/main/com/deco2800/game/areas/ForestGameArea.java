@@ -139,17 +139,16 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private Entity spawnBullet() {
+  private void spawnBullet() {
     Array<Entity> bullets = new Array<>();
-    Entity newBullet = BulletFactory.createBullet();
-    Entity anotherNewBullet = BulletFactory.createBullet();
-    bullets.add(newBullet);
-    bullets.add(anotherNewBullet);
-    spawnEntity(newBullet);
-    spawnEntity(anotherNewBullet);
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBullet = BulletFactory.createBullet();
+      bullets.add(newBullet);
+      spawnEntity(newBullet);
+    }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
-    return newBullet;
   }
 
   private void spawnGhosts() {

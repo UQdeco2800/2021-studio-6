@@ -1,31 +1,29 @@
 package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 /**
- * Used to listen and wait for player's range button to be clicked (LMB). Once clicked,
+ * Used to listen and wait for player's range button to be clicked (L key). Once clicked,
  * a bullet will be created from player's entity position and launched towards coordinate where range button
- * is clicked in game area
+ * is clicked in game area. If no movement keys clicked, range attack will be launched to the right by default
  */
 public class PlayerRangeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackComponent.class);
     private static Array<Entity> activeBullets;
-    private Vector2 playerPos, mouseClicked;
-    private OrthographicCamera orthoCam;
-    float DEFINED_PRECISION = 1/6f;
+    final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
+    private Vector2 longAttackDir = new Vector2(0,0);
+    private static final int MAX_COORDINATE = 15;
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets
@@ -44,7 +42,7 @@ public class PlayerRangeAttackComponent extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("playerRangeAttack", this::fire);
+        entity.getEvents().addListener("rangeAttack", this::fire);
     }
 
     @Override
@@ -52,50 +50,96 @@ public class PlayerRangeAttackComponent extends Component {
     }
 
     /**
-     * Fires bullet projectile from player to destination clicked in game
+     * Scale vector position for bullet targets to reach the end of the screen based on player's position
+     * in game
+     *
+     * @param directionCheck are vectors that will be scaled depending on keys pressed by user
      */
-    void fire() {
-        float xMouseCoord = Gdx.input.getX();
-        float yMouseCoord = Gdx.input.getY();
+    private void registerDirection(Vector2 directionCheck) {
 
-        System.out.println("Screen width and height : " + Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
-        // currently this is game screen coordinates - will need to convert to game world coordinate
-        System.out.println("Mouse clicks val : " + xMouseCoord + " " + yMouseCoord);
+        if (directionCheck.epsilonEquals(Vector2Utils.RIGHT)) {
+            System.out.println("RIGHT REGISTER");
+            longAttackDir = Vector2Utils.RIGHT;
 
-//        float ratio = (float) screenHeight / screenWidth;
-//        camera.viewportWidth = gameWidth;
-//        camera.viewportHeight = gameWidth * ratio;
+        } else if (directionCheck.epsilonEquals(Vector2Utils.LEFT)) {
+            System.out.println("LEFT REGISTER");
+            longAttackDir = Vector2Utils.LEFT;;
 
-        float ratio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        orthoCam = new OrthographicCamera(15f, 15f * ratio);
+        } else if (directionCheck.epsilonEquals(Vector2Utils.UP)) {
+            System.out.println("UP REGISTER");
+            longAttackDir = Vector2Utils.UP;
 
-        Vector3 mouseClickedScreenCoord = new Vector3(new Vector2(xMouseCoord,yMouseCoord), 0);
-        mouseClickedScreenCoord = orthoCam.unproject(mouseClickedScreenCoord);
-        System.out.println("Bullet clicked " + mouseClickedScreenCoord);
-
-        playerPos = this.entity.getPosition();
-        System.out.println("Player position " + playerPos);
-        System.out.println("==============================");
-
-//        temp = orthoCam.unproject(mouseClickedScreenCoord)
-//        System.out.println("mouse : " + mouseClicked);
-//        System.out.println(playerPos);
-//        System.out.println("x coord mouse clicked : " + xMouseCoord);
-//        System.out.println("y coord mouse clicked : " + yMouseCoord);
-
-        if (activeBullets.size != 0) {
-            Entity firedBullet = activeBullets.pop();
-            // fire bullet from current position
-            firedBullet.setPosition(playerPos);
-            firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(Gdx.graphics.getWidth() - xMouseCoord, Gdx.graphics.getHeight() - yMouseCoord));
+        } else if (directionCheck.epsilonEquals(Vector2Utils.DOWN)) {
+            System.out.println("DOWN REGISTER");
+            longAttackDir = Vector2Utils.DOWN;
         }
-        // bullet will be fired and updated
-//        Entity firingBullet = activeBullets.get(0);
-//        activeBullets.removeRange(0,0);
-//
-//
-//        // firing bullet
-//        firingBullet.setPosition(playerPos);
-//        firingBullet.getComponent(PhysicsMovementComponent.class).setTarget(mouseClicked);
     }
+
+    private Vector2 scaleVector(Vector2 playerCoord) {
+        float xPosPlayer = playerCoord.x;
+        float yPosPlayer = playerCoord.y;
+        Vector2 scaledVector = new Vector2();
+
+        // player has not moved before
+        if (longAttackDir.isZero()) {
+            System.out.println("DEFAULT ATTACK RIGHT");
+            scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
+
+        // player has moved before
+        } else if (longAttackDir.epsilonEquals(Vector2Utils.RIGHT)) {
+            System.out.println("MOVE ATTACK RIGHT");
+            scaledVector = new Vector2(MAX_COORDINATE,yPosPlayer);
+            longAttackDir = Vector2Utils.RIGHT;
+
+        } else if (longAttackDir.epsilonEquals(Vector2Utils.LEFT)) {
+            System.out.println("MOVE ATTACK LEFT");
+            scaledVector = new Vector2(-MAX_COORDINATE,yPosPlayer);
+            longAttackDir = Vector2Utils.LEFT;;
+
+        } else if (longAttackDir.epsilonEquals(Vector2Utils.UP)) {
+            System.out.println("MOVE ATTACK UP");
+            scaledVector = new Vector2(xPosPlayer, MAX_COORDINATE);
+            longAttackDir = Vector2Utils.UP;
+
+        } else if (longAttackDir.epsilonEquals(Vector2Utils.DOWN)) {
+            System.out.println("MOVE ATTACK DOWN");
+            scaledVector = new Vector2(xPosPlayer, -MAX_COORDINATE);
+            longAttackDir = Vector2Utils.DOWN;
+        }
+        return scaledVector.cpy();
+    }
+
+    /**
+     * Fires bullet projectile from player to destination clicked in game
+     *
+     * @param movingAttackDir would be vectors used to deploy projectiles in a direction (would only
+     *                        be either north, south, east or west for now)
+     */
+    void fire(Vector2 movingAttackDir) {
+        System.out.println(movingAttackDir);
+        Vector2 playerPos = this.entity.getPosition();
+        Vector2 bulletTargetPos = new Vector2();
+
+        registerDirection(movingAttackDir);
+
+        // player has not moved before, use default direction attack (to the right)
+        if (longAttackDir.isZero()) {
+            System.out.println("DEFAULT ATTACK PLAYER NO MOVE");
+            bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
+            bulletTargetPos.y = playerPos.y;
+        } else {
+            System.out.println("DIRECTIONAL ATTACK PLAYER MOVE");
+        // player has moved before, last button clicked to move as direction
+            bulletTargetPos = scaleVector(playerPos);
+        }
+
+        // bullet shot and there is ammo
+        if (activeBullets.size != 0 && movingAttackDir.isZero()) {
+            Entity firedBullet = activeBullets.pop();
+            firedBullet.setPosition(playerPos);
+            System.out.println("BULLET TRAJECTORY " + bulletTargetPos);
+            firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+        }
+    }
+
 }

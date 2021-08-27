@@ -3,7 +3,7 @@ package com.deco2800.game.components;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * Used to manage entities that are required to be updated or diposed of outside of time step
+ * Used to manage entities that are required to be updated or diposed of outside of physics time step
  */
 public class DisposingComponent extends Component {
 

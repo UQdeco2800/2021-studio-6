@@ -55,27 +55,26 @@ public class BulletCollisionComponent extends Component {
     public void bulletHit(Fixture me, Fixture other) {
 
         // Get data of current bullet for checking
+        Entity bullet = ((BodyUserData) me.getBody().getUserData()).entity;
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 //        System.out.println("Target layer " +  target.getComponent(ColliderComponent.class).getLayer());
 
         if (this.launchStatus) {
             if (PhysicsLayer.contains(playerLayer, other.getFilterData().categoryBits)) {
-                return;
-
+                logger.debug("Bullet may have collided with player's layer");
                 // bullet collide with obstacles
             } else if (PhysicsLayer.contains(obstacleLayer, other.getFilterData().categoryBits)) {
-                System.out.println("COLLIDE WITH SOMETHING NOT NPC");
-                this.entity.setPosition(ORIGIN);
-                this.entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
-                PlayerRangeAttackComponent.restockBulletShot(this.entity);
+                logger.debug("Bullet collided with obstacle's layer");
+                entity.getComponent(DisposingComponent.class).toBeReused();
 
                 // bullet collides with NPC
             } else if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-                System.out.println("COLLIDE WITH NPC");
-                System.out.println("Bullet collided");
+                logger.debug("Bullet collided with NPC's layer");
+
 //            this.entity.setPosition(ORIGIN);
 //            this.entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
 //            PlayerRangeAttackComponent.restockBulletShot(this.entity);
+                entity.getComponent(DisposingComponent.class).toBeReused();
             }
 
             // Try to detect enemy.

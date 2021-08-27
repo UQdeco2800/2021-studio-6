@@ -3,7 +3,9 @@ package com.deco2800.game.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.raycast.AllHitCallback;
 import com.deco2800.game.physics.raycast.RaycastHit;
 import com.deco2800.game.physics.raycast.SingleHitCallback;
@@ -24,6 +26,7 @@ public class PhysicsEngine implements Disposable {
   private static final float MAX_UPDATE_TIME = 0.25f;
   private static final float PHYSICS_TIMESTEP = 0.016f;
   private static final Vector2 GRAVITY = new Vector2(0f, -0f);
+  private final Vector2 ORIGIN = new Vector2(0,0);
   private static final int VELOCITY_ITERATIONS = 6;
   private static final int POSITION_ITERATIONS = 2;
 
@@ -62,7 +65,12 @@ public class PhysicsEngine implements Disposable {
     }
 
     if (!toReuse.isEmpty()) {
-
+      for (Entity entity : toReuse) {
+        entity.setPosition(ORIGIN);
+        entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
+        PlayerRangeAttackComponent.restockBulletShot(entity);
+      }
+      toReuse.clear();
     }
 
     if (!toDispose.isEmpty()) {
@@ -163,11 +171,21 @@ public class PhysicsEngine implements Disposable {
   }
 
   /**
-   * Used to register entity that will be dispose before physic step
+   * Used to register entity that will be dispose outside of physics time step
    *
    * @param entity that will be dispose and removed from world
    */
   public void addToDisposeQueue(Entity entity) {
     this.toDispose.add(entity);
+  }
+
+  /**
+   * Used to register entity that will be reused outside of physics time step
+   *
+   * @param entity that will be reused - this is done by relocating entity to a position in screen
+   *               that cannot be seen by user
+   */
+  public void addToReuseQueue(Entity entity) {
+    this.toReuse.add(entity);
   }
 }

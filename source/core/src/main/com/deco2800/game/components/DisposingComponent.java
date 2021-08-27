@@ -17,4 +17,11 @@ public class DisposingComponent extends Component {
         System.out.println(entity);
         ServiceLocator.getPhysicsService().getPhysics().addToDisposeQueue(entity);
     }
+
+    /**
+     * Register entity to be reused, so that entity does not need to be recreated repeatedly
+     */
+    public void toBeReused() {
+        ServiceLocator.getPhysicsService().getPhysics().addToReuseQueue(entity);
+    }
 }

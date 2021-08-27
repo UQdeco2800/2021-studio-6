@@ -128,7 +128,7 @@ public class PlayerRangeAttackComponent extends Component {
      *                        be either north, south, east or west for now)
      */
     void fire(Vector2 movingAttackDir) {
-        Vector2 playerPos = this.entity.getPosition();
+        Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
 
         registerDirection(movingAttackDir);

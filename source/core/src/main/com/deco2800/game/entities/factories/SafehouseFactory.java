@@ -17,7 +17,7 @@ public class SafehouseFactory {
         Entity safehouse = new Entity()
                 .addComponent(new TextureRenderComponent("images/safehouse.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.SAFEHOUSE));
         safehouse.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         safehouse.getComponent(TextureRenderComponent.class).scaleEntity();
         safehouse.scaleHeight(2.5f);

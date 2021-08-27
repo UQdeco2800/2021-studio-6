@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
@@ -44,6 +45,17 @@ public class BulletFactory {
         newTarget = newTarget.scl(100);
         newTarget = newTarget.add(source.getPosition());
 
+        float rotation = (MathUtils.radiansToDegrees * MathUtils.atan2(newTarget.y - y1, newTarget.x - x1));
+//        float rotation = 0;
+        Entity bullet = new Entity()
+                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotation))
+                .addComponent(new PhysicsComponent())
+                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
+                .addComponent(new ColliderComponent())
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                .addComponent(new CombatStatsComponent(1, 2))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
+                .addComponent(new BulletCollider(target, gameArea));
         bullet.setPosition(source.getPosition().x, source.getPosition().y);
 
 

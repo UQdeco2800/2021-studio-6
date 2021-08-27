@@ -67,8 +67,6 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
     spawnLargeEnemy();
 
     playMusic();
@@ -127,33 +125,15 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private void spawnGhosts() {
+  private void spawnLargeEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_GHOSTS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity largeEnemy = NPCFactory.createLargeEnemy(player);
+      spawnEntityAt(largeEnemy, randomPos, true, true);
     }
-  }
-
-  private void spawnGhostKing() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
-  }
-
-  private void spawnLargeEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity largeEnemy = NPCFactory.createLargeEnemy(player);
-    spawnEntityAt(largeEnemy, randomPos, true, true);
   }
 
   private void playMusic() {

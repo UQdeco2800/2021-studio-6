@@ -31,16 +31,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
-    System.out.println(numKeysPressed);
 
     if (keycode == Keys.D) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT);
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
     } else if (keycode == Keys.A) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT);
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
     } else if (keycode == Keys.W) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.UP);
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
     } else if (keycode == Keys.S) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN);
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
     }
 
     switch (keycode) {

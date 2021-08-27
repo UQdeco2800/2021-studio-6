@@ -2,6 +2,7 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -144,6 +145,7 @@ public class PlayerRangeAttackComponent extends Component {
         // bullet shot and there is ammo
         if (activeBullets.size != 0 && movingAttackDir.isZero()) {
             Entity firedBullet = activeBullets.pop();
+            firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
             keepShotBullet = firedBullet;
 
             firedBullet.setPosition(playerPos);

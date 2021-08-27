@@ -33,6 +33,7 @@ public class PhysicsEngine implements Disposable {
   private final AllHitCallback allHitCallback = new AllHitCallback();
   private float accumulator;
   private List<Entity> toDispose = new ArrayList<>();
+  private List<Entity> toReuse = new ArrayList<>();
 
   public PhysicsEngine() {
     this(new World(GRAVITY, true), ServiceLocator.getTimeSource());
@@ -58,6 +59,10 @@ public class PhysicsEngine implements Disposable {
     while (accumulator >= PHYSICS_TIMESTEP) {
       world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
+    }
+
+    if (!toReuse.isEmpty()) {
+
     }
 
     if (!toDispose.isEmpty()) {

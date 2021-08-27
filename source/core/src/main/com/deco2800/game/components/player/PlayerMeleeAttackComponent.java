@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
@@ -59,16 +60,6 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     /**
-     * Listens and detects if NPC has died (health = 0) to allow entity of NPC to register
-     * for disposing outside of physics step
-     *
-     * @param entity which will be register or queued to be disposed of
-     */
-    private void registerDisposing(Entity entity) {
-        entity.toBeDisposed();
-    }
-
-    /**
      * When player and enemy no longer in contact, reset variable closeToAttack. Only resets closeToAttack
      * variable - there is a bug where player can click melee button before colliding with enemy and upon
      * collision, enemy receives damage immediately
@@ -109,7 +100,7 @@ public class PlayerMeleeAttackComponent extends Component {
             // freezes enemy - will need to be replaced to despawn enemy entity
             if (targetStats.isDead()) {
                 logger.info("An entity will be disposed of");
-                registerDisposing(targetStats.getEntity());
+                target.getComponent(DisposingComponent.class).toBeDisposed();
             }
 
             this.meleeAttackClicked = false;

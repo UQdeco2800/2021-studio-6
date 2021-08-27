@@ -7,6 +7,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class BulletCollisionComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(BulletCollisionComponent.class);
     short targetLayer = PhysicsLayer.NPC;
-    short ignoreLayer = PhysicsLayer.PLAYER;
+    short playerLayer = PhysicsLayer.PLAYER;
     short obstacleLayer = PhysicsLayer.OBSTACLE;
     private final Vector2 ORIGIN = new Vector2(0,0);
     private boolean launchStatus = false;
@@ -53,28 +54,31 @@ public class BulletCollisionComponent extends Component {
 
     public void bulletHit(Fixture me, Fixture other) {
 
-        // Try to detect enemy.
+        // Get data of current bullet for checking
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        if (PhysicsLayer.contains(ignoreLayer, target.getComponent(ColliderComponent.class).getLayer())) {
-            System.out.println("PLAYER'S STUFF");
+//        System.out.println("Target layer " +  target.getComponent(ColliderComponent.class).getLayer());
 
-            // bullet collide with obstacles
-        } else if (PhysicsLayer.contains(obstacleLayer, target.getComponent(ColliderComponent.class).getLayer())) {
-            System.out.println("COLLIDE WITH SOMETHING NOT NPC");
+        if (this.launchStatus) {
+            if (PhysicsLayer.contains(playerLayer, other.getFilterData().categoryBits)) {
+                return;
+
+                // bullet collide with obstacles
+            } else if (PhysicsLayer.contains(obstacleLayer, other.getFilterData().categoryBits)) {
+                System.out.println("COLLIDE WITH SOMETHING NOT NPC");
+                this.entity.setPosition(ORIGIN);
+                this.entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
+                PlayerRangeAttackComponent.restockBulletShot(this.entity);
+
+                // bullet collides with NPC
+            } else if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
+                System.out.println("COLLIDE WITH NPC");
+                System.out.println("Bullet collided");
 //            this.entity.setPosition(ORIGIN);
 //            this.entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
 //            PlayerRangeAttackComponent.restockBulletShot(this.entity);
+            }
 
-            // bullet collides with NPC
-        } else if (PhysicsLayer.contains(targetLayer, target.getComponent(ColliderComponent.class).getLayer())) {
-            System.out.println("COLLIDE WITH NPC");
-            System.out.println("Bullet collided");
-//            this.entity.setPosition(ORIGIN);
-//            this.entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
-//            PlayerRangeAttackComponent.restockBulletShot(this.entity);
-        }
-
-        // Try to detect enemy.
+            // Try to detect enemy.
 //        CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
 //        if (targetStats != null) {
 //            System.out.println("COLLIDE WITH NPC");
@@ -83,5 +87,6 @@ public class BulletCollisionComponent extends Component {
 //            keepShotBullet.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
 //            activeBullets.add(keepShotBullet);
 //        }
+        }
     }
 }

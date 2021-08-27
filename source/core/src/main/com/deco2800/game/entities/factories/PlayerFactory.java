@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
@@ -33,7 +34,7 @@ public class PlayerFactory {
             ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     Entity player = new Entity()
-            .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
+                    .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new PlayerMeleeAttackComponent())
@@ -43,7 +44,8 @@ public class PlayerFactory {
                     .addComponent(new InventoryComponent(stats.gold))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
-                    .addComponent(new PlayerRangeAttackComponent());
+                    .addComponent(new PlayerRangeAttackComponent())
+                    .addComponent(new DisposingComponent());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

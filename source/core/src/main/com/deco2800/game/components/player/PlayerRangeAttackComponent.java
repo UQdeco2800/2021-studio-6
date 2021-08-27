@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 public class PlayerRangeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackComponent.class);
     private static Array<Entity> activeBullets;
-    public static Entity keepShotBullet;
     final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
@@ -144,9 +143,9 @@ public class PlayerRangeAttackComponent extends Component {
 
         // bullet shot and there is ammo
         if (activeBullets.size != 0 && movingAttackDir.isZero()) {
-            Entity firedBullet = activeBullets.pop();
+            Entity firedBullet = activeBullets.get(0);
+            activeBullets.removeIndex(0);
             firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
-            keepShotBullet = firedBullet;
 
             firedBullet.setPosition(playerPos);
             firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);

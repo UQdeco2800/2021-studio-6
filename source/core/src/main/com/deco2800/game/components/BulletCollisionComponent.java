@@ -21,6 +21,7 @@ public class BulletCollisionComponent extends Component {
     short ignoreLayer = PhysicsLayer.PLAYER;
     short obstacleLayer = PhysicsLayer.OBSTACLE;
     private final Vector2 ORIGIN = new Vector2(0,0);
+    private boolean launchStatus = false;
 
     public BulletCollisionComponent() {
     }
@@ -32,6 +33,22 @@ public class BulletCollisionComponent extends Component {
 
     @Override
     public void update() {
+    }
+
+    /**
+     * Sets current launch status of bullet. False being bullets not fired yet by user
+     */
+    public void setBulletLaunchStatus(boolean launched) {
+        this.launchStatus = launched;
+    }
+
+    /**
+     * Gives current launch status of bullet Used later on to check if collisions are detected in
+     * game before launching bullets
+     * @return the launch status of bullets
+     */
+    public boolean getBulletLaunchStatus() {
+        return this.launchStatus;
     }
 
     public void bulletHit(Fixture me, Fixture other) {

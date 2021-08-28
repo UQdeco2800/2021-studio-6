@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
-
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.GameTime;
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
@@ -16,6 +17,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   // method requirement for player to execute long range attack
   private final Vector2 RANGE_ATTACK = Vector2.Zero.cpy();
   private IntSet downKeys = new IntSet(20);
+  // Timing for dashing
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
+  private final int DELAY_LENGTH = 2000;
+  private final int DASH_LENGTH = 400;
+  private long waitEndTime;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -58,6 +64,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
+        return true;
+      case Keys.SHIFT_LEFT:
+        if (timeSource.getTime() >= waitEndTime) { // Check if player is allowed to dash again
+          waitEndTime = timeSource.getTime() + DELAY_LENGTH; // Start timer for delay between dashes
+          entity.getEvents().trigger("dash", DASH_LENGTH);
+        }
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");

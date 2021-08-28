@@ -15,6 +15,9 @@ public class PlayerActions extends Component {
   // Speed Modification
   private Vector2 MaxSpeed; // Metres per second
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
+  // Dashing
+  private final Vector2 dashSpeed = new Vector2(45f, 45f);
+  private boolean dashing = false;
 
   private PhysicsComponent physicsComponent;
   private PlayerMeleeAttackComponent playerMeleeAttackComponent;
@@ -37,6 +40,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("updateWound", this::speedModification);
+    entity.getEvents().addListener("dash", this::dash);
   }
 
   @Override
@@ -49,7 +53,13 @@ public class PlayerActions extends Component {
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 desiredVelocity = walkDirection.cpy().scl(MaxSpeed);
+    Vector2 desiredVelocity;
+    if (dashing) {
+      desiredVelocity = walkDirection.cpy().scl(dashSpeed);
+      dashing = false;
+    } else {
+      desiredVelocity = walkDirection.cpy().scl(MaxSpeed);
+    }
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
@@ -62,6 +72,13 @@ public class PlayerActions extends Component {
    */
   void speedModification(int woundState) {
     MaxSpeed = new Vector2(woundSpeeds[woundState], woundSpeeds[woundState]);
+  }
+
+  /**
+   * Sets the player to dashing so their next move is
+   */
+  void dash(int length) {
+      this.dashing = true;
   }
 
   /**

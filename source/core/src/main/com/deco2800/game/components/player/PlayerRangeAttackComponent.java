@@ -40,6 +40,10 @@ public class PlayerRangeAttackComponent extends Component {
         activeBullets.add(bulletShot);
     }
 
+    public static Array<Entity> getActiveBullets() {
+        return activeBullets;
+    }
+
     /**
      * Used to load after spawning in game area for firing in game
      *
@@ -132,23 +136,26 @@ public class PlayerRangeAttackComponent extends Component {
 
         registerDirection(movingAttackDir);
 
-        // player has not moved before, use default direction attack (to the right)
-        if (longAttackDir.isZero()) {
-            bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
-            bulletTargetPos.y = playerPos.y;
-        } else {
-        // player has moved before, last button clicked to move as direction
-            bulletTargetPos = scaleVector(playerPos);
-        }
+        // check if there is ammo
+        if (activeBullets.size != 0) {
+            // player has not moved before, use default direction attack (to the right)
+            if (longAttackDir.isZero()) {
+                bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
+                bulletTargetPos.y = playerPos.y;
+            } else {
+                // player has moved before, last button clicked to move as direction
+                bulletTargetPos = scaleVector(playerPos);
+            }
 
-        // bullet shot and there is ammo
-        if (activeBullets.size != 0 && movingAttackDir.isZero()) {
-            Entity firedBullet = activeBullets.get(0);
-            activeBullets.removeIndex(0);
-            firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
+            // bullet shot
+            if (movingAttackDir.isZero()) {
+                Entity firedBullet = activeBullets.get(0);
+                activeBullets.removeIndex(0);
+                firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
 
-            firedBullet.setPosition(playerPos);
-            firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+                firedBullet.setPosition(playerPos);
+                firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+            }
         }
     }
 

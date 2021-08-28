@@ -3,6 +3,7 @@ package com.deco2800.game.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -68,8 +69,12 @@ public class PhysicsEngine implements Disposable {
       for (Entity entity : toReuse) {
         entity.setPosition(ORIGIN);
         entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
+
+        entity.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(false);
+        entity.getComponent(BulletCollisionComponent.class).setBulletCollisionStatus(false);
         PlayerRangeAttackComponent.restockBulletShot(entity);
       }
+      System.out.println("BULLETS AFTER RESTOCKING : size is ENGINE " + PlayerRangeAttackComponent.getActiveBullets().size);
       toReuse.clear();
     }
 

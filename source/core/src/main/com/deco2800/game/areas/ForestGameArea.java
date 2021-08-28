@@ -125,6 +125,9 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
+  /**
+   * Spawns multiple large enemies randomly within the game area
+   */
   private void spawnLargeEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

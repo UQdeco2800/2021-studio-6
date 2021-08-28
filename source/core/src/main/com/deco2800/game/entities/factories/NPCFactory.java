@@ -52,12 +52,18 @@ public class NPCFactory {
     //Movement speed of large enemy
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
+    Vector2 hitBox = new Vector2(2,2);
+
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(new TextureRenderComponent("images/large_enemy_pix.png"))
             .addComponent(new PhysicsMovementComponent(speed));
 
+    //Increase the size of the enemy
     largeEnemy.setScale(2,2);
+
+    //Change size of hit box
+    largeEnemy.getComponent(ColliderComponent.class).setAsBox(hitBox);
 
     return largeEnemy;
   }

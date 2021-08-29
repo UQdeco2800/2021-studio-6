@@ -13,8 +13,9 @@ public class SafehouseGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(SafehouseGameArea.class);
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
 
-    private static final String[] safehouseTexture = {
-            "images/safehouse/interior-day1-v1.0.png"
+    private static final String[] safehouseTextures = {
+            "images/safehouse/interior-day1-v1.0.png",
+            "images/player_placeholders/BACK.png"
     };
 
     private Entity player;
@@ -40,6 +41,7 @@ public class SafehouseGameArea extends GameArea {
     private void loadAssets() {
         logger.debug("Loading assets: Safehouse");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(safehouseTextures);
     }
 
     private void displayUI() {

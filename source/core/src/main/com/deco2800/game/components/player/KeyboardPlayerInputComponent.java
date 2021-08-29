@@ -55,14 +55,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         return true;
       case Keys.SPACE:
-        entity.getEvents().trigger("attack");
+        // If game is paused then player cannot attack
+        if (!isPaused) {
+          entity.getEvents().trigger("attack");
+        }
         return true;
       case Input.Buttons.LEFT:
         System.out.println("mouse clicked");
-
-      // Pressing the escape key will set time scale to 0f (pause) or 1f (resume) in the GameArea
-      // it appears to freeze all the assets, however the music and attack button is still active
-      // and the player can still attack the enemies...
+      /*
+      Pauses the game when ESC key is pressed, more like "freezes" the assets
+      if anything because the ESC key just controls the time scale in the game from
+      0f for "pause" and 1f for "resume".
+       */
       case Keys.ESCAPE:
         if (isPaused) {
           System.out.println("Resume Game - setTimeScale to 1f");
@@ -73,6 +77,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           ServiceLocator.getTimeSource().setTimeScale(0f);
           isPaused = true;
         }
+        return true;
       default:
         return false;
     }

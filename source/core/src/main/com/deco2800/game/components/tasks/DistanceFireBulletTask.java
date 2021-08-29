@@ -21,7 +21,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     private int priority;
     private final Entity target;
     private final float viewDistance;
-    private final float maxChaseDistance;
+
     private final PhysicsEngine physics;
     private final DebugRenderer debugRenderer;
     private final RaycastHit hit = new RaycastHit();
@@ -35,7 +35,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
         this.priority = priority;
         this.target = target;
         this.viewDistance = viewDistance;
-        this.maxChaseDistance = maxChaseDistance;
+
         physics = ServiceLocator.getPhysicsService().getPhysics();
         debugRenderer = ServiceLocator.getRenderService().getDebug();
     }
@@ -80,7 +80,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
 
     private int getActivePriority() {
         float dst = getDistanceToTarget();
-        if (dst > maxChaseDistance || !isTargetVisible()) {
+        if (dst > viewDistance || !isTargetVisible()) {
             return -1; // Too far, stop chasing
         }
         return priority;

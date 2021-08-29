@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
@@ -14,6 +15,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private boolean isPaused = false;  // variable for PAUSING in keyDown method
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -57,8 +59,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Input.Buttons.LEFT:
         System.out.println("mouse clicked");
+
+      // Pressing the escape key will set time scale to 0f (pause) or 1f (resume) in the GameArea
+      // it appears to freeze all the assets, however the music and attack button is still active
+      // and the player can still attack the enemies...
       case Keys.ESCAPE:
-        System.out.println("ESCAPE!");
+        if (isPaused) {
+          System.out.println("Resume Game - setTimeScale to 1f");
+          ServiceLocator.getTimeSource().setTimeScale(1f);
+          isPaused = false;
+        } else {
+          System.out.println("Pause Game - setTimeScale to 0f");
+          ServiceLocator.getTimeSource().setTimeScale(0f);
+          isPaused = true;
+        }
       default:
         return false;
     }

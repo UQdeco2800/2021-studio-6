@@ -66,28 +66,6 @@ public class PlayerRangeAttackComponent extends Component {
     }
 
     /**
-     * Sets user's current facing direction when executing range attack
-     *
-     * @param directionCheck are vectors that will be checked to register which direction is currently facing
-     *                       for range attack
-     */
-    private void registerDirection(Vector2 directionCheck) {
-
-        if (directionCheck.epsilonEquals(Vector2Utils.RIGHT)) {
-            longAttackDir = Vector2Utils.RIGHT;
-
-        } else if (directionCheck.epsilonEquals(Vector2Utils.LEFT)) {
-            longAttackDir = Vector2Utils.LEFT;;
-
-        } else if (directionCheck.epsilonEquals(Vector2Utils.UP)) {
-            longAttackDir = Vector2Utils.UP;
-
-        } else if (directionCheck.epsilonEquals(Vector2Utils.DOWN)) {
-            longAttackDir = Vector2Utils.DOWN;
-        }
-    }
-
-    /**
      * Returns Vector2 coordinates that will be used for target coordinates for bullets. These vectors
      * are then scaled to reach the end of the game screen relative to player's position.
      *
@@ -134,7 +112,10 @@ public class PlayerRangeAttackComponent extends Component {
         Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
 
-        registerDirection(movingAttackDir);
+        // when player attacks, (0,0) vector is sent over, only directional information is important now
+        if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
+            longAttackDir = movingAttackDir.cpy();
+        }
 
         // check if there is ammo
         if (activeBullets.size != 0) {

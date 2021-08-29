@@ -71,7 +71,6 @@ public class BulletCollisionComponent extends Component {
 
         // collision can occur twice for 1 bullet and ensure that bullet has not been launched yet
         if (this.launchStatus && !this.collideStatus) {
-            System.out.println("Bullet entity : " + entity);
             if (PhysicsLayer.contains(playerLayer, other.getFilterData().categoryBits)) {
                 logger.debug("Bullet may have collided with player's layer");
                 // bullet collide with obstacles

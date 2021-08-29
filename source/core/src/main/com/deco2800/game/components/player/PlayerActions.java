@@ -16,7 +16,8 @@ public class PlayerActions extends Component {
   private Vector2 MaxSpeed; // Metres per second
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
   // Dashing
-  private final Vector2 dashSpeed = new Vector2(45f, 45f);
+  private final float dashSpeed = 90f;
+  private float diagonalDashSpeed;
   private boolean dashing = false;
 
   private PhysicsComponent physicsComponent;
@@ -30,6 +31,7 @@ public class PlayerActions extends Component {
    */
   public PlayerActions (int woundState) {
     MaxSpeed = new Vector2((float) woundState, (float) woundState);
+    diagonalDashSpeed = dashSpeed/2; // ensuring dash is equal for diagonal and regular directions
   }
 
   @Override
@@ -55,7 +57,13 @@ public class PlayerActions extends Component {
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
     if (dashing) {
-      desiredVelocity = walkDirection.cpy().scl(dashSpeed);
+      if (walkDirection.cpy().x == 0f) { // Making dash length equal for all axis'
+        desiredVelocity = walkDirection.cpy().scl(0f, dashSpeed);
+      } else if (walkDirection.cpy().y == 0f) {
+        desiredVelocity = walkDirection.cpy().scl(dashSpeed, 0f);
+      } else {
+        desiredVelocity = walkDirection.cpy().scl(diagonalDashSpeed, diagonalDashSpeed);
+      }
       dashing = false;
     } else {
       desiredVelocity = walkDirection.cpy().scl(MaxSpeed);

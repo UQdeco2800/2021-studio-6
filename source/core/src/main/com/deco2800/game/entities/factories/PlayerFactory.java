@@ -1,7 +1,10 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
@@ -12,6 +15,7 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -33,6 +37,18 @@ public class PlayerFactory {
     InputComponent inputComponent =
             ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
+    /*
+    //Uncomment when the player animation files are finished and replace the source
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+    animator.addAnimation("movingLeft", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("movingRight", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("movingDown", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("movingUp", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("standing", 0.1f, Animation.PlayMode.LOOP);
+    */
+
     Entity player = new Entity()
                     .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
@@ -46,7 +62,10 @@ public class PlayerFactory {
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
                     .addComponent(new PlayerRangeAttackComponent())
-                    .addComponent(new DisposingComponent());
+                    .addComponent(new DisposingComponent())
+                    //.addComponent(animator)
+                    //Uncomment when adding animations back in
+                    .addComponent(new PlayerAnimationController());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

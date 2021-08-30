@@ -1,5 +1,3 @@
-
-
 package com.deco2800.game.components;
 
 import org.slf4j.Logger;

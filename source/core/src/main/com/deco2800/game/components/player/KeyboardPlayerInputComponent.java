@@ -50,18 +50,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     switch (keycode) {
       case Keys.W:
+        this.getEntity().getEvents().trigger("moveUp");
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
         return true;
       case Keys.A:
+        this.getEntity().getEvents().trigger("moveLeft");
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
         return true;
       case Keys.S:
+        this.getEntity().getEvents().trigger("moveDown");
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
         return true;
       case Keys.D:
+        this.getEntity().getEvents().trigger("moveRight");
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
@@ -93,6 +97,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyUp(int keycode) {
     downKeys.remove(keycode);
+    this.getEntity().getEvents().trigger("still");
     switch (keycode) {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);

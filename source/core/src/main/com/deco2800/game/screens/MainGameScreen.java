@@ -141,8 +141,4 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.getEntityService().register(ui);
   }
-
-  public Logger getLogger() {
-    return logger;
-  }
 }

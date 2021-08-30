@@ -32,6 +32,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private PlayerCombatStatsComponent playerCombatStats;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
+    private Vector2 direction;
     short targetLayer = PhysicsLayer.NPC;
 
     public PlayerMeleeAttackComponent() {
@@ -40,10 +41,26 @@ public class PlayerMeleeAttackComponent extends Component {
 
     @Override
     public void create() {
-        if (fixtureDef.shape == null) {
+
+        // event listeners to check if enemy is within range of melee attack or not
+        entity.getEvents().addListener("collisionStart", this::onEnemyClose);
+        entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
+        entity.getEvents().addListener("attack", this::Attack);
+        entity.getEvents().addListener("walk", this::Walk);
+
+        playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
+
+    }
+
+
+    private void Attack() {
+
+        dispose();
+        if (fixtureDef.shape == null ) {
             logger.trace("{} Setting default bounding box", this);
             fixtureDef.shape = makeBoundingBox();
         }
+        this.meleeAttackClicked = true;
 
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         fixture = physBody.createFixture(fixtureDef);
@@ -51,13 +68,22 @@ public class PlayerMeleeAttackComponent extends Component {
         // if sensor is false, NPC will not be able to collide with player's fixture
         setSensor(true);
 
-        // event listeners to check if enemy is within range of melee attack or not
-        entity.getEvents().addListener("collisionStart", this::onEnemyClose);
-        entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
 
-
-        playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
     }
+
+
+
+    private void Walk(Vector2 walkDirection) {
+        dispose();
+        direction = walkDirection;
+        System.out.println(direction);
+
+
+    }
+
+
+
+
 
     /**
      * When player and enemy no longer in contact, reset variable closeToAttack. Only resets closeToAttack
@@ -79,6 +105,8 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
+        System.out.println("impact");
+
 
         // By default, should only try detect NPC layers only
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
@@ -96,6 +124,9 @@ public class PlayerMeleeAttackComponent extends Component {
         // enemy within range and player clicked melee attack button
         if (closeToAttack && meleeAttackClicked && targetStats != null) {
             targetStats.hit(playerCombatStats);
+            System.out.println("Enemy Hit");
+            System.out.println(me);
+
 
             // freezes enemy - will need to be replaced to despawn enemy entity
             if (targetStats.isDead()) {
@@ -225,6 +256,7 @@ public class PlayerMeleeAttackComponent extends Component {
         return fixture.getFilterData().categoryBits;
     }
 
+
     @Override
     public void dispose() {
         super.dispose();
@@ -243,7 +275,22 @@ public class PlayerMeleeAttackComponent extends Component {
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         // width and height enlarge - this is the range of melee attack for player
-        bbox.setAsBox(center.x * 2, center.y * 2, center, 0f);
+        System.out.println("works");
+        //if (direction  == new Vector2(1,0)) {
+            System.out.println("works");
+            bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.69), 0f);
+
+        //}
+
         return bbox;
     }
+
+
+
+
+
+
+
+
+
 }

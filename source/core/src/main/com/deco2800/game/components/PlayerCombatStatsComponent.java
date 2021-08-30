@@ -241,7 +241,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     /**
      * Sets the invincibility check to momentarily prevent player damage
      *
-     * @length parameter for how long to set inivisibility for (in milliseconds)
+     * @param length parameter for how long to set inivisibility for (in milliseconds)
      */
     public void invincibleStart(int length) {
         invincibleActive = true;

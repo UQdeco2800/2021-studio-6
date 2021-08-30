@@ -27,6 +27,9 @@ public class PlayerActions extends Component {
 
   /**
    * Basic constructor for setting the initial player speed based on saved wound state
+   *
+   * @param woundState is the current wound state of player which affects the movement speed of player
+   *                   in game world
    */
   public PlayerActions (int woundState) {
     MaxSpeed = new Vector2((float) woundState, (float) woundState);

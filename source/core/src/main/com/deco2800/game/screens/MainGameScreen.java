@@ -151,7 +151,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   public void changeLevel() {
     this.gameArea.dispose();
-    //this.gameArea = new Level2(terrainFactory);
+    this.gameArea = new Level2(terrainFactory);
     this.gameArea.create();
   }
 }

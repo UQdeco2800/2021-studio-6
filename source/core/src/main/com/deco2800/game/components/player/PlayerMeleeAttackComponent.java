@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -12,6 +13,7 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
+import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,11 +34,12 @@ public class PlayerMeleeAttackComponent extends Component {
     private PlayerCombatStatsComponent playerCombatStats;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
-    private Vector2 direction;
+    private Vector2 directionMove;
     short targetLayer = PhysicsLayer.NPC;
 
     public PlayerMeleeAttackComponent() {
         fixtureDef = new FixtureDef();
+
     }
 
     @Override
@@ -54,30 +57,37 @@ public class PlayerMeleeAttackComponent extends Component {
 
 
     private void Attack() {
-
+        System.out.println(getDirection());
         dispose();
-        if (fixtureDef.shape == null ) {
+
+        if (fixtureDef.shape == null) {
             logger.trace("{} Setting default bounding box", this);
             fixtureDef.shape = makeBoundingBox();
         }
-        this.meleeAttackClicked = true;
 
+        this.meleeAttackClicked = true;
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         fixture = physBody.createFixture(fixtureDef);
 
         // if sensor is false, NPC will not be able to collide with player's fixture
         setSensor(true);
 
-
     }
 
 
 
     private void Walk(Vector2 walkDirection) {
-        dispose();
-        direction = walkDirection;
-        System.out.println(direction);
+        setDirection(walkDirection);
+        System.out.println(getDirection());
+    }
 
+    private Vector2 getDirection() {
+        return directionMove;
+    }
+
+    private void setDirection(Vector2 direction) {
+        System.out.println("changed");
+        this.directionMove = direction;
 
     }
 
@@ -105,8 +115,6 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
-        System.out.println("impact");
-
 
         // By default, should only try detect NPC layers only
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
@@ -264,6 +272,8 @@ public class PlayerMeleeAttackComponent extends Component {
         if (physBody.getFixtureList().contains(fixture, true)) {
             physBody.destroyFixture(fixture);
         }
+
+        fixtureDef.shape = null;
     }
 
     /**
@@ -272,15 +282,22 @@ public class PlayerMeleeAttackComponent extends Component {
      * @return enlarge fixture and places it on the center of the entity
      */
     private Shape makeBoundingBox() {
+        //System.out.println(directionMove);
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         // width and height enlarge - this is the range of melee attack for player
-        System.out.println("works");
-        //if (direction  == new Vector2(1,0)) {
-            System.out.println("works");
-            bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.69), 0f);
 
+
+
+        //if (direction == Vector2Utils.UP){
+            System.out.println("UP");
+            bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.7), 0f);
+            //bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.7), 0f);
+            //bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
+            //bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
         //}
+
+
 
         return bbox;
     }

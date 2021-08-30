@@ -3,6 +3,11 @@ package com.deco2800.game.components.player;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
+/**
+ * This class listens to events relevant to a player's state and plays the animation when one
+ * of the events is triggered. Currently not implemented as the animations do
+ * not yet exist. Can be expanded later on to include other animation events.
+ */
 public class PlayerAnimationController extends Component {
   AnimationRenderComponent animator;
 

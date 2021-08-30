@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
-public class ForestGameArea extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+public class Level2 extends GameArea {
+  private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
@@ -53,7 +53,7 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
 
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public Level2(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
   }
@@ -71,7 +71,7 @@ public class ForestGameArea extends GameArea {
     spawnGhosts();
     spawnGhostKing();
     spawnSafehouse();
-    spawnCobWeb();
+    spawnCobweb();
     spawnBush();
     playMusic();
   }
@@ -168,14 +168,14 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
 
-  private void spawnCobWeb() {
+  private void spawnCobweb() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_COBWEBS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cobWeb = ObstacleFactory.createCobWeb();
-      spawnEntityAt(cobWeb, randomPos, true, false);
+      Entity cobweb = ObstacleFactory.createCobweb();
+      spawnEntityAt(cobweb, randomPos, true, false);
     }
   }
   private void playMusic() {

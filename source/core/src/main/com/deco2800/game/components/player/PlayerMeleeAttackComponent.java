@@ -74,8 +74,6 @@ public class PlayerMeleeAttackComponent extends Component {
 
     }
 
-
-
     private void Walk(Vector2 walkDirection) {
         setDirection(walkDirection);
         System.out.println(getDirection());
@@ -87,7 +85,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
     private void setDirection(Vector2 direction) {
         System.out.println("changed");
-        this.directionMove = direction;
+        this.directionMove = direction.cpy();
 
     }
 
@@ -282,20 +280,33 @@ public class PlayerMeleeAttackComponent extends Component {
      * @return enlarge fixture and places it on the center of the entity
      */
     private Shape makeBoundingBox() {
-        //System.out.println(directionMove);
+
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         // width and height enlarge - this is the range of melee attack for player
+        System.out.println("Saved"+ directionMove);
+        System.out.println("Current" + Vector2Utils.UP);
 
 
-
-        //if (direction == Vector2Utils.UP){
+        if (directionMove.epsilonEquals(Vector2Utils.UP)){
             System.out.println("UP");
             bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.7), 0f);
-            //bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.7), 0f);
-            //bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
-            //bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
-        //}
+        }
+
+        else if (directionMove.epsilonEquals(Vector2Utils.DOWN)){
+            System.out.println("UP");
+            bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.7), 0f);
+        }
+
+        else if (directionMove.epsilonEquals(Vector2Utils.LEFT)){
+            System.out.println("UP");
+            bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
+        }
+
+        else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)){
+            System.out.println("UP");
+            bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float) 0.7 , 0), 0f);
+        }
 
 
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
@@ -54,6 +55,7 @@ public class PlayerMeleeAttackComponent extends Component {
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
 
+
         playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
     }
 
@@ -97,7 +99,8 @@ public class PlayerMeleeAttackComponent extends Component {
 
             // freezes enemy - will need to be replaced to despawn enemy entity
             if (targetStats.isDead()) {
-                target.setEnabled(false);
+                logger.info("An entity will be disposed of");
+                target.getComponent(DisposingComponent.class).toBeDisposed();
             }
 
             this.meleeAttackClicked = false;
@@ -110,9 +113,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * @param clicked is the melee button clicked by player
     * */
     public void meleeAttackClicked(boolean clicked) {
-
         if (closeToAttack) {
-            System.out.println("melee attack clicked true");
             this.meleeAttackClicked = clicked;
         }
     }

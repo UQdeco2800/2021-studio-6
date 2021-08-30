@@ -1,16 +1,7 @@
 {
-  "ghost": {
-    "health": 40,
-    "baseAttack": 10
-  },
-  "ghostKing": {
-    "health": 100,
-    "baseAttack": 25,
-    "spookyFactor": 7
-  }
   "largeEnemy": {
 	"health": 200,
-	"baseAttack": 50,
+	"baseAttack": 2,
 	"speed_x": 1,
 	"speed_y": 1
   }

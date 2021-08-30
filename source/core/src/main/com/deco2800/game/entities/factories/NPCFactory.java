@@ -54,10 +54,20 @@ public class NPCFactory {
 
     Vector2 hitBox = new Vector2(2,2);
 
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/largeEnemy.atlas", TextureAtlas.class));
+
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            .addComponent(new TextureRenderComponent("images/large_enemy_pix.png"))
-            .addComponent(new PhysicsMovementComponent(speed));
+            .addComponent(animator)
+            .addComponent(new PhysicsMovementComponent(speed))
+            .addComponent(new GhostAnimationController());
+
+    //largeEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     //Increase the size of the enemy
     largeEnemy.setScale(2,2);

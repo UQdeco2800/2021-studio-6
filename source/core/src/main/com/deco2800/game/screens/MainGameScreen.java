@@ -73,10 +73,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    forestGameArea.create();
-
-    this.gameArea = forestGameArea;
+    this.gameArea = new ForestGameArea(terrainFactory);
+    this.gameArea.create();
   }
 
   @Override
@@ -151,7 +149,9 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().register(ui);
   }
 
-  public void disposeLevel() {
+  public void changeLevel() {
     this.gameArea.dispose();
+    this.gameArea = new Level2(terrainFactory);
+    this.gameArea.create();
   }
 }

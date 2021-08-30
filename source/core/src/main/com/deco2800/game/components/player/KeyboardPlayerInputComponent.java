@@ -19,8 +19,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private IntSet downKeys = new IntSet(20);
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private final int DELAY_LENGTH = 2000;
-  private final int DASH_LENGTH = 400;
+  private final int DELAY_LENGTH = 2000; // in milliseconds
+  private final int INVINCIBILITY_LENGTH = 400; // in milliseconds
   private long waitEndTime;
 
   public KeyboardPlayerInputComponent() {
@@ -68,7 +68,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.SHIFT_LEFT:
         if (timeSource.getTime() >= waitEndTime) { // Check if player is allowed to dash again
           waitEndTime = timeSource.getTime() + DELAY_LENGTH; // Start timer for delay between dashes
-          entity.getEvents().trigger("dash", DASH_LENGTH);
+          entity.getEvents().trigger("dash", INVINCIBILITY_LENGTH);
         }
         return true;
       case Keys.SPACE:

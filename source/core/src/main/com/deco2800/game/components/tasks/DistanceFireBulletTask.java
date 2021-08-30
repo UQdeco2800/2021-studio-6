@@ -12,7 +12,8 @@ import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * FireBulletTask creates a task which triggers a fire event at fixed interval
+ * DistanceFireBulletTask creates a task which triggers a fire event at fixed interval if
+ * the target is within a certain radius of the entity
  */
 public class DistanceFireBulletTask extends DefaultTask implements PriorityTask {
     private final GameTime timeSource;
@@ -28,8 +29,10 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
 
     /**
      * @param duration How long to wait for, in seconds.
+     * @param priority priority used to swtich to this task
+     * @param viewDistance radius around entity to fire
      */
-    public DistanceFireBulletTask(Entity target, float duration, int priority, float viewDistance, float maxChaseDistance) {
+    public DistanceFireBulletTask(Entity target, float duration, int priority, float viewDistance) {
         this.timeSource = ServiceLocator.getTimeSource();
         this.duration = duration;
         this.priority = priority;
@@ -59,10 +62,10 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
             endTime = timeSource.getTime() + (int)(duration * 1000);
         }
     }
+
     @Override
     public void stop() {
         super.stop();
-
     }
 
     @Override

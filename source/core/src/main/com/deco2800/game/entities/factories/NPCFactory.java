@@ -104,7 +104,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 1, 10, 5f, 5f));
+                    .addTask(new DistanceFireBulletTask(target, 1, 10, 5f));
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())

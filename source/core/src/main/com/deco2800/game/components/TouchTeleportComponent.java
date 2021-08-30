@@ -6,7 +6,6 @@ import com.deco2800.game.areas.SafehouseGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
-import com.deco2800.game.screens.MainGameScreen;
 
 /**
  * When this entity touches a valid object's hitbox, teleport them to another level or area.
@@ -42,7 +41,6 @@ public class TouchTeleportComponent extends Component{
         }
 
         // Try to teleport entity
-
         SafehouseGameArea safehouseGameArea = new SafehouseGameArea();
         safehouseGameArea.create();
     }

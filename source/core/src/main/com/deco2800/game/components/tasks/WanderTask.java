@@ -64,6 +64,11 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     }
     currentTask.update();
   }
+  @Override
+  public void stop() {
+    super.stop();
+    movementTask.stop();
+  }
 
   private void startWaiting() {
     logger.debug("Starting waiting");

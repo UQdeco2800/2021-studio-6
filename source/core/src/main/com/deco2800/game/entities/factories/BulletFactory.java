@@ -27,18 +27,18 @@ public class BulletFactory {
      */
     public static Entity createBullet(Entity source, Entity target, GameArea gameArea) {
 
-
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;
         float x2 = target.getPosition().x;
         float y2 = target.getPosition().y;
 
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
+
         newTarget = newTarget.scl(100);
         newTarget = newTarget.add(source.getPosition());
 
         float rotation = (MathUtils.radiansToDegrees * MathUtils.atan2(newTarget.y - y1, newTarget.x - x1));
-//        float rotation = 0;
+
         Entity bullet = new Entity()
                 .addComponent(new TextureRenderComponent("images/blood_ball.png", rotation))
                 .addComponent(new PhysicsComponent())

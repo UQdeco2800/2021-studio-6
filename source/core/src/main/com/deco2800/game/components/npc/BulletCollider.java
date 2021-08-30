@@ -59,7 +59,6 @@ public class BulletCollider extends Component {
 
         if (target == this.target) {
             gameArea.despawnEntity(entity);
-//            System.out.println("hit player");
         }
 
     }

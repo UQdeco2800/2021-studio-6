@@ -20,8 +20,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private int stateMax;
     private int defenceLevel;
     private final int woundMax = 3;
+    // Modifiers
     private final int[] stateGates = new int[] {0, 5, 4, 3};
     private final double[] attackModifiers = new double[] {0, 0.6, 0.9, 1};
+    // Regeneration timer
     private Timer regenTimer;
     private boolean regenActive = false;
     private boolean invincibleActive = false;
@@ -32,6 +34,11 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setHealth(health); // overrides the parents setting of health
         setBaseRangedAttack(baseRangedAttack);
         setDefenceLevel(defenceLevel);
+    }
+
+    @Override
+    public void create() {
+        entity.getEvents().addListener("dash", this::invincibleStart); // setting invincibility during dash
     }
 
     /**
@@ -209,7 +216,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
-            invincibleStart();
+            invincibleStart(500);
         }
     }
 
@@ -233,8 +240,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
 
     /**
      * Sets the invincibility check to momentarily prevent player damage
+     *
+     * @length parameter for how long to set inivisibility for (in milliseconds)
      */
-    public void invincibleStart() {
+    public void invincibleStart(int length) {
         invincibleActive = true;
         Timer invincibleTimer = new Timer(true);
         invincibleTimer.schedule(new TimerTask() {
@@ -242,7 +251,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 invincibleActive = false;
                 cancel();
             }
-        }, 500 );
+        }, length);
     }
 
 }

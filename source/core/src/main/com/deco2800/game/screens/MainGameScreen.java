@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.Level2;
+import com.deco2800.game.areas.Level3;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
@@ -151,6 +153,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   public void changeLevel() {
     this.gameArea.dispose();
+    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
     this.gameArea = new Level2(terrainFactory);
     this.gameArea.create();
   }

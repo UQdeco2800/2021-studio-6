@@ -1,11 +1,14 @@
 package com.deco2800.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
-import com.deco2800.game.areas.SafehouseGameArea;
+import com.deco2800.game.areas.Level2;
+import com.deco2800.game.areas.Level3;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
@@ -42,8 +45,13 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private GameArea gameArea;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
+
+    // Sets background to light yellow
+    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -67,11 +75,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    forestGameArea.create();
-
-    //SafehouseGameArea safehouseGameArea = new SafehouseGameArea();
-    //safehouseGameArea.create();
+    this.gameArea = new ForestGameArea(terrainFactory);
+    this.gameArea.create();
   }
 
   @Override
@@ -146,7 +151,10 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().register(ui);
   }
 
-  public Logger getLogger() {
-    return logger;
+  public void changeLevel() {
+    this.gameArea.dispose();
+    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    this.gameArea = new Level2(terrainFactory);
+    this.gameArea.create();
   }
 }

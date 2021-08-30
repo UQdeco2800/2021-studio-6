@@ -179,7 +179,9 @@ public class AnimationRenderComponent extends RenderComponent {
 
   @Override
   public void dispose() {
-    atlas.dispose();
+    // THIS DELETES ALL ANIMATION INSTANCE REGARDLESS OF WHICH ANIMATION COMPONENT WAS ASSIGNED TO. If one enemy dies
+    // all animation will be removed - based on structure of code
+//    atlas.dispose();
     super.dispose();
   }
 }

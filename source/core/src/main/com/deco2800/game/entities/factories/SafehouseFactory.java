@@ -20,7 +20,7 @@ public class SafehouseFactory {
      */
     public static Entity createSafehouse() {
         Entity safehouse = new Entity()
-                .addComponent(new TextureRenderComponent("images/safehouse/exterior-day1-v1.1.png"))
+                .addComponent(new TextureRenderComponent("images/safehouse/exterior-day1-latest.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.SAFEHOUSE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SAFEHOUSE))

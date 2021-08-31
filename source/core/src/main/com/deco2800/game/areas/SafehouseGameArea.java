@@ -23,7 +23,10 @@ public class SafehouseGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final String[] safehouseTextures = {
-            "images/safehouse/"
+            "images/safehouse/exterior-day1-latest.png",
+            "images/safehouse/interior-day1-tile-ground1-latest.png",
+            "images/player_placeholders/BACK.png",
+            "images/Player_Sprite/front.png"
     };
 
     private final TerrainFactory terrainFactory;
@@ -38,7 +41,8 @@ public class SafehouseGameArea extends GameArea {
     public void create() {
         loadAssets();
         displayUI();
-        player = spawnPlayer();
+        spawnTerrain();
+        player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     }
 
     private void displayUI() {
@@ -49,7 +53,7 @@ public class SafehouseGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+        terrain = terrainFactory.createTerrain(TerrainType.SAFEHOUSE);
         spawnEntity(new Entity().addComponent(terrain));
     }
 

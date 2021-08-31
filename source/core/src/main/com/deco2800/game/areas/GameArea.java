@@ -57,14 +57,12 @@ public abstract class GameArea implements Disposable {
       Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
-
     if (centerX) {
       worldPos.x += (tileSize / 2) - entity.getCenterPosition().x;
     }
     if (centerY) {
       worldPos.y += (tileSize / 2) - entity.getCenterPosition().y;
     }
-
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }

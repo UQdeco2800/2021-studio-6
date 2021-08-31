@@ -60,14 +60,13 @@ public class NPCFactory {
 
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(new GhostAnimationController());
-
-    //largeEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     //Increase the size of the enemy
     largeEnemy.setScale(2,2);

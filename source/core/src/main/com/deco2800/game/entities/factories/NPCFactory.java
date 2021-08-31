@@ -83,13 +83,11 @@ public class NPCFactory {
     //Movement speed of large enemy
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
-//    Vector2 hitBox = new Vector2(2,2);
-
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/largeEnemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))

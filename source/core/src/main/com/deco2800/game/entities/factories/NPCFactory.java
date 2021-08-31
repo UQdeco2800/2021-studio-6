@@ -49,12 +49,19 @@ public class NPCFactory {
     BaseEntityConfig config = configs.smallEnemy;
     Vector2 speed = new Vector2(config.speed, config.speed);
 
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/small_enemy.atlas", TextureAtlas.class));
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+
     smallEnemy
+            .addComponent(new GhostAnimationController())
             .addComponent(new PhysicsMovementComponent(speed))
-            .addComponent(new TextureRenderComponent("images/small_enemy.png"))
+            .addComponent(animator)
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
-    smallEnemy.getComponent(TextureRenderComponent.class).scaleEntity();
+    smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     return smallEnemy;
   }

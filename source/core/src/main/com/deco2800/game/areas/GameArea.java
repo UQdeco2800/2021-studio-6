@@ -19,6 +19,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  public Entity player;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -67,6 +68,4 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
-
-  public abstract Entity spawnSafehouse();
 }

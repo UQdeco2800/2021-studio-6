@@ -13,7 +13,7 @@ import com.deco2800.game.services.GameTime;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  public final Vector2 walkDirection = Vector2.Zero.cpy();
   // method requirement for player to execute long range attack
   private final Vector2 RANGE_ATTACK = Vector2.Zero.cpy();
   private IntSet downKeys = new IntSet(20);
@@ -113,6 +113,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       default:
         return false;
     }
+
   }
 
   private void triggerWalkEvent() {

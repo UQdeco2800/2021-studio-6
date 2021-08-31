@@ -42,7 +42,7 @@ public class TouchTeleportComponent extends Component {
         }
 
         // Try to teleport entity
-        entity.getEvents().trigger("changeLevel");
+        MainGameScreen.changeLevel();
         System.out.println("Touched Safehouse");
     }
 }

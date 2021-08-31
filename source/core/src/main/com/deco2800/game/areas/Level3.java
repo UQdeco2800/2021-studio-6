@@ -28,7 +28,7 @@ public class Level3 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-          "images/player_placeholders/BACK.png",
+          "images/Player_Sprite/front.png", "images/player_placeholders/PROJECTILE.png",
           "images/tree.png",
           "images/ghost_king.png",
           "images/ghost_1.png",
@@ -51,8 +51,6 @@ public class Level3 extends GameArea {
 
   private final TerrainFactory terrainFactory;
 
-  private Entity player;
-
   public Level3(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
@@ -68,6 +66,7 @@ public class Level3 extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    spawnSafehouse();
     spawnGhosts();
     spawnGhostKing();
     spawnCobweb();
@@ -122,13 +121,12 @@ public class Level3 extends GameArea {
     }
   }
 
-  public Entity spawnSafehouse() {
+  public void spawnSafehouse() {
     GridPoint2 center = new GridPoint2(15, 15);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
     spawnEntityAt(safehouse, center, true, false);
-    return safehouse;
   }
 
   private Entity spawnPlayer() {

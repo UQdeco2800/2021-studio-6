@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BulletFactory;
@@ -55,8 +56,6 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
 
-  private Entity player;
-
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
@@ -72,6 +71,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    spawnSafehouse();
     spawnBullet();
     spawnGhosts();
     spawnGhostKing();
@@ -127,13 +127,12 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  public Entity spawnSafehouse() {
+  public void spawnSafehouse() {
     GridPoint2 center = new GridPoint2(15, 15);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
     spawnEntityAt(safehouse, center, true, false);
-    return safehouse;
   }
 
   private Entity spawnPlayer() {
@@ -229,6 +228,7 @@ public class ForestGameArea extends GameArea {
 
   @Override
   public void dispose() {
+
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();

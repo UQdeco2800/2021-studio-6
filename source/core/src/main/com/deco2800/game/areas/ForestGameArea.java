@@ -75,7 +75,6 @@ public class ForestGameArea extends GameArea {
     spawnBullet();
     spawnGhosts();
     spawnGhostKing();
-    spawnSafehouse();
     spawnCobweb();
     spawnBush();
     playMusic();
@@ -128,12 +127,13 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnSafehouse() {
+  public Entity spawnSafehouse() {
     GridPoint2 center = new GridPoint2(15, 15);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
     spawnEntityAt(safehouse, center, true, false);
+    return safehouse;
   }
 
   private Entity spawnPlayer() {

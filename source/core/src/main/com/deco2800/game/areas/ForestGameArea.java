@@ -22,6 +22,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_LARGE_ENEMY = 2;
+  private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -41,8 +42,8 @@ public class ForestGameArea extends GameArea {
           "images/large_enemy_pix.png",
           "images/largeEnemy.png",
   };
-  private static final String[] forestTextureAtlases = {
-          "images/terrain_iso_grass.atlas", "images/largeEnemy.atlas"
+  private static final String[] forestTextureAtlases = { 
+      "images/terrain_iso_grass.atlas", "images/largeEnemy.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/small_enemy.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -68,8 +69,10 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
     spawnLargeEnemy();
+    spawnSmallEnemy();
 
-    playMusic();
+
+//    playMusic();
   }
 
   private void displayUI() {
@@ -125,10 +128,19 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  /**
-   * Spawns multiple large enemies randomly within the game area
-   */
-  private void spawnLargeEnemy() {
+  private void spawnSmallEnemy() {//this da noo 1
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_GHOSTS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+      spawnEntityAt(smallEnemy, randomPos, true, true);
+    }
+  }
+
+
+private void spawnLargeEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 

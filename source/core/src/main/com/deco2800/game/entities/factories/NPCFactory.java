@@ -41,7 +41,37 @@ public class NPCFactory {
 
 
   /**
+   * 
+   * Creates a small enemy entity.
+   *
+   * @param target entity to chase
+   * @return entity
+   */
+  public static Entity createSmallEnemy(Entity target) {
+    Entity smallEnemy = createBaseNPC(target);
+    BaseEntityConfig config = configs.smallEnemy;
+    Vector2 speed = new Vector2(config.speed, config.speed);
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/small_enemy.atlas", TextureAtlas.class));
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+
+    smallEnemy
+            .addComponent(new GhostAnimationController())
+            .addComponent(new PhysicsMovementComponent(speed))
+            .addComponent(animator)
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+    smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return smallEnemy;
+  }
+
+  /**
    * Creates an enemy with slower speed but deals more damage to the target
+   *
    * @param target entity to chase
    * @return the large enemy entity
    */
@@ -52,7 +82,7 @@ public class NPCFactory {
     //Movement speed of large enemy
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
-    Vector2 hitBox = new Vector2(2,2);
+//    Vector2 hitBox = new Vector2(2,2);
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
@@ -72,7 +102,7 @@ public class NPCFactory {
     largeEnemy.setScale(2,2);
 
     //Change size of hit box
-    largeEnemy.getComponent(ColliderComponent.class).setAsBox(hitBox);
+//    largeEnemy.getComponent(ColliderComponent.class).setAsBox(hitBox);
 
     return largeEnemy;
   }

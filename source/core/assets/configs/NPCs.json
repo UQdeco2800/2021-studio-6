@@ -4,6 +4,20 @@
 	"baseAttack": 2,
 	"speed_x": 1,
 	"speed_y": 1
+  },
+  "ghost": {
+    "health": 40,
+    "baseAttack": 10
+  },
+  "ghostKing": {
+    "health": 100,
+    "baseAttack": 25,
+    "spookyFactor": 7
+  },
+  "smallEnemy": {
+    "health": 10,
+    "baseAttack": 5,
+    "speed": 2
   }
 }
 

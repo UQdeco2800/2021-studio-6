@@ -23,22 +23,27 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_LARGE_ENEMY = 2;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_LONGRANGE = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-          "images/box_boy_leaf.png",
-          "images/tree.png",
-          "images/ghost_king.png",
-          "images/ghost_1.png",
-          "images/grass_1.png",
-          "images/grass_2.png",
-          "images/grass_3.png",
-          "images/hex_grass_1.png",
-          "images/hex_grass_2.png",
-          "images/hex_grass_3.png",
-          "images/iso_grass_1.png",
-          "images/iso_grass_2.png",
-          "images/iso_grass_3.png",
+    "images/box_boy_leaf.png",
+    "images/tree.png",
+    "images/ghost_king.png",
+    "images/ghost_1.png",
+    "images/grass_1.png",
+    "images/grass_2.png",
+    "images/grass_3.png",
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+          "images/gunman.png",
+          "images/eye.png",
+          "images/blood_ball.png",
+          "images/player.png",
           "images/large_enemy_pix.png",
           "images/largeEnemy.png",
   };
@@ -71,7 +76,7 @@ public class ForestGameArea extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
 
-
+    spawnLongRangeEnemies();
 //    playMusic();
   }
 
@@ -124,7 +129,7 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(10, 10), false, false);
     return newPlayer;
   }
 
@@ -148,6 +153,16 @@ private void spawnLargeEnemy() {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity largeEnemy = NPCFactory.createLargeEnemy(player);
       spawnEntityAt(largeEnemy, randomPos, true, true);
+    }
+  }
+
+  private void spawnLongRangeEnemies() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    for (int i = 0; i < NUM_LONGRANGE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity archer = NPCFactory.createLongRangeEnemy(player, this);
+      spawnEntityAt(archer, randomPos, true, true);
     }
   }
 

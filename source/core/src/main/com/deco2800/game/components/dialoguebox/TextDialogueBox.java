@@ -4,11 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.deco2800.game.ui.UIComponent;
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 /**
  * Text display of dialogue
@@ -16,17 +20,18 @@ import org.w3c.dom.Text;
  */
 public class TextDialogueBox extends UIComponent implements DialogueBox{
     private Dialogue dialogue;
-    private Table rootTable;
+    protected Table rootTable;
     private Label displayText;
-    private TextureAtlas textureAtlas;
+    protected TextureAtlas textureAtlas;
 
     private float width;
     private float height;
     private float padding;
 
-    private static final float DEFAULT_WIDTH = 500f;
+    private static final float DEFAULT_WIDTH = 1000f;
     private static final float DEFAULT_HEIGHT = 100f;
     private static final float DEFAULT_PADDING = 15f;
+    private static final float IMAGE_OFFSET = 250f;
 
     /**
      * Creates a new TextDialogueBox
@@ -67,24 +72,42 @@ public class TextDialogueBox extends UIComponent implements DialogueBox{
      */
     private void addActors() {
         rootTable = new Table();
+
+        //Create background
+        rootTable.setSkin(skin);
+        addBackground(rootTable);
+
+        //Add Text
         displayText = new Label(dialogue.getCurrentDialogue(), skin);
         displayText.setWrap(true);
 
-        rootTable.add(displayText).width(width - padding).pad(padding);
+        //Adjust text width if there is an image or not
+        float labelWidth = width - padding;
+        if (dialogue.getClass() == DialogueImage.class) {
+            labelWidth -= IMAGE_OFFSET;
+        }
+        rootTable.add(displayText).width(labelWidth).pad(padding);
 
-        rootTable.setSkin(skin);
+        //Add Image
+        if (dialogue.getClass() == DialogueImage.class) {
+            DialogueImage dialogueImage = (DialogueImage) dialogue;
+            Image image = new Image(textureAtlas.findRegion(dialogueImage.getCurrentImagePath()));
+            rootTable.add(image).height(250f).width(250f);
+        }
 
+        rootTable.pack();
+        stage.addActor(rootTable);
+    }
+
+    /**
+     * Adds the dialogue box background to the table
+     * @param table table
+     */
+    protected void addBackground(Table table){
         NinePatch ninePatch = textureAtlas.createPatch("dialogue-box-background");
         ninePatch.scale(0.5f,0.5f);
         NinePatchDrawable patchDrawable = new NinePatchDrawable(ninePatch);
-
-        rootTable.setBackground(patchDrawable);
-
-
-
-        rootTable.pack();
-
-        stage.addActor(rootTable);
+        table.setBackground(patchDrawable);
     }
 
     /**

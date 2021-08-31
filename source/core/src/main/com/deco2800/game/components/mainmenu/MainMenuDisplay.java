@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +110,16 @@ public class MainMenuDisplay extends UIComponent {
             logger.info("PLAUYING SOUND");
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.5f);
+
+            // disposes the sound after the sound has finished to 
+            // allow the sound playing after menu screen is disposed
+            Timer.schedule(new Timer.Task() {
+              @Override
+              public void run() {
+                buttonClickSound.dispose();
+              }
+            }, 2);
+
             entity.getEvents().trigger(eventTrigger);
           }
         });
@@ -263,7 +274,6 @@ public class MainMenuDisplay extends UIComponent {
     menuButtons.clear();
     background.clear();
     backgroundTextureAtlas.dispose();
-    buttonClickSound.dispose();
     rolloverClickSound.dispose();
     super.dispose();
   }

@@ -1,13 +1,16 @@
 package com.deco2800.game.components.mainmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.ui.UIComponent;
@@ -25,9 +28,9 @@ public class MainMenuDisplay extends UIComponent {
   private static final float MENU_TABLE_RIGHT_OFFSET = 1f / 8f;
   private static final float WIDTH_MAX_FOR_SMALL_FONT = 500;
   private static final float WIDTH_MAX_FOR_MEDIUM_FONT = 750;
-  private static final float PADDING_FOR_SMALL_FONT = 0;
-  private static final float PADDING_FOR_MEDIUM_FONT = 15;
-  private static final float PADDING_FOR_LARGE_FONT = 25;
+  private static final float PADDING_FOR_SMALL_FONT = 10;
+  private static final float PADDING_FOR_MEDIUM_FONT = 30;
+  private static final float PADDING_FOR_LARGE_FONT = 50;
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
@@ -37,6 +40,9 @@ public class MainMenuDisplay extends UIComponent {
   private TextureAtlas backgroundTextureAtlas;
   private Animation<TextureRegion> backgroundAnimation;
   private float elapsedTime = 0f;
+  private Sound buttonClickSound;
+  private Sound rolloverClickSound;
+  private Boolean rolloverActivated = false;
 
   @Override
   public void create() {
@@ -50,10 +56,11 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
 
+    buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.mp3"));
+    rolloverClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rollover.mp3"));
 
     backgroundTextureAtlas = new TextureAtlas(Gdx.files.internal("images/title-screen.atlas"));
     backgroundAnimation = new Animation<>(1f/3f, backgroundTextureAtlas.getRegions());
-
     background = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
 
     TextButton startBtn = new TextButton("Start", skin, MENU_BUTTON_STYLE);
@@ -66,35 +73,15 @@ public class MainMenuDisplay extends UIComponent {
     menuButtons.add(settingsBtn);
     menuButtons.add(exitBtn);
 
-
     // Triggers an event when the button is pressed
-    startBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Start button clicked");
-            entity.getEvents().trigger("start");
-          }
-        });
+    addButtonSelectListener(startBtn, "start", "Start button clicked");
+    addButtonSelectListener(settingsBtn, "settings", "Settings button clicked");
+    addButtonSelectListener(exitBtn, "exit", "Exit button clicked");
 
-    settingsBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Settings button clicked");
-            entity.getEvents().trigger("settings");
-          }
-        });
-
-    exitBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-
-            logger.debug("Exit button clicked");
-            entity.getEvents().trigger("exit");
-          }
-        });
+    // Triggers an event when the user has triggered the button rollover
+    addButtonRolloverListener(startBtn);
+    addButtonRolloverListener(settingsBtn);
+    addButtonRolloverListener(exitBtn);
 
     table.align(Align.center);
     table.add(startBtn);
@@ -105,6 +92,52 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(background);
     stage.addActor(table);
 
+  }
+
+  /**
+   * Adds a listener to a button that triggers an event when the user selects the button
+   * @param button the button to add the select listener to
+   * @param eventTrigger the event to be triggered when button is selected
+   * @param debugCommand the command to be printed to debug when the button is selected
+   */
+  private void addButtonSelectListener(Button button, String eventTrigger, String debugCommand) {
+    button.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug(debugCommand);
+            logger.info("PLAUYING SOUND");
+            long soundClickId = buttonClickSound.play();
+            buttonClickSound.setVolume(soundClickId,0.5f);
+            entity.getEvents().trigger(eventTrigger);
+          }
+        });
+  }
+
+  /**
+   * Adds a listener to a button that triggers an event when the user activates the button rollover state
+   * @param button the button to add the rollover listener to
+   */
+  private void addButtonRolloverListener(TextButton button) {
+    ClickListener rollOverListener = new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        if (!rolloverActivated && !event.getRelatedActor().toString().contains("Label:")) {
+          rolloverActivated = true;
+          long soundRolloverId = rolloverClickSound.play();
+          rolloverClickSound.setVolume(soundRolloverId,0.5f);
+        }
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
+      {
+        if (!event.getRelatedActor().toString().contains("Label:")) {
+          rolloverActivated = false;
+        }
+      }
+    };
+
+    button.addListener(rollOverListener);
   }
 
   @Override
@@ -221,12 +254,17 @@ public class MainMenuDisplay extends UIComponent {
     return Z_INDEX;
   }
 
+  /**
+   * Disploses all the assets related to the main menu display
+   */
   @Override
   public void dispose() {
     table.clear();
     menuButtons.clear();
     background.clear();
     backgroundTextureAtlas.dispose();
+    buttonClickSound.dispose();
+    rolloverClickSound.dispose();
     super.dispose();
   }
 }

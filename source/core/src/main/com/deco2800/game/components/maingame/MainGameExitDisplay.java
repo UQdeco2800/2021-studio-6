@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -42,7 +43,21 @@ public class MainGameExitDisplay extends UIComponent {
 
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
 
+    // Window Pause test  ================================================
+    Window pause = new Window("PAUSE - Placeholder Screen", skin);
+    pause.padLeft(30f);
+    pause.add(new TextButton("Continue", skin));
+    pause.add(new TextButton("Settings", skin));
+    pause.add(new TextButton("Exit", skin));
+    pause.setSize(stage.getWidth() / 3f, stage.getHeight() / 2f);
+    pause.setMovable(false);
+
+
+    pause.setPosition(stage.getWidth() / 2 - pause.getWidth() / 2,
+            stage.getHeight() / 2 - pause.getHeight() / 2);
+
     stage.addActor(table);
+    stage.addActor(pause);
   }
 
   @Override

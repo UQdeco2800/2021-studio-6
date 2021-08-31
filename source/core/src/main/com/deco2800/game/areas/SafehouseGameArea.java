@@ -25,7 +25,8 @@ public class SafehouseGameArea extends GameArea {
     private static final String[] safehouseTextures = {
             "images/safehouse/exterior-day1-latest.png",
             "images/safehouse/interior-day1-tile-ground1-latest.png",
-            "images/player_placeholders/BACK.png"
+            "images/player_placeholders/BACK.png",
+            "images/Player_Sprite/front.png"
     };
 
     private final TerrainFactory terrainFactory;

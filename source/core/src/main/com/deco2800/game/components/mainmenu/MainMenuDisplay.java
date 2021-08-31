@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,10 @@ public class MainMenuDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
+  private static final String musicFilePath = "sounds/title-screen-music.mp3";
+  private static final String clickSoundFilePath = "sounds/click.mp3";
+  private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
+  private static final String titleScreenAtlasFilePath = "images/title-screen.atlas";
   private Table table;
   private Image background;
   private ArrayList<TextButton> menuButtons;
@@ -59,14 +64,14 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
 
-    menuSong = Gdx.audio.newMusic(Gdx.files.internal("sounds/titlescreen-music.mp3"));
-    menuSong.play();
+    menuSong = ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class);
     menuSong.setLooping(true);
+    menuSong.play();
 
-    buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.mp3"));
-    rolloverClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rollover.mp3"));
+    buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
+    rolloverClickSound = ServiceLocator.getResourceService().getAsset(rolloverSoundFilePath, Sound.class);
+    backgroundTextureAtlas = ServiceLocator.getResourceService().getAsset(titleScreenAtlasFilePath, TextureAtlas.class);
 
-    backgroundTextureAtlas = new TextureAtlas(Gdx.files.internal("images/title-screen.atlas"));
     backgroundAnimation = new Animation<>(1f/3f, backgroundTextureAtlas.getRegions());
     background = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
 
@@ -113,7 +118,6 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
-            logger.info("PLAUYING SOUND");
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.5f);
 
@@ -122,9 +126,9 @@ public class MainMenuDisplay extends UIComponent {
             Timer.schedule(new Timer.Task() {
               @Override
               public void run() {
-                buttonClickSound.dispose();
+                ServiceLocator.getResourceService().unloadAssets(new String[] {clickSoundFilePath});
               }
-            }, 2);
+            }, 0.2f);
 
             entity.getEvents().trigger(eventTrigger);
           }
@@ -277,11 +281,14 @@ public class MainMenuDisplay extends UIComponent {
   @Override
   public void dispose() {
     table.clear();
+    table.remove();
+    for (Button button : menuButtons) {
+      button.remove();
+    }
     menuButtons.clear();
     background.clear();
-    backgroundTextureAtlas.dispose();
-    rolloverClickSound.dispose();
-    menuSong.dispose();
+    background.remove();
+    ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class).stop();
     super.dispose();
   }
 }

@@ -2,6 +2,7 @@ package com.deco2800.game.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
@@ -184,6 +185,15 @@ public class PhysicsEngine implements Disposable {
   }
 
   /**
+   * Used to acquire dispose queue if required
+   *
+   * @return array of entities that will need to be disposed outside of physic time step
+   */
+  public List<Entity> getDisposeQueue() {
+    return new ArrayList<>(toDispose);
+  }
+
+  /**
    * Used to register entity that will be reused outside of physics time step
    *
    * @param entity that will be reused - this is done by relocating entity to a position in screen
@@ -191,5 +201,15 @@ public class PhysicsEngine implements Disposable {
    */
   public void addToReuseQueue(Entity entity) {
     this.toReuse.add(entity);
+  }
+
+  /**
+   * Used to acquire entities that will be reused
+   *
+   * @return array of entities that will be reused by resetting coordinates of entity to origin
+   * of game world coordinate
+   */
+  public List<Entity> getReuseQueue() {
+    return new ArrayList<>(toReuse);
   }
 }

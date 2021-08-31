@@ -1,6 +1,7 @@
 package com.deco2800.game.components.mainmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,6 +45,7 @@ public class MainMenuDisplay extends UIComponent {
   private Sound buttonClickSound;
   private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
+  private Music menuSong;
 
   @Override
   public void create() {
@@ -56,6 +58,10 @@ public class MainMenuDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
+
+    menuSong = Gdx.audio.newMusic(Gdx.files.internal("sounds/titlescreen-music.mp3"));
+    menuSong.play();
+    menuSong.setLooping(true);
 
     buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.mp3"));
     rolloverClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rollover.mp3"));
@@ -111,7 +117,7 @@ public class MainMenuDisplay extends UIComponent {
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.5f);
 
-            // disposes the sound after the sound has finished to 
+            // disposes the sound after the sound has finished to
             // allow the sound playing after menu screen is disposed
             Timer.schedule(new Timer.Task() {
               @Override
@@ -275,6 +281,7 @@ public class MainMenuDisplay extends UIComponent {
     background.clear();
     backgroundTextureAtlas.dispose();
     rolloverClickSound.dispose();
+    menuSong.dispose();
     super.dispose();
   }
 }

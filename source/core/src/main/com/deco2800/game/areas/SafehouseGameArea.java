@@ -87,4 +87,9 @@ public class SafehouseGameArea extends GameArea {
         super.dispose();
         this.unloadAssets();
     }
+
+    @Override
+    public Entity spawnSafehouse() {
+        return null;
+    }
 }

@@ -3,6 +3,10 @@ package com.deco2800.game.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.components.BulletCollisionComponent;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.raycast.AllHitCallback;
 import com.deco2800.game.physics.raycast.RaycastHit;
 import com.deco2800.game.physics.raycast.SingleHitCallback;
@@ -10,6 +14,9 @@ import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Process game physics using the Box2D library. See the Box2D documentation for examples or use
@@ -20,6 +27,7 @@ public class PhysicsEngine implements Disposable {
   private static final float MAX_UPDATE_TIME = 0.25f;
   private static final float PHYSICS_TIMESTEP = 0.016f;
   private static final Vector2 GRAVITY = new Vector2(0f, -0f);
+  private final Vector2 ORIGIN = new Vector2(0,0);
   private static final int VELOCITY_ITERATIONS = 6;
   private static final int POSITION_ITERATIONS = 2;
 
@@ -28,6 +36,8 @@ public class PhysicsEngine implements Disposable {
   private final SingleHitCallback singleHitCallback = new SingleHitCallback();
   private final AllHitCallback allHitCallback = new AllHitCallback();
   private float accumulator;
+  private List<Entity> toDispose = new ArrayList<>();
+  private List<Entity> toReuse = new ArrayList<>();
 
   public PhysicsEngine() {
     this(new World(GRAVITY, true), ServiceLocator.getTimeSource());
@@ -40,6 +50,7 @@ public class PhysicsEngine implements Disposable {
   }
 
   public void update() {
+
     // Updating physics isn't as easy as triggering an update every frame. Each frame could take a
     // different amount of time to run, but physics simulations are only stable if computed at a
     // consistent frame rate! See: https://gafferongames.com/post/fix_your_timestep/
@@ -52,6 +63,25 @@ public class PhysicsEngine implements Disposable {
     while (accumulator >= PHYSICS_TIMESTEP) {
       world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
+    }
+
+    if (!toReuse.isEmpty()) {
+      for (Entity entity : toReuse) {
+        entity.setPosition(ORIGIN);
+        entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
+
+        entity.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(false);
+        entity.getComponent(BulletCollisionComponent.class).setBulletCollisionStatus(false);
+        PlayerRangeAttackComponent.restockBulletShot(entity);
+      }
+      toReuse.clear();
+    }
+
+    if (!toDispose.isEmpty()) {
+      for (Entity entity : toDispose) {
+        entity.dispose();
+      }
+      toDispose.clear();
     }
   }
 
@@ -142,5 +172,24 @@ public class PhysicsEngine implements Disposable {
   @Override
   public void dispose() {
     world.dispose();
+  }
+
+  /**
+   * Used to register entity that will be dispose outside of physics time step
+   *
+   * @param entity that will be dispose and removed from world
+   */
+  public void addToDisposeQueue(Entity entity) {
+    this.toDispose.add(entity);
+  }
+
+  /**
+   * Used to register entity that will be reused outside of physics time step
+   *
+   * @param entity that will be reused - this is done by relocating entity to a position in screen
+   *               that cannot be seen by user
+   */
+  public void addToReuseQueue(Entity entity) {
+    this.toReuse.add(entity);
   }
 }

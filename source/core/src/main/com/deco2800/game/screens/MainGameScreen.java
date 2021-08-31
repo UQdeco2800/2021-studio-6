@@ -1,15 +1,12 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.areas.Level2;
-import com.deco2800.game.areas.SafehouseGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
@@ -48,6 +45,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   private GameArea gameArea;
   private TerrainFactory terrainFactory;
+  private Entity safehouse;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -77,8 +75,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    this.gameArea = new ForestGameArea(terrainFactory);
-    this.gameArea.create();
+    generateGameArea();
+    safehouse.getEvents().addListener("changeLevel", this::generateGameArea);
   }
 
   @Override
@@ -157,5 +155,23 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  public void generateGameArea() {
+    CurrentLevel += 0.5;
+    if (CurrentLevel == 1) {
+      this.gameArea = new ForestGameArea(terrainFactory);
+    } else {
+      this.gameArea.dispose();
+      if (CurrentLevel == 2) {
+        this.gameArea = new Level2(terrainFactory);
+      } else if (CurrentLevel == 3) {
+        this.gameArea = new Level3(terrainFactory);
+      } else {
+        this.gameArea = new SafehouseGameArea(terrainFactory);
+      }
+    }
+    this.gameArea.create();
+    this.safehouse = this.gameArea.spawnSafehouse();
   }
 }

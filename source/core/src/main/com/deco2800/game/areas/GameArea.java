@@ -65,4 +65,6 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+
+  public abstract Entity spawnSafehouse();
 }

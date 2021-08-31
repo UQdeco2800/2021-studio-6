@@ -22,6 +22,11 @@ class GameAreaTest {
         new GameArea() {
           @Override
           public void create() {}
+
+            @Override
+            public Entity spawnSafehouse() {
+                return null;
+            }
         };
 
     ServiceLocator.registerEntityService(new EntityService());

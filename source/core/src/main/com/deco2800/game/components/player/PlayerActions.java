@@ -13,7 +13,7 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class PlayerActions extends Component {
   // Speed Modification
-  private Vector2 MaxSpeed; // Metres per second
+  private Vector2 maxSpeed; // Metres per second
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
   // Dashing
   private final float dashSpeed = 90f;
@@ -25,7 +25,6 @@ public class PlayerActions extends Component {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
 
-
   /**
    * Basic constructor for setting the initial player speed based on saved wound state
    *
@@ -33,7 +32,7 @@ public class PlayerActions extends Component {
    *                   in game world
    */
   public PlayerActions (int woundState) {
-    MaxSpeed = new Vector2((float) woundState, (float) woundState);
+    setInitialSpeed(woundState);
     diagonalDashSpeed = dashSpeed/2; // ensuring dash is equal for diagonal and regular directions
   }
 
@@ -69,11 +68,26 @@ public class PlayerActions extends Component {
       }
       dashing = false;
     } else {
-      desiredVelocity = walkDirection.cpy().scl(MaxSpeed);
+      desiredVelocity = walkDirection.cpy().scl(maxSpeed);
     }
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  }
+
+  /**
+   * Set the players intial speed. Allows values from 0 to 3 inclusive, values being set to the closest valid number when outside the range (same logic as playercombatstats component)
+   *
+   * @param woundState new woundState of the player
+   */
+  private void setInitialSpeed(int woundState) {
+    if (woundState <= 3 && woundState >=  0) {
+      maxSpeed = new Vector2(woundSpeeds[woundState], woundSpeeds[woundState]);
+    } else if (woundState > 3) {
+      maxSpeed = new Vector2(woundSpeeds[3], woundSpeeds[3]);
+    } else {
+      maxSpeed = new Vector2(woundSpeeds[0], woundSpeeds[0]);
+    }
   }
 
   /**
@@ -82,7 +96,7 @@ public class PlayerActions extends Component {
    * @param woundState new woundState of the player
    */
   void speedModification(int woundState) {
-    MaxSpeed = new Vector2(woundSpeeds[woundState], woundSpeeds[woundState]);
+    maxSpeed = new Vector2(woundSpeeds[woundState], woundSpeeds[woundState]);
   }
 
   /**
@@ -118,5 +132,23 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
     playerMeleeAttackComponent.meleeAttackClicked(true);
+  }
+
+  /**
+   * Returns the whether the player is currently dashing
+   *
+   * @return whether the player is in the dashing state
+   */
+  public boolean getDashState() {
+    return dashing;
+  }
+
+  /**
+  * Returns the current max speed of the player
+  *
+  * @return the players current speed
+   */
+  public Vector2 getCurrentSpeed() {
+    return maxSpeed;
   }
 }

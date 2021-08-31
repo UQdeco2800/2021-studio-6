@@ -15,12 +15,12 @@ import com.deco2800.game.services.GameTime;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
   // method requirement for player to execute long range attack
-  private final Vector2 RANGE_ATTACK = Vector2.Zero.cpy();
+  private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private IntSet downKeys = new IntSet(20);
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private final int DELAY_LENGTH = 2000; // in milliseconds
-  private final int INVINCIBILITY_LENGTH = 400; // in milliseconds
+  private static final int DelayLength = 2000; // in milliseconds
+  private static final int InvincibilityLength = 400; // in milliseconds
   private long waitEndTime;
 
   public KeyboardPlayerInputComponent() {
@@ -71,21 +71,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.SHIFT_LEFT:
         if (timeSource.getTime() >= waitEndTime) { // Check if player is allowed to dash again
-          waitEndTime = timeSource.getTime() + DELAY_LENGTH; // Start timer for delay between dashes
-          entity.getEvents().trigger("dash", INVINCIBILITY_LENGTH);
+          waitEndTime = timeSource.getTime() + DelayLength; // Start timer for delay between dashes
+          entity.getEvents().trigger("dash", InvincibilityLength);
         }
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
         return true;
       case Keys.L:
-        entity.getEvents().trigger("rangeAttack", RANGE_ATTACK);
+        entity.getEvents().trigger("rangeAttack", RangeAttack);
         return true;
       default:
         return false;
     }
-
-
   }
 
   /**
@@ -126,5 +124,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
+  }
+
+  /**
+   * Lets you know whether the player is currently able to dash or still needs to wait
+   *
+   * @return a true or false as to whether the player can currently dash
+   */
+  public boolean canDash() {
+    return (timeSource.getTime() >= waitEndTime);
   }
 }

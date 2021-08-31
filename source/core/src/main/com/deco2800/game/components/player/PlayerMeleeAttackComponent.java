@@ -56,6 +56,9 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
 
+    /**
+     * Triggered when the player presses the attack button.
+     */
     private void Attack() {
         System.out.println(getDirection());
         dispose();
@@ -74,15 +77,31 @@ public class PlayerMeleeAttackComponent extends Component {
 
     }
 
+    /**
+     * Triggered when the player walks in a direction.
+     *
+     * @param walkDirection direction that the player walked
+     */
     private void Walk(Vector2 walkDirection) {
+        dispose();
         setDirection(walkDirection);
         System.out.println(getDirection());
     }
 
+    /**
+     * Getter for direction of player movement.
+     *
+     * @return player last walked direction
+     */
     private Vector2 getDirection() {
         return directionMove;
     }
 
+    /**
+     * Setter for direction of player movement.
+     *
+     * @param direction the direction that the player last walked in.
+     */
     private void setDirection(Vector2 direction) {
         System.out.println("changed");
         this.directionMove = direction.cpy();

@@ -39,6 +39,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
     public PlayerMeleeAttackComponent() {
         fixtureDef = new FixtureDef();
+        directionMove = new Vector2((float)0.0,(float)0.0);
 
     }
 

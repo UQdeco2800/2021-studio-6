@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.components.dialoguebox.DialogueInputComponent;
+import com.deco2800.game.components.dialoguebox.ImageDialogueBox;
 import com.deco2800.game.components.dialoguebox.TextDialogueBox;
 import com.deco2800.game.entities.Entity;
 
@@ -21,7 +22,7 @@ public class DialogueBoxFactory {
         Entity textDialogue = new Entity()
                 .addComponent(new DialogueInputComponent())
                 .addComponent(new TextDialogueBox(dialogue));
-        textDialogue.getEvents().addListener("closeDialogue", textDialogue::dispose);
+        addCloseListener(textDialogue);
         return textDialogue;
     }
 
@@ -33,5 +34,26 @@ public class DialogueBoxFactory {
     public static Entity createTextDialogue(String dialogue) {
         List<String> dialogues = Arrays.asList(dialogue.split(";"));
         return createTextDialogue(new Dialogue(dialogues));
+    }
+
+    /**
+     * Creates an image dialgoue from a Dialogue
+     * @param dialogue Dialogue object
+     * @return ImageDialogueBox entity
+     */
+    public static Entity createImageDialogue(Dialogue dialogue) {
+        Entity imageDialogue = new Entity()
+                .addComponent(new DialogueInputComponent())
+                .addComponent(new ImageDialogueBox(dialogue));
+        addCloseListener(imageDialogue);
+        return imageDialogue;
+    }
+
+    /**
+     * Adds closeDialogue listener to an entity. When received the entity disposes itself
+     * @param entity entity
+     */
+    private static void addCloseListener(Entity entity){
+        entity.getEvents().addListener("closeDialogue", entity::dispose);
     }
 }

@@ -12,7 +12,7 @@ import com.deco2800.game.ui.UIComponent;
 /**
  * Text display of dialogue
  */
-public class TextDialogueBox extends UIComponent {
+public class TextDialogueBox extends UIComponent implements DialogueBox{
     private Dialogue dialogue;
     private Table rootTable;
     private Label displayText;
@@ -65,6 +65,7 @@ public class TextDialogueBox extends UIComponent {
     /**
      * Advances dialogue and updates text display
      */
+    @Override
     public void advanceDialogue(){
         if (!dialogue.hasNext()) {
             entity.getEvents().trigger("closeDialogue");

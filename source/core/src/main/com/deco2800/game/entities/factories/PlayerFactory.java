@@ -1,10 +1,8 @@
 package com.deco2800.game.entities.factories;
 
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
-import com.deco2800.game.components.player.InventoryComponent;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
-import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
@@ -35,18 +33,21 @@ public class PlayerFactory {
     InputComponent inputComponent =
             ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
-    Entity player =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/player_placeholders/BACK.png"))
+    Entity player = new Entity()
+                    .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new PlayerMeleeAttackComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                    .addComponent(new PlayerActions())
-                    .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState, stats.baseRangedAttack, stats.defenceLevel))
+                    .addComponent(new PlayerActions(stats.woundState))
+                    .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
+                            stats.baseRangedAttack, stats.defenceLevel))
                     .addComponent(new InventoryComponent(stats.gold))
                     .addComponent(inputComponent)
-                    .addComponent(new PlayerStatsDisplay());
+                    .addComponent(new PlayerStatsDisplay())
+                    .addComponent(new PlayerRangeAttackComponent())
+                    .addComponent(new DisposingComponent());
+
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

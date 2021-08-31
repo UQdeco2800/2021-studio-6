@@ -75,7 +75,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
         // if sensor is false, NPC will not be able to collide with player's fixture
         setSensor(true);
-
+        System.out.println("FIXTURE CREATED : " + fixture);
     }
 
     /**
@@ -86,7 +86,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private void Walk(Vector2 walkDirection) {
         dispose();
         setDirection(walkDirection);
-        System.out.println(getDirection());
+        System.out.println("FIXTURE NO MORE " + fixture);
     }
 
     /**
@@ -104,13 +104,9 @@ public class PlayerMeleeAttackComponent extends Component {
      * @param direction the direction that the player last walked in.
      */
     private void setDirection(Vector2 direction) {
-        System.out.println("changed");
         this.directionMove = direction.cpy();
 
     }
-
-
-
 
 
     /**
@@ -133,6 +129,9 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
+        System.out.println("enemy coliding");
+        System.out.println(me);
+        System.out.println("different fixture : " + fixture);
 
         // By default, should only try detect NPC layers only
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
@@ -150,9 +149,6 @@ public class PlayerMeleeAttackComponent extends Component {
         // enemy within range and player clicked melee attack button
         if (closeToAttack && meleeAttackClicked && targetStats != null) {
             targetStats.hit(playerCombatStats);
-            System.out.println("Enemy Hit");
-            System.out.println(me);
-
 
             // freezes enemy - will need to be replaced to despawn enemy entity
             if (targetStats.isDead()) {
@@ -282,15 +278,29 @@ public class PlayerMeleeAttackComponent extends Component {
         return fixture.getFilterData().categoryBits;
     }
 
-
     @Override
     public void dispose() {
         super.dispose();
+        System.out.println("Destroy fixture now =====");
+        System.out.println(fixture);
+//        System.out.println(fixture.getUserData());
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+        System.out.println("SOMETHING HEREEEEE" + physBody.getFixtureList().size);
         if (physBody.getFixtureList().contains(fixture, true)) {
-            physBody.destroyFixture(fixture);
-        }
+//            System.out.println("FIXTURE BEING DESTROYEEEEEEEEEEEEED");
+//            physBody.destroyFixture(fixture);
 
+            int toDestroy = physBody.getFixtureList().indexOf(fixture, true);
+            physBody.getFixtureList().removeIndex(toDestroy);
+            System.out.println("INDEX TO DESTROY : " + toDestroy);
+            System.out.println("fixture to destroy " + toDestroy);
+//            physBody.destroyFixture(toDestroy);
+        }
+        System.out.println("SOMETHING HEREEEEE??????" + physBody.getFixtureList().size);
+
+        System.out.println("NULL HERE PLEASE");
+        System.out.println(fixture);
+//        System.out.println(fixture.getShape());
         fixtureDef.shape = null;
     }
 
@@ -314,17 +324,17 @@ public class PlayerMeleeAttackComponent extends Component {
         }
 
         else if (directionMove.epsilonEquals(Vector2Utils.DOWN)){
-            System.out.println("UP");
+            System.out.println("DOWN");
             bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.7), 0f);
         }
 
         else if (directionMove.epsilonEquals(Vector2Utils.LEFT)){
-            System.out.println("UP");
+            System.out.println("LEFT");
             bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
         }
 
         else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)){
-            System.out.println("UP");
+            System.out.println("RIGHT");
             bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float) 0.7 , 0), 0f);
         }
 

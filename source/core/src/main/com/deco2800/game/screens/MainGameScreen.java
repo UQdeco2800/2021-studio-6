@@ -37,7 +37,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private int CurrentLevel = 1;
+  private double CurrentLevel = 0.5;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
@@ -73,8 +73,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
     generateGameArea();
-    safehouse.getEvents().addListener("changeLevel", this::changeLevel);
-
+    safehouse.getEvents().addListener("changeLevel", this::generateGameArea);
   }
 
   @Override
@@ -149,13 +148,8 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().register(ui);
   }
 
-  public void changeLevel() {
-    CurrentLevel += 0.5;
-    generateGameArea();
-    System.out.println("level changed");
-  }
-
   public void generateGameArea() {
+    CurrentLevel += 0.5;
     if (CurrentLevel == 1) {
       this.gameArea = new ForestGameArea(terrainFactory);
     } else {

@@ -98,9 +98,6 @@ public class NPCFactory {
     //Increase the size of the enemy
     largeEnemy.setScale(2,2);
 
-    //Change size of hit box
-//    largeEnemy.getComponent(ColliderComponent.class).setAsBox(hitBox);
-
     return largeEnemy;
   }
 

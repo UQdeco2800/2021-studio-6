@@ -67,6 +67,7 @@ public class PlayerMeleeAttackComponent extends Component {
             dispose();
         }
         setDirection(walkDirection);
+        System.out.println(getDirection());
         System.out.println("FIXTURE NO MORE " + fixture);
     }
 
@@ -145,8 +146,10 @@ public class PlayerMeleeAttackComponent extends Component {
      * Triggered when the player presses the attack button.
      */
     private void Attack() {
-        System.out.println(getDirection());
-        dispose();
+
+        if (fixture != null) {
+            dispose();
+        }
 
         if (fixtureDef.shape == null) {
             logger.trace("{} Setting default bounding box", this);
@@ -166,13 +169,13 @@ public class PlayerMeleeAttackComponent extends Component {
     public void dispose() {
         super.dispose();
         logger.info("Destroy fixture now =====");
-        System.out.println(fixture);
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
 
             int toDestroy = physBody.getFixtureList().indexOf(fixture, true);
             physBody.getFixtureList().removeIndex(toDestroy);
         }
+        fixtureDef.shape = null;
     }
 
     /**
@@ -300,27 +303,27 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private Shape makeBoundingBox() {
 
+
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         // width and height enlarge - this is the range of melee attack for player
-
         if (directionMove.epsilonEquals(Vector2Utils.UP)){
-            System.out.println("UP");
+            //System.out.println("UP");
             bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.7), 0f);
         }
 
         else if (directionMove.epsilonEquals(Vector2Utils.DOWN)){
-            System.out.println("DOWN");
+            //System.out.println("DOWN");
             bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.7), 0f);
         }
 
         else if (directionMove.epsilonEquals(Vector2Utils.LEFT)){
-            System.out.println("LEFT");
+            //System.out.println("LEFT");
             bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
         }
 
         else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)){
-            System.out.println("RIGHT");
+            //System.out.println("RIGHT");
             bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float) 0.7 , 0), 0f);
         }
 

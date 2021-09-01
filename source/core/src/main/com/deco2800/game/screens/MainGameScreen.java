@@ -47,7 +47,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private GameArea gameArea;
-
+  private Entity ui;
   public MainGameScreen(GdxGame game) {
     this.game = game;
     // Sets background to light yellow
@@ -82,27 +82,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
-      CurrentLevel += 0.5;
-      Vector2 walkingDirection
-              = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
-      gameArea.dispose();
-      if (CurrentLevel == 2) {
-        gameArea = new Level2(terrainFactory);
-        gameArea.create();
-        gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-                .walkDirection.add(walkingDirection);
-      } else if (CurrentLevel == 3) {
-        gameArea = new Level3(terrainFactory);
-        gameArea.create();
-        gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-                .walkDirection.add(walkingDirection);
-      } else if (CurrentLevel % 1 == 0.5){
-        gameArea = new SafehouseGameArea(terrainFactory);
-        gameArea.create();
-        gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-                .walkDirection.add(walkingDirection);
-      }
-      levelChange = false;
+      generateNewLevel();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
@@ -115,11 +95,17 @@ public class MainGameScreen extends ScreenAdapter {
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
+  /**
+   * Function is called when you minimise the game program.
+   */
   @Override
   public void pause() {
     logger.info("Game paused");
   }
 
+  /**
+   * Function is called when you open the game program when it was minimised.
+   */
   @Override
   public void resume() {
     logger.info("Game resumed");
@@ -162,7 +148,7 @@ public class MainGameScreen extends ScreenAdapter {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-    Entity ui = new Entity();
+    this.ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
@@ -176,5 +162,32 @@ public class MainGameScreen extends ScreenAdapter {
 
   public static void changeLevel() {
     levelChange = true;
+  }
+
+  public void generateNewLevel() {
+    CurrentLevel += 0.5;
+    Vector2 walkingDirection
+            = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+    gameArea.dispose();
+    if (CurrentLevel == 2) {
+      gameArea = new Level2(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 3) {
+      gameArea = new Level3(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel % 1 == 0.5){
+      gameArea = new SafehouseGameArea(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 4) {
+      System.out.println("You win");
+      ui.getEvents().trigger("exit");
+    }
+    levelChange = false;
   }
 }

@@ -3,13 +3,12 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.SafehouseFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -25,6 +24,7 @@ public class Level3 extends GameArea {
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -56,7 +56,9 @@ public class Level3 extends GameArea {
     this.terrainFactory = terrainFactory;
   }
 
-  /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+  /**
+   * Create the game area, including terrain, static entities (trees), dynamic entities (player)
+   */
   @Override
   public void create() {
     loadAssets();
@@ -67,6 +69,7 @@ public class Level3 extends GameArea {
     spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
+    spawnBullet();
     spawnGhosts();
     spawnGhostKing();
     spawnCobweb();
@@ -76,7 +79,7 @@ public class Level3 extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Level 3"));
+    ui.addComponent(new GameAreaDisplay("Box Forest"));
     spawnEntity(ui);
   }
 
@@ -131,8 +134,21 @@ public class Level3 extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
+
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+
+  private void spawnBullet() {
+    Array<Entity> bullets = new Array<>();
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBullet = BulletFactory.createBullet();
+      bullets.add(newBullet);
+      spawnEntity(newBullet);
+    }
+
+    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
   private void spawnGhosts() {
@@ -143,17 +159,6 @@ public class Level3 extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity ghost = NPCFactory.createGhost(player);
       spawnEntityAt(ghost, randomPos, true, true);
-    }
-  }
-
-  private void spawnBush() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_BUSH; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity bush = ObstacleFactory.createBush();
-      spawnEntityAt(bush, randomPos, true, false);
     }
   }
 
@@ -172,14 +177,26 @@ public class Level3 extends GameArea {
 
     for (int i = 0; i < NUM_COBWEBS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cobWeb = ObstacleFactory.createCobweb();
-      spawnEntityAt(cobWeb, randomPos, true, false);
+      Entity cobweb = ObstacleFactory.createCobweb();
+      spawnEntityAt(cobweb, randomPos, true, false);
     }
   }
+
+  private void spawnBush() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_BUSH; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity bush = ObstacleFactory.createBush();
+      spawnEntityAt(bush, randomPos, true, false);
+    }
+  }
+
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(0f);
     music.play();
   }
 
@@ -208,6 +225,7 @@ public class Level3 extends GameArea {
 
   @Override
   public void dispose() {
+
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();

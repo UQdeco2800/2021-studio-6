@@ -45,7 +45,6 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private GameArea gameArea;
-  private Entity safehouse;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -81,7 +80,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
-      CurrentLevel += 1;
+      CurrentLevel += 0.5;
       Vector2 walkingDirection
               = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
       gameArea.dispose();

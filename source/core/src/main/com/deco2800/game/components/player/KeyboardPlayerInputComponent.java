@@ -96,6 +96,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     switch (keycode) {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);
+
         triggerWalkEvent();
         return true;
       case Keys.A:
@@ -108,6 +109,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
+        System.out.println(walkDirection);
         triggerWalkEvent();
         return true;
       default:

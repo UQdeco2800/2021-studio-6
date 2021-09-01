@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Timer;
 import java.util.TimerTask;
+import com.deco2800.game.GdxGame;
 
 /**
  * Component used to store information related to combat for the player such as
@@ -27,6 +28,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private Timer regenTimer;
     private boolean regenActive = false;
     private boolean invincibleActive = false;
+
+    private GdxGame game;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -217,6 +220,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 regenStart();
             }
             invincibleStart(500);
+        }
+
+        if (isDead()) {
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
         }
     }
 

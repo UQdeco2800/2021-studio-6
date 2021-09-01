@@ -1,6 +1,7 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -42,6 +43,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private Entity player;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -72,6 +75,8 @@ public class MainGameScreen extends ScreenAdapter {
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
     ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     forestGameArea.create();
+
+    player = forestGameArea.getPlayer();
   }
 
   @Override
@@ -79,6 +84,13 @@ public class MainGameScreen extends ScreenAdapter {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
+
+    if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+      game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    }
+
+    CAMERA_POSITION.set(player.getPosition());
+    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
   }
 
   @Override

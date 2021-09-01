@@ -16,9 +16,6 @@ import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -108,8 +105,8 @@ public class PlayerMeleeAttackComponent extends Component {
     /**
      * Called when collision with any fixture has occurred and sets closeToAttack
      * to be True. Event system will continuously check collision between objects in world
-     * If enemy is close and player has clicked the attack melee button, damage will be dealt to
-     * the NPC
+     * If enemy is close and player has clicked the attack melee button, player
+     * will be allowed to damage them.
      *
      * @param me is the fixture of current component
      * @param other is the other fixture which current component is in contact
@@ -132,6 +129,13 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
+    /**
+     * Function to handle actually hitting an enemy. Gets called after the melee
+     * attack has been triggered and the collision and fixtures are set.
+     *
+     * Goes through each enemy close to the player and damages them individually.
+     * Afterwards, goes through the set of killed enemies and removes them.
+     */
     private void damage() {
         for (Fixture enemy: closeEnemies) {
             Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
@@ -153,7 +157,8 @@ public class PlayerMeleeAttackComponent extends Component {
         removingEnemies.clear();
     }
     /**
-     * Triggered when the player presses the attack button.
+     * Triggered when the player presses the attack button. Handles creating
+     * the fixtures for the attack and prepping before actual the damage/hit.
      */
     private void Attack() {
         if (fixtureDef.shape == null) {

@@ -66,11 +66,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("dash");
         return true;
       case Keys.SPACE:
-        entity.getEvents().trigger("attack");
-        return true;
+        if (!this.entity.getComponent(PlayerActions.class).isDashing()) {
+          entity.getEvents().trigger("attack");
+          return true;
+        }
       case Keys.L:
-        entity.getEvents().trigger("rangeAttack", RangeAttack);
-        return true;
+        if (!this.entity.getComponent(PlayerActions.class).isDashing()) {
+          entity.getEvents().trigger("rangeAttack", RangeAttack);
+          return true;
+        }
       default:
         return false;
     }

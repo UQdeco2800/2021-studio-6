@@ -43,8 +43,8 @@ public class PlayerActions extends Component {
   public PlayerActions (int woundState) {
     setSpeed(woundState);
     diagonalDashSpeed = dashSpeed/2; // ensuring dash is equal for diagonal and regular directions
-    delayEndTime = -1;
-    dashEndTime = -1;
+    delayEndTime = 0;
+    dashEndTime = 0;
   }
 
   @Override
@@ -113,6 +113,19 @@ public class PlayerActions extends Component {
   }
 
   /**
+   * Lets you know whether the player is currently able to dash or still needs to wait
+   *
+   * @return long
+   */
+  public long getDelayTimeRemaining() {
+    if ((delayEndTime-timeSource.getTime()) > 0) {
+      return (delayEndTime-timeSource.getTime());
+    } else {
+      return 0;
+    }
+  }
+
+  /**
    * Sets the player to dashing if the current cooldown has passed
    */
   void dash() {
@@ -158,7 +171,7 @@ public class PlayerActions extends Component {
    *
    * @return whether the player is in the dashing state
    */
-  public boolean getDashState() {
+  public boolean isDashing() {
     return dashing;
   }
 

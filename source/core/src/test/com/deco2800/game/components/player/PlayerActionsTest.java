@@ -75,11 +75,11 @@ class PlayerActionsTest {
         player.create();
 
         player.getEvents().trigger("dash");
-        assertFalse(player.getComponent(PlayerActions.class).getDashState());
+        assertFalse(player.getComponent(PlayerActions.class).isDashing());
 
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
         player.getEvents().trigger("dash");
-        assertTrue(player.getComponent(PlayerActions.class).getDashState());
+        assertTrue(player.getComponent(PlayerActions.class).isDashing());
     }
 
     @Test
@@ -109,6 +109,26 @@ class PlayerActionsTest {
         // Checking delay reset
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
         assertFalse(player.getComponent(PlayerActions.class).canDash());
+    }
+
+    @Test
+    void shouldGetRemainingDelayTime() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerInputService(new InputService());
+        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
+        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(inputComponent).addComponent(new PlayerCombatStatsComponent(3, 5, 3, 5, 0));
+        player.create();
+        assertEquals(0, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
+
+        assertTrue(player.getComponent(PlayerActions.class).canDash());
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
+        assertEquals(2000, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
+
+        when(time.getTime()).thenReturn(2000L);
+        assertEquals(0, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
     }
 
     @Test

@@ -36,6 +36,17 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
+  private static final String[] shortGreen = {"images/hud/22highbar6.png"};
+  private static final String[] shortEmpty = {"images/hud/22highbar1.png"};
+  private static final String[] mediumGreen = {"images/hud/27highbar7.png"};
+  private static final String[] mediumOrange = {"images/hud/27highbar6.png"};
+  private static final String[] mediumEmpty = {"images/hud/27highbar1.png"};
+  private static final String[] longGreen = {"images/hud/32highbar8.png"};
+  private static final String[] longOrange = {"images/hud/32highbar7.png"};
+  private static final String[] longRed = {"images/hud/32highbar6.png"};
+  private static final String[] longEmpty = {"images/hud/32highbar1.png"};
+
+
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
@@ -115,6 +126,16 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainGameTextures);
+    resourceService.loadTextures(shortGreen);
+    resourceService.loadTextures(shortEmpty);
+    resourceService.loadTextures(mediumEmpty);
+    resourceService.loadTextures(mediumGreen);
+    resourceService.loadTextures(mediumOrange);
+    resourceService.loadTextures(longEmpty);
+    resourceService.loadTextures(longGreen);
+    resourceService.loadTextures(longOrange);
+    resourceService.loadTextures(longRed);
+
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -122,6 +143,15 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainGameTextures);
+    resourceService.unloadAssets(shortGreen);
+    resourceService.unloadAssets(shortEmpty);
+    resourceService.unloadAssets(mediumEmpty);
+    resourceService.unloadAssets(mediumGreen);
+    resourceService.unloadAssets(mediumOrange);
+    resourceService.unloadAssets(longEmpty);
+    resourceService.unloadAssets(longGreen);
+    resourceService.unloadAssets(longOrange);
+    resourceService.unloadAssets(longRed);
   }
 
   /**

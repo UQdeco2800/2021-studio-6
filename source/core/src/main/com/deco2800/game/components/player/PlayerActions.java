@@ -62,6 +62,7 @@ public class PlayerActions extends Component {
   public void update() {
     if (moving) {
       updateSpeed();
+      
     }
   }
 

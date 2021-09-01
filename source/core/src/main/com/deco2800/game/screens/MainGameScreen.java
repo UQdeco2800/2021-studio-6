@@ -42,10 +42,6 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
-  // ============ Temporary variables to test pause/resume methods =============
-  private boolean isPaused = false;
-  private final GameTime gameTime;
-
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -54,7 +50,6 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
-    gameTime = ServiceLocator.getTimeSource();
 
     PhysicsService physicsService = new PhysicsService();
     ServiceLocator.registerPhysicsService(physicsService);

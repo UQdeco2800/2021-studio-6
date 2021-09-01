@@ -109,7 +109,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
-        System.out.println(walkDirection);
         triggerWalkEvent();
         return true;
       default:

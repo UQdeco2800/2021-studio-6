@@ -1,6 +1,5 @@
 package com.deco2800.game.components.mainmenu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -35,12 +34,12 @@ public class MainMenuDisplay extends UIComponent {
   private static final float PADDING_FOR_MEDIUM_FONT = 30;
   private static final float PADDING_FOR_LARGE_FONT = 50;
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
-  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
-  private static final float Z_INDEX = 2f;
   private static final String musicFilePath = "sounds/title-screen-music.mp3";
   private static final String clickSoundFilePath = "sounds/click.mp3";
   private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
   private static final String titleScreenAtlasFilePath = "images/title-screen.atlas";
+  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
+  private static final float Z_INDEX = 2f;
   private Table table;
   private Image background;
   private ArrayList<TextButton> menuButtons;
@@ -59,7 +58,7 @@ public class MainMenuDisplay extends UIComponent {
   }
 
   /**
-   * Adds all the assets for the menu into the stage
+   * Adds all the assets (buttons, background, sound, music) for the menu into the stage
    */
   private void addActors() {
     table = new Table();
@@ -118,11 +117,11 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
+            System.out.println(debugCommand);
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.5f);
 
-            // disposes the sound after the sound has finished to
-            // allow the sound playing after menu screen is disposed
+            // disposes the sound after the sound has finished to allow the sound playing after menu screen is disposed
             Timer.schedule(new Timer.Task() {
               @Override
               public void run() {
@@ -276,7 +275,7 @@ public class MainMenuDisplay extends UIComponent {
   }
 
   /**
-   * Disploses all the assets related to the main menu display
+   * Disposes all the assets related to the main menu display
    */
   @Override
   public void dispose() {

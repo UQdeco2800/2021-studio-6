@@ -25,13 +25,14 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
+  private MainMenuDisplay mainMenuDisplay;
   private static final String[] mainMenuTextures = {};
   private static final String[] mainMenuSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
   private static final String[] mainMenuTransitionalSounds = {"sounds/click.mp3"};
   private static final String[] mainMenuMusic = {"sounds/title-screen-music.mp3"};
   private static final String[] mainMenuTextureAtlases = {"images/title-screen.atlas"};
-  private MainMenuDisplay mainMenuDisplay;
+
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;

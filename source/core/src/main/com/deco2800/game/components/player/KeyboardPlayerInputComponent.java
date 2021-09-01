@@ -95,7 +95,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyUp(int keycode) {
     downKeys.remove(keycode);
-    this.getEntity().getEvents().trigger("still");
+    if (downKeys.isEmpty()) {
+      this.getEntity().getEvents().trigger("still");
+    }
     switch (keycode) {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);

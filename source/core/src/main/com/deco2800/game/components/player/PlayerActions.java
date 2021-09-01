@@ -66,6 +66,7 @@ public class PlayerActions extends Component {
       } else {
         desiredVelocity = walkDirection.cpy().scl(diagonalDashSpeed, diagonalDashSpeed);
       }
+      System.out.println(desiredVelocity);
       dashing = false;
     } else {
       desiredVelocity = walkDirection.cpy().scl(maxSpeed);

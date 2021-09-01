@@ -23,23 +23,23 @@ public class PlayerAnimationController extends Component {
   }
 
   void animateStill() {
-    //animator.startAnimation("standing");
+    animator.startAnimation("idle");
   }
 
   void animateLeft() {
-    //animator.startAnimation("movingLeft");
+    animator.startAnimation("left");
   }
 
   void animateRight() {
-    //animator.startAnimation("movingRight");
+    animator.startAnimation("right");
   }
 
   void animateUp() {
-    //animator.startAnimation("movingUp");
+    animator.startAnimation("back");
   }
 
   void animateDown() {
-    //animator.startAnimation("movingDown");
+    animator.startAnimation("front");
   }
 
 }

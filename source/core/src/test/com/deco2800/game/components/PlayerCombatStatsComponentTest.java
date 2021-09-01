@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
-public class PlayerCombatStatsComponentTest {
+class PlayerCombatStatsComponentTest {
 
     @Test
     void shouldSetGetWoundState() {

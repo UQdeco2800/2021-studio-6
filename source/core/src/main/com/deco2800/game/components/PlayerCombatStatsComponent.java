@@ -17,7 +17,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private int woundState;
     private int stateMax;
     private int defenceLevel;
-    private final int woundMax = 3;
+    private static final int woundMax = 3;
     // Modifiers
     private final int[] stateGates = new int[] {0, 5, 4, 3};
     private final double[] attackModifiers = new double[] {0, 0.6, 0.9, 1};
@@ -144,6 +144,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         } else {
             this.woundState = 0;
             setStateMax(0);
+            if (this.getEntity() != null) {
+                this.getEntity().getComponent(DisposingComponent.class).toBeDisposed();
+            }
         }
         if (entity != null) {
             entity.getEvents().trigger("updateWound", this.woundState);

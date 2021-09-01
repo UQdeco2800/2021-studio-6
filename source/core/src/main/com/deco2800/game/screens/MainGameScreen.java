@@ -9,6 +9,7 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -87,7 +88,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     renderer.render();
 
-    CAMERA_POSITION.set(player.getPosition());
+    CAMERA_POSITION.set(gameArea.player.getPosition());
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
   }
 

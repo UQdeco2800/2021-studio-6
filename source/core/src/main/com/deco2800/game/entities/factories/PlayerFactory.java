@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;

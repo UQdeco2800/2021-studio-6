@@ -58,6 +58,7 @@ class PhysicsEngineTest {
     verify(world).createBody(bodyDef);
 
     engine.destroyBody(body);
+    engine.update();
     verify(world).destroyBody(body);
   }
 

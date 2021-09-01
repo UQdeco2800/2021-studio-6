@@ -1,4 +1,10 @@
 {
+ "largeEnemy": {
+	"health": 30,
+	"baseAttack": 10,
+	"speed_x": 1,
+	"speed_y": 1
+  },
   "ghost": {
     "health": 40,
     "baseAttack": 1
@@ -7,6 +13,11 @@
     "health": 100,
     "baseAttack": 2,
     "spookyFactor": 7
+  },
+  "smallEnemy": {
+    "health": 10,
+    "baseAttack": 5,
+    "speed": 2
   }
 }
 

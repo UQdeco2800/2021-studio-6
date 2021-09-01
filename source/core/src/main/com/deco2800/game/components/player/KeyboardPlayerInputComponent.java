@@ -5,25 +5,23 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.services.GameTime;
+import java.util.ArrayList;
+
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   public final Vector2 walkDirection = Vector2.Zero.cpy();
+  // Method requirement for player to execute long range attack
+  private final Vector2 RangeAttack = Vector2.Zero.cpy();
+  private final IntSet downKeys = new IntSet(20);
+  private final ArrayList<Integer> movementKeys = new ArrayList<>();
   private boolean isPaused = false;  // variable for PAUSING in keyDown method
-  // method requirement for player to execute long range attack
-  private final Vector2 RANGE_ATTACK = Vector2.Zero.cpy();
-  private IntSet downKeys = new IntSet(20);
-  // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private final int DELAY_LENGTH = 2000; // in milliseconds
-  private final int INVINCIBILITY_LENGTH = 400; // in milliseconds
-  private long waitEndTime;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -53,58 +51,60 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
 
     switch (keycode) {
-        case Keys.W:
-          walkDirection.add(Vector2Utils.UP);
-          triggerWalkEvent();
-          return true;
-        case Keys.A:
-          walkDirection.add(Vector2Utils.LEFT);
-          triggerWalkEvent();
-          return true;
-        case Keys.S:
-          walkDirection.add(Vector2Utils.DOWN);
-          triggerWalkEvent();
-          return true;
-        case Keys.D:
-          walkDirection.add(Vector2Utils.RIGHT);
-          triggerWalkEvent();
-          return true;
-        case Keys.SHIFT_LEFT:
-          if (!isPaused) {
-            if (timeSource.getTime() >= waitEndTime) { // Check if player is allowed to dash again
-              waitEndTime = timeSource.getTime() + DELAY_LENGTH; // Start timer for delay between dashes
-              entity.getEvents().trigger("dash", INVINCIBILITY_LENGTH);
-            }
-          }
-          return true;
-        case Keys.SPACE:
-          // If game is paused then player cannot attack
-          if (!isPaused) {
-            entity.getEvents().trigger("attack");
-          }
-          return true;
-        case Keys.L:
-          if (!isPaused) {
-            entity.getEvents().trigger("rangeAttack", RANGE_ATTACK);
-          }
-          return true;
-//      case Input.Buttons.LEFT:
-//        System.out.println("mouse clicked");
+      case Keys.W:
+        movementKeys.add(keycode);
+        walkDirection.add(Vector2Utils.UP);
+        triggerWalkEvent();
+        animationHandle();
+        return true;
+      case Keys.A:
+        movementKeys.add(keycode);
+        walkDirection.add(Vector2Utils.LEFT);
+        triggerWalkEvent();
+        animationHandle();
+        return true;
+      case Keys.S:
+        movementKeys.add(keycode);
+        walkDirection.add(Vector2Utils.DOWN);
+        triggerWalkEvent();
+        animationHandle();
+        return true;
+      case Keys.D:
+        movementKeys.add(keycode);
+        walkDirection.add(Vector2Utils.RIGHT);
+        triggerWalkEvent();
+        animationHandle();
+        return true;
+      case Keys.SHIFT_LEFT:
+        if (!isPaused) {
+          entity.getEvents().trigger("dash");
+        }
+        return true;
+      case Keys.SPACE:
+        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+          entity.getEvents().trigger("attack");
+        }
+        return true;
+      case Keys.ENTER:
+        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+          entity.getEvents().trigger("rangeAttack", RangeAttack);
+        }
+        return true;
       /*
       Pauses the game when ESC key is pressed, more like "freezes" the assets
       if anything because the ESC key just controls the time scale in the game from
       0f for "pause" and 1f for "resume".
        */
-        case Keys.ESCAPE:
-          if (isPaused) {
-            timeSource.setTimeScale(1f);
-            isPaused = false;
-          } else {
-            timeSource.setTimeScale(0f);
-            isPaused = true;
-          }
-          return true;
-        default:
+      case Keys.ESCAPE:
+        if (isPaused) {
+          timeSource.setTimeScale(1f);
+          isPaused = false;
+        } else {
+          timeSource.setTimeScale(0f);
+          isPaused = true;
+        }
+        return true;
+      default:
         return false;
     }
   }
@@ -120,26 +120,66 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.remove(keycode);
     switch (keycode) {
       case Keys.W:
+        removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.UP);
 
         triggerWalkEvent();
+        animationHandle();
         return true;
       case Keys.A:
+        removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
+        animationHandle();
         return true;
       case Keys.S:
+        removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
+        animationHandle();
         return true;
       case Keys.D:
+        removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
+        animationHandle();
         return true;
       default:
         return false;
     }
 
+  }
+
+  /**
+   * Function to handle trigger the required player animation. Gets called after
+   * each change to player movement i.e. keydown or keyup.
+   */
+  private void animationHandle() {
+    if (movementKeys.size() > 0) {
+      switch (movementKeys.get(movementKeys.size() - 1)) {
+        case Keys.W:
+          this.getEntity().getEvents().trigger("moveUp");
+          break;
+        case Keys.A:
+          this.getEntity().getEvents().trigger("moveLeft");
+          break;
+        case Keys.S:
+          this.getEntity().getEvents().trigger("moveDown");
+          break;
+        case Keys.D:
+          this.getEntity().getEvents().trigger("moveRight");
+          break;
+      }
+    }
+  }
+
+  /**
+   * Removes the necessary movement key from the list of current keys
+   *
+   * @param keycode the keycode to remove from movementKeys
+   */
+  private void removeMovementKey(int keycode) {
+    movementKeys.removeIf(movementKey -> movementKey == keycode);
   }
 
   private void triggerWalkEvent() {

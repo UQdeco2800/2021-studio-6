@@ -56,35 +56,16 @@ public class PlayerMeleeAttackComponent extends Component {
 
     }
 
-
-    /**
-     * Triggered when the player presses the attack button.
-     */
-    private void Attack() {
-        System.out.println(getDirection());
-        dispose();
-
-        if (fixtureDef.shape == null) {
-            logger.trace("{} Setting default bounding box", this);
-            fixtureDef.shape = makeBoundingBox();
-        }
-
-        this.meleeAttackClicked = true;
-        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-        fixture = physBody.createFixture(fixtureDef);
-
-        // if sensor is false, NPC will not be able to collide with player's fixture
-        setSensor(true);
-        System.out.println("FIXTURE CREATED : " + fixture);
-    }
-
     /**
      * Triggered when the player walks in a direction.
      *
      * @param walkDirection direction that the player walked
      */
     private void Walk(Vector2 walkDirection) {
-        dispose();
+
+        if (fixture != null) {
+            dispose();
+        }
         setDirection(walkDirection);
         System.out.println("FIXTURE NO MORE " + fixture);
     }
@@ -129,7 +110,7 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
-        System.out.println("enemy coliding");
+        logger.info("ENEMY COLLIDING");
         System.out.println(me);
         System.out.println("different fixture : " + fixture);
 
@@ -157,6 +138,40 @@ public class PlayerMeleeAttackComponent extends Component {
             }
 
             this.meleeAttackClicked = false;
+        }
+    }
+
+    /**
+     * Triggered when the player presses the attack button.
+     */
+    private void Attack() {
+        System.out.println(getDirection());
+        dispose();
+
+        if (fixtureDef.shape == null) {
+            logger.trace("{} Setting default bounding box", this);
+            fixtureDef.shape = makeBoundingBox();
+        }
+
+        this.meleeAttackClicked = true;
+        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+        fixture = physBody.createFixture(fixtureDef);
+
+        // if sensor is false, NPC will not be able to collide with player's fixture
+        setSensor(true);
+        System.out.println("FIXTURE CREATED : " + fixture);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        logger.info("Destroy fixture now =====");
+        System.out.println(fixture);
+        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+        if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
+
+            int toDestroy = physBody.getFixtureList().indexOf(fixture, true);
+            physBody.getFixtureList().removeIndex(toDestroy);
         }
     }
 
@@ -278,32 +293,6 @@ public class PlayerMeleeAttackComponent extends Component {
         return fixture.getFilterData().categoryBits;
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        System.out.println("Destroy fixture now =====");
-        System.out.println(fixture);
-//        System.out.println(fixture.getUserData());
-        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-        System.out.println("SOMETHING HEREEEEE" + physBody.getFixtureList().size);
-        if (physBody.getFixtureList().contains(fixture, true)) {
-//            System.out.println("FIXTURE BEING DESTROYEEEEEEEEEEEEED");
-//            physBody.destroyFixture(fixture);
-
-            int toDestroy = physBody.getFixtureList().indexOf(fixture, true);
-            physBody.getFixtureList().removeIndex(toDestroy);
-            System.out.println("INDEX TO DESTROY : " + toDestroy);
-            System.out.println("fixture to destroy " + toDestroy);
-//            physBody.destroyFixture(toDestroy);
-        }
-        System.out.println("SOMETHING HEREEEEE??????" + physBody.getFixtureList().size);
-
-        System.out.println("NULL HERE PLEASE");
-        System.out.println(fixture);
-//        System.out.println(fixture.getShape());
-        fixtureDef.shape = null;
-    }
-
     /**
      * Enlarge shape of fixture based on fixture size of entity
      *
@@ -314,9 +303,6 @@ public class PlayerMeleeAttackComponent extends Component {
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         // width and height enlarge - this is the range of melee attack for player
-        System.out.println("Saved"+ directionMove);
-        System.out.println("Current" + Vector2Utils.UP);
-
 
         if (directionMove.epsilonEquals(Vector2Utils.UP)){
             System.out.println("UP");

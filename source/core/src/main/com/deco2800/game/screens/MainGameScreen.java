@@ -90,12 +90,12 @@ public class MainGameScreen extends ScreenAdapter {
         gameArea.create();
         gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
                 .walkDirection.add(walkingDirection);
-      } else if (CurrentLevel == 3) {
+      } /*else if (CurrentLevel == 3) {
         gameArea = new Level3(terrainFactory);
         gameArea.create();
         gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
                 .walkDirection.add(walkingDirection);
-      } else if (CurrentLevel % 1 == 0.5){
+      } */ else if (CurrentLevel == 3){ //CurrentLevel % 1 == 0.5
         gameArea = new SafehouseGameArea(terrainFactory);
         gameArea.create();
         gameArea.player.getComponent(KeyboardPlayerInputComponent.class)

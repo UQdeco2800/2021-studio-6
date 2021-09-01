@@ -31,8 +31,6 @@ public class SafehouseGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
 
-    private Entity player;
-
     public SafehouseGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;

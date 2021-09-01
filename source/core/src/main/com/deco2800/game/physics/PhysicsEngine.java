@@ -28,7 +28,7 @@ public class PhysicsEngine implements Disposable {
   private static final float MAX_UPDATE_TIME = 0.25f;
   private static final float PHYSICS_TIMESTEP = 0.016f;
   private static final Vector2 GRAVITY = new Vector2(0f, -0f);
-  private final Vector2 ORIGIN = new Vector2(0,0);
+  private final Vector2 ORIGIN = new Vector2(-10,-10);
   private static final int VELOCITY_ITERATIONS = 6;
   private static final int POSITION_ITERATIONS = 2;
 
@@ -192,6 +192,15 @@ public class PhysicsEngine implements Disposable {
   }
 
   /**
+   * Used to acquire dispose queue if required
+   *
+   * @return array of entities that will need to be disposed outside of physic time step
+   */
+  public List<Entity> getDisposeQueue() {
+    return new ArrayList<>(toDispose);
+  }
+
+  /**
    * Used to register entity that will be reused outside of physics time step
    *
    * @param entity that will be reused - this is done by relocating entity to a position in screen
@@ -199,5 +208,15 @@ public class PhysicsEngine implements Disposable {
    */
   public void addToReuseQueue(Entity entity) {
     this.toReuse.add(entity);
+  }
+
+  /**
+   * Used to acquire entities that will be reused
+   *
+   * @return array of entities that will be reused by resetting coordinates of entity to origin
+   * of game world coordinate
+   */
+  public List<Entity> getReuseQueue() {
+    return new ArrayList<>(toReuse);
   }
 }

@@ -43,7 +43,7 @@ public class Level3 extends GameArea {
           "images/iso_grass_3.png", "images/safehouse/exterior-day1-latest.png"
   };
   private static final String[] forestTextureAtlases = {
-          "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+          "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -77,9 +77,14 @@ public class Level3 extends GameArea {
     playMusic();
   }
 
+  public Entity getPlayer() {
+    return player;
+  }
+
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Box Forest"));
+    // Can change level name here
+    ui.addComponent(new GameAreaDisplay("Level 3"));
     spawnEntity(ui);
   }
 

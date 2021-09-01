@@ -78,4 +78,10 @@ class PhysicsEngineTest {
     engine.dispose();
     verify(world).dispose();
   }
+
+  @Test
+  void disposeQueueShouldBeEmpty() {
+    PhysicsEngine engine = new PhysicsEngine(world, gameTime);
+
+  }
 }

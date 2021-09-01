@@ -1,5 +1,3 @@
-
-
 package com.deco2800.game.components;
 
 import org.slf4j.Logger;
@@ -19,7 +17,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private int woundState;
     private int stateMax;
     private int defenceLevel;
-    private final int woundMax = 3;
+    private static final int woundMax = 3;
     // Modifiers
     private final int[] stateGates = new int[] {0, 5, 4, 3};
     private final double[] attackModifiers = new double[] {0, 0.6, 0.9, 1};
@@ -27,6 +25,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private Timer regenTimer;
     private boolean regenActive = false;
     private boolean invincibleActive = false;
+    private final int regenCooldown = 5000;
+    private final int invincibilityCooldown = 500;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -34,11 +34,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setHealth(health); // overrides the parents setting of health
         setBaseRangedAttack(baseRangedAttack);
         setDefenceLevel(defenceLevel);
-    }
-
-    @Override
-    public void create() {
-        entity.getEvents().addListener("dash", this::invincibleStart); // setting invincibility during dash
     }
 
     /**
@@ -146,6 +141,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         } else {
             this.woundState = 0;
             setStateMax(0);
+            if (this.getEntity() != null) {
+                this.getEntity().getComponent(DisposingComponent.class).toBeDisposed();
+            }
         }
         if (entity != null) {
             entity.getEvents().trigger("updateWound", this.woundState);
@@ -216,7 +214,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
-            invincibleStart(500);
+            invincibleStart(invincibilityCooldown);
         }
     }
 
@@ -235,7 +233,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                     cancel();
                 }
             }
-        }, 5000, 5000);
+        }, regenCooldown, regenCooldown);
     }
 
     /**

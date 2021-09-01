@@ -35,6 +35,8 @@ public class BulletFactory {
                 .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                         stats.baseRangedAttack, stats.defenceLevel));
 
+        // hide bullet out of game screen
+        bullet.setPosition(-10,-10);
         bullet.getComponent(TextureRenderComponent.class).scaleEntity();
         return bullet;
     }

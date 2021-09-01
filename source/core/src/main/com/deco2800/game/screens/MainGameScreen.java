@@ -10,6 +10,7 @@ import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -39,18 +40,16 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double CurrentLevel = 0.5;
+  private double CurrentLevel = 1;
+  public static boolean levelChange = false;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private final TerrainFactory orthogonalTerrainFactory;
-  private final TerrainFactory isometricTerrainFactory;
+  private final TerrainFactory terrainFactory;
   private GameArea gameArea;
-  private Entity safehouse;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
-
     // Sets background to light yellow
     Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
 
@@ -75,23 +74,36 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-    this.orthogonalTerrainFactory = new TerrainFactory(
-            renderer.getCamera()
-    );
-    this.isometricTerrainFactory = new TerrainFactory(
-            renderer.getCamera(),
-            TerrainComponent.TerrainOrientation.ISOMETRIC
-    );
-    generateGameArea();
-    safehouse.getEvents().addListener("changeLevel", this::generateGameArea);
+    this.terrainFactory = new TerrainFactory(renderer.getCamera());
+    gameArea = new ForestGameArea(terrainFactory);
+    gameArea.create();
   }
 
   @Override
   public void render(float delta) {
-    if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-      generateGameArea();
+    if (levelChange) {
+      CurrentLevel += 0.5;
+      Vector2 walkingDirection
+              = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+      gameArea.dispose();
+      if (CurrentLevel == 2) {
+        gameArea = new Level2(terrainFactory);
+        gameArea.create();
+        gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+                .walkDirection.add(walkingDirection);
+      } else if (CurrentLevel == 3) {
+        gameArea = new Level3(terrainFactory);
+        gameArea.create();
+        gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+                .walkDirection.add(walkingDirection);
+      } else if (CurrentLevel % 1 == 0.5){
+        gameArea = new SafehouseGameArea(terrainFactory);
+        gameArea.create();
+        gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+                .walkDirection.add(walkingDirection);
+      }
+      levelChange = false;
     }
-
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
@@ -162,21 +174,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().register(ui);
   }
 
-  public void generateGameArea() {
-    CurrentLevel += 0.5;
-    if (CurrentLevel == 1) {
-      this.gameArea = new ForestGameArea(orthogonalTerrainFactory);
-    } else {
-      this.gameArea.dispose();
-      if (CurrentLevel == 2) {
-        this.gameArea = new Level2(orthogonalTerrainFactory);
-      } else if (CurrentLevel == 3) {
-        this.gameArea = new Level3(orthogonalTerrainFactory);
-      } else {
-        this.gameArea = new SafehouseGameArea(orthogonalTerrainFactory);
-      }
-    }
-    this.gameArea.create();
-    this.safehouse = this.gameArea.spawnSafehouse();
+  public static void changeLevel() {
+    levelChange = true;
   }
 }

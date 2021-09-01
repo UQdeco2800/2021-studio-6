@@ -93,11 +93,17 @@ public class MainGameScreen extends ScreenAdapter {
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
+  /**
+   * Function is called when you minimise the game program.
+   */
   @Override
   public void pause() {
     logger.info("Game paused");
   }
 
+  /**
+   * Function is called when you open the game program when it was minimised.
+   */
   @Override
   public void resume() {
     logger.info("Game resumed");

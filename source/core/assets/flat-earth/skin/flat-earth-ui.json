@@ -24,9 +24,9 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	color: {
-		r: 0.3372549
-		g: 0.8
-		b: 0.44705883
+		r: 0.6588235294,
+		g: 0.6,
+		b: 0.4901960784,
 		a: 1
 	}
 	gray: {
@@ -36,15 +36,15 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	highlight: {
-		r: 0.42156863
-		g: 1
-		b: 0.5552286
+		r: 0.8588235294
+		g: 0.7764705882
+		b: 0.6274509804
 		a: 1
 	}
 	pressed: {
-		r: 0.2529412
-		g: 0.6
-		b: 0.33313715
+		r: 0.4901960784,
+		g: 0.4431372549,
+		b: 0.3490196078,
 		a: 1
 	}
 	selection: {
@@ -52,6 +52,12 @@ com.badlogic.gdx.graphics.Color: {
 		g: 0.59607846
 		b: 0.85882354
 		a: 1
+	}
+	transparent: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0
 	}
 	white: {
 		r: 1
@@ -94,6 +100,18 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	list-c: {
 		name: list
 		color: color
+	}
+	menu-button-c: {
+		name: button,
+		color: transparent
+	}
+	menu-button-h: {
+		name: button,
+		color: transparent
+	}
+	menu-button-p: {
+		name: button,
+		color: transparent
 	}
 	radio-pressed-c: {
 		name: radio-pressed
@@ -325,6 +343,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font
 		fontColor: black
 	}
+	white: {
+		font: font
+		fontColor: white
+	}
 	button: {
 		font: button
 		fontColor: color
@@ -427,7 +449,34 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: button-p
 		over: button-h
 	}
-}
+	"menu-button-large": {
+		font: title,
+		fontColor: white,
+		downFontColor: white,
+		overFontColor: gray
+		up: menu-button-c
+		down: menu-button-p
+		over: menu-button-h
+	}
+	"menu-button-medium": {
+		font: font_large,
+		fontColor: white,
+		downFontColor: white,
+		overFontColor: gray
+		up: menu-button-c
+		down: menu-button-p
+		over: menu-button-h
+	}
+	"menu-button-small": {
+		font: font_small,
+		fontColor: white,
+		downFontColor: white,
+		overFontColor: gray
+		up: menu-button-c
+		down: menu-button-p
+		over: menu-button-h
+	}
+},
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: font

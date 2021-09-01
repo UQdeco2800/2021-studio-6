@@ -192,6 +192,7 @@ public class PlayerMeleeAttackComponent extends Component {
         } else {
             fixture.setSensor(isSensor);
         }
+
         return this;
     }
 

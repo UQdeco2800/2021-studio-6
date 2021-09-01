@@ -25,8 +25,14 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/background-menu-screen.png"};
   private MainMenuDisplay mainMenuDisplay;
+  private static final String[] mainMenuTextures = {};
+  private static final String[] mainMenuSounds = {"sounds/rollover.mp3"};
+  // Transitional sounds can play between screens by not unloading on screen change
+  private static final String[] mainMenuTransitionalSounds = {"sounds/click.mp3"};
+  private static final String[] mainMenuMusic = {"sounds/title-screen-music.mp3"};
+  private static final String[] mainMenuTextureAtlases = {"images/title-screen.atlas"};
+
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -73,12 +79,11 @@ public class MainMenuScreen extends ScreenAdapter {
   @Override
   public void dispose() {
     logger.debug("Disposing main menu screen");
-
+    mainMenuDisplay.dispose();
     renderer.dispose();
     unloadAssets();
     ServiceLocator.getRenderService().dispose();
     ServiceLocator.getEntityService().dispose();
-
     ServiceLocator.clear();
   }
 
@@ -86,6 +91,10 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+    resourceService.loadSounds(mainMenuSounds);
+    resourceService.loadSounds(mainMenuTransitionalSounds);
+    resourceService.loadMusic(mainMenuMusic);
+    resourceService.loadTextureAtlases(mainMenuTextureAtlases);
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -93,6 +102,9 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainMenuTextures);
+    resourceService.unloadAssets(mainMenuSounds);
+    resourceService.unloadAssets(mainMenuMusic);
+    resourceService.unloadAssets(mainMenuTextureAtlases);
   }
 
   /**

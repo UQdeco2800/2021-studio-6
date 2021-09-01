@@ -3,6 +3,7 @@ package com.deco2800.game.components.dialoguebox;
 
 import com.deco2800.game.components.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,5 +49,9 @@ public class Dialogue extends Component {
      */
     public String getCurrentDialogue() {
         return allDialogue.get(dialogueIndex);
+    }
+
+    public int getDialogueIndex() {
+        return dialogueIndex;
     }
 }

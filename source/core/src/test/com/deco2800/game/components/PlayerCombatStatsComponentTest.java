@@ -1,12 +1,22 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.Input;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.player.PlayerActions;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputService;
+import com.deco2800.game.physics.PhysicsService;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(GameExtension.class)
 public class PlayerCombatStatsComponentTest {
@@ -202,5 +212,16 @@ public class PlayerCombatStatsComponentTest {
         combat.hit(enemy);
         assertEquals(2, combat.getHealth());
         assertEquals(3, combat.getWoundState());
+    }
+
+    @Test
+    void shouldSetInvincible() {
+        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
+        CombatStatsComponent enemy = new CombatStatsComponent(100, 1);
+
+        assertEquals(3, combat.getHealth());
+        combat.invincibleStart(5);
+        combat.hit(enemy);
+        assertEquals(3, combat.getHealth());
     }
 }

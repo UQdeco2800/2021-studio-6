@@ -6,22 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.services.GameTime;
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
-  // method requirement for player to execute long range attack
+  // Method requirement for player to execute long range attack
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private IntSet downKeys = new IntSet(20);
-  // Timing for dashing
-  private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final int DelayLength = 2000; // in milliseconds
-  private static final int InvincibilityLength = 400; // in milliseconds
-  private long waitEndTime;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -70,10 +63,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         return true;
       case Keys.SHIFT_LEFT:
-        if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
-          waitEndTime = timeSource.getTime() + DelayLength; // Start timer for delay between dashes
-          entity.getEvents().trigger("dash", InvincibilityLength);
-        }
+        entity.getEvents().trigger("dash");
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
@@ -124,14 +114,5 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
-  }
-
-  /**
-   * Lets you know whether the player is currently able to dash or still needs to wait
-   *
-   * @return a true or false as to whether the player can currently dash
-   */
-  public boolean canDash() {
-    return (timeSource.getTime() >= waitEndTime);
   }
 }

@@ -34,11 +34,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setDefenceLevel(defenceLevel);
     }
 
-    @Override
-    public void create() {
-        entity.getEvents().addListener("dash", this::invincibleStart); // setting invincibility during dash
-    }
-
     /**
      * Returns true if the player's has 0 wound state, otherwise false.
      *

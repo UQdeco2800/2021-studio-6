@@ -221,10 +221,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             }
             invincibleStart(500);
         }
-
-        if (isDead()) {
-            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-        }
     }
 
     /**

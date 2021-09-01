@@ -6,7 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
@@ -38,13 +38,14 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-
+  private double CurrentLevel = 1;
+  public static boolean levelChange = false;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-
-  private Entity player;
-
+  private final TerrainFactory terrainFactory;
+  private GameArea gameArea;
+  private Entity ui;
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -72,22 +73,19 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    forestGameArea.create();
-
-    player = forestGameArea.getPlayer();
+    this.terrainFactory = new TerrainFactory(renderer.getCamera());
+    gameArea = new ForestGameArea(terrainFactory);
+    gameArea.create();
   }
 
   @Override
   public void render(float delta) {
+    if (levelChange) {
+      generateNewLevel();
+    }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
-
-    if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-      game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-    }
 
     CAMERA_POSITION.set(player.getPosition());
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -99,11 +97,17 @@ public class MainGameScreen extends ScreenAdapter {
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
+  /**
+   * Function is called when you minimise the game program.
+   */
   @Override
   public void pause() {
     logger.info("Game paused");
   }
 
+  /**
+   * Function is called when you open the game program when it was minimised.
+   */
   @Override
   public void resume() {
     logger.info("Game resumed");
@@ -146,7 +150,7 @@ public class MainGameScreen extends ScreenAdapter {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-    Entity ui = new Entity();
+    this.ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
@@ -156,5 +160,36 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  public static void changeLevel() {
+    levelChange = true;
+  }
+
+  public void generateNewLevel() {
+    CurrentLevel += 0.5;
+    Vector2 walkingDirection
+            = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+    gameArea.dispose();
+    if (CurrentLevel == 2) {
+      gameArea = new Level2(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 3) {
+      gameArea = new Level3(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel % 1 == 0.5){
+      gameArea = new SafehouseGameArea(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 4) {
+      System.out.println("You win");
+      ui.getEvents().trigger("exit");
+    }
+    levelChange = false;
   }
 }

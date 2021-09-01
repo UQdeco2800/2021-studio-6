@@ -19,6 +19,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  public Entity player;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -53,17 +54,15 @@ public abstract class GameArea implements Disposable {
    * @param centerY true to center entity Y on the tile, false to align the bottom left corner
    */
   protected void spawnEntityAt(
-      Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+          Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
-
     if (centerX) {
       worldPos.x += (tileSize / 2) - entity.getCenterPosition().x;
     }
     if (centerY) {
       worldPos.y += (tileSize / 2) - entity.getCenterPosition().y;
     }
-
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }

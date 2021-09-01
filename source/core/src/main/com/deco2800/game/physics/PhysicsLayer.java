@@ -9,6 +9,10 @@ public class PhysicsLayer {
   // NPC (Non-Playable Character) colliders
   public static final short NPC = (1 << 3);
   public static final short ALL = ~0;
+  // Safehouse object
+  public static final short SAFEHOUSE = (1 << 4);
+  // Paraphernalia
+  public static final short PARAPHERNALIA = (1 << 4);
 
   public static boolean contains(short filterBits, short layer) {
     return (filterBits & layer) != 0;

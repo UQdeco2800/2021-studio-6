@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -27,6 +28,8 @@ import org.slf4j.LoggerFactory;
 public class SafehouseGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 2);
+    private static Entity door;
+    private final float WALL_WIDTH = 0.1f;
     private static final String[] safehouseTextures = {
             "images/safehouse/interior-day1-tile-ground1-latest.png",
             "images/safehouse/interior-day1-tile-door1-latest.png",
@@ -62,18 +65,37 @@ public class SafehouseGameArea extends GameArea {
         // Background terrain
         terrain = terrainFactory.createTerrain(TerrainType.SAFEHOUSE);
         spawnEntity(new Entity().addComponent(terrain));
+
+        // Terrain walls
+        float tileSize = terrain.getTileSize();
+        GridPoint2 tileBounds = terrain.getMapBounds(0);
+        Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+
+        // Left
+        spawnEntityAt(
+                ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false,false);
+        // Right
+        spawnEntityAt(
+                ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), new GridPoint2(tileBounds.x, 0), false,false);
+        // Top
+        spawnEntityAt(
+                ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), new GridPoint2(0, tileBounds.x), false,false);
+        // Bottom
+        spawnEntityAt(
+                ObstacleFactory.createWall(worldBounds.y, WALL_WIDTH), GridPoint2Utils.ZERO, false,false);
     }
 
     public static void spawnDoor() {
         GridPoint2 center = new GridPoint2(15, 15);
 
         // Create entity
-        Entity door = new Entity()
+        door = new Entity()
                 .addComponent(new TextureRenderComponent("images/safehouse/interior-day1-tile-door1-latest.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
-                .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
+                .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER))
+                .addComponent(new DisposingComponent());
         door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         door.getComponent(TextureRenderComponent.class).scaleEntity();
         door.scaleHeight(2.5f);
@@ -110,6 +132,7 @@ public class SafehouseGameArea extends GameArea {
 
     @Override
     public void dispose() {
+        door.getComponent(DisposingComponent.class).toBeDisposed();
         super.dispose();
         this.unloadAssets();
     }

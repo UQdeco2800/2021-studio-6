@@ -63,7 +63,7 @@ public class SafehouseGameArea extends GameArea {
     spawnDoor();
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     spawnBullet();
-    playMusic();
+    //playMusic();
   }
 
   public Entity getPlayer() {

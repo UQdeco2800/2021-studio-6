@@ -47,7 +47,7 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png", "images/safehouse/exterior-day1-latest.png"
+    "images/iso_grass_3.png",
     "images/iso_grass_3.png",
     "images/gunman.png",
     "images/eye.png",
@@ -55,11 +55,16 @@ public class ForestGameArea extends GameArea {
     "images/player.png",
     "images/large_enemy_pix.png",
     "images/largeEnemy.png",
-    "images/iso_grass_3.png", 
-    "images/safehouse.png"
+    "images/iso_grass_3.png",
+    "images/safehouse/exterior-day1-latest.png"
   };
   private static final String[] forestTextureAtlases = { 
-      "images/terrain_iso_grass.atlas", "images/largeEnemy.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/small_enemy.atlas", "images/player.atlas"
+      "images/terrain_iso_grass.atlas",
+      "images/largeEnemy.atlas",
+      "images/ghost.atlas",
+      "images/ghostKing.atlas",
+      "images/small_enemy.atlas",
+      "images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -84,8 +89,6 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnSafehouse();
     spawnBullet();
-    spawnGhosts();
-    spawnGhostKing();
     spawnCobweb();
     spawnBush();
     playMusic();
@@ -126,16 +129,15 @@ public class ForestGameArea extends GameArea {
     // Right
     spawnEntityAt(
         ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),false,false);
+            new GridPoint2(tileBounds.x, 0),false,false);
     // Top
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),false,false);
+            new GridPoint2(0, tileBounds.y),false,false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
             GridPoint2Utils.ZERO, false, false);
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
@@ -202,7 +204,7 @@ public class ForestGameArea extends GameArea {
   }
 
 
-private void spawnLargeEnemy() {
+  private void spawnLargeEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 

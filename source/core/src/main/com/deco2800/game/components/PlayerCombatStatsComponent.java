@@ -29,8 +29,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private boolean regenActive = false;
     private boolean invincibleActive = false;
 
-    private GdxGame game;
-
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
         setWoundState(woundState);

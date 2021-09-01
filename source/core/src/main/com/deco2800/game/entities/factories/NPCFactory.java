@@ -66,7 +66,7 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
-
+    smallEnemy.setScale(0.75f, 0.75f);
     return smallEnemy;
   }
 
@@ -96,7 +96,7 @@ public class NPCFactory {
             .addComponent(new GhostAnimationController());
 
     //Increase the size of the enemy
-    largeEnemy.setScale(2,2);
+    largeEnemy.setScale(2f,2f);
 
     return largeEnemy;
   }
@@ -123,7 +123,7 @@ public class NPCFactory {
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea));
-    longRange.setScale(new Vector2(1.5f, 1.5f));
+    longRange.setScale(new Vector2(1f, 1f));
     return longRange;
   }
 
@@ -147,7 +147,7 @@ public class NPCFactory {
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
 
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    //PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     return npc;
   }
 

@@ -224,4 +224,26 @@ class PlayerCombatStatsComponentTest {
         combat.hit(enemy);
         assertEquals(3, combat.getHealth());
     }
+
+    @Test
+    void shouldBeInvincible() {
+        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
+        CombatStatsComponent enemy = new CombatStatsComponent(100, 1);
+
+        assertEquals(3, combat.getHealth());
+        combat.hit(enemy);
+        combat.hit(enemy);
+        combat.hit(enemy);
+        assertEquals(2, combat.getHealth());
+    }
+
+    @Test
+    void shouldDealDamageNegative() {
+        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
+        CombatStatsComponent enemy = new CombatStatsComponent(100, -10);
+
+        assertEquals(3, combat.getHealth());
+        combat.hit(enemy);
+        assertEquals(2, combat.getHealth());
+    }
 }

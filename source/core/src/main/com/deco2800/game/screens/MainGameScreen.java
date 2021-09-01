@@ -157,7 +157,7 @@ public class MainGameScreen extends ScreenAdapter {
   }
 
   public void generateNewLevel() {
-    CurrentLevel += 1;
+    CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
     gameArea.dispose();

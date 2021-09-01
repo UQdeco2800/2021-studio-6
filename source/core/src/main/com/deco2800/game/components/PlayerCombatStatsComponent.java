@@ -25,6 +25,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private Timer regenTimer;
     private boolean regenActive = false;
     private boolean invincibleActive = false;
+    private final int regenCooldown = 5000;
+    private final int invincibilityCooldown = 500;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -212,7 +214,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
-            invincibleStart(500);
+            invincibleStart(invincibilityCooldown);
         }
     }
 
@@ -231,7 +233,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                     cancel();
                 }
             }
-        }, 5000, 5000);
+        }, regenCooldown, regenCooldown);
     }
 
     /**

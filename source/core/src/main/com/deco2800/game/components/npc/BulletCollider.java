@@ -12,7 +12,6 @@ import com.deco2800.game.physics.components.HitboxComponent;
 /**
  * BulletCollider component detects collision between entity and target
  * Entity needs to have a HitboxComponent, and the target needs to be in the right layer
- * @todo the bullet should despawn on collision with anything in its layer
  */
 
 public class BulletCollider extends Component {

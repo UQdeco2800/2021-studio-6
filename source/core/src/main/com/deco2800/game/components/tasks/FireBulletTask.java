@@ -22,7 +22,7 @@ public class FireBulletTask extends DefaultTask implements PriorityTask {
     /**
      * @param duration How long to wait for, in seconds.
      */
-    public FireBulletTask(float duration, int priority) {
+    public FireBulletTask(float duration) {
         timeSource = ServiceLocator.getTimeSource();
         this.duration = duration;
     }

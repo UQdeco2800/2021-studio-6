@@ -31,6 +31,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
      * @param duration How long to wait for, in seconds.
      * @param priority priority used to swtich to this task
      * @param viewDistance radius around entity to fire
+     * @param target the target entity (most likely the player)
      */
     public DistanceFireBulletTask(Entity target, float duration, int priority, float viewDistance) {
         this.timeSource = ServiceLocator.getTimeSource();

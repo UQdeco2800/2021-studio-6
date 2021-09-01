@@ -23,7 +23,9 @@ public class EnemyBulletFactory {
 
     /** Creates a bullet entity firing from a source entity through a  target entity
      * @param target the target entity to be fired at
-     *  @param gameArea need to spawn the entity in (could instead implement a listener
+     * @param gameArea need to spawn the entity in (could instead implement a listener
+     * @param source the source of the bullet
+     * @return the bullet entity
      */
     public static Entity createBullet(Entity source, Entity target, GameArea gameArea) {
 

@@ -77,7 +77,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("attack");
           return true;
         }
-      case Keys.L:
+      case Keys.ENTER:
         if (!this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
           return true;

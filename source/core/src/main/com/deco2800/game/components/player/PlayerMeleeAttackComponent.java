@@ -161,7 +161,6 @@ public class PlayerMeleeAttackComponent extends Component {
                 position.y = entity.getScale().y - (size.y / 2);
                 break;
         }
-
         return setAsBox(size, position);
     }
 

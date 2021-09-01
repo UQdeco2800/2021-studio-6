@@ -57,7 +57,6 @@ public class TerrainFactory {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
       case FOREST_DEMO:
-        System.out.println("FOREST_DEMO");
         TextureRegion orthoGrass =
             new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
         TextureRegion orthoTuft =
@@ -66,7 +65,6 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
       case FOREST_DEMO_ISO:
-        System.out.println("FOREST_DEMO_ISO");
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
         TextureRegion isoTuft =
@@ -75,7 +73,6 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
         return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
       case FOREST_DEMO_HEX:
-        System.out.println("OREST_DEMO_HEX");
         TextureRegion hexGrass =
             new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
         TextureRegion hexTuft =
@@ -84,7 +81,6 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
         return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
       case SAFEHOUSE:
-        System.out.println("SAFEHOUSE");
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
         return createSafehouseTerrain(1f, orthoGround);

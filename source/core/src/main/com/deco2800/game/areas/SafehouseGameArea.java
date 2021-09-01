@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.SafehouseFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -23,8 +20,8 @@ public class SafehouseGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final String[] safehouseTextures = {
-            "images/safehouse/exterior-day1-latest.png",
             "images/safehouse/interior-day1-tile-ground1-latest.png",
+            "images/safehouse/interior-day1-tile-door1-latest.png",
             "images/player_placeholders/BACK.png",
             "images/Player_Sprite/front.png"
     };
@@ -44,6 +41,7 @@ public class SafehouseGameArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
+        spawnDoor();
         player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     }
 
@@ -59,6 +57,13 @@ public class SafehouseGameArea extends GameArea {
         spawnEntity(new Entity().addComponent(terrain));
     }
 
+    public Entity spawnDoor() {
+        GridPoint2 center = new GridPoint2(15, 15);
+
+        Entity door = SafehouseParaphernaliaFactory.createDoor();
+        spawnEntityAt(door, center, true, false);
+        return door;
+    }
 
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer();

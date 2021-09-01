@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
+import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
@@ -42,7 +43,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private final TerrainFactory terrainFactory;
+  private final TerrainFactory orthogonalTerrainFactory;
+  private final TerrainFactory isometricTerrainFactory;
   private GameArea gameArea;
   private Entity safehouse;
 
@@ -73,7 +75,13 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-    this.terrainFactory = new TerrainFactory(renderer.getCamera());
+    this.orthogonalTerrainFactory = new TerrainFactory(
+            renderer.getCamera()
+    );
+    this.isometricTerrainFactory = new TerrainFactory(
+            renderer.getCamera(),
+            TerrainComponent.TerrainOrientation.ISOMETRIC
+    );
     generateGameArea();
     safehouse.getEvents().addListener("changeLevel", this::generateGameArea);
   }
@@ -81,9 +89,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-      gameArea.dispose();
-      gameArea = new SafehouseGameArea(terrainFactory);
-      gameArea.create();
+      generateGameArea();
     }
 
     physicsEngine.update();
@@ -159,15 +165,15 @@ public class MainGameScreen extends ScreenAdapter {
   public void generateGameArea() {
     CurrentLevel += 0.5;
     if (CurrentLevel == 1) {
-      this.gameArea = new ForestGameArea(terrainFactory);
+      this.gameArea = new ForestGameArea(orthogonalTerrainFactory);
     } else {
       this.gameArea.dispose();
       if (CurrentLevel == 2) {
-        this.gameArea = new Level2(terrainFactory);
+        this.gameArea = new Level2(orthogonalTerrainFactory);
       } else if (CurrentLevel == 3) {
-        this.gameArea = new Level3(terrainFactory);
+        this.gameArea = new Level3(orthogonalTerrainFactory);
       } else {
-        this.gameArea = new SafehouseGameArea(terrainFactory);
+        this.gameArea = new SafehouseGameArea(orthogonalTerrainFactory);
       }
     }
     this.gameArea.create();

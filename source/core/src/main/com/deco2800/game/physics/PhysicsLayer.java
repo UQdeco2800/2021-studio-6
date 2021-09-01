@@ -11,6 +11,8 @@ public class PhysicsLayer {
   public static final short ALL = ~0;
   // Safehouse object
   public static final short SAFEHOUSE = (1 << 4);
+  // Safehouse paraphernalia
+  public static final short SAFEHOUSEPARAPHERNALIA = (1 << 5);
 
   public static boolean contains(short filterBits, short layer) {
     return (filterBits & layer) != 0;

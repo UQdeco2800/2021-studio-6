@@ -17,6 +17,15 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image heartImage;
   private Label woundLabel;
   private Label healthLabel;
+//  private Image greenShortHealthBar;
+//  private Image emptyShortHealthBar;
+//  private Image greenMediumHealthBar;
+//  private Image orangeMediumHealthBar;
+//  private Image emptyMediumHealthBar;
+//  private Image greenLongHealthBar;
+//  private Image orangeLongHealthBar;
+//  private Image redLongHealthBar;
+//  private Image emptyLongHealthBar;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -43,6 +52,24 @@ public class PlayerStatsDisplay extends UIComponent {
     // Heart image
     float heartSideLength = 30f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+//    greenShortHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/22highbar6.png", Texture.class));
+//    emptyShortHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/22highbar1.png", Texture.class));
+//    greenMediumHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/27highbar7.png", Texture.class));
+//    orangeMediumHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/27highbar6.png", Texture.class));
+//    emptyMediumHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/27highbar1.png", Texture.class));
+//    greenLongHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/32highbar8.png", Texture.class));
+//    orangeLongHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/32highbar7.png", Texture.class));
+//    redLongHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/32highbar6.png", Texture.class));
+//    emptyLongHealthBar = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hudelements/32highbar1.png", Texture.class));
 
     // Health text
     int wounds = entity.getComponent(PlayerCombatStatsComponent.class).getWoundState();

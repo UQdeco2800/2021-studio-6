@@ -1,0 +1,55 @@
+
+27hpbar.png
+size: 128, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+mediumEmpty
+  rotate: false
+  xy: 2, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 0
+mediumRegen
+  rotate: false
+  xy: 12, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 0
+mediumRegen
+  rotate: false
+  xy: 22, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 1
+mediumRegen
+  rotate: false
+  xy: 32, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 2
+mediumRegen
+  rotate: false
+  xy: 42, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 3
+mediumOrange
+  rotate: false
+  xy: 52, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 0
+mediumGreen
+  rotate: false
+  xy: 62, 4
+  size: 8, 27
+  orig: 8, 27
+  offset: 0, 0
+  index: 0

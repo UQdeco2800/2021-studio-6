@@ -19,7 +19,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * Factory to create 'bullets' from a source entity to a dest entity
  * The bullet currently travels in a straight line from source towards (and past) target
  */
-public class BulletFactory {
+public class EnemyBulletFactory {
 
     /** Creates a bullet entity firing from a source entity through a  target entity
      * @param target the target entity to be fired at

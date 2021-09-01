@@ -3,8 +3,7 @@ package com.deco2800.game.components.npc;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.BulletFactory;
-import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.entities.factories.EnemyBulletFactory;
 
 /**
  * This class listens for the fire event then spawns and fires a bullet from
@@ -37,7 +36,7 @@ public class FireBulletListener extends Component {
      * 'fires' a bullet from the entity to the target
      */
     void fire() {
-        gameArea.spawnEntity(BulletFactory.createBullet(this.entity, target, gameArea));
+        gameArea.spawnEntity(EnemyBulletFactory.createBullet(this.entity, target, gameArea));
     }
 
 }

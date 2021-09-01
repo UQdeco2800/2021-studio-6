@@ -1,7 +1,6 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,7 +9,6 @@ import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
-import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -40,7 +38,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double CurrentLevel = 1;
+  private double CurrentLevel = 0.5;
   public static boolean levelChange = false;
   private final GdxGame game;
   private final Renderer renderer;
@@ -83,7 +81,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
-      CurrentLevel += 1;
+      CurrentLevel += 0.5;
       Vector2 walkingDirection
               = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
       gameArea.dispose();

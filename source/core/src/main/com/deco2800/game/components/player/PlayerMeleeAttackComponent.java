@@ -15,6 +15,8 @@ import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * When entity is within range of enemy and melee attack button is clicked, damage is dealt
  * to the NPC only.
@@ -31,7 +33,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private Fixture fixture;
     private PlayerCombatStatsComponent playerCombatStats;
     private boolean meleeAttackClicked;
-    private boolean closeToAttack;
+    private ArrayList<Entity> closeToAttack;
     short targetLayer = PhysicsLayer.NPC;
 
     public PlayerMeleeAttackComponent() {
@@ -40,6 +42,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
     @Override
     public void create() {
+        closeToAttack = new ArrayList<>();
         if (fixtureDef.shape == null) {
             logger.trace("{} Setting default bounding box", this);
             fixtureDef.shape = makeBoundingBox();
@@ -64,9 +67,17 @@ public class PlayerMeleeAttackComponent extends Component {
      * variable - there is a bug where player can click melee button before colliding with enemy and upon
      * collision, enemy receives damage immediately
      */
+
     private void onEnemyFar(Fixture me, Fixture other) {
-        this.closeToAttack = false;
+        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+        if(closeToAttack.contains(target)){
+            closeToAttack.remove(target);
+        }
     }
+//old Changed by @yourlow on S1T5-feature/enemies branch merge
+//    private void onEnemyFar(Fixture me, Fixture other) {
+//        this.closeToAttack = false;
+//    }
 
     /**
      * Called when collision with any fixture has occurred and sets closeToAttack
@@ -79,8 +90,6 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
-
-        // By default, should only try detect NPC layers only
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore - could be obstacle but not NPC
             return;
@@ -88,35 +97,66 @@ public class PlayerMeleeAttackComponent extends Component {
 
         // Try to detect enemy.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-        if (targetStats != null) {
-            closeToAttack = true;
-        }
-
-        // enemy within range and player clicked melee attack button
-        if (closeToAttack && meleeAttackClicked && targetStats != null) {
-            targetStats.hit(playerCombatStats);
-
-            // freezes enemy - will need to be replaced to despawn enemy entity
-            if (targetStats.isDead()) {
-                logger.info("An entity will be disposed of");
-                target.getComponent(DisposingComponent.class).toBeDisposed();
-            }
-
-            this.meleeAttackClicked = false;
+        if(closeToAttack.contains(target)){
+            return;
+        }else {
+            closeToAttack.add(target);
         }
     }
+
+//old Changed by @yourlow on S1T5-feature/enemies branch merge
+//    private void onEnemyClose(Fixture me, Fixture other) {
+//
+//        // By default, should only try detect NPC layers only
+//        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
+//            // Doesn't match our target layer, ignore - could be obstacle but not NPC
+//            return;
+//        }
+//
+//        // Try to detect enemy.
+//        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+//        CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+//        if (targetStats != null) {
+//            closeToAttack = true;
+//        }
+//
+//        // enemy within range and player clicked melee attack button
+//        if (closeToAttack && meleeAttackClicked && targetStats != null) {
+//            targetStats.hit(playerCombatStats);
+//
+////            // freezes enemy - will need to be replaced to despawn enemy entity
+////            if (targetStats.isDead()) {
+////                logger.info("An entity will be disposed of");
+//////                target.getComponent(DisposingComponent.class).toBeDisposed();
+////            }
+//
+//            this.meleeAttackClicked = false;
+//        }
+//    }
+
+
 
     /**
      * This is an indication that the melee attack button has been clicked
      *
      * @param clicked is the melee button clicked by player
-    * */
+     * */
     public void meleeAttackClicked(boolean clicked) {
-        if (closeToAttack) {
-            this.meleeAttackClicked = clicked;
+        for (Entity e: closeToAttack) {
+            CombatStatsComponent targetStats = e.getComponent(CombatStatsComponent.class);
+            targetStats.hit(playerCombatStats);
+            if(targetStats.isDead()){
+                e.getComponent(DisposingComponent.class).toBeDisposed();
+            }
         }
     }
+
+//old Changed by @yourlow on S1T5-feature/enemies branch merge
+//    public void meleeAttackClicked(boolean clicked) {
+//        if (closeToAttack) {
+//            this.meleeAttackClicked = clicked;
+//        }
+//    }
 
     /**
      * Set physics as a box with a given size. Box is centered around the entity.

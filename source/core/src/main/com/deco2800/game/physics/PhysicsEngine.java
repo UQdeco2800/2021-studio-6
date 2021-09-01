@@ -37,6 +37,7 @@ public class PhysicsEngine implements Disposable {
   private final SingleHitCallback singleHitCallback = new SingleHitCallback();
   private final AllHitCallback allHitCallback = new AllHitCallback();
   private float accumulator;
+  private List<Body> toDelete;
   private List<Entity> toDispose = new ArrayList<>();
   private List<Entity> toReuse = new ArrayList<>();
 
@@ -48,6 +49,7 @@ public class PhysicsEngine implements Disposable {
     this.world = world;
     world.setContactListener(new PhysicsContactListener());
     this.timeSource = timeSource;
+    this.toDelete = new ArrayList<>();
   }
 
   public void update() {
@@ -65,6 +67,10 @@ public class PhysicsEngine implements Disposable {
       world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
     }
+    for(Body b : toDelete) {
+      world.destroyBody(b);
+    }
+    toDelete.clear();
 
     if (!toReuse.isEmpty()) {
       for (Entity entity : toReuse) {
@@ -93,7 +99,8 @@ public class PhysicsEngine implements Disposable {
 
   public void destroyBody(Body body) {
     logger.debug("Destroying physics body {}", body);
-    world.destroyBody(body);
+    toDelete.add(body);
+//    world.destroyBody(body);
   }
 
   public Joint createJoint(JointDef jointDef) {

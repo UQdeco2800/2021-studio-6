@@ -24,7 +24,9 @@ import org.slf4j.LoggerFactory;
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
+  private static final int NUM_LARGE_ENEMY = 2;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
@@ -41,10 +43,18 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png", "images/safehouse.png"
+    "images/iso_grass_3.png",
+    "images/gunman.png",
+    "images/eye.png",
+    "images/blood_ball.png",
+    "images/player.png",
+    "images/large_enemy_pix.png",
+    "images/largeEnemy.png",
+    "images/iso_grass_3.png", 
+    "images/safehouse.png"
   };
-  private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas"
+  private static final String[] forestTextureAtlases = { 
+      "images/terrain_iso_grass.atlas", "images/largeEnemy.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/small_enemy.atlas", "images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -69,12 +79,13 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    spawnLargeEnemy();
+    spawnSmallEnemy();
     spawnBullet();
-    spawnGhosts();
-    spawnGhostKing();
     spawnSafehouse();
 
-    playMusic();
+    spawnLongRangeEnemies();
+//    playMusic();
   }
 
   private void displayUI() {
@@ -95,22 +106,22 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            new GridPoint2(tileBounds.x, 0),
+            false,
+            false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
   private void spawnTrees() {
@@ -134,7 +145,6 @@ public class ForestGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
@@ -151,24 +161,37 @@ public class ForestGameArea extends GameArea {
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
-  private void spawnGhosts() {
+  private void spawnSmallEnemy() {//this da noo 1
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_GHOSTS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+      spawnEntityAt(smallEnemy, randomPos, true, true);
     }
   }
 
-  private void spawnGhostKing() {
+
+private void spawnLargeEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
+    for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity largeEnemy = NPCFactory.createLargeEnemy(player);
+      spawnEntityAt(largeEnemy, randomPos, true, true);
+    }
+  }
+
+  private void spawnLongRangeEnemies() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    for (int i = 0; i < NUM_LONGRANGE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity archer = NPCFactory.createLongRangeEnemy(player, this);
+      spawnEntityAt(archer, randomPos, true, true);
+    }
   }
 
   private void playMusic() {

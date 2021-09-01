@@ -8,6 +8,7 @@ import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,18 +19,23 @@ import static org.mockito.Mockito.when;
 @ExtendWith(GameExtension.class)
 class KeyboardPlayerInputComponentTest {
 
+    @BeforeEach
+    void beforeEach() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerInputService(new InputService());
+    }
+
     @Test
     void shouldTriggerDashOnButtonPress() {
         GameTime time = mock(GameTime.class);
-        ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerTimeSource(time);
-        ServiceLocator.registerInputService(new InputService());
         InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
         Entity player = new Entity().addComponent(inputComponent);
         player.create();
 
         // Regular trigger
         assertTrue(player.getComponent(KeyboardPlayerInputComponent.class).canDash());
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
         assertFalse(player.getComponent(KeyboardPlayerInputComponent.class).canDash());
 
@@ -44,6 +50,19 @@ class KeyboardPlayerInputComponentTest {
         // Checking delay reset
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
         assertFalse(player.getComponent(KeyboardPlayerInputComponent.class).canDash());
+    }
+
+    @Test
+    void shouldNotTriggerDashWhenNotMoving() {
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
+        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
+        Entity player = new Entity().addComponent(inputComponent);
+        player.create();
+        
+        assertTrue(player.getComponent(KeyboardPlayerInputComponent.class).canDash());
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
+        assertTrue(player.getComponent(KeyboardPlayerInputComponent.class).canDash());
     }
 
 }

@@ -70,7 +70,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         return true;
       case Keys.SHIFT_LEFT:
-        if (timeSource.getTime() >= waitEndTime) { // Check if player is allowed to dash again
+        if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
           waitEndTime = timeSource.getTime() + DelayLength; // Start timer for delay between dashes
           entity.getEvents().trigger("dash", InvincibilityLength);
         }

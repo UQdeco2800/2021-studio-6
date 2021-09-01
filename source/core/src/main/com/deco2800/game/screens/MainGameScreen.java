@@ -38,7 +38,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double CurrentLevel = 0.5;
+  private double CurrentLevel = 1;
   public static boolean levelChange = false;
   private final GdxGame game;
   private final Renderer renderer;
@@ -81,7 +81,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
-      CurrentLevel += 0.5;
+      CurrentLevel += 1;
       Vector2 walkingDirection
               = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
       gameArea.dispose();

@@ -31,6 +31,8 @@ public class SafehouseGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
 
+    private Entity player;
+
     public SafehouseGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
@@ -40,7 +42,9 @@ public class SafehouseGameArea extends GameArea {
     @Override
     public void create() {
         loadAssets();
+
         displayUI();
+
         spawnTerrain();
         player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     }
@@ -86,5 +90,4 @@ public class SafehouseGameArea extends GameArea {
         super.dispose();
         this.unloadAssets();
     }
-
 }

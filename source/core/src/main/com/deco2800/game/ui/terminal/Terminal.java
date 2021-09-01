@@ -4,7 +4,6 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.ui.terminal.commands.Command;
 import com.deco2800.game.ui.terminal.commands.DebugCommand;
 import com.deco2800.game.ui.terminal.commands.PrintDialogueCommand;
-import com.deco2800.game.ui.terminal.commands.PrintStarterImageDialogue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,6 @@ public class Terminal extends Component {
 
     addCommand("debug", new DebugCommand());
     addCommand("printDialogue",new PrintDialogueCommand());
-    addCommand("pd", new PrintStarterImageDialogue());
   }
 
   /** @return message entered by user */

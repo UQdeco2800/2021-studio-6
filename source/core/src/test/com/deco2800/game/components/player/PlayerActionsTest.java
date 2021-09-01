@@ -62,12 +62,6 @@ class PlayerActionsTest {
         speed = new Vector2(4f, 4f);
         assertEquals(speed.x, player.getComponent(PlayerActions.class).getCurrentSpeed().x);
         assertEquals(speed.y, player.getComponent(PlayerActions.class).getCurrentSpeed().y);
-
-        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(0);
-        assertEquals(0, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
-        speed = new Vector2(0f, 0f);
-        assertEquals(speed.x, player.getComponent(PlayerActions.class).getCurrentSpeed().x);
-        assertEquals(speed.y, player.getComponent(PlayerActions.class).getCurrentSpeed().y);
     }
 
     @Test

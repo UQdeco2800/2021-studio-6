@@ -37,17 +37,15 @@ public class PlayerFactory {
     InputComponent inputComponent =
             ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
-    /*
-    //Uncomment when the player animation files are finished and replace the source
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
-    animator.addAnimation("movingLeft", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("movingRight", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("movingDown", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("movingUp", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("standing", 0.1f, Animation.PlayMode.LOOP);
-    */
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
+
 
     Entity player = new Entity()
                     .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
@@ -63,8 +61,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerStatsDisplay())
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())
-                    //.addComponent(animator)
-                    //Uncomment when adding animations back in
+                    .addComponent(animator)
                     .addComponent(new PlayerAnimationController());
 
 

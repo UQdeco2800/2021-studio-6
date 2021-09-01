@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(GameExtension.class)
-public class PlayerCombatStatsComponentTest {
+class PlayerCombatStatsComponentTest {
 
     @Test
     void shouldSetGetWoundState() {

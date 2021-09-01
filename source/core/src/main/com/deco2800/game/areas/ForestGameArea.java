@@ -3,9 +3,12 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BulletFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -24,10 +27,11 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_LARGE_ENEMY = 2;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
+  private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
+    "images/Player_Sprite/front.png", "images/player_placeholders/PROJECTILE.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -40,12 +44,14 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-          "images/gunman.png",
-          "images/eye.png",
-          "images/blood_ball.png",
-          "images/player.png",
-          "images/large_enemy_pix.png",
-          "images/largeEnemy.png",
+    "images/gunman.png",
+    "images/eye.png",
+    "images/blood_ball.png",
+    "images/player.png",
+    "images/large_enemy_pix.png",
+    "images/largeEnemy.png",
+    "images/iso_grass_3.png", 
+    "images/safehouse.png"
   };
   private static final String[] forestTextureAtlases = { 
       "images/terrain_iso_grass.atlas", "images/largeEnemy.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/small_enemy.atlas"
@@ -75,6 +81,8 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnLargeEnemy();
     spawnSmallEnemy();
+    spawnBullet();
+    spawnSafehouse();
 
     spawnLongRangeEnemies();
 //    playMusic();
@@ -127,10 +135,30 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+  private void spawnSafehouse() {
+    GridPoint2 center = new GridPoint2(15, 15);
+
+    Entity safehouse = ObstacleFactory.createSafehouse();
+    // Position is currently procedurally (kidding, just randomly) generated.
+    spawnEntityAt(safehouse, center, true, false);
+  }
+
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, new GridPoint2(10, 10), false, false);
+    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+
+  private void spawnBullet() {
+    Array<Entity> bullets = new Array<>();
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBullet = BulletFactory.createBullet();
+      bullets.add(newBullet);
+      spawnEntity(newBullet);
+    }
+
+    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
   private void spawnSmallEnemy() {//this da noo 1
@@ -169,7 +197,7 @@ private void spawnLargeEnemy() {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(0f);
     music.play();
   }
 

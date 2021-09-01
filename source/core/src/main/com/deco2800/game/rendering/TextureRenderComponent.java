@@ -12,7 +12,7 @@ public class TextureRenderComponent extends RenderComponent {
   private TextureRegion textureRegion;
   private float rotation = 0;
   /**
-   * @param texturePath internal path of static teture to render. Will be scaled to the entity's
+   * @param texturePath internal path of static texture to render. Will be scaled to the entity's
    *     scale.
    */
   public TextureRenderComponent(String texturePath) {

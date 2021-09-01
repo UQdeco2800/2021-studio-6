@@ -7,6 +7,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
+import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.*;
@@ -112,7 +113,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 1, 10, 5f));
+                    .addTask(new DistanceFireBulletTask(target, 1, 10, 8f));
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
@@ -122,7 +123,8 @@ public class NPCFactory {
                     .addComponent(new TextureRenderComponent("images/eye.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
-                    .addComponent(new FireBulletListener(target, gameArea));
+                    .addComponent(new FireBulletListener(target, gameArea))
+                    .addComponent(new DisposingComponent());
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
   }
@@ -145,7 +147,8 @@ public class NPCFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(aiComponent);
+            .addComponent(aiComponent)
+            .addComponent(new DisposingComponent());
 
     //PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     return npc;

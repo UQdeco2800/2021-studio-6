@@ -3,15 +3,25 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
-
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.GameTime;
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+  // method requirement for player to execute long range attack
+  private final Vector2 RANGE_ATTACK = Vector2.Zero.cpy();
+  private IntSet downKeys = new IntSet(20);
+  // Timing for dashing
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
+  private final int DELAY_LENGTH = 2000; // in milliseconds
+  private final int INVINCIBILITY_LENGTH = 400; // in milliseconds
+  private long waitEndTime;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -25,6 +35,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
+    downKeys.add(keycode);
+    int numKeysPressed = downKeys.size;
+
+    if (keycode == Keys.D) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
+    } else if (keycode == Keys.A) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
+    } else if (keycode == Keys.W) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
+    } else if (keycode == Keys.S) {
+      entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
+    }
+
     switch (keycode) {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
@@ -42,12 +65,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
+      case Keys.SHIFT_LEFT:
+        if (timeSource.getTime() >= waitEndTime) { // Check if player is allowed to dash again
+          waitEndTime = timeSource.getTime() + DELAY_LENGTH; // Start timer for delay between dashes
+          entity.getEvents().trigger("dash", INVINCIBILITY_LENGTH);
+        }
+        return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
+        return true;
+      case Keys.L:
+        entity.getEvents().trigger("rangeAttack", RANGE_ATTACK);
         return true;
       default:
         return false;
     }
+
+
   }
 
   /**
@@ -58,6 +92,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
+    downKeys.remove(keycode);
     switch (keycode) {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);

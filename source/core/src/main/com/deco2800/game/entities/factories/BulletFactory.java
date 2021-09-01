@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
@@ -28,7 +29,7 @@ public class BulletFactory {
         Entity bullet = new Entity()
                 .addComponent(new TextureRenderComponent("images/player_placeholders/PROJECTILE.png"))
                 .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent())
+                .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new BulletCollisionComponent())
                 .addComponent(new DisposingComponent())

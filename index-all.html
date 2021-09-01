@@ -246,6 +246,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/CameraComponent.html#%3Cinit%3E(com.badlogic.gdx.graphics.Camera)">CameraComponent(Camera)</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#canDash()">canDash()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
+<dd>
+<div class="block">Lets you know whether the player is currently able to dash or still needs to wait</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsComponent.AlignX.html#CENTER">CENTER</a></span> - com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsComponent.AlignX.html" title="enum in com.deco2800.game.physics.components">PhysicsComponent.AlignX</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsComponent.AlignY.html#CENTER">CENTER</a></span> - com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsComponent.AlignY.html" title="enum in com.deco2800.game.physics.components">PhysicsComponent.AlignY</a></dt>
@@ -406,6 +410,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#create()">create()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerAnimationController.html#create()">create()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerAnimationController.html" title="class in com.deco2800.game.components.player">PlayerAnimationController</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerMeleeAttackComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerRangeAttackComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerRangeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerRangeAttackComponent</a></dt>
@@ -416,8 +422,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates reusable ui styles and adds actors to the stage.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/components/PlayerCombatStatsComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/PlayerCombatStatsComponent.html" title="class in com.deco2800.game.components">PlayerCombatStatsComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/settingsmenu/SettingsMenuDisplay.html#create()">create()</a></span> - Method in class com.deco2800.game.components.settingsmenu.<a href="com/deco2800/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.deco2800.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/TouchAttackComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/TouchAttackComponent.html" title="class in com.deco2800.game.components">TouchAttackComponent</a></dt>
@@ -919,6 +923,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gets the current dialogue text</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#getCurrentSpeed()">getCurrentSpeed()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
+<dd>
+<div class="block">Returns the current max speed of the player</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/Renderer.html#getDebug()">getDebug()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/Renderer.html" title="class in com.deco2800.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/RenderService.html#getDebug()">getDebug()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/RenderService.html" title="class in com.deco2800.game.rendering">RenderService</a></dt>
@@ -927,11 +935,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns the entity's base attack damage for ranged attacks.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#getDelayTimeRemaining()">getDelayTimeRemaining()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
+<dd>
+<div class="block">Lets you know whether the player is currently able to dash or still needs to wait</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/GameTime.html#getDeltaTime()">getDeltaTime()</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/GameTime.html" title="class in com.deco2800.game.services">GameTime</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/dialoguebox/TextDialogueBox.html#getDialogue()">getDialogue()</a></span> - Method in class com.deco2800.game.components.dialoguebox.<a href="com/deco2800/game/components/dialoguebox/TextDialogueBox.html" title="class in com.deco2800.game.components.dialoguebox">TextDialogueBox</a></dt>
 <dd>
 <div class="block">Dialogue object being displayed</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsEngine.html#getDisposeQueue()">getDisposeQueue()</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsEngine.html" title="class in com.deco2800.game.physics">PhysicsEngine</a></dt>
+<dd>
+<div class="block">Used to acquire dispose queue if required</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/Terminal.html#getEnteredMessage()">getEnteredMessage()</a></span> - Method in class com.deco2800.game.ui.terminal.<a href="com/deco2800/game/ui/terminal/Terminal.html" title="class in com.deco2800.game.ui.terminal">Terminal</a></dt>
 <dd>&nbsp;</dd>
@@ -1047,6 +1063,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#getResourceService()">getResourceService()</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsEngine.html#getReuseQueue()">getReuseQueue()</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsEngine.html" title="class in com.deco2800.game.physics">PhysicsEngine</a></dt>
+<dd>
+<div class="block">Used to acquire entities that will be reused</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/Entity.html#getScale()">getScale()</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Get the entity's scale.</div>
@@ -1237,6 +1257,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/PlayerCombatStatsComponent.html#invincibleStart(int)">invincibleStart(int)</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/PlayerCombatStatsComponent.html" title="class in com.deco2800.game.components">PlayerCombatStatsComponent</a></dt>
 <dd>
 <div class="block">Sets the invincibility check to momentarily prevent player damage</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#isDashing()">isDashing()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
+<dd>
+<div class="block">Returns the whether the player is currently dashing</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/CombatStatsComponent.html#isDead()">isDead()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/CombatStatsComponent.html" title="class in com.deco2800.game.components">CombatStatsComponent</a></dt>
 <dd>
@@ -1651,6 +1675,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Basic constructor for setting the initial player speed based on saved wound state</div>
 </dd>
+<dt><a href="com/deco2800/game/components/player/PlayerAnimationController.html" title="class in com.deco2800.game.components.player"><span class="typeNameLink">PlayerAnimationController</span></a> - Class in <a href="com/deco2800/game/components/player/package-summary.html">com.deco2800.game.components.player</a></dt>
+<dd>
+<div class="block">This class listens to events relevant to a player's state and plays the animation when one
+ of the events is triggered.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerAnimationController.html#%3Cinit%3E()">PlayerAnimationController()</a></span> - Constructor for class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerAnimationController.html" title="class in com.deco2800.game.components.player">PlayerAnimationController</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/PlayerCombatStatsComponent.html" title="class in com.deco2800.game.components"><span class="typeNameLink">PlayerCombatStatsComponent</span></a> - Class in <a href="com/deco2800/game/components/package-summary.html">com.deco2800.game.components</a></dt>
 <dd>
 <div class="block">Component used to store information related to combat for the player such as

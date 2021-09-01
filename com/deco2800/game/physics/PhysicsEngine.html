@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -196,11 +196,25 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i7">
+<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDisposeQueue()">getDisposeQueue</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Used to acquire dispose queue if required</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReuseQueue()">getReuseQueue</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Used to acquire entities that will be reused</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/physics/box2d/World.html?is-external=true" title="class or interface in com.badlogic.gdx.physics.box2d" class="externalLink">World</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorld()">getWorld</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#raycast(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,short,com.deco2800.game.physics.raycast.RaycastHit)">raycast</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;from,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;to,
@@ -211,7 +225,7 @@ short&nbsp;layerMask,
  colliders in the specified layers.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#raycast(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.deco2800.game.physics.raycast.RaycastHit)">raycast</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;from,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;to,
@@ -221,7 +235,7 @@ short&nbsp;layerMask,
  colliders.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code><a href="raycast/RaycastHit.html" title="class in com.deco2800.game.physics.raycast">RaycastHit</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#raycastAll(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)">raycastAll</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;from,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;to)</code></th>
@@ -230,7 +244,7 @@ short&nbsp;layerMask,
  colliders in the specified layers.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i11">
+<tr class="rowColor" id="i13">
 <td class="colFirst"><code><a href="raycast/RaycastHit.html" title="class in com.deco2800.game.physics.raycast">RaycastHit</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#raycastAll(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,short)">raycastAll</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;from,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;to,
@@ -240,7 +254,7 @@ short&nbsp;layerMask)</code></th>
  colliders in the specified layers.</div>
 </td>
 </tr>
-<tr class="altColor" id="i12">
+<tr class="altColor" id="i14">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -423,6 +437,17 @@ short&nbsp;layerMask)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="getDisposeQueue()">getDisposeQueue</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.List&lt;<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</span>&nbsp;<span class="memberName">getDisposeQueue</span>()</div>
+<div class="block">Used to acquire dispose queue if required</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>array of entities that will need to be disposed outside of physic time step</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="addToReuseQueue(com.deco2800.game.entities.Entity)">addToReuseQueue</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addToReuseQueue</span>&#8203;(<span class="arguments"><a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</span></div>
 <div class="block">Used to register entity that will be reused outside of physics time step</div>
@@ -430,6 +455,18 @@ short&nbsp;layerMask)</span></div>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>entity</code> - that will be reused - this is done by relocating entity to a position in screen
                that cannot be seen by user</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getReuseQueue()">getReuseQueue</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.List&lt;<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</span>&nbsp;<span class="memberName">getReuseQueue</span>()</div>
+<div class="block">Used to acquire entities that will be reused</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>array of entities that will be reused by resetting coordinates of entity to origin
+ of game world coordinate</dd>
 </dl>
 </section>
 </li>

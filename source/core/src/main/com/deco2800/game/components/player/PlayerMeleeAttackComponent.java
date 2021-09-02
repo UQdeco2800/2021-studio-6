@@ -9,15 +9,21 @@ import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
+import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * When entity is within range of enemy and melee attack button is clicked, damage is dealt
@@ -31,8 +37,16 @@ import java.util.Set;
 public class PlayerMeleeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerMeleeAttackComponent.class);
 
-    private final FixtureDef fixtureDef;
+    private FixtureDef fixtureDef;
+    private final FixtureDef fixtureDefW;
+    private final FixtureDef fixtureDefA;
+    private final FixtureDef fixtureDefS;
+    private final FixtureDef fixtureDefD;
     private Fixture fixture;
+    private Fixture fixtureW;
+    private Fixture fixtureA;
+    private Fixture fixtureS;
+    private Fixture fixtureD;
     private PlayerCombatStatsComponent playerCombatStats;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
@@ -41,8 +55,21 @@ public class PlayerMeleeAttackComponent extends Component {
     private final Set<Fixture> closeEnemies = new HashSet<>();
     private final Set<Fixture> removingEnemies = new HashSet<>();
 
+
+    private final GameTime timeSource = ServiceLocator.getTimeSource();
+    private static final int attackLength = 100; // in milliseconds
+    private long attackStart;
+    private long attackEnd;
+    private Timer attackTimer;
+    private boolean canAttack = true;
+
+
     public PlayerMeleeAttackComponent() {
         fixtureDef = new FixtureDef();
+        fixtureDefW = new FixtureDef();
+        fixtureDefA = new FixtureDef();
+        fixtureDefS = new FixtureDef();
+        fixtureDefD = new FixtureDef();
         directionMove = new Vector2((float)0.0,(float)0.0);
     }
 
@@ -78,6 +105,30 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private Vector2 getDirection() {
         return directionMove;
+    }
+
+    /**
+     * Getter for direction of player movement.
+     *
+     * @return player last walked direction
+     */
+    private FixtureDef getFixDirection() {
+        if (directionMove.epsilonEquals(Vector2Utils.UP)){
+            return fixtureDefW;
+        }
+        else if (directionMove.epsilonEquals(Vector2Utils.DOWN)){
+            return fixtureDefS;
+        }
+
+        else if (directionMove.epsilonEquals(Vector2Utils.LEFT)){
+            return fixtureDefA;
+        }
+
+        else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)){
+            return fixtureDefD;
+        }
+        System.out.println("null");
+        return null;
     }
 
     /**
@@ -161,29 +212,53 @@ public class PlayerMeleeAttackComponent extends Component {
      * the fixtures for the attack and prepping before actual the damage/hit.
      */
     private void Attack() {
-        if (fixtureDef.shape == null) {
-            logger.trace("{} Setting default bounding box", this);
-            fixtureDef.shape = makeBoundingBox();
+        if (canAttack) {
+            fixtureDef = getFixDirection();
+            if (fixtureDef != null) {
+                canAttack = false;
+                if (fixtureDef.shape == null) {
+                    logger.trace("{} Setting default bounding box", this);
+                    fixtureDef.shape = makeBoundingBox();
+                }
+
+                this.meleeAttackClicked = true;
+                Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+                fixture = physBody.createFixture(fixtureDef);
+
+                // if sensor is false, NPC will not be able to collide with player's fixture
+                setSensor(true);
+                damage();
+                disposeStart();
+            }
         }
+    }
 
-        this.meleeAttackClicked = true;
-        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-        fixture = physBody.createFixture(fixtureDef);
-
-        // if sensor is false, NPC will not be able to collide with player's fixture
-        setSensor(true);
-        damage();
-        dispose();
+    public void disposeStart() {
+        attackTimer = new Timer(true);
+        attackTimer.schedule( new TimerTask() {
+            public void run() {
+                dispose();
+                cancel();
+            }
+        }, attackLength);
     }
 
     @Override
     public void dispose() {
-        super.dispose();
+        //super.dispose();
+        PhysicsComponent test = entity.getComponent(PhysicsComponent.class);
+        //fixtureDef.shape = null;
+        //Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+        //ServiceLocator.getPhysicsService().getPhysics().destroyBody(physBody);
+
+        //test.dispose();
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             physBody.destroyFixture(fixture);
+            fixture = null;
         }
-        fixtureDef.shape = null;
+
+        canAttack = true;
     }
 
     /**

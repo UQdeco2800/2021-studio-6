@@ -1,0 +1,62 @@
+
+32hpbar.png
+size: 128, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+longEmpty
+  rotate: false
+  xy: 2, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 0
+longRegen
+  rotate: false
+  xy: 12, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 0
+longRegen
+  rotate: false
+  xy: 22, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 1
+longRegen
+  rotate: false
+  xy: 32, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 2
+longRegen
+  rotate: false
+  xy: 42, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 3
+longRed
+  rotate: false
+  xy: 52, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 0
+longOrange
+  rotate: false
+  xy: 62, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 0
+longGreen
+  rotate: false
+  xy: 72, 4
+  size: 8, 32
+  orig: 8, 32
+  offset: 0, 0
+  index: 0

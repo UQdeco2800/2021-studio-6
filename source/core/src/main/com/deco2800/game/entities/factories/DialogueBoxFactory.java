@@ -21,17 +21,25 @@ public class DialogueBoxFactory {
         Entity textDialogue = new Entity()
                 .addComponent(new DialogueInputComponent())
                 .addComponent(new TextDialogueBox(dialogue));
-        textDialogue.getEvents().addListener("closeDialogue", textDialogue::dispose);
+        addCloseListener(textDialogue);
         return textDialogue;
     }
 
     /**
-     * Creates a text dialogue from a string
+     * Creates a pure text dialogue from a string
      * @param dialogue Semicolon seperated string of dialogue
      * @return TextDialogue Entity
      */
     public static Entity createTextDialogue(String dialogue) {
         List<String> dialogues = Arrays.asList(dialogue.split(";"));
         return createTextDialogue(new Dialogue(dialogues));
+    }
+
+    /**
+     * Adds closeDialogue listener to an entity. When received the entity disposes itself
+     * @param entity entity
+     */
+    private static void addCloseListener(Entity entity){
+        entity.getEvents().addListener("closeDialogue", entity::dispose);
     }
 }

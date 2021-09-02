@@ -190,7 +190,6 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
-        System.out.println("collision");
         System.out.println(me.getFilterData().categoryBits);
         System.out.println(other.getFilterData().categoryBits);
         // By default, should only try detect NPC layers only

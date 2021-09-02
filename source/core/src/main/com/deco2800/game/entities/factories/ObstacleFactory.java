@@ -34,40 +34,41 @@ public class ObstacleFactory {
   }
 
   /**
-   * Create a cobweb entity, currently do not have the texture for cobweb so currently using tree
-   * texture as a placeholder
+   * Create a cobweb entity, slows the player's movement.
    * @return entity
    */
   public static Entity createCobweb() {
     Entity cobweb =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new TextureRenderComponent("images/obstacle_sprite/cobweb.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
 
     cobweb.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     cobweb.getComponent(TextureRenderComponent.class).scaleEntity();
-    cobweb.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(cobweb, 0.5f, 0.2f);
+    cobweb.scaleHeight(1.0f);
+
+    PhysicsUtils.setScaledCollider(cobweb, 1.0f, 1.0f);
+
     return cobweb;
   }
 
   /**
-   * Creates a bush entity, currently do not have the texture for bush so using tree texture as a
-   * placeholder
+   * Creates a bush entity, does damage to the player when they walk over it.
    * @return entity
    */
   public static Entity createBush() {
     Entity bush =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new TextureRenderComponent("images/obstacle_sprite/bush.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
 
     bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bush.getComponent(TextureRenderComponent.class).scaleEntity();
-    bush.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(bush, 0.5f, 0.2f);
+    bush.scaleHeight(1.0f);
+
+    PhysicsUtils.setScaledCollider(bush, 1.0f, 1.0f);
     return bush;
   }
   /**

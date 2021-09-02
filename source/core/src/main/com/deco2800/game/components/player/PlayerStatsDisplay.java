@@ -148,6 +148,8 @@ public class PlayerStatsDisplay extends UIComponent {
             ("images/hud/32highbar7.png", Texture.class));
     orangeLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
             ("images/hud/32highbar7.png", Texture.class));
+    orangeLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
+            ("images/hud/32highbar8.png", Texture.class));
     redLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
             ("images/hud/32highbar6.png", Texture.class));
     redLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset

@@ -63,8 +63,7 @@ public class PhysicsEngine implements Disposable {
 
     // Depending on how much time has passed, we may compute 0 or more physics steps in one go. If
     // we need to catch up, we'll compute multiple in a row before getting to rendering.
-    while (accumulator >= PHYSICS_TIMESTEP) {
-      world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    while (accumulator >= PHYSICS_TIMESTEP) { world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
     }
     for(Body b : toDelete) {

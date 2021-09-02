@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import java.util.ArrayList;
 
@@ -13,11 +15,13 @@ import java.util.ArrayList;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  public final Vector2 walkDirection = Vector2.Zero.cpy();
   // Method requirement for player to execute long range attack
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private final IntSet downKeys = new IntSet(20);
   private final ArrayList<Integer> movementKeys = new ArrayList<>();
+  private boolean isPaused = false;  // variable for PAUSING in keyDown method
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -34,14 +38,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
-    if (keycode == Keys.D) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
-    } else if (keycode == Keys.A) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
-    } else if (keycode == Keys.W) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
-    } else if (keycode == Keys.S) {
-      entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
+    if (!isPaused) {
+      if (keycode == Keys.D) {
+        entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
+      } else if (keycode == Keys.A) {
+        entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
+      } else if (keycode == Keys.W) {
+        entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
+      } else if (keycode == Keys.S) {
+        entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
+      }
     }
 
     switch (keycode) {
@@ -70,18 +76,34 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         animationHandle();
         return true;
       case Keys.SHIFT_LEFT:
-        entity.getEvents().trigger("dash");
+        if (!isPaused) {
+          entity.getEvents().trigger("dash");
+        }
         return true;
       case Keys.SPACE:
-        if (!this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("attack");
-          return true;
         }
+        return true;
       case Keys.ENTER:
-        if (!this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
-          return true;
         }
+        return true;
+      /*
+      Pauses the game when ESC key is pressed, more like "freezes" the assets
+      if anything because the ESC key just controls the time scale in the game from
+      0f for "pause" and 1f for "resume".
+       */
+      case Keys.ESCAPE:
+        if (isPaused) {
+          timeSource.setTimeScale(1f);
+          isPaused = false;
+        } else {
+          timeSource.setTimeScale(0f);
+          isPaused = true;
+        }
+        return true;
       default:
         return false;
     }
@@ -100,6 +122,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.UP);
+
         triggerWalkEvent();
         animationHandle();
         return true;
@@ -124,6 +147,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       default:
         return false;
     }
+
   }
 
   /**

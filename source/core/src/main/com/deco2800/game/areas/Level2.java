@@ -6,14 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.BulletFactory;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.SafehouseFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -23,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
-public class ForestGameArea extends GameArea {
+public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
@@ -56,15 +51,15 @@ public class ForestGameArea extends GameArea {
     "images/large_enemy_pix.png",
     "images/largeEnemy.png",
     "images/iso_grass_3.png",
-    "images/safehouse/exterior-day1-latest.png"
+    "images/safehouse/exterior-day1-latest.png",
   };
-  private static final String[] forestTextureAtlases = { 
-      "images/terrain_iso_grass.atlas",
-      "images/largeEnemy.atlas",
-      "images/ghost.atlas",
-      "images/ghostKing.atlas",
-      "images/small_enemy.atlas",
-      "images/player.atlas"
+  private static final String[] forestTextureAtlases = {
+    "images/terrain_iso_grass.atlas",
+    "images/largeEnemy.atlas",
+    "images/ghost.atlas",
+    "images/ghostKing.atlas",
+    "images/small_enemy.atlas",
+    "images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -72,7 +67,7 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
 
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public Level2(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
   }
@@ -108,7 +103,7 @@ public class ForestGameArea extends GameArea {
   private void displayUI() {
     Entity ui = new Entity();
     // Can change level name here
-    ui.addComponent(new GameAreaDisplay("Level 1"));
+    ui.addComponent(new GameAreaDisplay("Level 2"));
     spawnEntity(ui);
   }
 
@@ -124,15 +119,15 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
             GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
             new GridPoint2(tileBounds.x, 0),false,false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
             new GridPoint2(0, tileBounds.y),false,false);
     // Bottom
     spawnEntityAt(

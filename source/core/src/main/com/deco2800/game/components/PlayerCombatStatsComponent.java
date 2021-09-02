@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Timer;
 import java.util.TimerTask;
+import com.deco2800.game.GdxGame;
 
 /**
  * Component used to store information related to combat for the player such as

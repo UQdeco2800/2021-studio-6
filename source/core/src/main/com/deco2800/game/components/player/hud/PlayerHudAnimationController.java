@@ -1,11 +1,13 @@
-package com.deco2800.game.components.player;
+package com.deco2800.game.components.player.hud;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
+
 /**
  * This class listens to PlayerStatsDisplay and renders correct sprite state and
  * animations when events are triggered.
+ * CURRENTLY UNSED AS OF SPRINT 1
  */
 public class PlayerHudAnimationController extends Component{
     AnimationRenderComponent hudAnimator;

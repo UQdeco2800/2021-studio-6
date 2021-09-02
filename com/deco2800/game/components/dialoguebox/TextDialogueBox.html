@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -62,7 +62,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -103,12 +103,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section class="description">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></code>, <code><a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a></code>, <code>java.lang.Comparable&lt;<a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a>&gt;</code></dd>
+<dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></code>, <code><a href="DialogueBox.html" title="interface in com.deco2800.game.components.dialoguebox">DialogueBox</a></code>, <code><a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a></code>, <code>java.lang.Comparable&lt;<a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">TextDialogueBox</span>
-extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a></pre>
-<div class="block">Text display of dialogue</div>
+extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a>
+implements <a href="DialogueBox.html" title="interface in com.deco2800.game.components.dialoguebox">DialogueBox</a></pre>
+<div class="block">Text display of dialogue
+ TODO: Move texture atlas component to screen to prevent loading multiple times</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -118,6 +120,30 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 <!--   -->
 </a>
 <h2>Field Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Table.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Table</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rootTable">rootTable</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#textureAtlas">textureAtlas</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="inheritedList">
 <h3>Fields inherited from class&nbsp;com.deco2800.game.ui.<a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a></h3>
 <a id="fields.inherited.from.class.com.deco2800.game.ui.UIComponent">
@@ -152,6 +178,15 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 <div class="block">Creates a new TextDialogueBox</div>
 </td>
 </tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.components.dialoguebox.Dialogue,float,float,float)">TextDialogueBox</a></span>&#8203;(<a href="Dialogue.html" title="class in com.deco2800.game.components.dialoguebox">Dialogue</a>&nbsp;dialogue,
+float&nbsp;width,
+float&nbsp;height,
+float&nbsp;padding)</code></th>
+<td class="colLast">
+<div class="block">Creates a new TextDialogueBox</div>
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -176,34 +211,41 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </thead>
 <tbody>
 <tr class="altColor" id="i0">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addBackground(com.badlogic.gdx.scenes.scene2d.ui.Table)">addBackground</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Table.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Table</a>&nbsp;table)</code></th>
+<td class="colLast">
+<div class="block">Adds the dialogue box background to the table</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#advanceDialogue()">advanceDialogue</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Advances dialogue and updates text display</div>
 </td>
 </tr>
-<tr class="rowColor" id="i1">
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates UI and event listeners</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Called when the component is disposed.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/SpriteBatch.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">SpriteBatch</a>&nbsp;batch)</code></th>
 <td class="colLast">
 <div class="block">Draw the renderable.</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code><a href="Dialogue.html" title="class in com.deco2800.game.components.dialoguebox">Dialogue</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDialogue()">getDialogue</a></span>()</code></th>
 <td class="colLast">
@@ -250,6 +292,28 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </section>
 <section class="details">
 <ul class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<li class="blockList">
+<section class="fieldDetails"><a id="field.detail">
+<!--   -->
+</a>
+<h2>Field Details</h2>
+<ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="rootTable">rootTable</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Table.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Table</a></span>&nbsp;<span class="memberName">rootTable</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="textureAtlas">textureAtlas</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a></span>&nbsp;<span class="memberName">textureAtlas</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li class="blockList">
 <section class="constructorDetails"><a id="constructor.detail">
@@ -257,6 +321,23 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </a>
 <h2>Constructor Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="&lt;init&gt;(com.deco2800.game.components.dialoguebox.Dialogue,float,float,float)">TextDialogueBox</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">TextDialogueBox</span>&#8203;(<span class="arguments"><a href="Dialogue.html" title="class in com.deco2800.game.components.dialoguebox">Dialogue</a>&nbsp;dialogue,
+float&nbsp;width,
+float&nbsp;height,
+float&nbsp;padding)</span></div>
+<div class="block">Creates a new TextDialogueBox</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>dialogue</code> - Dialogue to be display</dd>
+<dd><code>width</code> - width of the box</dd>
+<dd><code>height</code> - height of the box</dd>
+<dd><code>padding</code> - padding applied to box</dd>
+</dl>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="&lt;init&gt;(com.deco2800.game.components.dialoguebox.Dialogue)">TextDialogueBox</a></h3>
@@ -291,6 +372,17 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="addBackground(com.badlogic.gdx.scenes.scene2d.ui.Table)">addBackground</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addBackground</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Table.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Table</a>&nbsp;table)</span></div>
+<div class="block">Adds the dialogue box background to the table</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>table</code> - table</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="getDialogue()">getDialogue</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Dialogue.html" title="class in com.deco2800.game.components.dialoguebox">Dialogue</a></span>&nbsp;<span class="memberName">getDialogue</span>()</div>
 <div class="block">Dialogue object being displayed</div>
@@ -305,6 +397,10 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 <h3><a id="advanceDialogue()">advanceDialogue</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">advanceDialogue</span>()</div>
 <div class="block">Advances dialogue and updates text display</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="DialogueBox.html#advanceDialogue()">advanceDialogue</a></code>&nbsp;in interface&nbsp;<code><a href="DialogueBox.html" title="interface in com.deco2800.game.components.dialoguebox">DialogueBox</a></code></dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
@@ -374,7 +470,7 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

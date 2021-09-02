@@ -210,7 +210,7 @@ public class ColliderComponent extends Component {
     super.dispose();
     Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
     if (physBody.getFixtureList().contains(fixture, true)) {
-      physBody.destroyFixture(fixture);
+//      physBody.destroyFixture(fixture);
     }
   }
 

@@ -58,6 +58,7 @@ class PhysicsEngineTest {
     verify(world).createBody(bodyDef);
 
     engine.destroyBody(body);
+    engine.update();
     verify(world).destroyBody(body);
   }
 
@@ -77,5 +78,11 @@ class PhysicsEngineTest {
     PhysicsEngine engine = new PhysicsEngine(world, gameTime);
     engine.dispose();
     verify(world).dispose();
+  }
+
+  @Test
+  void disposeQueueShouldBeEmpty() {
+    PhysicsEngine engine = new PhysicsEngine(world, gameTime);
+
   }
 }

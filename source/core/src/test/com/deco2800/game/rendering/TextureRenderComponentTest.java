@@ -28,6 +28,22 @@ class TextureRenderComponentTest {
     component.setEntity(entity);
     component.render(spriteBatch);
 
-    verify(spriteBatch).draw(texture, 2f, 2f, 1f, 1f);
+    verify(spriteBatch).draw(texture,
+            entity.getPosition().x,
+            entity.getPosition().y,
+            entity.getScale().x/2,
+            entity.getScale().x/2,
+            entity.getScale().x,
+            entity.getScale().y,
+            1.0f,
+            1.0f,
+            0,
+            0,
+            0,
+            texture.getWidth(),
+            texture.getHeight(),
+            false,
+            false);
   }
 }
+

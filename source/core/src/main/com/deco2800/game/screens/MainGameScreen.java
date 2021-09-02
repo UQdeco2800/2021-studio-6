@@ -1,13 +1,15 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -48,11 +50,14 @@ public class MainGameScreen extends ScreenAdapter {
 
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-
+  private double CurrentLevel = 1;
+  public static boolean levelChange = false;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-
+  private final TerrainFactory terrainFactory;
+  private GameArea gameArea;
+  private Entity ui;
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -80,16 +85,22 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    forestGameArea.create();
+    this.terrainFactory = new TerrainFactory(renderer.getCamera());
+    gameArea = new ForestGameArea(terrainFactory);
+    gameArea.create();
   }
 
   @Override
   public void render(float delta) {
+    if (levelChange) {
+      generateNewLevel();
+    }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
+
+    CAMERA_POSITION.set(gameArea.player.getPosition());
+    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
   }
 
   @Override
@@ -98,11 +109,17 @@ public class MainGameScreen extends ScreenAdapter {
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
+  /**
+   * Function is called when you minimise the game program.
+   */
   @Override
   public void pause() {
     logger.info("Game paused");
   }
 
+  /**
+   * Function is called when you open the game program when it was minimised.
+   */
   @Override
   public void resume() {
     logger.info("Game resumed");
@@ -164,7 +181,7 @@ public class MainGameScreen extends ScreenAdapter {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-    Entity ui = new Entity();
+    this.ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
@@ -174,5 +191,36 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  public static void changeLevel() {
+    levelChange = true;
+  }
+
+  public void generateNewLevel() {
+    CurrentLevel += 0.5;
+    Vector2 walkingDirection
+            = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+    gameArea.dispose();
+    if (CurrentLevel == 2) {
+      gameArea = new Level2(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 3) {
+      gameArea = new Level3(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel % 1 == 0.5){
+      gameArea = new SafehouseGameArea(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 4) {
+      System.out.println("You win");
+      ui.getEvents().trigger("exit");
+    }
+    levelChange = false;
   }
 }

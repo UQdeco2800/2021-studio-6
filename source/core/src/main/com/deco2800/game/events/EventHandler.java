@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  * trigger(), all listeners are notified of the event.
  *
  * <p>Currently supports up to 3 arguments for an event. More can be added, but consider instead
- * passing a class with required fields.
+ *  * passing a class with required fields.
  *
  * <p>If you get a ClassCastException from an event, trigger is being called with different
  * arguments than the listeners expect.

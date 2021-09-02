@@ -2,6 +2,7 @@ package com.deco2800.game.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
@@ -27,7 +28,7 @@ public class PhysicsEngine implements Disposable {
   private static final float MAX_UPDATE_TIME = 0.25f;
   private static final float PHYSICS_TIMESTEP = 0.016f;
   private static final Vector2 GRAVITY = new Vector2(0f, -0f);
-  private final Vector2 ORIGIN = new Vector2(0,0);
+  private final Vector2 ORIGIN = new Vector2(-10,-10);
   private static final int VELOCITY_ITERATIONS = 6;
   private static final int POSITION_ITERATIONS = 2;
 
@@ -36,6 +37,7 @@ public class PhysicsEngine implements Disposable {
   private final SingleHitCallback singleHitCallback = new SingleHitCallback();
   private final AllHitCallback allHitCallback = new AllHitCallback();
   private float accumulator;
+  private List<Body> toDelete;
   private List<Entity> toDispose = new ArrayList<>();
   private List<Entity> toReuse = new ArrayList<>();
 
@@ -47,6 +49,7 @@ public class PhysicsEngine implements Disposable {
     this.world = world;
     world.setContactListener(new PhysicsContactListener());
     this.timeSource = timeSource;
+    this.toDelete = new ArrayList<>();
   }
 
   public void update() {
@@ -60,10 +63,13 @@ public class PhysicsEngine implements Disposable {
 
     // Depending on how much time has passed, we may compute 0 or more physics steps in one go. If
     // we need to catch up, we'll compute multiple in a row before getting to rendering.
-    while (accumulator >= PHYSICS_TIMESTEP) {
-      world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    while (accumulator >= PHYSICS_TIMESTEP) { world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
     }
+    for(Body b : toDelete) {
+      world.destroyBody(b);
+    }
+    toDelete.clear();
 
     if (!toReuse.isEmpty()) {
       for (Entity entity : toReuse) {
@@ -92,7 +98,8 @@ public class PhysicsEngine implements Disposable {
 
   public void destroyBody(Body body) {
     logger.debug("Destroying physics body {}", body);
-    world.destroyBody(body);
+    toDelete.add(body);
+//    world.destroyBody(body);
   }
 
   public Joint createJoint(JointDef jointDef) {
@@ -184,6 +191,15 @@ public class PhysicsEngine implements Disposable {
   }
 
   /**
+   * Used to acquire dispose queue if required
+   *
+   * @return array of entities that will need to be disposed outside of physic time step
+   */
+  public List<Entity> getDisposeQueue() {
+    return new ArrayList<>(toDispose);
+  }
+
+  /**
    * Used to register entity that will be reused outside of physics time step
    *
    * @param entity that will be reused - this is done by relocating entity to a position in screen
@@ -191,5 +207,15 @@ public class PhysicsEngine implements Disposable {
    */
   public void addToReuseQueue(Entity entity) {
     this.toReuse.add(entity);
+  }
+
+  /**
+   * Used to acquire entities that will be reused
+   *
+   * @return array of entities that will be reused by resetting coordinates of entity to origin
+   * of game world coordinate
+   */
+  public List<Entity> getReuseQueue() {
+    return new ArrayList<>(toReuse);
   }
 }

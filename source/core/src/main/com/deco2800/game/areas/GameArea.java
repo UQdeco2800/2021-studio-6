@@ -19,6 +19,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  public Entity player;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -35,11 +36,21 @@ public abstract class GameArea implements Disposable {
   }
 
   /**
+   * Despawns and disposes an entity from the gameArea
+   * @param entity The entity to despawn
+   */
+  public void despawnEntity(Entity entity) {
+    int entityIdx = areaEntities.indexOf(entity);
+    Entity temp = areaEntities.remove(entityIdx);
+    temp.dispose();
+  }
+
+  /**
    * Spawn entity at its current position
    *
    * @param entity Entity (not yet registered)
    */
-  protected void spawnEntity(Entity entity) {
+  public void spawnEntity(Entity entity) {
     areaEntities.add(entity);
     ServiceLocator.getEntityService().register(entity);
   }
@@ -53,17 +64,15 @@ public abstract class GameArea implements Disposable {
    * @param centerY true to center entity Y on the tile, false to align the bottom left corner
    */
   protected void spawnEntityAt(
-      Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+          Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
-
     if (centerX) {
       worldPos.x += (tileSize / 2) - entity.getCenterPosition().x;
     }
     if (centerY) {
       worldPos.y += (tileSize / 2) - entity.getCenterPosition().y;
     }
-
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }

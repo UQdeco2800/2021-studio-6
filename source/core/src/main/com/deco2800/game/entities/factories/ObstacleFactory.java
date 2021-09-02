@@ -34,6 +34,43 @@ public class ObstacleFactory {
   }
 
   /**
+   * Create a cobweb entity, currently do not have the texture for cobweb so currently using tree
+   * texture as a placeholder
+   * @return entity
+   */
+  public static Entity createCobweb() {
+    Entity cobweb =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    cobweb.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    cobweb.getComponent(TextureRenderComponent.class).scaleEntity();
+    cobweb.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(cobweb, 0.5f, 0.2f);
+    return cobweb;
+  }
+
+  /**
+   * Creates a bush entity, currently do not have the texture for bush so using tree texture as a
+   * placeholder
+   * @return entity
+   */
+  public static Entity createBush() {
+    Entity bush =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bush.getComponent(TextureRenderComponent.class).scaleEntity();
+    bush.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(bush, 0.5f, 0.2f);
+    return bush;
+  }
+  /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units
    * @param height Wall height in world units
@@ -46,22 +83,6 @@ public class ObstacleFactory {
 
     wall.setScale(width, height);
     return wall;
-  }
-
-  /**
-   * Creates a Safehouse entity
-   * @return Safehouse entity of given width and height
-   */
-  public static Entity createSafehouse() {
-    Entity safehouse = new Entity()
-            .addComponent(new TextureRenderComponent("images/safehouse.png"))
-            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    safehouse.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    safehouse.getComponent(TextureRenderComponent.class).scaleEntity();
-    safehouse.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(safehouse, 0.5f, 0.2f);
-    return safehouse;
   }
 
   private ObstacleFactory() {

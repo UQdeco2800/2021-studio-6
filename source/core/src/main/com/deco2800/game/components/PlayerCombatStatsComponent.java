@@ -210,6 +210,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (damage <= 0) {
                 damage = 1;
             }
+            ///PLEASEEEEEEEEEEEEEE get rid of this before merging or anything stupid like that
+            damage = 0;
             int newHealth = getHealth() - damage;
             setHealth(newHealth);
             if (getHealth() != getStateMax()) {

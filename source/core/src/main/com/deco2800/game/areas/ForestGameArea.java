@@ -90,7 +90,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnSafehouse();
+//    spawnSafehouse();
     spawnIntroDialogue();
 
     spawnBullet();
@@ -100,7 +100,7 @@ public class ForestGameArea extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
-    spawnSafehouse();
+//    spawnSafehouse();
 
     spawnLongRangeEnemies();
 //    playMusic();

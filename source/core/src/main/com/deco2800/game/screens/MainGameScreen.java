@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
@@ -20,6 +21,7 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
+import com.deco2800.game.rendering.lightingcomponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -58,6 +60,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final TerrainFactory terrainFactory;
   private GameArea gameArea;
   private Entity ui;
+  private lightingcomponent lc;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -77,9 +81,13 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
+//    lc = new lightingcomponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
+
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+
+//    ServiceLocator.getRenderService().register(lc);
 
     loadAssets();
     createUI();
@@ -101,6 +109,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     CAMERA_POSITION.set(gameArea.player.getPosition());
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+
+
   }
 
   @Override

@@ -71,7 +71,7 @@ public class MainMenuDisplay extends UIComponent {
 
     menuSong = ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class);
     menuSong.setLooping(true);
-    menuSong.setVolume(0.5f);
+    menuSong.setVolume(0.3f);
     menuSong.play();
 
     buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
@@ -126,7 +126,7 @@ public class MainMenuDisplay extends UIComponent {
             logger.debug(debugCommand);
             System.out.println(debugCommand);
             long soundClickId = buttonClickSound.play();
-            buttonClickSound.setVolume(soundClickId,0.5f);
+            buttonClickSound.setVolume(soundClickId,0.8f);
 
             // disposes the sound after the sound has finished to allow the sound playing after menu screen is disposed
             Timer.schedule(new Timer.Task() {
@@ -149,16 +149,16 @@ public class MainMenuDisplay extends UIComponent {
     ClickListener rollOverListener = new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-        if (!rolloverActivated && !event.getRelatedActor().toString().contains("Label:")) {
+        if (!rolloverActivated && event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
           rolloverActivated = true;
           long soundRolloverId = rolloverClickSound.play();
-          rolloverClickSound.setVolume(soundRolloverId,0.5f);
+          rolloverClickSound.setVolume(soundRolloverId,0.8f);
         }
       }
       @Override
       public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
       {
-        if (!event.getRelatedActor().toString().contains("Label:")) {
+        if (event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
           rolloverActivated = false;
         }
       }

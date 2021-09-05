@@ -20,7 +20,7 @@ public class PauseMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("continue", this::onContinue);
-    entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("pause-settings", this::onSettings);
     entity.getEvents().addListener("exit-to-menu", this::onExitToMenu);
     entity.getEvents().addListener("exit-game", this::onExitGame);
   }

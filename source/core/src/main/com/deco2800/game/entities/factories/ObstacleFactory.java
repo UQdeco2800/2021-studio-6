@@ -5,7 +5,9 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 /**
@@ -34,40 +36,41 @@ public class ObstacleFactory {
   }
 
   /**
-   * Create a cobweb entity, currently do not have the texture for cobweb so currently using tree
-   * texture as a placeholder
+   * Create a cobweb entity, slows the player's movement.
    * @return entity
    */
   public static Entity createCobweb() {
     Entity cobweb =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new TextureRenderComponent("images/obstacle_sprite/cobweb.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                    .addComponent(new HitboxComponent())
+                    .addComponent(new EntityEffectsComponent(PhysicsLayer.PLAYER, EntityEffectsComponent.Effect.MOVEMENT));
 
     cobweb.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     cobweb.getComponent(TextureRenderComponent.class).scaleEntity();
-    cobweb.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(cobweb, 0.5f, 0.2f);
+    cobweb.scaleHeight(1.0f);
+
+    //TODO: Investigate ColliderComponent instead of HitboxComponent and different PhysicsLayers.
+
     return cobweb;
   }
 
   /**
-   * Creates a bush entity, currently do not have the texture for bush so using tree texture as a
-   * placeholder
+   * Creates a bush entity, does damage to the player when they walk over it.
    * @return entity
    */
   public static Entity createBush() {
     Entity bush =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new TextureRenderComponent("images/obstacle_sprite/bush.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                    .addComponent(new HitboxComponent())
+                    .addComponent(new EntityEffectsComponent(PhysicsLayer.PLAYER, EntityEffectsComponent.Effect.HEALTH));
 
     bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bush.getComponent(TextureRenderComponent.class).scaleEntity();
-    bush.scaleHeight(1.5f);
-    PhysicsUtils.setScaledCollider(bush, 0.5f, 0.2f);
+    bush.scaleHeight(1.0f);
     return bush;
   }
   /**

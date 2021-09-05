@@ -1,15 +1,19 @@
 package com.deco2800.game.components.mainmenu;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -21,23 +25,31 @@ import java.util.ArrayList;
  * A ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
-  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
-  private static final float Z_INDEX = 2f;
-  private Table table;
-  private Image background;
-  private ArrayList<TextButton> menuButtons;
   private static final float BACKGROUND_IMAGE_ASPECT = 9f / 16f;
   private static final float MENU_TABLE_HEIGHT_RATIO = 1f / 2f;
   private static final float MENU_TABLE_RIGHT_OFFSET = 1f / 8f;
   private static final float WIDTH_MAX_FOR_SMALL_FONT = 500;
   private static final float WIDTH_MAX_FOR_MEDIUM_FONT = 750;
-  private static final float PADDING_FOR_SMALL_FONT = 0;
-  private static final float PADDING_FOR_MEDIUM_FONT = 15;
-  private static final float PADDING_FOR_LARGE_FONT = 25;
-
-  private TextureAtlas textureAtlas;
+  private static final float PADDING_FOR_SMALL_FONT = 10;
+  private static final float PADDING_FOR_MEDIUM_FONT = 30;
+  private static final float PADDING_FOR_LARGE_FONT = 50;
+  private static final String MENU_BUTTON_STYLE = "menu-button-large";
+  private static final String musicFilePath = "sounds/title-screen-music.mp3";
+  private static final String clickSoundFilePath = "sounds/click.mp3";
+  private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
+  private static final String titleScreenAtlasFilePath = "images/title-screen.atlas";
+  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
+  private static final float Z_INDEX = 2f;
+  private Table table;
+  private Image background;
+  private ArrayList<TextButton> menuButtons;
+  private TextureAtlas backgroundTextureAtlas;
   private Animation<TextureRegion> backgroundAnimation;
   private float elapsedTime = 0f;
+  private Sound buttonClickSound;
+  private Sound rolloverClickSound;
+  private Boolean rolloverActivated = false;
+  private Music menuSong;
 
   @Override
   public void create() {
@@ -46,70 +58,45 @@ public class MainMenuDisplay extends UIComponent {
   }
 
   /**
-   * Adds all the assets for the menu into the stage
+   * Adds all the assets (buttons, background, sound, music) for the menu into the stage
    */
   private void addActors() {
     table = new Table();
 
-    textureAtlas = new TextureAtlas(Gdx.files.internal("images/title-screen.atlas"));
-    backgroundAnimation = new Animation(1f/3f, textureAtlas.getRegions());
+    menuSong = ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class);
+    menuSong.setLooping(true);
+    menuSong.setVolume(0.3f);
+    menuSong.play();
+
+    buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
+    rolloverClickSound = ServiceLocator.getResourceService().getAsset(rolloverSoundFilePath, Sound.class);
+    backgroundTextureAtlas = ServiceLocator.getResourceService().getAsset(titleScreenAtlasFilePath, TextureAtlas.class);
+
+    backgroundAnimation = new Animation<>(1f/3f, backgroundTextureAtlas.getRegions());
     background = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
 
-    TextButton startBtn = new TextButton("Start", skin, "menu-button-large");
-    TextButton loadBtn = new TextButton("Load", skin, "menu-button-large");
-    TextButton settingsBtn = new TextButton("Settings", skin, "menu-button-large");
-    TextButton exitBtn = new TextButton("Exit", skin, "menu-button-large");
+    TextButton startBtn = new TextButton("Start", skin, MENU_BUTTON_STYLE);
+    TextButton settingsBtn = new TextButton("Settings", skin, MENU_BUTTON_STYLE);
+    TextButton exitBtn = new TextButton("Exit", skin, MENU_BUTTON_STYLE);
 
     // Adds all the text buttons into a list to be accessed elsewhere in the class
-    menuButtons = new ArrayList<TextButton>();
+    menuButtons = new ArrayList<>();
     menuButtons.add(startBtn);
-    menuButtons.add(loadBtn);
     menuButtons.add(settingsBtn);
     menuButtons.add(exitBtn);
 
-
     // Triggers an event when the button is pressed
-    startBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Start button clicked");
-            entity.getEvents().trigger("start");
-          }
-        });
+    addButtonSelectListener(startBtn, "start", "Start button clicked");
+    addButtonSelectListener(settingsBtn, "settings", "Settings button clicked");
+    addButtonSelectListener(exitBtn, "exit", "Exit button clicked");
 
-    loadBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Load button clicked");
-            entity.getEvents().trigger("load");
-          }
-        });
-
-    settingsBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Settings button clicked");
-            entity.getEvents().trigger("settings");
-          }
-        });
-
-    exitBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-
-            logger.debug("Exit button clicked");
-            entity.getEvents().trigger("exit");
-          }
-        });
+    // Triggers an event when the user has triggered the button rollover
+    addButtonRolloverListener(startBtn);
+    addButtonRolloverListener(settingsBtn);
+    addButtonRolloverListener(exitBtn);
 
     table.align(Align.center);
     table.add(startBtn);
-    // load button is removed until the save/load functionality has been added
-    //table.add(loadBtn);
     table.add(settingsBtn);
     table.add(exitBtn);
 
@@ -117,6 +104,61 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(background);
     stage.addActor(table);
 
+  }
+
+  /**
+   * Adds a listener to a button that triggers an event when the user selects the button
+   * @param button the button to add the select listener to
+   * @param eventTrigger the event to be triggered when button is selected
+   * @param debugCommand the command to be printed to debug when the button is selected
+   */
+  private void addButtonSelectListener(Button button, String eventTrigger, String debugCommand) {
+    button.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug(debugCommand);
+            System.out.println(debugCommand);
+            long soundClickId = buttonClickSound.play();
+            buttonClickSound.setVolume(soundClickId,0.8f);
+
+            // disposes the sound after the sound has finished to allow the sound playing after menu screen is disposed
+            Timer.schedule(new Timer.Task() {
+              @Override
+              public void run() {
+                ServiceLocator.getResourceService().unloadAssets(new String[] {clickSoundFilePath});
+              }
+            }, 0.2f);
+
+            entity.getEvents().trigger(eventTrigger);
+          }
+        });
+  }
+
+  /**
+   * Adds a listener to a button that triggers an event when the user activates the button rollover state
+   * @param button the button to add the rollover listener to
+   */
+  private void addButtonRolloverListener(TextButton button) {
+    ClickListener rollOverListener = new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        if (!rolloverActivated && event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
+          rolloverActivated = true;
+          long soundRolloverId = rolloverClickSound.play();
+          rolloverClickSound.setVolume(soundRolloverId,0.8f);
+        }
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
+      {
+        if (event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
+          rolloverActivated = false;
+        }
+      }
+    };
+
+    button.addListener(rollOverListener);
   }
 
   @Override
@@ -142,7 +184,7 @@ public class MainMenuDisplay extends UIComponent {
   public void resize(int width, int height) {
 
       // determine whether the height or width is the restricting factor for background size
-      boolean restrictedByHeight = (width * BACKGROUND_IMAGE_ASPECT > height) ? true : false;
+      boolean restrictedByHeight = (width * BACKGROUND_IMAGE_ASPECT > height);
 
       resizeBackground(width, height, restrictedByHeight);
       resizeTable(width, height, restrictedByHeight);
@@ -164,8 +206,8 @@ public class MainMenuDisplay extends UIComponent {
         if (restrictedByHeight) {
             backgroundWidth = height * (1f / BACKGROUND_IMAGE_ASPECT);
             backgroundHeight = height;
-            backgroundX = width /2 - backgroundWidth/2;
-            backgroundY = height /2 - backgroundHeight/2;
+            backgroundX = (float) width / 2 - backgroundWidth / 2;
+            backgroundY = (float) height / 2 - backgroundHeight / 2;
         }
 
         background.setWidth(backgroundWidth);
@@ -207,7 +249,7 @@ public class MainMenuDisplay extends UIComponent {
       } else if (tableWidth < WIDTH_MAX_FOR_MEDIUM_FONT) {
           changeMenuButtonStyles("menu-button-medium", PADDING_FOR_MEDIUM_FONT);
       } else {
-          changeMenuButtonStyles("menu-button-large", PADDING_FOR_LARGE_FONT);
+          changeMenuButtonStyles(MENU_BUTTON_STYLE, PADDING_FOR_LARGE_FONT);
       }
   }
 
@@ -221,6 +263,7 @@ public class MainMenuDisplay extends UIComponent {
           Button.ButtonStyle newButtonStyle = skin.get( style, TextButton.TextButtonStyle.class );
           menuButton.setStyle(newButtonStyle);
           Array<Cell> cells = table.getCells();
+
           for (Cell cell : cells) {
               cell.pad(padding);
           }
@@ -232,9 +275,20 @@ public class MainMenuDisplay extends UIComponent {
     return Z_INDEX;
   }
 
+  /**
+   * Disposes all the assets related to the main menu display
+   */
   @Override
   public void dispose() {
     table.clear();
+    table.remove();
+    for (Button button : menuButtons) {
+      button.remove();
+    }
+    menuButtons.clear();
+    background.clear();
+    background.remove();
+    ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class).stop();
     super.dispose();
   }
 }

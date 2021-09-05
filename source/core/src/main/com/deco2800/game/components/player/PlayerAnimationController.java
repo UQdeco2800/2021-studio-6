@@ -20,6 +20,7 @@ public class PlayerAnimationController extends Component {
     entity.getEvents().addListener("moveRight", this::animateRight);
     entity.getEvents().addListener("moveUp", this::animateUp);
     entity.getEvents().addListener("moveDown", this::animateDown);
+    entity.getEvents().addListener("hurt",this::animateFlash);
   }
 
   void animateStill() {
@@ -42,4 +43,7 @@ public class PlayerAnimationController extends Component {
     animator.startAnimation("front");
   }
 
+  void animateFlash() {
+    animator.startAnimation("hurt");
+  }
 }

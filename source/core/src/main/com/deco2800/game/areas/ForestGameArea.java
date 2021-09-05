@@ -6,14 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.dialoguebox.Dialogue;
+import com.deco2800.game.components.dialoguebox.DialogueImage;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.BulletFactory;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.SafehouseFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -21,6 +19,8 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -35,7 +35,10 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/Player_Sprite/front.png", "images/player_placeholders/PROJECTILE.png",
+    "images/Player_Sprite/front.png",
+    "images/player_placeholders/PROJECTILE.png",
+    "images/obstacle_sprite/cobweb.png",
+    "images/obstacle_sprite/bush.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -58,7 +61,7 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png"
   };
-  private static final String[] forestTextureAtlases = { 
+  private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
       "images/largeEnemy.atlas",
       "images/ghost.atlas",
@@ -88,6 +91,8 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
+    spawnIntroDialogue();
+
     spawnBullet();
     spawnCobweb();
     spawnBush();
@@ -245,6 +250,17 @@ public class ForestGameArea extends GameArea {
       Entity bush = ObstacleFactory.createBush();
       spawnEntityAt(bush, randomPos, true, false);
     }
+  }
+
+  //TODO: This should be replaced when a global storage of dialogue and story is implemented
+  private void spawnIntroDialogue(){
+    String quote = "OH NO!\nThe light - it's disappearing. I have to make it to the safe house before the " +
+            "darkness gets to me!";
+    ArrayList<String> a = new ArrayList<>();
+    a.add(quote);
+    Dialogue dialogue = new DialogueImage(a, "player-portrait");
+    Entity dialogueEntity = DialogueBoxFactory.createTextDialogue(dialogue);
+    spawnEntity(dialogueEntity);
   }
 
   private void playMusic() {

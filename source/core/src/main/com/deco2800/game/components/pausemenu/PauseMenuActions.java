@@ -1,5 +1,6 @@
 package com.deco2800.game.components.pausemenu;
 
+import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.services.GameTime;
@@ -14,7 +15,10 @@ import org.slf4j.LoggerFactory;
 public class PauseMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
   private final GameTime timeSource = ServiceLocator.getTimeSource();
+  private static final float buttonClickDuration = 0.3f;
   private GdxGame game;
+  private boolean gameReturningToMenu = false;
+  private boolean gameQuiting = false;
 
   public PauseMenuActions(GdxGame game) {
     this.game = game;
@@ -50,7 +54,16 @@ public class PauseMenuActions extends Component {
    */
   private void onExitToMenu() {
     logger.info("Exiting to menu");
-    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    if (!gameReturningToMenu) {
+      gameReturningToMenu = true;
+      // starts the game after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        }
+      }, buttonClickDuration);
+    }
   }
 
   /**
@@ -58,6 +71,15 @@ public class PauseMenuActions extends Component {
    */
   private void onExitGame() {
     logger.info("Exit game");
-    game.exit();
+    if (!gameQuiting) {
+      gameQuiting = true;
+      // starts the game after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.exit();
+        }
+      }, buttonClickDuration);
+    }
   }
 }

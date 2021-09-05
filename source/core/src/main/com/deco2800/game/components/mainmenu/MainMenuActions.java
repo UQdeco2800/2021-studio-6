@@ -12,8 +12,11 @@ import org.slf4j.LoggerFactory;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
+  private static final float buttonClickDuration = 0.3f;
   private GdxGame game;
   private boolean gameStarted = false;
+  private boolean gameQuiting = false;
+
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -40,7 +43,7 @@ public class MainMenuActions extends Component {
         public void run() {
           game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         }
-      }, 0.2f);
+      }, buttonClickDuration);
     }
   }
 
@@ -57,7 +60,16 @@ public class MainMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    game.exit();
+    if (!gameQuiting) {
+      gameQuiting = true;
+      // starts the game after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.exit();
+        }
+      }, buttonClickDuration);
+    }
   }
 
   /**

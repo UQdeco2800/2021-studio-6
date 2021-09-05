@@ -26,7 +26,7 @@ import java.util.ArrayList;
  */
 public class PauseMenuDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
-  private static final String clickSoundFilePath = "sounds/click-high-pitch.mp3";
+  private static final String clickSoundFilePath = "sounds/click.mp3";
   private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
   private static final float MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT = 300;
   private static final float MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT = 300;

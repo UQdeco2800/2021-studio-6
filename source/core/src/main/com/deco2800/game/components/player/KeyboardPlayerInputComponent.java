@@ -37,7 +37,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
-    if (!timeSource.isPaused()) {
+    if (timeSource == null || !timeSource.isPaused()) {
       if (keycode == Keys.D) {
         entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
       } else if (keycode == Keys.A) {
@@ -75,22 +75,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         animationHandle();
         return true;
       case Keys.SHIFT_LEFT:
-        if (!timeSource.isPaused()) {
+        if (timeSource == null || !timeSource.isPaused()) {
           entity.getEvents().trigger("dash");
         }
         return true;
       case Keys.SPACE:
-        if (!timeSource.isPaused() && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if ((timeSource == null || !timeSource.isPaused()) && !this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if (!timeSource.isPaused() && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if ((timeSource == null || !timeSource.isPaused()) && !this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
       case Keys.ESCAPE:
-        timeSource.togglePause();
+        if (timeSource != null) {
+          timeSource.togglePause();
+        }
         return true;
       default:
         return false;

@@ -118,7 +118,6 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
-            System.out.println(debugCommand);
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.8f);
 

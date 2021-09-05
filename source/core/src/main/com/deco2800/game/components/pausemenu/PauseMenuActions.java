@@ -50,6 +50,7 @@ public class PauseMenuActions extends Component {
    */
   private void onExitToMenu() {
     logger.info("Exiting to menu");
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
   /**
@@ -59,5 +60,4 @@ public class PauseMenuActions extends Component {
     logger.info("Exit game");
     game.exit();
   }
-
 }

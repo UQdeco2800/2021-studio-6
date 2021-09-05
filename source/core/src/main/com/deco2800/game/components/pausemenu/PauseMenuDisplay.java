@@ -236,9 +236,19 @@ public class PauseMenuDisplay extends UIComponent {
     return Z_INDEX;
   }
 
+  /**
+   * Disposes all the assets related to the pause menu display
+   */
   @Override
   public void dispose() {
     table.clear();
+    table.remove();
+    for (Button button : menuButtons) {
+      button.remove();
+    }
+    menuButtons.clear();
+
     super.dispose();
   }
+
 }

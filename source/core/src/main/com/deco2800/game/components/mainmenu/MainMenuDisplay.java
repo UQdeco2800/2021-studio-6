@@ -121,14 +121,6 @@ public class MainMenuDisplay extends UIComponent {
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.8f);
 
-            // disposes the sound after the sound has finished to allow the sound playing after menu screen is disposed
-            Timer.schedule(new Timer.Task() {
-              @Override
-              public void run() {
-                ServiceLocator.getResourceService().unloadAssets(new String[] {clickSoundFilePath});
-              }
-            }, 0.2f);
-
             entity.getEvents().trigger(eventTrigger);
           }
         });

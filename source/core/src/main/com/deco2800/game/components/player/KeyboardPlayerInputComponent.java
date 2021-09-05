@@ -20,7 +20,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private final IntSet downKeys = new IntSet(20);
   private final ArrayList<Integer> movementKeys = new ArrayList<>();
-  private boolean isPaused = false;  // variable for PAUSING in keyDown method
   private final GameTime timeSource = ServiceLocator.getTimeSource();
 
   public KeyboardPlayerInputComponent() {
@@ -38,7 +37,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
-    if (!isPaused) {
+    if (!timeSource.isPaused()) {
       if (keycode == Keys.D) {
         entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
       } else if (keycode == Keys.A) {
@@ -76,33 +75,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         animationHandle();
         return true;
       case Keys.SHIFT_LEFT:
-        if (!isPaused) {
+        if (!timeSource.isPaused()) {
           entity.getEvents().trigger("dash");
         }
         return true;
       case Keys.SPACE:
-        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!timeSource.isPaused() && !this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!timeSource.isPaused() && !this.entity.getComponent(PlayerActions.class).isDashing()) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
-      /*
-      Pauses the game when ESC key is pressed, more like "freezes" the assets
-      if anything because the ESC key just controls the time scale in the game from
-      0f for "pause" and 1f for "resume".
-       */
       case Keys.ESCAPE:
-        if (isPaused) {
-          timeSource.setTimeScale(1f);
-          isPaused = false;
-        } else {
-          timeSource.setTimeScale(0f);
-          isPaused = true;
-        }
+        timeSource.togglePause();
         return true;
       default:
         return false;

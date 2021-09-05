@@ -2,6 +2,8 @@ package com.deco2800.game.components.pausemenu;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PauseMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
   private GdxGame game;
 
   public PauseMenuActions(GdxGame game) {
@@ -30,6 +33,7 @@ public class PauseMenuActions extends Component {
    */
   private void onContinue() {
     logger.info("Continue game");
+    timeSource.togglePause();
 
   }
 

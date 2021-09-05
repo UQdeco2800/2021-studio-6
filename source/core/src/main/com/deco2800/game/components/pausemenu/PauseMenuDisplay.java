@@ -26,8 +26,19 @@ import java.util.ArrayList;
  */
 public class PauseMenuDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
-  private static final String clickSoundFilePath = "sounds/click.mp3";
+  private static final String clickSoundFilePath = "sounds/click-high-pitch.mp3";
   private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
+  private static final float MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT = 300;
+  private static final float MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT = 300;
+  private static final float MAX_PAUSE_MENU_WIDTH_LARGE_FONT = 400;
+  private static final float MAX_PAUSE_MENU_HEIGHT_LARGE_FONT = 400;
+  private static final float PADDING_FOR_SMALL_FONT = 5;
+  private static final float PADDING_FOR_MEDIUM_FONT = 15;
+  private static final float PADDING_FOR_LARGE_FONT = 25;
+  private static final float MAX_PAUSE_MENU_WIDTH = 500;
+  private static final float MAX_PAUSE_MENU_HEIGHT = 600;
+  private static final float PAUSE_MENU_WIDTH_TO_SCREEN_RATIO = 2.7f / 3f;
+  private static final float PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO = 2.7f / 3f;
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
@@ -36,6 +47,7 @@ public class PauseMenuDisplay extends UIComponent {
   private Sound buttonClickSound;
   private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
+  private ArrayList<TextButton> menuButtons;
 
   @Override
   public void create() {
@@ -60,7 +72,7 @@ public class PauseMenuDisplay extends UIComponent {
   }
 
   /**
-   * Adds all the assets (buttons, background, sound, music) for the menu into the stage
+   * Adds a pause menu into the stage that contain the pause menu buttons
    */
   private void addActors() {
 
@@ -72,6 +84,13 @@ public class PauseMenuDisplay extends UIComponent {
     TextButton settingsBtn = new TextButton("Settings", skin, MENU_BUTTON_STYLE);
     TextButton menuBtn = new TextButton("Exit to Menu", skin, MENU_BUTTON_STYLE);
     TextButton exitBtn = new TextButton("Exit Game", skin, MENU_BUTTON_STYLE);
+
+    // Adds all the text buttons into a list to be accessed elsewhere in the class
+    menuButtons = new ArrayList<>();
+    menuButtons.add(continueBtn);
+    menuButtons.add(settingsBtn);
+    menuButtons.add(menuBtn);
+    menuButtons.add(exitBtn);
 
     // Triggers an event when the button is pressed
     addButtonSelectListener(continueBtn, "continue", "Continue button clicked");
@@ -88,7 +107,6 @@ public class PauseMenuDisplay extends UIComponent {
     pauseWindow = new Window("Game Paused", skin);
 
     table = new Table();
-
     table.add(continueBtn);
     table.row();
     table.add(settingsBtn);
@@ -96,16 +114,37 @@ public class PauseMenuDisplay extends UIComponent {
     table.add(menuBtn);
     table.row();
     table.add(exitBtn);
-
     pauseWindow.add(table);
 
-    // Set and position pause window screen
-    pauseWindow.setSize(stage.getWidth() / 3f, stage.getHeight() / 2f);
+    setPauseMenuSize();
     pauseWindow.setMovable(false);
+
+    stage.addActor(pauseWindow);
+  }
+
+  /**
+   * Sets the size of the pause menu dependent on the stage current size
+   */
+  private void setPauseMenuSize() {
+    float stageWidth = stage.getWidth();
+    float stageHeight = stage.getHeight();
+    float pauseMenuWidth = stageWidth * PAUSE_MENU_WIDTH_TO_SCREEN_RATIO;
+    float pauseMenuHeight = stageHeight * PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO;
+
+    // Checks if pause menu should be a max width and height
+    if (pauseMenuWidth > MAX_PAUSE_MENU_WIDTH) {
+      pauseMenuWidth = MAX_PAUSE_MENU_WIDTH;
+    }
+    if (pauseMenuHeight > MAX_PAUSE_MENU_HEIGHT) {
+      pauseMenuHeight = MAX_PAUSE_MENU_HEIGHT;
+    }
+
+    // Set and position pause window screen
+    pauseWindow.setSize(pauseMenuWidth, pauseMenuHeight);
     pauseWindow.setPosition(stage.getWidth() / 2 - pauseWindow.getWidth() / 2,
         stage.getHeight() / 2 - pauseWindow.getHeight() / 2);
 
-    stage.addActor(pauseWindow);
+    adjustMenuButtonsFontSize(pauseMenuWidth, pauseMenuHeight);
   }
 
 
@@ -124,14 +163,6 @@ public class PauseMenuDisplay extends UIComponent {
             System.out.println(debugCommand);
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.8f);
-
-            // disposes the sound after the sound has finished to allow the sound playing after menu screen is disposed
-            Timer.schedule(new Timer.Task() {
-              @Override
-              public void run() {
-                ServiceLocator.getResourceService().unloadAssets(new String[] {clickSoundFilePath});
-              }
-            }, 0.2f);
 
             entity.getEvents().trigger(eventTrigger);
           }
@@ -167,6 +198,37 @@ public class PauseMenuDisplay extends UIComponent {
   @Override
   public void draw(SpriteBatch batch) {
     // draw is handled by the stage
+    setPauseMenuSize();
+  }
+
+  /**
+   * Adjusts the menu button font size based on the size of the table containing the menu buttons
+   */
+  private void adjustMenuButtonsFontSize(float menuWidth, float menuHeight) {
+
+    if (menuWidth >= MAX_PAUSE_MENU_WIDTH_LARGE_FONT && menuHeight >= MAX_PAUSE_MENU_HEIGHT_LARGE_FONT) {
+      changeMenuButtonStyles("menu-button-large", PADDING_FOR_LARGE_FONT);
+    } else if (menuWidth >= MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT && menuHeight >= MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT) {
+      changeMenuButtonStyles("menu-button-medium", PADDING_FOR_MEDIUM_FONT);
+    } else {
+      changeMenuButtonStyles("menu-button-small", PADDING_FOR_SMALL_FONT);
+    }
+  }
+
+  /**
+   * Sets the style for all the buttons within the menu button table
+   * @param style - The LibGDX style to set the button to
+   */
+  private void changeMenuButtonStyles(String style, float padding) {
+    for (TextButton menuButton : menuButtons) {
+      Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
+      menuButton.setStyle(newButtonStyle);
+      Array<Cell> cells = table.getCells();
+
+      for (Cell cell : cells) {
+        cell.pad(padding);
+      }
+    }
   }
 
   @Override

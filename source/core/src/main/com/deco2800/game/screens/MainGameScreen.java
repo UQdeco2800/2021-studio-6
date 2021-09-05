@@ -40,7 +40,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] mainGameTextures = {"images/heart.png","images/hud/22highbar6.png",
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png"};
-  private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
+  private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click-high-pitch.mp3"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
   public static boolean levelChange = false;

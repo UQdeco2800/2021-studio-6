@@ -18,10 +18,14 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerRangeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackComponent.class);
+    // activeBullets array will be updated and reloaded with ammo entities whenever bullet collides with
+    // any object in game world
     private static Array<Entity> activeBullets;
     final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
+    private int ammo = entity.getComponent(InventoryComponent.class).getAmmo();
+    private int magazineCapacity = 5;
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets

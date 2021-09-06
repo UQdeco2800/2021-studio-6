@@ -1,5 +1,7 @@
 package com.deco2800.game.components;
 
+import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
+import com.deco2800.game.physics.components.PhysicsComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Timer;
@@ -35,6 +37,11 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setHealth(health); // overrides the parents setting of health
         setBaseRangedAttack(baseRangedAttack);
         setDefenceLevel(defenceLevel);
+    }
+
+    @Override
+    public void create() {
+        entity.getEvents().addListener("invincibility", this::invincibleStart);
     }
 
     /**

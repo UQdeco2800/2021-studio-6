@@ -1,31 +1,34 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Input;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.extensions.GameExtension;
-import com.deco2800.game.input.InputComponent;
-import com.deco2800.game.input.InputService;
-import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 class PlayerActionsTest {
+    @Mock GameTime time;
+
+    @BeforeEach
+    void beforeEach() {
+        ServiceLocator.registerTimeSource(time);
+    }
 
     @Test
-    void shouldSetInitialSpeed() {
-        GameTime time = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(time);
+    void shouldSetSpeed() {
         PlayerActions action = new PlayerActions(3);
         Vector2 speed = new Vector2(3f, 3f);
         assertEquals(speed.x, action.getCurrentSpeed().x);
@@ -48,17 +51,14 @@ class PlayerActionsTest {
     }
 
     @Test
-    void shouldChangeSpeedWhenWounded() {
-        GameTime time = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(time);
-        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(new PlayerCombatStatsComponent(3, 5, 3, 5, 0));
+    void shouldChangeSpeedWhenWoundChanges() {
+        Entity player = new Entity().addComponent(new PlayerActions(3));
         player.create();
         Vector2 speed = new Vector2(3f, 3f);
         assertEquals(speed.x, player.getComponent(PlayerActions.class).getCurrentSpeed().x);
         assertEquals(speed.y, player.getComponent(PlayerActions.class).getCurrentSpeed().y);
 
-        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(2);
-        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        player.getEvents().trigger("updateWound", 2);
         speed = new Vector2(4f, 4f);
         assertEquals(speed.x, player.getComponent(PlayerActions.class).getCurrentSpeed().x);
         assertEquals(speed.y, player.getComponent(PlayerActions.class).getCurrentSpeed().y);
@@ -66,36 +66,28 @@ class PlayerActionsTest {
 
     @Test
     void shouldTriggerDashOnlyWhenMoving() {
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerInputService(new InputService());
-        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
-        GameTime time = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(time);
-        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(inputComponent).addComponent(new PlayerCombatStatsComponent(3, 5, 3, 5, 0));
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerActions(3));
         player.create();
-
+        assertFalse(player.getComponent(PlayerActions.class).isDashing());
         player.getEvents().trigger("dash");
         assertFalse(player.getComponent(PlayerActions.class).isDashing());
 
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
+        player.getEvents().trigger("walk", new Vector2(1f, 0f));
         player.getEvents().trigger("dash");
         assertTrue(player.getComponent(PlayerActions.class).isDashing());
     }
 
     @Test
     void shouldTriggerDashOutsideDelay() {
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerInputService(new InputService());
-        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
-        GameTime time = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(time);
-        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(inputComponent).addComponent(new PlayerCombatStatsComponent(3, 5, 3, 5, 0));
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerActions(3));
         player.create();
 
         // Regular trigger
         assertTrue(player.getComponent(PlayerActions.class).canDash());
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
+        player.getEvents().trigger("walk", new Vector2(1f, 0f));
+        player.getEvents().trigger("dash");
         assertFalse(player.getComponent(PlayerActions.class).canDash());
 
         // Trigger before delay is up
@@ -107,47 +99,37 @@ class PlayerActionsTest {
         assertTrue(player.getComponent(PlayerActions.class).canDash());
 
         // Checking delay reset
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
+        player.getEvents().trigger("dash");
         assertFalse(player.getComponent(PlayerActions.class).canDash());
     }
 
     @Test
     void shouldGetRemainingDelayTime() {
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerInputService(new InputService());
-        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
-        GameTime time = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(time);
-        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(inputComponent).addComponent(new PlayerCombatStatsComponent(3, 5, 3, 5, 0));
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerActions(3));
         player.create();
         assertEquals(0, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
 
-        assertTrue(player.getComponent(PlayerActions.class).canDash());
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
+        player.getEvents().trigger("walk", new Vector2(1f, 0f));
+        player.getEvents().trigger("dash");
         assertEquals(2000, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
 
-        when(time.getTime()).thenReturn(2000L);
+        when(time.getTime()).thenReturn(1000L);
+        assertEquals(1000, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
+
+        when(time.getTime()).thenReturn(3000L);
         assertEquals(0, player.getComponent(PlayerActions.class).getDelayTimeRemaining());
     }
 
     @Test
-    void dashShouldSetInvincible() {
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerInputService(new InputService());
-        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
-        GameTime time = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(time);
-        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(inputComponent).addComponent(new PlayerCombatStatsComponent(3, 5, 3, 5, 0));
+    void dashShouldTriggerInvincible() {
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerActions(3));
         player.create();
-
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
-
-        CombatStatsComponent enemy = new CombatStatsComponent(100, 2);
-
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
-        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        EventListener1 listener = mock(EventListener1.class);
+        player.getEvents().addListener("invincible", listener);
+        player.getEvents().trigger("walk", new Vector2(1f, 0f));
+        player.getEvents().trigger("dash");
+        verify(listener).handle(100);
     }
 }

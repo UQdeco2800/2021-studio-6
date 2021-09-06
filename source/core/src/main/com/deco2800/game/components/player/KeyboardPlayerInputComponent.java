@@ -22,9 +22,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final ArrayList<Integer> movementKeys = new ArrayList<>();
   private boolean isPaused = false;  // variable for PAUSING in keyDown method
   private final GameTime timeSource = ServiceLocator.getTimeSource();
+  // Variable for allowing attacks
+  private boolean canAttack = true;
 
   public KeyboardPlayerInputComponent() {
     super(5);
+  }
+
+  @Override
+  public void create() {
+    super.create();
+    entity.getEvents().addListener("enableAttack", this::enableAttack);
+    entity.getEvents().addListener("disableAttack", this::disableAttack);
   }
 
   /**
@@ -81,13 +90,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         return true;
       case Keys.SPACE:
-        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!isPaused && canAttack) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!isPaused && canAttack) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
+        }
+        return true;
+      case Keys.E:
+        if (!isPaused && canAttack) {
+          entity.getEvents().trigger("tryAbility");
         }
         return true;
       /*
@@ -122,7 +136,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.UP);
-
         triggerWalkEvent();
         animationHandle();
         return true;
@@ -188,5 +201,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
+  }
+
+  /**
+   * Sets the player able to attack
+   */
+  void enableAttack() {
+    this.canAttack = true;
+  }
+
+  /**
+   * Sets the player to be unable to attack
+   */
+  void disableAttack() {
+    this.canAttack = false;
   }
 }

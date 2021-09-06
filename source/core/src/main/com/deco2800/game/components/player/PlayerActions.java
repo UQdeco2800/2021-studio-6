@@ -4,11 +4,9 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.services.GameTime;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -24,15 +22,18 @@ public class PlayerActions extends Component {
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
   // Dashing
   private final float dashSpeed = 20f;
-  private float diagonalDashSpeed;
   private boolean dashing = false;
+  private Vector2 dashVelocity;
+  // Long Dashing
+  private boolean longDashing = false;
+  private long longDashEndTime = 0;
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final int DelayLength = 2000; // in milliseconds
-  private static final int DashLength = 50; // in milliseconds
-  private Vector2 dashDirection;
-  private long delayEndTime;
-  private long dashEndTime;
+  private static final int delayLength = 2000; // in milliseconds
+  private static final int dashLength = 100; // in milliseconds
+  private long delayEndTime = 0;
+  private long dashEndTime = 0;
+
 
   /**
    * Basic constructor for setting the initial player speed based on saved wound state
@@ -42,9 +43,6 @@ public class PlayerActions extends Component {
    */
   public PlayerActions (int woundState) {
     setSpeed(woundState);
-    diagonalDashSpeed = dashSpeed/2; // ensuring dash is equal for diagonal and regular directions
-    delayEndTime = 0;
-    dashEndTime = 0;
   }
 
   @Override
@@ -56,36 +54,47 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("updateWound", this::setSpeed);
     entity.getEvents().addListener("dash", this::dash);
+    entity.getEvents().addListener("longDash", this::longDash);
   }
 
   @Override
   public void update() {
-    if (moving) {
+    if (dashing) {
+      updateDash(dashEndTime);
+    } else if (longDashing) {
+      updateDash(longDashEndTime);
+    } else if (moving) {
       updateSpeed();
     }
   }
 
+  /**
+   * When player is set to moving the player will be moved in the key direction during update
+   */
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 desiredVelocity;
-    if (dashing) {
-      if (dashDirection.cpy().x == 0f) { // Making dash length equal for all axis'
-        desiredVelocity = dashDirection.cpy().scl(0f, dashSpeed);
-      } else if (dashDirection.cpy().y == 0f) {
-        desiredVelocity = dashDirection.cpy().scl(dashSpeed, 0f);
-      } else {
-        desiredVelocity = dashDirection.cpy().scl(diagonalDashSpeed, diagonalDashSpeed);
-      }
-      if (dashEndTime <= timeSource.getTime()) { // stop dash at end of time
-        dashing = false;
-      }
-    } else {
-      desiredVelocity = walkDirection.cpy().scl(maxSpeed);
-    }
+    Vector2 desiredVelocity = walkDirection.cpy().scl(maxSpeed);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  }
+
+  /**
+   * When player is set to dashing, walking will be overwritten
+   * Until the end of the dash time the player will be moved in the dash direction every update
+   */
+  private void updateDash(long endTime) {
+    Body body = physicsComponent.getBody();
+    Vector2 velocity = body.getLinearVelocity();
+    // impulse = (desiredVel - currentVel) * mass
+    Vector2 impulse = dashVelocity.cpy().sub(velocity).scl(body.getMass());
+    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+    if (endTime <= timeSource.getTime()) { // stop dash at end of time
+      dashing = false;
+      this.longDashing = false;
+      this.entity.getEvents().trigger("enableAttack");
+    }
   }
 
   /**
@@ -126,16 +135,55 @@ public class PlayerActions extends Component {
   }
 
   /**
+   * Returns the whether the player is currently dashing
+   *
+   * @return whether the player is in the dashing state
+   */
+  public boolean isDashing() {
+    return dashing;
+  }
+
+  /**
+   * Returns the current max speed of the player
+   *
+   * @return the players current speed
+   */
+  public Vector2 getCurrentSpeed() {
+    return maxSpeed;
+  }
+
+  /**
    * Sets the player to dashing if the current cooldown has passed
    */
   void dash() {
     if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
-      delayEndTime = timeSource.getTime() + DelayLength;
-      dashEndTime = timeSource.getTime() + DashLength;
-      dashDirection = walkDirection.cpy(); // Get dash direction
-      this.entity.getComponent(PlayerCombatStatsComponent.class).invincibleStart(DashLength);
+      delayEndTime = timeSource.getTime() + delayLength;
+      dashEndTime = timeSource.getTime() + dashLength;
+      if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
+        dashVelocity = walkDirection.cpy().scl(dashSpeed);
+      } else {
+        dashVelocity = walkDirection.cpy().scl(dashSpeed/2, dashSpeed/2);
+      }
+      this.entity.getEvents().trigger("invincible", dashLength);
+      this.entity.getEvents().trigger("disableAttack");
       this.dashing = true;
     }
+  }
+
+  /**
+   * Sets the player to start a long dash
+   * @param endTime is the time to end the dash according to the game clock
+   */
+  void longDash(long endTime) {
+    longDashEndTime = endTime;
+    if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
+      dashVelocity = walkDirection.cpy().scl(dashSpeed*2);
+    } else {
+      dashVelocity = walkDirection.cpy().scl(dashSpeed, dashSpeed);
+    }
+    this.entity.getEvents().trigger("invincible", endTime-timeSource.getTime());
+    this.entity.getEvents().trigger("disableAttack");
+    this.longDashing = true;
   }
 
   /**
@@ -164,23 +212,5 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
     playerMeleeAttackComponent.meleeAttackClicked(true);
-  }
-
-  /**
-   * Returns the whether the player is currently dashing
-   *
-   * @return whether the player is in the dashing state
-   */
-  public boolean isDashing() {
-    return dashing;
-  }
-
-  /**
-  * Returns the current max speed of the player
-  *
-  * @return the players current speed
-   */
-  public Vector2 getCurrentSpeed() {
-    return maxSpeed;
   }
 }

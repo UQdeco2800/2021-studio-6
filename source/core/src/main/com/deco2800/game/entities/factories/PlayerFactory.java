@@ -57,6 +57,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                             stats.baseRangedAttack, stats.defenceLevel))
                     .addComponent(new InventoryComponent(stats.gold))
+                    .addComponent(new PlayerAbilitiesComponent(0))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
                     .addComponent(new PlayerRangeAttackComponent())

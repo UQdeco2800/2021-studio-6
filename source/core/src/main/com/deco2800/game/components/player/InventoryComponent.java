@@ -48,6 +48,14 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Adds to the player's ammo count . The amount added can be negative.
+   * @param ammo ammo to add
+   */
+  public void addAmmo(int ammo) {
+    setAmmo(this.ammo + ammo);
+  }
+
+  /**
    * Returns the player's gold.
    *
    * @return entity's health

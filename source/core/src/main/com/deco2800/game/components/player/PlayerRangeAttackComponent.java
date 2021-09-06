@@ -24,7 +24,7 @@ public class PlayerRangeAttackComponent extends Component {
     final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
-    private int ammo = entity.getComponent(InventoryComponent.class).getAmmo();
+    private int ammo;
     private int magazineCapacity = 5;
 
     /**
@@ -32,7 +32,8 @@ public class PlayerRangeAttackComponent extends Component {
      * for firing
      *
      */
-    public PlayerRangeAttackComponent() {
+    public PlayerRangeAttackComponent(int ammo) {
+        this.ammo = ammo;
     }
 
     /**

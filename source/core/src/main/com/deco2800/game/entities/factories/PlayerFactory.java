@@ -63,7 +63,7 @@ public class PlayerFactory {
                     .addComponent(new InventoryComponent(stats.gold, stats.bulletNumber))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
-                    .addComponent(new PlayerRangeAttackComponent(stats.bulletNumber))
+                    .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())
                     .addComponent(animator)
                     .addComponent(new PlayerAnimationController());

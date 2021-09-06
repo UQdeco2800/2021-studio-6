@@ -24,7 +24,6 @@ public class PlayerRangeAttackComponent extends Component {
     final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
-    private int ammo;
     private int magazineCapacity = 5;
 
     /**
@@ -32,8 +31,7 @@ public class PlayerRangeAttackComponent extends Component {
      * for firing
      *
      */
-    public PlayerRangeAttackComponent(int ammo) {
-        this.ammo = ammo;
+    public PlayerRangeAttackComponent() {
     }
 
     /**
@@ -45,6 +43,12 @@ public class PlayerRangeAttackComponent extends Component {
         activeBullets.add(bulletShot);
     }
 
+    /**
+     * To return bullet of entities that are spawned in the game world. These will continuously
+     * be used for performance sake
+     *
+     * @return array of entities
+     */
     public static Array<Entity> getActiveBullets() {
         return activeBullets;
     }
@@ -52,7 +56,7 @@ public class PlayerRangeAttackComponent extends Component {
     /**
      * Used to load after spawning in game area for firing in game
      *
-     * @param bullets is the number of bullets player has to shoot
+     * @param bullets is the number of bullets player will be able to spawn into the game world
      */
     public void addBullets(Array<Entity> bullets) {
         activeBullets = new Array<>(bullets);
@@ -122,8 +126,8 @@ public class PlayerRangeAttackComponent extends Component {
             longAttackDir = movingAttackDir.cpy();
         }
 
-        // check if there is ammo
-        if (activeBullets.size != 0) {
+        // check if there are bullets left to shoot in magazine currently
+        if (magazineCapacity != 0) {
             // player has not moved before, use default direction attack (to the right)
             if (longAttackDir.isZero()) {
                 bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
@@ -141,6 +145,9 @@ public class PlayerRangeAttackComponent extends Component {
 
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+
+                // update
+                magazineCapacity--;
             }
         }
     }

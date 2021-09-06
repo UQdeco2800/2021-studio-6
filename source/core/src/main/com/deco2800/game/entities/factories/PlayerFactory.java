@@ -19,6 +19,8 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
+import java.io.File;
+
 /**
  * Factory to create a player entity.
  *
@@ -28,6 +30,8 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+  private static String base = "configs/BaseWeapon.json";
+  private static String sword = "configs/Sword.json";
 
   /**
    * Create a player entity.
@@ -51,7 +55,7 @@ public class PlayerFactory {
                     .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
-                    .addComponent(new PlayerMeleeAttackComponent())
+                    .addComponent(new PlayerMeleeAttackComponent(sword))
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new PlayerActions(stats.woundState))
                     .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,

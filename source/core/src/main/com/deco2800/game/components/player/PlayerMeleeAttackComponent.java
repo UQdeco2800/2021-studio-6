@@ -1,6 +1,5 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -8,8 +7,9 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.configs.BaseWeaponConfig;
+import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.BodyUserData;
-import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
@@ -19,11 +19,11 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  * When entity is within range of enemy and melee attack button is clicked, damage is dealt
@@ -44,11 +44,6 @@ public class PlayerMeleeAttackComponent extends Component {
     private final FixtureDef fixtureDefS;
     private final FixtureDef fixtureDefD;
     private Fixture fixture;
-    private Fixture fixtureW;
-    private Fixture fixtureA;
-    private Fixture fixtureS;
-    private Fixture fixtureD;
-    private PlayerCombatStatsComponent playerCombatStats;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
     private Vector2 directionMove;
@@ -58,15 +53,24 @@ public class PlayerMeleeAttackComponent extends Component {
 
 
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static final int attackLength = 100; // in milliseconds
     private long attackStart;
     private long attackEnd;
     private Timer attackTimer;
     private boolean canAttack = true;
     private boolean setShapes = false;
 
+    private int damage;
+    private int knockback;
+    private float length;
+    private float height;
+    private int attackLength; // in milliseconds
 
-    public PlayerMeleeAttackComponent() {
+
+    public PlayerMeleeAttackComponent(String weaponConfig) {
+       // String filename = weaponConfig.getPath();
+        BaseWeaponConfig stats =
+            FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
+        System.out.println(stats);
         fixtureDef = new FixtureDef();
         fixtureDefW = new FixtureDef();
         fixtureDefA = new FixtureDef();
@@ -74,19 +78,20 @@ public class PlayerMeleeAttackComponent extends Component {
         fixtureDefD = new FixtureDef();
         fixtureDefLast = fixtureDefW;
 
+        damage = stats.attackDamage;
+        knockback = stats.knockback;
+        length = stats.length;
+        height = stats.height;
+        attackLength = stats.attackLength; // in milliseconds
     }
 
     @Override
     public void create() {
-
         // event listeners to check if enemy is within range of melee attack or not
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
         entity.getEvents().addListener("attack", this::Attack);
         entity.getEvents().addListener("walk", this::Walk);
-
-        playerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
-
     }
 
     /**
@@ -96,7 +101,6 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void Walk(Vector2 walkDirection) {
         if (fixture != null) {
-            System.out.println("Disposing");
             dispose();
         }
         setDirection(walkDirection);
@@ -117,7 +121,6 @@ public class PlayerMeleeAttackComponent extends Component {
      * @return player last walked direction
      */
     private FixtureDef getFixDirection() {
-        System.out.println(directionMove);
         if (directionMove != null) {
             if (directionMove.epsilonEquals(Vector2Utils.UP)) {
                 fixtureDefLast = fixtureDefW;
@@ -133,26 +136,25 @@ public class PlayerMeleeAttackComponent extends Component {
                 return fixtureDefD;
             }
         }
-        System.out.println("null1");
         return fixtureDefLast;
     }
 
     private void setShapes() {
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
-        bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.8), 0f);
+        bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)0.8), 0f);
         fixtureDefW.shape = bbox;
         bbox = new PolygonShape();
         center = entity.getScale().scl(0.5f);
-        bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.8 , 0), 0f);
+        bbox.setAsBox(center.x * height, center.y*length, center.add( (float)-0.8 , 0), 0f);
         fixtureDefA.shape = bbox;
         bbox = new PolygonShape();
         center = entity.getScale().scl(0.5f);
-        bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float) 0.8 , 0), 0f);
+        bbox.setAsBox(center.x * height, center.y*length, center.add( (float) 0.8 , 0), 0f);
         fixtureDefD.shape = bbox;
         bbox = new PolygonShape();
         center = entity.getScale().scl(0.5f);
-        bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.8), 0f);
+        bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)-0.8), 0f);
         fixtureDefS.shape = bbox;
         directionMove = new Vector2((float)0.0,(float)0.0);
     }
@@ -190,16 +192,12 @@ public class PlayerMeleeAttackComponent extends Component {
      *              with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
-        System.out.println(me.getFilterData().categoryBits);
-        System.out.println(other.getFilterData().categoryBits);
         // By default, should only try detect NPC layers only
         if (!PhysicsLayer.contains(PhysicsLayer.WEAPON, me.getFilterData().categoryBits)) {
-            System.out.println("PLAYER");
             return;
         }
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore - could be obstacle but not NPC
-            System.out.println("here");
             return;
         }
 
@@ -207,11 +205,14 @@ public class PlayerMeleeAttackComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
         if (targetStats != null) {
-            System.out.println("close");
             closeToAttack = true;
             closeEnemies.add(other);
             damage();
         }
+    }
+
+    private void attackTrigger() {
+
     }
 
     /**
@@ -222,14 +223,13 @@ public class PlayerMeleeAttackComponent extends Component {
      * Afterwards, goes through the set of killed enemies and removes them.
      */
     private void damage() {
-        System.out.println("damage");
         for (Fixture enemy: closeEnemies) {
             Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
             CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+            attackTrigger();
             // enemy within range and player clicked melee attack button
             if (closeToAttack && meleeAttackClicked && targetStats != null) {
-                targetStats.hit(playerCombatStats);
-                System.out.println(targetStats.getHealth());
+                targetStats.hit(damage);
                 // freezes enemy - will need to be replaced to despawn enemy entity
                 if (targetStats.isDead()) {
                     removingEnemies.add(enemy);
@@ -255,7 +255,6 @@ public class PlayerMeleeAttackComponent extends Component {
                 if (!setShapes) {
                     setShapes();
                     setShapes = true;
-                    logger.trace("{} Setting default bounding box", this);
                     //fixtureDef.shape = makeBoundingBox();
                 }
 
@@ -292,7 +291,6 @@ public class PlayerMeleeAttackComponent extends Component {
         //test.dispose();
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
-            System.out.println("deleted");
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
             //physBody.destroyFixture(fixture);
             fixture = null;
@@ -418,36 +416,4 @@ public class PlayerMeleeAttackComponent extends Component {
         }
         return fixture.getFilterData().categoryBits;
     }
-
-    /**
-     * Enlarge shape of fixture based on fixture size of entity
-     *
-     * @return enlarge fixture and places it on the center of the entity
-     */
-    private Shape makeBoundingBox() {
-
-        PolygonShape bbox = new PolygonShape();
-        Vector2 center = entity.getScale().scl(0.5f);
-        // width and height enlarge - this is the range of melee attack for player
-
-        if (directionMove.epsilonEquals(Vector2Utils.UP)){
-            bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)0.7), 0f);
-        }
-
-        else if (directionMove.epsilonEquals(Vector2Utils.DOWN)){
-            bbox.setAsBox(center.x * 2, center.y*(float)0.5, center.add( 0 , (float)-0.7), 0f);
-        }
-
-        else if (directionMove.epsilonEquals(Vector2Utils.LEFT)){
-            bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float)-0.7 , 0), 0f);
-        }
-
-        else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)){
-            bbox.setAsBox(center.x * (float)0.5, center.y*2, center.add( (float) 0.7 , 0), 0f);
-        }
-        return bbox;
-    }
-
-
-
 }

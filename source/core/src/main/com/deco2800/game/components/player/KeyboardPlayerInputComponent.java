@@ -75,6 +75,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         animationHandle();
         return true;
+      case Keys.R:
+        if (!isPaused) {
+          entity.getEvents().trigger("reload");
+        }
       case Keys.SHIFT_LEFT:
         if (!isPaused) {
           entity.getEvents().trigger("dash");

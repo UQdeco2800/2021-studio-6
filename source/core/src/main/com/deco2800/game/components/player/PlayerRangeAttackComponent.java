@@ -146,10 +146,28 @@ public class PlayerRangeAttackComponent extends Component {
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
 
-                // update
+                // update current gun magazine
                 magazineCapacity--;
             }
         }
     }
 
+    /**
+     * Called to reload current gun magazine capacity. May not always be reloaded to 5 (the max).
+     * It is dependent on ammo left in inventory
+     *
+     * @param ammo that will be reloaded into gun magazine
+     */
+    public void reloadGunMagazine(int ammo) {
+        this.magazineCapacity += ammo;
+    }
+
+    /**
+     * Called to check current magazine capacity for reloading and ammo reduction purposes
+     *
+     * @return current gun magazine - how many bullets left in current round
+     */
+    public int getGunMagazine() {
+        return this.magazineCapacity;
+    }
 }

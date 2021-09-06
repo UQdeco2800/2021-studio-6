@@ -8,7 +8,9 @@ import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.services.GameTime;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -17,6 +19,8 @@ import com.deco2800.game.services.GameTime;
 public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private PlayerMeleeAttackComponent playerMeleeAttackComponent;
+  private PlayerRangeAttackComponent playerRangeAttackComponent;
+  private InventoryComponent inventory;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   // Speed Modification
@@ -30,6 +34,7 @@ public class PlayerActions extends Component {
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   private static final int DelayLength = 2000; // in milliseconds
   private static final int DashLength = 50; // in milliseconds
+  private static final int DelayReloadLength = 3000; // in milliseconds
   private Vector2 dashDirection;
   private long delayEndTime;
   private long dashEndTime;
@@ -56,6 +61,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("updateWound", this::setSpeed);
     entity.getEvents().addListener("dash", this::dash);
+    entity.getEvents().addListener("reload", this::reload);
   }
 
   @Override
@@ -136,6 +142,39 @@ public class PlayerActions extends Component {
       this.entity.getComponent(PlayerCombatStatsComponent.class).invincibleStart(DashLength);
       this.dashing = true;
     }
+  }
+
+  /**
+   * Reloads player's range attack weapon for firing again
+   */
+  void reload() {
+    System.out.println("delay started");
+    inventory = entity.getComponent(InventoryComponent.class);
+    playerRangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
+
+    // used to check number of ammo required from inventory for deduction
+    int magazineNum = playerRangeAttackComponent.getGunMagazine();
+
+    System.out.println(magazineNum);
+
+    Timer reloadTimer = new Timer(true);
+//    reloadTimer.schedule( new TimerTask() {
+//      public void run() {
+//
+//        int ammoLeft = inventory.getAmmo();
+//        int ammoToReload;
+//
+//        if (ammoLeft > 5) {
+//          ammoToReload = 5;
+//          inventory.addAmmo(ammoToReload);
+//        } else {
+//          ammoToReload = ammoLeft;
+//
+//        }
+//
+//        cancel();
+//      }
+//    }, DelayReloadLength);
   }
 
   /**

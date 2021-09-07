@@ -130,6 +130,6 @@ class PlayerActionsTest {
         player.getEvents().addListener("invincible", listener);
         player.getEvents().trigger("walk", new Vector2(1f, 0f));
         player.getEvents().trigger("dash");
-        verify(listener).handle(100);
+        verify(listener).handle(100L);
     }
 }

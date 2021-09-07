@@ -28,9 +28,6 @@ public class PlayerActions extends Component {
   private final float dashSpeed = 20f;
   private boolean dashing = false;
   private Vector2 dashVelocity;
-  // Long Dashing
-  private boolean longDashing = false;
-  private long longDashEndTime = 0;
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   private static final int delayLength = 2000; // in milliseconds
@@ -61,7 +58,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("updateWound", this::setSpeed);
-    entity.getEvents().addListener("dash", this::dash);
+    entity.getEvents().addListener("dash", this::regularDash);
     entity.getEvents().addListener("longDash", this::longDash);
     entity.getEvents().addListener("reload", this::reload);
   }
@@ -69,9 +66,7 @@ public class PlayerActions extends Component {
   @Override
   public void update() {
     if (dashing) {
-      updateDash(dashEndTime);
-    } else if (longDashing) {
-      updateDash(longDashEndTime);
+      updateDash();
     } else if (moving) {
       updateSpeed();
     }
@@ -93,15 +88,14 @@ public class PlayerActions extends Component {
    * When player is set to dashing, walking will be overwritten
    * Until the end of the dash time the player will be moved in the dash direction every update
    */
-  private void updateDash(long endTime) {
+  private void updateDash() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = dashVelocity.cpy().sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
-    if (endTime <= timeSource.getTime()) { // stop dash at end of time
+    if (dashEndTime <= timeSource.getTime()) { // stop dash at end of time
       dashing = false;
-      this.longDashing = false;
       this.entity.getEvents().trigger("enableAttack");
     }
   }
@@ -164,18 +158,11 @@ public class PlayerActions extends Component {
   /**
    * Sets the player to dashing if the current cooldown has passed
    */
-  void dash() {
+  void regularDash() {
     if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
       delayEndTime = timeSource.getTime() + delayLength;
       dashEndTime = timeSource.getTime() + dashLength;
-      if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
-        dashVelocity = walkDirection.cpy().scl(dashSpeed);
-      } else {
-        dashVelocity = walkDirection.cpy().scl(dashSpeed/2, dashSpeed/2);
-      }
-      this.entity.getEvents().trigger("invincible", dashLength);
-      this.entity.getEvents().trigger("disableAttack");
-      this.dashing = true;
+      setDash(dashSpeed);
     }
   }
 
@@ -184,15 +171,8 @@ public class PlayerActions extends Component {
    * @param endTime is the time to end the dash according to the game clock
    */
   void longDash(long endTime) {
-    longDashEndTime = endTime;
-    if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
-      dashVelocity = walkDirection.cpy().scl(dashSpeed * 2);
-    } else {
-      dashVelocity = walkDirection.cpy().scl(dashSpeed, dashSpeed);
-    }
-    this.entity.getEvents().trigger("invincible", endTime - timeSource.getTime());
-    this.entity.getEvents().trigger("disableAttack");
-    this.longDashing = true;
+    dashEndTime = endTime;
+    setDash(dashSpeed*2);
   }
 
   /**
@@ -265,5 +245,20 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
     playerMeleeAttackComponent.meleeAttackClicked(true);
+  }
+
+  /**
+   * Sets the players dash velocity based on direction and speed
+   * @param mainSpeed the horizontal/vertical speed of the dash
+   */
+  private void setDash(float mainSpeed) {
+    if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
+      dashVelocity = walkDirection.cpy().scl(mainSpeed);
+    } else {
+      dashVelocity = walkDirection.cpy().scl(mainSpeed/2, mainSpeed/2);
+    }
+    this.entity.getEvents().trigger("invincible", dashEndTime - timeSource.getTime());
+    this.entity.getEvents().trigger("disableAttack");
+    this.dashing = true;
   }
 }

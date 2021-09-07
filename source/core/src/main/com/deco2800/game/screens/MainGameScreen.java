@@ -97,7 +97,7 @@ public class MainGameScreen extends ScreenAdapter {
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
-          game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+          game.setScreen(GdxGame.ScreenType.GAME_OVER);
         }
       }, 1f);
     }

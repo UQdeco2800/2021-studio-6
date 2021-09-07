@@ -62,6 +62,7 @@ public class SafehouseGameArea extends GameArea {
     spawnTerrain();
     spawnDoor();
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
+    player.getEvents().trigger("disableAttack");
     spawnBullet();
     //playMusic();
   }

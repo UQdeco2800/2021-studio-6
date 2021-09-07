@@ -179,7 +179,6 @@ public class PlayerActions extends Component {
   }
 
   /**
-<<<<<<< HEAD
    * Sets the player to start a long dash
    * @param endTime is the time to end the dash according to the game clock
    */

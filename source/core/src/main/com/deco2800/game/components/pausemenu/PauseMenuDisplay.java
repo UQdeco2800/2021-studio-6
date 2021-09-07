@@ -160,9 +160,8 @@ public class PauseMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
-            System.out.println(debugCommand);
             long soundClickId = buttonClickSound.play();
-            buttonClickSound.setVolume(soundClickId,0.8f);
+            buttonClickSound.setVolume(soundClickId,0.6f);
 
             entity.getEvents().trigger(eventTrigger);
           }
@@ -177,16 +176,21 @@ public class PauseMenuDisplay extends UIComponent {
     ClickListener rollOverListener = new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-        if (!rolloverActivated && event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
+
+        // check that the rollover even is the text button and not the button label
+        if (!rolloverActivated && event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
+                || event.getRelatedActor().toString().contains("TextButton"))) {
           rolloverActivated = true;
           long soundRolloverId = rolloverClickSound.play();
-          rolloverClickSound.setVolume(soundRolloverId,0.8f);
+          rolloverClickSound.setVolume(soundRolloverId,0.5f);
         }
       }
       @Override
       public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
       {
-        if (event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
+        // check that the rollover even is the text button and not the button label
+        if (event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
+                || event.getRelatedActor().toString().contains("TextButton"))) {
           rolloverActivated = false;
         }
       }

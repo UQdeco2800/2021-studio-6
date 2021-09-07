@@ -25,6 +25,7 @@ public class PlayerRangeAttackComponent extends Component {
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
     private int magazineCapacity = 5;
+    private boolean currentlyReloading = false;
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets
@@ -126,8 +127,8 @@ public class PlayerRangeAttackComponent extends Component {
             longAttackDir = movingAttackDir.cpy();
         }
 
-        // check if there are bullets left to shoot in magazine currently
-        if (magazineCapacity != 0) {
+        // check if there are bullets left to shoot in magazine currently and if player is currently reloading
+        if (magazineCapacity != 0 && !getReloadingStatus()) {
             // player has not moved before, use default direction attack (to the right)
             if (longAttackDir.isZero()) {
                 bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
@@ -159,7 +160,27 @@ public class PlayerRangeAttackComponent extends Component {
      * @param ammo that will be reloaded into gun magazine
      */
     public void reloadGunMagazine(int ammo) {
+        setReloadingStatus(false);
         this.magazineCapacity += ammo;
+    }
+
+    /**
+     * Updates reloading status of player - used to prevent player from shooting while reloading
+     *
+     * @param reloading that will be used to update reloading status to prevent player from shooting
+     *                  when reloading
+     */
+    public void setReloadingStatus(boolean reloading) {
+        this.currentlyReloading = reloading;
+    }
+
+    /**
+     * Returns reloading status of player
+     *
+     * @return true if reloading is currently being execute and false otherwise
+     */
+    public boolean getReloadingStatus() {
+        return currentlyReloading;
     }
 
     /**

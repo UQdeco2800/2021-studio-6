@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.gameover.GameOverActions;
 import com.deco2800.game.components.gameover.GameOverDisplay;
-import com.deco2800.game.components.mainmenu.MainMenuActions;
-import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;

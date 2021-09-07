@@ -86,7 +86,7 @@ public class BulletCollisionComponent extends Component {
                 setBulletCollisionStatus(true);
 
                 if (targetStats != null) {
-                    targetStats.hit(bulletCombatStats);
+                    targetStats.hit(bulletCombatStats.getBaseAttack());
 
                     if (targetStats.isDead()) {
                         target.getComponent(DisposingComponent.class).toBeDisposed();

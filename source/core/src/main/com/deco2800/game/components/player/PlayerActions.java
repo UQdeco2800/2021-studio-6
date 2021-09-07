@@ -7,6 +7,8 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -15,6 +17,8 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private PlayerMeleeAttackComponent playerMeleeAttackComponent;
+  private PlayerRangeAttackComponent playerRangeAttackComponent;
+  private InventoryComponent inventory;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   // Speed Modification
@@ -33,6 +37,9 @@ public class PlayerActions extends Component {
   private static final int dashLength = 100; // in milliseconds
   private long delayEndTime = 0;
   private long dashEndTime = 0;
+
+  private static final int DelayReloadLength = 3000; // in milliseconds
+
 
 
   /**
@@ -55,6 +62,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("updateWound", this::setSpeed);
     entity.getEvents().addListener("dash", this::dash);
     entity.getEvents().addListener("longDash", this::longDash);
+    entity.getEvents().addListener("reload", this::reload);
   }
 
   @Override
@@ -171,19 +179,53 @@ public class PlayerActions extends Component {
   }
 
   /**
+<<<<<<< HEAD
    * Sets the player to start a long dash
    * @param endTime is the time to end the dash according to the game clock
    */
   void longDash(long endTime) {
     longDashEndTime = endTime;
     if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
-      dashVelocity = walkDirection.cpy().scl(dashSpeed*2);
+      dashVelocity = walkDirection.cpy().scl(dashSpeed * 2);
     } else {
       dashVelocity = walkDirection.cpy().scl(dashSpeed, dashSpeed);
     }
-    this.entity.getEvents().trigger("invincible", endTime-timeSource.getTime());
+    this.entity.getEvents().trigger("invincible", endTime - timeSource.getTime());
     this.entity.getEvents().trigger("disableAttack");
     this.longDashing = true;
+  }
+
+  /**
+   * Reloads player's range attack weapon for firing again
+   */
+  void reload() {
+    System.out.println("delay started");
+    inventory = entity.getComponent(InventoryComponent.class);
+    playerRangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
+
+    // used to check number of ammo required from inventory for deduction
+    int magazineNum = playerRangeAttackComponent.getGunMagazine();
+
+    System.out.println(magazineNum);
+
+    Timer reloadTimer = new Timer(true);
+//    reloadTimer.schedule( new TimerTask() {
+//      public void run() {
+//
+//        int ammoLeft = inventory.getAmmo();
+//        int ammoToReload;
+//
+//        if (ammoLeft > 5) {
+//          ammoToReload = 5;
+//          inventory.addAmmo(ammoToReload);
+//        } else {
+//          ammoToReload = ammoLeft;
+//
+//        }
+//
+//        cancel();
+//      }
+//    }, DelayReloadLength);
   }
 
   /**

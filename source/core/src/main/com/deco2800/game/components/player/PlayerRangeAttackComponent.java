@@ -18,10 +18,13 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerRangeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackComponent.class);
+    // activeBullets array will be updated and reloaded with ammo entities whenever bullet collides with
+    // any object in game world
     private static Array<Entity> activeBullets;
     final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
+    private int magazineCapacity = 5;
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets
@@ -40,6 +43,12 @@ public class PlayerRangeAttackComponent extends Component {
         activeBullets.add(bulletShot);
     }
 
+    /**
+     * To return bullet of entities that are spawned in the game world. These will continuously
+     * be used for performance sake
+     *
+     * @return array of entities
+     */
     public static Array<Entity> getActiveBullets() {
         return activeBullets;
     }
@@ -47,7 +56,7 @@ public class PlayerRangeAttackComponent extends Component {
     /**
      * Used to load after spawning in game area for firing in game
      *
-     * @param bullets is the number of bullets player has to shoot
+     * @param bullets is the number of bullets player will be able to spawn into the game world
      */
     public void addBullets(Array<Entity> bullets) {
         activeBullets = new Array<>(bullets);
@@ -117,8 +126,8 @@ public class PlayerRangeAttackComponent extends Component {
             longAttackDir = movingAttackDir.cpy();
         }
 
-        // check if there is ammo
-        if (activeBullets.size != 0) {
+        // check if there are bullets left to shoot in magazine currently
+        if (magazineCapacity != 0) {
             // player has not moved before, use default direction attack (to the right)
             if (longAttackDir.isZero()) {
                 bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
@@ -136,8 +145,29 @@ public class PlayerRangeAttackComponent extends Component {
 
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+
+                // update current gun magazine
+                magazineCapacity--;
             }
         }
     }
 
+    /**
+     * Called to reload current gun magazine capacity. May not always be reloaded to 5 (the max).
+     * It is dependent on ammo left in inventory
+     *
+     * @param ammo that will be reloaded into gun magazine
+     */
+    public void reloadGunMagazine(int ammo) {
+        this.magazineCapacity += ammo;
+    }
+
+    /**
+     * Called to check current magazine capacity for reloading and ammo reduction purposes
+     *
+     * @return current gun magazine - how many bullets left in current round
+     */
+    public int getGunMagazine() {
+        return this.magazineCapacity;
+    }
 }

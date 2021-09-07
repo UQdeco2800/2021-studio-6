@@ -87,10 +87,10 @@ public class CombatStatsComponent extends Component {
   /**
    * The action of inflicting damage on another entity
    *
-   * @param attacker is the amount of damage inflicted on the entity which reduces their health
+   * @param damage is the amount of damage inflicted on the entity which reduces their health
    */
-  public void hit(PlayerCombatStatsComponent attacker) {
-    int newHealth = getHealth() - attacker.getBaseAttack();
+  public void hit(int damage) {
+    int newHealth = getHealth() - damage;
     setHealth(newHealth);
   }
 }

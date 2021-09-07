@@ -5,10 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
@@ -51,6 +53,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final TerrainFactory terrainFactory;
   private GameArea gameArea;
   private Entity ui;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -81,6 +84,23 @@ public class MainGameScreen extends ScreenAdapter {
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
     gameArea = new ForestGameArea(terrainFactory);
     gameArea.create();
+
+    this.gameArea.player.getEvents().addListener("updateWound", this::checkGameOver);
+  }
+
+  private void checkGameOver(int wound) {
+    if (this.gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
+      logger.info("Game Over");
+      GameTime timeSource = ServiceLocator.getTimeSource();
+      timeSource.pause();
+
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        }
+      }, 1f);
+    }
   }
 
   @Override
@@ -155,6 +175,7 @@ public class MainGameScreen extends ScreenAdapter {
   private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
+
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 

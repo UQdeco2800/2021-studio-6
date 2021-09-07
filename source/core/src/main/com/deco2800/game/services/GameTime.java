@@ -54,15 +54,18 @@ public class GameTime {
   }
 
   /**
-   * If the game is paused then it will unpause. If the game is unpaused then it will pause.
+   * Pauses the game
    */
-  public void togglePause() {
-    if (isPaused) {
-      timeScale = 1f;
-      isPaused = false;
-    } else {
-      timeScale = 0f;
-      isPaused = true;
-    }
+  public void pause() {
+    timeScale = 0f;
+    isPaused = true;
+  }
+
+  /**
+   * Unpauses the game
+   */
+  public void unpause() {
+    timeScale = 1f;
+    isPaused = false;
   }
 }

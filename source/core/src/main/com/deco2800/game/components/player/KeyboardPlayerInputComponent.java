@@ -89,11 +89,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
-      case Keys.ESCAPE:
-        if (timeSource != null) {
-          timeSource.togglePause();
-        }
-        return true;
       default:
         return false;
     }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -48,6 +49,8 @@ public class PauseMenuDisplay extends UIComponent {
   private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
   private ArrayList<TextButton> menuButtons;
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
+  private boolean isEnabled = false;
 
   @Override
   public void create() {
@@ -55,20 +58,16 @@ public class PauseMenuDisplay extends UIComponent {
     addActors();
   }
 
-  /**
-   * Checks to see if the game is paused by ESC key, if it is display the pause window
-   * Game resumes by pressing ESC key again and the pause window goes away
-   */
-  @Override
-  public void update() {
-    super.update();
-
-    // If game is paused then turn off the screen
-    if (ServiceLocator.getTimeSource().getDeltaTime() == 0f) {
+  public void togglePauseScreen() {
+    if (!isEnabled) {
+      timeSource.pause();
       pauseWindow.setVisible(true);
       pauseWindow.toFront();
+      isEnabled = true;
     } else {
       pauseWindow.setVisible(false);
+      timeSource.unpause();
+      isEnabled = false;
     }
   }
 
@@ -76,7 +75,6 @@ public class PauseMenuDisplay extends UIComponent {
    * Adds a pause menu into the stage that contain the pause menu buttons
    */
   private void addActors() {
-
 
     buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
     rolloverClickSound = ServiceLocator.getResourceService().getAsset(rolloverSoundFilePath, Sound.class);
@@ -121,8 +119,11 @@ public class PauseMenuDisplay extends UIComponent {
     setPauseMenuSize();
     pauseWindow.setMovable(false);
     pauseWindow.setResizable(false);
+    pauseWindow.setVisible(false);
 
     stage.addActor(pauseWindow);
+
+    entity.getEvents().addListener("togglepause", this::togglePauseScreen);
   }
 
   /**

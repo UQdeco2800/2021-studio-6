@@ -33,12 +33,11 @@ public class PauseMenuActions extends Component {
   }
 
   /**
-   * Swaps to the Main Game screen.
+   * Unpauses the game
    */
   private void onContinue() {
     logger.info("Continue game");
-    timeSource.togglePause();
-
+    entity.getEvents().trigger("togglepause");
   }
 
   /**
@@ -49,8 +48,7 @@ public class PauseMenuActions extends Component {
   }
 
   /**
-   * Intended for loading a saved game state.
-   * Load functionality is not actually implemented.
+   * Swtiches back to the main menu screen
    */
   private void onExitToMenu() {
     logger.info("Exiting to menu");

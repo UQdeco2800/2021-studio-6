@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
@@ -160,6 +161,7 @@ public class MainGameScreen extends ScreenAdapter {
     this.ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
+        .addComponent(new KeyboardLevelInputComponent())
         .addComponent(new PauseMenuActions(this.game))
         .addComponent(new PauseMenuDisplay())
         .addComponent(new Terminal())

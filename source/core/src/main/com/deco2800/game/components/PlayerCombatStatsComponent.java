@@ -26,7 +26,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private boolean invincibleActive = false;
     private final long regenCooldown = 5000;
     private long nextRegen;
-    private final long invincibilityLength = 500; // in ms
+    private final long invincibilityLength = 400; // in ms
     private long invincibilityEndTime;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {

@@ -27,7 +27,6 @@ public class PauseMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("continue", this::onContinue);
-    entity.getEvents().addListener("pause-settings", this::onSettings);
     entity.getEvents().addListener("exit-to-menu", this::onExitToMenu);
     entity.getEvents().addListener("exit-game", this::onExitGame);
   }
@@ -38,13 +37,6 @@ public class PauseMenuActions extends Component {
   private void onContinue() {
     logger.info("Continue game");
     entity.getEvents().trigger("togglepause");
-  }
-
-  /**
-   * Shows the Settings screen.
-   */
-  private void onSettings() {
-    logger.info("Launching settings screen");
   }
 
   /**

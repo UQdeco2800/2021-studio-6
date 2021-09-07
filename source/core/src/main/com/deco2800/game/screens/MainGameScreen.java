@@ -85,22 +85,20 @@ public class MainGameScreen extends ScreenAdapter {
     gameArea = new ForestGameArea(terrainFactory);
     gameArea.create();
 
-    this.gameArea.player.getEvents().addListener("updateWound", this::checkGameOver);
+    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
   }
 
-  private void checkGameOver(int wound) {
-    if (this.gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
-      logger.info("Game Over");
-      GameTime timeSource = ServiceLocator.getTimeSource();
-      timeSource.pause();
+  private void checkGameOver() {
+    logger.info("Game Over");
+    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource.pause();
 
-      Timer.schedule(new Timer.Task() {
-        @Override
-        public void run() {
-          game.setScreen(GdxGame.ScreenType.GAME_OVER);
-        }
-      }, 1f);
-    }
+    Timer.schedule(new Timer.Task() {
+      @Override
+      public void run() {
+        game.setScreen(GdxGame.ScreenType.GAME_OVER);
+      }
+    }, 1f);
   }
 
   @Override

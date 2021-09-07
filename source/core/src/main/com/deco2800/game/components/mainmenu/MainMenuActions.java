@@ -35,7 +35,7 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
-    if (!gameStarted) {
+    if (!gameQuiting && !gameStarted) {
       gameStarted = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
@@ -60,7 +60,7 @@ public class MainMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    if (!gameQuiting) {
+    if (!gameQuiting && !gameStarted) {
       gameQuiting = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
@@ -77,6 +77,8 @@ public class MainMenuActions extends Component {
    */
   private void onSettings() {
     logger.info("Launching settings screen");
-    game.setScreen(GdxGame.ScreenType.SETTINGS);
+    if (!gameQuiting && !gameStarted) {
+      game.setScreen(GdxGame.ScreenType.SETTINGS);
+    }
   }
 }

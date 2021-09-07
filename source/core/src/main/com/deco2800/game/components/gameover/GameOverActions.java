@@ -35,7 +35,7 @@ public class GameOverActions extends Component {
    */
   private void onRestart() {
     logger.info("Start game");
-    if (!gameStarted) {
+    if (!gameStarted && !menuLoading && !gameQuiting) {
       gameStarted = true;
       // restarts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
@@ -52,7 +52,7 @@ public class GameOverActions extends Component {
    */
   private void onMenu() {
     logger.info("Start game");
-    if (!menuLoading) {
+    if (!gameStarted && !menuLoading && !gameQuiting) {
       menuLoading = true;
       // displays the main menu after the button click sound has finished
       Timer.schedule(new Timer.Task() {
@@ -69,7 +69,7 @@ public class GameOverActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    if (!gameQuiting) {
+    if (!gameStarted && !menuLoading && !gameQuiting) {
       gameQuiting = true;
       // exits the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {

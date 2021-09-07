@@ -36,7 +36,9 @@ public class PauseMenuActions extends Component {
    */
   private void onContinue() {
     logger.info("Continue game");
-    entity.getEvents().trigger("togglepause");
+    if (!gameReturningToMenu && !gameQuiting) {
+      entity.getEvents().trigger("togglepause");
+    }
   }
 
   /**
@@ -44,7 +46,7 @@ public class PauseMenuActions extends Component {
    */
   private void onExitToMenu() {
     logger.info("Exiting to menu");
-    if (!gameReturningToMenu) {
+    if (!gameReturningToMenu && !gameQuiting) {
       gameReturningToMenu = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
@@ -61,7 +63,7 @@ public class PauseMenuActions extends Component {
    */
   private void onExitGame() {
     logger.info("Exit game");
-    if (!gameQuiting) {
+    if (!gameReturningToMenu && !gameQuiting) {
       gameQuiting = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {

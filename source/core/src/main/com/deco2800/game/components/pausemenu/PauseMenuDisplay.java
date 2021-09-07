@@ -104,20 +104,22 @@ public class PauseMenuDisplay extends UIComponent {
     addButtonRolloverListener(menuBtn);
     addButtonRolloverListener(exitBtn);
 
-    pauseWindow = new Window("Game Paused", skin);
-
+    pauseWindow = new Window("", skin, "pausemenu");
+    pauseWindow.padTop(0);
     table = new Table();
     table.add(continueBtn);
     table.row();
-    table.add(settingsBtn);
-    table.row();
+    //table.add(settingsBtn);
+    //table.row();
     table.add(menuBtn);
     table.row();
     table.add(exitBtn);
+    table.padBottom(20);
     pauseWindow.add(table);
 
     setPauseMenuSize();
     pauseWindow.setMovable(false);
+    pauseWindow.setResizable(false);
 
     stage.addActor(pauseWindow);
   }

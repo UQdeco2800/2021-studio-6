@@ -63,7 +63,7 @@ public class PlayerAbilitiesComponent extends Component {
                     entity.getEvents().trigger("shortInvincibility");
                 case 2:
                     entity.getEvents().trigger("knockback");
-                default:
+                case 3:
                     entity.getEvents().trigger("rangedAOE");
             }
         }

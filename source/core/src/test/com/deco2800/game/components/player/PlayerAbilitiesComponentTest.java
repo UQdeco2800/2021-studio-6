@@ -59,6 +59,10 @@ class PlayerAbilitiesComponentTest {
         when(time.getTime()).thenReturn(60000L);
         player.getEvents().trigger("tryAbility");
         verify(listener0, times(2)).handle();
+
+        when(time.getTime()).thenReturn(140000L);
+        player.getEvents().trigger("tryAbility");
+        verify(listener0, times(3)).handle();
     }
 
     @Test
@@ -70,10 +74,22 @@ class PlayerAbilitiesComponentTest {
         player.getEvents().trigger("tryAbility");
         verify(listener1).handle(355L);
 
-        when(time.getTime()).thenReturn(70000L);
+        when(time.getTime()).thenReturn(60005L);
         player.getComponent(PlayerAbilitiesComponent.class).setAbility(1);
         player.getEvents().addListener("shortInvincibility", listener0);
         player.getEvents().trigger("tryAbility");
         verify(listener0).handle();
+
+        when(time.getTime()).thenReturn(120005L);
+        player.getComponent(PlayerAbilitiesComponent.class).setAbility(2);
+        player.getEvents().addListener("knockback", listener0);
+        player.getEvents().trigger("tryAbility");
+        verify(listener0, times(2)).handle();
+
+        when(time.getTime()).thenReturn(180005L);
+        player.getComponent(PlayerAbilitiesComponent.class).setAbility(3);
+        player.getEvents().addListener("rangedAOE", listener0);
+        player.getEvents().trigger("tryAbility");
+        verify(listener0, times(3)).handle();
     }
 }

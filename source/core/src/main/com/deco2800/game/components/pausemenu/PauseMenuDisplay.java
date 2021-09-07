@@ -66,6 +66,7 @@ public class PauseMenuDisplay extends UIComponent {
     // If game is paused then turn off the screen
     if (ServiceLocator.getTimeSource().getDeltaTime() == 0f) {
       pauseWindow.setVisible(true);
+      pauseWindow.toFront();
     } else {
       pauseWindow.setVisible(false);
     }
@@ -106,6 +107,7 @@ public class PauseMenuDisplay extends UIComponent {
 
     pauseWindow = new Window("", skin, "pausemenu");
     pauseWindow.padTop(0);
+    pauseWindow.padBottom(0);
     table = new Table();
     table.add(continueBtn);
     table.row();
@@ -114,7 +116,6 @@ public class PauseMenuDisplay extends UIComponent {
     table.add(menuBtn);
     table.row();
     table.add(exitBtn);
-    table.padBottom(20);
     pauseWindow.add(table);
 
     setPauseMenuSize();

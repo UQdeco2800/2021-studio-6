@@ -1,4 +1,4 @@
-package com.deco2800.game.components.mainmenu;
+package com.deco2800.game.components.gameover;
 
 import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
@@ -10,34 +10,34 @@ import org.slf4j.LoggerFactory;
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
  * events is triggered.
  */
-public class MainMenuActions extends Component {
-  private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
+public class GameOverActions extends Component {
+  private static final Logger logger = LoggerFactory.getLogger(GameOverActions.class);
   private static final float buttonClickDuration = 0.3f;
   private GdxGame game;
   private boolean gameStarted = false;
+  private boolean menuLoading = false;
   private boolean gameQuiting = false;
 
 
-  public MainMenuActions(GdxGame game) {
+  public GameOverActions(GdxGame game) {
     this.game = game;
   }
 
   @Override
   public void create() {
-    entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("restart", this::onRestart);
+    entity.getEvents().addListener("menu", this::onMenu);
     entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("settings", this::onSettings);
   }
 
   /**
-   * Swaps to the Main Game screen.
+   * Swaps to the main game screen
    */
-  private void onStart() {
+  private void onRestart() {
     logger.info("Start game");
-    if (!gameQuiting && !gameStarted) {
+    if (!gameStarted && !menuLoading && !gameQuiting) {
       gameStarted = true;
-      // starts the game after the button click sound has finished
+      // restarts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
@@ -48,11 +48,20 @@ public class MainMenuActions extends Component {
   }
 
   /**
-   * Intended for loading a saved game state.
-   * Load functionality is not actually implemented.
+   * Swaps to the menu screen
    */
-  private void onLoad() {
-    logger.info("Load game");
+  private void onMenu() {
+    logger.info("Start game");
+    if (!gameStarted && !menuLoading && !gameQuiting) {
+      menuLoading = true;
+      // displays the main menu after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        }
+      }, buttonClickDuration);
+    }
   }
 
   /**
@@ -60,25 +69,15 @@ public class MainMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    if (!gameQuiting && !gameStarted) {
+    if (!gameStarted && !menuLoading && !gameQuiting) {
       gameQuiting = true;
-      // starts the game after the button click sound has finished
+      // exits the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
           game.exit();
         }
       }, buttonClickDuration);
-    }
-  }
-
-  /**
-   * Swaps to the Settings screen.
-   */
-  private void onSettings() {
-    logger.info("Launching settings screen");
-    if (!gameQuiting && !gameStarted) {
-      game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
   }
 }

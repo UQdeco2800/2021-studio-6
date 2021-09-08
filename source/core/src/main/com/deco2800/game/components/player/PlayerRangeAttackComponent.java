@@ -41,7 +41,9 @@ public class PlayerRangeAttackComponent extends Component {
      * @param bulletShot is the bullet that has been shot and removed from activeBullets array
      */
     public static void restockBulletShot(Entity bulletShot) {
-        activeBullets.add(bulletShot);
+        if (activeBullets != null) {
+            activeBullets.add(bulletShot);
+        }
     }
 
     /**

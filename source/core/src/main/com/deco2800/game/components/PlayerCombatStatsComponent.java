@@ -28,6 +28,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private long nextRegen;
     private final long invincibilityLength = 400; // in ms
     private long invincibilityEndTime;
+    private int index;
+    private int[] Woundex = new int[] {7, 3, 0};
+    private int[] statex = new int[] {1, 2, 3, 4, 5};
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -35,6 +38,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setHealth(health); // overrides the parents setting of health
         setBaseRangedAttack(baseRangedAttack);
         setDefenceLevel(defenceLevel);
+        index = 1;
     }
 
     /**
@@ -75,6 +79,15 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     public Boolean atMax() {
         return woundState == woundMax;
+    }
+
+    public int getindex() {
+        if (isDead()) {
+            return 13;
+        }
+        int woundIndex = Woundex[getWoundState() - 1];
+        int healthIndex = statex[getStateMax() - getHealth()];
+        return woundIndex + healthIndex;
     }
 
     /**
@@ -238,6 +251,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
+            entity.getEvents().trigger("health", getindex());
             invincibleStart(invincibilityLength);
         }
     }
@@ -248,6 +262,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     public void regenStart() {
         regenActive = true;
+        entity.getEvents().trigger("heal");
         nextRegen = timeSource.getTime() + regenCooldown + 3000; // Extra 3 second so it takes longer to start regen
     }
 
@@ -266,6 +281,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     private void regenerate() {
         setHealth(getHealth() + 1);
+        entity.getEvents().trigger("health", getindex());
         if (getHealth() >= getStateMax()) {
             regenActive = false;
             System.out.println("NO REGEN");

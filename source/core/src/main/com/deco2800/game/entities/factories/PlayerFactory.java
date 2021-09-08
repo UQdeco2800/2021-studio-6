@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
+import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
+import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
@@ -47,7 +49,6 @@ public class PlayerFactory {
     animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
 
-
     Entity player = new Entity()
                     .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
@@ -61,11 +62,13 @@ public class PlayerFactory {
                     .addComponent(new PlayerAbilitiesComponent(0))
                     .addComponent(new InventoryComponent(stats.gold, stats.bulletNumber))
                     .addComponent(inputComponent)
-                    .addComponent(new PlayerStatsDisplay())
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())
+                    .addComponent(new PlayerStatsDisplay())
                     .addComponent(animator)
-                    .addComponent(new PlayerAnimationController());
+                    .addComponent(new PlayerAnimationController())
+                    .addComponent(new PlayerHudAnimationController())
+                    .addComponent(new PlayerHealthAnimationController());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

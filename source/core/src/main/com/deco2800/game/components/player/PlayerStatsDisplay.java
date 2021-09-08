@@ -5,11 +5,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
+import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
+import com.deco2800.game.components.player.hud.PlayerHudFactory;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -17,6 +25,7 @@ import com.deco2800.game.ui.UIComponent;
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
   Table tableHealth;
+  Table tableCooldowns;
   private Image heartImage;
   private Label woundLabel;
   private Label healthLabel;
@@ -60,7 +69,13 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image orangeLongHealthBar5;
   private Image redLongHealthBar5;
   private Image emptyLongHealthBar5;
-
+  private Image fullCooldown;
+  private Image emptyCooldown;
+  private TextureAtlas dashAtlas;
+  private Animation<TextureRegion> dashAnimation;
+  private PlayerHudAnimationController controller;
+  private IndependentAnimator dashAnimator;
+  private IndependentAnimator healthAnimator;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -68,10 +83,39 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
-    addActors();
+    healthAnimator =
+        new IndependentAnimator(
+            ServiceLocator.getResourceService()
+                .getAsset("images/hud/health.atlas", TextureAtlas.class), 10, (float) -2.7, 3, 1);
+    healthAnimator.addAnimation("health1", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health2", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health3", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health4", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health5", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health6", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health7", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health8", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health9", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health10", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health11", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health12", 0.1f, Animation.PlayMode.NORMAL);
+    healthAnimator.addAnimation("health13", 0.1f, Animation.PlayMode.NORMAL);
+
+    dashAnimator =
+        new IndependentAnimator(
+            ServiceLocator.getResourceService()
+                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), 10, (float) -2, 3, (float) 0.5);
+    dashAnimator.addAnimation("dashbar", 0.04f, Animation.PlayMode.NORMAL);
+    dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
+
+    PlayerHudAnimationController setHud = this.entity.getComponent(PlayerHudAnimationController.class);
+    setHud.setter();
+    PlayerHealthAnimationController setHealth = this.entity.getComponent(PlayerHealthAnimationController.class);
+    setHealth.setter();
 
     entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    addActors();
   }
 
   /**
@@ -88,6 +132,11 @@ public class PlayerStatsDisplay extends UIComponent {
     tableHealth.top().left();
     tableHealth.setFillParent(true);
     tableHealth.padTop(150f);
+
+    tableCooldowns = new Table();
+    tableCooldowns.top().left();
+    tableCooldowns.setFillParent(true);
+    tableCooldowns.padTop(250f).padLeft(5f);
 
     // Heart image
     float heartSideLength = 30f;
@@ -172,6 +221,11 @@ public class PlayerStatsDisplay extends UIComponent {
 //            ("images/hud/32highbar1.png", Texture.class));
 
 
+    fullCooldown = new Image(ServiceLocator.getResourceService().getAsset
+        ("images/hud/dashbarFull.png", Texture.class));
+
+    emptyCooldown = new Image(ServiceLocator.getResourceService().getAsset
+        ("images/hud/dashbarEmpty.png", Texture.class));
     // Health text
     int wounds = entity.getComponent(PlayerCombatStatsComponent.class).getWoundState();
     int health = entity.getComponent(PlayerCombatStatsComponent.class).getHealth();
@@ -203,9 +257,26 @@ public class PlayerStatsDisplay extends UIComponent {
     tableHealth.add(greenShortHealthBar2).size(barWidth, barShort);
     tableHealth.add(greenShortHealthBar3).size(barWidth, barShort);
 
+  //  float cooldownHeight = 12f;
+   // tableCooldowns.add(fullCooldown).size(barLong, cooldownHeight);
+
+
+   // dashAtlas = ServiceLocator.getResourceService().getAsset("images/hud/dashbar.atlas", TextureAtlas.class);
+
+   // dashAnimation = new Animation<>(1f/3f, dashAtlas.getRegions());
+   // Image background = new Image(dashAnimation.getKeyFrame(0,true));
+  //  tableCooldowns.add(background);
+
+
     stage.addActor(table);
-    stage.addActor(tableHealth);
+    //stage.addActor(tableHealth);
+   // stage.addActor(tableCooldowns);
+
+    //hudAnimator = this.entity.getComponent(AnimationRenderComponent.class);
+
+    //stage.addActor(hud);
   }
+
 
   @Override
   public void draw(SpriteBatch batch)  {
@@ -228,6 +299,16 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("Health: %d", health);
     healthLabel.setText(text);
+  }
+
+  public IndependentAnimator getDashAnimator() {
+    System.out.println(dashAnimator);
+    return dashAnimator;
+  }
+
+  public IndependentAnimator getHealthAnimator() {
+    System.out.println(healthAnimator);
+    return healthAnimator;
   }
 
   @Override

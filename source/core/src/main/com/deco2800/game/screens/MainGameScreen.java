@@ -47,6 +47,9 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] longOrange = {"images/hud/32highbar7.png"};
   private static final String[] longRed = {"images/hud/32highbar6.png"};
   private static final String[] longEmpty = {"images/hud/32highbar1.png"};
+  private static final String[] dashCooldown = {"images/hud/dashbar.png"};
+  private static final String[] dashCooldownFull = {"images/hud/dashbarFull.png"};
+  private static final String[] dashCooldownEmpty = {"images/hud/dashbarEmpty.png"};
 
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -100,6 +103,7 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.render();
 
     CAMERA_POSITION.set(gameArea.player.getPosition());
+    ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
   }
 
@@ -152,6 +156,9 @@ public class MainGameScreen extends ScreenAdapter {
     resourceService.loadTextures(longGreen);
     resourceService.loadTextures(longOrange);
     resourceService.loadTextures(longRed);
+    resourceService.loadTextures(dashCooldown);
+    resourceService.loadTextures(dashCooldownFull);
+    resourceService.loadTextures(dashCooldownEmpty);
 
     ServiceLocator.getResourceService().loadAll();
   }
@@ -169,6 +176,9 @@ public class MainGameScreen extends ScreenAdapter {
     resourceService.unloadAssets(longGreen);
     resourceService.unloadAssets(longOrange);
     resourceService.unloadAssets(longRed);
+    resourceService.unloadAssets(dashCooldown);
+    resourceService.loadTextures(dashCooldownFull);
+    resourceService.loadTextures(dashCooldownEmpty);
   }
 
   /**

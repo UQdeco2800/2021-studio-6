@@ -4,6 +4,9 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
+import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.hud.PlayerHudFactory;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -90,7 +93,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
       case Keys.SHIFT_LEFT:
         if (!isPaused) {
-          entity.getEvents().trigger("dash");
+          this.getEntity().getEvents().trigger("dash");
         }
         return true;
       case Keys.SPACE:

@@ -159,6 +159,7 @@ public class PlayerActions extends Component {
    */
   void regularDash() {
     if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
+      this.getEntity().getEvents().trigger("dashBar");
       delayEndTime = timeSource.getTime() + delayLength;
       dashEndTime = timeSource.getTime() + dashLength;
       setDash(dashSpeed);

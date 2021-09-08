@@ -84,14 +84,13 @@ public class PlayerRangeAttackComponent extends Component {
      * @param playerCoord is the current player's position. It is used to launch bullet from player's position
      * @return coordinates used for bullet's target coordinates
      */
-    private Vector2 scaleVector(Vector2 playerCoord) {
+    public Vector2 scaleVector(Vector2 playerCoord) {
         float xPosPlayer = playerCoord.x;
         float yPosPlayer = playerCoord.y;
         Vector2 scaledVector = new Vector2();
 
         // player has not moved before
         if (longAttackDir.isZero()) {
-            System.out.println("DEFAULT ATTACK RIGHT");
             scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
 
         // player has moved before

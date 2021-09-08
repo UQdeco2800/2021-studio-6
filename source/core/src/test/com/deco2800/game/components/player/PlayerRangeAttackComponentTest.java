@@ -3,19 +3,10 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.deco2800.game.components.BulletCollisionComponent;
-import com.deco2800.game.components.DisposingComponent;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.EntityService;
-import com.deco2800.game.entities.factories.BulletFactory;
 import com.deco2800.game.extensions.GameExtension;
-import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
-import com.deco2800.game.physics.components.ColliderComponent;
-import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,9 +30,8 @@ public class PlayerRangeAttackComponentTest {
 
 
     @Test
-    void shouldGetBullets() {
+    void shouldGetAndRestockBullets() {
         Entity player = new Entity();
-
         player.addComponent(new PlayerRangeAttackComponent());
 
         Array<Entity> bullets = new Array<>();
@@ -54,9 +44,25 @@ public class PlayerRangeAttackComponentTest {
             bullets.add(newBullet);
         }
         player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+        assertEquals(5, PlayerRangeAttackComponent.getActiveBullets().size);
 
-        PhysicsEngine engine = new PhysicsEngine(world, gameTime);
+        Entity dudBullet = new Entity();
+        PlayerRangeAttackComponent.restockBulletShot(dudBullet);
+        assertEquals(6, PlayerRangeAttackComponent.getActiveBullets().size);
+    }
 
-        assertEquals(5, player.getComponent(PlayerRangeAttackComponent.class).getActiveBullets().size);
+    @Test
+    void checkReloadingStatusAndGunMagazineCapacity() {
+        Entity player = new Entity();
+        player.addComponent(new PlayerRangeAttackComponent());
+
+        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
+        player.getComponent(PlayerRangeAttackComponent.class).setReloadingStatus(true);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
+
+        assertEquals(5, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        player.getComponent(PlayerRangeAttackComponent.class).reloadGunMagazine(1);
+        assertEquals(6, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
     }
 }

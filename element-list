@@ -6,12 +6,14 @@ com.deco2800.game.areas.terrain
 com.deco2800.game.components
 com.deco2800.game.components.dialoguebox
 com.deco2800.game.components.gamearea
-com.deco2800.game.components.maingame
+com.deco2800.game.components.gameover
 com.deco2800.game.components.mainmenu
 com.deco2800.game.components.npc
+com.deco2800.game.components.pausemenu
 com.deco2800.game.components.player
 com.deco2800.game.components.player.hud
 com.deco2800.game.components.settingsmenu
+com.deco2800.game.components.story
 com.deco2800.game.components.tasks
 com.deco2800.game.concurrency
 com.deco2800.game.entities

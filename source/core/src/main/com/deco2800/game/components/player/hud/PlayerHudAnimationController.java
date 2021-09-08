@@ -14,16 +14,26 @@ public class PlayerHudAnimationController extends Component{
         super.create();
     }
 
+    /**
+     * Setter has to be called after creation from wherever the Controller was
+     * instanced to get around some annoying issues.
+     */
     public void setter() {
         statsDisplay = this.entity.getComponent(PlayerStatsDisplay.class);
         hudAnimator = statsDisplay.getDashAnimator();
         entity.getEvents().addListener("dashBar", this::dashStart);
         entity.getEvents().addListener("start", this::start);
+        entity.getEvents().addListener("dispose", this::disposeAnimation);
     }
 
     void start() {hudAnimator.startAnimation("dashbarFull");
     }
 
-    void dashStart() {hudAnimator.startAnimation("dashbar");
+    void dashStart() {
+        hudAnimator.startAnimation("dashbar");
+    }
+
+    void disposeAnimation() {
+        hudAnimator.dispose();
     }
 }

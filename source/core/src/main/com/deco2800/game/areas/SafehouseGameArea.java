@@ -36,7 +36,8 @@ public class SafehouseGameArea extends GameArea {
   private static final String[] safehouseTextures = {
     "images/Player_Sprite/front.png", "images/player_placeholders/PROJECTILE.png",
     "images/safehouse/interior-day1-tile-ground1-latest.png",
-    "images/safehouse/interior-day1-tile-door1-latest.png"
+    "images/safehouse/interior-day1-tile-door1-latest.png",
+      "images/hud/dashbarFull.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {

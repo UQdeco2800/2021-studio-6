@@ -28,9 +28,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private long nextRegen;
     private final long invincibilityLength = 400; // in ms
     private long invincibilityEndTime;
-    private int index;
-    private int[] Woundex = new int[] {7, 3, 0};
-    private int[] statex = new int[] {1, 2, 3, 4, 5};
+    private final int[] Woundex = new int[] {7, 3, 0};
+    private final int[] statex = new int[] {1, 2, 3, 4, 5};
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -38,7 +37,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setHealth(health); // overrides the parents setting of health
         setBaseRangedAttack(baseRangedAttack);
         setDefenceLevel(defenceLevel);
-        index = 1;
     }
 
     /**
@@ -81,6 +79,12 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         return woundState == woundMax;
     }
 
+    /**
+     * This unwieldy function is used to communicate with the health interface
+     * to give it the necessary health index for the current state. Will
+     * hopefully be improved later on.
+     * @return the int relating to the health animation index
+     */
     public int getindex() {
         if (isDead()) {
             return 13;
@@ -283,13 +287,15 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Increases the players current health, unless health is full for their wound state
      */
     private void regenerate() {
-        setHealth(getHealth() + 1);
-        entity.getEvents().trigger("health", getindex());
-        if (getHealth() >= getStateMax()) {
-            regenActive = false;
-            System.out.println("NO REGEN");
+        if (!timeSource.isPaused()) {
+            setHealth(getHealth() + 1);
+            entity.getEvents().trigger("health", getindex());
+            if (getHealth() >= getStateMax()) {
+                regenActive = false;
+                System.out.println("NO REGEN");
+            }
+            nextRegen = timeSource.getTime() + regenCooldown;
         }
-        nextRegen = timeSource.getTime() + regenCooldown;
     }
 
 }

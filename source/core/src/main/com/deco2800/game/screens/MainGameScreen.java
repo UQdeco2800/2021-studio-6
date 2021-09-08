@@ -208,6 +208,7 @@ public class MainGameScreen extends ScreenAdapter {
     CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+    gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {
       gameArea = new Level2(terrainFactory);

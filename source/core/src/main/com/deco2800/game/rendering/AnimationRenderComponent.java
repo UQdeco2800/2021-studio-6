@@ -49,7 +49,7 @@ public class AnimationRenderComponent extends RenderComponent {
   public AnimationRenderComponent(TextureAtlas atlas) {
     this.atlas = atlas;
     this.animations = new HashMap<>(4);
-    timeSource = ServiceLocator.getTimeSource();
+    this.timeSource = ServiceLocator.getTimeSource();
   }
 
   /**
@@ -84,7 +84,7 @@ public class AnimationRenderComponent extends RenderComponent {
     }
 
     Animation<TextureRegion> animation = new Animation<>(frameDuration, regions, playMode);
-    animations.put(name, animation);
+    this.animations.put(name, animation);
     logger.debug("Adding animation {}", name);
     return true;
   }
@@ -102,7 +102,7 @@ public class AnimationRenderComponent extends RenderComponent {
    */
   public boolean removeAnimation(String name) {
     logger.debug("Removing animation {}", name);
-    return animations.remove(name) != null;
+    return this.animations.remove(name) != null;
   }
 
   /**
@@ -111,7 +111,7 @@ public class AnimationRenderComponent extends RenderComponent {
    * @return true if added, false otherwise.
    */
   public boolean hasAnimation(String name) {
-    return animations.containsKey(name);
+    return this.animations.containsKey(name);
   }
 
   /**
@@ -119,17 +119,19 @@ public class AnimationRenderComponent extends RenderComponent {
    * @param name Name of the animation to play.
    */
   public void startAnimation(String name) {
-    Animation<TextureRegion> animation = animations.getOrDefault(name, null);
+    Animation<TextureRegion> animation = this.animations.getOrDefault(name, null);
     if (animation == null) {
+      System.out.println("error");
       logger.error(
           "Attempted to play unknown animation {}. Ensure animation is added before playback.",
           name);
       return;
     }
-
-    currentAnimation = animation;
-    currentAnimationName = name;
-    animationPlayTime = 0f;
+    System.out.println(animation);
+    System.out.println(name);
+    this.currentAnimation = animation;
+    this.currentAnimationName = name;
+    this.animationPlayTime = 0f;
     logger.debug("Starting animation {}", name);
   }
 
@@ -138,14 +140,14 @@ public class AnimationRenderComponent extends RenderComponent {
    * @return true if animation was stopped, false if no animation is playing.
    */
   public boolean stopAnimation() {
-    if (currentAnimation == null) {
+    if (this.currentAnimation == null) {
       return false;
     }
 
     logger.debug("Stopping animation {}", currentAnimationName);
-    currentAnimation = null;
-    currentAnimationName = null;
-    animationPlayTime = 0f;
+    this.currentAnimation = null;
+    this.currentAnimationName = null;
+    this.animationPlayTime = 0f;
     return true;
   }
 
@@ -154,7 +156,47 @@ public class AnimationRenderComponent extends RenderComponent {
    * @return current animation name, or null if not playing.
    */
   public String getCurrentAnimation() {
-    return currentAnimationName;
+    return this.currentAnimationName;
+  }
+
+  /**
+   * Get the animation currently being played.
+   * @return current animation, or null if not playing.
+   */
+  public Animation<TextureRegion> getFullAnimation() {
+    return this.currentAnimation;
+  }
+
+  /**
+   * Get the TextureAtlas for the animation.
+   * @return atlas file for the animation component, or null if not exists.
+   */
+  public TextureAtlas getAtlas() {
+    return this.atlas;
+  }
+
+  /**
+   * Get the current AnimationPlayTime
+   * @return current AnimationPlayTime, or null if not playing.
+   */
+  public float getAnimTime() {
+    return animationPlayTime;
+  }
+
+  /**
+   * Get the timeSource of the component
+   * @return reference to the local timeSource.
+   */
+  public GameTime getTime() {
+    return timeSource;
+  }
+
+  /**
+   * Sets the current AnimationPlayTime.
+   * @param newTime new time to set AnimationPlayTime as
+   */
+  public void setTime(float newTime) {
+    this.animationPlayTime = newTime;
   }
 
   /**
@@ -162,19 +204,18 @@ public class AnimationRenderComponent extends RenderComponent {
    * @return true if animation was playing and has now finished, false otherwise.
    */
   public boolean isFinished() {
-    return currentAnimation != null && currentAnimation.isAnimationFinished(animationPlayTime);
+    return this.currentAnimation != null && this.currentAnimation.isAnimationFinished(animationPlayTime);
   }
 
   @Override
   protected void draw(SpriteBatch batch) {
-    if (currentAnimation == null) {
-      return;
+    if (this.currentAnimation != null) {
+      TextureRegion region = this.currentAnimation.getKeyFrame(animationPlayTime);
+      Vector2 pos = entity.getPosition();
+      Vector2 scale = entity.getScale();
+      batch.draw(region, pos.x, pos.y, scale.x, scale.y);
+      animationPlayTime += timeSource.getDeltaTime();
     }
-    TextureRegion region = currentAnimation.getKeyFrame(animationPlayTime);
-    Vector2 pos = entity.getPosition();
-    Vector2 scale = entity.getScale();
-    batch.draw(region, pos.x, pos.y, scale.x, scale.y);
-    animationPlayTime += timeSource.getDeltaTime();
   }
 
   @Override

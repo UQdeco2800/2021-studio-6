@@ -14,6 +14,12 @@ public class PlayerHealthAnimationController  extends Component{
       super.create();
     }
 
+  /**
+   * Setter has to be called after creation from wherever the Controller was
+   * instanced to get around some annoying issues.
+   *
+   * Index is used to keep track of what health state the player is at.
+   */
     public void setter() {
       index = 1;
       PlayerStatsDisplay statsDisplayHealth = this.entity.getComponent(PlayerStatsDisplay.class);
@@ -22,6 +28,7 @@ public class PlayerHealthAnimationController  extends Component{
       entity.getEvents().addListener("hit", this::hit);
       entity.getEvents().addListener("heal", this::heal);
       entity.getEvents().addListener("start", this::start);
+      entity.getEvents().addListener("dispose", this::disposeAnimation);
     }
 
     void start() {
@@ -46,4 +53,10 @@ public class PlayerHealthAnimationController  extends Component{
       }
     healthAnimator.startAnimation("health" + index);
    }
+
+
+  void disposeAnimation() {
+    healthAnimator.dispose();
+  }
+
   }

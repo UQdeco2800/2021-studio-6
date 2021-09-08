@@ -83,12 +83,12 @@ class KeyboardPlayerInputComponentTest {
     }
 
     @Test
-    public void shouldTriggerDashOnUnpause() {
+    public void shouldntTriggerDashOnPause() {
         player.getEvents().addListener("dash", listener0);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
         verify(listener0).handle();
 
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.ESCAPE);
+        when(time.isPaused()).thenReturn(true);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
         verifyNoMoreInteractions(listener0);
     }

@@ -1,10 +1,14 @@
 package com.deco2800.game.components;
 
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.logging.Handler;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -157,32 +161,33 @@ class PlayerCombatStatsComponentTest {
     @Test
     void shouldSetGetHit() {
         GameTime time = mock(GameTime.class);
+        DisposingComponent dispose = mock(DisposingComponent.class);
         ServiceLocator.registerTimeSource(time);
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
+        Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(3, 20, 3, 25, 0)).addComponent(dispose);
         CombatStatsComponent enemy = mock(CombatStatsComponent.class);
         when(enemy.getBaseAttack()).thenReturn(3);
 
-        combat.hit(enemy);
-        assertEquals(combat.getStateMax(), combat.getHealth());
-        assertEquals(2, combat.getWoundState());
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
 
         when(time.getTime()).thenReturn(400L);
-        combat.update();
+        player.getComponent(PlayerCombatStatsComponent.class).update();
         when(enemy.getBaseAttack()).thenReturn(1);
-        combat.hit(enemy);
-        assertEquals(2, combat.getWoundState());
-        assertEquals(combat.getStateMax() - 1, combat.getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax() - 1, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
         when(enemy.getBaseAttack()).thenReturn(8);
         when(time.getTime()).thenReturn(800L);
-        combat.update();
-        combat.hit(enemy);
+        player.getComponent(PlayerCombatStatsComponent.class).update();
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
         when(time.getTime()).thenReturn(1600L);
-        combat.update();
-        combat.hit(enemy);
-        assertEquals(0, combat.getWoundState());
-        assertTrue(combat.isDead());
-        assertEquals(combat.getStateMax(), combat.getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).update();
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(0, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertTrue(player.getComponent(PlayerCombatStatsComponent.class).isDead());
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 
     @Test
@@ -192,25 +197,25 @@ class PlayerCombatStatsComponentTest {
         ServiceLocator.registerTimeSource(time);
         CombatStatsComponent enemy = mock(CombatStatsComponent.class);
         when(enemy.getBaseAttack()).thenReturn(3);
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(10, 20, 3, 25, 0);
+        Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(3, 20, 3, 25, 0));
 
-        combat.hit(enemy);
-        assertEquals(combat.getStateMax(), combat.getHealth());
-        assertEquals(2, combat.getWoundState());
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
 
-        combat.setDefenceLevel(1);
+        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(1);
         when(time.getTime()).thenReturn(400L);
-        combat.update();
-        combat.hit(enemy);
-        assertEquals(2, combat.getHealth());
-        assertEquals(2, combat.getWoundState());
+        player.getComponent(PlayerCombatStatsComponent.class).update();
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
 
         when(time.getTime()).thenReturn(800L);
-        combat.update();
-        combat.setDefenceLevel(2);
-        combat.hit(enemy);
-        assertEquals(1, combat.getHealth());
-        assertEquals(2, combat.getWoundState());
+        player.getComponent(PlayerCombatStatsComponent.class).update();
+        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(2);
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
     }
 
     @Test
@@ -235,17 +240,17 @@ class PlayerCombatStatsComponentTest {
         when(time.getTime()).thenReturn(0L);
         CombatStatsComponent enemy = mock(CombatStatsComponent.class);
         when(enemy.getBaseAttack()).thenReturn(1);
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
+        Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(3, 20, 3, 25, 0));
 
-        assertEquals(3, combat.getHealth());
-        combat.hit(enemy);
-        combat.hit(enemy);
-        assertEquals(2, combat.getHealth());
+        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
         when(time.getTime()).thenReturn(300L);
-        combat.update();
-        combat.hit(enemy);
-        assertEquals(2, combat.getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).update();
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 
     @Test
@@ -253,12 +258,12 @@ class PlayerCombatStatsComponentTest {
         GameTime time = mock(GameTime.class);
         ServiceLocator.registerTimeSource(time);
         when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(3, 20, 3, 25, 0));
         CombatStatsComponent enemy = mock(CombatStatsComponent.class);
         when(enemy.getBaseAttack()).thenReturn(-10);
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0);
 
-        assertEquals(3, combat.getHealth());
-        combat.hit(enemy);
-        assertEquals(2, combat.getHealth());
+        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 }

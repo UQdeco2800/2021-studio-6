@@ -69,8 +69,6 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateSpeed();
     }
-
-
   }
 
   /**
@@ -233,7 +231,6 @@ public class PlayerActions extends Component {
         inventory.setAmmo(0);
       }
     }
-
     return ammoToReload;
   }
 

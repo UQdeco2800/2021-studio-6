@@ -1,9 +1,14 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.events.listeners.EventListener0;
 import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,17 +95,17 @@ class PlayerActionsTest {
         player.getEvents().trigger("dash");
         assertFalse(player.getComponent(PlayerActions.class).canDash());
 
-        // Trigger before delay is up
         when(time.getTime()).thenReturn(10L);
         assertFalse(player.getComponent(PlayerActions.class).canDash());
 
-        // Trigger after delay
         when(time.getTime()).thenReturn(2990L);
         assertTrue(player.getComponent(PlayerActions.class).canDash());
 
-        // Checking delay reset
         player.getEvents().trigger("dash");
         assertFalse(player.getComponent(PlayerActions.class).canDash());
+
+        when(time.getTime()).thenReturn(10000L);
+        assertTrue(player.getComponent(PlayerActions.class).canDash());
     }
 
     @Test
@@ -131,5 +136,93 @@ class PlayerActionsTest {
         player.getEvents().trigger("walk", new Vector2(1f, 0f));
         player.getEvents().trigger("dash");
         verify(listener).handle(100L);
+    }
+
+    @Test
+    void dashShouldStopAttacks() {
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerActions(3));
+        player.create();
+        EventListener0 listener = mock(EventListener0.class);
+        player.getEvents().addListener("disableAttack", listener);
+        player.getEvents().trigger("walk", new Vector2(1f, 0f));
+        player.getEvents().trigger("dash");
+        verify(listener).handle();
+    }
+
+    @Test
+    void shouldTriggerAndSetTimeForLongDash() {
+        PhysicsComponent physicsComponent = mock(PhysicsComponent.class);
+        Body body = mock(Body.class);
+        when(physicsComponent.getBody()).thenReturn(body);
+        when(body.getLinearVelocity()).thenReturn(new Vector2(1f, 1f));
+
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(physicsComponent);
+        player.create();
+        player.getEvents().trigger("longDash", 1000L);
+        assertTrue(player.getComponent(PlayerActions.class).isDashing());
+
+        when(time.getTime()).thenReturn(999L);
+        player.update();
+        assertTrue(player.getComponent(PlayerActions.class).isDashing());
+
+        when(time.getTime()).thenReturn(1000L);
+        player.update();
+        assertFalse(player.getComponent(PlayerActions.class).isDashing());
+    }
+
+    @Test
+    public void shouldSetDashVelocityBasedOnDirection() {
+        // Setting up body to allow physics calls
+        PhysicsComponent physicsComponent = mock(PhysicsComponent.class);
+        Body body = mock(Body.class);
+        Vector2 linearVelocity = new Vector2(1f, 1f);
+        when(physicsComponent.getBody()).thenReturn(body);
+        when(body.getLinearVelocity()).thenReturn(linearVelocity);
+        when(body.getWorldCenter()).thenReturn(new Vector2(0f, 0f));
+        when(body.getMass()).thenReturn(2f);
+
+        when(time.getTime()).thenReturn(0L);
+        Vector2 directionVelocity = new Vector2(20f, 0f);
+        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(physicsComponent);
+        player.create();
+        player.getEvents().trigger("walk", new Vector2(1f, 0f));
+        player.getEvents().trigger("dash");
+        player.update();
+        verify(body).applyLinearImpulse(directionVelocity.cpy().sub(linearVelocity).scl(2f), new Vector2(0f, 0f), true);
+
+        when(time.getTime()).thenReturn(2000L);
+        directionVelocity = new Vector2(0f, 20f);
+        player.getEvents().trigger("walk", new Vector2(0f, 1f));
+        player.getEvents().trigger("dash");
+        player.update();
+        verify(body).applyLinearImpulse(directionVelocity.cpy().sub(linearVelocity).scl(2f), new Vector2(0f, 0f), true);
+
+        when(time.getTime()).thenReturn(4000L);
+        player.getEvents().trigger("walkStop");
+        player.update();
+        directionVelocity = new Vector2(10f, 10f);
+        player.getEvents().trigger("walk", new Vector2(1f, 1f));
+        player.getEvents().trigger("dash");
+        player.update();
+        verify(body).applyLinearImpulse(directionVelocity.cpy().sub(linearVelocity).scl(2f), new Vector2(0f, 0f), true);
+    }
+
+    @Test
+    public void shouldAttack() {
+        PlayerMeleeAttackComponent melee = mock(PlayerMeleeAttackComponent.class);
+        ResourceService resourceService = mock(ResourceService.class);
+        Sound sound = mock(Sound.class);
+        ServiceLocator.registerResourceService(resourceService);
+        when(resourceService.getAsset("sounds/Impact4.ogg", Sound.class)).thenReturn(sound);
+        when(sound.play()).thenReturn(0L);
+
+        Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(melee);
+        player.create();
+        player.getEvents().trigger("attack");
+
+        verify(resourceService).getAsset("sounds/Impact4.ogg", Sound.class);
+        verify(melee).meleeAttackClicked(true);
     }
 }

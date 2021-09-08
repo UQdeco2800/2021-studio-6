@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -81,95 +82,94 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(45f).padLeft(5f);
+    table.padTop(45f);
 
     tableHealth = new Table();
     tableHealth.top().left();
     tableHealth.setFillParent(true);
-    tableHealth.padTop(150f).padLeft(5f);
+    tableHealth.padTop(150f);
 
     // Heart image
     float heartSideLength = 30f;
-//    heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
-    greenShortHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/22highbar6.png", Texture.class));
-    greenShortHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/22highbar6.png", Texture.class));
-    greenShortHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/22highbar6.png", Texture.class));
-    emptyShortHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/22highbar1.png", Texture.class));
-    emptyShortHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/22highbar1.png", Texture.class));
-    emptyShortHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/22highbar1.png", Texture.class));
-    greenMediumHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar7.png", Texture.class));
-    greenMediumHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar7.png", Texture.class));
-    greenMediumHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar7.png", Texture.class));
-    greenMediumHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar7.png", Texture.class));
-    orangeMediumHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar6.png", Texture.class));
-    orangeMediumHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar6.png", Texture.class));
-    orangeMediumHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar6.png", Texture.class));
-    orangeMediumHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar6.png", Texture.class));
-    emptyMediumHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar1.png", Texture.class));
-    emptyMediumHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar1.png", Texture.class));
-    emptyMediumHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar1.png", Texture.class));
-    emptyMediumHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/27highbar1.png", Texture.class));
-    greenLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar8.png", Texture.class));
-    greenLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar8.png", Texture.class));
-    greenLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar8.png", Texture.class));
-    greenLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar8.png", Texture.class));
-    greenLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar8.png", Texture.class));
-    orangeLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar7.png", Texture.class));
-    orangeLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar7.png", Texture.class));
-    orangeLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar7.png", Texture.class));
-    orangeLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar7.png", Texture.class));
-    orangeLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar7.png", Texture.class));
-    orangeLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar8.png", Texture.class));
-    redLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar6.png", Texture.class));
-    redLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar6.png", Texture.class));
-    redLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar6.png", Texture.class));
-    redLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar6.png", Texture.class));
-    redLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar6.png", Texture.class));
-    emptyLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar1.png", Texture.class));
-    emptyLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar1.png", Texture.class));
-    emptyLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar1.png", Texture.class));
-    emptyLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar1.png", Texture.class));
-    emptyLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
-            ("images/hud/32highbar1.png", Texture.class));
+//    greenShortHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/22highbar6.png", Texture.class));
+//    greenShortHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/22highbar6.png", Texture.class));
+//    greenShortHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/22highbar6.png", Texture.class));
+//    emptyShortHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/22highbar1.png", Texture.class));
+//    emptyShortHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/22highbar1.png", Texture.class));
+//    emptyShortHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/22highbar1.png", Texture.class));
+//    greenMediumHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar7.png", Texture.class));
+//    greenMediumHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar7.png", Texture.class));
+//    greenMediumHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar7.png", Texture.class));
+//    greenMediumHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar7.png", Texture.class));
+//    orangeMediumHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar6.png", Texture.class));
+//    orangeMediumHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar6.png", Texture.class));
+//    orangeMediumHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar6.png", Texture.class));
+//    orangeMediumHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar6.png", Texture.class));
+//    emptyMediumHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar1.png", Texture.class));
+//    emptyMediumHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar1.png", Texture.class));
+//    emptyMediumHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar1.png", Texture.class));
+//    emptyMediumHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/27highbar1.png", Texture.class));
+//    greenLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar8.png", Texture.class));
+//    greenLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar8.png", Texture.class));
+//    greenLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar8.png", Texture.class));
+//    greenLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar8.png", Texture.class));
+//    greenLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar8.png", Texture.class));
+//    orangeLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar7.png", Texture.class));
+//    orangeLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar7.png", Texture.class));
+//    orangeLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar7.png", Texture.class));
+//    orangeLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar7.png", Texture.class));
+//    orangeLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar7.png", Texture.class));
+//    orangeLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar8.png", Texture.class));
+//    redLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar6.png", Texture.class));
+//    redLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar6.png", Texture.class));
+//    redLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar6.png", Texture.class));
+//    redLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar6.png", Texture.class));
+//    redLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar6.png", Texture.class));
+//    emptyLongHealthBar1 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar1.png", Texture.class));
+//    emptyLongHealthBar2 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar1.png", Texture.class));
+//    emptyLongHealthBar3 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar1.png", Texture.class));
+//    emptyLongHealthBar4 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar1.png", Texture.class));
+//    emptyLongHealthBar5 = new Image(ServiceLocator.getResourceService().getAsset
+//            ("images/hud/32highbar1.png", Texture.class));
 
 
     // Health text
@@ -180,10 +180,11 @@ public class PlayerStatsDisplay extends UIComponent {
     woundLabel = new Label(woundText, skin, "large");
     healthLabel = new Label(healthText, skin, "large");
 
-    table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
     table.add(heartImage).size(heartSideLength).pad(6);
     table.add(woundLabel);
+    table.padLeft(6f);
+
     float barWidth = 16f;
     float barLong = 64f;
     float barMedium = 54f;
@@ -234,44 +235,45 @@ public class PlayerStatsDisplay extends UIComponent {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
-    greenShortHealthBar1.remove();
-    greenShortHealthBar2.remove();
-    greenShortHealthBar3.remove();
-    emptyShortHealthBar1.remove();
-    emptyShortHealthBar2.remove();
-    emptyShortHealthBar3.remove();
-    greenMediumHealthBar1.remove();
-    orangeMediumHealthBar1.remove();
-    emptyMediumHealthBar1.remove();
-    greenMediumHealthBar2.remove();
-    orangeMediumHealthBar2.remove();
-    emptyMediumHealthBar2.remove();
-    greenMediumHealthBar3.remove();
-    orangeMediumHealthBar3.remove();
-    emptyMediumHealthBar3.remove();
-    greenMediumHealthBar4.remove();
-    orangeMediumHealthBar4.remove();
-    emptyMediumHealthBar4.remove();
-    greenLongHealthBar1.remove();
-    orangeLongHealthBar1.remove();
-    redLongHealthBar1.remove();
-    emptyLongHealthBar1.remove();
-    greenLongHealthBar2.remove();
-    orangeLongHealthBar2.remove();
-    redLongHealthBar2.remove();
-    emptyLongHealthBar2.remove();
-    greenLongHealthBar3.remove();
-    orangeLongHealthBar3.remove();
-    redLongHealthBar3.remove();
-    emptyLongHealthBar3.remove();
-    greenLongHealthBar4.remove();
-    orangeLongHealthBar4.remove();
-    redLongHealthBar4.remove();
-    emptyLongHealthBar4.remove();
-    greenLongHealthBar5.remove();
-    orangeLongHealthBar5.remove();
-    redLongHealthBar5.remove();
-    emptyLongHealthBar5.remove();
+    table.remove();
+//    greenShortHealthBar1.remove();
+//    greenShortHealthBar2.remove();
+//    greenShortHealthBar3.remove();
+//    emptyShortHealthBar1.remove();
+//    emptyShortHealthBar2.remove();
+//    emptyShortHealthBar3.remove();
+//    greenMediumHealthBar1.remove();
+//    orangeMediumHealthBar1.remove();
+//    emptyMediumHealthBar1.remove();
+//    greenMediumHealthBar2.remove();
+//    orangeMediumHealthBar2.remove();
+//    emptyMediumHealthBar2.remove();
+//    greenMediumHealthBar3.remove();
+//    orangeMediumHealthBar3.remove();
+//    emptyMediumHealthBar3.remove();
+//    greenMediumHealthBar4.remove();
+//    orangeMediumHealthBar4.remove();
+//    emptyMediumHealthBar4.remove();
+//    greenLongHealthBar1.remove();
+//    orangeLongHealthBar1.remove();
+//    redLongHealthBar1.remove();
+//    emptyLongHealthBar1.remove();
+//    greenLongHealthBar2.remove();
+//    orangeLongHealthBar2.remove();
+//    redLongHealthBar2.remove();
+//    emptyLongHealthBar2.remove();
+//    greenLongHealthBar3.remove();
+//    orangeLongHealthBar3.remove();
+//    redLongHealthBar3.remove();
+//    emptyLongHealthBar3.remove();
+//    greenLongHealthBar4.remove();
+//    orangeLongHealthBar4.remove();
+//    redLongHealthBar4.remove();
+//    emptyLongHealthBar4.remove();
+//    greenLongHealthBar5.remove();
+//    orangeLongHealthBar5.remove();
+//    redLongHealthBar5.remove();
+//    emptyLongHealthBar5.remove();
 
   }
 }

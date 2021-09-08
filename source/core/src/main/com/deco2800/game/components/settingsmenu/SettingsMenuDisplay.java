@@ -34,6 +34,9 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+  private Boolean changeBackButton = false;
+  private Boolean changeTable = false;
+  private TextButton exitBtn;
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
@@ -46,13 +49,30 @@ public class SettingsMenuDisplay extends UIComponent {
     addActors();
   }
 
+  public void setTable(Table table) {
+    rootTable = table;
+  }
+
+  public void changeBackLocation(Boolean changeBackButton) {
+    this.changeBackButton = changeBackButton;
+  }
+  public void changeTableLocation(Boolean changeTable) {
+    this.changeTable = changeTable;
+  }
+
+  public TextButton getExitBtn() {
+    return exitBtn;
+  }
+
   private void addActors() {
     Label title = new Label("Settings", skin, "title");
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
 
-    rootTable = new Table();
-    rootTable.setFillParent(true);
+    if (!changeTable) {
+      rootTable = new Table();
+      rootTable.setFillParent(true);
+    }
 
     rootTable.align(Align.center | Align.bottom);
     rootTable.add(title).expandX().bottom();
@@ -161,17 +181,20 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private Table makeMenuBtns() {
-    TextButton exitBtn = new TextButton("Exit", skin);
+    exitBtn = new TextButton("Exit", skin);
     TextButton applyBtn = new TextButton("Apply", skin);
 
-    exitBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Exit button clicked");
-            exitMenu();
-          }
-        });
+    if (!changeBackButton) {
+
+      exitBtn.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+              logger.debug("Exit button clicked");
+              exitMenu();
+            }
+          });
+    }
 
     applyBtn.addListener(
         new ChangeListener() {

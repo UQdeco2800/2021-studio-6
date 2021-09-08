@@ -12,6 +12,10 @@ import java.util.List;
  * Factory to create a dialogue
  */
 public class DialogueBoxFactory {
+
+    private DialogueBoxFactory(){
+        throw new IllegalStateException("Utility Class");
+    }
     /**
      * Creates a text dialogue from a Dialogue
      * @param dialogue Dialogue object

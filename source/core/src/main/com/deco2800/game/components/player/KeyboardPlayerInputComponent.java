@@ -23,7 +23,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private final IntSet downKeys = new IntSet(20);
   private final ArrayList<Integer> movementKeys = new ArrayList<>();
-  private boolean isPaused = false;  // variable for PAUSING in keyDown method
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   // Variable for allowing attacks
   private boolean canAttack = true;
@@ -50,7 +49,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
-    if (!isPaused) {
+    if (timeSource == null || !timeSource.isPaused()) {
       if (keycode == Keys.D) {
         entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
       } else if (keycode == Keys.A) {
@@ -88,41 +87,28 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         animationHandle();
         return true;
       case Keys.R:
-        if (!isPaused) {
+        if (timeSource == null || !timeSource.isPaused()) {
           entity.getEvents().trigger("reload");
         }
       case Keys.SHIFT_LEFT:
-        if (!isPaused) {
-          this.getEntity().getEvents().trigger("dash");
+        if (timeSource == null || !timeSource.isPaused()) {
+          //this.getEntity().getEvents().trigger("dash");
+          entity.getEvents().trigger("dash");
         }
         return true;
       case Keys.SPACE:
-        if (!isPaused && canAttack) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if (!isPaused && canAttack) {
+        if (!timeSource.isPaused() && canAttack) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
       case Keys.E:
-        if (!isPaused && canAttack) {
+        if (!timeSource.isPaused() && canAttack) {
           entity.getEvents().trigger("tryAbility");
-        }
-        return true;
-      /*
-      Pauses the game when ESC key is pressed, more like "freezes" the assets
-      if anything because the ESC key just controls the time scale in the game from
-      0f for "pause" and 1f for "resume".
-       */
-      case Keys.ESCAPE:
-        if (isPaused) {
-          timeSource.setTimeScale(1f);
-          isPaused = false;
-        } else {
-          timeSource.setTimeScale(0f);
-          isPaused = true;
         }
         return true;
       default:

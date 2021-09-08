@@ -44,7 +44,7 @@ public class PlayerInventoryDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(45f).padLeft(5f);
+    table.padTop(280f).padLeft(5f);
 
     // Heart image
     float heartSideLength = 30f;
@@ -66,11 +66,11 @@ public class PlayerInventoryDisplay extends UIComponent {
     ammoLabel = new Label(ammoText, skin, "large");
     torchLabel = new Label(torchText, skin, "large");
 
-    table.add(bandageImage).size(heartSideLength).pad(5);
-    table.add(bandageLabel);
-    table.add(ammoImage).size(heartSideLength).pad(5);
-    table.add(ammoLabel);
-    table.add(torchImage).size(heartSideLength).pad(5);
+    table.add(bandageImage).size(heartSideLength).padTop(80).padLeft(10);
+    table.add(bandageLabel).padTop(80);
+    table.add(ammoImage).size(heartSideLength).padTop(160);
+    table.add(ammoLabel).padTop(160);
+    table.add(torchImage).size(heartSideLength).padRight(10);
     table.add(torchLabel);
 
     stage.addActor(table);

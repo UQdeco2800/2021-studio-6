@@ -65,6 +65,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())
                     .addComponent(new PlayerStatsDisplay())
+
                     .addComponent(animator)
                     .addComponent(new PlayerAnimationController())
                     .addComponent(new PlayerHudAnimationController())
@@ -76,6 +77,7 @@ public class PlayerFactory {
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
+  //.addComponent(new PlayerInventoryDisplay())
 
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");

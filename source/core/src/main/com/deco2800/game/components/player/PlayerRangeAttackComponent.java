@@ -48,7 +48,7 @@ public class PlayerRangeAttackComponent extends Component {
      * To return bullet of entities that are spawned in the game world. These will continuously
      * be used for performance sake
      *
-     * @return array of entities
+     * @return array of bullet entities that are currently active and ready to be used
      */
     public static Array<Entity> getActiveBullets() {
         return activeBullets;

@@ -37,7 +37,6 @@ public class PlayerActions extends Component {
   // Timing for reloading along with additional variables relevant to reloading
   private static final int delayReloadLength = 3000; // in milliseconds
   private final int BULLET_MAGAZINE_FULL = 5;
-  private boolean reloadStatus = false;
   private int ammoToReload;
 
   /**
@@ -70,6 +69,8 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateSpeed();
     }
+
+
   }
 
   /**
@@ -193,21 +194,7 @@ public class PlayerActions extends Component {
       playerRangeAttackComponent.setReloadingStatus(true);
 
       // acquire ammo to reload and update ammo in inventory
-      if (magazineNum == 0 && ammoLeft > 5) {
-        ammoToReload = BULLET_MAGAZINE_FULL;
-        inventory.addAmmo(-ammoToReload);
-      } else {
-
-        // if there is enough ammo, refill magazine to fullest and if there isn't enough, empty
-        // ammo inventory and take whatever that is left
-        ammoToReload = BULLET_MAGAZINE_FULL - magazineNum;
-        if (inventory.hasAmmo(ammoToReload)) {
-          inventory.addAmmo(-ammoToReload);
-        } else {
-          ammoToReload = ammoLeft;
-          inventory.setAmmo(0);
-        }
-      }
+      ammoToReload = getAmmo(magazineNum, ammoLeft, inventory);
 
       // simulate a reloading period
       reloadTimer.schedule( new TimerTask() {
@@ -217,6 +204,37 @@ public class PlayerActions extends Component {
         }
       }, delayReloadLength);
     }
+  }
+
+  /**
+   * Gets ammo for reloading and updates ammo in player's inventory component
+   *
+   * @param magazineNum which entails the current number of bullets left in player's magazine upon
+   *                    reloading
+   * @param ammoLeft informs the number of ammo left in inventory of player currently
+   * @param inventory component that is attached to player that has information on ammo count and methods
+   *                  for updating ammo account
+   * @return ammo for reloading that will be scheduled for reloading
+   */
+  public int getAmmo(int magazineNum, int ammoLeft, InventoryComponent inventory) {
+    // magazine empty and there is enough ammo in inventory
+    if (magazineNum == 0 && ammoLeft > 5) {
+      ammoToReload = BULLET_MAGAZINE_FULL;
+      inventory.addAmmo(-ammoToReload);
+    } else {
+
+      // if there is enough ammo to refill sub-empty magazine, refill magazine to fullest -
+      // else there isn't enough, empty ammo inventory and take whatever that is left
+      ammoToReload = BULLET_MAGAZINE_FULL - magazineNum;
+      if (inventory.hasAmmo(ammoToReload)) {
+        inventory.addAmmo(-ammoToReload);
+      } else {
+        ammoToReload = ammoLeft;
+        inventory.setAmmo(0);
+      }
+    }
+
+    return ammoToReload;
   }
 
   /**

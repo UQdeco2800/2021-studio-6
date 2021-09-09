@@ -81,13 +81,14 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
-//    lc = new lightingcomponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
+    lc = new lightingcomponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
 //    ServiceLocator.getRenderService().register(lc);
+    lc.setCamera(renderer.getCamera().getCamera());
 
     loadAssets();
     createUI();
@@ -105,10 +106,16 @@ public class MainGameScreen extends ScreenAdapter {
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+
     renderer.render();
+    lc.setCamera(renderer.getCamera().getCamera());
+    lc.render(null);
+    renderer.renderUI();
+
 
     CAMERA_POSITION.set(gameArea.player.getPosition());
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+
 
 
   }

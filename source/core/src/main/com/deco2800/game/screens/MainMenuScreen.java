@@ -61,6 +61,7 @@ public class MainMenuScreen extends ScreenAdapter {
     mainMenuDisplay.render(delta);
     ServiceLocator.getEntityService().update();
     renderer.render();
+    renderer.renderUI();
   }
 
   @Override

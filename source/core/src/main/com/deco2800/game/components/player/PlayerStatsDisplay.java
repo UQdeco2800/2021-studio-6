@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -177,8 +178,11 @@ public class PlayerStatsDisplay extends UIComponent {
     int health = entity.getComponent(PlayerCombatStatsComponent.class).getHealth();
     CharSequence woundText = String.format("Wounds: %d", wounds);
     CharSequence healthText = String.format("Health: %d", health);
+
     woundLabel = new Label(woundText, skin, "large");
     healthLabel = new Label(healthText, skin, "large");
+
+
 
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);

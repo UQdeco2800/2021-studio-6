@@ -96,14 +96,18 @@ public class Renderer implements Disposable {
     Matrix4 projMatrix = camera.getProjectionMatrix();
     batch.setProjectionMatrix(projMatrix);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    stage.act();
-    stage.draw();
+
     batch.begin();
     renderService.render(batch);
     batch.end();
     debugRenderer.render(projMatrix);
 
 
+  }
+
+  public void renderUI() {
+    stage.act();
+    stage.draw();
   }
 
   /**

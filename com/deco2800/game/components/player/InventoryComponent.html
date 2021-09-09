@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -102,8 +102,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends <a href="../Component.html" title="class in com.deco2800.game.components">Component</a></pre>
 <div class="block">A component intended to be used by the player to track their inventory.
 
- Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
- Can also be used as a more generic component for other entities.</div>
+ Currently only stores the gold and ammo amount</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -137,7 +136,8 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">InventoryComponent</a></span>&#8203;(int&nbsp;gold)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,int)">InventoryComponent</a></span>&#8203;(int&nbsp;gold,
+int&nbsp;ammo)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -165,26 +165,54 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAmmo(int)">addAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
+<td class="colLast">
+<div class="block">Adds to the player's ammo count .</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addGold(int)">addGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
 <div class="block">Adds to the player's gold.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i1">
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmmo()">getAmmo</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the player's ammo.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGold()">getGold</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the player's gold.</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAmmo(int)">hasAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
+<td class="colLast">
+<div class="block">Returns if the player has a certain amount of ammo.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasGold(int)">hasGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
 <div class="block">Returns if the player has a certain amount of gold.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmmo(int)">setAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
+<td class="colLast">
+<div class="block">Sets the player's ammo.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGold(int)">setGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
@@ -220,8 +248,9 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(int)">InventoryComponent</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">InventoryComponent</span>&#8203;(<span class="arguments">int&nbsp;gold)</span></div>
+<h3><a id="&lt;init&gt;(int,int)">InventoryComponent</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">InventoryComponent</span>&#8203;(<span class="arguments">int&nbsp;gold,
+int&nbsp;ammo)</span></div>
 </section>
 </li>
 </ul>
@@ -234,6 +263,52 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </a>
 <h2>Method Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="getAmmo()">getAmmo</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getAmmo</span>()</div>
+<div class="block">Returns the player's ammo.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>entity's ammmo</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="hasAmmo(int)">hasAmmo</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.Boolean</span>&nbsp;<span class="memberName">hasAmmo</span>&#8203;(<span class="arguments">int&nbsp;ammo)</span></div>
+<div class="block">Returns if the player has a certain amount of ammo.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ammo</code> - required amount of ammo</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>player has greater than or equal to the required amount of ammo</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setAmmo(int)">setAmmo</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setAmmo</span>&#8203;(<span class="arguments">int&nbsp;ammo)</span></div>
+<div class="block">Sets the player's ammo. Ammo has a minimum bound of 0.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ammo</code> - to be set for player</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="addAmmo(int)">addAmmo</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addAmmo</span>&#8203;(<span class="arguments">int&nbsp;ammo)</span></div>
+<div class="block">Adds to the player's ammo count . The amount added can be negative.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ammo</code> - ammo to add</dd>
+</dl>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getGold()">getGold</a></h3>

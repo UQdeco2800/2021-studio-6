@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,16 +182,67 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>static <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Array.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Array</a>&lt;<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getActiveBullets()">getActiveBullets</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">To return bullet of entities that are spawned in the game world.</div>
+</td>
 </tr>
 <tr class="rowColor" id="i3">
+<td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDirection()">getDirection</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get direction player is currently facing</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGunMagazine()">getGunMagazine</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Called to check current magazine capacity for reloading and ammo reduction purposes</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReloadingStatus()">getReloadingStatus</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns reloading status of player</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reloadGunMagazine(int)">reloadGunMagazine</a></span>&#8203;(int&nbsp;ammo)</code></th>
+<td class="colLast">
+<div class="block">Called to reload current gun magazine capacity.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restockBulletShot(com.deco2800.game.entities.Entity)">restockBulletShot</a></span>&#8203;(<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;bulletShot)</code></th>
 <td class="colLast">
 <div class="block">To reuse bullet shot for performance sake</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="altColor" id="i8">
+<td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scaleVector(com.badlogic.gdx.math.Vector2)">scaleVector</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;playerCoord)</code></th>
+<td class="colLast">
+<div class="block">Returns Vector2 coordinates that will be used for target coordinates for bullets.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDirection(com.badlogic.gdx.math.Vector2)">setDirection</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;direction)</code></th>
+<td class="colLast">
+<div class="block">Set the current direction player is currently facing for range attack</div>
+</td>
+</tr>
+<tr class="altColor" id="i10">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReloadingStatus(boolean)">setReloadingStatus</a></span>&#8203;(boolean&nbsp;reloading)</code></th>
+<td class="colLast">
+<div class="block">Updates reloading status of player - used to prevent player from shooting while reloading</div>
+</td>
+</tr>
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -258,6 +309,12 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <section class="detail">
 <h3><a id="getActiveBullets()">getActiveBullets</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Array.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Array</a>&lt;<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</span>&nbsp;<span class="memberName">getActiveBullets</span>()</div>
+<div class="block">To return bullet of entities that are spawned in the game world. These will continuously
+ be used for performance sake</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>array of bullet entities that are currently active and ready to be used</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
@@ -267,7 +324,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <div class="block">Used to load after spawning in game area for firing in game</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>bullets</code> - is the number of bullets player has to shoot</dd>
+<dd><code>bullets</code> - is the number of bullets player will be able to spawn into the game world</dd>
 </dl>
 </section>
 </li>
@@ -292,6 +349,88 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="scaleVector(com.badlogic.gdx.math.Vector2)">scaleVector</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></span>&nbsp;<span class="memberName">scaleVector</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;playerCoord)</span></div>
+<div class="block">Returns Vector2 coordinates that will be used for target coordinates for bullets. These vectors
+ are then scaled to reach the end of the game screen relative to player's position.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>playerCoord</code> - is the current player's position. It is used to launch bullet from player's position</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>coordinates used for bullet's target coordinates</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setDirection(com.badlogic.gdx.math.Vector2)">setDirection</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setDirection</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;direction)</span></div>
+<div class="block">Set the current direction player is currently facing for range attack</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>direction</code> - player is currently facing based on what movement key is pressed</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getDirection()">getDirection</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></span>&nbsp;<span class="memberName">getDirection</span>()</div>
+<div class="block">Get direction player is currently facing</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>direction playerr is currently facing</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="reloadGunMagazine(int)">reloadGunMagazine</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">reloadGunMagazine</span>&#8203;(<span class="arguments">int&nbsp;ammo)</span></div>
+<div class="block">Called to reload current gun magazine capacity. May not always be reloaded to 5 (the max).
+ It is dependent on ammo left in inventory</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ammo</code> - that will be reloaded into gun magazine</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setReloadingStatus(boolean)">setReloadingStatus</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setReloadingStatus</span>&#8203;(<span class="arguments">boolean&nbsp;reloading)</span></div>
+<div class="block">Updates reloading status of player - used to prevent player from shooting while reloading</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>reloading</code> - that will be used to update reloading status to prevent player from shooting
+                  when reloading</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getReloadingStatus()">getReloadingStatus</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">getReloadingStatus</span>()</div>
+<div class="block">Returns reloading status of player</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if reloading is currently being execute and false otherwise</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getGunMagazine()">getGunMagazine</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getGunMagazine</span>()</div>
+<div class="block">Called to check current magazine capacity for reloading and ammo reduction purposes</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>current gun magazine - how many bullets left in current round</dd>
 </dl>
 </section>
 </li>

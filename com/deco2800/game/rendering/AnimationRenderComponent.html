@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -102,6 +102,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></code>, <code><a href="Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a></code>, <code>java.lang.Comparable&lt;<a href="Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a>&gt;</code></dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="IndependentAnimator.html" title="class in com.deco2800.game.rendering">IndependentAnimator</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">AnimationRenderComponent</span>
@@ -214,48 +218,83 @@ float&nbsp;frameDuration,
 </td>
 </tr>
 <tr class="altColor" id="i4">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAnimTime()">getAnimTime</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the current AnimationPlayTime</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAtlas()">getAtlas</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the TextureAtlas for the animation.</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentAnimation()">getCurrentAnimation</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Get the name of the animation currently being played.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="rowColor" id="i7">
+<td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/Animation.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">Animation</a>&lt;<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureRegion.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureRegion</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFullAnimation()">getFullAnimation</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the animation currently being played.</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<td class="colFirst"><code><a href="../services/GameTime.html" title="class in com.deco2800.game.services">GameTime</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTime()">getTime</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the timeSource of the component</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAnimation(java.lang.String)">hasAnimation</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Whether the animator has added the given animation.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFinished()">isFinished</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Has the playing animation finished? This will always be false for looping animations.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnimation(java.lang.String)">removeAnimation</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Remove an animation from this animator.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scaleEntity()">scaleEntity</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Scale the entity to a width of 1 and a height matching the texture's ratio</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="rowColor" id="i13">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTime(float)">setTime</a></span>&#8203;(float&nbsp;newTime)</code></th>
+<td class="colLast">
+<div class="block">Sets the current AnimationPlayTime.</div>
+</td>
+</tr>
+<tr class="altColor" id="i14">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startAnimation(java.lang.String)">startAnimation</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Start playback of an animation.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="rowColor" id="i15">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stopAnimation()">stopAnimation</a></span>()</code></th>
 <td class="colLast">
@@ -412,6 +451,61 @@ float&nbsp;frameDuration,
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>current animation name, or null if not playing.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getFullAnimation()">getFullAnimation</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/Animation.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">Animation</a>&lt;<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureRegion.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureRegion</a>&gt;</span>&nbsp;<span class="memberName">getFullAnimation</span>()</div>
+<div class="block">Get the animation currently being played.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>current animation, or null if not playing.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getAtlas()">getAtlas</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a></span>&nbsp;<span class="memberName">getAtlas</span>()</div>
+<div class="block">Get the TextureAtlas for the animation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>atlas file for the animation component, or null if not exists.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getAnimTime()">getAnimTime</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getAnimTime</span>()</div>
+<div class="block">Get the current AnimationPlayTime</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>current AnimationPlayTime, or null if not playing.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getTime()">getTime</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../services/GameTime.html" title="class in com.deco2800.game.services">GameTime</a></span>&nbsp;<span class="memberName">getTime</span>()</div>
+<div class="block">Get the timeSource of the component</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>reference to the local timeSource.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setTime(float)">setTime</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setTime</span>&#8203;(<span class="arguments">float&nbsp;newTime)</span></div>
+<div class="block">Sets the current AnimationPlayTime.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>newTime</code> - new time to set AnimationPlayTime as</dd>
 </dl>
 </section>
 </li>

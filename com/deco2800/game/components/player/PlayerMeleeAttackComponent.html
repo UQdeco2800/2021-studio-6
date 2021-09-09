@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -140,7 +140,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">PlayerMeleeAttackComponent</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">PlayerMeleeAttackComponent</a></span>&#8203;(java.lang.String&nbsp;weaponConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -181,30 +181,35 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </td>
 </tr>
 <tr class="altColor" id="i2">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#disposeStart()">disposeStart</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/physics/box2d/Fixture.html?is-external=true" title="class or interface in com.badlogic.gdx.physics.box2d" class="externalLink">Fixture</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFixture()">getFixture</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>short</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLayer()">getLayer</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#meleeAttackClicked(boolean)">meleeAttackClicked</a></span>&#8203;(boolean&nbsp;clicked)</code></th>
 <td class="colLast">
 <div class="block">This is an indication that the melee attack button has been clicked</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code><a href="PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAsBox(com.badlogic.gdx.math.Vector2)">setAsBox</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;size)</code></th>
 <td class="colLast">
 <div class="block">Set physics as a box with a given size.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code><a href="PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAsBox(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)">setAsBox</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;size,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;position)</code></th>
@@ -212,7 +217,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <div class="block">Set physics as a box with a given size and local position.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code><a href="PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAsBoxAligned(com.badlogic.gdx.math.Vector2,com.deco2800.game.physics.components.PhysicsComponent.AlignX,com.deco2800.game.physics.components.PhysicsComponent.AlignY)">setAsBoxAligned</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;size,
 <a href="../../physics/components/PhysicsComponent.AlignX.html" title="enum in com.deco2800.game.physics.components">PhysicsComponent.AlignX</a>&nbsp;alignX,
@@ -221,14 +226,14 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <div class="block">Set physics as a box with a given size.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code><a href="PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSensor(boolean)">setSensor</a></span>&#8203;(boolean&nbsp;isSensor)</code></th>
 <td class="colLast">
 <div class="block">Set whether this physics component is a sensor.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code><a href="PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShape(com.badlogic.gdx.physics.box2d.Shape)">setShape</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/physics/box2d/Shape.html?is-external=true" title="class or interface in com.badlogic.gdx.physics.box2d" class="externalLink">Shape</a>&nbsp;shape)</code></th>
 <td class="colLast">
@@ -264,8 +269,8 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;()">PlayerMeleeAttackComponent</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">PlayerMeleeAttackComponent</span>()</div>
+<h3><a id="&lt;init&gt;(java.lang.String)">PlayerMeleeAttackComponent</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">PlayerMeleeAttackComponent</span>&#8203;(<span class="arguments">java.lang.String&nbsp;weaponConfig)</span></div>
 </section>
 </li>
 </ul>
@@ -288,6 +293,24 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="disposeStart()">disposeStart</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">disposeStart</span>()</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="dispose()">dispose</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">dispose</span>()</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#dispose()">Component</a></code></span></div>
+<div class="block">Called when the component is disposed. Dispose of any internal resources here.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../Component.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
 </dl>
 </section>
 </li>
@@ -391,18 +414,6 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../physics/PhysicsLayer.html" title="class in com.deco2800.game.physics"><code>PhysicsLayer</code></a> this collider belongs to</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="dispose()">dispose</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">dispose</span>()</div>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#dispose()">Component</a></code></span></div>
-<div class="block">Called when the component is disposed. Dispose of any internal resources here.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../Component.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
 </dl>
 </section>
 </li>

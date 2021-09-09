@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -178,27 +178,36 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </td>
 </tr>
 <tr class="altColor" id="i2">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmmo(int,int,com.deco2800.game.components.player.InventoryComponent)">getAmmo</a></span>&#8203;(int&nbsp;magazineNum,
+int&nbsp;ammoLeft,
+<a href="InventoryComponent.html" title="class in com.deco2800.game.components.player">InventoryComponent</a>&nbsp;inventory)</code></th>
+<td class="colLast">
+<div class="block">Gets ammo for reloading and updates ammo in player's inventory component</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentSpeed()">getCurrentSpeed</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the current max speed of the player</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelayTimeRemaining()">getDelayTimeRemaining</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Lets you know whether the player is currently able to dash or still needs to wait</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDashing()">isDashing</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the whether the player is currently dashing</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -321,6 +330,25 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the players current speed</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getAmmo(int,int,com.deco2800.game.components.player.InventoryComponent)">getAmmo</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getAmmo</span>&#8203;(<span class="arguments">int&nbsp;magazineNum,
+int&nbsp;ammoLeft,
+<a href="InventoryComponent.html" title="class in com.deco2800.game.components.player">InventoryComponent</a>&nbsp;inventory)</span></div>
+<div class="block">Gets ammo for reloading and updates ammo in player's inventory component</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>magazineNum</code> - which entails the current number of bullets left in player's magazine upon
+                    reloading</dd>
+<dd><code>ammoLeft</code> - informs the number of ammo left in inventory of player currently</dd>
+<dd><code>inventory</code> - component that is attached to player that has information on ammo count and methods
+                  for updating ammo account</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>ammo for reloading that will be scheduled for reloading</dd>
 </dl>
 </section>
 </li>

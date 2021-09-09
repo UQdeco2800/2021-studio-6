@@ -116,7 +116,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
     tableHealth.add(healthBar).size(110f, 32f);
     stage.addActor(table);
-    stage.addActor(tableHealth);
+    //stage.addActor(tableHealth);
   }
 
 

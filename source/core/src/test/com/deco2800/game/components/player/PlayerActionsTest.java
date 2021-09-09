@@ -144,7 +144,7 @@ class PlayerActionsTest {
         Entity player = new Entity().addComponent(new PlayerActions(3));
         player.create();
         EventListener0 listener = mock(EventListener0.class);
-        player.getEvents().addListener("disableAttack", listener);
+        player.getEvents().addListener("disableDashAttack", listener);
         player.getEvents().trigger("walk", new Vector2(1f, 0f));
         player.getEvents().trigger("dash");
         verify(listener).handle();

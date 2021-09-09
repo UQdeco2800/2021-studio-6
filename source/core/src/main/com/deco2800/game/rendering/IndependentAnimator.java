@@ -34,8 +34,10 @@ public class IndependentAnimator  extends AnimationRenderComponent {
     if (super.getFullAnimation() != null) {
       TextureRegion region = super.getFullAnimation().getKeyFrame(super.getAnimTime());
       Vector2 current = ServiceLocator.getRenderService().getPos();
-      batch.draw(region, current.x - xPos, current.y - yPos, xScale, yScale);
-      super.setTime(super.getAnimTime() + super.getTime().getDeltaTime());
+      if (current != null) {
+        batch.draw(region, current.x - xPos, current.y - yPos, xScale, yScale);
+        super.setTime(super.getAnimTime() + super.getTime().getDeltaTime());
+      }
     }
   }
 

@@ -95,7 +95,7 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     if (dashEndTime <= timeSource.getTime()) { // stop dash at end of time
       dashing = false;
-      this.entity.getEvents().trigger("enableAttack");
+      this.entity.getEvents().trigger("enableDashAttack");
     }
   }
 
@@ -274,7 +274,7 @@ public class PlayerActions extends Component {
       dashVelocity = walkDirection.cpy().scl(mainSpeed/2, mainSpeed/2);
     }
     this.entity.getEvents().trigger("invincible", dashEndTime - timeSource.getTime());
-    this.entity.getEvents().trigger("disableAttack");
+    this.entity.getEvents().trigger("disableDashAttack");
     this.dashing = true;
   }
 }

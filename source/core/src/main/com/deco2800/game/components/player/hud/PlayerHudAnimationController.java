@@ -24,6 +24,7 @@ public class PlayerHudAnimationController extends Component{
         entity.getEvents().addListener("dashBar", this::dashStart);
         entity.getEvents().addListener("start", this::start);
         entity.getEvents().addListener("dispose", this::disposeAnimation);
+        hudAnimator.startAnimation("dashbarFull");
     }
 
     void start() {hudAnimator.startAnimation("dashbarFull");

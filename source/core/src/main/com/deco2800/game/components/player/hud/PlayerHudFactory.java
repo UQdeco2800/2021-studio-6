@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -16,30 +17,25 @@ import com.deco2800.game.services.ServiceLocator;
  * Currently Unused
  */
 public class PlayerHudFactory {
-    public static Entity createShortBar(Entity target) {
-        Entity shortBar = createBaseBar(target);
+    public static Entity createHud() {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/hud/22hpbar.atlas", TextureAtlas.class));
-        animator.addAnimation("shortEmpty", 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("shortRegen", 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("shortGreen", 0.1f, Animation.PlayMode.NORMAL);
+                                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class));
+        animator.addAnimation("dashbar", 0.1f, Animation.PlayMode.NORMAL);
+       // animator.addAnimation("shortRegen", 0.1f, Animation.PlayMode.NORMAL);
+        //animator.addAnimation("shortGreen", 0.1f, Animation.PlayMode.NORMAL);
 
-        shortBar
+
+        Entity dash = new Entity()
+            .addComponent(new TextureRenderComponent("images/hud/dashbarFull.png"))
             .addComponent(animator)
             .addComponent(new PlayerHudAnimationController());
 
-        shortBar.getComponent(AnimationRenderComponent.class).scaleEntity();
-        return shortBar;
+        //dash.getComponent(AnimationRenderComponent.class).scaleEntity();
+        return dash;
 
 
     }
 
-
-    public static Entity createBaseBar(Entity target) {
-        Entity baseBar = new Entity();
-
-        return baseBar;
-    }
 }

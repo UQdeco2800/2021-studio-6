@@ -68,6 +68,10 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("firstHit", this::removeHealth);
     addActors();
+    setAnimations();
+  }
+
+  public void setAnimations() {
     PlayerHudAnimationController setHud = this.entity.getComponent(PlayerHudAnimationController.class);
     PlayerHealthAnimationController setHealth = this.entity.getComponent(PlayerHealthAnimationController.class);
     setHud.setter();

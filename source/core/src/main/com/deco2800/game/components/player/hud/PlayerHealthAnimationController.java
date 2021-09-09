@@ -29,13 +29,10 @@ public class PlayerHealthAnimationController  extends Component{
       entity.getEvents().addListener("health", this::change);
       entity.getEvents().addListener("hit", this::hit);
       entity.getEvents().addListener("heal", this::heal);
-      entity.getEvents().addListener("start", this::start);
       entity.getEvents().addListener("dispose", this::disposeAnimation);
-    }
-
-    void start() {
       healthAnimator.startAnimation("health1");
     }
+
 
   void change(int set) {
       if (!hit) {

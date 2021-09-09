@@ -26,6 +26,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   // Variable for allowing attacks
   private boolean canAttack = true;
+  private boolean canDashAttack = true;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -36,6 +37,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     super.create();
     entity.getEvents().addListener("enableAttack", this::enableAttack);
     entity.getEvents().addListener("disableAttack", this::disableAttack);
+    entity.getEvents().addListener("enableDashAttack", this::enableDashAttack);
+    entity.getEvents().addListener("disableDashAttack", this::disableDashAttack);
   }
 
   /**
@@ -98,17 +101,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         return true;
       case Keys.SPACE:
-        if ((timeSource == null || !timeSource.isPaused()) && canAttack) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if (!timeSource.isPaused() && canAttack) {
+        if (!timeSource.isPaused() && canAttack && canDashAttack) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
       case Keys.E:
-        if (!timeSource.isPaused() && canAttack) {
+        if (!timeSource.isPaused() && canAttack && canDashAttack) {
           entity.getEvents().trigger("tryAbility");
         }
         return true;
@@ -210,4 +213,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   void disableAttack() {
     this.canAttack = false;
   }
+
+
+  /**
+   * Sets the player able to attack
+   */
+  void enableDashAttack() {
+    this.canDashAttack = true;
+  }
+
+  /**
+   * Sets the player to be unable to attack
+   */
+  void disableDashAttack() {
+    this.canDashAttack = false;
+  }
 }
+

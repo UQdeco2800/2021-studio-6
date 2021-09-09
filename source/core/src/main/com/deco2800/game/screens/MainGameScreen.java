@@ -42,9 +42,6 @@ public class MainGameScreen extends ScreenAdapter {
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
-  private static final String[] dashCooldown = {"images/hud/dashbar.png"};
-  private static final String[] dashCooldownFull = {"images/hud/dashbarFull.png"};
-  private static final String[] dashCooldownEmpty = {"images/hud/dashbarEmpty.png"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
@@ -158,9 +155,6 @@ public class MainGameScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainGameTextures);
     resourceService.loadSounds(menuSounds);
-    resourceService.loadTextures(dashCooldown);
-    resourceService.loadTextures(dashCooldownFull);
-    resourceService.loadTextures(dashCooldownEmpty);
 
     ServiceLocator.getResourceService().loadAll();
   }
@@ -170,9 +164,6 @@ public class MainGameScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainGameTextures);
     resourceService.unloadAssets(menuSounds);
-    resourceService.unloadAssets(dashCooldown);
-    resourceService.loadTextures(dashCooldownFull);
-    resourceService.loadTextures(dashCooldownEmpty);
 
   }
 

@@ -8,6 +8,7 @@ public class PlayerHealthAnimationController  extends Component{
 
   private IndependentAnimator healthAnimator;
     private int index;
+    private boolean hit;
 
     @Override
     public void create() {
@@ -21,6 +22,7 @@ public class PlayerHealthAnimationController  extends Component{
    * Index is used to keep track of what health state the player is at.
    */
     public void setter() {
+      hit = false;
       index = 1;
       PlayerStatsDisplay statsDisplayHealth = this.entity.getComponent(PlayerStatsDisplay.class);
       healthAnimator = statsDisplayHealth.getHealthAnimator();
@@ -36,13 +38,15 @@ public class PlayerHealthAnimationController  extends Component{
     }
 
   void change(int set) {
-    System.out.println("change");
+      if (!hit) {
+        entity.getEvents().trigger("firstHit");
+      }
+      hit = true;
     healthAnimator.startAnimation("health" + set);
   }
 
     void hit(int damage) {
       index += damage;
-      System.out.println("hit");
       healthAnimator.startAnimation("health" + index);
     }
 

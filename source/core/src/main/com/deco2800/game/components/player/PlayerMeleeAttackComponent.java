@@ -64,7 +64,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private float length;
     private float height;
     private int attackLength; // in milliseconds
-
+    private long disposeTime = 0;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
        // String filename = weaponConfig.getPath();
@@ -265,19 +265,20 @@ public class PlayerMeleeAttackComponent extends Component {
                 // if sensor is false, NPC will not be able to collide with player's fixture
                 setSensor(true);
                 //damage();
-                disposeStart();
+                disposeTimeSet();
             }
         }
     }
 
-    public void disposeStart() {
-        attackTimer = new Timer(true);
-        attackTimer.schedule( new TimerTask() {
-            public void run() {
-                dispose();
-                cancel();
-            }
-        }, attackLength);
+    public void disposeTimeSet() {
+        disposeTime = timeSource.getTime() + attackLength;
+    }
+
+    @Override
+    public void update() {
+        if (disposeTime < timeSource.getTime()) {
+            dispose();
+        }
     }
 
     @Override

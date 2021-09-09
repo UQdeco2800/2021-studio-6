@@ -49,6 +49,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
+    // keep track of player's current facing direction
     if (timeSource == null || !timeSource.isPaused()) {
       if (keycode == Keys.D) {
         entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());

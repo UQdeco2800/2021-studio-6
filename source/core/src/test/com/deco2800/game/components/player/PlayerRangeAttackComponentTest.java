@@ -3,6 +3,7 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.physics.PhysicsService;
@@ -109,5 +110,40 @@ public class PlayerRangeAttackComponentTest {
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionR.cpy());
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition()).cpy()
                 .epsilonEquals(15,0));
+    }
+
+    @Test
+    void shouldFireCorrectly() {
+        Entity player = new Entity();
+        player.addComponent(new PlayerRangeAttackComponent());
+
+        Array<Entity> bullets = new Array<>();
+        int NUM_BULLETS = 5;
+        for (int i = 0; i < NUM_BULLETS; i++) {
+            Entity newBullet = new Entity()
+                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                    .addComponent(new BulletCollisionComponent());
+
+            // hide bullet out of game screen
+            newBullet.setPosition(-10,-10);
+            bullets.add(newBullet);
+        }
+        player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+        player.setPosition(0,0);
+
+        Vector2 movingDirection = new Vector2(1,0);
+        player.getComponent(PlayerRangeAttackComponent.class).fire(movingDirection);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(1,0));
+
+        Vector2 shot = new Vector2(0,0);
+        Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(0);
+        player.getComponent(PlayerRangeAttackComponent.class).fire(shot);
+
+        assertEquals(4, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        assertEquals(4, PlayerRangeAttackComponent.getActiveBullets().size);
+
+        assertTrue(bulletAlmostFired.getPosition().epsilonEquals(0,0));
+        assertTrue(bulletAlmostFired.getComponent(BulletCollisionComponent.class).getBulletLaunchStatus());
+        assertTrue(bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget().epsilonEquals(15,0));
     }
 }

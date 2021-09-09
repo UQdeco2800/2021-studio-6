@@ -66,12 +66,16 @@ public class PlayerInventoryDisplay extends UIComponent {
     ammoLabel = new Label(ammoText, skin, "large");
     torchLabel = new Label(torchText, skin, "large");
 
-    table.add(bandageImage).size(heartSideLength).padTop(80).padLeft(10);
-    table.add(bandageLabel).padTop(80);
-    table.add(ammoImage).size(heartSideLength).padTop(160);
-    table.add(ammoLabel).padTop(160);
-    table.add(torchImage).size(heartSideLength).padRight(10);
+    table.add(torchImage).size(heartSideLength);
     table.add(torchLabel);
+    table.row();
+    table.add(bandageImage).size(heartSideLength);
+    table.add(bandageLabel);
+    table.row();
+    table.add(ammoImage).size(heartSideLength);
+    table.add(ammoLabel);
+
+
 
     stage.addActor(table);
   }

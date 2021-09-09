@@ -111,7 +111,7 @@ public class PlayerMeleeAttackComponent extends Component {
      *
      * @return player last walked direction
      */
-    private Vector2 getDirection() {
+    public Vector2 getDirection() {
         return directionMove;
     }
 
@@ -311,67 +311,6 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     /**
-     * Set physics as a box with a given size. Box is centered around the entity.
-     *
-     * @param size size of the box
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setAsBox(Vector2 size) {
-        return setAsBox(size, entity.getCenterPosition());
-    }
-
-    /**
-     * Set physics as a box with a given size. Box is aligned based on alignment.
-     *
-     * @param size size of the box
-     * @param alignX how to align x relative to entity
-     * @param alignY how to align y relative to entity
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setAsBoxAligned(Vector2 size, AlignX alignX, AlignY alignY) {
-        Vector2 position = new Vector2();
-        switch (alignX) {
-            case LEFT:
-                position.x = size.x / 2;
-                break;
-            case CENTER:
-                position.x = entity.getCenterPosition().x;
-                break;
-            case RIGHT:
-                position.x = entity.getScale().x - (size.x / 2);
-                break;
-        }
-
-        switch (alignY) {
-            case BOTTOM:
-                position.y = size.y / 2;
-                break;
-            case CENTER:
-                position.y = entity.getCenterPosition().y;
-                break;
-            case TOP:
-                position.y = entity.getScale().y - (size.y / 2);
-                break;
-        }
-
-        return setAsBox(size, position);
-    }
-
-    /**
-     * Set physics as a box with a given size and local position. Box is centered around the position.
-     *
-     * @param size size of the box
-     * @param position position of the box center relative to the entity.
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setAsBox(Vector2 size, Vector2 position) {
-        PolygonShape bbox = new PolygonShape();
-        bbox.setAsBox(size.x / 2, size.y / 2, position, 0f);
-        setShape(bbox);
-        return this;
-    }
-
-    /**
      * Set whether this physics component is a sensor. Sensors don't collide with other objects but
      * still trigger collision events. See: https://www.iforce2d.net/b2dtut/sensors
      *
@@ -387,21 +326,6 @@ public class PlayerMeleeAttackComponent extends Component {
         return this;
     }
 
-    /**
-     * Set shape
-     *
-     * @param shape shape, default = bounding box the same size as the entity
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setShape(Shape shape) {
-        if (fixture == null) {
-            fixtureDef.shape = shape;
-        } else {
-            logger.error("{} Cannot set Collider shape after create(), ignoring.", this);
-        }
-        return this;
-    }
-
     /** @return Physics fixture of this collider. Null before created() */
     public Fixture getFixture() {
         return fixture;
@@ -412,6 +336,7 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     public short getLayer() {
         if (fixture == null) {
+            System.out.println(fixtureDef.filter.categoryBits);
             return fixtureDef.filter.categoryBits;
         }
         return fixture.getFilterData().categoryBits;

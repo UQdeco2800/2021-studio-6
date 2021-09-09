@@ -114,6 +114,24 @@ public class PlayerRangeAttackComponent extends Component {
     }
 
     /**
+     * Set the current direction player is currently facing for range attack
+     *
+     * @param direction player is currently facing based on what movement key is pressed
+     */
+    public void setDirection(Vector2 direction) {
+        longAttackDir = direction.cpy();
+    }
+
+    /**
+     * Get direction player is currently facing
+     *
+     * @return direction playerr is currently facing
+     */
+    public Vector2 getDirection() {
+        return longAttackDir.cpy();
+    }
+
+    /**
      * Fires bullet projectile in a straight line based on the moving direction of player
      *
      * @param movingAttackDir would be vectors used to deploy projectiles in a direction (would only
@@ -125,13 +143,13 @@ public class PlayerRangeAttackComponent extends Component {
 
         // when player attacks, (0,0) vector is sent over, only directional information is important now
         if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
-            longAttackDir = movingAttackDir.cpy();
+            setDirection(movingAttackDir);
         }
 
         // check if there are bullets left to shoot in magazine currently and if player is currently reloading
         if (magazineCapacity != 0 && !getReloadingStatus()) {
             // player has not moved before, use default direction attack (to the right)
-            if (longAttackDir.isZero()) {
+            if (getDirection().isZero()) {
                 bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
                 bulletTargetPos.y = playerPos.y;
             } else {

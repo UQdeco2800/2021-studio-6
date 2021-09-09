@@ -65,4 +65,49 @@ public class PlayerRangeAttackComponentTest {
         assertEquals(6, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
         assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
     }
+
+    @Test
+    void checkAndSetPlayerDirection() {
+        Entity player = new Entity();
+        player.addComponent(new PlayerRangeAttackComponent());
+
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(0,0));
+        Vector2 direction = new Vector2(1,0);
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(direction);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(1,0));
+    }
+
+    @Test
+    void shouldScaleVectors() {
+        Entity player = new Entity();
+        player.addComponent(new PlayerRangeAttackComponent());
+        player.setPosition(0,0);
+
+        Vector2 directionL = new Vector2(-1,0);
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionL);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition())
+                .epsilonEquals(-15,0));
+
+        Vector2 directionD = new Vector2(0,-1);
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionD);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition())
+                .epsilonEquals(0,-15));
+
+        Vector2 directionU = new Vector2(0,1);
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionU);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition())
+                .epsilonEquals(0,15));
+    }
+
+    @Test
+    void shouldScaleRight() {
+        Entity player = new Entity();
+        player.addComponent(new PlayerRangeAttackComponent());
+        player.setPosition(0,0);
+
+        Vector2 directionR = new Vector2(1,0);
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionR.cpy());
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition()).cpy()
+                .epsilonEquals(15,0));
+    }
 }

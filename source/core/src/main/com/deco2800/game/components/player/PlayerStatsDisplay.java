@@ -108,14 +108,14 @@ public class PlayerStatsDisplay extends UIComponent {
     dashAnimator.addAnimation("dashbar", 0.04f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
-    PlayerHudAnimationController setHud = this.entity.getComponent(PlayerHudAnimationController.class);
-    setHud.setter();
-    PlayerHealthAnimationController setHealth = this.entity.getComponent(PlayerHealthAnimationController.class);
-    setHealth.setter();
 
     entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     addActors();
+    PlayerHudAnimationController setHud = this.entity.getComponent(PlayerHudAnimationController.class);
+    PlayerHealthAnimationController setHealth = this.entity.getComponent(PlayerHealthAnimationController.class);
+    setHud.setter();
+    setHealth.setter();
   }
 
   /**

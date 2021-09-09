@@ -121,14 +121,11 @@ public class AnimationRenderComponent extends RenderComponent {
   public void startAnimation(String name) {
     Animation<TextureRegion> animation = this.animations.getOrDefault(name, null);
     if (animation == null) {
-      System.out.println("error");
       logger.error(
           "Attempted to play unknown animation {}. Ensure animation is added before playback.",
           name);
       return;
     }
-    System.out.println(animation);
-    System.out.println(name);
     this.currentAnimation = animation;
     this.currentAnimationName = name;
     this.animationPlayTime = 0f;

@@ -65,7 +65,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())
                     .addComponent(new PlayerStatsDisplay())
-
+                    .addComponent(new PlayerInventoryDisplay())
                     .addComponent(animator)
                     .addComponent(new PlayerAnimationController())
                     .addComponent(new PlayerHudAnimationController())

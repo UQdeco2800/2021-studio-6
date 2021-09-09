@@ -46,10 +46,10 @@ public class EnemyBulletFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea));
+                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
         bullet.setScale(0.8f, 0.8f);
         //centers the bullet to the source
         bullet.setPosition(

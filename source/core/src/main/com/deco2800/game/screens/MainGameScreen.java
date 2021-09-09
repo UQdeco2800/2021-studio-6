@@ -42,6 +42,7 @@ public class MainGameScreen extends ScreenAdapter {
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
+
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
   public static boolean levelChange = false;
@@ -109,6 +110,7 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.render();
 
     CAMERA_POSITION.set(gameArea.player.getPosition());
+    ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
   }
 
@@ -162,6 +164,7 @@ public class MainGameScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainGameTextures);
     resourceService.unloadAssets(menuSounds);
+
   }
 
   /**
@@ -196,6 +199,7 @@ public class MainGameScreen extends ScreenAdapter {
     CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+    gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {
       gameArea = new Level2(terrainFactory);

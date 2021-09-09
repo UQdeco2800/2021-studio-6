@@ -4,6 +4,9 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
+import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.hud.PlayerHudFactory;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -21,9 +24,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final IntSet downKeys = new IntSet(20);
   private final ArrayList<Integer> movementKeys = new ArrayList<>();
   private final GameTime timeSource = ServiceLocator.getTimeSource();
+  // Variable for allowing attacks
+  private boolean canAttack = true;
+  private boolean canDashAttack = true;
 
   public KeyboardPlayerInputComponent() {
     super(5);
+  }
+
+  @Override
+  public void create() {
+    super.create();
+    entity.getEvents().addListener("enableAttack", this::enableAttack);
+    entity.getEvents().addListener("disableAttack", this::disableAttack);
+    entity.getEvents().addListener("enableDashAttack", this::enableDashAttack);
+    entity.getEvents().addListener("disableDashAttack", this::disableDashAttack);
   }
 
   /**
@@ -37,6 +52,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
+    // keep track of player's current facing direction
     if (timeSource == null || !timeSource.isPaused()) {
       if (keycode == Keys.D) {
         entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
@@ -74,19 +90,29 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         animationHandle();
         return true;
+      case Keys.R:
+        if (timeSource == null || !timeSource.isPaused()) {
+          entity.getEvents().trigger("reload");
+        }
       case Keys.SHIFT_LEFT:
         if (timeSource == null || !timeSource.isPaused()) {
+          //this.getEntity().getEvents().trigger("dash");
           entity.getEvents().trigger("dash");
         }
         return true;
       case Keys.SPACE:
-        if ((timeSource == null || !timeSource.isPaused()) && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if ((timeSource == null || !timeSource.isPaused()) && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if (!timeSource.isPaused() && canAttack && canDashAttack) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
+        }
+        return true;
+      case Keys.E:
+        if (!timeSource.isPaused() && canAttack && canDashAttack) {
+          entity.getEvents().trigger("tryAbility");
         }
         return true;
       default:
@@ -107,7 +133,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.UP);
-
         triggerWalkEvent();
         animationHandle();
         return true;
@@ -174,4 +199,34 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("walk", walkDirection);
     }
   }
+
+  /**
+   * Sets the player able to attack
+   */
+  void enableAttack() {
+    this.canAttack = true;
+  }
+
+  /**
+   * Sets the player to be unable to attack
+   */
+  void disableAttack() {
+    this.canAttack = false;
+  }
+
+
+  /**
+   * Sets the player able to attack
+   */
+  void enableDashAttack() {
+    this.canDashAttack = true;
+  }
+
+  /**
+   * Sets the player to be unable to attack
+   */
+  void disableDashAttack() {
+    this.canDashAttack = false;
+  }
 }
+

@@ -1,0 +1,97 @@
+
+health.png
+size: 256, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+health1
+  rotate: false
+  xy: 2, 138
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health2
+  rotate: false
+  xy: 2, 2
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health3
+  rotate: false
+  xy: 2, 70
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health4
+  rotate: false
+  xy: 2, 206
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health5
+  rotate: false
+  xy: 114, 70
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health6
+  rotate: false
+  xy: 2, 104
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health7
+  rotate: false
+  xy: 114, 36
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health8
+  rotate: false
+  xy: 114, 104
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health9
+  rotate: false
+  xy: 114, 206
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health10
+  rotate: false
+  xy: 114, 138
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health11
+  rotate: false
+  xy: 2, 172
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health12
+  rotate: false
+  xy: 2, 36
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1
+health13
+  rotate: false
+  xy: 114, 172
+  size: 110, 32
+  orig: 110, 32
+  offset: 0, 0
+  index: -1

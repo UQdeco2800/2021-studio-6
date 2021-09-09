@@ -36,11 +36,15 @@ public class SafehouseGameArea extends GameArea {
   private static final String[] safehouseTextures = {
     "images/Player_Sprite/front.png", "images/player_placeholders/PROJECTILE.png",
     "images/safehouse/interior-day1-tile-ground1-latest.png",
-    "images/safehouse/interior-day1-tile-door1-latest.png"
+    "images/safehouse/interior-day1-tile-door1-latest.png",
+      "images/hud/dashbarFull.png",
+      "images/hud/healthFull.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
-    "images/player.atlas"
+    "images/player.atlas",
+      "images/hud/dashbar.atlas",
+      "images/hud/health.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -62,6 +66,7 @@ public class SafehouseGameArea extends GameArea {
     spawnTerrain();
     spawnDoor();
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
+    player.getEvents().trigger("disableAttack");
     spawnBullet();
     //playMusic();
   }

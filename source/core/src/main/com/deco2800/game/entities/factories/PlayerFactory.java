@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
-import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.player.*;
+import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
+import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
@@ -28,6 +29,8 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+  private static String base = "configs/BaseWeapon.json";
+  private static String sword = "configs/Sword.json";
 
   /**
    * Create a player entity.
@@ -46,23 +49,27 @@ public class PlayerFactory {
     animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
 
-
     Entity player = new Entity()
                     .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
-                    .addComponent(new PlayerMeleeAttackComponent())
+                    .addComponent(new PlayerMeleeAttackComponent(sword))
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new PlayerActions(stats.woundState))
                     .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                             stats.baseRangedAttack, stats.defenceLevel))
-                    .addComponent(new InventoryComponent(stats.gold))
+                    .addComponent(new InventoryComponent(stats.gold, 5))
+                    .addComponent(new PlayerAbilitiesComponent(0))
+                    .addComponent(new InventoryComponent(stats.gold, stats.bulletNumber))
                     .addComponent(inputComponent)
-                    .addComponent(new PlayerStatsDisplay())
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())
+                    .addComponent(new PlayerStatsDisplay())
+
                     .addComponent(animator)
-                    .addComponent(new PlayerAnimationController());
+                    .addComponent(new PlayerAnimationController())
+                    .addComponent(new PlayerHudAnimationController())
+                    .addComponent(new PlayerHealthAnimationController());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
@@ -70,6 +77,7 @@ public class PlayerFactory {
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
+  //.addComponent(new PlayerInventoryDisplay())
 
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");

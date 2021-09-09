@@ -1,6 +1,7 @@
 package com.deco2800.game.rendering;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -15,6 +16,7 @@ public class RenderService implements Disposable {
   private static final int INITIAL_CAPACITY = 4;
   private Stage stage;
   private DebugRenderer debugRenderer;
+  private Vector2 currentView;
 
   /**
    * Map from layer to list of renderables, allows us to render each layer in the correct order
@@ -78,6 +80,16 @@ public class RenderService implements Disposable {
 
   public DebugRenderer getDebug() {
     return debugRenderer;
+  }
+
+
+
+  public Vector2 getPos() {
+    return currentView;
+  }
+
+  public void setPos(Vector2 cameraPosition) {
+    currentView = cameraPosition;
   }
 
   @Override

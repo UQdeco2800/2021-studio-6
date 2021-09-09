@@ -55,6 +55,8 @@ public class Level3 extends GameArea {
     "images/largeEnemy.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
+      "images/hud/dashbarFull.png",
+      "images/hud/healthFull.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -62,7 +64,9 @@ public class Level3 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/small_enemy.atlas",
-    "images/player.atlas"  };
+    "images/player.atlas",
+      "images/hud/dashbar.atlas",
+      "images/hud/health.atlas"  };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};

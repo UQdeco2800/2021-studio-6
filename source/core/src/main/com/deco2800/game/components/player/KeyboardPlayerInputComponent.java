@@ -106,12 +106,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         return true;
       case Keys.ENTER:
-        if (!timeSource.isPaused() && canAttack && canDashAttack) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
       case Keys.E:
-        if (!timeSource.isPaused() && canAttack && canDashAttack) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
           entity.getEvents().trigger("tryAbility");
         }
         return true;

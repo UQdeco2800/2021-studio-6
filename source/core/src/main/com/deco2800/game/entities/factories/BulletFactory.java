@@ -27,7 +27,7 @@ public class BulletFactory {
      */
     public static Entity createBullet() {
         Entity bullet = new Entity()
-                .addComponent(new TextureRenderComponent("images/player_placeholders/PROJECTILE.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/shootingammo.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new ColliderComponent().setSensor(true))

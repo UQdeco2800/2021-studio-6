@@ -10,21 +10,43 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
  */
 public class PlayerAnimationController extends Component {
   AnimationRenderComponent animator;
+  private int lastDirection;
 
   @Override
   public void create() {
     super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
-    entity.getEvents().addListener("still", this::animateStill);
-    entity.getEvents().addListener("moveLeft", this::animateLeft);
-    entity.getEvents().addListener("moveRight", this::animateRight);
-    entity.getEvents().addListener("moveUp", this::animateUp);
-    entity.getEvents().addListener("moveDown", this::animateDown);
-    entity.getEvents().addListener("hurt",this::animateFlash);
+    entity.getEvents().addListener("moveLeft", this::animateMoveLeft);
+    entity.getEvents().addListener("moveRight", this::animateMoveRight);
+    entity.getEvents().addListener("moveUp", this::animateMoveUp);
+    entity.getEvents().addListener("moveDown", this::animateMoveDown);
+   // entity.getEvents().addListener("left", this::animateLeft);
+   // entity.getEvents().addListener("right", this::animateRight);
+  //  entity.getEvents().addListener("up", this::animateUp);
+    entity.getEvents().addListener("walkStop", this::animateIdle);
+    entity.getEvents().addListener("hurt",this::animateHurt);
+    lastDirection = 1;
+    animator.startAnimation("front");
   }
 
-  void animateStill() {
-    animator.startAnimation("idle");
+  void animateMoveDown() {
+    animator.startAnimation("front-run");
+    lastDirection = 1;
+  }
+
+  void animateMoveRight() {
+    animator.startAnimation("right-run");
+    lastDirection = 2;
+  }
+
+  void animateMoveUp() {
+    animator.startAnimation("back-run");
+    lastDirection = 3;
+  }
+
+  void animateMoveLeft() {
+    animator.startAnimation("left-run");
+    lastDirection = 4;
   }
 
   void animateLeft() {
@@ -44,7 +66,38 @@ public class PlayerAnimationController extends Component {
     animator.startAnimation("front");
   }
 
-  void animateFlash() {
-    animator.startAnimation("hurt");
+
+
+  void animateHurt() {
+    switch (lastDirection) {
+      case 1:
+        animator.startAnimation("front-hurt");
+        break;
+      case 2:
+        animator.startAnimation("right-hurt");
+        break;
+      case 3:
+        animator.startAnimation("back-hurt");
+        break;
+      case 4:
+        animator.startAnimation("left-hurt");
+        break;
+    }
+  }
+  void animateIdle() {
+    switch (lastDirection) {
+      case 1:
+        animator.startAnimation("front");
+        break;
+      case 2:
+        animator.startAnimation("right");
+        break;
+      case 3:
+        animator.startAnimation("back");
+        break;
+      case 4:
+        animator.startAnimation("left");
+        break;
+    }
   }
 }

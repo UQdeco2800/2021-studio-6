@@ -6,12 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.components.dialoguebox.DialogueImage;
-import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
-import com.deco2800.game.components.player.hud.PlayerHudFactory;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -41,6 +38,7 @@ public class ForestGameArea extends GameArea {
     "images/player_placeholders/PROJECTILE.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
+    "images/playeritems/shootingammo.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -71,7 +69,7 @@ public class ForestGameArea extends GameArea {
       "images/ghost.atlas",
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
-      "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas"
   };

@@ -89,8 +89,8 @@ public class PlayerMeleeAttackComponent extends Component {
         // event listeners to check if enemy is within range of melee attack or not
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
-        entity.getEvents().addListener("attack", this::Attack);
-        entity.getEvents().addListener("walk", this::Walk);
+        entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("walk", this::walk);
     }
 
     /**
@@ -98,7 +98,7 @@ public class PlayerMeleeAttackComponent extends Component {
      *
      * @param walkDirection direction that the player walked
      */
-    private void Walk(Vector2 walkDirection) {
+    private void walk(Vector2 walkDirection) {
         if (fixture != null) {
             dispose();
         }
@@ -246,7 +246,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * Triggered when the player presses the attack button. Handles creating
      * the fixtures for the attack and prepping before actual the damage/hit.
      */
-    private void Attack() {
+    private void attack() {
         if (canAttack) {
             fixtureDef = getFixDirection();
             if (fixtureDef != null) {
@@ -269,7 +269,7 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
-    public void disposeTimeSet() {
+    private void disposeTimeSet() {
         disposeTime = timeSource.getTime() + attackLength;
     }
 

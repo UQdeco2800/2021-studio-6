@@ -44,7 +44,10 @@ public class PlayerStatsDisplay extends UIComponent {
     healthAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/health.atlas", TextureAtlas.class), 10, (float) -2.7, 3, 1);
+                .getAsset("images/hud/health.atlas", TextureAtlas.class));
+    healthAnimator.setCamera(true);
+    healthAnimator.setPositions(10, (float) -2.7);
+    healthAnimator.setScale( 3, 1);
     healthAnimator.addAnimation("health1", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health2", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health3", 0.1f, Animation.PlayMode.NORMAL);
@@ -62,10 +65,13 @@ public class PlayerStatsDisplay extends UIComponent {
     dashAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), 10, (float) -2, 3, (float) 0.5);
+                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class));
     dashAnimator.addAnimation("dashbar", 0.04f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
+    dashAnimator.setCamera(true);
+    dashAnimator.setPositions(10, (float) -2);
+    dashAnimator.setScale( 3, (float) 0.5);
 
     entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);

@@ -5,8 +5,6 @@ import com.deco2800.game.components.PlayerCombatStatsComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-
 /**
  * Reusable component used to host all trigger events that are related to items
  * found player's inventory component. These events are related to effects that comes with
@@ -32,6 +30,12 @@ public class PlayerReusableComponent extends Component {
         entity.getEvents().addListener("useBandage", this::applyBandage);
     }
 
+    /**
+     * This is uses a bandage from the player's inventory. It checks to ensure that
+     * there are bandages in the first place and if player's wound state is below 3. When
+     * these conditions are met and the numbered key 1 is clicked, bandage will be used and
+     * wound state is restored (by 1)
+     */
     void applyBandage() {
         if (inventory.hasBandages(MIN_BANDAGE_NUM)) {
             // if player is at max wound state, do not do anything
@@ -46,6 +50,11 @@ public class PlayerReusableComponent extends Component {
         }
     }
 
+    /**
+     * Updates bandage count in player's inventory later
+     * @param newBandageCount that is used to update number of bandages left in player's
+     *                        inventory
+     */
     void updateBandageCount(int newBandageCount) {
         inventory.setBandages(newBandageCount);
     }

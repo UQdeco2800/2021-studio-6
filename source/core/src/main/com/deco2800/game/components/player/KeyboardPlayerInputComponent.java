@@ -91,6 +91,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (timeSource == null || !timeSource.isPaused()) {
           entity.getEvents().trigger("reload");
         }
+        return true;
       case Keys.SHIFT_LEFT:
         if (timeSource == null || !timeSource.isPaused()) {
           //this.getEntity().getEvents().trigger("dash");

@@ -25,6 +25,8 @@ public class InventoryComponent extends Component {
   public void create() {
     super.create();
     entity.getEvents().trigger("updateBandageHUD",this.bandages);
+    entity.getEvents().trigger("updateAmmoHUD",this.ammo);
+    entity.getEvents().trigger("updateCoinHUD",this.gold);
   }
 
   /**
@@ -53,6 +55,7 @@ public class InventoryComponent extends Component {
   public void setAmmo(int ammo) {
     this.ammo = Math.max(ammo, 0);
     logger.debug("Setting ammo to {}", this.ammo);
+    entity.getEvents().trigger("updateAmmoHUD",this.ammo);
   }
 
   /**
@@ -87,12 +90,9 @@ public class InventoryComponent extends Component {
    * @param gold gold
    */
   public void setGold(int gold) {
-    if (gold >= 0) {
-      this.gold = gold;
-    } else {
-      this.gold = 0;
-    }
+    this.gold = Math.max(gold, 0);
     logger.debug("Setting gold to {}", this.gold);
+    entity.getEvents().trigger("updateCoinHUD",this.gold);
   }
 
   /**
@@ -129,7 +129,7 @@ public class InventoryComponent extends Component {
   public void setBandages(int bandages) {
     this.bandages = Math.max(bandages, 0);
     logger.debug("Setting ammo to {}", this.bandages);
-    entity.getEvents().trigger("updateBandageHUD",bandages);
+    entity.getEvents().trigger("updateBandageHUD",this.bandages);
   }
 
   /**

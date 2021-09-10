@@ -23,8 +23,11 @@ class InventoryComponentTest {
 
   @Test
   void shouldSetGetGold() {
-    InventoryComponent inventory = new InventoryComponent(100, 5, 10);
-    assertEquals(100, inventory.getGold());
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+    assertEquals(150, inventory.getGold());
 
     inventory.setGold(150);
     assertEquals(150, inventory.getGold());
@@ -35,7 +38,10 @@ class InventoryComponentTest {
 
   @Test
   void shouldSetGetAmmo() {
-    InventoryComponent inventory = new InventoryComponent(100, 5, 10);
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertEquals(5, inventory.getAmmo());
 
     inventory.setAmmo(150);
@@ -61,7 +67,10 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddGold() {
-    InventoryComponent inventory = new InventoryComponent(100, 5, 10);
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     inventory.addGold(-500);
     assertEquals(0, inventory.getGold());
 
@@ -72,7 +81,10 @@ class InventoryComponentTest {
 
   @Test
   void shouldAddAmmo() {
-    InventoryComponent inventory = new InventoryComponent(100, 5, 10);
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     inventory.addAmmo(-500);
     assertEquals(0, inventory.getAmmo());
 

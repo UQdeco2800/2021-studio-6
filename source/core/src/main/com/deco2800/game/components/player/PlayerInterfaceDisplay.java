@@ -70,8 +70,8 @@ public class PlayerInterfaceDisplay extends UIComponent {
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("firstHit", this::removeHealth);
     entity.getEvents().addListener("updateBandageHUD", this::updatePlayerBandageUI);
-    entity.getEvents().addListener("useAmmo", this::updatePlayerAmmoUI);
-    entity.getEvents().addListener("useTorch", this::updatePlayerCoinUI);
+    entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
+    entity.getEvents().addListener("updateCoinHUD", this::updatePlayerCoinUI);
     addActors();
     setAnimations();
   }

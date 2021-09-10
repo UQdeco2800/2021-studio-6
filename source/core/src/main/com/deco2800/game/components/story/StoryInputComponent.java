@@ -18,7 +18,7 @@ public class StoryInputComponent extends InputComponent {
      */
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == ADVANCE_KEY){
+        if(StoryManager.getInstance().isDisplaying() && keycode == ADVANCE_KEY){
             entity.getEvents().trigger(StoryManager.ADVANCE_LISTENER);
             return true;
         }

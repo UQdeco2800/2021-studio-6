@@ -22,6 +22,10 @@ public abstract class CutSceneConfig implements StoryConfig{
     public CutSceneConfig create() {
         dialogue = new Dialogue(new ArrayList<>(List.of(dialogueText)));
 
+        ServiceLocator.getResourceService().loadTextures(imagePaths);
+        ServiceLocator.getResourceService().loadMusic(new String[]{musicPath});
+        ServiceLocator.getResourceService().loadAll();
+
         images = new ArrayList<>();
         for(String path: imagePaths) {
             Image image = new Image(ServiceLocator.getResourceService().getAsset(path, Texture.class));

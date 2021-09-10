@@ -11,6 +11,8 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.story.StoryInputComponent;
+import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -183,7 +185,9 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
+        .addComponent(new TerminalDisplay())
+        .addComponent(StoryManager.getInstance())
+        .addComponent(new StoryInputComponent());
 
     ServiceLocator.getEntityService().register(ui);
   }

@@ -22,7 +22,7 @@ public class CutScene extends Component implements StoryBase{
     public void create() {
         config.create();
 
-        dialogueEntity = DialogueBoxFactory.createTextDialogue(config.dialogue);
+        dialogueEntity = DialogueBoxFactory.createRawTextDialogue(config.dialogue);
 
         imageEntity = ImageSequenceFactory.createImageSequence(config.images);
 
@@ -37,6 +37,7 @@ public class CutScene extends Component implements StoryBase{
         dialogueEntity.getComponent(TextDialogueBox.class).advance();
     }
 
+    @Override
     public void display() {
         ServiceLocator.getEntityService().register(dialogueEntity);
         ServiceLocator.getEntityService().register(imageEntity);

@@ -33,9 +33,12 @@ public class ImageSequence extends UIComponent {
     }
 
     public void advance() {
-        index++;
-        stage.clear();
-        stage.addActor(images.get(index));
-        stage.draw();
+        if (index < images.size() - 1) {
+            index++;
+            stage.addActor(images.get(index));
+            stage.draw();
+        } else {
+            dispose();
+        }
     }
 }

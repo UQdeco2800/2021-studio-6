@@ -29,6 +29,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+
   private static String base = "configs/BaseWeapon.json";
   private static String sword = "configs/Sword.json";
 
@@ -58,9 +59,8 @@ public class PlayerFactory {
                     .addComponent(new PlayerActions(stats.woundState))
                     .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                             stats.baseRangedAttack, stats.defenceLevel))
-                    .addComponent(new InventoryComponent(stats.gold, 5))
+                    .addComponent(new InventoryComponent(stats.gold, stats.ammo, stats.bandages))
                     .addComponent(new PlayerAbilitiesComponent(0))
-                    .addComponent(new InventoryComponent(stats.gold, stats.bulletNumber))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new DisposingComponent())

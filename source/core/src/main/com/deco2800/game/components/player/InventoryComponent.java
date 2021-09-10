@@ -13,10 +13,12 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int gold;
   private int ammo;
+  private int bandages;
 
-  public InventoryComponent(int gold, int ammo) {
+  public InventoryComponent(int gold, int ammo, int bandages) {
     setGold(gold);
     setAmmo(ammo);
+    setBandages(bandages);
   }
 
   /**
@@ -93,5 +95,41 @@ public class InventoryComponent extends Component {
    */
   public void addGold(int gold) {
     setGold(this.gold + gold);
+  }
+
+  /**
+   * Returns the player's bandage number left to use.
+   *
+   * @return entity's bandage item quantity
+   */
+  public int getBandages() {
+    return this.bandages;
+  }
+
+  /**
+   * Returns if the player has a certain amount of bandages.
+   * @param bandages required amount of bandages to be checked against
+   * @return player has greater than or equal to the required amount of bandages
+   */
+  public Boolean hasBandages(int bandages) {
+    return this.bandages >= bandages;
+  }
+
+  /**
+   * Sets the player's bandage. Bandage has a minimum bound of 0.
+   *
+   * @param bandages bandage to be set
+   */
+  public void setBandages(int bandages) {
+    this.bandages = Math.max(bandages, 0);
+    logger.debug("Setting ammo to {}", this.bandages);
+  }
+
+  /**
+   * Adds to the player's bandage. The amount added can be negative.
+   * @param bandages to add or subtract
+   */
+  public void addBandages(int bandages) {
+    setBandages(this.bandages + bandages);
   }
 }

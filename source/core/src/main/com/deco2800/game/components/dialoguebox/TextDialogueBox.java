@@ -15,7 +15,7 @@ import com.deco2800.game.ui.UIComponent;
  * Text display of dialogue
  * TODO: Move texture atlas component to screen to prevent loading multiple times
  */
-public class TextDialogueBox extends UIComponent implements StoryBase {
+public class TextDialogueBox extends UIComponent {
     private Dialogue dialogue;
     protected Table rootTable;
     private Label displayText;
@@ -118,7 +118,6 @@ public class TextDialogueBox extends UIComponent implements StoryBase {
     /**
      * Advances dialogue and updates text display
      */
-    @Override
     public void advance(){
         if (!dialogue.hasNext()) {
             dispose();

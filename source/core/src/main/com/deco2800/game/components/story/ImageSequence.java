@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.deco2800.game.ui.UIComponent;
 
 import java.util.List;
-public class ImageSequence extends UIComponent implements StoryBase {
+public class ImageSequence extends UIComponent {
 
     private final List<Image> images;
     private int index;
@@ -32,7 +32,6 @@ public class ImageSequence extends UIComponent implements StoryBase {
 
     }
 
-    @Override
     public void advance() {
         index++;
         stage.clear();

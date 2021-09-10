@@ -63,5 +63,4 @@ public class EnemyBulletFactory {
         return bullet;
     }
 
-
 }

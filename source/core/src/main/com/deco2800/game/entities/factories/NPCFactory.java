@@ -129,6 +129,29 @@ public class NPCFactory {
     return longRange;
   }
 
+  public static Entity createTouchLongRangeEnemy(Entity target, GameArea gameArea) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+                    .addTask(new DistanceFireBulletTask(target, 1, 10, 8f));
+
+    Entity toughLongRangeEnemy = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+            .addComponent(new TextureRenderComponent("images/eye.png"))
+            .addComponent(new CombatStatsComponent(1, 1))
+            .addComponent(aiComponent)
+            .addComponent(new FireBulletListener(target, gameArea))
+            .addComponent(new DisposingComponent());
+
+    toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
+
+    return toughLongRangeEnemy;
+  }
+
 
 
   /**

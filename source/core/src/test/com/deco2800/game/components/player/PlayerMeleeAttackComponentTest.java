@@ -2,10 +2,12 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -16,12 +18,17 @@ import com.deco2800.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
+@ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class PlayerMeleeAttackComponentTest {
+    @Mock GameTime gameTime;
+    @Mock World world;
+
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
@@ -63,25 +70,43 @@ public class PlayerMeleeAttackComponentTest {
 
     @Test
     void shouldAttack() {
-        String sword = "configs/Sword.json";
-        Entity player = new Entity()
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PlayerMeleeAttackComponent(sword));
+        // by default a fixture will be created in the north direction of player
+        Entity player = createPlayer();
         Entity enemy = createEnemy();
 
-        player.getEvents().trigger("walk", Vector2Utils.RIGHT);
         player.getEvents().trigger("attack");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture enemyFixture = enemy.getComponent(HitboxComponent.class).getFixture();
 
         player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
         player.getEvents().trigger("attack");
-//        System.out.println(enemy.getComponent(CombatStatsComponent.class).getHealth());;
+        assertEquals(15, enemy.getComponent(CombatStatsComponent.class).getHealth());
+    }
+
+    @Test
+    void shouldAttackAfterMoving() {
+        Entity player = createPlayer();
+        Entity enemy = createEnemy();
+
+        player.getEvents().trigger("attack");
+        Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
+        Fixture enemyFixture = enemy.getComponent(HitboxComponent.class).getFixture();
+
+        player.getEvents().trigger("walk", Vector2Utils.RIGHT);
+        player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
     }
 
     @Test
     void shouldNotAttack() {
+    }
 
+    Entity createPlayer() {
+        String sword = "configs/Sword.json";
+        Entity player = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new PlayerMeleeAttackComponent(sword));
+        player.create();
+        return player;
     }
 
     Entity createEnemy() {

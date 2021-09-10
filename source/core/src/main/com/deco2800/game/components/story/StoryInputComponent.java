@@ -1,18 +1,13 @@
-package com.deco2800.game.components.dialoguebox;
+package com.deco2800.game.components.story;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.deco2800.game.input.InputComponent;
 
-/**
- * Input handler for dialogue
- * @deprecated Replaced with story input component that handles all story input
- */
-@Deprecated
-public class DialogueInputComponent extends InputComponent {
+public class StoryInputComponent extends InputComponent {
     private static final int ADVANCE_KEY = Input.Keys.SPACE;
 
-    public DialogueInputComponent() {
+    public StoryInputComponent() {
         super(7);
     }
 
@@ -24,7 +19,7 @@ public class DialogueInputComponent extends InputComponent {
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == ADVANCE_KEY){
-            entity.getEvents().trigger("advanceDialogue");
+            entity.getEvents().trigger(StoryManager.ADVANCE_LISTENER);
             return true;
         }
         return false;

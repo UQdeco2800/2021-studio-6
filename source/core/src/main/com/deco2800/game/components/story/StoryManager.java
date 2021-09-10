@@ -39,7 +39,7 @@ public class StoryManager extends Component {
      * @param name cutscene id
      */
     public void loadCutScene(StoryNames name){
-        CutSceneConfig config = scenesConfigs.get(StoryNames.TEST);
+        CutSceneConfig config = scenesConfigs.get(name);
         CutScene cutScene = new CutScene(config);
         cutScene.create();
         loadedStory = cutScene;

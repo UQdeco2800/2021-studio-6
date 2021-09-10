@@ -258,6 +258,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
+            entity.getEvents().trigger("hurt");
             entity.getEvents().trigger("health", getindex());
             invincibleStart(invincibilityLength);
         }

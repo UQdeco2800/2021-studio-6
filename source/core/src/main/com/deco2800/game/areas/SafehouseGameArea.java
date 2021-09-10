@@ -43,7 +43,7 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] safeHouseTextureAtlases = {
-    "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas"
   };

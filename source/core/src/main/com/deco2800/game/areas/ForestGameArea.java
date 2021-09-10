@@ -69,7 +69,7 @@ public class ForestGameArea extends GameArea {
       "images/ghost.atlas",
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
-      "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas"
   };

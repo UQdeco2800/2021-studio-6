@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 
 /**
@@ -10,6 +11,16 @@ import com.deco2800.game.components.Component;
 public class PlayerPickupComponent extends Component {
 
     public PlayerPickupComponent() {
+
+    }
+
+    @Override
+    public void create() {
+        super.create();
+        entity.getEvents().addListener("collisionStart", this::tryPickUpItem);
+    }
+
+    private void tryPickUpItem(Fixture me, Fixture other) {
 
     }
 }

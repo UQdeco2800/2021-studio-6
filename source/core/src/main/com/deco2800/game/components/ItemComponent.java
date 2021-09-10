@@ -8,10 +8,10 @@ import com.deco2800.game.items.Items;
  * during the game
  */
 public class ItemComponent extends Component {
-    private Items itemType;
+    private final Items itemType;
 
     public ItemComponent(Items itemType) {
-        itemType = itemType;
+        this.itemType = itemType;
     }
 
     /**

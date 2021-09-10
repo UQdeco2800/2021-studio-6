@@ -31,7 +31,7 @@ public class PlayerReusableComponent extends Component {
     }
 
     /**
-     * This is uses a bandage from the player's inventory. It checks to ensure that
+     * This uses a bandage from the player's inventory. It checks to ensure that
      * there are bandages in the first place and if player's wound state is below 3. When
      * these conditions are met and the numbered key 1 is clicked, bandage will be used and
      * wound state is restored (by 1)

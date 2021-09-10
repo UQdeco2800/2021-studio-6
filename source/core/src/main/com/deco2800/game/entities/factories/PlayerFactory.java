@@ -50,7 +50,7 @@ public class PlayerFactory {
     animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
 
     Entity player = new Entity()
-                    .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
+                    .addComponent(new TextureRenderComponent("images/Player_Sprite/front01.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new PlayerMeleeAttackComponent(sword))

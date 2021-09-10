@@ -22,6 +22,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -49,27 +51,35 @@ public class PlayerMeleeAttackComponentTest {
 
     @Test
     void checkStatesAfterBeforeAttack() {
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
         String sword = "configs/Sword.json";
-        Entity player = new Entity()
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PlayerMeleeAttackComponent(sword));
+        Entity player = createPlayer();
+        Vector2 directionR = new Vector2(1,0);
 
         // there should not be any fixtures yet
         assertNull(player.getComponent(PlayerMeleeAttackComponent.class).getFixture());
         assertEquals(PhysicsLayer.DEFAULT, player.getComponent(PlayerMeleeAttackComponent.class).getLayer());
 
-
-        player.create();
-
+//        when(time.getTime()).thenReturn(3000L);
         player.getEvents().trigger("attack");
         // fixture created melee attack executed
         assertNotNull(player.getComponent(PlayerMeleeAttackComponent.class).getFixture());
         assertEquals(PhysicsLayer.WEAPON, player.getComponent(PlayerMeleeAttackComponent.class).getLayer());
+        player.getEvents().trigger("walk", directionR);
+
+        player.getComponent(PlayerMeleeAttackComponent.class).update();
+//        player.getComponent(PlayerMeleeAttackComponent.class).update();
+//        player.getComponent(PlayerMeleeAttackComponent.class).update();
+
+        assertNull(player.getComponent(PlayerMeleeAttackComponent.class).getFixture());
     }
 
 
     @Test
     void shouldAttack() {
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
         // by default a fixture will be created in the north direction of player
         Entity player = createPlayer();
         Entity enemy = createEnemy();
@@ -85,6 +95,8 @@ public class PlayerMeleeAttackComponentTest {
 
     @Test
     void shouldAttackAfterMoving() {
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
         Entity player = createPlayer();
         Entity enemy = createEnemy();
 

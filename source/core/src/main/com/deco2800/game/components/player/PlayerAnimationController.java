@@ -41,7 +41,7 @@ public class PlayerAnimationController extends Component {
   }
 
   void animateDown() {
-    animator.startAnimation("front  ");
+    animator.startAnimation("front");
   }
 
   void animateFlash() {

@@ -70,7 +70,6 @@ public class PlayerMeleeAttackComponent extends Component {
        // String filename = weaponConfig.getPath();
         BaseWeaponConfig stats =
             FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
-        System.out.println(stats);
         fixtureDef = new FixtureDef();
         fixtureDefW = new FixtureDef();
         fixtureDefA = new FixtureDef();
@@ -293,7 +292,7 @@ public class PlayerMeleeAttackComponent extends Component {
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
-            //physBody.destroyFixture(fixture);
+            physBody.destroyFixture(fixture);
             fixture = null;
         }
 
@@ -337,7 +336,6 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     public short getLayer() {
         if (fixture == null) {
-            System.out.println(fixtureDef.filter.categoryBits);
             return fixtureDef.filter.categoryBits;
         }
         return fixture.getFilterData().categoryBits;

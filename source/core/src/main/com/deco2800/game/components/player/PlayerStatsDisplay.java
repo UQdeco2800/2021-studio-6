@@ -1,6 +1,5 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -9,15 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
 import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
-import com.deco2800.game.components.player.hud.PlayerHudFactory;
-import com.deco2800.game.entities.Entity;
-import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * A ui component for displaying player stats, e.g. health.

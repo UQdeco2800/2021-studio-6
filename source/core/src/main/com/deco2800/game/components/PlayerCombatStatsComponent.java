@@ -185,7 +185,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             }
         }
         if (entity != null) {
+            // update player HUD interface when bandage is used to improve wound state
             entity.getEvents().trigger("updateWound", this.woundState);
+            entity.getEvents().trigger("health", getindex());
             if (isDead()) {
                 entity.getEvents().trigger("dead");
             }

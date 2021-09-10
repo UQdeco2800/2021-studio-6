@@ -1,0 +1,90 @@
+
+PlayerItems.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+armour
+  rotate: false
+  xy: 2, 652
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+ax
+  rotate: false
+  xy: 2, 327
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+bandage01
+  rotate: false
+  xy: 327, 652
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+bandage02
+  rotate: false
+  xy: 2, 2
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+dagger
+  rotate: false
+  xy: 327, 327
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+explosion
+  rotate: false
+  xy: 652, 652
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: 0
+explosion
+  rotate: false
+  xy: 327, 2
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: 1
+explosion
+  rotate: false
+  xy: 327, 2
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: 2
+firecracker
+  rotate: false
+  xy: 652, 327
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+halmet
+  rotate: false
+  xy: 977, 652
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 652, 2
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1
+tourch
+  rotate: false
+  xy: 977, 327
+  size: 323, 323
+  orig: 323, 323
+  offset: 0, 0
+  index: -1

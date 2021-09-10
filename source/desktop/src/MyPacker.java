@@ -2,8 +2,8 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 public class MyPacker {
     public static void main (String[] args) throws Exception {
-        TexturePacker.process("core/assets/images/Player_Sprite",
+        TexturePacker.process("core/assets/images/playeritems",
                 "core/assets/images/Player_Spritesheets",
-                "PlayerSpriteSheet");
+                "PlayerItems");
     }
 }

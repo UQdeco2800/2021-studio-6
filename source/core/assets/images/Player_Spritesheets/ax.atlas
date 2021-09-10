@@ -1,0 +1,34 @@
+
+ax.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+ax0
+  rotate: false
+  xy: 2, 2
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+ax1
+  rotate: false
+  xy: 698, 2
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+ax2
+  rotate: false
+  xy: 350, 2
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+ax3
+  rotate: false
+  xy: 1046, 2
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1

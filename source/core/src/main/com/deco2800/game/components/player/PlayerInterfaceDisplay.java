@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 /**
  * A ui component for displaying player stats, e.g. health.
  */
-public class PlayerStatsDisplay extends UIComponent {
+public class PlayerInterfaceDisplay extends UIComponent {
   Table table;
   Table tableHealth;
   private Image heartImage;

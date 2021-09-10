@@ -51,34 +51,40 @@ class PlayerCombatStatsComponentTest {
 
     @Test
     void shouldCheckStateMax() {
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(10, 20, 3, 25, 0);
-        assertEquals(combat.getHealth(), combat.getStateMax());
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
+        Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(10, 20, 3, 25, 0));
+        player.create();
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getHealth(), player.getComponent(PlayerCombatStatsComponent.class).getStateMax());
 
-        combat.setWoundState(2);
-        combat.setHealth(2);
-        assertNotEquals(combat.getHealth(), combat.getStateMax());
-        combat.setStateMax(2);
-        assertEquals(combat.getStateMax(), combat.getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(2);
+        player.getComponent(PlayerCombatStatsComponent.class).setHealth(2);
+        assertNotEquals(player.getComponent(PlayerCombatStatsComponent.class).getHealth(), player.getComponent(PlayerCombatStatsComponent.class).getStateMax());
+        player.getComponent(PlayerCombatStatsComponent.class).setStateMax(2);
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 
     @Test
     void shouldSetWoundAndHealth() {
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(10, 20, 3, 25, 0);
-        assertEquals(3, combat.getWoundState());
-        assertEquals(combat.getStateMax(), combat.getHealth());
+        GameTime time = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(time);
+        Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(10, 20, 3, 25, 0));
+        player.create();
+        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
-        combat.setHealth(100);
-        assertEquals(3, combat.getWoundState()); // max for the wound state is 3
-        assertEquals(combat.getStateMax(), combat.getHealth());
-        combat.setHealth(0);
-        assertEquals(2, combat.getWoundState());
-        assertEquals(combat.getStateMax(), combat.getHealth());
-        combat.setHealth(-20);
-        assertEquals(1, combat.getWoundState());
-        assertEquals(combat.getStateMax(), combat.getHealth());
-        combat.setHealth(2);
-        assertEquals(1, combat.getWoundState());
-        assertEquals(2, combat.getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).setHealth(100);
+        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getWoundState()); // max for the wound state is 3
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).setHealth(0);
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).setHealth(-20);
+        assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        player.getComponent(PlayerCombatStatsComponent.class).setHealth(2);
+        assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 
     @Test

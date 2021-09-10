@@ -1,14 +1,11 @@
 package com.deco2800.game.components;
 
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.logging.Handler;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

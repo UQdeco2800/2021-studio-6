@@ -19,8 +19,11 @@ public abstract class CutSceneConfig implements StoryConfig{
     protected String[] imagePaths;
     protected String musicPath;
 
+    /**
+     * Create all the assets defined
+     */
     @Override
-    public CutSceneConfig create() {
+    public void create() {
         dialogue = new Dialogue(new ArrayList<>(List.of(dialogueText)));
 
         ServiceLocator.getResourceService().loadTextures(imagePaths);
@@ -38,6 +41,5 @@ public abstract class CutSceneConfig implements StoryConfig{
         }
 
         music = ServiceLocator.getResourceService().getAsset(musicPath, Music.class);
-        return this;
     }
 }

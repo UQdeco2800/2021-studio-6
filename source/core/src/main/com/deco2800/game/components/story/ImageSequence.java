@@ -32,6 +32,9 @@ public class ImageSequence extends UIComponent {
 
     }
 
+    /**
+     * Advances the image sequence. Disposes of itself when done
+     */
     public void advance() {
         if (index < images.size() - 1) {
             index++;
@@ -44,6 +47,9 @@ public class ImageSequence extends UIComponent {
         }
     }
 
+    /**
+     * Removes all images
+     */
     @Override
     public void dispose() {
         super.dispose();

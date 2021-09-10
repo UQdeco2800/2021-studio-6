@@ -3,14 +3,15 @@ package com.deco2800.game.components.story;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.story.stories.TestCutscene;
-import com.deco2800.game.events.listeners.EventListener;
-import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 import java.util.EnumMap;
 
+/**
+ * Singleton component that manages the loading and display of story elements
+ */
 public class StoryManager extends Component {
 
     private static StoryManager manager = null;
@@ -33,6 +34,10 @@ public class StoryManager extends Component {
         entity.getEvents().addListener(ADVANCE_LISTENER, this::advance);
     }
 
+    /**
+     * Loads a cutscene in preparation for display
+     * @param name cutscene id
+     */
     public void loadCutScene(StoryNames name){
         CutSceneConfig config = scenesConfigs.get(StoryNames.TEST);
         CutScene cutScene = new CutScene(config);
@@ -40,6 +45,10 @@ public class StoryManager extends Component {
         loadedStory = cutScene;
     }
 
+    /**
+     * Displays a story that is loaded
+     * @return null if no story is loaded, else the displayed story
+     */
     public StoryBase displayStory() {
 
         if (!isLoaded()) {
@@ -51,10 +60,17 @@ public class StoryManager extends Component {
         return loadedStory;
     }
 
+    /**
+     * If a story is being displayed
+     * @return if the story is displayed
+     */
     public boolean isDisplaying(){
         return displaying;
     }
 
+    /**
+     * Advances the story by one.
+     */
     public void advance() {
 
         if (!isLoaded()) {
@@ -68,11 +84,19 @@ public class StoryManager extends Component {
         }
     }
 
+    /**
+     * Disposes a loaded story
+     */
     public void disposeLoadedStory() {
         loadedStory.dispose();
         loadedStory = null;
+        displaying = false;
     }
 
+    /**
+     * Returns the singleton instance
+     * @return the StoryManager instance
+     */
     public static StoryManager getInstance(){
         if (manager == null) {
             manager = new StoryManager();
@@ -80,6 +104,10 @@ public class StoryManager extends Component {
         return manager;
     }
 
+    /**
+     * Returns if a story is loaded or not
+     * @return story is loaded or not
+     */
     private boolean isLoaded(){
         if (loadedStory == null) {
             logger.error("No story loaded");

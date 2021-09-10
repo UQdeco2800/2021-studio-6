@@ -4,6 +4,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.deco2800.game.input.InputComponent;
 
+/**
+ * Input component for story input
+ */
 public class StoryInputComponent extends InputComponent {
     private static final int ADVANCE_KEY = Input.Keys.SPACE;
 

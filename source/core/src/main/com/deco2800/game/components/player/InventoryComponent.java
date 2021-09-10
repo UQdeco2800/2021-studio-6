@@ -16,9 +16,15 @@ public class InventoryComponent extends Component {
   private int bandages;
 
   public InventoryComponent(int gold, int ammo, int bandages) {
-    setGold(gold);
-    setAmmo(ammo);
-    setBandages(bandages);
+    this.gold = gold;
+    this.ammo = ammo;
+    this.bandages = bandages;
+  }
+
+  @Override
+  public void create() {
+    super.create();
+    entity.getEvents().trigger("updateBandageHUD",this.bandages);
   }
 
   /**
@@ -123,6 +129,7 @@ public class InventoryComponent extends Component {
   public void setBandages(int bandages) {
     this.bandages = Math.max(bandages, 0);
     logger.debug("Setting ammo to {}", this.bandages);
+    entity.getEvents().trigger("updateBandageHUD",bandages);
   }
 
   /**

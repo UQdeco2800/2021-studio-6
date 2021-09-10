@@ -18,6 +18,7 @@ public class PlayerReusableComponent extends Component {
     private PlayerCombatStatsComponent playerStats;
     private static final int MIN_BANDAGE_NUM = 1;
     private static final int INCREASE_WOUND_STATE = 1;
+    private static final int BANDAGE_USED = 1;
 
     public PlayerReusableComponent() {
     }
@@ -36,14 +37,16 @@ public class PlayerReusableComponent extends Component {
             // if player is at max wound state, do not do anything
             if (!playerStats.atMax()) {
                 int currentWoundState = playerStats.getWoundState();
-                playerStats.setWoundState(currentWoundState + INCREASE_WOUND_STATE);
+                int bandageCount = inventory.getBandages();
 
+                updateBandageCount(bandageCount - BANDAGE_USED);
+                playerStats.setWoundState(currentWoundState + INCREASE_WOUND_STATE);
             }
             System.out.println("bandage used triggered");
         }
     }
 
-    void updateBandageCount(int bandage) {
-        
+    void updateBandageCount(int newBandageCount) {
+        inventory.setBandages(newBandageCount);
     }
 }

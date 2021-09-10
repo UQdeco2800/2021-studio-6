@@ -1,14 +1,26 @@
 package com.deco2800.game.components.player;
 
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
+  @Mock GameTime time;
+  @BeforeEach
+  void beforeEach() {
+    ServiceLocator.registerTimeSource(time);
+  }
+
   @Test
   void shouldSetGetGold() {
     InventoryComponent inventory = new InventoryComponent(100, 5, 10);
@@ -71,7 +83,10 @@ class InventoryComponentTest {
 
   @Test
   void shouldSetGetBandages() {
-    InventoryComponent inventory = new InventoryComponent(100, 5, 10);
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertEquals(10, inventory.getBandages());
 
     inventory.setBandages(150);
@@ -83,14 +98,20 @@ class InventoryComponentTest {
 
   @Test
   void shouldCheckHasBandages() {
-    InventoryComponent inventory = new InventoryComponent(150, 5, 10);
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertTrue(inventory.hasBandages(10));
     assertFalse(inventory.hasBandages(200));
   }
 
   @Test
   void shouldAddBandages() {
-    InventoryComponent inventory = new InventoryComponent(100, 5, 10);
+    Entity player = new Entity()
+            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     inventory.addBandages(-500);
     assertEquals(0, inventory.getBandages());
 

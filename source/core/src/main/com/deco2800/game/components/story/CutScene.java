@@ -48,9 +48,12 @@ public class CutScene extends Component implements StoryBase{
             imageEntity.getComponent(ImageSequence.class).advance();
             dialogueEntity.getComponent(TextDialogueBox.class).advance();
             dialogueEntity.getComponent(TextDialogueBox.class).forceUpdate();
+
+            if (index == config.getLength()) {
+                dispose();
+            }
         } else {
             dispose();
-            isDead = true;
         }
     }
 
@@ -72,6 +75,7 @@ public class CutScene extends Component implements StoryBase{
     @Override
     public void dispose() {
         super.dispose();
+        isDead = true;
         config.music.stop();
         config.music.dispose();
     }

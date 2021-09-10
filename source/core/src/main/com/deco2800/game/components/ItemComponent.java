@@ -9,9 +9,19 @@ import com.deco2800.game.items.Items;
  */
 public class ItemComponent extends Component {
     private final Items itemType;
+    private final int itemQuantity;
 
-    public ItemComponent(Items itemType) {
+    public ItemComponent(Items itemType, int itemQuantity) {
         this.itemType = itemType;
+        this.itemQuantity = itemQuantity;
+    }
+
+    /**
+     * This will return item quantity for item that has been dropped in game world
+     * @return quantity of specific item on tile in game world
+     */
+    public int getItemQuantity() {
+        return this.itemQuantity;
     }
 
     /**

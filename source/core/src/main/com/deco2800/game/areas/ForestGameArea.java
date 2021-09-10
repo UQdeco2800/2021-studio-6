@@ -174,7 +174,8 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_AMMO_PICKUPS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity pickupAmmo = ItemFactory.createAmmoPickup();
+      int randomAmmoQuantity = RandomUtils.randomInt(5);
+      Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
       spawnEntityAt(pickupAmmo, randomPos, true, false);
     }
   }

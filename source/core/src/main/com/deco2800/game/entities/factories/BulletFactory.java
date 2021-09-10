@@ -20,6 +20,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 public class BulletFactory {
     private static final PlayerConfig stats =
             FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+    private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
 
     /**
      * Bullets are created here before player fires it in game
@@ -37,7 +38,7 @@ public class BulletFactory {
                         stats.baseRangedAttack, stats.defenceLevel));
 
         // hide bullet out of game screen
-        bullet.setPosition(-10,-10);
+        bullet.setPosition(HIDDEN_COORD);
         bullet.getComponent(TextureRenderComponent.class).scaleEntity();
         return bullet;
     }

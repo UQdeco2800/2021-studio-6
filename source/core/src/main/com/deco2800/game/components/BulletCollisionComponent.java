@@ -62,7 +62,7 @@ public class BulletCollisionComponent extends Component {
         return this.launchStatus;
     }
 
-    public void bulletHit(Fixture me, Fixture other) {
+    private void bulletHit(Fixture me, Fixture other) {
 
         // Get data of current bullet for checking
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;

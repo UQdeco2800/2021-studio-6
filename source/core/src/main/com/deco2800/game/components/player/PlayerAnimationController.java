@@ -29,6 +29,7 @@ public class PlayerAnimationController extends Component {
 
   void animateLeft() {
     animator.startAnimation("left");
+
   }
 
   void animateRight() {
@@ -40,7 +41,7 @@ public class PlayerAnimationController extends Component {
   }
 
   void animateDown() {
-    animator.startAnimation("front");
+    animator.startAnimation("front  ");
   }
 
   void animateFlash() {

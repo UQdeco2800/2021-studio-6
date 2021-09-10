@@ -4,4 +4,5 @@ public interface StoryBase {
     void advance();
     void display();
     void dispose();
+    boolean isDead();
 }

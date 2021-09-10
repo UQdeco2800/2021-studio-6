@@ -35,10 +35,20 @@ public class ImageSequence extends UIComponent {
     public void advance() {
         if (index < images.size() - 1) {
             index++;
+            images.get(index - 1).remove();
             stage.addActor(images.get(index));
             stage.draw();
         } else {
-            dispose();
+            images.get(index).remove();
+            super.dispose();
+        }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        for (Image image: images) {
+            image.remove();
         }
     }
 }

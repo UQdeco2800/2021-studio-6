@@ -30,6 +30,8 @@ public class TextDialogueBox extends UIComponent {
     private static final float DEFAULT_PADDING = 15f;
     private static final float IMAGE_OFFSET = 250f;
 
+    private boolean isDead = false;
+
     /**
      * Creates a new TextDialogueBox
      * @param dialogue Dialogue to be display
@@ -126,6 +128,16 @@ public class TextDialogueBox extends UIComponent {
         displayText.setText(dialogue.next());
     }
 
+    /**
+     * Removes the dialogue box then adds it again in its current state
+     */
+    public void forceUpdate(){
+        if (!isDead) {
+            rootTable.remove();
+            stage.addActor(rootTable);
+        }
+    }
+
     @Override
     protected void draw(SpriteBatch batch) {
         //Update positioning
@@ -139,7 +151,9 @@ public class TextDialogueBox extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
+        isDead = true;
         displayText.remove();
         rootTable.remove();
     }
+
 }

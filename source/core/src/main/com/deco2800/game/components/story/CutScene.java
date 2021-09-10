@@ -14,6 +14,9 @@ public class CutScene extends Component implements StoryBase{
     private Entity dialogueEntity;
     private Entity imageEntity;
 
+    private int index = 0;
+    private boolean isDead = false;
+
     CutScene(CutSceneConfig config){
         this.config = config;
     }
@@ -33,14 +36,32 @@ public class CutScene extends Component implements StoryBase{
 
     @Override
     public void advance(){
-        imageEntity.getComponent(ImageSequence.class).advance();
-        dialogueEntity.getComponent(TextDialogueBox.class).advance();
+        if (index < config.getLength()){
+            index++;
+            imageEntity.getComponent(ImageSequence.class).advance();
+            dialogueEntity.getComponent(TextDialogueBox.class).advance();
+            dialogueEntity.getComponent(TextDialogueBox.class).forceUpdate();
+        } else {
+            dispose();
+            isDead = true;
+        }
     }
 
     @Override
     public void display() {
-        ServiceLocator.getEntityService().register(dialogueEntity);
         ServiceLocator.getEntityService().register(imageEntity);
+        ServiceLocator.getEntityService().register(dialogueEntity);
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        config.music.stop();
+        config.music.dispose();
+    }
+
+    @Override
+    public boolean isDead() {
+        return isDead;
+    }
 }

@@ -3,6 +3,7 @@ package com.deco2800.game.components.story;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.story.stories.TestCutscene;
+import com.deco2800.game.events.listeners.EventListener;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,6 @@ public class StoryManager extends Component {
     private boolean displaying = false;
 
     private StoryBase loadedStory;
-    private int storyIndex;
 
     private StoryManager(){
         scenesConfigs.put(StoryNames.TEST, new TestCutscene());
@@ -41,10 +41,11 @@ public class StoryManager extends Component {
     }
 
     public StoryBase displayStory() {
-        if (loadedStory == null) {
-            logger.error("No story loaded");
+
+        if (!isLoaded()) {
             return null;
         }
+
         loadedStory.display();
         displaying = true;
         return loadedStory;
@@ -55,7 +56,21 @@ public class StoryManager extends Component {
     }
 
     public void advance() {
-        loadedStory.advance();
+
+        if (!isLoaded()) {
+            return;
+        }
+
+        if (!loadedStory.isDead()) {
+            loadedStory.advance();
+        } else {
+            disposeLoadedStory();
+        }
+    }
+
+    public void disposeLoadedStory() {
+        loadedStory.dispose();
+        loadedStory = null;
     }
 
     public static StoryManager getInstance(){
@@ -63,6 +78,15 @@ public class StoryManager extends Component {
             manager = new StoryManager();
         }
         return manager;
+    }
+
+    private boolean isLoaded(){
+        if (loadedStory == null) {
+            logger.error("No story loaded");
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

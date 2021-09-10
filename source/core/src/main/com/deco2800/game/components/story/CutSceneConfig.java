@@ -1,5 +1,6 @@
 package com.deco2800.game.components.story;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -29,6 +30,10 @@ public abstract class CutSceneConfig implements StoryConfig{
         images = new ArrayList<>();
         for(String path: imagePaths) {
             Image image = new Image(ServiceLocator.getResourceService().getAsset(path, Texture.class));
+            int screenHeight = Gdx.graphics.getHeight();
+            int screenWidth = Gdx.graphics.getWidth();
+            image.setHeight(screenHeight);
+            image.setWidth(screenWidth);
             images.add(image);
         }
 

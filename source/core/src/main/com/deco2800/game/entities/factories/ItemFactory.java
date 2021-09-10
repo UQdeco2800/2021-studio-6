@@ -23,6 +23,7 @@ public class ItemFactory {
                 .addComponent(new ItemComponent(Items.AMMO, itemQuantity))
                 .addComponent(new TextureRenderComponent("images/playeritems/pickupammo.png"))
                 .addComponent(new DisposingComponent());
+        ammo.setScale(0.7f, 0.7f);
         return ammo;
     }
 }

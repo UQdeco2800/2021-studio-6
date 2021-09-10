@@ -1,5 +1,6 @@
 package com.deco2800.game.components.mainmenu;
 
+import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import org.slf4j.Logger;
@@ -11,7 +12,11 @@ import org.slf4j.LoggerFactory;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
+  private static final float buttonClickDuration = 0.3f;
   private GdxGame game;
+  private boolean gameStarted = false;
+  private boolean gameQuiting = false;
+
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -30,9 +35,16 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
-    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-
-
+    if (!gameQuiting && !gameStarted) {
+      gameStarted = true;
+      // starts the game after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        }
+      }, buttonClickDuration);
+    }
   }
 
   /**
@@ -48,7 +60,16 @@ public class MainMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    game.exit();
+    if (!gameQuiting && !gameStarted) {
+      gameQuiting = true;
+      // starts the game after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.exit();
+        }
+      }, buttonClickDuration);
+    }
   }
 
   /**
@@ -56,6 +77,8 @@ public class MainMenuActions extends Component {
    */
   private void onSettings() {
     logger.info("Launching settings screen");
-    game.setScreen(GdxGame.ScreenType.SETTINGS);
+    if (!gameQuiting && !gameStarted) {
+      game.setScreen(GdxGame.ScreenType.SETTINGS);
+    }
   }
 }

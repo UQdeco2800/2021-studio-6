@@ -4,343 +4,350 @@ size: 2048, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-dashbar 01
+dashbar
   rotate: false
   xy: 2, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 02
+dashbar
   rotate: false
   xy: 100, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 03
+dashbar
   rotate: false
   xy: 198, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 04
+dashbar
   rotate: false
   xy: 296, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 05
+dashbar
   rotate: false
   xy: 394, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 06
+dashbar
   rotate: false
   xy: 492, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 07
+dashbar
   rotate: false
   xy: 590, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 08
+dashbar
   rotate: false
   xy: 688, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 09
+dashbar
   rotate: false
   xy: 786, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 10
+dashbar
   rotate: false
   xy: 884, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 11
+dashbar
   rotate: false
   xy: 982, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 12
+dashbar
   rotate: false
   xy: 1080, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 13
+dashbar
   rotate: false
   xy: 1178, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 14
+dashbar
   rotate: false
   xy: 1276, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 15
+dashbar
   rotate: false
   xy: 1374, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 16
+dashbar
   rotate: false
   xy: 1472, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 17
+dashbar
   rotate: false
   xy: 1570, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 18
+dashbar
   rotate: false
   xy: 1668, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 19
+dashbar
   rotate: false
   xy: 1766, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 20
+dashbar
   rotate: false
   xy: 1864, 4
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 21
+dashbar
   rotate: false
   xy: 2, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 22
+dashbar
   rotate: false
   xy: 100, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 23
+dashbar
   rotate: false
   xy: 198, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 24
+dashbar
   rotate: false
   xy: 296, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 25
+dashbar
   rotate: false
   xy: 394, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 26
+dashbar
   rotate: false
   xy: 492, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 27
+dashbar
   rotate: false
   xy: 590, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 28
+dashbar
   rotate: false
   xy: 688, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 29
+dashbar
   rotate: false
   xy: 786, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 30
+dashbar
   rotate: false
   xy: 884, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 31
+dashbar
   rotate: false
   xy: 982, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 32
+dashbar
   rotate: false
   xy: 1080, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 33
+dashbar
   rotate: false
   xy: 1178, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 34
+dashbar
   rotate: false
   xy: 1276, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 35
+dashbar
   rotate: false
   xy: 1374, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 36
+dashbar
   rotate: false
   xy: 1472, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 37
+dashbar
   rotate: false
   xy: 1570, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 38
+dashbar
   rotate: false
   xy: 1668, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 39
+dashbar
   rotate: false
   xy: 1766, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 40
+dashbar
   rotate: false
   xy: 1864, 22
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 41
+dashbar
   rotate: false
   xy: 2, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 42
+dashbar
   rotate: false
   xy: 100, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 43
+dashbar
   rotate: false
   xy: 198, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 44
+dashbar
   rotate: false
   xy: 296, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 45
+dashbar
   rotate: false
   xy: 394, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 46
+dashbar
   rotate: false
   xy: 492, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 47
+dashbar
   rotate: false
   xy: 590, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 48
+dashbar
   rotate: false
   xy: 688, 40
   size: 96, 16
   orig: 96, 16
   offset: 0, 0
   index: -1
-dashbar 49
+dashbar
+  rotate: false
+  xy: 786, 40
+  size: 96, 16
+  orig: 96, 16
+  offset: 0, 0
+  index: -1
+dashbarFull
   rotate: false
   xy: 786, 40
   size: 96, 16

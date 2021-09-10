@@ -18,10 +18,14 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerRangeAttackComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAttackComponent.class);
+    // activeBullets array will be updated and reloaded with ammo entities whenever bullet collides with
+    // any object in game world
     private static Array<Entity> activeBullets;
     final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 15;
+    private int magazineCapacity = 5;
+    private boolean currentlyReloading = false;
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets
@@ -37,9 +41,17 @@ public class PlayerRangeAttackComponent extends Component {
      * @param bulletShot is the bullet that has been shot and removed from activeBullets array
      */
     public static void restockBulletShot(Entity bulletShot) {
-        activeBullets.add(bulletShot);
+        if (activeBullets != null) {
+            activeBullets.add(bulletShot);
+        }
     }
 
+    /**
+     * To return bullet of entities that are spawned in the game world. These will continuously
+     * be used for performance sake
+     *
+     * @return array of bullet entities that are currently active and ready to be used
+     */
     public static Array<Entity> getActiveBullets() {
         return activeBullets;
     }
@@ -47,7 +59,7 @@ public class PlayerRangeAttackComponent extends Component {
     /**
      * Used to load after spawning in game area for firing in game
      *
-     * @param bullets is the number of bullets player has to shoot
+     * @param bullets is the number of bullets player will be able to spawn into the game world
      */
     public void addBullets(Array<Entity> bullets) {
         activeBullets = new Array<>(bullets);
@@ -72,14 +84,13 @@ public class PlayerRangeAttackComponent extends Component {
      * @param playerCoord is the current player's position. It is used to launch bullet from player's position
      * @return coordinates used for bullet's target coordinates
      */
-    private Vector2 scaleVector(Vector2 playerCoord) {
+    public Vector2 scaleVector(Vector2 playerCoord) {
         float xPosPlayer = playerCoord.x;
         float yPosPlayer = playerCoord.y;
         Vector2 scaledVector = new Vector2();
 
         // player has not moved before
         if (longAttackDir.isZero()) {
-            System.out.println("DEFAULT ATTACK RIGHT");
             scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
 
         // player has moved before
@@ -103,6 +114,24 @@ public class PlayerRangeAttackComponent extends Component {
     }
 
     /**
+     * Set the current direction player is currently facing for range attack
+     *
+     * @param direction player is currently facing based on what movement key is pressed
+     */
+    public void setDirection(Vector2 direction) {
+        longAttackDir = direction.cpy();
+    }
+
+    /**
+     * Get direction player is currently facing
+     *
+     * @return direction playerr is currently facing
+     */
+    public Vector2 getDirection() {
+        return longAttackDir.cpy();
+    }
+
+    /**
      * Fires bullet projectile in a straight line based on the moving direction of player
      *
      * @param movingAttackDir would be vectors used to deploy projectiles in a direction (would only
@@ -114,13 +143,13 @@ public class PlayerRangeAttackComponent extends Component {
 
         // when player attacks, (0,0) vector is sent over, only directional information is important now
         if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
-            longAttackDir = movingAttackDir.cpy();
+            setDirection(movingAttackDir);
         }
 
-        // check if there is ammo
-        if (activeBullets.size != 0) {
+        // check if there are bullets left to shoot in magazine currently and if player is currently reloading
+        if (magazineCapacity != 0 && !getReloadingStatus()) {
             // player has not moved before, use default direction attack (to the right)
-            if (longAttackDir.isZero()) {
+            if (getDirection().isZero()) {
                 bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
                 bulletTargetPos.y = playerPos.y;
             } else {
@@ -129,15 +158,56 @@ public class PlayerRangeAttackComponent extends Component {
             }
 
             // bullet shot
-            if (movingAttackDir.isZero()) {
+            if (movingAttackDir.isZero() && activeBullets != null) {
                 Entity firedBullet = activeBullets.get(0);
                 activeBullets.removeIndex(0);
                 firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
 
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+
+                // update current gun magazine
+                magazineCapacity--;
             }
         }
     }
 
+    /**
+     * Called to reload current gun magazine capacity. May not always be reloaded to 5 (the max).
+     * It is dependent on ammo left in inventory
+     *
+     * @param ammo that will be reloaded into gun magazine
+     */
+    public void reloadGunMagazine(int ammo) {
+        setReloadingStatus(false);
+        this.magazineCapacity += ammo;
+    }
+
+    /**
+     * Updates reloading status of player - used to prevent player from shooting while reloading
+     *
+     * @param reloading that will be used to update reloading status to prevent player from shooting
+     *                  when reloading
+     */
+    public void setReloadingStatus(boolean reloading) {
+        this.currentlyReloading = reloading;
+    }
+
+    /**
+     * Returns reloading status of player
+     *
+     * @return true if reloading is currently being execute and false otherwise
+     */
+    public boolean getReloadingStatus() {
+        return currentlyReloading;
+    }
+
+    /**
+     * Called to check current magazine capacity for reloading and ammo reduction purposes
+     *
+     * @return current gun magazine - how many bullets left in current round
+     */
+    public int getGunMagazine() {
+        return this.magazineCapacity;
+    }
 }

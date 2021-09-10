@@ -7,15 +7,52 @@ import org.slf4j.LoggerFactory;
 /**
  * A component intended to be used by the player to track their inventory.
  *
- * Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
- * Can also be used as a more generic component for other entities.
+ * Currently only stores the gold and ammo amount
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int gold;
+  private int ammo;
 
-  public InventoryComponent(int gold) {
+  public InventoryComponent(int gold, int ammo) {
     setGold(gold);
+    setAmmo(ammo);
+  }
+
+  /**
+   * Returns the player's ammo.
+   *
+   * @return entity's ammmo
+   */
+  public int getAmmo() {
+    return this.ammo;
+  }
+
+  /**
+   * Returns if the player has a certain amount of ammo.
+   * @param ammo required amount of ammo
+   * @return player has greater than or equal to the required amount of ammo
+   */
+  public Boolean hasAmmo(int ammo) {
+    return this.ammo >= ammo;
+  }
+
+  /**
+   * Sets the player's ammo. Ammo has a minimum bound of 0.
+   *
+   * @param ammo to be set for player
+   */
+  public void setAmmo(int ammo) {
+    this.ammo = Math.max(ammo, 0);
+    logger.debug("Setting ammo to {}", this.ammo);
+  }
+
+  /**
+   * Adds to the player's ammo count . The amount added can be negative.
+   * @param ammo ammo to add
+   */
+  public void addAmmo(int ammo) {
+    setAmmo(this.ammo + ammo);
   }
 
   /**

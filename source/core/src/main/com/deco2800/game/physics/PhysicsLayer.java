@@ -9,6 +9,7 @@ public class PhysicsLayer {
   // NPC (Non-Playable Character) colliders
   public static final short NPC = (1 << 3);
   public static final short ALL = ~0;
+  public static final short WEAPON = (1 << 5);
   // Safehouse object
   public static final short SAFEHOUSE = (1 << 4);
   // Paraphernalia

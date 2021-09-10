@@ -62,6 +62,12 @@ public class BulletCollisionComponent extends Component {
         return this.launchStatus;
     }
 
+    /**
+     * Dictates what happens to bullets when it collides with different objects
+     * in the game world
+     * @param me the bullet that has been launched and moving in game world
+     * @param other object which bullet collide with
+     */
     private void bulletHit(Fixture me, Fixture other) {
 
         // Get data of current bullet for checking

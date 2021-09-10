@@ -16,6 +16,10 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  */
 public class ItemFactory {
 
+    /**
+     * Ammo pickup will spawn when enemies die - but for now, it has been spawned randomly in game world
+     * @return ammo pickup for player to use
+     */
     public static Entity createAmmoPickup(int itemQuantity) {
         Entity ammo = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -25,5 +29,20 @@ public class ItemFactory {
                 .addComponent(new DisposingComponent());
         ammo.setScale(0.7f, 0.7f);
         return ammo;
+    }
+
+    /**
+     * Coin pickup will spawn when enemies die - but for now, it has been spawned randomly in game world
+     * @return ammo pickup for player to use to purchase items
+     */
+    public static Entity createCoinPickup(int itemQuantity) {
+        Entity coin = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.COINS, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/pickupammo.png"))
+                .addComponent(new DisposingComponent());
+        coin.setScale(0.7f, 0.7f);
+        return coin;
     }
 }

@@ -27,6 +27,14 @@ public class PlayerStatsDisplay extends UIComponent {
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
 
+  Table tableInventory;
+  private Image bandageImage;
+  private Label bandageLabel;
+  private Image ammoImage;
+  private Label ammoLabel;
+  private Image torchImage;
+  private Label coinLabel;
+
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -62,6 +70,9 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("firstHit", this::removeHealth);
+    entity.getEvents().addListener("useBandage", this::updatePlayerBandageUI);
+    entity.getEvents().addListener("useAmmo", this::updatePlayerAmmoUI);
+    entity.getEvents().addListener("useTorch", this::updatePlayerCoinUI);
     addActors();
     setAnimations();
   }
@@ -87,9 +98,10 @@ public class PlayerStatsDisplay extends UIComponent {
     tableHealth.top().left();
     tableHealth.setFillParent(true);
     tableHealth.padTop(150f);
+    tableHealth.add(healthBar).size(110f, 32f);
 
     // Heart image
-    float heartSideLength = 30f;
+    float imageSideLength = 30f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
 
@@ -105,13 +117,39 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel = new Label(healthText, skin, "large");
 
     table.add(healthLabel);
-    table.add(heartImage).size(heartSideLength).pad(6);
+    table.add(heartImage).size(imageSideLength).pad(6);
     table.add(woundLabel);
     table.padLeft(6f);
 
-    tableHealth.add(healthBar).size(110f, 32f);
+    // Relevant images used alongside labels
+    bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+    ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    torchImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+
+    // Data variables shown on HUD
+    int bandages = 0;
+    int ammo = 0;
+    int coins = 0;
+
+    CharSequence bandageText = String.format("Bandage: %d", bandages);
+    CharSequence ammoText = String.format("Ammo: %d", ammo);
+    CharSequence torchText = String.format("Coins: %d", coins);
+
+    bandageLabel = new Label(bandageText, skin, "large");
+    ammoLabel = new Label(ammoText, skin, "large");
+    coinLabel = new Label(torchText, skin, "large");
+
+    table.row().padTop(200f);
+    table.add(torchImage).size(imageSideLength);
+    table.add(coinLabel);
+    table.row();
+    table.add(bandageImage).size(imageSideLength);
+    table.add(bandageLabel);
+    table.row();
+    table.add(ammoImage).size(imageSideLength);
+    table.add(ammoLabel);
+
     stage.addActor(table);
-    //stage.addActor(tableHealth);
   }
 
 
@@ -136,6 +174,33 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("Health: %d", health);
     healthLabel.setText(text);
+  }
+
+  /**
+   * Updates the player's bandage quantity left on the ui.
+   * @param bandages number left in player's inventory
+   */
+  public void updatePlayerBandageUI(int bandages) {
+    CharSequence text = String.format("Bandage: %d", bandages);
+    bandageLabel.setText(text);
+  }
+
+  /**
+   * Updates the player's ammo quantity left on the ui.
+   * @param ammo number left in player's inventory
+   */
+  public void updatePlayerAmmoUI(int ammo) {
+    CharSequence text = String.format("Ammo: %d", ammo);
+    ammoLabel.setText(text);
+  }
+
+  /**
+   * Updates the player's coin quantity left on the ui.
+   * @param coin number left in player's inventory
+   */
+  public void updatePlayerCoinUI(int coin) {
+    CharSequence text = String.format("Coins: %d", coin);
+    coinLabel.setText(text);
   }
 
   /**
@@ -169,6 +234,15 @@ public class PlayerStatsDisplay extends UIComponent {
     heartImage.remove();
     healthLabel.remove();
     healthBar.remove();
+
+    coinLabel.remove();
+    bandageLabel.remove();
+    ammoLabel.remove();
+
+    bandageImage.remove();
+    ammoImage.remove();
+    torchImage.remove();
+
     tableHealth.remove();
     table.remove();
   }

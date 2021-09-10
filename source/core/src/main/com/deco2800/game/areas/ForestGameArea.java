@@ -38,6 +38,7 @@ public class ForestGameArea extends GameArea {
     "images/player_placeholders/PROJECTILE.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
+    "images/playeritems/shootingammo.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",

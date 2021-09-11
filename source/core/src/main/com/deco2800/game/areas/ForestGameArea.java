@@ -106,7 +106,7 @@ public class ForestGameArea extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
-//    spawnSafehouse();
+    spawnSafehouse();
 
     spawnLongRangeEnemies();
 //    playMusic();

@@ -14,19 +14,25 @@ import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerInterfaceDisplay extends UIComponent {
-  Table table, tableCoin, tableBandage, tableAmmo, tableHealth;
+  Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth;
   private Image heartImage;
   private Label woundLabel;
   private Label healthLabel;
   private Image healthBar;
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
+  private ArrayList<Image> bulletImages = new ArrayList<>();
 
-  private Image bandageImage, ammoImage, coinImage;
+  private Image bandageImage, ammoImage, coinImage, bulletImage1, bulletImage2, bulletImage3, bulletImage4,
+          bulletImage5;
   private Label bandageLabel, ammoLabel, coinLabel, bulletMagazineLabel;
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -125,6 +131,13 @@ public class PlayerInterfaceDisplay extends UIComponent {
     bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
     ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
     coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin.png", Texture.class));
+    bulletImage1 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    bulletImage2 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    bulletImage3 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    bulletImage4 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    bulletImage5 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    List<Image> imageList = Arrays.asList( bulletImage1, bulletImage2, bulletImage3, bulletImage4, bulletImage5);
+    bulletImages.addAll(imageList);
 
     // components with relevant data variables
     InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
@@ -134,12 +147,11 @@ public class PlayerInterfaceDisplay extends UIComponent {
     int bandages = inventory.getBandages();
     int ammo = inventory.getAmmo();
     int coins = inventory.getGold();
-    int bulletsInMagazine = rangeAttackComponent.getGunMagazine();
 
     CharSequence bandageText = String.format(": %d", bandages);
     CharSequence ammoText = String.format(" : %d", ammo);
     CharSequence cointText = String.format(" : %d", coins);
-    CharSequence magazineText = String.format("Bullets left: %d/5", bulletsInMagazine);
+    CharSequence magazineText = String.format(" Left");
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
@@ -160,13 +172,22 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableAmmo.add(ammoImage);
     tableAmmo.add(ammoLabel);
 
+    tableGunMagazine = new Table();
+    tableGunMagazine.add(bulletImage1);
+    tableGunMagazine.add(bulletImage2);
+    tableGunMagazine.add(bulletImage3);
+    tableGunMagazine.add(bulletImage4);
+    tableGunMagazine.add(bulletImage5);
+    tableGunMagazine.add(bulletMagazineLabel);
+
     table.row();
     table.add(tableCoin).left();
     table.row();
     table.add(tableBandage).left();
     table.row();
     table.add(tableAmmo).left();
-
+    table.row();
+    table.add(tableGunMagazine).left();
     stage.addActor(table);
   }
 
@@ -174,7 +195,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    *
    */
   public void updatePlayerGunMagazine(int bullet) {
-
+    bulletImages.indexOf(0);
   }
 
   @Override

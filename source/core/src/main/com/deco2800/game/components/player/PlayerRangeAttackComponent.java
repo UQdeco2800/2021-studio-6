@@ -181,6 +181,7 @@ public class PlayerRangeAttackComponent extends Component {
     public void reloadGunMagazine(int ammo) {
         setReloadingStatus(false);
         this.magazineCapacity += ammo;
+
     }
 
     /**
@@ -214,7 +215,7 @@ public class PlayerRangeAttackComponent extends Component {
     /**
      * Called to decrease gun magazine when a bullet is shot by player
      */
-    public void decreaseGunMagazine() {
+    private void decreaseGunMagazine() {
         --this.magazineCapacity;
     }
 }

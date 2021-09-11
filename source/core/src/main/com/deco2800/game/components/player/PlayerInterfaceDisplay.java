@@ -18,8 +18,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerInterfaceDisplay extends UIComponent {
-  Table table;
-  Table tableHealth;
+  Table table, tableCoin, tableBandage, tableAmmo, tableHealth;
   private Image heartImage;
   private Label woundLabel;
   private Label healthLabel;
@@ -102,6 +101,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
     // Heart image
     float imageSideLength = 30f;
+    float bandageSideLength = 50f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
 
@@ -136,9 +136,9 @@ public class PlayerInterfaceDisplay extends UIComponent {
     int coins = inventory.getGold();
     int bulletsInMagazine = rangeAttackComponent.getGunMagazine();
 
-    CharSequence bandageText = String.format("Bandage: %d", bandages);
-    CharSequence ammoText = String.format("Ammo: %d", ammo);
-    CharSequence cointText = String.format("Coins: %d", coins);
+    CharSequence bandageText = String.format(": %d", bandages);
+    CharSequence ammoText = String.format(" : %d", ammo);
+    CharSequence cointText = String.format(" : %d", coins);
     CharSequence magazineText = String.format("Bullets left: %d/5", bulletsInMagazine);
 
     bandageLabel = new Label(bandageText, skin, "large");
@@ -146,18 +146,26 @@ public class PlayerInterfaceDisplay extends UIComponent {
     coinLabel = new Label(cointText, skin, "large");
     bulletMagazineLabel = new Label(magazineText, skin, "large");
 
-    table.row().padTop(200f);
-    table.add(coinImage).size(imageSideLength);
-    table.add(coinLabel);
-    table.row();
-    table.add(bandageImage).size(imageSideLength);
-    table.add(bandageLabel);
-    table.row();
-    table.add(ammoImage).size(imageSideLength);
-    table.add(ammoLabel);
+    tableCoin = new Table();
+    tableCoin.padTop(200f);
+    tableCoin.add(coinImage);
+    tableCoin.add(coinLabel);
 
-    table.row().top().right();
-    table.add(bulletMagazineLabel);
+    tableBandage = new Table();
+    tableBandage.padLeft(-10);
+    tableBandage.add(bandageImage).size(bandageSideLength);
+    tableBandage.add(bandageLabel);
+
+    tableAmmo = new Table();
+    tableAmmo.add(ammoImage);
+    tableAmmo.add(ammoLabel);
+
+    table.row();
+    table.add(tableCoin).left();
+    table.row();
+    table.add(tableBandage).left();
+    table.row();
+    table.add(tableAmmo).left();
 
     stage.addActor(table);
   }
@@ -197,7 +205,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param bandages number left in player's inventory
    */
   public void updatePlayerBandageUI(int bandages) {
-    CharSequence text = String.format("Bandage: %d", bandages);
+    CharSequence text = String.format(": %d", bandages);
     bandageLabel.setText(text);
   }
 
@@ -206,7 +214,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param ammo number left in player's inventory
    */
   public void updatePlayerAmmoUI(int ammo) {
-    CharSequence text = String.format("Ammo: %d", ammo);
+    CharSequence text = String.format(" : %d", ammo);
     ammoLabel.setText(text);
   }
 
@@ -215,7 +223,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param coin number left in player's inventory
    */
   public void updatePlayerCoinUI(int coin) {
-    CharSequence text = String.format("Coins: %d", coin);
+    CharSequence text = String.format(" : %d", coin);
     coinLabel.setText(text);
   }
 

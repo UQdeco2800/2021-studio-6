@@ -14,10 +14,11 @@ public class PlayerAbilitiesComponent extends Component {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private static final Logger logger = LoggerFactory.getLogger(PlayerAbilitiesComponent.class);
     private static final int delayLength = 60000; // in milliseconds
-    private static final long dashLength = 350; // in milliseconds
     private long delayEndTime = 0;
     private int ability;
-
+    // Ability Specific Variables
+    private static final long dashLength = 200; // in milliseconds
+    private static final long invincbilityLength = 3000;
     /**
      * Basic constructor for setting the players chosen ability
      * @param ability is the ability state to set the player to
@@ -60,7 +61,7 @@ public class PlayerAbilitiesComponent extends Component {
                 case 0:
                     entity.getEvents().trigger("longDash", dashLength+timeSource.getTime());
                 case 1:
-                    entity.getEvents().trigger("shortInvincibility");
+                    entity.getEvents().trigger("invincibility", invincbilityLength);
                 case 2:
                     entity.getEvents().trigger("knockback");
                 case 3:

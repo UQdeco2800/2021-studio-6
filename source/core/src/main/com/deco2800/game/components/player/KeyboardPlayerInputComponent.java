@@ -91,6 +91,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (timeSource == null || !timeSource.isPaused()) {
           entity.getEvents().trigger("reload");
         }
+        return true;
       case Keys.SHIFT_LEFT:
         if (timeSource == null || !timeSource.isPaused()) {
           //this.getEntity().getEvents().trigger("dash");
@@ -112,6 +113,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("tryAbility");
         }
         return true;
+      case Keys.NUM_1:
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
+          System.out.println("1 clicked");
+          entity.getEvents().trigger("useBandage");
+        }
       default:
         return false;
     }

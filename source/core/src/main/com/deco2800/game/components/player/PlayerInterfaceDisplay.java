@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 /**
  * A ui component for displaying player stats, e.g. health.
  */
-public class PlayerStatsDisplay extends UIComponent {
+public class PlayerInterfaceDisplay extends UIComponent {
   Table table;
   Table tableHealth;
   private Image heartImage;
@@ -27,7 +27,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
 
-  Table tableInventory;
   private Image bandageImage;
   private Label bandageLabel;
   private Image ammoImage;
@@ -76,9 +75,9 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("firstHit", this::removeHealth);
-    entity.getEvents().addListener("useBandage", this::updatePlayerBandageUI);
-    entity.getEvents().addListener("useAmmo", this::updatePlayerAmmoUI);
-    entity.getEvents().addListener("useTorch", this::updatePlayerCoinUI);
+    entity.getEvents().addListener("updateBandageHUD", this::updatePlayerBandageUI);
+    entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
+    entity.getEvents().addListener("updateCoinHUD", this::updatePlayerCoinUI);
     addActors();
     setAnimations();
   }

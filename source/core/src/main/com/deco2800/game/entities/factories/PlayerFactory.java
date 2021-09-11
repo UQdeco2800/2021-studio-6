@@ -76,8 +76,10 @@ public class PlayerFactory {
                     .addComponent(new PlayerAbilitiesComponent(0))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerRangeAttackComponent())
+                    .addComponent(new PlayerReusableComponent())
                     .addComponent(new DisposingComponent())
-                    .addComponent(new PlayerStatsDisplay())
+                    .addComponent(new PlayerInterfaceDisplay())
+                    .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
                     .addComponent(animator)
                     .addComponent(new PlayerAnimationController())
                     .addComponent(new PlayerHudAnimationController())
@@ -86,11 +88,8 @@ public class PlayerFactory {
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-//    player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
-  //.addComponent(new PlayerInventoryDisplay())
-
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

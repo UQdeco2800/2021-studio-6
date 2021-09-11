@@ -24,11 +24,12 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private boolean regenActive = false;
     private boolean invincibleActive = false;
-    private final long regenCooldown = 5000;
+    private static final long regenCooldown = 5000;
+    private static final long initialRegenOffset = 3000;
     private long nextRegen;
-    private final long invincibilityLength = 400; // in ms
+    private static final long invincibilityLength = 400; // in ms
     private long invincibilityEndTime;
-    private final int[] Woundex = new int[] {7, 3, 0};
+    private final int[] woundex = new int[] {7, 3, 0};
     private final int[] statex = new int[] {1, 2, 3, 4, 5};
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
@@ -44,10 +45,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     @Override
     public void update() {
-        if (regenActive && timeSource.getTime() >= nextRegen) {
+        if (regenActive && (timeSource.getTime() >= nextRegen)) {
             regenerate();
         }
-        if (invincibleActive && timeSource.getTime() >= invincibilityEndTime) {
+        if (invincibleActive && (timeSource.getTime() >= invincibilityEndTime)) {
             invincibleActive = false;
         }
     }
@@ -86,10 +87,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * @return the int relating to the health animation index
      */
     public int getindex() {
-        if (isDead()) {
+        if (woundState == 0) {
             return 13;
         }
-        int woundIndex = Woundex[getWoundState() - 1];
+        int woundIndex = woundex[getWoundState() - 1];
         int healthIndex = statex[getStateMax() - getHealth()];
         return woundIndex + healthIndex;
     }
@@ -185,8 +186,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             }
         }
         if (entity != null) {
+            // update player HUD interface when bandage is used to improve wound state
             entity.getEvents().trigger("updateWound", this.woundState);
-            if (isDead()) {
+            entity.getEvents().trigger("health", getindex());
+            if (woundState == 0) {
                 entity.getEvents().trigger("dead");
             }
         }
@@ -218,8 +221,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 setWoundState(getWoundState() - 1);
             }
         }
-        if (getHealth() < getStateMax()) {
-            regenActive = true;
+        if (getHealth() != getStateMax()) {
+            regenStart();
         }
     }
 
@@ -268,10 +271,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Starts health regeneration that increases player's state health
      * periodically until it reaches max, at which point it stops itself.
      */
-    public void regenStart() {
+    private void regenStart() {
         regenActive = true;
         entity.getEvents().trigger("heal");
-        nextRegen = timeSource.getTime() + regenCooldown + 3000; // Extra 3 second so it takes longer to start regen
+        nextRegen = timeSource.getTime() + regenCooldown + initialRegenOffset; // Extra 3 second so it takes longer to start regen
     }
 
     /**
@@ -280,7 +283,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * @param length parameter for how long to set inivisibility for (in milliseconds)
      */
     public void invincibleStart(long length) {
-        invincibilityEndTime = timeSource.getTime() + invincibilityLength;
+        invincibilityEndTime = timeSource.getTime() + length;
         invincibleActive = true;
     }
 
@@ -293,7 +296,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             entity.getEvents().trigger("health", getindex());
             if (getHealth() >= getStateMax()) {
                 regenActive = false;
-                System.out.println("NO REGEN");
             }
             nextRegen = timeSource.getTime() + regenCooldown;
         }

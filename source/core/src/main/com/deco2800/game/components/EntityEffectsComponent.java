@@ -80,12 +80,12 @@ public class EntityEffectsComponent extends Component {
         // if me == BUSH, apply HEALTH effect on player.
         if(this.action == Effect.HEALTH) {
             //TODO: Write implementation of effects onto desired entity.
-            logger.info("Apply HEALTH effect onto entity: " + target.toString());
+//            logger.info("Apply HEALTH effect onto entity: " + target.toString());
         }
 
         // if me == COBWEB, apply MOVEMENT effect on player.
         if(this.action == Effect.MOVEMENT) {
-            logger.info("Apply MOVEMENT effect onto entity: " + target.toString());
+//            logger.info("Apply MOVEMENT effect onto entity: " + target.toString());
         }
     }
 

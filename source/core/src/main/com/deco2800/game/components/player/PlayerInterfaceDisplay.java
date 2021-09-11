@@ -77,6 +77,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     entity.getEvents().addListener("firstHit", this::removeHealth);
     entity.getEvents().addListener("updateBandageHUD", this::updatePlayerBandageUI);
     entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
+    entity.getEvents().addListener("updateGunMagImageHUD", this::updatePlayerGunMagazineImages);
     entity.getEvents().addListener("updateCoinHUD", this::updatePlayerCoinUI);
     addActors();
     setAnimations();
@@ -192,10 +193,23 @@ public class PlayerInterfaceDisplay extends UIComponent {
   }
 
   /**
-   *
+   * Updates images of bullet left in magazine on player's HUD
+   * @param index to acquire which image to hide on screen for user to visibly see
+   *              bullet has been launched
+   * @param reload when reloading, could possibly reload multiple bullets, will need
+   *               to set multiple images to be visible on screen
    */
-  public void updatePlayerGunMagazine(int bullet) {
-    bulletImages.indexOf(0);
+  public void updatePlayerGunMagazineImages(int index, boolean reload) {
+    // for when bullets are shot
+    if (!reload) {
+      bulletImages.get(index).setVisible(false);
+
+    } else {
+      // for reloading
+      for (int i = 0; i < index; i++) {
+        bulletImages.get(i).setVisible(true);
+      }
+    }
   }
 
   @Override

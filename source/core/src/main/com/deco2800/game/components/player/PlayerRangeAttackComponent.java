@@ -138,7 +138,7 @@ public class PlayerRangeAttackComponent extends Component {
      *                        be either north, south, east or west for now)
      */
     void fire(Vector2 movingAttackDir) {
-        Vector2 playerPos = entity.getPosition();
+        Vector2 playerPos = entity.getCenterPosition();
         Vector2 bulletTargetPos;
 
         // when player attacks, (0,0) vector is sent over, only directional information is important now
@@ -181,7 +181,8 @@ public class PlayerRangeAttackComponent extends Component {
     public void reloadGunMagazine(int ammo) {
         setReloadingStatus(false);
         this.magazineCapacity += ammo;
-
+        entity.getEvents().trigger("updateGunMagImageHUD",
+                this.magazineCapacity, true);
     }
 
     /**
@@ -217,5 +218,7 @@ public class PlayerRangeAttackComponent extends Component {
      */
     private void decreaseGunMagazine() {
         --this.magazineCapacity;
+        entity.getEvents().trigger("updateGunMagImageHUD",
+                this.magazineCapacity, false);
     }
 }

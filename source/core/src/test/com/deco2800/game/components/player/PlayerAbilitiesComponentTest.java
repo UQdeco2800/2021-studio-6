@@ -46,23 +46,23 @@ class PlayerAbilitiesComponentTest {
     public void shouldBeOnDelay() {
         Entity player = new Entity().addComponent(new PlayerAbilitiesComponent(1));
         player.create();
-        player.getEvents().addListener("shortInvincibility", listener0);
+        player.getEvents().addListener("invincibility", listener1);
         player.getEvents().trigger("tryAbility");
-        verify(listener0).handle();
+        verify(listener1).handle(3000L);
         player.getEvents().trigger("tryAbility");
-        verifyNoMoreInteractions(listener0);
+        verifyNoMoreInteractions(listener1);
 
         when(time.getTime()).thenReturn(5000L);
         player.getEvents().trigger("tryAbility");
-        verifyNoMoreInteractions(listener0);
+        verifyNoMoreInteractions(listener1);
 
         when(time.getTime()).thenReturn(60000L);
         player.getEvents().trigger("tryAbility");
-        verify(listener0, times(2)).handle();
+        verify(listener1, times(2)).handle(3000L);
 
         when(time.getTime()).thenReturn(140000L);
         player.getEvents().trigger("tryAbility");
-        verify(listener0, times(3)).handle();
+        verify(listener1, times(3)).handle(3000L);
     }
 
     @Test
@@ -72,24 +72,24 @@ class PlayerAbilitiesComponentTest {
         player.create();
         player.getEvents().addListener("longDash", listener1);
         player.getEvents().trigger("tryAbility");
-        verify(listener1).handle(355L);
+        verify(listener1).handle(205L); // 200L is length of longDash
 
         when(time.getTime()).thenReturn(60005L);
-        player.getComponent(PlayerAbilitiesComponent.class).setAbility(1);
-        player.getEvents().addListener("shortInvincibility", listener0);
+        player.getComponent(PlayerAbilitiesComponent.class).setAbility(1); // ability code corresponding to invincibility
+        player.getEvents().addListener("invincibility", listener1);
         player.getEvents().trigger("tryAbility");
-        verify(listener0).handle();
+        verify(listener1).handle(3000L);
 
         when(time.getTime()).thenReturn(120005L);
         player.getComponent(PlayerAbilitiesComponent.class).setAbility(2);
         player.getEvents().addListener("knockback", listener0);
         player.getEvents().trigger("tryAbility");
-        verify(listener0, times(2)).handle();
+        verify(listener0).handle();
 
         when(time.getTime()).thenReturn(180005L);
         player.getComponent(PlayerAbilitiesComponent.class).setAbility(3);
         player.getEvents().addListener("rangedAOE", listener0);
         player.getEvents().trigger("tryAbility");
-        verify(listener0, times(3)).handle();
+        verify(listener0, times(2)).handle();
     }
 }

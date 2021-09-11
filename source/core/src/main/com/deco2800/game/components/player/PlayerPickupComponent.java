@@ -40,13 +40,17 @@ public class PlayerPickupComponent extends Component {
         InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
         if (item != null && inventory != null) {
             int ammoLeft = inventory.getAmmo();
+            int coinLeft = inventory.getGold();
             int itemQuantity = item.getItemQuantity();
 
             if (item.getItemType() == Items.AMMO) {
                 // dispose item when picked up, can be changed later on
                 inventory.setAmmo(ammoLeft + itemQuantity);
-                target.getComponent(DisposingComponent.class).toBeDisposed();
+            } else if (item.getItemType() == Items.COINS) {
+                // dispose item when picked up, can be changed later on
+                inventory.setGold(coinLeft + itemQuantity);
             }
+            target.getComponent(DisposingComponent.class).toBeDisposed();
         }
     }
 }

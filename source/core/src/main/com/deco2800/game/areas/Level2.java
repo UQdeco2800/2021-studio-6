@@ -30,7 +30,7 @@ public class Level2 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",

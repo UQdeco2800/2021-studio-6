@@ -122,7 +122,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     table.padLeft(6f);
 
     // Relevant images used alongside labels
-    bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+    bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
     ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
     coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin.png", Texture.class));
 

@@ -31,7 +31,7 @@ public class Level2 extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
-    "images/Player_Sprite/front01.png",
+    "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/tree.png",

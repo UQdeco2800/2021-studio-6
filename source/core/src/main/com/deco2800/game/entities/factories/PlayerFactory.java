@@ -66,7 +66,7 @@ public class PlayerFactory {
     Entity player = new Entity()
                    // .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new PlayerMeleeAttackComponent(sword))
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new PlayerActions(stats.woundState))

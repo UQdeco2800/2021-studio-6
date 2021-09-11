@@ -167,7 +167,7 @@ public class PlayerRangeAttackComponent extends Component {
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
 
                 // update current gun magazine
-                magazineCapacity--;
+                decreaseGunMagazine();
             }
         }
     }
@@ -209,5 +209,12 @@ public class PlayerRangeAttackComponent extends Component {
      */
     public int getGunMagazine() {
         return this.magazineCapacity;
+    }
+
+    /**
+     * Called to decrease gun magazine when a bullet is shot by player
+     */
+    public void decreaseGunMagazine() {
+        --this.magazineCapacity;
     }
 }

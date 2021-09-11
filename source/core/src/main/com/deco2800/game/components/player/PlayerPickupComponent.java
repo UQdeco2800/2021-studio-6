@@ -1,7 +1,6 @@
 package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.ItemComponent;
@@ -28,9 +27,19 @@ public class PlayerPickupComponent extends Component {
         entity.getEvents().addListener("collisionStart", this::tryPickUpItem);
     }
 
+    /**
+     * Colliding with any specific objects in game world will trigger method below. This
+     * method aims to find specific objects with item variables behavior to be put into
+     * player's inventory when player collides with it
+     * @param me player's fixture that is moving in game world
+     * @param other any other fixture in game world
+     */
     private void tryPickUpItem(Fixture me, Fixture other) {
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore - could be obstacle, NPC or even safehouse
+            return;
+        }
+        if (!PhysicsLayer.contains(PhysicsLayer.PLAYER, me.getFilterData().categoryBits)) {
             return;
         }
 

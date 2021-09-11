@@ -115,7 +115,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.NUM_1:
         if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          System.out.println("1 clicked");
           entity.getEvents().trigger("useBandage");
         }
       default:

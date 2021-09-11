@@ -27,13 +27,8 @@ public class PlayerInterfaceDisplay extends UIComponent {
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
 
-  private Image bandageImage;
-  private Label bandageLabel;
-  private Image ammoImage;
-  private Label ammoLabel;
-  private Image torchImage;
-  private Label coinLabel;
-
+  private Image bandageImage, ammoImage, coinImage;
+  private Label bandageLabel, ammoLabel, coinLabel, bulletMagazineLabel;
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -129,23 +124,30 @@ public class PlayerInterfaceDisplay extends UIComponent {
     // Relevant images used alongside labels
     bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
     ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    torchImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+    coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin.png", Texture.class));
+
+    // components with relevant data variables
+    InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+    PlayerRangeAttackComponent rangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
 
     // Data variables shown on HUD
-    int bandages = 0;
-    int ammo = 0;
-    int coins = 0;
+    int bandages = inventory.getBandages();
+    int ammo = inventory.getAmmo();
+    int coins = inventory.getGold();
+    int bulletsInMagazine = rangeAttackComponent.getGunMagazine();
 
     CharSequence bandageText = String.format("Bandage: %d", bandages);
     CharSequence ammoText = String.format("Ammo: %d", ammo);
-    CharSequence torchText = String.format("Coins: %d", coins);
+    CharSequence cointText = String.format("Coins: %d", coins);
+    CharSequence magazineText = String.format("Bullets left: %d/5", bulletsInMagazine);
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
-    coinLabel = new Label(torchText, skin, "large");
+    coinLabel = new Label(cointText, skin, "large");
+    bulletMagazineLabel = new Label(magazineText, skin, "large");
 
     table.row().padTop(200f);
-    table.add(torchImage).size(imageSideLength);
+    table.add(coinImage).size(imageSideLength);
     table.add(coinLabel);
     table.row();
     table.add(bandageImage).size(imageSideLength);
@@ -154,9 +156,18 @@ public class PlayerInterfaceDisplay extends UIComponent {
     table.add(ammoImage).size(imageSideLength);
     table.add(ammoLabel);
 
+    table.row().top().right();
+    table.add(bulletMagazineLabel);
+
     stage.addActor(table);
   }
 
+  /**
+   *
+   */
+  public void updatePlayerGunMagazine(int bullet) {
+
+  }
 
   @Override
   public void draw(SpriteBatch batch)  {
@@ -243,10 +254,11 @@ public class PlayerInterfaceDisplay extends UIComponent {
     coinLabel.remove();
     bandageLabel.remove();
     ammoLabel.remove();
+    bulletMagazineLabel.remove();
 
     bandageImage.remove();
     ammoImage.remove();
-    torchImage.remove();
+    coinImage.remove();
 
     tableHealth.remove();
     table.remove();

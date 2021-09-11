@@ -51,7 +51,7 @@ public class EntityEffectsComponent extends Component {
      */
     public void create() {
         // Register collision event listeners.
-        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+//        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
 
         // Save entity hitbox.
         this.hitboxComponent = entity.getComponent(HitboxComponent.class);

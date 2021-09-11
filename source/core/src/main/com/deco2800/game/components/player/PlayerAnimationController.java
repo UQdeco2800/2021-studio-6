@@ -44,6 +44,10 @@ public class PlayerAnimationController extends Component {
     }
   }
 
+  /**
+   * Checks if the player is currently in the process of the hurt animation.
+   * @return true if getting hurt, false otherwise
+   */
   private boolean checkHurt() {
     return hurtActive;
   }

@@ -41,6 +41,23 @@ public class IndependentAnimator  extends AnimationRenderComponent {
   }
 
   /**
+   * Gets the position of where the associated animation should be played.
+   * @return Array corresponding to the x and y positions
+   */
+  public float[] getPositions() {
+    return new float[]{xPos, yPos};
+  }
+
+
+  /**
+   * Gets the scale of the associated animation.
+   * @return Array corresponding to the x and y animation scales
+   */
+  public float[] getScale() {
+    return new float[]{xScale, yScale};
+  }
+
+  /**
    * Sets the scale of the animation
    * @param x the x scale of the animation
    * @param y the y scale of the animation

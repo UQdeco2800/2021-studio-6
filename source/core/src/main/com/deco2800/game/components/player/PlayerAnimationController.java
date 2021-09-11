@@ -20,13 +20,15 @@ public class PlayerAnimationController extends Component {
     entity.getEvents().addListener("moveRight", this::animateMoveRight);
     entity.getEvents().addListener("moveUp", this::animateMoveUp);
     entity.getEvents().addListener("moveDown", this::animateMoveDown);
-   // entity.getEvents().addListener("left", this::animateLeft);
-   // entity.getEvents().addListener("right", this::animateRight);
-  //  entity.getEvents().addListener("up", this::animateUp);
     entity.getEvents().addListener("walkStop", this::animateIdle);
     entity.getEvents().addListener("hurt",this::animateHurt);
+    entity.getEvents().addListener("dead",this::animateDead);
     lastDirection = 1;
     animator.startAnimation("front");
+  }
+
+  void animateDead() {
+    animator.startAnimation("dead-right");
   }
 
   void animateMoveDown() {
@@ -48,25 +50,6 @@ public class PlayerAnimationController extends Component {
     animator.startAnimation("left-run");
     lastDirection = 4;
   }
-
-  void animateLeft() {
-    animator.startAnimation("left");
-
-  }
-
-  void animateRight() {
-    animator.startAnimation("right");
-  }
-
-  void animateUp() {
-    animator.startAnimation("back");
-  }
-
-  void animateDown() {
-    animator.startAnimation("front");
-  }
-
-
 
   void animateHurt() {
     switch (lastDirection) {

@@ -40,7 +40,6 @@ public class BulletFactory {
         // hide bullet out of game screen
         bullet.setPosition(HIDDEN_COORD);
         bullet.setScale(0.7f, 0.7f);
-        bullet.getComponent(TextureRenderComponent.class).scaleEntity();
         return bullet;
     }
 }

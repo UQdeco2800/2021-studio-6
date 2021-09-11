@@ -110,7 +110,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.E:
         if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          entity.getEvents().trigger("tryAbility");
+          entity.getEvents().trigger("tryAbility", walkDirection);
         }
         return true;
       case Keys.NUM_1:

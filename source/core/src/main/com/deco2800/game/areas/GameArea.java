@@ -41,9 +41,7 @@ public abstract class GameArea implements Disposable {
    */
   public void despawnEntity(Entity entity) {
     int entityIdx = areaEntities.indexOf(entity);
-
-    // seems to cause index out of bounds exception, possibility is fixture colliding more than once
-    // and this method gets loaded twice in a row
+    //array out of bounds check if something tries to despawn twice
     if (entityIdx != -1) {
       Entity temp = areaEntities.remove(entityIdx);
       temp.dispose();

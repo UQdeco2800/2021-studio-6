@@ -34,7 +34,6 @@ class PlayerActionsTest {
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerTimeSource(time);
-        ServiceLocator.registerPhysicsService(new PhysicsService());
     }
 
     @Test

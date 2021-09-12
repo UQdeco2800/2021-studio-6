@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -136,8 +136,9 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,int)">InventoryComponent</a></span>&#8203;(int&nbsp;gold,
-int&nbsp;ammo)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,int,int)">InventoryComponent</a></span>&#8203;(int&nbsp;gold,
+int&nbsp;ammo,
+int&nbsp;bandages)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -172,47 +173,82 @@ int&nbsp;ammo)</code></th>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addBandages(int)">addBandages</a></span>&#8203;(int&nbsp;bandages)</code></th>
+<td class="colLast">
+<div class="block">Adds to the player's bandage.</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addGold(int)">addGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
 <div class="block">Adds to the player's gold.</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Called when the entity is created and registered.</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmmo()">getAmmo</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the player's ammo.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBandages()">getBandages</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the player's bandage number left to use.</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGold()">getGold</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the player's gold.</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAmmo(int)">hasAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
 <td class="colLast">
 <div class="block">Returns if the player has a certain amount of ammo.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i8">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasBandages(int)">hasBandages</a></span>&#8203;(int&nbsp;bandages)</code></th>
+<td class="colLast">
+<div class="block">Returns if the player has a certain amount of bandages.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasGold(int)">hasGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
 <div class="block">Returns if the player has a certain amount of gold.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmmo(int)">setAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
 <td class="colLast">
 <div class="block">Sets the player's ammo.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="rowColor" id="i11">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBandages(int)">setBandages</a></span>&#8203;(int&nbsp;bandages)</code></th>
+<td class="colLast">
+<div class="block">Sets the player's bandage.</div>
+</td>
+</tr>
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGold(int)">setGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
@@ -227,7 +263,7 @@ int&nbsp;ammo)</code></th>
 <h3>Methods inherited from class&nbsp;com.deco2800.game.components.<a href="../Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.components.Component">
 <!--   -->
-</a><code><a href="../Component.html#create()">create</a>, <a href="../Component.html#dispose()">dispose</a>, <a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
+</a><code><a href="../Component.html#dispose()">dispose</a>, <a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <a id="methods.inherited.from.class.java.lang.Object">
@@ -248,9 +284,10 @@ int&nbsp;ammo)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(int,int)">InventoryComponent</a></h3>
+<h3><a id="&lt;init&gt;(int,int,int)">InventoryComponent</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">InventoryComponent</span>&#8203;(<span class="arguments">int&nbsp;gold,
-int&nbsp;ammo)</span></div>
+int&nbsp;ammo,
+int&nbsp;bandages)</span></div>
 </section>
 </li>
 </ul>
@@ -263,6 +300,19 @@ int&nbsp;ammo)</span></div>
 </a>
 <h2>Method Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="create()">create</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
+<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
+ should be made here, not in the constructor which is called before an entity is finished.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getAmmo()">getAmmo</a></h3>
@@ -352,6 +402,52 @@ int&nbsp;ammo)</span></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>gold</code> - gold to add</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getBandages()">getBandages</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getBandages</span>()</div>
+<div class="block">Returns the player's bandage number left to use.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>entity's bandage item quantity</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="hasBandages(int)">hasBandages</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.Boolean</span>&nbsp;<span class="memberName">hasBandages</span>&#8203;(<span class="arguments">int&nbsp;bandages)</span></div>
+<div class="block">Returns if the player has a certain amount of bandages.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>bandages</code> - required amount of bandages to be checked against</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>player has greater than or equal to the required amount of bandages</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setBandages(int)">setBandages</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setBandages</span>&#8203;(<span class="arguments">int&nbsp;bandages)</span></div>
+<div class="block">Sets the player's bandage. Bandage has a minimum bound of 0.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>bandages</code> - bandage to be set</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="addBandages(int)">addBandages</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addBandages</span>&#8203;(<span class="arguments">int&nbsp;bandages)</span></div>
+<div class="block">Adds to the player's bandage. The amount added can be negative.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>bandages</code> - to add or subtract</dd>
 </dl>
 </section>
 </li>

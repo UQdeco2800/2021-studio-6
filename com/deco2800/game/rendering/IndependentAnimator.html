@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,11 +141,7 @@ extends <a href="AnimationRenderComponent.html" title="class in com.deco2800.gam
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas,float,float,float,float)">IndependentAnimator</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas,
-float&nbsp;xOffset,
-float&nbsp;yOffset,
-float&nbsp;xScl,
-float&nbsp;yScl)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas)">IndependentAnimator</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas)</code></th>
 <td class="colLast">
 <div class="block">Create the Independent Animator for the given TextureAtlas.</div>
 </td>
@@ -188,10 +184,48 @@ float&nbsp;yScl)</code></th>
 </td>
 </tr>
 <tr class="altColor" id="i2">
+<td class="colFirst"><code>float[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPositions()">getPositions</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gets the position of where the associated animation should be played.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>float[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScale()">getScale</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gets the scale of the associated animation.</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getZIndex()">getZIndex</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Z index controls rendering order within a layer.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCamera(boolean)">setCamera</a></span>&#8203;(boolean&nbsp;to)</code></th>
+<td class="colLast">
+<div class="block">Sets whether or not the animation should be displayed in relation to the
+ camera or the scene.</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPositions(float,float)">setPositions</a></span>&#8203;(float&nbsp;x,
+float&nbsp;y)</code></th>
+<td class="colLast">
+<div class="block">Sets the position of where the associated animation should be played.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setScale(float,float)">setScale</a></span>&#8203;(float&nbsp;x,
+float&nbsp;y)</code></th>
+<td class="colLast">
+<div class="block">Sets the scale of the animation</div>
 </td>
 </tr>
 </tbody>
@@ -233,16 +267,16 @@ float&nbsp;yScl)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas,float,float,float,float)">IndependentAnimator</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">IndependentAnimator</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas,
-float&nbsp;xOffset,
-float&nbsp;yOffset,
-float&nbsp;xScl,
-float&nbsp;yScl)</span></div>
+<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas)">IndependentAnimator</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">IndependentAnimator</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas)</span></div>
 <div class="block">Create the Independent Animator for the given TextureAtlas. Extends the
  AnimationRenderComponent but doesn't need to be attached to an entity.
  Instead, makes use of given x and y offsets to position the animation in
- relation to the screen. Also sizes according to given scales.</div>
+ relation to the camera or the scene. Also sizes according to given scales.
+
+ When using this, should first create the IndependentAnimator by giving it
+ the atlas file. After that, you need to set both the x and y position and
+ scale. Lastly, set whether it should follow the camera or not.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>atlas</code> - libGDX-supported texture atlas containing desired animations</dd>
@@ -259,6 +293,68 @@ float&nbsp;yScl)</span></div>
 </a>
 <h2>Method Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="setPositions(float,float)">setPositions</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setPositions</span>&#8203;(<span class="arguments">float&nbsp;x,
+float&nbsp;y)</span></div>
+<div class="block">Sets the position of where the associated animation should be played.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>x</code> - the x coordinate of the animation location</dd>
+<dd><code>y</code> - the y coordinate of the animation location</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getPositions()">getPositions</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float[]</span>&nbsp;<span class="memberName">getPositions</span>()</div>
+<div class="block">Gets the position of where the associated animation should be played.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Array corresponding to the x and y positions</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getScale()">getScale</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float[]</span>&nbsp;<span class="memberName">getScale</span>()</div>
+<div class="block">Gets the scale of the associated animation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Array corresponding to the x and y animation scales</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setScale(float,float)">setScale</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setScale</span>&#8203;(<span class="arguments">float&nbsp;x,
+float&nbsp;y)</span></div>
+<div class="block">Sets the scale of the animation</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>x</code> - the x scale of the animation</dd>
+<dd><code>y</code> - the y scale of the animation</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setCamera(boolean)">setCamera</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setCamera</span>&#8203;(<span class="arguments">boolean&nbsp;to)</span></div>
+<div class="block">Sets whether or not the animation should be displayed in relation to the
+ camera or the scene. I.e. interface animations are for the camera and
+ follow the player.
+ True means that it follows the camera, false means the scene.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>to</code> - the boolean value to set the animation camera to follow</dd>
+</dl>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></h3>

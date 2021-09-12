@@ -55,7 +55,6 @@ public class PlayerHealthAnimationController  extends Component{
     healthAnimator.startAnimation("health" + index);
    }
 
-
   void disposeAnimation() {
     healthAnimator.dispose();
   }

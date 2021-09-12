@@ -1,11 +1,15 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
+import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseWeaponConfig;
 import com.deco2800.game.files.FileLoader;
@@ -14,6 +18,7 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
@@ -66,6 +71,9 @@ public class PlayerMeleeAttackComponent extends Component {
     private int attackLength; // in milliseconds
     private long disposeTime = 0;
 
+    private IndependentAnimator weaponAnimator;
+    private int lastDirection = 2;
+
     public PlayerMeleeAttackComponent(String weaponConfig) {
        // String filename = weaponConfig.getPath();
         BaseWeaponConfig stats =
@@ -91,6 +99,36 @@ public class PlayerMeleeAttackComponent extends Component {
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("walk", this::walk);
+
+        if (this.entity.getComponent(PlayerWeaponAnimationController.class) != null) {
+            weaponAnimator =
+                new IndependentAnimator(
+                    ServiceLocator.getResourceService()
+                        .getAsset("images/weapon/sword.atlas", TextureAtlas.class));
+            weaponAnimator.addAnimation("attackUp", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackDown", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackLeft", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackRight", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.setCamera(true);
+            weaponAnimator.setScale(length * 1.5f, height * 1.5f);
+            setAnimations();
+        }
+    }
+
+    /**
+     * Sets the animations for the weaponAnimator after a certain point to allow assets to load
+     */
+    public void setAnimations() {
+        PlayerWeaponAnimationController setWeapon = this.entity.getComponent(PlayerWeaponAnimationController.class);
+        setWeapon.setter();
+    }
+
+    /**
+     * Gets the animator for the weapons
+     * @return IndependentAnimator for the weapon attack
+     */
+    public IndependentAnimator getAnimator() {
+        return weaponAnimator;
     }
 
     /**
@@ -123,15 +161,19 @@ public class PlayerMeleeAttackComponent extends Component {
         if (directionMove != null) {
             if (directionMove.epsilonEquals(Vector2Utils.UP)) {
                 fixtureDefLast = fixtureDefW;
+                lastDirection = 1;
                 return fixtureDefW;
             } else if (directionMove.epsilonEquals(Vector2Utils.DOWN)) {
                 fixtureDefLast = fixtureDefS;
+                lastDirection = 2;
                 return fixtureDefS;
             } else if (directionMove.epsilonEquals(Vector2Utils.LEFT)) {
                 fixtureDefLast = fixtureDefA;
+                lastDirection = 3;
                 return fixtureDefA;
             } else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)) {
                 fixtureDefLast = fixtureDefD;
+                lastDirection = 4;
                 return fixtureDefD;
             }
         }
@@ -339,5 +381,14 @@ public class PlayerMeleeAttackComponent extends Component {
             return fixtureDef.filter.categoryBits;
         }
         return fixture.getFilterData().categoryBits;
+    }
+
+    /**
+     * Public function to get the last direction the player attacked in
+     * @return returns an int corresponding to the direction
+     * 1 = up, 2 = down, 3 = left and 4 = right (can be changed to ENUMS)
+     */
+    public int getLastDirection() {
+        return lastDirection;
     }
 }

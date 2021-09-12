@@ -45,7 +45,8 @@ public class SafehouseGameArea extends GameArea {
   private static final String[] safeHouseTextureAtlases = {
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
-      "images/hud/health.atlas"
+      "images/hud/health.atlas",
+      "images/weapon/sword.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

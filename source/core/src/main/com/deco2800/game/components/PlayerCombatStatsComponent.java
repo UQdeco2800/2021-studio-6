@@ -182,6 +182,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             this.woundState = 0;
             setStateMax(0);
             if (this.getEntity() != null) {
+                entity.getEvents().trigger("dispose");
                 this.getEntity().getComponent(DisposingComponent.class).toBeDisposed();
             }
         }

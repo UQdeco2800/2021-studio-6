@@ -186,7 +186,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         }
         if (entity != null) {
             entity.getEvents().trigger("updateWound", this.woundState);
-            if (isDead()) {
+            if (Boolean.TRUE.equals(isDead())) {
                 entity.getEvents().trigger("dead");
             }
         }

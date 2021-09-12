@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -34,22 +33,20 @@ public class MainMenuDisplay extends UIComponent {
   private static final float PADDING_FOR_MEDIUM_FONT = 30;
   private static final float PADDING_FOR_LARGE_FONT = 50;
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
-  private static final String musicFilePath = "sounds/title-screen-music.mp3";
-  private static final String clickSoundFilePath = "sounds/click.mp3";
-  private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
-  private static final String titleScreenAtlasFilePath = "images/title-screen.atlas";
+  private static final String MUSIC_FILE_PATH = "sounds/title-screen-music.mp3";
+  private static final String CLICK_SOUND_FILE_PATH = "sounds/click.mp3";
+  private static final String ROLLOVER_SOUND_FILE_PATH = "sounds/rollover.mp3";
+  private static final String TITLE_SCREEN_ATLAS_FILE_PATH = "images/title-screen.atlas";
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
   private Image background;
   private ArrayList<TextButton> menuButtons;
-  private TextureAtlas backgroundTextureAtlas;
   private Animation<TextureRegion> backgroundAnimation;
   private float elapsedTime = 0f;
   private Sound buttonClickSound;
   private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
-  private Music menuSong;
 
   @Override
   public void create() {
@@ -63,14 +60,15 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
 
-    menuSong = ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class);
+    Music menuSong = ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class);
     menuSong.setLooping(true);
     menuSong.setVolume(0.3f);
     menuSong.play();
 
-    buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
-    rolloverClickSound = ServiceLocator.getResourceService().getAsset(rolloverSoundFilePath, Sound.class);
-    backgroundTextureAtlas = ServiceLocator.getResourceService().getAsset(titleScreenAtlasFilePath, TextureAtlas.class);
+    buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
+    rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
+
+    TextureAtlas backgroundTextureAtlas = ServiceLocator.getResourceService().getAsset(TITLE_SCREEN_ATLAS_FILE_PATH, TextureAtlas.class);
 
     backgroundAnimation = new Animation<>(1f/3f, backgroundTextureAtlas.getRegions());
     background = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
@@ -134,7 +132,7 @@ public class MainMenuDisplay extends UIComponent {
     ClickListener rollOverListener = new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-        if (!rolloverActivated && event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
+        if (Boolean.FALSE.equals(rolloverActivated) && event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
           rolloverActivated = true;
           long soundRolloverId = rolloverClickSound.play();
           rolloverClickSound.setVolume(soundRolloverId,0.8f);
@@ -253,9 +251,8 @@ public class MainMenuDisplay extends UIComponent {
       for (TextButton menuButton : menuButtons) {
           Button.ButtonStyle newButtonStyle = skin.get( style, TextButton.TextButtonStyle.class );
           menuButton.setStyle(newButtonStyle);
-          Array<Cell> cells = table.getCells();
 
-          for (Cell cell : cells) {
+          for (Cell<Actor> cell : table.getCells()) {
               cell.pad(padding);
           }
       }
@@ -279,7 +276,7 @@ public class MainMenuDisplay extends UIComponent {
     menuButtons.clear();
     background.clear();
     background.remove();
-    ServiceLocator.getResourceService().getAsset(musicFilePath, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class).stop();
     super.dispose();
   }
 }

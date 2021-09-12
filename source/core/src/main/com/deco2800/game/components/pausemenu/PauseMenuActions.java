@@ -3,8 +3,6 @@ package com.deco2800.game.components.pausemenu;
 import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.services.GameTime;
-import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PauseMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
-  private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final float buttonClickDuration = 0.3f;
+  private static final float BUTTON_CLICK_DURATION = 0.3f;
   private GdxGame game;
   private boolean gameReturningToMenu = false;
   private boolean gameQuiting = false;
@@ -54,7 +51,7 @@ public class PauseMenuActions extends Component {
         public void run() {
           game.setScreen(GdxGame.ScreenType.MAIN_MENU);
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
   }
 
@@ -71,7 +68,7 @@ public class PauseMenuActions extends Component {
         public void run() {
           game.exit();
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
   }
 }

@@ -32,7 +32,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
-  private static final String[] forestTextures = {
+  private static final String[] FOREST_TEXTURES = {
     "images/Player_Sprite/front.png",
     "images/player_placeholders/PROJECTILE.png",
     "images/obstacle_sprite/cobweb.png",
@@ -61,7 +61,7 @@ public class ForestGameArea extends GameArea {
     "images/hud/dashbarFull.png",
       "images/hud/healthFull.png"
   };
-  private static final String[] forestTextureAtlases = {
+  private static final String[] FOREST_TEXTURE_ATLASES = {
       "images/terrain_iso_grass.atlas",
       "images/largeEnemy.atlas",
       "images/ghost.atlas",
@@ -71,9 +71,9 @@ public class ForestGameArea extends GameArea {
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String[] FOREST_SOUNDS = {"sounds/Impact4.ogg"};
+  private static final String BACKGROUND_MUSIC = "sounds/BGM_03_mp3.mp3";
+  private static final String[] FOREST_MUSIC = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
 
@@ -260,7 +260,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     music.setLooping(true);
     music.setVolume(0f);
     music.play();
@@ -269,10 +269,10 @@ public class ForestGameArea extends GameArea {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(forestTextures);
-    resourceService.loadTextureAtlases(forestTextureAtlases);
-    resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    resourceService.loadTextures(FOREST_TEXTURES);
+    resourceService.loadTextureAtlases(FOREST_TEXTURE_ATLASES);
+    resourceService.loadSounds(FOREST_SOUNDS);
+    resourceService.loadMusic(FOREST_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -283,17 +283,17 @@ public class ForestGameArea extends GameArea {
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(forestTextures);
-    resourceService.unloadAssets(forestTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(FOREST_TEXTURES);
+    resourceService.unloadAssets(FOREST_TEXTURE_ATLASES);
+    resourceService.unloadAssets(FOREST_SOUNDS);
+    resourceService.unloadAssets(FOREST_MUSIC);
   }
 
   @Override
   public void dispose() {
 
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 }

@@ -24,8 +24,8 @@ import java.util.ArrayList;
  */
 public class PauseMenuDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
-  private static final String clickSoundFilePath = "sounds/click.mp3";
-  private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
+  private static final String CLICK_SOUND_FILE_PATH = "sounds/click.mp3";
+  private static final String ROLLOVER_SOUND_FILE_PATH = "sounds/rollover.mp3";
   private static final float MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT = 300;
   private static final float MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT = 300;
   private static final float MAX_PAUSE_MENU_WIDTH_LARGE_FONT = 400;
@@ -77,8 +77,8 @@ public class PauseMenuDisplay extends UIComponent {
    */
   private void addActors() {
 
-    buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
-    rolloverClickSound = ServiceLocator.getResourceService().getAsset(rolloverSoundFilePath, Sound.class);
+    buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
+    rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
 
     pauseWindow = new Window("", skin, "pausemenu");
     createMainTable();
@@ -223,7 +223,7 @@ public class PauseMenuDisplay extends UIComponent {
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 
         // check that the rollover even is the text button and not the button label
-        if (!rolloverActivated && event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
+        if (Boolean.FALSE.equals(rolloverActivated) && event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
                 || event.getRelatedActor().toString().contains("TextButton"))) {
           rolloverActivated = true;
           long soundRolloverId = rolloverClickSound.play();
@@ -256,7 +256,7 @@ public class PauseMenuDisplay extends UIComponent {
   private void adjustMenuButtonsFontSize(float menuWidth, float menuHeight) {
 
     if (menuWidth >= MAX_PAUSE_MENU_WIDTH_LARGE_FONT && menuHeight >= MAX_PAUSE_MENU_HEIGHT_LARGE_FONT) {
-      changeMenuButtonStyles("menu-button-large", PADDING_FOR_LARGE_FONT);
+      changeMenuButtonStyles(MENU_BUTTON_STYLE, PADDING_FOR_LARGE_FONT);
     } else if (menuWidth >= MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT && menuHeight >= MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT) {
       changeMenuButtonStyles("menu-button-medium", PADDING_FOR_MEDIUM_FONT);
     } else {
@@ -272,9 +272,8 @@ public class PauseMenuDisplay extends UIComponent {
     for (TextButton menuButton : menuButtons) {
       Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
       menuButton.setStyle(newButtonStyle);
-      Array<Cell> cells = mainTable.getCells();
 
-      for (Cell cell : cells) {
+      for (Cell<Actor> cell : mainTable.getCells()) {
         cell.pad(padding);
       }
     }

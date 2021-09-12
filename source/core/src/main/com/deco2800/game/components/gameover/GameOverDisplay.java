@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class GameOverDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
   private static final float PADDING_FOR_LARGE_FONT = 30;
-  private static final String clickSoundFilePath = "sounds/click.mp3";
-  private static final String rolloverSoundFilePath = "sounds/rollover.mp3";
+  private static final String CLICK_SOUND_FILE_PATH = "sounds/click.mp3";
+  private static final String ROLLOVER_SOUND_FILE_PATH = "sounds/rollover.mp3";
   private static final Logger logger = LoggerFactory.getLogger(GameOverDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
@@ -43,8 +43,8 @@ public class GameOverDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
 
-    buttonClickSound = ServiceLocator.getResourceService().getAsset(clickSoundFilePath, Sound.class);
-    rolloverClickSound = ServiceLocator.getResourceService().getAsset(rolloverSoundFilePath, Sound.class);
+    buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
+    rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
 
     TextButton restartBtn = new TextButton("Restart Game", skin, MENU_BUTTON_STYLE);
     TextButton menuBtn = new TextButton("Return to Menu", skin, MENU_BUTTON_STYLE);
@@ -69,9 +69,9 @@ public class GameOverDisplay extends UIComponent {
     table.align(Align.center);
     table.add(restartBtn).pad(PADDING_FOR_LARGE_FONT);
     table.row();
-    table.add(menuBtn).pad(PADDING_FOR_LARGE_FONT);;
+    table.add(menuBtn).pad(PADDING_FOR_LARGE_FONT);
     table.row();
-    table.add(exitBtn).pad(PADDING_FOR_LARGE_FONT);;
+    table.add(exitBtn).pad(PADDING_FOR_LARGE_FONT);
     table.setFillParent(true);
 
     stage.addActor(table);
@@ -106,7 +106,7 @@ public class GameOverDisplay extends UIComponent {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 
-        if (!rolloverActivated && (event.getRelatedActor() == null || !event.getRelatedActor().toString().contains("Label:"))) {
+        if (Boolean.FALSE.equals(rolloverActivated) && (event.getRelatedActor() == null || !event.getRelatedActor().toString().contains("Label:"))) {
           rolloverActivated = true;
           long soundRolloverId = rolloverClickSound.play();
           rolloverClickSound.setVolume(soundRolloverId,0.8f);

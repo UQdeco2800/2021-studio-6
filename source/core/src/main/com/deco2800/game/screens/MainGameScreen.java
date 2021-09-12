@@ -224,6 +224,7 @@ public class MainGameScreen extends ScreenAdapter {
       System.out.println("You win");
       ui.getEvents().trigger("exit");
     }
+    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;
   }
 }

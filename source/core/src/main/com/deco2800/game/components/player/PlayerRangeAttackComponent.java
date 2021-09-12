@@ -137,7 +137,7 @@ public class PlayerRangeAttackComponent extends Component {
      * @param movingAttackDir would be vectors used to deploy projectiles in a direction (would only
      *                        be either north, south, east or west for now)
      */
-    void fire(Vector2 movingAttackDir) {
+    public void fire(Vector2 movingAttackDir) {
         Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
 

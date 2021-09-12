@@ -194,7 +194,7 @@ public class PlayerActions extends Component {
   /**
    * Reloads player's range attack weapon for firing again
    */
-  void reload() {
+  private void reload() {
     inventory = entity.getComponent(InventoryComponent.class);
     playerRangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
     boolean reloadingStatus = playerRangeAttackComponent.getReloadingStatus();
@@ -224,7 +224,7 @@ public class PlayerActions extends Component {
    *
    * @return a true or false to reload gun magazine
    */
-  public boolean canReload() {
+  private boolean canReload() {
     return (timeSource.getTime() >= timeStartReload);
   }
 

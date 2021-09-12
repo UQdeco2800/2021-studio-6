@@ -61,7 +61,7 @@ public class CutScene extends Component implements StoryBase{
      * Shows and displays the cutscene
      */
     @Override
-    public void display() {
+    public void display() throws Exception{
         ServiceLocator.getEntityService().register(imageEntity);
         ServiceLocator.getEntityService().register(dialogueEntity);
         config.music.setLooping(true);

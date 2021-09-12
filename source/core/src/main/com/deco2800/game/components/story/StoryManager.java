@@ -48,6 +48,7 @@ public class StoryManager extends Component {
         }
 
         loadedStory = config.initialiseStory();
+        loadedStory.create();
     }
 
     /**
@@ -60,7 +61,12 @@ public class StoryManager extends Component {
             return null;
         }
 
-        loadedStory.display();
+        try{
+            loadedStory.display();
+        } catch (Exception ignored) {
+            logger.error("Story has not been created");
+        }
+
         displaying = true;
         return loadedStory;
     }

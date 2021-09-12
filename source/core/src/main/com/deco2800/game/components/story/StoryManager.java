@@ -17,7 +17,7 @@ public class StoryManager extends Component {
     private static StoryManager manager = null;
 
     private final Logger logger = LoggerFactory.getLogger(StoryManager.class);
-    private final EnumMap<StoryNames, CutSceneConfig> scenesConfigs = new EnumMap<>(StoryNames.class);
+    private final EnumMap<StoryNames, StoryConfig> scenesConfigs = new EnumMap<>(StoryNames.class);
 
     public static final String ADVANCE_LISTENER = "advanceStory";
     private boolean displaying = false;
@@ -39,10 +39,15 @@ public class StoryManager extends Component {
      * @param name cutscene id
      */
     public void loadCutScene(StoryNames name){
-        CutSceneConfig config = scenesConfigs.get(name);
-        CutScene cutScene = new CutScene(config);
-        cutScene.create();
-        loadedStory = cutScene;
+
+        StoryConfig config = scenesConfigs.get(name);
+
+        if (config == null) {
+            logger.error("Story does not exist");
+            return;
+        }
+
+        loadedStory = config.initialiseStory();
     }
 
     /**

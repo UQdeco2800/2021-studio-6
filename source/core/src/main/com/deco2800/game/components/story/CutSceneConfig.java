@@ -42,4 +42,9 @@ public abstract class CutSceneConfig implements StoryConfig{
 
         music = ServiceLocator.getResourceService().getAsset(musicPath, Music.class);
     }
+
+    @Override
+    public StoryBase initialiseStory() {
+        return new CutScene(this);
+    }
 }

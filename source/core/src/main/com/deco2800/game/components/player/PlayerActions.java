@@ -75,11 +75,14 @@ public class PlayerActions extends Component {
     // check for reload ensures canReload method will not be called needlessly
     // and will only be true when player has clicked R to reload
     if (checkForReload) {
+      // display reloading text to player on interface
+      entity.getEvents().trigger("gunMagazineReloading");
 
       // it is time to reload, game time exceeds time to reload
       if (canReload()) {
         checkForReload = false;
         playerRangeAttackComponent.reloadGunMagazine(ammoToReload);
+        entity.getEvents().trigger("hideReloadingStatus");
       }
     }
   }

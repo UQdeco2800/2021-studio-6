@@ -22,7 +22,7 @@ import java.util.List;
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerInterfaceDisplay extends UIComponent {
-  Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload;
+  Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload, tableTemp;
   private Image heartImage;
   private Label woundLabel;
   private Label healthLabel;
@@ -79,6 +79,9 @@ public class PlayerInterfaceDisplay extends UIComponent {
     entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
     entity.getEvents().addListener("updateGunMagImageHUD", this::updatePlayerGunMagazineImages);
     entity.getEvents().addListener("updateCoinHUD", this::updatePlayerCoinUI);
+    entity.getEvents().addListener("gunMagazineEmpty", this::displayGunMagEmpty);
+    entity.getEvents().addListener("gunMagazineReloading", this::displayGunMagReloading);
+    entity.getEvents().addListener("hideReloadingStatus", this::hideReloadingStatus);
     addActors();
     setAnimations();
   }
@@ -122,11 +125,13 @@ public class PlayerInterfaceDisplay extends UIComponent {
     CharSequence healthText = String.format("Health: %d", health);
     woundLabel = new Label(woundText, skin, "large");
     healthLabel = new Label(healthText, skin, "large");
+    tableTemp = new Table();
+    tableTemp.add(healthLabel);
+    tableTemp.add(heartImage).size(imageSideLength).pad(6);
+    tableTemp.add(woundLabel);
 
     table.row().left();
-    table.add(healthLabel);
-    table.add(heartImage).size(imageSideLength).pad(6);
-    table.add(woundLabel);
+    table.add(tableTemp);
     table.padLeft(6f);
 
     // Relevant images used alongside labels
@@ -184,8 +189,8 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableGunMagazine.add(bulletMagazineLabel);
 
     tableReload = new Table();
-//    tableReload.center().bottom();
     tableReload.add(reloadLabel);
+    tableReload.setVisible(false);
 
     table.row();
     table.add(tableCoin).left();
@@ -195,7 +200,8 @@ public class PlayerInterfaceDisplay extends UIComponent {
     table.add(tableAmmo).left();
     table.row();
     table.add(tableGunMagazine).left();
-//    table.add(tableReload).center();
+    table.row().expand().bottom().padBottom(180f);
+    table.add(tableReload);
 
     stage.addActor(table);
   }
@@ -207,7 +213,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param reload when reloading, could possibly reload multiple bullets, will need
    *               to set multiple images to be visible on screen
    */
-  public void updatePlayerGunMagazineImages(int index, boolean reload) {
+  private void updatePlayerGunMagazineImages(int index, boolean reload) {
     // for when bullets are shot
     if (!reload) {
       bulletImages.get(index).setVisible(false);
@@ -219,6 +225,33 @@ public class PlayerInterfaceDisplay extends UIComponent {
       }
     }
   }
+
+  /**
+   * Displays text that tells user that it is time to reload weapon
+   */
+  private void displayGunMagEmpty() {
+    tableReload.setVisible(true);
+    String text = "No ammo! Press R to reload!";
+    reloadLabel.setText(text);
+  }
+
+  /**
+   * Displays text that tells user that currently, gun is reloading
+   */
+  private void displayGunMagReloading() {
+    tableReload.setVisible(true);
+    String text = "Reloading...";
+    reloadLabel.setText(text);
+  }
+
+  /**
+   * Hides reloading text once gun has been reloaded successfully after a certain period of time
+   * in game
+   */
+  private void hideReloadingStatus() {
+    tableReload.setVisible(false);
+  }
+
 
   @Override
   public void draw(SpriteBatch batch)  {

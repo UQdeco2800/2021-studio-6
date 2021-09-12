@@ -30,7 +30,7 @@ public class GameOverScreen extends ScreenAdapter {
   private static final String[] gameOverSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
   private static final String[] gameOverTransitionalSounds = {"sounds/click.mp3"};
-  private static final String[] gameOverMusic = {};
+  private static final String[] gameOverMusic = {"sounds/game-over-music.mp3"};
   private static final String[] gameOverTextureAtlases = {};
 
 

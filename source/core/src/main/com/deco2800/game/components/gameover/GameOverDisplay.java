@@ -1,5 +1,6 @@
 package com.deco2800.game.components.gameover;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class GameOverDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
   private static final float PADDING_FOR_LARGE_FONT = 30;
+  private static final String MUSIC_FILE_PATH = "sounds/game-over-music.mp3";
   private static final String CLICK_SOUND_FILE_PATH = "sounds/click.mp3";
   private static final String ROLLOVER_SOUND_FILE_PATH = "sounds/rollover.mp3";
   private static final Logger logger = LoggerFactory.getLogger(GameOverDisplay.class);
@@ -42,6 +44,8 @@ public class GameOverDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
+
+    playMusic();
 
     buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
     rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
@@ -75,6 +79,13 @@ public class GameOverDisplay extends UIComponent {
     table.setFillParent(true);
 
     stage.addActor(table);
+  }
+
+  private void playMusic() {
+    Music gameOverSong = ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class);
+    gameOverSong.setLooping(true);
+    gameOverSong.setVolume(0.1f);
+    gameOverSong.play();
   }
 
   /**
@@ -146,6 +157,7 @@ public class GameOverDisplay extends UIComponent {
       button.remove();
     }
     menuButtons.clear();
+    ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class).stop();
     super.dispose();
   }
 }

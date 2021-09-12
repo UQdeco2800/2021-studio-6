@@ -13,13 +13,11 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
-import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -48,8 +46,8 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String BACKGROUND_MUSIC = "sounds/safehouse-music.mp3";
+  private static final String[] SAFEHOUSE_MUSIC = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
 
@@ -68,7 +66,8 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnBullet();
-    //playMusic();
+
+    playMusic();
   }
 
   public Entity getPlayer() {
@@ -150,10 +149,10 @@ public class SafehouseGameArea extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-    music.setLooping(true);
-    music.setVolume(0f);
-    music.play();
+    Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
+    gameOverSong.setLooping(true);
+    gameOverSong.setVolume(0.1f);
+    gameOverSong.play();
   }
 
   private void loadAssets() {
@@ -162,7 +161,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
     resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    resourceService.loadMusic(SAFEHOUSE_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -176,7 +175,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(SAFEHOUSE_MUSIC);
   }
 
   @Override
@@ -184,7 +183,7 @@ public class SafehouseGameArea extends GameArea {
     door.getComponent(DisposingComponent.class).toBeDisposed();
 
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 }

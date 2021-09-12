@@ -60,10 +60,7 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
 
-    Music menuSong = ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class);
-    menuSong.setLooping(true);
-    menuSong.setVolume(0.3f);
-    menuSong.play();
+    playMusic();
 
     buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
     rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
@@ -102,6 +99,13 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(background);
     stage.addActor(table);
 
+  }
+
+  private void playMusic() {
+    Music menuSong = ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class);
+    menuSong.setLooping(true);
+    menuSong.setVolume(0.3f);
+    menuSong.play();
   }
 
   /**

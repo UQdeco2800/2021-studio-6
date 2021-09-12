@@ -35,7 +35,9 @@ public class PlayerActions extends Component {
   private long delayEndTime = 0;
   private long dashEndTime = 0;
   // Timing for reloading along with additional variables relevant to reloading
-  private static final int delayReloadLength = 3000; // in milliseconds
+  private static final int delayReloadLength = 2000; // in milliseconds
+  private static long timeStartReload = 0;
+  private boolean checkForReload = false;
   private final int BULLET_MAGAZINE_FULL = 5;
   private int ammoToReload;
 
@@ -68,6 +70,20 @@ public class PlayerActions extends Component {
       updateDash();
     } else if (moving) {
       updateSpeed();
+    }
+
+    // check for reload ensures canReload method will not be called needlessly
+    // and will only be true when player has clicked R to reload
+    if (checkForReload) {
+      // display reloading text to player on interface
+      entity.getEvents().trigger("gunMagazineReloading");
+
+      // it is time to reload, game time exceeds time to reload
+      if (canReload()) {
+        checkForReload = false;
+        playerRangeAttackComponent.reloadGunMagazine(ammoToReload);
+        entity.getEvents().trigger("hideReloadingStatus");
+      }
     }
   }
 
@@ -178,7 +194,7 @@ public class PlayerActions extends Component {
   /**
    * Reloads player's range attack weapon for firing again
    */
-  void reload() {
+  private void reload() {
     inventory = entity.getComponent(InventoryComponent.class);
     playerRangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
     boolean reloadingStatus = playerRangeAttackComponent.getReloadingStatus();
@@ -187,7 +203,6 @@ public class PlayerActions extends Component {
     int magazineNum = playerRangeAttackComponent.getGunMagazine();
     int ammoLeft = inventory.getAmmo();
 
-    Timer reloadTimer = new Timer(true);
     // if bullet magazine is full or reloading is currently occurring or there is no ammo, do nothing
     if (magazineNum != BULLET_MAGAZINE_FULL && !reloadingStatus && ammoLeft >= 1) {
       playerRangeAttackComponent.setReloadingStatus(true);
@@ -195,15 +210,24 @@ public class PlayerActions extends Component {
       // acquire ammo to reload and update ammo in inventory
       ammoToReload = getAmmo(magazineNum, ammoLeft, inventory);
 
-      // simulate a reloading period
-      reloadTimer.schedule( new TimerTask() {
-        public void run() {
-          playerRangeAttackComponent.reloadGunMagazine(ammoToReload);
-          cancel();
-        }
-      }, delayReloadLength);
+      // simulate a reloading process by setting reload to happen later in game
+      // this will trigger update method to continuously check when it is time
+      // to reload
+      timeStartReload = timeSource.getTime() + delayReloadLength;
+      checkForReload = true;
     }
   }
+
+  /**
+   * Lets you know when it is time for player to reload. Reload should not happen
+   * immediately, so need to simulate idea of reloading which delays time
+   *
+   * @return a true or false to reload gun magazine
+   */
+  private boolean canReload() {
+    return (timeSource.getTime() >= timeStartReload);
+  }
+
 
   /**
    * Gets ammo for reloading and updates ammo in player's inventory component
@@ -243,6 +267,14 @@ public class PlayerActions extends Component {
   void walk(Vector2 direction) {
     this.walkDirection = direction;
     moving = true;
+  }
+
+  /**
+   * Public function to return the movement status of the player
+   * @return true if the player is moving, false otherwise
+   */
+  public boolean isMoving() {
+    return moving;
   }
 
   /**

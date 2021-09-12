@@ -1,0 +1,27 @@
+
+explosion.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+explosion0
+  rotate: false
+  xy: 2, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+explosion1
+  rotate: false
+  xy: 350, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+explosion2
+  rotate: false
+  xy: 698, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1

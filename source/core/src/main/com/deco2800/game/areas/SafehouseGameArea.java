@@ -34,7 +34,8 @@ public class SafehouseGameArea extends GameArea {
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
   private static final String[] safehouseTextures = {
-    "images/Player_Sprite/front.png", "images/player_placeholders/PROJECTILE.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/coin.png", "images/playeritems/bandage/bandage01.png",
+    "images/Player_Sprite/front01.png", "images/playeritems/pickupammo.png",
     "images/safehouse/interior-day1-tile-ground1-latest.png",
     "images/safehouse/interior-day1-tile-door1-latest.png",
       "images/hud/dashbarFull.png",
@@ -42,9 +43,10 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] safeHouseTextureAtlases = {
-    "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
-      "images/hud/health.atlas"
+      "images/hud/health.atlas",
+      "images/weapon/sword.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

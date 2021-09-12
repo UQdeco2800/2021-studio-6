@@ -1,11 +1,15 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
+import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseWeaponConfig;
 import com.deco2800.game.files.FileLoader;
@@ -14,6 +18,7 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
@@ -64,13 +69,15 @@ public class PlayerMeleeAttackComponent extends Component {
     private float length;
     private float height;
     private int attackLength; // in milliseconds
+    private long disposeTime = 0;
 
+    private IndependentAnimator weaponAnimator;
+    private int lastDirection = 2;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
        // String filename = weaponConfig.getPath();
         BaseWeaponConfig stats =
             FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
-        System.out.println(stats);
         fixtureDef = new FixtureDef();
         fixtureDefW = new FixtureDef();
         fixtureDefA = new FixtureDef();
@@ -90,8 +97,38 @@ public class PlayerMeleeAttackComponent extends Component {
         // event listeners to check if enemy is within range of melee attack or not
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
-        entity.getEvents().addListener("attack", this::Attack);
-        entity.getEvents().addListener("walk", this::Walk);
+        entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("walk", this::walk);
+
+        if (this.entity.getComponent(PlayerWeaponAnimationController.class) != null) {
+            weaponAnimator =
+                new IndependentAnimator(
+                    ServiceLocator.getResourceService()
+                        .getAsset("images/weapon/sword.atlas", TextureAtlas.class));
+            weaponAnimator.addAnimation("attackUp", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackDown", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackLeft", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackRight", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.setCamera(true);
+            weaponAnimator.setScale(length * 1.5f, height * 1.5f);
+            setAnimations();
+        }
+    }
+
+    /**
+     * Sets the animations for the weaponAnimator after a certain point to allow assets to load
+     */
+    public void setAnimations() {
+        PlayerWeaponAnimationController setWeapon = this.entity.getComponent(PlayerWeaponAnimationController.class);
+        setWeapon.setter();
+    }
+
+    /**
+     * Gets the animator for the weapons
+     * @return IndependentAnimator for the weapon attack
+     */
+    public IndependentAnimator getAnimator() {
+        return weaponAnimator;
     }
 
     /**
@@ -99,7 +136,7 @@ public class PlayerMeleeAttackComponent extends Component {
      *
      * @param walkDirection direction that the player walked
      */
-    private void Walk(Vector2 walkDirection) {
+    private void walk(Vector2 walkDirection) {
         if (fixture != null) {
             dispose();
         }
@@ -111,8 +148,17 @@ public class PlayerMeleeAttackComponent extends Component {
      *
      * @return player last walked direction
      */
-    private Vector2 getDirection() {
+    public Vector2 getDirection() {
         return directionMove;
+    }
+
+    /**
+     * Getter for direction of player movement.
+     *
+     * @return player last walked direction
+     */
+    public void setDirection(int lastDirectionSet) {
+        this.lastDirection = lastDirectionSet;
     }
 
     /**
@@ -122,18 +168,19 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private FixtureDef getFixDirection() {
         if (directionMove != null) {
-            if (directionMove.epsilonEquals(Vector2Utils.UP)) {
-                fixtureDefLast = fixtureDefW;
-                return fixtureDefW;
-            } else if (directionMove.epsilonEquals(Vector2Utils.DOWN)) {
-                fixtureDefLast = fixtureDefS;
-                return fixtureDefS;
-            } else if (directionMove.epsilonEquals(Vector2Utils.LEFT)) {
-                fixtureDefLast = fixtureDefA;
-                return fixtureDefA;
-            } else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)) {
-                fixtureDefLast = fixtureDefD;
-                return fixtureDefD;
+            switch (lastDirection) {
+                case 1:
+                    fixtureDefLast = fixtureDefW;
+                    return fixtureDefW;
+                case 2:
+                    fixtureDefLast = fixtureDefS;
+                    return fixtureDefS;
+                case 3:
+                    fixtureDefLast = fixtureDefA;
+                    return fixtureDefA;
+                case 4:
+                    fixtureDefLast = fixtureDefD;
+                    return fixtureDefD;
             }
         }
         return fixtureDefLast;
@@ -247,7 +294,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * Triggered when the player presses the attack button. Handles creating
      * the fixtures for the attack and prepping before actual the damage/hit.
      */
-    private void Attack() {
+    private void attack() {
         if (canAttack) {
             fixtureDef = getFixDirection();
             if (fixtureDef != null) {
@@ -265,19 +312,20 @@ public class PlayerMeleeAttackComponent extends Component {
                 // if sensor is false, NPC will not be able to collide with player's fixture
                 setSensor(true);
                 //damage();
-                disposeStart();
+                disposeTimeSet();
             }
         }
     }
 
-    public void disposeStart() {
-        attackTimer = new Timer(true);
-        attackTimer.schedule( new TimerTask() {
-            public void run() {
-                dispose();
-                cancel();
-            }
-        }, attackLength);
+    private void disposeTimeSet() {
+        disposeTime = timeSource.getTime() + attackLength;
+    }
+
+    @Override
+    public void update() {
+        if (disposeTime < timeSource.getTime()) {
+            dispose();
+        }
     }
 
     @Override
@@ -292,7 +340,7 @@ public class PlayerMeleeAttackComponent extends Component {
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
-            //physBody.destroyFixture(fixture);
+            physBody.destroyFixture(fixture);
             fixture = null;
         }
 
@@ -311,67 +359,6 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     /**
-     * Set physics as a box with a given size. Box is centered around the entity.
-     *
-     * @param size size of the box
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setAsBox(Vector2 size) {
-        return setAsBox(size, entity.getCenterPosition());
-    }
-
-    /**
-     * Set physics as a box with a given size. Box is aligned based on alignment.
-     *
-     * @param size size of the box
-     * @param alignX how to align x relative to entity
-     * @param alignY how to align y relative to entity
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setAsBoxAligned(Vector2 size, AlignX alignX, AlignY alignY) {
-        Vector2 position = new Vector2();
-        switch (alignX) {
-            case LEFT:
-                position.x = size.x / 2;
-                break;
-            case CENTER:
-                position.x = entity.getCenterPosition().x;
-                break;
-            case RIGHT:
-                position.x = entity.getScale().x - (size.x / 2);
-                break;
-        }
-
-        switch (alignY) {
-            case BOTTOM:
-                position.y = size.y / 2;
-                break;
-            case CENTER:
-                position.y = entity.getCenterPosition().y;
-                break;
-            case TOP:
-                position.y = entity.getScale().y - (size.y / 2);
-                break;
-        }
-
-        return setAsBox(size, position);
-    }
-
-    /**
-     * Set physics as a box with a given size and local position. Box is centered around the position.
-     *
-     * @param size size of the box
-     * @param position position of the box center relative to the entity.
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setAsBox(Vector2 size, Vector2 position) {
-        PolygonShape bbox = new PolygonShape();
-        bbox.setAsBox(size.x / 2, size.y / 2, position, 0f);
-        setShape(bbox);
-        return this;
-    }
-
-    /**
      * Set whether this physics component is a sensor. Sensors don't collide with other objects but
      * still trigger collision events. See: https://www.iforce2d.net/b2dtut/sensors
      *
@@ -383,21 +370,6 @@ public class PlayerMeleeAttackComponent extends Component {
             fixtureDef.isSensor = isSensor;
         } else {
             fixture.setSensor(isSensor);
-        }
-        return this;
-    }
-
-    /**
-     * Set shape
-     *
-     * @param shape shape, default = bounding box the same size as the entity
-     * @return self
-     */
-    public PlayerMeleeAttackComponent setShape(Shape shape) {
-        if (fixture == null) {
-            fixtureDef.shape = shape;
-        } else {
-            logger.error("{} Cannot set Collider shape after create(), ignoring.", this);
         }
         return this;
     }
@@ -415,5 +387,14 @@ public class PlayerMeleeAttackComponent extends Component {
             return fixtureDef.filter.categoryBits;
         }
         return fixture.getFilterData().categoryBits;
+    }
+
+    /**
+     * Public function to get the last direction the player attacked in
+     * @return returns an int corresponding to the direction
+     * 1 = up, 2 = down, 3 = left and 4 = right (can be changed to ENUMS)
+     */
+    public int getLastDirection() {
+        return lastDirection;
     }
 }

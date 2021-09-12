@@ -6,12 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.components.dialoguebox.DialogueImage;
-import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
-import com.deco2800.game.components.player.hud.PlayerHudFactory;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -34,13 +31,16 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
+  // this can be removed - this is purely for testing purposes
+  private static final int NUM_AMMO_PICKUPS = 3;
+  private static final int NUM_COIN_PICKUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/Player_Sprite/front.png",
-    "images/player_placeholders/PROJECTILE.png",
+    "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
-    "images/obstacle_sprite/bush.png",
+    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -71,9 +71,10 @@ public class ForestGameArea extends GameArea {
       "images/ghost.atlas",
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
-      "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
-      "images/hud/health.atlas"
+      "images/hud/health.atlas",
+      "images/weapon/sword.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -110,6 +111,9 @@ public class ForestGameArea extends GameArea {
 
     spawnLongRangeEnemies();
 //    playMusic();
+
+    // this is used for testing purposes for player pick up
+    spawnPickupItems();
   }
 
   public Entity getPlayer() {
@@ -166,6 +170,25 @@ public class ForestGameArea extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
+  private void spawnPickupItems() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_AMMO_PICKUPS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int randomAmmoQuantity = RandomUtils.randomInt(5);
+      Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
+      spawnEntityAt(pickupAmmo, randomPos, true, false);
+    }
+
+    for (int i = 0; i < NUM_COIN_PICKUPS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int randomCoinQuantity = RandomUtils.randomInt(5);
+      Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
+      spawnEntityAt(pickupCoin, randomPos, true, false);
+    }
+  }
+
   private void spawnTrees() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -200,7 +223,7 @@ public class ForestGameArea extends GameArea {
       spawnEntity(newBullet);
     }
 
-    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
   private void spawnSmallEnemy() {//this da noo 1

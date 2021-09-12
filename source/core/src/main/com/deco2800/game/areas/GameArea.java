@@ -46,7 +46,6 @@ public abstract class GameArea implements Disposable {
       Entity temp = areaEntities.remove(entityIdx);
       temp.dispose();
     }
-
   }
 
   /**

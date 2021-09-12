@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -14,10 +15,11 @@ public class PlayerAbilitiesComponent extends Component {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private static final Logger logger = LoggerFactory.getLogger(PlayerAbilitiesComponent.class);
     private static final int delayLength = 60000; // in milliseconds
-    private static final long dashLength = 350; // in milliseconds
     private long delayEndTime = 0;
     private int ability;
-
+    // Ability Specific Variables
+    private static final long dashLength = 200; // in milliseconds
+    private static final long invincbilityLength = 3000;
     /**
      * Basic constructor for setting the players chosen ability
      * @param ability is the ability state to set the player to
@@ -52,19 +54,23 @@ public class PlayerAbilitiesComponent extends Component {
 
     /**
      * Attempts to trigger the players ability
+     *
+     * @param direction Used for the implementation of abilities
      */
-    void triggerAbility() {
-        if (timeSource.getTime() >= delayEndTime) {
-            delayEndTime = timeSource.getTime() + delayLength;
-            switch (this.ability) {
-                case 0:
-                    entity.getEvents().trigger("longDash", dashLength+timeSource.getTime());
-                case 1:
-                    entity.getEvents().trigger("shortInvincibility");
-                case 2:
-                    entity.getEvents().trigger("knockback");
-                case 3:
-                    entity.getEvents().trigger("rangedAOE");
+    void triggerAbility(Vector2 direction) {
+        if (ability != 0 || !direction.isZero()) { // ensuring that abilities which require movement have it
+            if (timeSource.getTime() >= delayEndTime) {
+                delayEndTime = timeSource.getTime() + delayLength;
+                switch (this.ability) {
+                    case 0:
+                        entity.getEvents().trigger("longDash", dashLength+timeSource.getTime());
+                    case 1:
+                        entity.getEvents().trigger("invincibility", invincbilityLength);
+                    case 2:
+                        entity.getEvents().trigger("knockback");
+                    case 3:
+                        entity.getEvents().trigger("rangedAOE");
+                }
             }
         }
     }

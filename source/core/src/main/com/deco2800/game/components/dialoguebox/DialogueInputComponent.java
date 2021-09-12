@@ -10,7 +10,7 @@ import com.deco2800.game.input.InputComponent;
  */
 @Deprecated
 public class DialogueInputComponent extends InputComponent {
-    private static final int ADVANCE_KEY = Input.Keys.SPACE;
+    private static final int ADVANCE_KEY = Input.Keys.M;
 
     public DialogueInputComponent() {
         super(7);

@@ -36,13 +36,11 @@ public class TouchTeleportComponent extends Component {
             return;
         }
 
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-            // Doesn't match our target layer, ignore
-            return;
+        if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
+            // Try to teleport entity
+            MainGameScreen.changeLevel();
         }
 
-        // Try to teleport entity
-        MainGameScreen.changeLevel();
-        System.out.println("Touched Safehouse");
+
     }
 }

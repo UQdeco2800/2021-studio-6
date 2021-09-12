@@ -4,11 +4,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.services.GameTime;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -17,6 +17,8 @@ import com.deco2800.game.services.GameTime;
 public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private PlayerMeleeAttackComponent playerMeleeAttackComponent;
+  private PlayerRangeAttackComponent playerRangeAttackComponent;
+  private InventoryComponent inventory;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   // Speed Modification
@@ -24,15 +26,18 @@ public class PlayerActions extends Component {
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
   // Dashing
   private final float dashSpeed = 20f;
-  private float diagonalDashSpeed;
   private boolean dashing = false;
+  private Vector2 dashVelocity;
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final int DelayLength = 2000; // in milliseconds
-  private static final int DashLength = 50; // in milliseconds
-  private Vector2 dashDirection;
-  private long delayEndTime;
-  private long dashEndTime;
+  private static final int delayLength = 2000; // in milliseconds
+  private static final int dashLength = 100; // in milliseconds
+  private long delayEndTime = 0;
+  private long dashEndTime = 0;
+  // Timing for reloading along with additional variables relevant to reloading
+  private static final int delayReloadLength = 3000; // in milliseconds
+  private final int BULLET_MAGAZINE_FULL = 5;
+  private int ammoToReload;
 
   /**
    * Basic constructor for setting the initial player speed based on saved wound state
@@ -42,9 +47,6 @@ public class PlayerActions extends Component {
    */
   public PlayerActions (int woundState) {
     setSpeed(woundState);
-    diagonalDashSpeed = dashSpeed/2; // ensuring dash is equal for diagonal and regular directions
-    delayEndTime = 0;
-    dashEndTime = 0;
   }
 
   @Override
@@ -55,37 +57,46 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("updateWound", this::setSpeed);
-    entity.getEvents().addListener("dash", this::dash);
+    entity.getEvents().addListener("dash", this::regularDash);
+    entity.getEvents().addListener("longDash", this::longDash);
+    entity.getEvents().addListener("reload", this::reload);
   }
 
   @Override
   public void update() {
-    if (moving) {
+    if (dashing) {
+      updateDash();
+    } else if (moving) {
       updateSpeed();
     }
   }
 
+  /**
+   * When player is set to moving the player will be moved in the key direction during update
+   */
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 desiredVelocity;
-    if (dashing) {
-      if (dashDirection.cpy().x == 0f) { // Making dash length equal for all axis'
-        desiredVelocity = dashDirection.cpy().scl(0f, dashSpeed);
-      } else if (dashDirection.cpy().y == 0f) {
-        desiredVelocity = dashDirection.cpy().scl(dashSpeed, 0f);
-      } else {
-        desiredVelocity = dashDirection.cpy().scl(diagonalDashSpeed, diagonalDashSpeed);
-      }
-      if (dashEndTime <= timeSource.getTime()) { // stop dash at end of time
-        dashing = false;
-      }
-    } else {
-      desiredVelocity = walkDirection.cpy().scl(maxSpeed);
-    }
+    Vector2 desiredVelocity = walkDirection.cpy().scl(maxSpeed);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  }
+
+  /**
+   * When player is set to dashing, walking will be overwritten
+   * Until the end of the dash time the player will be moved in the dash direction every update
+   */
+  private void updateDash() {
+    Body body = physicsComponent.getBody();
+    Vector2 velocity = body.getLinearVelocity();
+    // impulse = (desiredVel - currentVel) * mass
+    Vector2 impulse = dashVelocity.cpy().sub(velocity).scl(body.getMass());
+    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+    if (dashEndTime <= timeSource.getTime()) { // stop dash at end of time
+      dashing = false;
+      this.entity.getEvents().trigger("enableDashAttack");
+    }
   }
 
   /**
@@ -126,16 +137,102 @@ public class PlayerActions extends Component {
   }
 
   /**
+   * Returns the whether the player is currently dashing
+   *
+   * @return whether the player is in the dashing state
+   */
+  public boolean isDashing() {
+    return dashing;
+  }
+
+  /**
+   * Returns the current max speed of the player
+   *
+   * @return the players current speed
+   */
+  public Vector2 getCurrentSpeed() {
+    return maxSpeed;
+  }
+
+  /**
    * Sets the player to dashing if the current cooldown has passed
    */
-  void dash() {
+  void regularDash() {
     if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
-      delayEndTime = timeSource.getTime() + DelayLength;
-      dashEndTime = timeSource.getTime() + DashLength;
-      dashDirection = walkDirection.cpy(); // Get dash direction
-      this.entity.getComponent(PlayerCombatStatsComponent.class).invincibleStart(DashLength);
-      this.dashing = true;
+      this.getEntity().getEvents().trigger("dashBar");
+      delayEndTime = timeSource.getTime() + delayLength;
+      dashEndTime = timeSource.getTime() + dashLength;
+      setDash(dashSpeed);
     }
+  }
+
+  /**
+   * Sets the player to start a long dash
+   * @param endTime is the time to end the dash according to the game clock
+   */
+  void longDash(long endTime) {
+    dashEndTime = endTime;
+    setDash(dashSpeed*2);
+  }
+
+  /**
+   * Reloads player's range attack weapon for firing again
+   */
+  void reload() {
+    inventory = entity.getComponent(InventoryComponent.class);
+    playerRangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
+    boolean reloadingStatus = playerRangeAttackComponent.getReloadingStatus();
+
+    // used to check number of ammo required from inventory for deduction
+    int magazineNum = playerRangeAttackComponent.getGunMagazine();
+    int ammoLeft = inventory.getAmmo();
+
+    Timer reloadTimer = new Timer(true);
+    // if bullet magazine is full or reloading is currently occurring or there is no ammo, do nothing
+    if (magazineNum != BULLET_MAGAZINE_FULL && !reloadingStatus && ammoLeft >= 1) {
+      playerRangeAttackComponent.setReloadingStatus(true);
+
+      // acquire ammo to reload and update ammo in inventory
+      ammoToReload = getAmmo(magazineNum, ammoLeft, inventory);
+
+      // simulate a reloading period
+      reloadTimer.schedule( new TimerTask() {
+        public void run() {
+          playerRangeAttackComponent.reloadGunMagazine(ammoToReload);
+          cancel();
+        }
+      }, delayReloadLength);
+    }
+  }
+
+  /**
+   * Gets ammo for reloading and updates ammo in player's inventory component
+   *
+   * @param magazineNum which entails the current number of bullets left in player's magazine upon
+   *                    reloading
+   * @param ammoLeft informs the number of ammo left in inventory of player currently
+   * @param inventory component that is attached to player that has information on ammo count and methods
+   *                  for updating ammo account
+   * @return ammo for reloading that will be scheduled for reloading
+   */
+  public int getAmmo(int magazineNum, int ammoLeft, InventoryComponent inventory) {
+    // magazine empty and there is enough ammo in inventory
+    if (magazineNum == 0 && ammoLeft > 5) {
+      ammoToReload = BULLET_MAGAZINE_FULL;
+      inventory.addAmmo(-ammoToReload);
+    } else {
+
+      // if there is enough ammo to refill sub-empty magazine, refill magazine to fullest -
+      // else there isn't enough, empty ammo inventory and take whatever that is left
+      ammoToReload = BULLET_MAGAZINE_FULL - magazineNum;
+      if (inventory.hasAmmo(ammoToReload)) {
+        inventory.addAmmo(-ammoToReload);
+      } else {
+        ammoToReload = ammoLeft;
+        inventory.setAmmo(0);
+      }
+    }
+    return ammoToReload;
   }
 
   /**
@@ -167,20 +264,17 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Returns the whether the player is currently dashing
-   *
-   * @return whether the player is in the dashing state
+   * Sets the players dash velocity based on direction and speed
+   * @param mainSpeed the horizontal/vertical speed of the dash
    */
-  public boolean isDashing() {
-    return dashing;
-  }
-
-  /**
-  * Returns the current max speed of the player
-  *
-  * @return the players current speed
-   */
-  public Vector2 getCurrentSpeed() {
-    return maxSpeed;
+  private void setDash(float mainSpeed) {
+    if (walkDirection.cpy().x == 0f || walkDirection.cpy().y == 0f) { // Making dash length equal for all axis'
+      dashVelocity = walkDirection.cpy().scl(mainSpeed);
+    } else {
+      dashVelocity = walkDirection.cpy().scl(mainSpeed/2, mainSpeed/2);
+    }
+    this.entity.getEvents().trigger("invincible", dashEndTime - timeSource.getTime());
+    this.entity.getEvents().trigger("disableDashAttack");
+    this.dashing = true;
   }
 }

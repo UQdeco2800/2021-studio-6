@@ -1,0 +1,7 @@
+{
+  "attackLength": 100,
+  "attackDamage": 10,
+  "knockback": 50,
+  "length": 2,
+  "height" : 1
+}

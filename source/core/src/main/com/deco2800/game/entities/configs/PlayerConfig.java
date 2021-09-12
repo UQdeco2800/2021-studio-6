@@ -12,4 +12,5 @@ public class PlayerConfig extends BaseEntityConfig  {
   public int health = 3;
   public int ammo = 10;
   public int bandages = 3;
+  public int ability = 0;
 }

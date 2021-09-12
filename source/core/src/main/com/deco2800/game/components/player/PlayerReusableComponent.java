@@ -46,7 +46,6 @@ public class PlayerReusableComponent extends Component {
                 updateBandageCount(bandageCount - BANDAGE_USED);
                 playerStats.setWoundState(currentWoundState + INCREASE_WOUND_STATE);
             }
-            System.out.println("bandage used triggered");
         }
     }
 

@@ -123,7 +123,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     woundLabel = new Label(woundText, skin, "large");
     healthLabel = new Label(healthText, skin, "large");
 
-    table.row().padLeft(-100f);
+    table.row().left();
     table.add(healthLabel);
     table.add(heartImage).size(imageSideLength).pad(6);
     table.add(woundLabel);

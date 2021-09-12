@@ -167,6 +167,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * each change to player movement i.e. keydown or keyup.
    */
   private void animationHandle() {
+    PlayerMeleeAttackComponent tempAttack = this.entity.getComponent(PlayerMeleeAttackComponent.class);
     if (movementKeys.size() > 0) {
       switch (movementKeys.get(movementKeys.size() - 1)) {
         case Keys.W:
@@ -181,6 +182,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.D:
           this.getEntity().getEvents().trigger("moveRight");
           break;
+      }
+      if (tempAttack != null) {
+        switch (movementKeys.get(movementKeys.size() - 1)) {
+          case Keys.W:
+            tempAttack.setDirection(1);
+            break;
+          case Keys.A:
+            tempAttack.setDirection(3);
+            break;
+          case Keys.S:
+            tempAttack.setDirection(2);
+            break;
+          case Keys.D:
+            tempAttack.setDirection(4);
+            break;
+        }
       }
     }
   }

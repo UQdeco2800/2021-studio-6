@@ -157,24 +157,30 @@ public class PlayerMeleeAttackComponent extends Component {
      *
      * @return player last walked direction
      */
+    public void setDirection(int lastDirectionSet) {
+        this.lastDirection = lastDirectionSet;
+    }
+
+    /**
+     * Getter for direction of player movement.
+     *
+     * @return player last walked direction
+     */
     private FixtureDef getFixDirection() {
         if (directionMove != null) {
-            if (directionMove.epsilonEquals(Vector2Utils.UP)) {
-                fixtureDefLast = fixtureDefW;
-                lastDirection = 1;
-                return fixtureDefW;
-            } else if (directionMove.epsilonEquals(Vector2Utils.DOWN)) {
-                fixtureDefLast = fixtureDefS;
-                lastDirection = 2;
-                return fixtureDefS;
-            } else if (directionMove.epsilonEquals(Vector2Utils.LEFT)) {
-                fixtureDefLast = fixtureDefA;
-                lastDirection = 3;
-                return fixtureDefA;
-            } else if (directionMove.epsilonEquals(Vector2Utils.RIGHT)) {
-                fixtureDefLast = fixtureDefD;
-                lastDirection = 4;
-                return fixtureDefD;
+            switch (lastDirection) {
+                case 1:
+                    fixtureDefLast = fixtureDefW;
+                    return fixtureDefW;
+                case 2:
+                    fixtureDefLast = fixtureDefS;
+                    return fixtureDefS;
+                case 3:
+                    fixtureDefLast = fixtureDefA;
+                    return fixtureDefA;
+                case 4:
+                    fixtureDefLast = fixtureDefD;
+                    return fixtureDefD;
             }
         }
         return fixtureDefLast;

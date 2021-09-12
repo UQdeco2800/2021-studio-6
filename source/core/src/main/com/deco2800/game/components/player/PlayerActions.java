@@ -267,6 +267,14 @@ public class PlayerActions extends Component {
   }
 
   /**
+   * Public function to return the movement status of the player
+   * @return true if the player is moving, false otherwise
+   */
+  public boolean isMoving() {
+    return moving;
+  }
+
+  /**
    * Stops the player from walking.
    */
   void stopWalking() {

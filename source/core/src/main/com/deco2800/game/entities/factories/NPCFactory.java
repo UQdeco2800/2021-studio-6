@@ -15,6 +15,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.GhostKingConfig;
 import com.deco2800.game.entities.configs.LargeEnemyConfig;
+import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -41,6 +42,46 @@ public class NPCFactory {
   private static final NPCConfigs configs =
           FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+
+  /**
+   *
+   * Creates a small enemy entity.
+   *
+   * @param target entity to chase
+   * @return entity
+   */
+  public static Entity createSpawnerEnemy(Entity target) {
+    SpawnerEnemyConfig config = configs.spawnerEnemy;
+    Vector2 speed = new Vector2(config.speed_x, config.speed_y);
+
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/spawnerEnemy.atlas", TextureAtlas.class));
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+    Entity spawnerEnemy =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent)
+                    .addComponent(new DisposingComponent())
+                    .addComponent(new GhostAnimationController())
+                    .addComponent(new PhysicsMovementComponent(speed))
+                    .addComponent(animator)
+                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+    spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
+    spawnerEnemy.setScale(1f, 1f);
+    return spawnerEnemy;
+    //------------------------------------------------
+  }
 
   /**
    * 

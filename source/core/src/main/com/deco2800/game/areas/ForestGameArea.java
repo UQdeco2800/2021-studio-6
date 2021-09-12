@@ -31,6 +31,8 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
   private static final int NUM_LARGE_ENEMY = 2;
+  private static final int NUM_SMALL_ENEMY = 2;
+  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
@@ -71,6 +73,7 @@ public class ForestGameArea extends GameArea {
       "images/ghost.atlas",
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
+      "images/spawnerEnemy.atlas",
       "images/player.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas"
@@ -105,6 +108,7 @@ public class ForestGameArea extends GameArea {
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
+    spawnSpawnerEnemy();
     spawnBullet();
     spawnSafehouse();
 
@@ -203,11 +207,22 @@ public class ForestGameArea extends GameArea {
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
-  private void spawnSmallEnemy() {//this da noo 1
+  private void spawnSpawnerEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
+    for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player);
+      spawnEntityAt(spawnerEnemy, randomPos, true, true);
+    }
+  }
+
+  private void spawnSmallEnemy() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity smallEnemy = NPCFactory.createSmallEnemy(player);
       spawnEntityAt(smallEnemy, randomPos, true, true);

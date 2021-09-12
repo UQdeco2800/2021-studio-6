@@ -22,7 +22,7 @@ import java.util.List;
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerInterfaceDisplay extends UIComponent {
-  Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth;
+  Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload;
   private Image heartImage;
   private Label woundLabel;
   private Label healthLabel;
@@ -33,7 +33,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
   private Image bandageImage, ammoImage, coinImage, bulletImage1, bulletImage2, bulletImage3, bulletImage4,
           bulletImage5;
-  private Label bandageLabel, ammoLabel, coinLabel, bulletMagazineLabel;
+  private Label bandageLabel, ammoLabel, coinLabel, bulletMagazineLabel, reloadLabel;
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -123,6 +123,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     woundLabel = new Label(woundText, skin, "large");
     healthLabel = new Label(healthText, skin, "large");
 
+    table.row().padLeft(-100f);
     table.add(healthLabel);
     table.add(heartImage).size(imageSideLength).pad(6);
     table.add(woundLabel);
@@ -142,7 +143,6 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
     // components with relevant data variables
     InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
-    PlayerRangeAttackComponent rangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
 
     // Data variables shown on HUD
     int bandages = inventory.getBandages();
@@ -152,12 +152,14 @@ public class PlayerInterfaceDisplay extends UIComponent {
     CharSequence bandageText = String.format(": %d", bandages);
     CharSequence ammoText = String.format(" : %d", ammo);
     CharSequence cointText = String.format(" : %d", coins);
-    CharSequence magazineText = String.format(" Left");
+    CharSequence magazineText = " Left";
+    CharSequence reloadText = "No ammo! Press R to reload!";
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
     coinLabel = new Label(cointText, skin, "large");
     bulletMagazineLabel = new Label(magazineText, skin, "large");
+    reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
     tableCoin.padTop(200f);
@@ -181,6 +183,10 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableGunMagazine.add(bulletImage5);
     tableGunMagazine.add(bulletMagazineLabel);
 
+    tableReload = new Table();
+//    tableReload.center().bottom();
+    tableReload.add(reloadLabel);
+
     table.row();
     table.add(tableCoin).left();
     table.row();
@@ -189,6 +195,8 @@ public class PlayerInterfaceDisplay extends UIComponent {
     table.add(tableAmmo).left();
     table.row();
     table.add(tableGunMagazine).left();
+//    table.add(tableReload).center();
+
     stage.addActor(table);
   }
 
@@ -290,20 +298,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
   @Override
   public void dispose() {
     super.dispose();
-    heartImage.remove();
-    healthLabel.remove();
     healthBar.remove();
-
-    coinLabel.remove();
-    bandageLabel.remove();
-    ammoLabel.remove();
-    bulletMagazineLabel.remove();
-
-    bandageImage.remove();
-    ammoImage.remove();
-    coinImage.remove();
-
-    tableHealth.remove();
     table.remove();
   }
 }

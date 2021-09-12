@@ -47,6 +47,7 @@ public class PlayerAbilitiesComponent extends Component {
 
     /**
      * Returns an int code indicating the players chosen ability
+     * @return returns the ability
      */
     public int getAbility() {
         return ability;

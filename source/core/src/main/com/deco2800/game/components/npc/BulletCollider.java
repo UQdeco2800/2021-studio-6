@@ -24,6 +24,7 @@ public class BulletCollider extends Component {
      * Creates a collider between self entity and target entity
      * @param target the target to collide with
      * @param gameArea reference to the game area (used to spawn entity)
+     * @param targetLayer the target layer to set locally
      */
     public BulletCollider(Entity target, GameArea gameArea, short targetLayer) {
         this.target = target;

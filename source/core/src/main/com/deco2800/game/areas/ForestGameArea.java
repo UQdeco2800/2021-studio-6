@@ -6,12 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
-import com.deco2800.game.components.dialoguebox.Dialogue;
-import com.deco2800.game.components.dialoguebox.DialogueImage;
-import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
-import com.deco2800.game.components.player.hud.PlayerHudFactory;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -22,7 +19,6 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -258,15 +254,9 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  //TODO: This should be replaced when a global storage of dialogue and story is implemented
   private void spawnIntroDialogue(){
-    String quote = "OH NO!\nThe light - it's disappearing. I have to make it to the safe house before the " +
-            "darkness gets to me!";
-    ArrayList<String> a = new ArrayList<>();
-    a.add(quote);
-    Dialogue dialogue = new DialogueImage(a, "player-portrait");
-    Entity dialogueEntity = DialogueBoxFactory.createTextDialogue(dialogue);
-    spawnEntity(dialogueEntity);
+    StoryManager.getInstance().loadCutScene(StoryNames.INTRO_DIALOGUE);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {

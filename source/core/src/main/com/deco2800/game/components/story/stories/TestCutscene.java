@@ -1,5 +1,5 @@
 package com.deco2800.game.components.story.stories;
-import com.deco2800.game.components.story.CutSceneConfig;
+import com.deco2800.game.components.story.cutscene.CutSceneConfig;
 
 /**
  * Asset paths for the test cutscene

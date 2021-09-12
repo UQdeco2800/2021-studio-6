@@ -1,7 +1,9 @@
-package com.deco2800.game.components.story;
+package com.deco2800.game.components.story.cutscene;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.dialoguebox.TextDialogueBox;
+import com.deco2800.game.components.story.ImageSequence;
+import com.deco2800.game.components.story.StoryBase;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.DialogueBoxFactory;
 import com.deco2800.game.entities.factories.ImageSequenceFactory;
@@ -10,7 +12,7 @@ import com.deco2800.game.services.ServiceLocator;
 /**
  * A story consisting of an image sequence, music and dialogue
  */
-public class CutScene extends Component implements StoryBase{
+public class CutScene extends Component implements StoryBase {
     private final CutSceneConfig config;
 
     private Entity dialogueEntity;

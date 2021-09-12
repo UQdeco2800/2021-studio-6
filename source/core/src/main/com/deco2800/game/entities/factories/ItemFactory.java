@@ -2,7 +2,6 @@ package com.deco2800.game.entities.factories;
 
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.ItemComponent;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Items;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -18,6 +17,8 @@ public class ItemFactory {
 
     /**
      * Ammo pickup will spawn when enemies die - but for now, it has been spawned randomly in game world
+     *
+     * @param itemQuantity the number of ammo quantity for ammo pick up
      * @return ammo pickup for player to use
      */
     public static Entity createAmmoPickup(int itemQuantity) {
@@ -33,6 +34,8 @@ public class ItemFactory {
 
     /**
      * Coin pickup will spawn when enemies die - but for now, it has been spawned randomly in game world
+     *
+     * @param itemQuantity the number of coin quantity for coin pick up
      * @return ammo pickup for player to use to purchase items
      */
     public static Entity createCoinPickup(int itemQuantity) {

@@ -147,7 +147,7 @@ public class PlayerRangeAttackComponentTest {
         assertTrue(bulletAlmostFired.getPosition().epsilonEquals(0,0));
         assertTrue(bulletAlmostFired.getComponent(BulletCollisionComponent.class).getBulletLaunchStatus());
 
-//        Vector2 targetCoord = new Vector2(15, 0);
+        Vector2 targetCoord = new Vector2(15, 0);
 //        assertTrue(bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget().epsilonEquals(targetCoord.cpy()));
     }
 }

@@ -66,7 +66,6 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(animator)
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     smallEnemy.setScale(0.75f, 0.75f);
     return smallEnemy;

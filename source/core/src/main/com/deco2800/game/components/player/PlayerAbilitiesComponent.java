@@ -41,6 +41,7 @@ public class PlayerAbilitiesComponent extends Component {
 
     /**
      * Returns the players chosen ability
+     * @return returns the ability
      */
     public Abilities getAbility() {
         return ability;

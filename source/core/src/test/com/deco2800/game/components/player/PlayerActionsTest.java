@@ -8,7 +8,6 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.events.listeners.EventListener0;
 import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.extensions.GameExtension;
-import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
@@ -65,14 +64,14 @@ class PlayerActionsTest {
 //        player.getEvents().trigger("reload");
 //        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
 //        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-//
-//        // should still be reloading
+
+        // should still be reloading
 //        when(time.getTime()).thenReturn(1500L);
 //        player.update();
 //        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
 //        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-//
-//        // finished reloading
+
+        // finished reloading
 //        when(time.getTime()).thenReturn(2100L);
 //        player.update();
 //        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());

@@ -153,9 +153,9 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     /**
-     * Getter for direction of player movement.
+     * Setter for direction of player movement.
      *
-     * @return player last walked direction
+     * @param lastDirectionSet what int value to set the lastDirection as
      */
     public void setDirection(int lastDirectionSet) {
         this.lastDirection = lastDirectionSet;

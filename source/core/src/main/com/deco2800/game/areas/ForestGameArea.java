@@ -108,7 +108,7 @@ public class ForestGameArea extends GameArea {
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
-    spawnSpawnerEnemy();
+    spawnSpawnerEnemy(this);
     spawnBullet();
     spawnSafehouse();
 
@@ -207,14 +207,25 @@ public class ForestGameArea extends GameArea {
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
-  private void spawnSpawnerEnemy() {
+  private void spawnSpawnerEnemy(ForestGameArea forestGameArea) {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, forestGameArea);
       spawnEntityAt(spawnerEnemy, randomPos, true, true);
+    }
+  }
+
+  public void spawnSpawnerEnemySmallEnemy() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+      spawnEntityAt(smallEnemy, randomPos, true, true);
     }
   }
 

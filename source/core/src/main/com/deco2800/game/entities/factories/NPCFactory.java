@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
@@ -50,14 +51,14 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createSpawnerEnemy(Entity target) {
+  public static Entity createSpawnerEnemy(Entity target, ForestGameArea forestGameArea) {
     SpawnerEnemyConfig config = configs.spawnerEnemy;
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+                    .addTask(new SpawnerEnemyTask(target, 10, 3f, 4f, forestGameArea)); //view distance should be increased through testing
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
@@ -80,7 +81,6 @@ public class NPCFactory {
     spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     spawnerEnemy.setScale(1f, 1f);
     return spawnerEnemy;
-    //------------------------------------------------
   }
 
   /**

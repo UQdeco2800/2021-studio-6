@@ -22,16 +22,16 @@ public class MenuUtility {
 
   /**
    * Adds a listener to a button that triggers an event when the user selects the button
+   * @param entity the entity that the trigger will be called to
    * @param button the button to add the select listener to
    * @param eventTrigger the event to be triggered when button is selected
-   * @param debugCommand the command to be printed to debug when the button is selected
    */
-  public static void addButtonSelectListener(Entity entity, Button button, String eventTrigger, String debugCommand) {
+  public static void addButtonSelectListener(Entity entity, Button button, String eventTrigger) {
     button.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug(debugCommand);
+            logger.debug("Button clicked with trigger of: " + eventTrigger);
 
             Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
             buttonClickSound.stop();

@@ -64,9 +64,9 @@ public class MainMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit", skin, MENU_BUTTON_STYLE);
 
     // Triggers an event when the button is pressed
-    MenuUtility.addButtonSelectListener(entity, startBtn, "start", "Start button clicked");
-    MenuUtility.addButtonSelectListener(entity, settingsBtn, "settings", "Settings button clicked");
-    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit", "Exit button clicked");
+    MenuUtility.addButtonSelectListener(entity, startBtn, "start");
+    MenuUtility.addButtonSelectListener(entity, settingsBtn, "settings");
+    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit");
 
     // Triggers an event when the user has triggered the button rollover
     MenuUtility.addButtonRolloverListener(startBtn);

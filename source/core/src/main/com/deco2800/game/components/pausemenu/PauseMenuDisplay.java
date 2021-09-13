@@ -109,10 +109,10 @@ public class PauseMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit Game", skin, MENU_BUTTON_STYLE);
 
     // Triggers an event when the button is pressed
-    MenuUtility.addButtonSelectListener(entity, continueBtn, "continue", "Continue button clicked");
-    MenuUtility.addButtonSelectListener(entity, settingsBtn, "pause-settings", "Settings button clicked");
-    MenuUtility.addButtonSelectListener(entity, menuBtn, "exit-to-menu", "Exit to menu button clicked");
-    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit-game", "Exit game button clicked");
+    MenuUtility.addButtonSelectListener(entity, continueBtn, "continue");
+    MenuUtility.addButtonSelectListener(entity, settingsBtn, "pause-settings");
+    MenuUtility.addButtonSelectListener(entity, menuBtn, "exit-to-menu");
+    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit-game");
 
     // Triggers an event when the user has triggered the button rollover
     MenuUtility.addButtonRolloverListener(continueBtn);
@@ -139,7 +139,7 @@ public class PauseMenuDisplay extends UIComponent {
     settingsMenu.changeTableLocation(true);
     settingsMenu.create();
     TextButton backBtn = settingsMenu.getExitBtn();
-    MenuUtility.addButtonSelectListener(entity, backBtn, "back", "Back button clicked");
+    MenuUtility.addButtonSelectListener(entity, backBtn, "back");
     entity.getEvents().addListener("back", this::closeSettings);
 
   }

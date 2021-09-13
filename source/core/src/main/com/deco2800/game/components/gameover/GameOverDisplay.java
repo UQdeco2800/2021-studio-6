@@ -52,9 +52,9 @@ public class GameOverDisplay extends UIComponent {
     exitBtn.pad(BUTTON_PADDING_FOR_LARGE_FONT);
 
     // Triggers an event when the button is pressed
-    MenuUtility.addButtonSelectListener(entity, restartBtn, "restart", "Restart button clicked");
-    MenuUtility.addButtonSelectListener(entity, menuBtn, "menu", "Menu button clicked");
-    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit", "Exit button clicked");
+    MenuUtility.addButtonSelectListener(entity, restartBtn, "restart");
+    MenuUtility.addButtonSelectListener(entity, menuBtn, "menu");
+    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit");
 
     // Triggers an event when the user has triggered the button rollover
     MenuUtility.addButtonRolloverListener(restartBtn);

@@ -26,7 +26,7 @@ public class GameOverScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private GameOverDisplay gameOverDisplay;
-  private static final String[] gameOverTextures = {};
+  private static final String[] gameOverTextures = {"images/placeholder.png"};
   private static final String[] gameOverSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
   private static final String[] gameOverTransitionalSounds = {"sounds/click.mp3"};

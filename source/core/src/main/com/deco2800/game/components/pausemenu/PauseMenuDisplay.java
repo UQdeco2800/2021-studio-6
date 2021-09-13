@@ -1,18 +1,15 @@
 package com.deco2800.game.components.pausemenu;
 
 
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.settingsmenu.SettingsMenuDisplay;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import com.deco2800.game.utils.MenuUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,27 +19,29 @@ import org.slf4j.LoggerFactory;
  */
 public class PauseMenuDisplay extends UIComponent {
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
-  private static final String CLICK_SOUND_FILE_PATH = "sounds/click.mp3";
-  private static final String ROLLOVER_SOUND_FILE_PATH = "sounds/rollover.mp3";
   private static final float MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT = 300;
   private static final float MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT = 300;
   private static final float MAX_PAUSE_MENU_WIDTH_LARGE_FONT = 400;
   private static final float MAX_PAUSE_MENU_HEIGHT_LARGE_FONT = 400;
-  private static final float PADDING_FOR_SMALL_FONT = 5;
-  private static final float PADDING_FOR_MEDIUM_FONT = 15;
-  private static final float PADDING_FOR_LARGE_FONT = 25;
+  private static final float CELL_PADDING_LARGE = 20;
+  private static final float CELL_PADDING_MEDIUM = 12;
+  private static final float CELL_PADDING_SMALL = 6;
+  private static final float BUTTON_PADDING_FOR_SMALL_FONT = 5;
+  private static final float BUTTON_PADDING_FOR_MEDIUM_FONT = 15;
+  private static final float BUTTON_PADDING_FOR_LARGE_FONT = 25;
   private static final float MAX_PAUSE_MENU_WIDTH = 500;
   private static final float MAX_PAUSE_MENU_HEIGHT = 600;
   private static final float PAUSE_MENU_WIDTH_TO_SCREEN_RATIO = 2.7f / 3f;
   private static final float PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO = 2.7f / 3f;
+  private static final String BACKGROUND = "images/placeholder.png";
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private final GdxGame game;
   private Table mainTable;
   private Table settingsTable;
-  private Window pauseWindow;
-  private Boolean rolloverActivated = false;
+  private Table pauseWindow;
   private boolean isEnabled = false;
+  private Image background;
 
   public PauseMenuDisplay(GdxGame game) {
     this.game = game;
@@ -50,7 +49,9 @@ public class PauseMenuDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+    logger.debug("Creating Pause menu screen");
     addActors();
+    logger.debug("Finished creating Pause menu screen");
   }
 
   public void togglePauseScreen() {
@@ -59,10 +60,13 @@ public class PauseMenuDisplay extends UIComponent {
     if (!isEnabled) {
       timeSource.pause();
       pauseWindow.setVisible(true);
+      background.setVisible(true);
+      background.toFront();
       pauseWindow.toFront();
       isEnabled = true;
     } else {
       pauseWindow.setVisible(false);
+      background.setVisible(false);
       timeSource.unpause();
       isEnabled = false;
     }
@@ -73,20 +77,24 @@ public class PauseMenuDisplay extends UIComponent {
    */
   private void addActors() {
 
-    pauseWindow = new Window("", skin, "pausemenu");
+    background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND, Texture.class));
+
+    pauseWindow = new Table();
+
     createMainTable();
     createSettingsTable();
     pauseWindow.add(mainTable);
+
     // adding and removing moves the table from being drawn on the screen but default
     pauseWindow.add(settingsTable);
     pauseWindow.removeActor(settingsTable);
     pauseWindow.padTop(0);
     pauseWindow.padBottom(0);
     setPauseMenuSize();
-    pauseWindow.setMovable(false);
-    pauseWindow.setResizable(false);
     pauseWindow.setVisible(false);
+    background.setVisible(false);
 
+    stage.addActor(background);
     stage.addActor(pauseWindow);
 
     entity.getEvents().addListener("togglepause", this::togglePauseScreen);
@@ -101,16 +109,16 @@ public class PauseMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit Game", skin, MENU_BUTTON_STYLE);
 
     // Triggers an event when the button is pressed
-    addButtonSelectListener(continueBtn, "continue", "Continue button clicked");
-    addButtonSelectListener(settingsBtn, "pause-settings", "Settings button clicked");
-    addButtonSelectListener(menuBtn, "exit-to-menu", "Exit to menu button clicked");
-    addButtonSelectListener(exitBtn, "exit-game", "Exit game button clicked");
+    MenuUtility.addButtonSelectListener(entity, continueBtn, "continue", "Continue button clicked");
+    MenuUtility.addButtonSelectListener(entity, settingsBtn, "pause-settings", "Settings button clicked");
+    MenuUtility.addButtonSelectListener(entity, menuBtn, "exit-to-menu", "Exit to menu button clicked");
+    MenuUtility.addButtonSelectListener(entity, exitBtn, "exit-game", "Exit game button clicked");
 
     // Triggers an event when the user has triggered the button rollover
-    addButtonRolloverListener(continueBtn);
-    addButtonRolloverListener(settingsBtn);
-    addButtonRolloverListener(menuBtn);
-    addButtonRolloverListener(exitBtn);
+    MenuUtility.addButtonRolloverListener(continueBtn);
+    MenuUtility.addButtonRolloverListener(settingsBtn);
+    MenuUtility.addButtonRolloverListener(menuBtn);
+    MenuUtility.addButtonRolloverListener(exitBtn);
 
     mainTable = new Table();
     mainTable.add(continueBtn);
@@ -131,7 +139,7 @@ public class PauseMenuDisplay extends UIComponent {
     settingsMenu.changeTableLocation(true);
     settingsMenu.create();
     TextButton backBtn = settingsMenu.getExitBtn();
-    addButtonSelectListener(backBtn, "back", "Back button clicked");
+    MenuUtility.addButtonSelectListener(entity, backBtn, "back", "Back button clicked");
     entity.getEvents().addListener("back", this::closeSettings);
 
   }
@@ -172,64 +180,13 @@ public class PauseMenuDisplay extends UIComponent {
 
     // Set and position pause window screen
     pauseWindow.setSize(pauseMenuWidth, pauseMenuHeight);
+    background.setSize(pauseMenuWidth, pauseMenuHeight);
     pauseWindow.setPosition(stage.getWidth() / 2 - pauseWindow.getWidth() / 2,
+        stage.getHeight() / 2 - pauseWindow.getHeight() / 2);
+    background.setPosition(stage.getWidth() / 2 - pauseWindow.getWidth() / 2,
         stage.getHeight() / 2 - pauseWindow.getHeight() / 2);
 
     adjustMenuButtonsFontSize(pauseMenuWidth, pauseMenuHeight);
-  }
-
-
-  /**
-   * Adds a listener to a button that triggers an event when the user selects the button
-   * @param button the button to add the select listener to
-   * @param eventTrigger the event to be triggered when button is selected
-   * @param debugCommand the command to be printed to debug when the button is selected
-   */
-  private void addButtonSelectListener(Button button, String eventTrigger, String debugCommand) {
-    button.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug(debugCommand);
-            Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
-            long soundClickId = buttonClickSound.play();
-            buttonClickSound.setVolume(soundClickId,0.6f);
-
-            entity.getEvents().trigger(eventTrigger);
-          }
-        });
-  }
-
-  /**
-   * Adds a listener to a button that triggers an event when the user activates the button rollover state
-   * @param button the button to add the rollover listener to
-   */
-  private void addButtonRolloverListener(TextButton button) {
-    ClickListener rollOverListener = new ClickListener() {
-      @Override
-      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-
-        // check that the rollover even is the text button and not the button label
-        if (Boolean.FALSE.equals(rolloverActivated) && event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
-                || event.getRelatedActor().toString().contains("TextButton"))) {
-          rolloverActivated = true;
-          Sound rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
-          long soundRolloverId = rolloverClickSound.play();
-          rolloverClickSound.setVolume(soundRolloverId,0.5f);
-        }
-      }
-      @Override
-      public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
-      {
-        // check that the rollover even is the text button and not the button label
-        if (event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
-                || event.getRelatedActor().toString().contains("TextButton"))) {
-          rolloverActivated = false;
-        }
-      }
-    };
-
-    button.addListener(rollOverListener);
   }
 
   @Override
@@ -244,28 +201,14 @@ public class PauseMenuDisplay extends UIComponent {
   private void adjustMenuButtonsFontSize(float menuWidth, float menuHeight) {
 
     if (menuWidth >= MAX_PAUSE_MENU_WIDTH_LARGE_FONT && menuHeight >= MAX_PAUSE_MENU_HEIGHT_LARGE_FONT) {
-      changeMenuButtonStyles(MENU_BUTTON_STYLE, PADDING_FOR_LARGE_FONT);
+      MenuUtility.changeMenuButtonStyles(mainTable, skin, MENU_BUTTON_STYLE, BUTTON_PADDING_FOR_LARGE_FONT,
+          CELL_PADDING_LARGE);
     } else if (menuWidth >= MAX_PAUSE_MENU_WIDTH_MEDIUM_FONT && menuHeight >= MAX_PAUSE_MENU_HEIGHT_MEDIUM_FONT) {
-      changeMenuButtonStyles("menu-button-medium", PADDING_FOR_MEDIUM_FONT);
+      MenuUtility.changeMenuButtonStyles(mainTable, skin, "menu-button-medium", BUTTON_PADDING_FOR_MEDIUM_FONT,
+          CELL_PADDING_MEDIUM);
     } else {
-      changeMenuButtonStyles("menu-button-small", PADDING_FOR_SMALL_FONT);
-    }
-  }
-
-  /**
-   * Sets the style for all the buttons within the menu table
-   * @param style - The LibGDX style to set the button to
-   * @param padding - The padding for each cell of the table
-   */
-  private void changeMenuButtonStyles(String style, float padding) {
-    for (Cell<Actor> cell : mainTable.getCells()) {
-      cell.pad(padding);
-      Actor cellContents = cell.getActor();
-      if (Button.class.isInstance(cellContents)) {
-        Button cellButton = (Button) cellContents;
-        Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
-        cellButton.setStyle(newButtonStyle);
-      }
+      MenuUtility.changeMenuButtonStyles(mainTable, skin, "menu-button-small", BUTTON_PADDING_FOR_SMALL_FONT,
+          CELL_PADDING_SMALL);
     }
   }
 

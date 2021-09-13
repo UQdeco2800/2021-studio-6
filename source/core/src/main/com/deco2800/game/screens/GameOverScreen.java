@@ -23,15 +23,16 @@ import org.slf4j.LoggerFactory;
  */
 public class GameOverScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(GameOverScreen.class);
-  private final GdxGame game;
-  private final Renderer renderer;
-  private GameOverDisplay gameOverDisplay;
   private static final String[] gameOverTextures = {"images/placeholder.png"};
   private static final String[] gameOverSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
   private static final String[] gameOverTransitionalSounds = {"sounds/click.mp3"};
   private static final String[] gameOverMusic = {"sounds/game-over-music.mp3"};
   private static final String[] gameOverTextureAtlases = {};
+  private final GdxGame game;
+  private final Renderer renderer;
+  private GameOverDisplay gameOverDisplay;
+
 
 
   public GameOverScreen(GdxGame game) {

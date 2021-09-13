@@ -14,8 +14,7 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private static final float BUTTON_CLICK_DURATION = 0.3f;
   private GdxGame game;
-  private boolean gameStarted = false;
-  private boolean gameQuiting = false;
+  private boolean loading = false;
 
 
   public MainMenuActions(GdxGame game) {
@@ -35,8 +34,8 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
-    if (!gameQuiting && !gameStarted) {
-      gameStarted = true;
+    if (!loading) {
+      loading = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
@@ -60,8 +59,8 @@ public class MainMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    if (!gameQuiting && !gameStarted) {
-      gameQuiting = true;
+    if (!loading) {
+      loading = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
@@ -77,7 +76,7 @@ public class MainMenuActions extends Component {
    */
   private void onSettings() {
     logger.info("Launching settings screen");
-    if (!gameQuiting && !gameStarted) {
+    if (!loading) {
       game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
   }

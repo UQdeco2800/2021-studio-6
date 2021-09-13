@@ -14,8 +14,7 @@ public class PauseMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
   private static final float BUTTON_CLICK_DURATION = 0.3f;
   private GdxGame game;
-  private boolean gameReturningToMenu = false;
-  private boolean gameQuiting = false;
+  private boolean loading = false;
 
   public PauseMenuActions(GdxGame game) {
     this.game = game;
@@ -33,7 +32,7 @@ public class PauseMenuActions extends Component {
    */
   private void onContinue() {
     logger.info("Continue game");
-    if (!gameReturningToMenu && !gameQuiting) {
+    if (!loading) {
       entity.getEvents().trigger("togglepause");
     }
   }
@@ -43,8 +42,8 @@ public class PauseMenuActions extends Component {
    */
   private void onExitToMenu() {
     logger.info("Exiting to menu");
-    if (!gameReturningToMenu && !gameQuiting) {
-      gameReturningToMenu = true;
+    if (!loading) {
+      loading = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
@@ -60,8 +59,8 @@ public class PauseMenuActions extends Component {
    */
   private void onExitGame() {
     logger.info("Exit game");
-    if (!gameReturningToMenu && !gameQuiting) {
-      gameQuiting = true;
+    if (!loading) {
+      loading = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override

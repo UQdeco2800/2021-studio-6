@@ -111,7 +111,7 @@ public class TerrainFactory {
       float tileWorldSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurb
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(cityRoad.getRegionWidth(), cityRoad.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, cityRoad, citySidewalk, cityCurb);
+    TiledMap tiledMap = createCityTiles(tilePixelSize, cityRoad, citySidewalk, cityCurb);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -163,10 +163,10 @@ public class TerrainFactory {
     TerrainTile roadTile = new TerrainTile(cityRoad);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
     TerrainTile curbTile = new TerrainTile(cityCurb);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-    System.out.println("Hello");
-    //Copied from above, change as needed
-    fillTiles(layer, MAP_SIZE, roadTile);
+    int xScale = 2;
+    int yScale = 1;
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
+    fillTiles(layer, MAP_SIZE, xScale, yScale, roadTile);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -202,6 +202,21 @@ public class TerrainFactory {
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
+        Cell cell = new Cell();
+        cell.setTile(tile);
+        layer.setCell(x, y, cell);
+      }
+    }
+  }
+
+  /**
+   * A version of fillTiles that allows for filling of maps that are rectangular
+   * @param xScale What multiplier to apply to the map's x-axis
+   * @param yScale What multiplier to apply to the map's y-axis
+   */
+  private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, int xScale, int yScale, TerrainTile tile) {
+    for (int x = 0; x < mapSize.x * xScale; x++) {
+      for (int y = 0; y < mapSize.y * yScale; y++) {
         Cell cell = new Cell();
         cell.setTile(tile);
         layer.setCell(x, y, cell);

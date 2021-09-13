@@ -1,5 +1,7 @@
 package com.deco2800.game.entities.configs;
 
+import com.deco2800.game.items.Abilities;
+
 /**
  * Defines the properties stored in player config files to be loaded by the Player Factory.
  */
@@ -12,5 +14,5 @@ public class PlayerConfig extends BaseEntityConfig  {
   public int health = 3;
   public int ammo = 10;
   public int bandages = 3;
-  public int ability = 0;
+  public Abilities ability = Abilities.LONG_DASH;
 }

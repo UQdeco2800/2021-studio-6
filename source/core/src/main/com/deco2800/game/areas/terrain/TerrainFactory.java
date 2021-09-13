@@ -64,6 +64,14 @@ public class TerrainFactory {
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
+      case CITY:
+        TextureRegion cityRoad =
+            new TextureRegion(resourceService.getAsset("images/placeholder_road.png", Texture.class));
+        TextureRegion citySidewalk =
+            new TextureRegion(resourceService.getAsset("images/placeholder_sidewalk.png", Texture.class));
+        TextureRegion cityCurb =
+            new TextureRegion(resourceService.getAsset("images/placeholder_curb.png", Texture.class));
+        return createCityTerrain(0.5f, cityRoad, citySidewalk, cityCurb);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -95,6 +103,15 @@ public class TerrainFactory {
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
     TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
+    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
+  private TerrainComponent createCityTerrain(
+      float tileWorldSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurb
+  ) {
+    GridPoint2 tilePixelSize = new GridPoint2(cityRoad.getRegionWidth(), cityRoad.getRegionHeight());
+    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, cityRoad, citySidewalk, cityCurb);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -135,6 +152,21 @@ public class TerrainFactory {
     // Add some grass and rocks
     fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+  }
+
+  private TiledMap createCityTiles(
+      GridPoint2 tileSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurb) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile roadTile = new TerrainTile(cityRoad);
+    TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
+    TerrainTile curbTile = new TerrainTile(cityCurb);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+    System.out.println("Hello");
+    //Copied from above, change as needed
+    fillTiles(layer, MAP_SIZE, roadTile);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -186,6 +218,7 @@ public class TerrainFactory {
     FOREST_DEMO,
     FOREST_DEMO_ISO,
     FOREST_DEMO_HEX,
-    SAFEHOUSE
+    SAFEHOUSE,
+    CITY
   }
 }

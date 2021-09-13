@@ -47,6 +47,9 @@ public class ForestGameArea extends GameArea {
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
+    "images/level_1/placeholder_road.png",
+    "images/level_1/placeholder_sidewalk.png",
+    "images/level_1/placeholder_curb.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -65,6 +68,7 @@ public class ForestGameArea extends GameArea {
     "images/hud/dashbarFull.png",
       "images/hud/healthFull.png"
   };
+
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
       "images/largeEnemy.atlas",
@@ -95,14 +99,11 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnIntroDialogue();
 
     spawnBullet();
-    spawnCobweb();
-    spawnBush();
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
@@ -129,7 +130,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.CITY);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -189,17 +190,6 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
-  }
-
   public void spawnSafehouse() {
     GridPoint2 center = new GridPoint2(15, 15);
 
@@ -256,28 +246,6 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
-    }
-  }
-
-  private void spawnCobweb() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_COBWEBS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cobweb = ObstacleFactory.createCobweb();
-      spawnEntityAt(cobweb, randomPos, true, false);
-    }
-  }
-
-  private void spawnBush() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_BUSH; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity bush = ObstacleFactory.createBush();
-      spawnEntityAt(bush, randomPos, true, false);
     }
   }
 

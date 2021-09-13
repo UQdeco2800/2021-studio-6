@@ -66,11 +66,11 @@ public class TerrainFactory {
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
       case CITY:
         TextureRegion cityRoad =
-            new TextureRegion(resourceService.getAsset("images/placeholder_road.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_road.png", Texture.class));
         TextureRegion citySidewalk =
-            new TextureRegion(resourceService.getAsset("images/placeholder_sidewalk.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_sidewalk.png", Texture.class));
         TextureRegion cityCurb =
-            new TextureRegion(resourceService.getAsset("images/placeholder_curb.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_curb.png", Texture.class));
         return createCityTerrain(0.5f, cityRoad, citySidewalk, cityCurb);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =

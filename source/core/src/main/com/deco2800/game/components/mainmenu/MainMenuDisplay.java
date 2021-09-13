@@ -12,13 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 /**
  * A ui component for displaying the Main menu.
@@ -41,11 +38,8 @@ public class MainMenuDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Image background;
-  private ArrayList<TextButton> menuButtons;
   private Animation<TextureRegion> backgroundAnimation;
   private float elapsedTime = 0f;
-  private Sound buttonClickSound;
-  private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
 
   @Override
@@ -62,9 +56,6 @@ public class MainMenuDisplay extends UIComponent {
 
     playMusic();
 
-    buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
-    rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
-
     TextureAtlas backgroundTextureAtlas = ServiceLocator.getResourceService().getAsset(TITLE_SCREEN_ATLAS_FILE_PATH, TextureAtlas.class);
 
     backgroundAnimation = new Animation<>(1f/3f, backgroundTextureAtlas.getRegions());
@@ -73,12 +64,6 @@ public class MainMenuDisplay extends UIComponent {
     TextButton startBtn = new TextButton("Start", skin, MENU_BUTTON_STYLE);
     TextButton settingsBtn = new TextButton("Settings", skin, MENU_BUTTON_STYLE);
     TextButton exitBtn = new TextButton("Exit", skin, MENU_BUTTON_STYLE);
-
-    // Adds all the text buttons into a list to be accessed elsewhere in the class
-    menuButtons = new ArrayList<>();
-    menuButtons.add(startBtn);
-    menuButtons.add(settingsBtn);
-    menuButtons.add(exitBtn);
 
     // Triggers an event when the button is pressed
     addButtonSelectListener(startBtn, "start", "Start button clicked");
@@ -120,6 +105,7 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
+            Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.8f);
 
@@ -138,6 +124,7 @@ public class MainMenuDisplay extends UIComponent {
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
         if (Boolean.FALSE.equals(rolloverActivated) && event.getRelatedActor() != null && !event.getRelatedActor().toString().contains("Label:")) {
           rolloverActivated = true;
+          Sound rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
           long soundRolloverId = rolloverClickSound.play();
           rolloverClickSound.setVolume(soundRolloverId,0.8f);
         }
@@ -247,19 +234,20 @@ public class MainMenuDisplay extends UIComponent {
   }
 
   /**
-   * Sets the style for all the buttons within the menu button table
+   * Sets the style for all the buttons within the menu table
    * @param style - The LibGDX style to set the button to
    * @param padding - The padding for each cell of the table
    */
   private void changeMenuButtonStyles(String style, float padding) {
-      for (TextButton menuButton : menuButtons) {
-          Button.ButtonStyle newButtonStyle = skin.get( style, TextButton.TextButtonStyle.class );
-          menuButton.setStyle(newButtonStyle);
-
-          for (Cell<Actor> cell : table.getCells()) {
-              cell.pad(padding);
-          }
+    for (Cell<Actor> cell : table.getCells()) {
+      cell.pad(padding);
+      Actor cellContents = cell.getActor();
+      if (Button.class.isInstance(cellContents)) {
+        Button cellButton = (Button) cellContents;
+        Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
+        cellButton.setStyle(newButtonStyle);
       }
+    }
   }
 
   @Override
@@ -274,10 +262,6 @@ public class MainMenuDisplay extends UIComponent {
   public void dispose() {
     table.clear();
     table.remove();
-    for (Button button : menuButtons) {
-      button.remove();
-    }
-    menuButtons.clear();
     background.clear();
     background.remove();
     ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class).stop();

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.settingsmenu.SettingsMenuDisplay;
 import com.deco2800.game.services.GameTime;
@@ -17,7 +16,6 @@ import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 
 /**
  * A ui component for displaying the pause menu.
@@ -43,11 +41,7 @@ public class PauseMenuDisplay extends UIComponent {
   private Table mainTable;
   private Table settingsTable;
   private Window pauseWindow;
-  private Sound buttonClickSound;
-  private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
-  private ArrayList<TextButton> menuButtons;
-  private final GameTime timeSource = ServiceLocator.getTimeSource();
   private boolean isEnabled = false;
 
   public PauseMenuDisplay(GdxGame game) {
@@ -60,6 +54,8 @@ public class PauseMenuDisplay extends UIComponent {
   }
 
   public void togglePauseScreen() {
+    GameTime timeSource = ServiceLocator.getTimeSource();
+
     if (!isEnabled) {
       timeSource.pause();
       pauseWindow.setVisible(true);
@@ -76,9 +72,6 @@ public class PauseMenuDisplay extends UIComponent {
    * Adds a pause menu into the stage that contain the pause menu buttons
    */
   private void addActors() {
-
-    buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
-    rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
 
     pauseWindow = new Window("", skin, "pausemenu");
     createMainTable();
@@ -106,13 +99,6 @@ public class PauseMenuDisplay extends UIComponent {
     TextButton settingsBtn = new TextButton("Settings", skin, MENU_BUTTON_STYLE);
     TextButton menuBtn = new TextButton("Exit to Menu", skin, MENU_BUTTON_STYLE);
     TextButton exitBtn = new TextButton("Exit Game", skin, MENU_BUTTON_STYLE);
-
-    // Adds all the text buttons into a list to be accessed elsewhere in the class
-    menuButtons = new ArrayList<>();
-    menuButtons.add(continueBtn);
-    menuButtons.add(settingsBtn);
-    menuButtons.add(menuBtn);
-    menuButtons.add(exitBtn);
 
     // Triggers an event when the button is pressed
     addButtonSelectListener(continueBtn, "continue", "Continue button clicked");
@@ -205,6 +191,7 @@ public class PauseMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
+            Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.6f);
 
@@ -226,6 +213,7 @@ public class PauseMenuDisplay extends UIComponent {
         if (Boolean.FALSE.equals(rolloverActivated) && event.getRelatedActor() != null && (!event.getRelatedActor().toString().contains("Label:")
                 || event.getRelatedActor().toString().contains("TextButton"))) {
           rolloverActivated = true;
+          Sound rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
           long soundRolloverId = rolloverClickSound.play();
           rolloverClickSound.setVolume(soundRolloverId,0.5f);
         }
@@ -265,16 +253,18 @@ public class PauseMenuDisplay extends UIComponent {
   }
 
   /**
-   * Sets the style for all the buttons within the menu button table
+   * Sets the style for all the buttons within the menu table
    * @param style - The LibGDX style to set the button to
+   * @param padding - The padding for each cell of the table
    */
   private void changeMenuButtonStyles(String style, float padding) {
-    for (TextButton menuButton : menuButtons) {
-      Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
-      menuButton.setStyle(newButtonStyle);
-
-      for (Cell<Actor> cell : mainTable.getCells()) {
-        cell.pad(padding);
+    for (Cell<Actor> cell : mainTable.getCells()) {
+      cell.pad(padding);
+      Actor cellContents = cell.getActor();
+      if (Button.class.isInstance(cellContents)) {
+        Button cellButton = (Button) cellContents;
+        Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
+        cellButton.setStyle(newButtonStyle);
       }
     }
   }
@@ -294,10 +284,6 @@ public class PauseMenuDisplay extends UIComponent {
     mainTable.remove();
     settingsTable.clear();
     settingsTable.remove();
-    for (Button button : menuButtons) {
-      button.remove();
-    }
-    menuButtons.clear();
 
     super.dispose();
   }

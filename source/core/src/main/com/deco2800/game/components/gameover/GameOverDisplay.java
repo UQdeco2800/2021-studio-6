@@ -14,7 +14,6 @@ import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 
 /**
  * A ui component for displaying the Main menu.
@@ -28,9 +27,6 @@ public class GameOverDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(GameOverDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
-  private ArrayList<TextButton> menuButtons;
-  private Sound buttonClickSound;
-  private Sound rolloverClickSound;
   private Boolean rolloverActivated = false;
 
   @Override
@@ -47,18 +43,9 @@ public class GameOverDisplay extends UIComponent {
 
     playMusic();
 
-    buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
-    rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
-
     TextButton restartBtn = new TextButton("Restart Game", skin, MENU_BUTTON_STYLE);
     TextButton menuBtn = new TextButton("Return to Menu", skin, MENU_BUTTON_STYLE);
     TextButton exitBtn = new TextButton("Exit", skin, MENU_BUTTON_STYLE);
-
-    // Adds all the text buttons into a list to be accessed elsewhere in the class
-    menuButtons = new ArrayList<>();
-    menuButtons.add(restartBtn);
-    menuButtons.add(menuBtn);
-    menuButtons.add(exitBtn);
 
     // Triggers an event when the button is pressed
     addButtonSelectListener(restartBtn, "restart", "Restart button clicked");
@@ -100,6 +87,7 @@ public class GameOverDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug(debugCommand);
+            Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
             long soundClickId = buttonClickSound.play();
             buttonClickSound.setVolume(soundClickId,0.8f);
 
@@ -119,6 +107,7 @@ public class GameOverDisplay extends UIComponent {
 
         if (Boolean.FALSE.equals(rolloverActivated) && (event.getRelatedActor() == null || !event.getRelatedActor().toString().contains("Label:"))) {
           rolloverActivated = true;
+          Sound rolloverClickSound = ServiceLocator.getResourceService().getAsset(ROLLOVER_SOUND_FILE_PATH, Sound.class);
           long soundRolloverId = rolloverClickSound.play();
           rolloverClickSound.setVolume(soundRolloverId,0.8f);
         }
@@ -153,10 +142,6 @@ public class GameOverDisplay extends UIComponent {
   public void dispose() {
     table.clear();
     table.remove();
-    for (Button button : menuButtons) {
-      button.remove();
-    }
-    menuButtons.clear();
     ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class).stop();
     super.dispose();
   }

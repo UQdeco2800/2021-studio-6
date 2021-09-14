@@ -3,6 +3,7 @@ package com.deco2800.game.components.story;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.story.stories.IntroDialogue;
+import com.deco2800.game.components.story.stories.PrologueCutScene;
 import com.deco2800.game.components.story.stories.TestCutscene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class StoryManager extends Component {
     private StoryManager(){
         scenesConfigs.put(StoryNames.TEST, new TestCutscene());
         scenesConfigs.put(StoryNames.INTRO_DIALOGUE, new IntroDialogue());
+        scenesConfigs.put(StoryNames.PROLOGUE, new PrologueCutScene());
     }
 
     @Override

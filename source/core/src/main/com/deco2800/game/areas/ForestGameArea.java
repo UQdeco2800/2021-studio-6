@@ -255,7 +255,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnIntroDialogue(){
-    StoryManager.getInstance().loadCutScene(StoryNames.INTRO_DIALOGUE);
+    StoryManager.getInstance().loadCutScene(StoryNames.PROLOGUE);
     StoryManager.getInstance().displayStory();
   }
 

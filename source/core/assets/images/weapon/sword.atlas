@@ -1,0 +1,118 @@
+
+sword.png
+size: 4096, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+attackDown
+  rotate: false
+  xy: 2572, 892
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 1218, 1406
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 3274, 892
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 1920, 1406
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 516, 704
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 704, 2
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 1544, 704
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 2, 1218
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 1030, 704
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 1218, 2
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 2058, 704
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 2, 516
+  size: 512, 700
+  orig: 512, 700
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 2, 2
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 2622, 1406
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 516, 1406
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 3324, 1406
+  size: 700, 512
+  orig: 700, 512
+  offset: 0, 0
+  index: -1

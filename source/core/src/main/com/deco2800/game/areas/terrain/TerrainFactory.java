@@ -169,6 +169,10 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
     fillTiles(layer, MAP_SIZE, xScale, yScale, roadTile);
 
+    GridPoint2 start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 0);
+    GridPoint2 end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.2);
+    setTilesInRegion(layer, sidewalkTile, start, end);
+
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
@@ -221,6 +225,37 @@ public class TerrainFactory {
         Cell cell = new Cell();
         cell.setTile(tile);
         layer.setCell(x, y, cell);
+      }
+    }
+  }
+
+  /**
+   * Given the size of a map and coordinates expressed in percentages of the total map size,
+   * calculate and returns the exact coordinates
+   * (e.g. take a map with size x = 200, y = 100, and xPos = 80% of the map's x size, yPos = 100% of the map's y size
+   * returns 160, 100)
+   * @param xSize Size of the map's x-axis
+   * @param ySize Size of the map's y-axis
+   * @param xPos Position of x-axis requested as a percentage of the map's x size
+   * @param yPos Position of y-axis requested as a percentage of the map's y size
+   * @return A GridPoint containing the exact coordinates requested
+   */
+  private static GridPoint2 calculatePosition(int xSize, int ySize, double xPos, double yPos) {
+    return new GridPoint2((int)(xSize * xPos), (int)(ySize * yPos));
+  }
+    //MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 1
+
+  /**
+   * Given a start position and an end position of a region, fill all tiles in that region with the selected tile
+   * @param start Start of region to fill
+   * @param end End of region to fill
+   */
+  private static void setTilesInRegion(
+      TiledMapTileLayer layer, TerrainTile tile, GridPoint2 start, GridPoint2 end) {
+    for (int x = start.x; x < end.x; x++) {
+      for (int y = start.y; y < end.y; y++) {
+        Cell cell = layer.getCell(x, y);
+        cell.setTile(tile);
       }
     }
   }

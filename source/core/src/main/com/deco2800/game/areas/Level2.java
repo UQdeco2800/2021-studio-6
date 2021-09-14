@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level2 extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+  private static final Logger logger = LoggerFactory.getLogger(Level1.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;

@@ -82,7 +82,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new ForestGameArea(terrainFactory);
+    gameArea = new Level1(terrainFactory);
     gameArea.create();
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);

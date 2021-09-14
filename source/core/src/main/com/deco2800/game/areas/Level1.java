@@ -105,16 +105,16 @@ public class Level1 extends GameArea {
     spawnTerrain();
     player = spawnPlayer();
     spawnSafehouse();
-    //spawnIntroDialogue();
+    spawnIntroDialogue();
 
     spawnBullet();
     playMusic();
-    //spawnLargeEnemy();
-    //spawnSmallEnemy();
+    spawnLargeEnemy();
+    spawnSmallEnemy();
     spawnBullet();
     spawnSafehouse();
 
-    //spawnLongRangeEnemies();
+    spawnLongRangeEnemies();
 //    playMusic();
 
     // this is used for testing purposes for player pick up

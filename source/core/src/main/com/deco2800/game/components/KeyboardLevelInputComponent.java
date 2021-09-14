@@ -27,7 +27,7 @@ public class KeyboardLevelInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     switch (keycode) {
       case Keys.ESCAPE:
-        if (timeSource != null && !timeSource.isPaused()) {
+        if (timeSource != null) {
           entity.getEvents().trigger("togglepause");
         }
         return true;

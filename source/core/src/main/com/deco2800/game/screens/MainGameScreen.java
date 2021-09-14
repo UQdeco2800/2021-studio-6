@@ -208,6 +208,11 @@ public class MainGameScreen extends ScreenAdapter {
     CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+
+    if (CurrentLevel == 4) {
+      victory();
+      return;
+    }
     gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {
@@ -225,8 +230,6 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel == 4) {
-      victory();
     }
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;

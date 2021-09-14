@@ -7,23 +7,26 @@ public class EpilogueCutScene extends CutSceneConfig {
     public static final String[] DIALOGUE =
             {
                     //Screen 0
-                    "There it was, a lonely sail boat afloat on the deserted harbour. A sign of hope, a sign of relief.",
-                    "It's time to tell the others.",
-                    "It's time to go home.",
+                    "There it is!",
+                    "A lonely sail boat... My way across the ocean to the place that promises hope.",
+                    "A life in the light...",
+                    "A life without fear...",
 
                     //Screen 1
-                    "Sailing into the glowing horizon, it was the most beautiful feeling ever.",
-                    "The light got bigger and bigger, it was almost blinding.",
-                    "The anticipation, the possibility of more fireflies and the tales each one beholds!",
-                    "An unusual current swept the ocean, rocking the sail back and forth.",
-                    "Just a bad storm I presumed, until I saw the ocean bed change color.",
-                    "It became darker by the second",
-                    "The colour faintly moved around the boat.",
-                    "It wasn't any big fish that lurked the sea. It was nothing like ive ever seen before.",
-                    "It was clear what it was. It was a...",
+                    "I sailed into the glowing horizon.",
+                    "The ever expanding light was beautiful.",
+                    "The anticipation...",
+                    "The hope...",
+                    "The possibility of meeting other fireflies, perhaps even some of my friends who have made the journey before me.",
+                    "An uneasy wind started to blow from the east, rocking the sail back and forth.",
+                    "Probably just a storm blowing in...",
+                    "The water seemed to be changing colour...",
+                    "Becoming darker and darker each second.",
+                    "The darkness faintly moved around the boat...",
+                    "It was clear what it was...",
 
                     //Screen 3
-                    "... A shadow!",
+                    "A shadow crawler!",
             };
     public static final String[] IMAGES =
             {
@@ -31,6 +34,7 @@ public class EpilogueCutScene extends CutSceneConfig {
                     "epilogue/1-the-docks.png",
                     "epilogue/1-the-docks.png",
                     "epilogue/1-the-docks.png",
+                    "epilogue/1-the-docks.png",
 
                     //Screen 1
                     "epilogue/2-the-glow.png",
@@ -41,8 +45,10 @@ public class EpilogueCutScene extends CutSceneConfig {
                     "epilogue/2-the-glow.png",
                     "epilogue/2-the-glow.png",
                     "epilogue/2-the-glow.png",
+                    "epilogue/2-the-glow.png",
 
                     //Screen 3
+                    "epilogue/3-the-shadow.png",
                     "epilogue/3-the-shadow.png",
                     "epilogue/3-the-shadow.png"
             };
@@ -61,6 +67,6 @@ public class EpilogueCutScene extends CutSceneConfig {
      */
     @Override
     public int getLength() {
-        return 13;
+        return 16;
     }
 }

@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
-public class ForestGameArea extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+public class Level1 extends GameArea {
+  private static final Logger logger = LoggerFactory.getLogger(Level1.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
@@ -90,7 +90,7 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
 
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public Level1(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
   }

@@ -40,6 +40,7 @@ public class EntityEffectsComponent extends Component {
      * Create a EntityEffects component which performs
      * a specified effect / action on when collision with a targeted entity.
      * @param targetLayer The PhysicsLayer of the target's collider.
+     * @param action The specific action to set
      */
     public EntityEffectsComponent(short targetLayer, short action) {
         this.targetLayer = targetLayer;
@@ -51,7 +52,7 @@ public class EntityEffectsComponent extends Component {
      */
     public void create() {
         // Register collision event listeners.
-        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+//        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
 
         // Save entity hitbox.
         this.hitboxComponent = entity.getComponent(HitboxComponent.class);
@@ -80,12 +81,12 @@ public class EntityEffectsComponent extends Component {
         // if me == BUSH, apply HEALTH effect on player.
         if(this.action == Effect.HEALTH) {
             //TODO: Write implementation of effects onto desired entity.
-            logger.info("Apply HEALTH effect onto entity: " + target.toString());
+//            logger.info("Apply HEALTH effect onto entity: " + target.toString());
         }
 
         // if me == COBWEB, apply MOVEMENT effect on player.
         if(this.action == Effect.MOVEMENT) {
-            logger.info("Apply MOVEMENT effect onto entity: " + target.toString());
+//            logger.info("Apply MOVEMENT effect onto entity: " + target.toString());
         }
     }
 

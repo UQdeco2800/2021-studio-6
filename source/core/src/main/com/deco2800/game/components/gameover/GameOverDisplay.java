@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.Align;
+import com.deco2800.game.rendering.LightingComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.MenuUtility;
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class GameOverDisplay extends UIComponent {
   private static final float BACKGROUND_IMAGE_ASPECT = 9f / 16f;
-  private static final float MENU_TABLE_HEIGHT_RATIO = 1f / 2f;
   private static final float MENU_TABLE_TOP_OFFSET = 1f / 8f;
   private static final float WIDTH_MAX_FOR_SMALL_FONT = 500;
   private static final float WIDTH_MAX_FOR_MEDIUM_FONT = 750;
@@ -40,6 +39,8 @@ public class GameOverDisplay extends UIComponent {
     super.create();
     logger.debug("Creating Game Over menu screen");
     addActors();
+    LightingComponent fireflyLighting = new LightingComponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
+    ServiceLocator.getRenderService().register(fireflyLighting);
     logger.debug("Finished creating Game Over menu screen");
   }
 

@@ -13,6 +13,7 @@ import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -48,6 +49,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
   public static boolean levelChange = false;
+  private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
@@ -91,7 +93,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   private void checkGameOver() {
     logger.info("Game Over");
-    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
 
     Timer.schedule(new Timer.Task() {
@@ -105,7 +107,10 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
+      timeSource = ServiceLocator.getTimeSource();
+      timeSource.pause();
       generateNewLevel();
+      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
@@ -221,10 +226,25 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
     } else if (CurrentLevel == 4) {
-      System.out.println("You win");
-      ui.getEvents().trigger("exit");
+      victory();
     }
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;
+  }
+
+  private void victory() {
+    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource.pause();
+    spawnOutroDialogue();
+  }
+
+  private void spawnOutroDialogue(){
+    StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
+    StoryManager.getInstance().displayStory();
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished", this::onOutroFinish);
+  }
+
+  private void onOutroFinish() {
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 }

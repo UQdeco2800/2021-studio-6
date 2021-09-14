@@ -4,9 +4,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
-import com.deco2800.game.components.Component;
-import com.deco2800.game.components.player.hud.PlayerHudFactory;
-import com.deco2800.game.entities.Entity;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -94,6 +91,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (timeSource == null || !timeSource.isPaused()) {
           entity.getEvents().trigger("reload");
         }
+        return true;
       case Keys.SHIFT_LEFT:
         if (timeSource == null || !timeSource.isPaused()) {
           //this.getEntity().getEvents().trigger("dash");
@@ -112,9 +110,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.E:
         if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          entity.getEvents().trigger("tryAbility");
+          entity.getEvents().trigger("tryAbility", walkDirection);
         }
         return true;
+      case Keys.NUM_1:
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
+          entity.getEvents().trigger("useBandage");
+        }
       default:
         return false;
     }
@@ -165,6 +167,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * each change to player movement i.e. keydown or keyup.
    */
   private void animationHandle() {
+    PlayerMeleeAttackComponent tempAttack = this.entity.getComponent(PlayerMeleeAttackComponent.class);
     if (movementKeys.size() > 0) {
       switch (movementKeys.get(movementKeys.size() - 1)) {
         case Keys.W:
@@ -179,6 +182,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.D:
           this.getEntity().getEvents().trigger("moveRight");
           break;
+      }
+      if (tempAttack != null) {
+        switch (movementKeys.get(movementKeys.size() - 1)) {
+          case Keys.W:
+            tempAttack.setDirection(1);
+            break;
+          case Keys.A:
+            tempAttack.setDirection(3);
+            break;
+          case Keys.S:
+            tempAttack.setDirection(2);
+            break;
+          case Keys.D:
+            tempAttack.setDirection(4);
+            break;
+        }
       }
     }
   }

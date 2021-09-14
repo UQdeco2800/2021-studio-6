@@ -2,6 +2,7 @@ package com.deco2800.game.components.story;
 
 
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.story.stories.EpilogueCutScene;
 import com.deco2800.game.components.story.stories.IntroDialogue;
 import com.deco2800.game.components.story.stories.PrologueCutScene;
 import com.deco2800.game.components.story.stories.TestCutscene;
@@ -32,6 +33,7 @@ public class StoryManager extends Component {
         scenesConfigs.put(StoryNames.TEST, new TestCutscene());
         scenesConfigs.put(StoryNames.INTRO_DIALOGUE, new IntroDialogue());
         scenesConfigs.put(StoryNames.PROLOGUE, new PrologueCutScene());
+        scenesConfigs.put(StoryNames.EPILOGUE, new EpilogueCutScene());
     }
 
     @Override
@@ -113,6 +115,7 @@ public class StoryManager extends Component {
         if (!prevPauseState) {
             ServiceLocator.getTimeSource().unpause();
         }
+        entity.getEvents().trigger("story-finished");
     }
 
     /**

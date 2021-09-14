@@ -26,9 +26,9 @@ public class PlayerRangeAttackComponentTest {
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerPhysicsService(new PhysicsService());
     }
-
 
     @Test
     void shouldGetAndRestockBullets() {

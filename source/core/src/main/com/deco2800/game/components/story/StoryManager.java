@@ -5,6 +5,7 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.components.story.stories.IntroDialogue;
 import com.deco2800.game.components.story.stories.PrologueCutScene;
 import com.deco2800.game.components.story.stories.TestCutscene;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ public class StoryManager extends Component {
 
     public static final String ADVANCE_LISTENER = "advanceStory";
     private boolean displaying = false;
+    private boolean prevPauseState = false;
 
     private StoryBase loadedStory;
 
@@ -56,7 +58,7 @@ public class StoryManager extends Component {
     }
 
     /**
-     * Displays a story that is loaded
+     * Displays a story that is loaded and pauses the game
      * @return null if no story is loaded, else the displayed story
      */
     public StoryBase displayStory() {
@@ -70,6 +72,9 @@ public class StoryManager extends Component {
         } catch (Exception ignored) {
             logger.error("Story has not been created");
         }
+
+        prevPauseState = ServiceLocator.getTimeSource().isPaused();
+        ServiceLocator.getTimeSource().pause();
 
         displaying = true;
         return loadedStory;
@@ -92,20 +97,22 @@ public class StoryManager extends Component {
             return;
         }
 
-        if (!loadedStory.isDead()) {
-            loadedStory.advance();
-        } else {
+        if (!loadedStory.advance()) {
             disposeLoadedStory();
         }
     }
 
     /**
-     * Disposes a loaded story
+     * Disposes a loaded story and returns to the previous pause state
      */
     public void disposeLoadedStory() {
         loadedStory.dispose();
         loadedStory = null;
         displaying = false;
+
+        if (!prevPauseState) {
+            ServiceLocator.getTimeSource().unpause();
+        }
     }
 
     /**

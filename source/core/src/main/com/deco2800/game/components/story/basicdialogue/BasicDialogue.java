@@ -33,7 +33,7 @@ public class BasicDialogue extends Component implements StoryBase {
      * Advance the story
      */
     @Override
-    public void advance() {
+    public boolean advance() {
         if (index < config.getLength()) {
             index++;
             dialogue.getComponent(TextDialogueBox.class).advance();
@@ -41,8 +41,10 @@ public class BasicDialogue extends Component implements StoryBase {
             if (index == config.getLength()) {
                 dispose();
             }
+            return true;
         } else {
             dispose();
+            return false;
         }
     }
 

@@ -44,7 +44,7 @@ public class CutScene extends Component implements StoryBase {
      * Advances the cutscene. Disposes of itself when there is no more story left
      */
     @Override
-    public void advance(){
+    public boolean advance(){
         if (index < config.getLength()){
             index++;
             imageEntity.getComponent(ImageSequence.class).advance();
@@ -53,9 +53,13 @@ public class CutScene extends Component implements StoryBase {
 
             if (index == config.getLength()) {
                 dispose();
+                return false;
             }
+
+            return true;
         } else {
             dispose();
+            return false;
         }
     }
 

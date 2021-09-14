@@ -8,9 +8,9 @@ public interface StoryBase {
     void create();
 
     /**
-     * Advance the story
+     * Advance the story. Returns true if there is story left
      */
-    void advance();
+    boolean advance();
 
     /**
      * Displays the story. Throws exception when story has not been created yet

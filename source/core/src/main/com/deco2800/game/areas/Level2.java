@@ -98,10 +98,9 @@ public class Level2 extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
-    spawnSafehouse();
 
     spawnLongRangeEnemies();
-//    playMusic();
+    playMusic();
   }
 
   public Entity getPlayer() {

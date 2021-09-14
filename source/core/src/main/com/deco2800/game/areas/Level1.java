@@ -73,7 +73,7 @@ public class Level1 extends GameArea {
       "images/hud/healthFull.png"
   };
 
-  private static final String[] forestTextureAtlases = {
+  private static final String[] cityTextureAtlases = {
       "images/terrain_iso_grass.atlas",
       "images/largeEnemy.atlas",
       "images/ghost.atlas",
@@ -84,7 +84,7 @@ public class Level1 extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+  private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -103,19 +103,21 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
+    spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnIntroDialogue();
 
     spawnBullet();
+    spawnCobweb();
+    spawnBush();
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
-    spawnSafehouse();
 
     spawnLongRangeEnemies();
-//    playMusic();
+    playMusic();
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -194,6 +196,17 @@ public class Level1 extends GameArea {
     }
   }
 
+  private void spawnTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createTree();
+      spawnEntityAt(tree, randomPos, true, false);
+    }
+  }
+
   public void spawnSafehouse() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     GridPoint2 position  = new GridPoint2((int)(tileBounds.x * 0.9), tileBounds.y/3);
@@ -253,6 +266,28 @@ public class Level1 extends GameArea {
     }
   }
 
+  private void spawnCobweb() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_COBWEBS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity cobweb = ObstacleFactory.createCobweb();
+      spawnEntityAt(cobweb, randomPos, true, false);
+    }
+  }
+
+  private void spawnBush() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_BUSH; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity bush = ObstacleFactory.createBush();
+      spawnEntityAt(bush, randomPos, true, false);
+    }
+  }
+
   //TODO: This should be replaced when a global storage of dialogue and story is implemented
   private void spawnIntroDialogue(){
     String quote = "OH NO!\nThe light - it's disappearing. I have to make it to the safe house before the " +
@@ -275,8 +310,8 @@ public class Level1 extends GameArea {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
-    resourceService.loadTextureAtlases(forestTextureAtlases);
-    resourceService.loadSounds(forestSounds);
+    resourceService.loadTextureAtlases(cityTextureAtlases);
+    resourceService.loadSounds(citySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -289,8 +324,8 @@ public class Level1 extends GameArea {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(forestTextures);
-    resourceService.unloadAssets(forestTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
+    resourceService.unloadAssets(cityTextureAtlases);
+    resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

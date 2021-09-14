@@ -205,6 +205,7 @@ public class MainGameScreen extends ScreenAdapter {
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
     gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
+    gameArea.removeEntites();
     if (CurrentLevel == 2) {
       gameArea = new Level2(terrainFactory);
       gameArea.create();

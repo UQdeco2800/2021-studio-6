@@ -30,9 +30,19 @@ public abstract class GameArea implements Disposable {
 
   /** Dispose of all internal entities in the area */
   public void dispose() {
+
     for (Entity entity : areaEntities) {
       entity.dispose();
     }
+
+  }
+  /** Removes all entites from the entity service and the gameArea */
+  public void removeEntites() {
+    for (Entity entity : areaEntities) {
+      ServiceLocator.getEntityService().unregister(entity);
+    }
+
+    areaEntities.clear();
   }
 
   /**

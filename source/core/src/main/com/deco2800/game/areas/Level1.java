@@ -103,14 +103,14 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnIntroDialogue();
 
     spawnBullet();
-    spawnCobweb();
-    spawnBush();
+    //spawnCobweb();
+    //spawnBush();
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();

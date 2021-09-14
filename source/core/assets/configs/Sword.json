@@ -3,5 +3,8 @@
   "attackDamage": 5,
   "knockback": 10,
   "length": 1.5,
-  "height" : 0.8
+  "height" : 0.8,
+  "atlasPath": "images/weapon/sword.atlas",
+  "animationCord": [ ["0.6f", "-0.3f"], ["0.7f", "0.6f"], ["1.5f", "0.2f"], ["-0.2f", "0.2f"]],
+  "scale" : ["1.5f", "1.5f"]
 }

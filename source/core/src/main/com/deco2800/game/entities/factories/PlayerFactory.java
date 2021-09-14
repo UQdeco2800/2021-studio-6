@@ -30,7 +30,6 @@ public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
-  private static String base = "configs/BaseWeapon.json";
   private static String sword = "configs/Sword.json";
 
   /**
@@ -43,7 +42,7 @@ public class PlayerFactory {
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/Player_Sprite/player_movement.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/Player_Animations/player_movement.atlas", TextureAtlas.class));
     animator.addAnimation("dead-left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("dead-right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
@@ -62,9 +61,24 @@ public class PlayerFactory {
     animator.addAnimation("front-run-hurt", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-run-hurt", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-hurt", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-helmet", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
 
     Entity player = new Entity()
-                   // .addComponent(new TextureRenderComponent("images/Player_Sprite/front.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new PlayerMeleeAttackComponent(sword))
@@ -85,8 +99,6 @@ public class PlayerFactory {
                     .addComponent(new PlayerHudAnimationController())
                     .addComponent(new PlayerWeaponAnimationController())
                     .addComponent(new PlayerHealthAnimationController());
-
-
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

@@ -6,5 +6,8 @@ public class BaseWeaponConfig {
   public float height;
   public int knockback;
   public int attackDamage;
+  public String atlasPath;
+  public Float[][] animationCord;
+  public Float[] scale;
 }
 

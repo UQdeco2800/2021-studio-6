@@ -26,10 +26,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * When entity is within range of enemy and melee attack button is clicked, damage is dealt
@@ -66,25 +63,21 @@ public class PlayerMeleeAttackComponent extends Component {
     private float length;
     private float height;
     private int attackLength; // in milliseconds
+    private String atlasFile;
+    private String weaponFile;
+    private Float[][] animationCords;
     private long disposeTime = 0;
     private IndependentAnimator weaponAnimator;
+    private boolean gotWeapon = false;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
-       // String filename = weaponConfig.getPath();
-        BaseWeaponConfig stats =
-            FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
         fixtureDef = new FixtureDef();
         fixtureDefW = new FixtureDef();
         fixtureDefA = new FixtureDef();
         fixtureDefS = new FixtureDef();
         fixtureDefD = new FixtureDef();
         fixtureDefLast = fixtureDefW;
-
-        damage = stats.attackDamage;
-        knockback = stats.knockback;
-        length = stats.length;
-        height = stats.height;
-        attackLength = stats.attackLength; // in milliseconds
+        weaponFile = weaponConfig;
     }
 
     @Override
@@ -94,28 +87,46 @@ public class PlayerMeleeAttackComponent extends Component {
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("walk", this::walk);
+        setWeapon(weaponFile);
+    }
 
-        if (this.entity.getComponent(PlayerWeaponAnimationController.class) != null) {
+    public void setWeapon(String weaponConfig) {
+        weaponFile = weaponConfig;
+        BaseWeaponConfig stats =
+            FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
+
+        damage = stats.attackDamage;
+        knockback = stats.knockback;
+        length = stats.length;
+        height = stats.height;
+        attackLength = stats.attackLength; // in milliseconds
+        atlasFile = stats.atlasPath;
+        animationCords = stats.animationCord;
+        PlayerWeaponAnimationController setWeapon = this.entity.getComponent(PlayerWeaponAnimationController.class);
+        if (gotWeapon) {
+            setWeapon.stop();
+        }
+        if (setWeapon != null) {
             weaponAnimator =
                 new IndependentAnimator(
                     ServiceLocator.getResourceService()
-                        .getAsset("images/weapon/sword.atlas", TextureAtlas.class));
+                        .getAsset(atlasFile, TextureAtlas.class));
             weaponAnimator.addAnimation("attackUp", 0.1f, Animation.PlayMode.NORMAL);
             weaponAnimator.addAnimation("attackDown", 0.1f, Animation.PlayMode.NORMAL);
             weaponAnimator.addAnimation("attackLeft", 0.1f, Animation.PlayMode.NORMAL);
             weaponAnimator.addAnimation("attackRight", 0.1f, Animation.PlayMode.NORMAL);
             weaponAnimator.setCamera(true);
-            weaponAnimator.setScale(length * 1.5f, height * 1.5f);
-            setAnimations();
+            weaponAnimator.setScale(length * stats.scale[0], height * stats.scale[1]);
+            setAnimations(setWeapon);
+            gotWeapon = true;
         }
     }
 
     /**
      * Sets the animations for the weaponAnimator after a certain point to allow assets to load
      */
-    public void setAnimations() {
-        PlayerWeaponAnimationController setWeapon = this.entity.getComponent(PlayerWeaponAnimationController.class);
-        setWeapon.setter();
+    public void setAnimations(PlayerWeaponAnimationController setWeapon) {
+        setWeapon.setter(animationCords);
     }
 
     /**

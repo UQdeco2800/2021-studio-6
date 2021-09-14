@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.ItemComponent;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Items;
 import com.deco2800.game.physics.BodyUserData;
@@ -47,19 +48,25 @@ public class PlayerPickupComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ItemComponent item = target.getComponent(ItemComponent.class);
         InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+        PlayerCombatStatsComponent stats = entity.getComponent(PlayerCombatStatsComponent.class);
+        PlayerMeleeAttackComponent weapon = entity.getComponent(PlayerMeleeAttackComponent.class);
         if (item != null && inventory != null) {
             int ammoLeft = inventory.getAmmo();
             int coinLeft = inventory.getGold();
             int itemQuantity = item.getItemQuantity();
 
             if (item.getItemType() == Items.AMMO) {
-                // dispose item when picked up, can be changed later on
                 inventory.setAmmo(ammoLeft + itemQuantity);
             } else if (item.getItemType() == Items.COINS) {
-                // dispose item when picked up, can be changed later on
                 inventory.setGold(coinLeft + itemQuantity);
             } else if (item.getItemType() == Items.ARMOUR) {
-                // TODO: do something to player's combat stats
+                stats.setDefenceLevel(2);
+            } else if (item.getItemType() == Items.HELMET) {
+                stats.setDefenceLevel(1);
+            } else if (item.getItemType() == Items.SWORD) {
+                 weapon.setWeapon("configs/Sword.json");
+            } else if (item.getItemType() == Items.AXE) {
+                weapon.setWeapon("configs/Axe.json");
             }
             target.getComponent(DisposingComponent.class).toBeDisposed();
         }

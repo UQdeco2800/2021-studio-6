@@ -82,6 +82,8 @@ public class CutScene extends Component implements StoryBase {
     public void dispose() {
         super.dispose();
         isDead = true;
+        imageEntity.dispose();
+        dialogueEntity.dispose();
         config.music.stop();
         config.music.dispose();
     }

@@ -33,19 +33,6 @@ public class PlayerMeleeAttackComponentTest {
     }
 
     @Test
-    void shouldTrackDirection() {
-        String sword = "configs/Sword.json";
-        Entity player = new Entity().addComponent(new PlayerMeleeAttackComponent(sword));
-        player.create();
-
-        assertNull(player.getComponent(PlayerMeleeAttackComponent.class).getDirection());
-        Vector2 directionR = new Vector2(1,0);
-        player.getEvents().trigger("walk", directionR);
-        assertTrue(player.getComponent(PlayerMeleeAttackComponent.class).getDirection()
-                .epsilonEquals(directionR));
-    }
-
-    @Test
     void checkStatesAfterBeforeAttack() {
         when(gameTime.getTime()).thenReturn(0L);
         Entity player = createPlayer();

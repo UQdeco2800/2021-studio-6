@@ -2,6 +2,7 @@ package com.deco2800.game.components.player;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.IndependentAnimator;
+import com.deco2800.game.items.Directions;
 
 
 public class PlayerWeaponAnimationController extends Component {
@@ -36,21 +37,22 @@ public class PlayerWeaponAnimationController extends Component {
   }
 
   void attack() {
-    int directionMove = meleeComponent.getLastDirection();
-    switch (directionMove) {
-      case 1:
+    KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
+    Directions direct = key.getDirection();
+    switch (direct) {
+      case MOVE_UP:
         weaponAnimator.setPositions(0.6f, -0.3f);
         weaponAnimator.startAnimation("attackUp");
         break;
-      case 2:
+      case MOVE_DOWN:
         weaponAnimator.setPositions(0.7f, 0.6f);
         weaponAnimator.startAnimation("attackDown");
       break;
-      case 3:
+      case MOVE_LEFT:
         weaponAnimator.setPositions(1.5f, 0.2f);
         weaponAnimator.startAnimation("attackLeft");
       break;
-      case 4:
+      case MOVE_RIGHT:
         weaponAnimator.setPositions(-0.2f, 0.2f);
         weaponAnimator.startAnimation("attackRight");
       break;

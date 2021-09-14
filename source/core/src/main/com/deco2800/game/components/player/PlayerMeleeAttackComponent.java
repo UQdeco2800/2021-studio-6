@@ -13,6 +13,7 @@ import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseWeaponConfig;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -51,16 +52,12 @@ public class PlayerMeleeAttackComponent extends Component {
     private Fixture fixture;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
-    private Vector2 directionMove;
     short targetLayer = PhysicsLayer.NPC;
     private final Set<Fixture> closeEnemies = new HashSet<>();
     private final Set<Fixture> removingEnemies = new HashSet<>();
 
 
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private long attackStart;
-    private long attackEnd;
-    private Timer attackTimer;
     private boolean canAttack = true;
     private boolean setShapes = false;
 
@@ -70,9 +67,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private float height;
     private int attackLength; // in milliseconds
     private long disposeTime = 0;
-
     private IndependentAnimator weaponAnimator;
-    private int lastDirection = 2;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
        // String filename = weaponConfig.getPath();
@@ -131,6 +126,7 @@ public class PlayerMeleeAttackComponent extends Component {
         return weaponAnimator;
     }
 
+
     /**
      * Triggered when the player walks in a direction.
      *
@@ -140,25 +136,6 @@ public class PlayerMeleeAttackComponent extends Component {
         if (fixture != null) {
             dispose();
         }
-        setDirection(walkDirection);
-    }
-
-    /**
-     * Getter for direction of player movement.
-     *
-     * @return player last walked direction
-     */
-    public Vector2 getDirection() {
-        return directionMove;
-    }
-
-    /**
-     * Setter for direction of player movement.
-     *
-     * @param lastDirectionSet what int value to set the lastDirection as
-     */
-    public void setDirection(int lastDirectionSet) {
-        this.lastDirection = lastDirectionSet;
     }
 
     /**
@@ -167,18 +144,20 @@ public class PlayerMeleeAttackComponent extends Component {
      * @return player last walked direction
      */
     private FixtureDef getFixDirection() {
-        if (directionMove != null) {
-            switch (lastDirection) {
-                case 1:
+        KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
+        if (key != null) {
+            Directions direct = key.getDirection();
+            switch (direct) {
+                case MOVE_UP:
                     fixtureDefLast = fixtureDefW;
                     return fixtureDefW;
-                case 2:
+                case MOVE_DOWN:
                     fixtureDefLast = fixtureDefS;
                     return fixtureDefS;
-                case 3:
+                case MOVE_LEFT:
                     fixtureDefLast = fixtureDefA;
                     return fixtureDefA;
-                case 4:
+                case MOVE_RIGHT:
                     fixtureDefLast = fixtureDefD;
                     return fixtureDefD;
             }
@@ -203,18 +182,8 @@ public class PlayerMeleeAttackComponent extends Component {
         center = entity.getScale().scl(0.5f);
         bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)-0.8), 0f);
         fixtureDefS.shape = bbox;
-        directionMove = new Vector2((float)0.0,(float)0.0);
+        //directionMove = new Vector2((float)0.0,(float)0.0);
     }
-
-    /**
-     * Setter for direction of player movement.
-     *
-     * @param direction the direction that the player last walked in.
-     */
-    private void setDirection(Vector2 direction) {
-        this.directionMove = direction.cpy();
-    }
-
 
     /**
      * When player and enemy no longer in contact, reset variable closeToAttack. Only resets closeToAttack
@@ -258,10 +227,6 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
-    private void attackTrigger() {
-
-    }
-
     /**
      * Function to handle actually hitting an enemy. Gets called after the melee
      * attack has been triggered and the collision and fixtures are set.
@@ -273,7 +238,6 @@ public class PlayerMeleeAttackComponent extends Component {
         for (Fixture enemy: closeEnemies) {
             Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
             CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-            attackTrigger();
             // enemy within range and player clicked melee attack button
             if (closeToAttack && meleeAttackClicked && targetStats != null) {
                 targetStats.hit(damage);
@@ -290,6 +254,7 @@ public class PlayerMeleeAttackComponent extends Component {
         }
         removingEnemies.clear();
     }
+
     /**
      * Triggered when the player presses the attack button. Handles creating
      * the fixtures for the attack and prepping before actual the damage/hit.
@@ -302,7 +267,6 @@ public class PlayerMeleeAttackComponent extends Component {
                 if (!setShapes) {
                     setShapes();
                     setShapes = true;
-                    //fixtureDef.shape = makeBoundingBox();
                 }
 
                 this.meleeAttackClicked = true;
@@ -311,7 +275,6 @@ public class PlayerMeleeAttackComponent extends Component {
                 fixture.getFilterData().categoryBits = PhysicsLayer.WEAPON;
                 // if sensor is false, NPC will not be able to collide with player's fixture
                 setSensor(true);
-                //damage();
                 disposeTimeSet();
             }
         }
@@ -330,20 +293,12 @@ public class PlayerMeleeAttackComponent extends Component {
 
     @Override
     public void dispose() {
-        //super.dispose();
-        PhysicsComponent test = entity.getComponent(PhysicsComponent.class);
-        //fixtureDef.shape = null;
-        //Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-        //ServiceLocator.getPhysicsService().getPhysics().destroyBody(physBody);
-
-        //test.dispose();
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
             physBody.destroyFixture(fixture);
             fixture = null;
         }
-
         canAttack = true;
     }
 
@@ -387,14 +342,5 @@ public class PlayerMeleeAttackComponent extends Component {
             return fixtureDef.filter.categoryBits;
         }
         return fixture.getFilterData().categoryBits;
-    }
-
-    /**
-     * Public function to get the last direction the player attacked in
-     * @return returns an int corresponding to the direction
-     * 1 = up, 2 = down, 3 = left and 4 = right (can be changed to ENUMS)
-     */
-    public int getLastDirection() {
-        return lastDirection;
     }
 }

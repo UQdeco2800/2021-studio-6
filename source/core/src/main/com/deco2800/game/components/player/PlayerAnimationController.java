@@ -1,10 +1,11 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+
 
 /**
  * This class listens to events relevant to a player's state and plays the animation when one
@@ -17,20 +18,20 @@ public class PlayerAnimationController extends Component {
   private static final long hurtDuration = 1000;
   private boolean hurtActive = false;
   private long hurtTime;
-  private int lastDirection;
+  private Directions lastDirection;
+  private String lastAnimation;
+  private final String[][] animationsLeft = {{"left", "left-run"}, {"left-hurt", "left-run-hurt"}};
+  private final String[][] animationsRight = {{"right", "right-run"}, {"right-hurt", "right-run-hurt"}};
+  private final String[][] animationsUp = {{"back", "back-run"}, {"back-hurt", "back-run-hurt"}};
+  private final String[][] animationsDown = {{"front", "front-run"}, {"front-hurt", "front-run-hurt"}};
+  private final String[][][] animationNoArmor = {animationsLeft, animationsRight, animationsDown, animationsUp};
 
   @Override
   public void create() {
     super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
-    entity.getEvents().addListener("moveLeft", this::animateMoveLeft);
-    entity.getEvents().addListener("moveRight", this::animateMoveRight);
-    entity.getEvents().addListener("moveUp", this::animateMoveUp);
-    entity.getEvents().addListener("moveDown", this::animateMoveDown);
-    entity.getEvents().addListener("walkStop", this::animateIdle);
     entity.getEvents().addListener("hurt",this::animateHurt);
-    entity.getEvents().addListener("dead",this::animateDead);
-    lastDirection = 1;
+    lastDirection = Directions.MOVE_DOWN;
     animator.startAnimation("front");
   }
 
@@ -38,109 +39,47 @@ public class PlayerAnimationController extends Component {
   public void update() {
     if (timeSource.getTimeSince(hurtTime) >= hurtDuration) {
       hurtActive = false;
-      if (!entity.getComponent(PlayerActions.class).isMoving()) {
-        animateIdle();
-      }
     }
-  }
-
-  /**
-   * Checks if the player is currently in the process of the hurt animation.
-   * @return true if getting hurt, false otherwise
-   */
-  private boolean checkHurt() {
-    return hurtActive;
-  }
-
-  void animateDead() {
-    animator.startAnimation("dead-right");
-  }
-
-  void animateMoveDown() {
-    if (checkHurt()) {
-      animator.startAnimation("front-run-hurt");
-    } else {
-      animator.startAnimation("front-run");
+    int idleIndex = 1;
+    int hurtIndex = 0;
+    int directIndex = 0;
+    if (!entity.getComponent(PlayerActions.class).isMoving()) {
+      idleIndex = 0;
+      lastDirection = Directions.IDLE;
     }
-    lastDirection = 1;
-  }
-
-  void animateMoveRight() {
-    if (checkHurt()) {
-      animator.startAnimation("right-run-hurt");
-    } else {
-      animator.startAnimation("right-run");
+    if (hurtActive) {
+      hurtIndex = 1;
     }
-    lastDirection = 2;
-  }
-
-  void animateMoveUp() {
-    if (checkHurt()) {
-      animator.startAnimation("back-run-hurt");
-    } else {
-      animator.startAnimation("back-run");
+    String anim;
+    KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
+    Directions direct = key.getDirection();
+    switch (direct) {
+      case MOVE_DOWN:
+        directIndex = 2;
+        lastDirection = direct;
+        break;
+      case MOVE_LEFT:
+        directIndex = 0;
+        lastDirection = direct;
+        break;
+      case MOVE_UP:
+        directIndex = 3;
+        lastDirection = direct;
+        break;
+      case MOVE_RIGHT:
+        directIndex = 1;
+        lastDirection = direct;
+        break;
     }
-    lastDirection = 3;
-  }
-
-  void animateMoveLeft() {
-    if (checkHurt()) {
-      animator.startAnimation("left-run-hurt");
-    } else {
-      animator.startAnimation("left-run");
+    anim = animationNoArmor[directIndex][hurtIndex][idleIndex];
+    if (!anim.equals(lastAnimation)) {
+      animator.startAnimation(anim);
+      lastAnimation = anim;
     }
-    lastDirection = 4;
   }
 
   void animateHurt() {
     hurtActive = true;
     hurtTime = timeSource.getTime() + hurtDuration;
-    switch (lastDirection) {
-      case 1:
-        animator.startAnimation("front-hurt");
-        break;
-      case 2:
-        animator.startAnimation("right-hurt");
-        break;
-      case 3:
-        animator.startAnimation("back-hurt");
-        break;
-      case 4:
-        animator.startAnimation("left-hurt");
-        break;
-    }
-  }
-  void animateIdle() {
-    if(checkHurt()) {
-      switch (lastDirection) {
-        case 1:
-          animator.startAnimation("front-hurt");
-          break;
-        case 2:
-          animator.startAnimation("right-hurt");
-          break;
-        case 3:
-          animator.startAnimation("back-hurt");
-          break;
-        case 4:
-          animator.startAnimation("left-hurt");
-          break;
-      }
-    } else {
-      switch (lastDirection) {
-        case 1:
-          animator.startAnimation("front");
-          break;
-        case 2:
-          animator.startAnimation("right");
-          break;
-        case 3:
-          animator.startAnimation("back");
-          break;
-        case 4:
-          animator.startAnimation("left");
-          break;
-      }
-    }
   }
 }

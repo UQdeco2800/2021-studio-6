@@ -34,7 +34,7 @@ public class ForestGameArea extends GameArea {
   // this can be removed - this is purely for testing purposes
   private static final int NUM_AMMO_PICKUPS = 3;
   private static final int NUM_COIN_PICKUPS = 3;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
@@ -47,9 +47,13 @@ public class ForestGameArea extends GameArea {
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
+    "images/level_1/road_tile_black.png",
+    "images/level_1/sidewalk.png",
+    "images/level_1/curbUpper.png",
+    "images/level_1/curbLower.png",
+    "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
-    "images/level_1/placeholder_sidewalk.png",
-    "images/level_1/placeholder_curb.png",
+    "images/level_1/road_tile_white.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -192,7 +196,7 @@ public class ForestGameArea extends GameArea {
 
   public void spawnSafehouse() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    GridPoint2 position  = new GridPoint2((int)(tileBounds.x * 0.9), tileBounds.y/2);
+    GridPoint2 position  = new GridPoint2((int)(tileBounds.x * 0.9), tileBounds.y/3);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     spawnEntityAt(safehouse, position, true, false);

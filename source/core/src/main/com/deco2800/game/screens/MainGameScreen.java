@@ -58,7 +58,7 @@ public class MainGameScreen extends ScreenAdapter {
     this.game = game;
 
     // Sets background to light yellow
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
+    Gdx.gl.glClearColor(50/255f, 50/255f, 50/255f, 1);
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -82,7 +82,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new ForestGameArea(terrainFactory);
+    gameArea = new Level1(terrainFactory);
     gameArea.create();
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);

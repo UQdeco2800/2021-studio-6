@@ -19,7 +19,7 @@ import com.deco2800.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(90, 30);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
@@ -65,14 +65,6 @@ public class TerrainFactory {
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
-      case CITY:
-        TextureRegion cityRoad =
-            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_road.png", Texture.class));
-        TextureRegion citySidewalk =
-            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_sidewalk.png", Texture.class));
-        TextureRegion cityCurb =
-            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_curb.png", Texture.class));
-        return createCityTerrain(0.5f, cityRoad, citySidewalk, cityCurb);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -89,6 +81,20 @@ public class TerrainFactory {
         TextureRegion hexRocks =
             new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
         return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
+      case CITY:
+        TextureRegion cityRoadBlack =
+                new TextureRegion(resourceService.getAsset("images/level_1/road_tile_black.png", Texture.class));
+        TextureRegion grass =
+                new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
+        TextureRegion cityRoadWhite =
+                new TextureRegion(resourceService.getAsset("images/level_1/road_tile_white.png", Texture.class));
+        TextureRegion cityRoadCracked =
+                new TextureRegion(resourceService.getAsset("images/level_1/road_tile_cracked.png", Texture.class));
+        TextureRegion citySidewalk =
+                new TextureRegion(resourceService.getAsset("images/level_1/placeholder_sidewalk.png", Texture.class));
+        TextureRegion cityCurb =
+                new TextureRegion(resourceService.getAsset("images/level_1/placeholder_curb.png", Texture.class));
+        return createCityTerrain(0.5f, grass, cityRoadBlack, cityRoadWhite, cityRoadCracked, citySidewalk, cityCurb);
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
@@ -109,10 +115,10 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createCityTerrain(
-      float tileWorldSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurb
+      float tileWorldSize, TextureRegion grass, TextureRegion cityRoadBlack, TextureRegion cityRoadWhite, TextureRegion cityRoadCracked, TextureRegion citySidewalk, TextureRegion cityCurb
   ) {
-    GridPoint2 tilePixelSize = new GridPoint2(cityRoad.getRegionWidth(), cityRoad.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, cityRoad, citySidewalk, cityCurb);
+    GridPoint2 tilePixelSize = new GridPoint2(cityRoadBlack.getRegionWidth(), cityRoadBlack.getRegionHeight());
+    TiledMap tiledMap = createCityTiles(tilePixelSize, grass, cityRoadBlack,cityRoadWhite, cityRoadCracked, citySidewalk, cityCurb);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -148,26 +154,40 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
+    fillTiles(layer, new GridPoint2(0,0), MAP_SIZE, grassTile);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    fillTilesAtRandom(layer, new GridPoint2(0, 0), MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
+    fillTilesAtRandom(layer, new GridPoint2(0, 0), MAP_SIZE, rockTile, ROCK_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
   private TiledMap createCityTiles(
-      GridPoint2 tileSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurb) {
+      GridPoint2 tileSize, TextureRegion grass, TextureRegion cityRoadBlack, TextureRegion cityRoadWhite,
+      TextureRegion cityRoadCracked, TextureRegion citySidewalk, TextureRegion cityCurb) {
     TiledMap tiledMap = new TiledMap();
-    TerrainTile roadTile = new TerrainTile(cityRoad);
+    TerrainTile grassTile = new TerrainTile(grass);
+    TerrainTile roadTileBlack = new TerrainTile(cityRoadBlack);
+    TerrainTile roadTileWhite = new TerrainTile(cityRoadWhite);
+    TerrainTile roadCracked = new TerrainTile(cityRoadCracked);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
     TerrainTile curbTile = new TerrainTile(cityCurb);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
     System.out.println("Hello");
     //Copied from above, change as needed
-    fillTiles(layer, MAP_SIZE, roadTile);
+    fillTiles(layer, new GridPoint2(0,0), MAP_SIZE, grassTile);
+    fillTiles(layer, new GridPoint2(0, 11), new GridPoint2(MAP_SIZE.x, 19), roadTileBlack);
+    fillTilesAtRandom(layer, new GridPoint2(0, 12), new GridPoint2(MAP_SIZE.x - 1, 18), roadCracked, 100);
+
+    for (int x = 0; x < MAP_SIZE.x; x++) {
+      if(x % 10 < 5) {
+        Cell cell = new Cell();
+        cell.setTile(roadTileWhite);
+        layer.setCell(x, 15, cell);
+      }
+    }
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -182,27 +202,25 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_SAFEHOUSE.x, MAP_SIZE_SAFEHOUSE.y, tileSize.x, tileSize.y);
 
     // Create base ground
-    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
+    fillTiles(layer, new GridPoint2(0,0), MAP_SIZE_SAFEHOUSE, groundTile);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
   private static void fillTilesAtRandom(
-      TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
-    GridPoint2 min = new GridPoint2(0, 0);
-    GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
+      TiledMapTileLayer layer, GridPoint2 minCoord, GridPoint2 maxCoord, TerrainTile tile, int amount) {
 
     for (int i = 0; i < amount; i++) {
-      GridPoint2 tilePos = RandomUtils.random(min, max);
+      GridPoint2 tilePos = RandomUtils.random(minCoord, maxCoord);
       Cell cell = layer.getCell(tilePos.x, tilePos.y);
       cell.setTile(tile);
     }
   }
 
-  private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++) {
+  private static void fillTiles(TiledMapTileLayer layer, GridPoint2 minCoord, GridPoint2 maxCoord, TerrainTile tile) {
+    for (int x = minCoord.x; x < maxCoord.x; x++) {
+      for (int y = minCoord.y; y <= maxCoord.y; y++) {
         Cell cell = new Cell();
         cell.setTile(tile);
         layer.setCell(x, y, cell);

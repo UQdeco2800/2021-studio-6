@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class GameOverScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(GameOverScreen.class);
-  private static final String[] gameOverTextures = {"images/placeholder.png"};
+  private static final String[] gameOverTextures = {"images/gameover.png"};
   private static final String[] gameOverSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
   private static final String[] gameOverTransitionalSounds = {"sounds/click.mp3"};
@@ -62,6 +62,7 @@ public class GameOverScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
+    gameOverDisplay.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 

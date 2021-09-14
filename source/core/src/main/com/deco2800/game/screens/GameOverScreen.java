@@ -11,7 +11,6 @@ import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
-import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
@@ -43,7 +42,7 @@ public class GameOverScreen extends ScreenAdapter {
     Gdx.gl.glClearColor(0/255f, 0/255f, 0/255f, 1);
 
     logger.debug("Initialising game over screen services");
-    ServiceLocator.registerPhysicsService(new PhysicsService());
+    
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());

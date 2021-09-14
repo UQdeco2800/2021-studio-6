@@ -4,7 +4,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.deco2800.game.rendering.LightingComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.MenuUtility;
@@ -39,8 +38,6 @@ public class GameOverDisplay extends UIComponent {
     super.create();
     logger.debug("Creating Game Over menu screen");
     addActors();
-    LightingComponent fireflyLighting = new LightingComponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
-    ServiceLocator.getRenderService().register(fireflyLighting);
     logger.debug("Finished creating Game Over menu screen");
   }
 

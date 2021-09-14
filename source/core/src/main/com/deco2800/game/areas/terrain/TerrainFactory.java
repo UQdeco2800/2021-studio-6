@@ -157,8 +157,8 @@ public class TerrainFactory {
     fillTiles(layer, new GridPoint2(0,0), MAP_SIZE, grassTile);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, new GridPoint2(0, 0), MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, new GridPoint2(0, 0), MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    fillTilesAtRandom(layer, new GridPoint2(0, 0), new GridPoint2(MAP_SIZE.x - 1, MAP_SIZE.y - 1), grassTuftTile, TUFT_TILE_COUNT);
+    fillTilesAtRandom(layer, new GridPoint2(0, 0), new GridPoint2(MAP_SIZE.x - 1, MAP_SIZE.y - 1), rockTile, ROCK_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

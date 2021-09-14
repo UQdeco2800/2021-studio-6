@@ -42,18 +42,9 @@ public class Level1 extends GameArea {
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
     "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/iso_grass_3.png",
     "images/gunman.png",
     "images/eye.png",
     "images/blood_ball.png",
@@ -67,8 +58,9 @@ public class Level1 extends GameArea {
     "images/level_1/road_tile_white.png",
     "images/level_1/road_tile_black.png",
     "images/level_1/road_tile_cracked.png",
-    "images/level_1/placeholder_curb.png",
-    "images/level_1/placeholder_sidewalk.png"
+    "images/level_1/sidewalk.png",
+    "images/level_1/curbUpper.png",
+    "images/level_1/curbLower.png"
 
   };
   private static final String[] cityTextureAtlases = {
@@ -101,7 +93,6 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnIntroDialogue();

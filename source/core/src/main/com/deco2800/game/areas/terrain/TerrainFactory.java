@@ -91,10 +91,12 @@ public class TerrainFactory {
         TextureRegion cityRoadCracked =
                 new TextureRegion(resourceService.getAsset("images/level_1/road_tile_cracked.png", Texture.class));
         TextureRegion citySidewalk =
-                new TextureRegion(resourceService.getAsset("images/level_1/placeholder_sidewalk.png", Texture.class));
-        TextureRegion cityCurb =
-                new TextureRegion(resourceService.getAsset("images/level_1/placeholder_curb.png", Texture.class));
-        return createCityTerrain(0.5f, grass, cityRoadBlack, cityRoadWhite, cityRoadCracked, citySidewalk, cityCurb);
+                new TextureRegion(resourceService.getAsset("images/level_1/sidewalk.png", Texture.class));
+        TextureRegion cityCurbUpper =
+                new TextureRegion(resourceService.getAsset("images/level_1/curbUpper.png", Texture.class));
+        TextureRegion cityCurbLower =
+                new TextureRegion(resourceService.getAsset("images/level_1/curbLower.png", Texture.class));
+        return createCityTerrain(0.5f, grass, cityRoadBlack, cityRoadWhite, cityRoadCracked, citySidewalk, cityCurbUpper, cityCurbLower);
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
@@ -115,10 +117,13 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createCityTerrain(
-      float tileWorldSize, TextureRegion grass, TextureRegion cityRoadBlack, TextureRegion cityRoadWhite, TextureRegion cityRoadCracked, TextureRegion citySidewalk, TextureRegion cityCurb
+      float tileWorldSize, TextureRegion grass, TextureRegion cityRoadBlack, TextureRegion cityRoadWhite,
+      TextureRegion cityRoadCracked, TextureRegion citySidewalk, TextureRegion cityCurbUpper,
+      TextureRegion cityCurbLower
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(cityRoadBlack.getRegionWidth(), cityRoadBlack.getRegionHeight());
-    TiledMap tiledMap = createCityTiles(tilePixelSize, grass, cityRoadBlack,cityRoadWhite, cityRoadCracked, citySidewalk, cityCurb);
+    TiledMap tiledMap = createCityTiles(tilePixelSize, grass, cityRoadBlack,cityRoadWhite, cityRoadCracked,
+            citySidewalk, cityCurbUpper, cityCurbLower);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -166,19 +171,24 @@ public class TerrainFactory {
 
   private TiledMap createCityTiles(
       GridPoint2 tileSize, TextureRegion grass, TextureRegion cityRoadBlack, TextureRegion cityRoadWhite,
-      TextureRegion cityRoadCracked, TextureRegion citySidewalk, TextureRegion cityCurb) {
+      TextureRegion cityRoadCracked, TextureRegion citySidewalk, TextureRegion cityCurbUpper,
+      TextureRegion cityCurbLower) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile grassTile = new TerrainTile(grass);
     TerrainTile roadTileBlack = new TerrainTile(cityRoadBlack);
     TerrainTile roadTileWhite = new TerrainTile(cityRoadWhite);
     TerrainTile roadCracked = new TerrainTile(cityRoadCracked);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
-    TerrainTile curbTile = new TerrainTile(cityCurb);
+    TerrainTile curbTileUpper = new TerrainTile(cityCurbUpper);
+    TerrainTile curbTileLower = new TerrainTile(cityCurbLower);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
     System.out.println("Hello");
     //Copied from above, change as needed
     fillTiles(layer, new GridPoint2(0,0), MAP_SIZE, grassTile);
+    fillTiles(layer, new GridPoint2(0, 6), new GridPoint2(MAP_SIZE.x, 24), sidewalkTile);
     fillTiles(layer, new GridPoint2(0, 11), new GridPoint2(MAP_SIZE.x, 19), roadTileBlack);
+    fillTiles(layer, new GridPoint2(0, 20), new GridPoint2(120, 20), curbTileUpper);
+    fillTiles(layer, new GridPoint2(0, 10), new GridPoint2(120, 10), curbTileLower);
     fillTilesAtRandom(layer, new GridPoint2(0, 12), new GridPoint2(MAP_SIZE.x - 1, 18), roadCracked, 100);
 
     for (int x = 0; x < MAP_SIZE.x; x++) {

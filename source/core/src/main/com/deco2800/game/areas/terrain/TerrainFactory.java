@@ -164,7 +164,7 @@ public class TerrainFactory {
     TerrainTile roadTile = new TerrainTile(cityRoad);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
     TerrainTile curbTile = new TerrainTile(cityCurb);
-    int xScale = 4;
+    int xScale = 3;
     int yScale = 1;
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
     fillTiles(layer, MAP_SIZE, xScale, yScale, roadTile);
@@ -174,10 +174,18 @@ public class TerrainFactory {
     GridPoint2 end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.1);
     setTilesInRegion(layer, sidewalkTile, start, end);
 
-    //Fill curb tiles
-    start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 1);
-    end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.15);
+    start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 0.6);
+    end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.7);
     setTilesInRegion(layer, sidewalkTile, start, end);
+
+    //Fill curb tiles
+    start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 0.1);
+    end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.15);
+    setTilesInRegion(layer, curbTile, start, end);
+
+    start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 0.58);
+    end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.6);
+    setTilesInRegion(layer, curbTile, start, end);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

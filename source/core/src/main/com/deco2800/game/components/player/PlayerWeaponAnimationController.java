@@ -63,7 +63,7 @@ public class PlayerWeaponAnimationController extends Component {
 
   void stop() {
     weaponAnimator.stopAnimation();
-    disposeAnimation();
+    //disposeAnimation();
   }
 
   void disposeAnimation() {

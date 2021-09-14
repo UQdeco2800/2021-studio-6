@@ -49,9 +49,9 @@ public class SafehouseGameArea extends GameArea {
       "images/weapon/sword.atlas"
   };
 
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
+  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
+  private static final String[] safehouseMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
 
@@ -70,7 +70,7 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnBullet();
-    //playMusic();
+    playMusic();
   }
 
   public Entity getPlayer() {
@@ -154,7 +154,7 @@ public class SafehouseGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.3f);
     music.play();
   }
 
@@ -163,8 +163,8 @@ public class SafehouseGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
-    resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    resourceService.loadSounds(safehouseSounds);
+    resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -177,14 +177,13 @@ public class SafehouseGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(safehouseSounds);
+    resourceService.unloadAssets(safehouseMusic);
   }
 
   @Override
   public void dispose() {
     door.getComponent(DisposingComponent.class).toBeDisposed();
-
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();

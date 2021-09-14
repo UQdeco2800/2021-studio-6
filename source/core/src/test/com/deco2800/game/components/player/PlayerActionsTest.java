@@ -35,8 +35,8 @@ class PlayerActionsTest {
         ServiceLocator.registerTimeSource(time);
     }
 
-    @Test
-    void shouldReload() {
+//    @Test
+//    void shouldReload() {
 //        when(time.getTime()).thenReturn(0L);
 //        Entity player = new Entity();
 //        player.addComponent(new PlayerActions(3))
@@ -64,19 +64,19 @@ class PlayerActionsTest {
 //        player.getEvents().trigger("reload");
 //        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
 //        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-
-        // should still be reloading
+//
+//        // should still be reloading
 //        when(time.getTime()).thenReturn(1500L);
 //        player.update();
 //        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
 //        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-
-        // finished reloading
+//
+//        // finished reloading
 //        when(time.getTime()).thenReturn(2100L);
 //        player.update();
 //        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
 //        assertEquals(5,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-    }
+//    }
 
     @Test
     void shouldSetSpeed() {

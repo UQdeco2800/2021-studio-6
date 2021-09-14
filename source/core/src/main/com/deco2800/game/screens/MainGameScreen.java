@@ -9,6 +9,7 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
@@ -113,9 +114,12 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     renderer.render();
 
-    CAMERA_POSITION.set(gameArea.player.getPosition());
-    ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
-    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+
+    if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
+      CAMERA_POSITION.set(gameArea.player.getPosition());
+      ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
+      renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    }
   }
 
   @Override

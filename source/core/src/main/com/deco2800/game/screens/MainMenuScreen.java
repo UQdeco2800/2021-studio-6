@@ -14,7 +14,6 @@ import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
-import com.deco2800.game.rendering.lightingcomponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -35,7 +34,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final String[] mainMenuTransitionalSounds = {"sounds/click.mp3"};
   private static final String[] mainMenuMusic = {"sounds/title-screen-music.mp3"};
   private static final String[] mainMenuTextureAtlases = {"images/title-screen.atlas"};
-  private lightingcomponent lc;
+
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -49,9 +48,10 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerPhysicsService(new PhysicsService());
-//    lc = new lightingcomponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
+
+
     renderer = RenderFactory.createRenderer();
-//    ServiceLocator.getRenderService().register(lc);
+
     loadAssets();
     createUI();
   }

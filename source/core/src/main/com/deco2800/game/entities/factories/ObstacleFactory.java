@@ -1,7 +1,9 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -9,6 +11,8 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+
+import java.awt.*;
 
 /**
  * Factory to create obstacle entities.
@@ -71,6 +75,22 @@ public class ObstacleFactory {
     bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bush.getComponent(TextureRenderComponent.class).scaleEntity();
     bush.scaleHeight(1.0f);
+    return bush;
+  }
+
+  public static Entity createLamp() {
+    Entity bush =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/lamppost.png"))
+                    .addComponent(new PointLightComponent(Color.ORANGE, 10f, 0, 0))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent());
+
+
+//    bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bush.getComponent(TextureRenderComponent.class).scaleEntity();
+//    bush.scaleHeight(2.0f);
+    bush.scaleWidth(0.7f);
     return bush;
   }
   /**

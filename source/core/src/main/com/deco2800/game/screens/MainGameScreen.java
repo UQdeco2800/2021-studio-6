@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
@@ -18,11 +17,11 @@ import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.lighting.Lighting;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
-import com.deco2800.game.rendering.lightingcomponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -52,9 +51,10 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
+  private final Lighting lighting;
   private GameArea gameArea;
   private Entity ui;
-  private lightingcomponent lc;
+
 
 
   public MainGameScreen(GdxGame game) {
@@ -76,14 +76,13 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
-    lc = new lightingcomponent(ServiceLocator.getPhysicsService().getPhysics().getWorld());
+    ServiceLocator.registerLightingService(new Lighting(ServiceLocator.getPhysicsService().getPhysics().getWorld()));
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-//    ServiceLocator.getRenderService().register(lc);
-    lc.setCamera(renderer.getCamera().getCamera());
+    lighting = ServiceLocator.getLightingService();
 
     loadAssets();
     createUI();
@@ -116,10 +115,10 @@ public class MainGameScreen extends ScreenAdapter {
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
-
+    lighting.update();
     renderer.render();
-    lc.setCamera(renderer.getCamera().getCamera());
-    lc.render(null);
+    lighting.setCamera(renderer.getCamera().getCamera());
+    lighting.render();
     renderer.renderUI();
 
 

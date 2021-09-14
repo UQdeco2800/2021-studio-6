@@ -39,7 +39,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
-    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png",
+    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
     "images/tree.png",
     "images/ghost_king.png",
@@ -186,6 +186,14 @@ public class ForestGameArea extends GameArea {
       int randomCoinQuantity = RandomUtils.randomInt(5);
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, randomPos, true, false);
+    }
+
+    // CREATED 3 ARMOURS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int armourQuantity = 1;
+      Entity armour = ItemFactory.createArmour(armourQuantity);
+      spawnEntityAt(armour, randomPos, true, false);
     }
   }
 

@@ -58,6 +58,8 @@ public class PlayerPickupComponent extends Component {
             } else if (item.getItemType() == Items.COINS) {
                 // dispose item when picked up, can be changed later on
                 inventory.setGold(coinLeft + itemQuantity);
+            } else if (item.getItemType() == Items.ARMOUR) {
+                // TODO: do something to player's combat stats
             }
             target.getComponent(DisposingComponent.class).toBeDisposed();
         }

@@ -71,7 +71,10 @@ public class PlayerPickupComponent extends Component {
             } else if (item.getItemType() == Items.AXE) {
                 weapon.setWeapon("configs/Axe.json");
             }
-            ServiceLocator.getGameArea().despawnEntity(target);
+
+            if (ServiceLocator.getGameArea() != null) {
+                ServiceLocator.getGameArea().despawnEntity(target);
+            }
             //target.getComponent(DisposingComponent.class).toBeDisposed();
         }
     }

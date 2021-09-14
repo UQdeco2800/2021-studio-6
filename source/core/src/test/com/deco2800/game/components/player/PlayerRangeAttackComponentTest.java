@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -140,6 +139,6 @@ public class PlayerRangeAttackComponentTest {
         assertTrue(bulletAlmostFired.getComponent(BulletCollisionComponent.class).getBulletLaunchStatus());
 
         Vector2 targetCoord = new Vector2(15, 0);
-//        assertEquals(targetCoord.cpy(), bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget()); //
+        assertEquals(targetCoord.cpy(), bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget()); //
     }
 }

@@ -11,28 +11,33 @@ public class PrologueCutScene extends CutSceneConfig {
                     "Daunting, terrifying, and deadly.",
 
                     //Screen 1
-                    "It all started with the lights. First flickering. Then gone. Leaving us in this darkness.",
-                    "You don’t want to be left in the dark. That’s where the shadow crawlers thrive.",
+                    "It all started with the lights.",
+                    "First flickering.",
+                    "Then gone. Leaving us in this darkness.",
 
                     //Screen 2
-                    "Demon-zombie minions of some greater evil being. They destroy light, take it away, leaving darkness" +
-                            " in their wake – killing anything in their way.",
+                    "You don't want to be left in the dark. That's where the shadow crawlers thrive.",
+                    "Demon-zombie minions of some greater evil being.",
+                    "They destroy light, take it away, leaving darkness in their wake - killing anything in their way.",
 
                     //Screen 3
                     "They went for the smaller towns first, forcing many to abandon their homes.",
-                    "People fled to the cities where the light provided them safety… for now.",
+                    "People fled to the cities where the light provided them safety.",
+                    "For now...",
 
                     //Screen 4
-                    "But there’s a light of hope, or so we believe to be hope. On the horizon. The Safe Haven.",
+                    "But there's a light of hope, or so we believe to be hope. On the horizon. The Safe Haven.",
+                    "Some people risk it and run for it. Journeying through hell, hoping to find a more permanent home " +
+                    "in the light.",
 
                     //Screen 5
-                    "Some people risk it and run for it. Journeying through hell, hoping to find a more permanent home " +
-                            "in the light. They’re the fireflies, leaving a path of light for others to follow.",
+                    "They're the fireflies, leaving a path of light for others to follow.",
                     "No one knows what's at the Safe Haven. No one even knows if any firefly has ever made it.",
 
                     //Screen 6
-                    "But what other choice do we have? The shadow crawlers are getting closer to the city every day. " +
-                            "The darkness is coming.",
+                    "But what other choice do we have?",
+                    "The shadow crawlers are getting closer to the city every day.",
+                    "The darkness is coming.",
                     "I have to leave and follow the fireflies."
             };
     public static final String[] IMAGES =
@@ -42,17 +47,22 @@ public class PrologueCutScene extends CutSceneConfig {
                     "utils/blackpixel.png",
 
                     //Screen 1
-                    "prologue/1/1.1.png",
-                    "prologue/1/1.1.png",
+                    "prologue/1 simple/1.1.png",
+                    "prologue/1 simple/1.2.png",
+                    "prologue/1 simple/1.3.png",
+                    "utils/blackpixel.png",
 
                     //Screen 2
                     "prologue/2.png",
+                    "prologue/2.png",
 
                     //Screen 3
+                    "prologue/3 simple/3.0.png",
                     "prologue/3 simple/3.2.png",
                     "prologue/3 simple/3.2.png",
 
                     //Screen 4
+                    "prologue/4.png",
                     "prologue/4.png",
 
                     //Screen 5
@@ -60,8 +70,10 @@ public class PrologueCutScene extends CutSceneConfig {
                     "prologue/5.png",
 
                     //Screen 6
+                    "prologue/6/6 background.png",
                     "prologue/6/6 basic.png",
-                    "prologue/6/6 basic.png"
+                    "prologue/6/6 basic.png",
+                    "utils/blackpixel.png"
             };
     public static final String MUSIC = "sounds/title-screen-music.mp3";
 
@@ -78,6 +90,6 @@ public class PrologueCutScene extends CutSceneConfig {
      */
     @Override
     public int getLength() {
-        return 12;
+        return 19;
     }
 }

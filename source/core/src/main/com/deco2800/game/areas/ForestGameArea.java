@@ -6,15 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-<<<<<<< HEAD
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
-=======
-import com.deco2800.game.components.dialoguebox.Dialogue;
-import com.deco2800.game.components.dialoguebox.DialogueImage;
-import com.deco2800.game.components.player.PlayerRangeAttackComponent;
->>>>>>> origin/main
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -41,14 +35,8 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_COIN_PICKUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
-<<<<<<< HEAD
   private static final String[] FOREST_TEXTURES = {
-    "images/Player_Sprite/front.png",
-    "images/player_placeholders/PROJECTILE.png",
-=======
-  private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
->>>>>>> origin/main
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",

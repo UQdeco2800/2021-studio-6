@@ -226,13 +226,7 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
     } else if (CurrentLevel == 4) {
-<<<<<<< HEAD
       victory();
-=======
-      System.out.println("You win");
-      gameArea.dispose();
-      ui.getEvents().trigger("exit");
->>>>>>> origin/main
     }
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;

@@ -4,5 +4,9 @@ public enum Items {
     COINS,
     AMMO,
     BANDAGE,
-    ARMOUR
+    ARMOUR,
+    HELMET,
+    SWORD,
+    AXE,
+    DAGGER
 }

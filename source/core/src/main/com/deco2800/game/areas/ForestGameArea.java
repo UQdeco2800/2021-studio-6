@@ -41,6 +41,8 @@ public class ForestGameArea extends GameArea {
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
+    "images/playeritems/ax/ax_right2.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -194,6 +196,38 @@ public class ForestGameArea extends GameArea {
       int armourQuantity = 1;
       Entity armour = ItemFactory.createArmour(armourQuantity);
       spawnEntityAt(armour, randomPos, true, false);
+    }
+
+    // CREATED 3 HELMETS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int helmetQuantity = 1;
+      Entity helmet = ItemFactory.createHelmet(helmetQuantity);
+      spawnEntityAt(helmet, randomPos, true, false);
+    }
+
+    // CREATED 3 DAGGERS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int daggerQuantity = 1;
+      Entity dagger = ItemFactory.createDagger(daggerQuantity);
+      spawnEntityAt(dagger, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int axeQuantity = 1;
+      Entity axe = ItemFactory.createAxe(axeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int swordQuantity = 1;
+      Entity sword = ItemFactory.createSword(swordQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
     }
   }
 

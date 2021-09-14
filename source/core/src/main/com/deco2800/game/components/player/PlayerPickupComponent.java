@@ -1,6 +1,8 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.ItemComponent;
@@ -9,6 +11,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Items;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Gives player entity the ability to pick up items that are spawned
@@ -68,7 +71,8 @@ public class PlayerPickupComponent extends Component {
             } else if (item.getItemType() == Items.AXE) {
                 weapon.setWeapon("configs/Axe.json");
             }
-            target.getComponent(DisposingComponent.class).toBeDisposed();
+            ServiceLocator.getGameArea().despawnEntity(target);
+            //target.getComponent(DisposingComponent.class).toBeDisposed();
         }
     }
 }

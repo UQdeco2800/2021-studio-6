@@ -85,6 +85,7 @@ public class MainGameScreen extends ScreenAdapter {
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
     gameArea = new ForestGameArea(terrainFactory);
     gameArea.create();
+    ServiceLocator.registerGameArea(gameArea);
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
   }
@@ -229,6 +230,7 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.dispose();
       ui.getEvents().trigger("exit");
     }
+    ServiceLocator.registerGameArea(gameArea);
     levelChange = false;
   }
 }

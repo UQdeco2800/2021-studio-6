@@ -121,56 +121,56 @@ public class MainMenuDisplay extends UIComponent {
       adjustMenuButtonsFontSize();
   }
 
-    /**
-     * Resizes the background based on the current stage width and height.
-     * @param width - The current width of the stage
-     * @param height - The current height of the stage
-     * @param restrictedByHeight - whether the height or width is the restricting factor for background size
-     */
-    private void resizeBackground(int width, int height, boolean restrictedByHeight) {
-        float backgroundWidth = width;
-        float backgroundHeight = width * BACKGROUND_IMAGE_ASPECT;
-        float backgroundX = width - backgroundWidth;
-        float backgroundY = height - backgroundHeight;
+  /**
+   * Resizes the background based on the current stage width and height.
+   * @param width - The current width of the stage
+   * @param height - The current height of the stage
+   * @param restrictedByHeight - whether the height or width is the restricting factor for background size
+   */
+  private void resizeBackground(int width, int height, boolean restrictedByHeight) {
+      float backgroundWidth = width;
+      float backgroundHeight = width * BACKGROUND_IMAGE_ASPECT;
+      float backgroundX = width - backgroundWidth;
+      float backgroundY = height - backgroundHeight;
 
-        if (restrictedByHeight) {
-            backgroundWidth = height * (1f / BACKGROUND_IMAGE_ASPECT);
-            backgroundHeight = height;
-            backgroundX = (float) width / 2 - backgroundWidth / 2;
-            backgroundY = (float) height / 2 - backgroundHeight / 2;
-        }
+      if (restrictedByHeight) {
+          backgroundWidth = height * (1f / BACKGROUND_IMAGE_ASPECT);
+          backgroundHeight = height;
+          backgroundX = (float) width / 2 - backgroundWidth / 2;
+          backgroundY = (float) height / 2 - backgroundHeight / 2;
+      }
 
-        background.setWidth(backgroundWidth);
-        background.setHeight(backgroundHeight);
-        background.setPosition(backgroundX, backgroundY);
-    }
+      background.setWidth(backgroundWidth);
+      background.setHeight(backgroundHeight);
+      background.setPosition(backgroundX, backgroundY);
+  }
 
-    /**
-     * Resizes the table containing the menu buttons based on the current stage width and height.
-     * @param width - The current width of the stage
-     * @param height - The current height of the stage
-     * @param restrictedByHeight - whether the height or width is the restricting factor for background size
-     */
-    private void resizeTable(int width, int height, boolean restrictedByHeight) {
-        float tableWidth = background.getWidth() - (background.getWidth() * MENU_TABLE_RIGHT_OFFSET);
-        float tableHeight = background.getHeight() * MENU_TABLE_HEIGHT_RATIO;
-        float tableX = width - background.getWidth();
-        float tableY = height - background.getHeight();
+  /**
+   * Resizes the table containing the menu buttons based on the current stage width and height.
+   * @param width - The current width of the stage
+   * @param height - The current height of the stage
+   * @param restrictedByHeight - whether the height or width is the restricting factor for background size
+   */
+  private void resizeTable(int width, int height, boolean restrictedByHeight) {
+      float tableWidth = background.getWidth() - (background.getWidth() * MENU_TABLE_RIGHT_OFFSET);
+      float tableHeight = background.getHeight() * MENU_TABLE_HEIGHT_RATIO;
+      float tableX = width - background.getWidth();
+      float tableY = height - background.getHeight();
 
-        if (restrictedByHeight) {
-            tableX = background.getX();
-            tableY = background.getY();
-        }
+      if (restrictedByHeight) {
+          tableX = background.getX();
+          tableY = background.getY();
+      }
 
-        table.setWidth(tableWidth);
-        table.setHeight(tableHeight);
-        table.setPosition(tableX, tableY);
-    }
+      table.setWidth(tableWidth);
+      table.setHeight(tableHeight);
+      table.setPosition(tableX, tableY);
+  }
 
-    /**
-     * Adjusts the menu button font size based on the size of the table containing the menu buttons
-     */
-    private void adjustMenuButtonsFontSize() {
+  /**
+   * Adjusts the menu button font size based on the size of the table containing the menu buttons
+   */
+  private void adjustMenuButtonsFontSize() {
 
       float tableWidth = table.getWidth();
 

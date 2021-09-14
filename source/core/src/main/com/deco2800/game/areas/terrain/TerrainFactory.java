@@ -72,7 +72,7 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/level_1/placeholder_sidewalk.png", Texture.class));
         TextureRegion cityCurb =
             new TextureRegion(resourceService.getAsset("images/level_1/placeholder_curb.png", Texture.class));
-        return createCityTerrain(0.5f, cityRoad, citySidewalk, cityCurb);
+        return createCityTerrain(0.35f, cityRoad, citySidewalk, cityCurb);
       case FOREST_DEMO_ISO:
         TextureRegion isoGrass =
             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
@@ -164,13 +164,19 @@ public class TerrainFactory {
     TerrainTile roadTile = new TerrainTile(cityRoad);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
     TerrainTile curbTile = new TerrainTile(cityCurb);
-    int xScale = 2;
+    int xScale = 4;
     int yScale = 1;
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
     fillTiles(layer, MAP_SIZE, xScale, yScale, roadTile);
 
+    //Fill sidewalk tiles
     GridPoint2 start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 0);
-    GridPoint2 end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.2);
+    GridPoint2 end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.1);
+    setTilesInRegion(layer, sidewalkTile, start, end);
+
+    //Fill curb tiles
+    start = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 0, 1);
+    end = calculatePosition(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, 1, 0.15);
     setTilesInRegion(layer, sidewalkTile, start, end);
 
     tiledMap.getLayers().add(layer);

@@ -101,16 +101,16 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     player = spawnPlayer();
     spawnSafehouse();
-    spawnIntroDialogue();
+    //spawnIntroDialogue();
 
     spawnBullet();
     playMusic();
-    spawnLargeEnemy();
-    spawnSmallEnemy();
+    //spawnLargeEnemy();
+    //spawnSmallEnemy();
     spawnBullet();
     spawnSafehouse();
 
-    spawnLongRangeEnemies();
+    //spawnLongRangeEnemies();
 //    playMusic();
 
     // this is used for testing purposes for player pick up
@@ -191,11 +191,11 @@ public class ForestGameArea extends GameArea {
   }
 
   public void spawnSafehouse() {
-    GridPoint2 center = new GridPoint2(15, 15);
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    GridPoint2 position  = new GridPoint2((int)(tileBounds.x * 0.9), tileBounds.y/2);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
-    // Position is currently procedurally (kidding, just randomly) generated.
-    spawnEntityAt(safehouse, center, true, false);
+    spawnEntityAt(safehouse, position, true, false);
   }
 
   private Entity spawnPlayer() {

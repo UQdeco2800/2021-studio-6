@@ -20,6 +20,7 @@ import com.deco2800.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
 
@@ -178,10 +179,10 @@ public class TerrainFactory {
   ) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile groundTile = new TerrainTile(ground);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_SAFEHOUSE.x, MAP_SIZE_SAFEHOUSE.y, tileSize.x, tileSize.y);
 
     // Create base ground
-    fillTiles(layer, MAP_SIZE, groundTile);
+    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

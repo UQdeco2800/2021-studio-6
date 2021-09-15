@@ -161,7 +161,7 @@ public class Level3 extends GameArea {
 
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
+      Entity tree = ObstacleFactory.createPineTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
   }

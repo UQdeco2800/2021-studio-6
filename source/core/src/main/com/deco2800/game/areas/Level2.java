@@ -17,9 +17,11 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.LinkedList;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level2 extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(Level1.class);
+  private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
@@ -80,22 +82,22 @@ public class Level2 extends GameArea {
   @Override
   public void create() {
     loadAssets();
-
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
-    player = spawnPlayer();
+    spawnBigTrees();
+    spawnPineTrees();
     spawnSafehouse();
-    spawnBullet();
     //spawnCobweb();
     //spawnBush();
-    playMusic();
-    spawnLargeEnemy();
-    spawnSmallEnemy();
+
+    player = spawnPlayer();
     spawnBullet();
 
+    spawnSmallEnemy();
+    spawnLargeEnemy();
     spawnLongRangeEnemies();
+
     playMusic();
   }
 
@@ -153,13 +155,47 @@ public class Level2 extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
-  private void spawnTrees() {
+  private void spawnPineTrees() {
+    LinkedList<GridPoint2> spawnLocations = new LinkedList<>();
+
+    // Add horizontal BOTTOM and TOP outer out of bound tree edge
+    for (int i = 0; i < 31; ++i) {
+      spawnLocations.add(new GridPoint2(i,0));  // bottom
+      spawnLocations.add(new GridPoint2(i,15)); // top
+    }
+
+    // Add vertical LEFT outer out of bound tree edge
+    int gapLeftBottom = 6;
+    int gapLeftTop = 8;
+    for (int y = 0; y < 15; ++y) {
+      if (y < gapLeftBottom || y > gapLeftTop ) {
+        spawnLocations.add(new GridPoint2(0,y));
+      }
+    }
+
+    // Add vertical RIGHT outer out of bound tree edge
+    int gapRightBottom = 7;
+    int gapRightTop = 12;
+    for (int y = 0; y < 15; ++y) {
+      if (y < gapRightBottom || y > gapRightTop ) {
+        spawnLocations.add(new GridPoint2(30, y));
+      }
+    }
+
+    // Spawn the pine trees at designated positions
+    for (int i = 0; i < spawnLocations.size(); i++) {
+      Entity tree = ObstacleFactory.createPineTree();
+      spawnEntityAt(tree, spawnLocations.get(i), true, false);
+    }
+  }
+
+  private void spawnBigTrees() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
+      Entity tree = ObstacleFactory.createPineTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
   }
@@ -192,16 +228,16 @@ public class Level2 extends GameArea {
 
   private void spawnSmallEnemy() {//this da noo 1
     GridPoint2[] spawnLocations = {
-            new GridPoint2(8, 5),
-            new GridPoint2(8,12),
-            new GridPoint2(25, 4),
-            new GridPoint2(25,3),
-            new GridPoint2(25, 2),
-            new GridPoint2(20,6),
-            new GridPoint2(16,9),
-            new GridPoint2(12, 10),
-            new GridPoint2(21,12),
-            new GridPoint2(27,12),
+      new GridPoint2(8, 5),
+      new GridPoint2(8,12),
+      new GridPoint2(25, 4),
+      new GridPoint2(25,3),
+      new GridPoint2(25, 2),
+      new GridPoint2(20,6),
+      new GridPoint2(16,9),
+      new GridPoint2(12, 10),
+      new GridPoint2(21,12),
+      new GridPoint2(27,12),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -212,13 +248,13 @@ public class Level2 extends GameArea {
 
   private void spawnLargeEnemy() {
     GridPoint2[] spawnLocations = {
-    new GridPoint2(2, 2),
-    new GridPoint2(4,12),
-    new GridPoint2(10, 3),
-    new GridPoint2(27,3),
-    new GridPoint2(29, 12),
-    new GridPoint2(18,13),
-    new GridPoint2(24,8)
+      new GridPoint2(2, 2),
+      new GridPoint2(4,12),
+      new GridPoint2(10, 3),
+      new GridPoint2(27,3),
+      new GridPoint2(29, 12),
+      new GridPoint2(18,13),
+      new GridPoint2(24,8)
   };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -229,12 +265,12 @@ public class Level2 extends GameArea {
 
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
-            new GridPoint2(14, 3),
-            new GridPoint2(16,3),
-            new GridPoint2(12, 8),
-            new GridPoint2(13,8),
-            new GridPoint2(24, 11),
-            new GridPoint2(24,13)
+      new GridPoint2(14, 3),
+      new GridPoint2(16,3),
+      new GridPoint2(12, 8),
+      new GridPoint2(13,8),
+      new GridPoint2(24, 11),
+      new GridPoint2(24,13)
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {

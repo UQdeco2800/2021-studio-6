@@ -87,6 +87,7 @@ public class PrologueCutScene extends CutSceneConfig {
                     "utils/blackpixel.png"
             };
     public static final String MUSIC = "sounds/title-screen-music.mp3";
+    private static final int LENGTH = 25;
 
     public PrologueCutScene() {
         dialogueText = DIALOGUE;
@@ -101,6 +102,6 @@ public class PrologueCutScene extends CutSceneConfig {
      */
     @Override
     public int getLength() {
-        return 25;
+        return LENGTH;
     }
 }

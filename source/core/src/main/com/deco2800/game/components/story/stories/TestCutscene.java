@@ -9,6 +9,7 @@ public class TestCutscene extends CutSceneConfig {
     public static final String[] imagePathsRaw = {"title-screen/0001.png", "title-screen/0021.png",
             "title-screen/0001.png"};
     public static final String musicPathRaw = "sounds/title-screen-music.mp3";
+    private static final int LENGTH = 3;
 
     /**
      * Sets asset paths for use
@@ -25,6 +26,6 @@ public class TestCutscene extends CutSceneConfig {
      */
     @Override
     public int getLength() {
-        return 3;
+        return LENGTH;
     }
 }

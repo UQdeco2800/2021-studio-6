@@ -53,6 +53,7 @@ public class EpilogueCutScene extends CutSceneConfig {
                     "epilogue/3-the-shadow.png"
             };
     public static final String MUSIC = "sounds/title-screen-music.mp3";
+    private static final int LENGTH = 16;
 
     public EpilogueCutScene() {
         dialogueText = DIALOGUE;
@@ -67,6 +68,6 @@ public class EpilogueCutScene extends CutSceneConfig {
      */
     @Override
     public int getLength() {
-        return 16;
+        return LENGTH;
     }
 }

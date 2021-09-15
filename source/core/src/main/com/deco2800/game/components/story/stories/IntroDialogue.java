@@ -6,6 +6,7 @@ public class IntroDialogue extends BasicDialogueConfig {
     public static final String[] QUOTE = {"OH NO!\nThe light - it's disappearing. I have to make it to the safe house before the " +
             "darkness gets to me!"};
     public static final String[] PORTRAIT = {"player-portrait"};
+    private static final int LENGTH = 1;
 
     public IntroDialogue(){
         dialogueText = QUOTE;
@@ -19,6 +20,6 @@ public class IntroDialogue extends BasicDialogueConfig {
      */
     @Override
     public int getLength() {
-        return 1;
+        return LENGTH;
     }
 }

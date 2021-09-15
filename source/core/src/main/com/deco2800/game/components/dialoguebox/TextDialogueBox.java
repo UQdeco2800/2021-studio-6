@@ -27,7 +27,7 @@ public class TextDialogueBox extends UIComponent {
 
     private static final float DEFAULT_WIDTH = 1000f;
     private static final float DEFAULT_HEIGHT = 100f;
-    private static final float DEFAULT_PADDING = 15f;
+    private static final float DEFAULT_PADDING = 30f;
     private static final float IMAGE_OFFSET = 250f;
 
     private boolean isDead = false;

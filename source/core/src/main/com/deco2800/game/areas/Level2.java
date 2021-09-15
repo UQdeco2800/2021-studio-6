@@ -85,7 +85,7 @@ public class Level2 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnBigTrees();
+//    spawnBigTrees();
     spawnPineTrees();
     spawnSafehouse();
     //spawnCobweb();
@@ -94,9 +94,9 @@ public class Level2 extends GameArea {
     player = spawnPlayer();
     spawnBullet();
 
-    spawnSmallEnemy();
-    spawnLargeEnemy();
-    spawnLongRangeEnemies();
+//    spawnSmallEnemy();
+//    spawnLargeEnemy();
+//    spawnLongRangeEnemies();
 
     playMusic();
   }
@@ -159,15 +159,15 @@ public class Level2 extends GameArea {
     LinkedList<GridPoint2> spawnLocations = new LinkedList<>();
 
     // Add horizontal BOTTOM and TOP outer out of bound tree edge
-    for (int i = 0; i < 31; ++i) {
+    for (int i = 0; i < 30; ++i) {
       spawnLocations.add(new GridPoint2(i,0));  // bottom
-      spawnLocations.add(new GridPoint2(i,15)); // top
+      spawnLocations.add(new GridPoint2(i,14)); // top
     }
 
     // Add vertical LEFT outer out of bound tree edge
     int gapLeftBottom = 6;
     int gapLeftTop = 8;
-    for (int y = 0; y < 15; ++y) {
+    for (int y = 0; y < 14; ++y) {
       if (y < gapLeftBottom || y > gapLeftTop ) {
         spawnLocations.add(new GridPoint2(0,y));
       }
@@ -176,9 +176,9 @@ public class Level2 extends GameArea {
     // Add vertical RIGHT outer out of bound tree edge
     int gapRightBottom = 7;
     int gapRightTop = 12;
-    for (int y = 0; y < 15; ++y) {
+    for (int y = 0; y < 14; ++y) {
       if (y < gapRightBottom || y > gapRightTop ) {
-        spawnLocations.add(new GridPoint2(30, y));
+        spawnLocations.add(new GridPoint2(29, y));
       }
     }
 

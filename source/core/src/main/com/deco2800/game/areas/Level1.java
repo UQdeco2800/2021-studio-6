@@ -189,7 +189,7 @@ public class Level1 extends GameArea {
 
   private void spawnPickupItems() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
 
     for (int i = 0; i < NUM_AMMO_PICKUPS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -208,7 +208,7 @@ public class Level1 extends GameArea {
 
   private void spawnTrees() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
 
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -258,7 +258,7 @@ public class Level1 extends GameArea {
   */
   private void spawnSpawnerEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
 
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -279,7 +279,7 @@ public class Level1 extends GameArea {
    */
   private void spawnSmallEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
 
     for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -291,7 +291,7 @@ public class Level1 extends GameArea {
 
   private void spawnLargeEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
 
     for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -302,7 +302,7 @@ public class Level1 extends GameArea {
 
   private void spawnLongRangeEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);

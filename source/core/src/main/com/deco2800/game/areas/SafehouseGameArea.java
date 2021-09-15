@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
-import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
@@ -14,13 +13,11 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
-import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -51,7 +48,7 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
+  private static final String backgroundMusic = "sounds/safehouse-music.mp3";
   private static final String[] safehouseMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -74,7 +71,8 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnBullet();
-    //playMusic();
+
+    playMusic();
   }
 
   public Entity getPlayer() {
@@ -120,6 +118,7 @@ public class SafehouseGameArea extends GameArea {
     door = new Entity()
             .addComponent(new TextureRenderComponent("images/safehouse/interior-day1-tile-door1-latest.png"))
             .addComponent(new PhysicsComponent())
+            .addComponent(new DisposingComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
@@ -164,7 +163,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
     resourceService.loadSounds(safehouseSounds);
-    //resourceService.loadMusic(safehouseMusic);
+    resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -178,13 +177,14 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(safehouseSounds);
-    //resourceService.unloadAssets(safehouseMusic);
+    resourceService.unloadAssets(safehouseMusic);
   }
 
   @Override
   public void dispose() {
     super.dispose();
-    //ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    door.getComponent(DisposingComponent.class).toBeDisposed();
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 }

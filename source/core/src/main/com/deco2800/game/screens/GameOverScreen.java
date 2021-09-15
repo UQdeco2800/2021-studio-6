@@ -23,15 +23,16 @@ import org.slf4j.LoggerFactory;
  */
 public class GameOverScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(GameOverScreen.class);
-  private final GdxGame game;
-  private final Renderer renderer;
-  private GameOverDisplay gameOverDisplay;
-  private static final String[] gameOverTextures = {};
+  private static final String[] gameOverTextures = {"images/gameover.png"};
   private static final String[] gameOverSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
   private static final String[] gameOverTransitionalSounds = {"sounds/click.mp3"};
-  private static final String[] gameOverMusic = {};
+  private static final String[] gameOverMusic = {"sounds/game-over-music.mp3"};
   private static final String[] gameOverTextureAtlases = {};
+  private final GdxGame game;
+  private final Renderer renderer;
+  private GameOverDisplay gameOverDisplay;
+
 
 
   public GameOverScreen(GdxGame game) {
@@ -41,6 +42,7 @@ public class GameOverScreen extends ScreenAdapter {
     Gdx.gl.glClearColor(0/255f, 0/255f, 0/255f, 1);
 
     logger.debug("Initialising game over screen services");
+    
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
@@ -61,6 +63,7 @@ public class GameOverScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
+    gameOverDisplay.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 

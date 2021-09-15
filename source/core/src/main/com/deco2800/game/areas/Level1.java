@@ -4,11 +4,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-import com.deco2800.game.components.dialoguebox.Dialogue;
-import com.deco2800.game.components.dialoguebox.DialogueImage;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.tasks.SpawnerEnemyTask;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -19,7 +21,6 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
@@ -28,6 +29,8 @@ public class Level1 extends GameArea {
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
   private static final int NUM_LARGE_ENEMY = 2;
+  private static final int NUM_SMALL_ENEMY = 2;
+  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
@@ -82,13 +85,16 @@ public class Level1 extends GameArea {
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
       "images/Player_Animations/player_movement.atlas",
+      "images/spawnerEnemy.atlas",
+      "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -114,13 +120,16 @@ public class Level1 extends GameArea {
     spawnBullet();
     //spawnCobweb();
     //spawnBush();
-    playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
+    spawnSpawnerEnemy();
     spawnBullet();
 
     spawnLongRangeEnemies();
-    playMusic();
+
+    //Listener for prologue finished to play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
+            this::playMusic);
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -275,12 +284,35 @@ public class Level1 extends GameArea {
 
     getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
-
-  private void spawnSmallEnemy() {//this da noo 1
+  /**
+  * Spawns the spawner enemy
+  */
+  private void spawnSpawnerEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
+    for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnEntityAt(spawnerEnemy, randomPos, true, true);
+    }
+  }
+  /**
+   * Spawns a small enemy from the appropriate spawner's position
+   */
+  public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
+    super.spawnFromSpawner(position, maxSpawnDistance);
+  }
+
+  /**
+   * Spawns the small enemy
+   */
+  private void spawnSmallEnemy() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity smallEnemy = NPCFactory.createSmallEnemy(player);
       spawnEntityAt(smallEnemy, randomPos, true, true);
@@ -331,21 +363,15 @@ public class Level1 extends GameArea {
     }
   }
 
-  //TODO: This should be replaced when a global storage of dialogue and story is implemented
   private void spawnIntroDialogue(){
-    String quote = "OH NO!\nThe light - it's disappearing. I have to make it to the safe house before the " +
-            "darkness gets to me!";
-    ArrayList<String> a = new ArrayList<>();
-    a.add(quote);
-    Dialogue dialogue = new DialogueImage(a, "player-portrait");
-    Entity dialogueEntity = DialogueBoxFactory.createTextDialogue(dialogue);
-    spawnEntity(dialogueEntity);
+    StoryManager.getInstance().loadCutScene(StoryNames.PROLOGUE);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.1f);
     music.play();
   }
 

@@ -12,11 +12,9 @@ import org.slf4j.LoggerFactory;
  */
 public class GameOverActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(GameOverActions.class);
-  private static final float buttonClickDuration = 0.3f;
+  private static final float BUTTON_CLICK_DURATION = 0.3f;
   private GdxGame game;
-  private boolean gameStarted = false;
-  private boolean menuLoading = false;
-  private boolean gameQuiting = false;
+  private boolean loading = false;
 
 
   public GameOverActions(GdxGame game) {
@@ -35,15 +33,15 @@ public class GameOverActions extends Component {
    */
   private void onRestart() {
     logger.info("Start game");
-    if (!gameStarted && !menuLoading && !gameQuiting) {
-      gameStarted = true;
+    if (!loading) {
+      loading = true;
       // restarts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
           game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
   }
 
@@ -52,15 +50,15 @@ public class GameOverActions extends Component {
    */
   private void onMenu() {
     logger.info("Start game");
-    if (!gameStarted && !menuLoading && !gameQuiting) {
-      menuLoading = true;
+    if (!loading) {
+      loading = true;
       // displays the main menu after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
           game.setScreen(GdxGame.ScreenType.MAIN_MENU);
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
   }
 
@@ -69,15 +67,15 @@ public class GameOverActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    if (!gameStarted && !menuLoading && !gameQuiting) {
-      gameQuiting = true;
+    if (!loading) {
+      loading = true;
       // exits the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
           game.exit();
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
   }
 }

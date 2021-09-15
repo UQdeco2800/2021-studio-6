@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level3 extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(Level1.class);
+  private static final Logger logger = LoggerFactory.getLogger(Level3.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
@@ -36,27 +36,26 @@ public class Level3 extends GameArea {
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
     "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/iso_grass_3.png",
+    "images/level_2/level2_grass_1.png",
+    "images/level_2/level2_grass_2.png",
+    "images/level_2/level2_grass_3.png",
+    "images/level_2/level2_grass_4.png",
+    "images/level_2/level2_grass_5.png",
+    "images/level_2/level2_grass_6.png",
+    "images/level_2/level2_tree_1-1.png",
+    "images/level_2/level2_tree_2-1.png",
     "images/gunman.png",
     "images/eye.png",
     "images/blood_ball.png",
     "images/player.png",
     "images/large_enemy_pix.png",
     "images/largeEnemy.png",
-    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
-      "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+    "images/hud/dashbarFull.png",
+    "images/hud/healthFull.png",
+    "images/grass_1.png",
+    "images/grass_2.png",
+    "images/grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -162,7 +161,7 @@ public class Level3 extends GameArea {
 
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
+      Entity tree = ObstacleFactory.createPineTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
   }

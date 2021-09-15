@@ -33,7 +33,7 @@ public class PauseMenuDisplay extends UIComponent {
   private static final float MAX_PAUSE_MENU_HEIGHT = 600;
   private static final float PAUSE_MENU_WIDTH_TO_SCREEN_RATIO = 2.7f / 3f;
   private static final float PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO = 2.7f / 3f;
-  private static final String BACKGROUND = "images/placeholder.png";
+  private static final String BACKGROUND_FILE_PATH = "images/placeholder.png";
   private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private final GdxGame game;
@@ -77,7 +77,7 @@ public class PauseMenuDisplay extends UIComponent {
    */
   private void addActors() {
 
-    background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND, Texture.class));
+    background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
 
     pauseWindow = new Table();
 

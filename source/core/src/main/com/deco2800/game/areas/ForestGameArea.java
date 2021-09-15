@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
@@ -12,6 +13,7 @@ import com.deco2800.game.components.dialoguebox.DialogueImage;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.player.hud.PlayerHudFactory;
+import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -108,7 +110,7 @@ public class ForestGameArea extends GameArea {
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
-    spawnSpawnerEnemy(this);
+    spawnSpawnerEnemy();
     spawnBullet();
     spawnSafehouse();
 
@@ -206,29 +208,38 @@ public class ForestGameArea extends GameArea {
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
-
-  private void spawnSpawnerEnemy(ForestGameArea forestGameArea) {
+  /**
+  * Spawns the spawner enemy
+  */
+  private void spawnSpawnerEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, forestGameArea);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, randomPos, true, true);
     }
   }
+  /**
+   * Spawns a small enemy from the appropriate spawner's position
+   */
+  public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
+    int x = Math.round(2 * position.x);
+    int y = Math.round(2 * position.y);
 
-  public void spawnSpawnerEnemySmallEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 minPos = new GridPoint2(x - maxSpawnDistance, y - maxSpawnDistance);
+    GridPoint2 maxPos = new GridPoint2(x + maxSpawnDistance, y + maxSpawnDistance);
 
-    for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity smallEnemy = NPCFactory.createSmallEnemy(player);
-      spawnEntityAt(smallEnemy, randomPos, true, true);
-    }
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+    spawnEntityAt(smallEnemy, randomPos, true, true);
   }
 
+  /**
+   * Spawns the small enemy
+   */
   private void spawnSmallEnemy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

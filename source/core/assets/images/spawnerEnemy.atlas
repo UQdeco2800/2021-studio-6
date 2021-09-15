@@ -24,3 +24,10 @@ float
   orig: 32, 32
   offset: 0, 0
   index: 1
+wait
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0

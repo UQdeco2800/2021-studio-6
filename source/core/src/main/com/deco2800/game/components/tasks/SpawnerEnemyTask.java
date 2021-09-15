@@ -3,6 +3,8 @@ package com.deco2800.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.entities.Entity;
@@ -11,7 +13,6 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.raycast.RaycastHit;
 import com.deco2800.game.rendering.DebugRenderer;
-import com.deco2800.game.services.ServiceLocator;
 
 /** Spawns small enemies while the player is in range */
 public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
@@ -23,24 +24,31 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
-  private final ForestGameArea forestGameArea; //final?
-  private int activeEnemies;
+  private final ForestGameArea forestGameArea;
+  private final Entity spawnerEnemy;
+  private static final int MAX_SPAWN_DISTANCE = 1;
+  private final GameTime timeSource;
+  private long endTime;
+  private static final float INTERVAL = 10;
 
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
    * @param viewDistance Maximum distance from the entity at which chasing can start.
    * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+   * @param forestGameArea The game area of the spawner entity
+   * @param spawnerEnemy The spawner enemy to spawn from
    */
-  public SpawnerEnemyTask(Entity target, int priority, float viewDistance, float maxChaseDistance, ForestGameArea forestGameArea) {
+  public SpawnerEnemyTask(Entity target, int priority, float viewDistance, float maxChaseDistance, ForestGameArea forestGameArea, Entity spawnerEnemy) {
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
     this.forestGameArea = forestGameArea;
-    this.activeEnemies = 0;
+    this.spawnerEnemy = spawnerEnemy;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
+    timeSource = ServiceLocator.getTimeSource();
   }
 
   @Override
@@ -50,9 +58,13 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     movementTask.start();
 
-    this.owner.getEntity().getEvents().trigger("spawnerStart"); //reference for animation
+    this.owner.getEntity().getEvents().trigger("spawnerStart"); //reference for animation and sound
   }
 
+
+  /**
+   * Each update, the timer is checked to see if enough time has passed for an enemy to be spawned
+   */
   @Override
   public void update() {
     movementTask.setTarget(target.getPosition());
@@ -60,9 +72,9 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
     }
-    if (this.activeEnemies < 3) {
-      this.forestGameArea.spawnSpawnerEnemySmallEnemy();
-      this.activeEnemies++;
+    if (timeSource.getTime() >= endTime) {
+      this.forestGameArea.spawnFromSpawner(this.spawnerEnemy.getPosition(), MAX_SPAWN_DISTANCE);
+      endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
     }
   }
 

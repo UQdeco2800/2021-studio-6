@@ -46,19 +46,15 @@ public class NPCFactory {
 
   /**
    *
-   * Creates a small enemy entity.
+   * Creates a spawner enemy entity.
    *
    * @param target entity to chase
+   * @param forestGameArea the current game area
    * @return entity
    */
   public static Entity createSpawnerEnemy(Entity target, ForestGameArea forestGameArea) {
     SpawnerEnemyConfig config = configs.spawnerEnemy;
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
-
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new SpawnerEnemyTask(target, 10, 3f, 4f, forestGameArea)); //view distance should be increased through testing
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
@@ -68,15 +64,17 @@ public class NPCFactory {
     Entity spawnerEnemy =
             new Entity()
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                    .addComponent(aiComponent)
                     .addComponent(new DisposingComponent())
                     .addComponent(new GhostAnimationController())
-                    .addComponent(new PhysicsMovementComponent(speed))
+                    .addComponent(new PhysicsMovementComponent(speed)) //remove?
                     .addComponent(animator)
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f)); //remove once idle task is created
+    spawnerEnemy.addComponent(aiComponent);
 
     spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     spawnerEnemy.setScale(1f, 1f);

@@ -1,13 +1,9 @@
 package com.deco2800.game.components.player.hud;
 
-import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.player.PlayerInterfaceDisplay;
-import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
-import com.deco2800.game.components.player.PlayerWeaponAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.events.listeners.EventListener0;
 import com.deco2800.game.extensions.GameExtension;
-import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -43,6 +39,7 @@ public class PlayerHealthAnimationControllerTest {
 
     @Test
     void shouldStartAnim() {
+        verify(display).getHealthAnimator();
         verify(anim).startAnimation("health1"); // the standard starting animation
     }
 

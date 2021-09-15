@@ -85,8 +85,8 @@ public class Level2 extends GameArea {
     displayUI();
 
     spawnTerrain();
-//    spawnBigTrees();
     spawnPineTrees();
+    spawnBigTrees();
     spawnSafehouse();
     //spawnCobweb();
     //spawnBush();
@@ -174,13 +174,19 @@ public class Level2 extends GameArea {
     }
 
     // Add vertical RIGHT outer out of bound tree edge
-    int gapRightBottom = 7;
-    int gapRightTop = 12;
+    int gapRightBottom = 4;
+    int gapRightTop = 7;
     for (int y = 0; y < 14; ++y) {
       if (y < gapRightBottom || y > gapRightTop ) {
         spawnLocations.add(new GridPoint2(29, y));
       }
     }
+
+    // Add bottom-left inner bound tree edge
+    spawnLocations.add(new GridPoint2(5,1));
+    spawnLocations.add(new GridPoint2(5,2));
+    spawnLocations.add(new GridPoint2(5,3));
+    spawnLocations.add(new GridPoint2(5,4));
 
     // Spawn the pine trees at designated positions
     for (int i = 0; i < spawnLocations.size(); i++) {
@@ -190,18 +196,54 @@ public class Level2 extends GameArea {
   }
 
   private void spawnBigTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2[] spawnLocations = {
+      // Left side
+      new GridPoint2(1, 9),
+      new GridPoint2(3, 9),
+      new GridPoint2(5, 9),
 
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createPineTree();
-      spawnEntityAt(tree, randomPos, true, false);
+      // "L" shape middle
+      new GridPoint2(10, 4),
+      new GridPoint2(12, 4),
+      new GridPoint2(14, 4),
+      new GridPoint2(16, 4),
+
+      new GridPoint2(10, 5),
+      new GridPoint2(10, 6),
+      new GridPoint2(10, 7),
+      new GridPoint2(10, 8),
+      new GridPoint2(10, 9),
+      new GridPoint2(10, 10),
+      new GridPoint2(10, 11),
+      new GridPoint2(10, 12),
+      new GridPoint2(10, 13),
+
+      // Right Side
+      new GridPoint2(28, 4),
+      new GridPoint2(26, 4),
+      new GridPoint2(24, 4),
+      new GridPoint2(22, 4),
+
+      new GridPoint2(22, 5),
+      new GridPoint2(22, 6),
+      new GridPoint2(22, 7),
+      new GridPoint2(22, 8),
+
+      new GridPoint2(22, 8),
+      new GridPoint2(20, 8),
+      new GridPoint2(18, 8),
+      new GridPoint2(16, 8),
+      new GridPoint2(14, 8),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity tree = ObstacleFactory.createBigTree();
+      spawnEntityAt(tree, spawnLocations[i], true, false);
     }
   }
 
   public void spawnSafehouse() {
-    GridPoint2 center = new GridPoint2(28, 8);
+    GridPoint2 center = new GridPoint2(28, 6);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
@@ -250,7 +292,7 @@ public class Level2 extends GameArea {
     GridPoint2[] spawnLocations = {
       new GridPoint2(2, 2),
       new GridPoint2(4,12),
-      new GridPoint2(10, 3),
+      new GridPoint2(10, 2),
       new GridPoint2(27,3),
       new GridPoint2(29, 12),
       new GridPoint2(18,13),
@@ -265,8 +307,8 @@ public class Level2 extends GameArea {
 
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(14, 3),
-      new GridPoint2(16,3),
+      new GridPoint2(14, 2),
+      new GridPoint2(16,2),
       new GridPoint2(12, 8),
       new GridPoint2(13,8),
       new GridPoint2(24, 11),

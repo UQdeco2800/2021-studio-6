@@ -1,5 +1,8 @@
 package com.deco2800.game.components.story;
 
+/**
+ * A story base object is what the manager calls upon to control the story.
+ */
 public interface StoryBase {
 
     /**

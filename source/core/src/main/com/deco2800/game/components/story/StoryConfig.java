@@ -1,5 +1,8 @@
 package com.deco2800.game.components.story;
 
+/**
+ * Configuration interface used by StoryBase objects to configure its entities
+ */
 public interface StoryConfig {
     /**
      * Create all the assets defined

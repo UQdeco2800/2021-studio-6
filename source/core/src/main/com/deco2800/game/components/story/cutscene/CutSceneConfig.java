@@ -12,6 +12,9 @@ import com.deco2800.game.services.ServiceLocator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Config for the cutscene story
+ */
 public abstract class CutSceneConfig implements StoryConfig {
     public Dialogue dialogue;
     public Music music;

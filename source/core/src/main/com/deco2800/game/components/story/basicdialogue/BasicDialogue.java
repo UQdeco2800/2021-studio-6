@@ -7,6 +7,9 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.DialogueBoxFactory;
 import com.deco2800.game.services.ServiceLocator;
 
+/**
+ * Basic dialogue (Sprint 1 dialogue box)
+ */
 public class BasicDialogue extends Component implements StoryBase {
     private final BasicDialogueConfig config;
 

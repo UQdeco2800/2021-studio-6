@@ -88,6 +88,25 @@ public class ObstacleFactory {
     return wall;
   }
 
+  /**
+   * Creates an object given the path to its image and its size
+   * @param image Path to the image to be used for object
+   * @param height How much to scale the height of the image
+   */
+  public static Entity createObject(String image, float height) {
+    Entity tree =
+        new Entity()
+            .addComponent(new TextureRenderComponent(image))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(height);
+    PhysicsUtils.setScaledCollider(tree, 1f, 1f);
+    return tree;
+  }
+
   public static Entity createBuilding() {
     Entity building =
         new Entity()

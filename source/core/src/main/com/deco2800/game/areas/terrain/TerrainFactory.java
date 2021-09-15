@@ -184,7 +184,7 @@ public class TerrainFactory {
     TerrainTile laneMarkingTile = new TerrainTile(laneMarkings);
 
     //Multiplier to size of map on x and y coordinates
-    int xScale = 3;
+    int xScale = 4;
     int yScale = 1;
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, tileSize.x, tileSize.y);
     fillTiles(layer, MAP_SIZE_CITY, xScale, yScale, cityBackgroundTile);

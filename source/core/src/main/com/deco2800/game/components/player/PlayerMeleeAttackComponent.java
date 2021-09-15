@@ -69,7 +69,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private long disposeTime = 0;
     private IndependentAnimator weaponAnimator;
     private boolean gotWeapon = false;
-    private long attackStart = 0;
+    private long attackEnd = 0;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
         fixtureDef = new FixtureDef();
@@ -121,6 +121,7 @@ public class PlayerMeleeAttackComponent extends Component {
             setAnimations(setWeapon);
             gotWeapon = true;
         }
+        attackEnd = 0;
         setShapes();
     }
 
@@ -147,6 +148,7 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void walk(Vector2 walkDirection) {
         if (fixture != null) {
+            weaponAnimator.stopAnimation();
             dispose();
         }
     }
@@ -179,7 +181,6 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     private void setShapes() {
-        System.out.println("setting");
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)0.8), 0f);
@@ -277,7 +278,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * the fixtures for the attack and prepping before actual the damage/hit.
      */
     private void attack() {
-        if (timeSource.getTime() >= attackStart) {
+        if (timeSource.getTime() >= attackEnd) {
             if (canAttack) {
                 fixtureDef = getFixDirection();
                 if (fixtureDef != null) {
@@ -289,7 +290,7 @@ public class PlayerMeleeAttackComponent extends Component {
                     // if sensor is false, NPC will not be able to collide with player's fixture
                     setSensor(true);
                     disposeTimeSet();
-                    attackStart = attackLength + timeSource.getTime();
+                    attackEnd = attackLength + timeSource.getTime();
                     entity.getEvents().trigger("attack");
                 }
             }
@@ -309,6 +310,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
     @Override
     public void dispose() {
+        weaponAnimator.stopAnimation();
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;

@@ -18,20 +18,38 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 public class ObstacleFactory {
 
   /**
-   * Creates a tree entity.
+   * Creates a wide tree entity.
    * @return entity
    */
-  public static Entity createTree() {
+  public static Entity createBigTree() {
     Entity tree =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_tree_1-1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
     tree.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
+    PhysicsUtils.setScaledCollider(tree, 0.75f, 0.75f);
+    return tree;
+  }
+
+  /**
+   * Creates a pine tree entity.
+   * @return entity
+   */
+  public static Entity createPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_tree_2-1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.5f);
+    PhysicsUtils.setScaledCollider(tree, 0.75f, 0.55f);
     return tree;
   }
 

@@ -76,7 +76,7 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+    "images/hud/healthFull.png"
   };
 
   private static final String[] cityTextureAtlases = {
@@ -256,7 +256,7 @@ public class Level1 extends GameArea {
 
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
+      Entity tree = ObstacleFactory.createBigTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
   }

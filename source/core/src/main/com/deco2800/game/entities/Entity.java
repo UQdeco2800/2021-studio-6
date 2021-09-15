@@ -201,6 +201,7 @@ public class Entity {
 
   /** Dispose of the entity. This will dispose of all components on this entity. */
   public void dispose() {
+    this.getEvents().trigger("dropItem");
     for (Component component : createdComponents) {
       component.dispose();
     }

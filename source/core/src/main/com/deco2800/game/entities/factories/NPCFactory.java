@@ -11,6 +11,7 @@ import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.npc.ItemDrop;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -163,7 +164,8 @@ public class NPCFactory {
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
-                    .addComponent(new DisposingComponent());
+                    .addComponent(new DisposingComponent())
+                    .addComponent(new ItemDrop(gameArea));
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
   }

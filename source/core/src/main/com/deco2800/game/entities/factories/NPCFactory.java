@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.npc.EnemySoundListener;
 import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
@@ -15,12 +14,10 @@ import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
-import com.deco2800.game.entities.configs.GhostKingConfig;
 import com.deco2800.game.entities.configs.LargeEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -134,8 +131,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f))
-                    .addTask(new EnemySoundTask(1));
+                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
 
     Entity toughLongRangeEnemy = new Entity()
             .addComponent(new PhysicsComponent())
@@ -144,11 +140,10 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(new TextureRenderComponent("images/eye.png"))
-            .addComponent(new CombatStatsComponent(1, 1))
+            .addComponent(new CombatStatsComponent(3, 1))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
-            .addComponent(new DisposingComponent())
-            .addComponent(new EnemySoundListener("sounds/longrange2.wav"));
+            .addComponent(new DisposingComponent());
 
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
 

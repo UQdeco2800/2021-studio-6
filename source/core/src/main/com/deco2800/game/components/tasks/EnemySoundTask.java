@@ -5,7 +5,7 @@ import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
-public class EnemySoundTask extends DefaultTask {
+public class EnemySoundTask extends DefaultTask implements PriorityTask {
     private final float duration;
     private long endTime;
     private final GameTime timeSource;
@@ -30,7 +30,7 @@ public class EnemySoundTask extends DefaultTask {
     @Override
     public void update() {
         if (timeSource.getTime() >= endTime) {
-            this.owner.getEntity().getEvents().trigger("fire");
+            this.owner.getEntity().getEvents().trigger("playSound");
             endTime = timeSource.getTime() + (int)(duration * 1000);
         }
     }
@@ -38,5 +38,10 @@ public class EnemySoundTask extends DefaultTask {
     @Override
     public void stop() {
         super.stop();
+    }
+
+    @Override
+    public int getPriority() {
+        return 0;
     }
 }

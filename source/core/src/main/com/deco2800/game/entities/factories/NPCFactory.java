@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.npc.EnemySoundListener;
 import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
@@ -133,7 +134,8 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
+                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f))
+                    .addTask(new EnemySoundTask(5));
 
     Entity toughLongRangeEnemy = new Entity()
             .addComponent(new PhysicsComponent())
@@ -145,9 +147,8 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(1, 1))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
-            .addComponent(new DisposingComponent());
-
-    Music music = ServiceLocator.getResourceService().getAsset()
+            .addComponent(new DisposingComponent())
+            .addComponent(new EnemySoundListener("sounds/longrange2.wav"));
 
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
 

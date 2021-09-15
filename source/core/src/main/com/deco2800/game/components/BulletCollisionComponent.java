@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,7 +96,7 @@ public class BulletCollisionComponent extends Component {
                     targetStats.hit(bulletCombatStats.getBaseAttack());
 
                     if (targetStats.isDead()) {
-                        target.getComponent(DisposingComponent.class).toBeDisposed();
+                        ServiceLocator.getGameArea().despawnEntity(target);
                     }
                 }
                 entity.getComponent(DisposingComponent.class).toBeReused();

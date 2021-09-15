@@ -122,8 +122,7 @@ public class SafehouseGameArea extends GameArea {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
-            .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER))
-            .addComponent(new DisposingComponent());
+            .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
     door.getComponent(TextureRenderComponent.class).scaleEntity();
     door.scaleHeight(2.5f);
@@ -184,7 +183,6 @@ public class SafehouseGameArea extends GameArea {
 
   @Override
   public void dispose() {
-    door.getComponent(DisposingComponent.class).toBeDisposed();
     super.dispose();
     //ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();

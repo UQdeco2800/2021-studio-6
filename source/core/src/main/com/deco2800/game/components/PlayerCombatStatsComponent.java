@@ -181,9 +181,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         } else {
             this.woundState = 0;
             setStateMax(0);
-            if (this.getEntity() != null) {
+            if (this.getEntity() != null && ServiceLocator.getGameArea() != null) {
                 entity.getEvents().trigger("dispose");
-                this.getEntity().getComponent(DisposingComponent.class).toBeDisposed();
+                ServiceLocator.getGameArea().despawnEntity(entity);
             }
         }
         if (entity != null) {

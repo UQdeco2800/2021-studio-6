@@ -165,7 +165,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
-    tableCoin.padTop(520f).padLeft(270f);
+    tableCoin.padTop(500f).padLeft(270f);
     tableCoin.add(coinImage);
     tableCoin.add(coinLabel);
 
@@ -180,6 +180,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableAmmo.add(ammoLabel);
 
     tableGunMagazine = new Table();
+    tableGunMagazine.padLeft(270f).padTop(-20f);
     tableGunMagazine.add(bulletImage1);
     tableGunMagazine.add(bulletImage2);
     tableGunMagazine.add(bulletImage3);
@@ -197,9 +198,9 @@ public class PlayerInterfaceDisplay extends UIComponent {
     table.row();
     table.add(tableAmmo).left();
     table.row();
+    table.add(tableReload).left().padLeft(600f);
+    table.row();
     table.add(tableGunMagazine).left();
-    table.row().expand().bottom().padBottom(180f);
-    table.add(tableReload);
 
     stage.addActor(table);
   }

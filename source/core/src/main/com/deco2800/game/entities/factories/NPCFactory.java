@@ -147,6 +147,8 @@ public class NPCFactory {
             .addComponent(new ToughFireBulletListener(target, gameArea))
             .addComponent(new DisposingComponent());
 
+    Music music = ServiceLocator.getResourceService().getAsset()
+
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
 
     return toughLongRangeEnemy;

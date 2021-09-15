@@ -63,6 +63,13 @@ public class EnemyBulletFactory {
         gameArea.spawnEntity(bullet);
     }
 
+    /**
+     * Creates three bullets for the tough long range enemy. One follows a straight line towards the player, another
+     * is shifted up 45 degrees from the straight one and the other is shifted down 45 degrees from the straight one.
+     * @param source the source of the bullet
+     * @param target the target entity to be fired at
+     * @param gameArea need to spawn the entity in
+     */
     public static void createToughBullet(Entity source, Entity target, GameArea gameArea) {
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;
@@ -71,12 +78,12 @@ public class EnemyBulletFactory {
 
         Vector2 straightTarget = new Vector2(x2 - x1, y2 - y1); //straight through player
 
+        //Shifted up 45 degrees from the straight vector
         double upX = (Math.cos((Math.PI)/4) * straightTarget.x) - (Math.sin((Math.PI)/4) * straightTarget.y);
         double upY = (Math.sin((Math.PI)/4) * straightTarget.x) + (Math.cos((Math.PI)/4) * straightTarget.y);
         Vector2 upRotate = new Vector2( (float) upX, (float) upY);
-        //upratate cos(45)* stragithTarget.x + sing
 
-        //downratate cos(-45)* stragithTarget.x + sing
+        //Shifted down 45 degrees from the straight vector
         double downX = (Math.cos(-(Math.PI)/4) * straightTarget.x) - (Math.sin(-(Math.PI)/4) * straightTarget.y);
         double downY = (Math.sin(-(Math.PI)/4) * straightTarget.x) + (Math.cos(-(Math.PI)/4) * straightTarget.y);
         Vector2 downRotate = new Vector2( (float) downX, (float) downY);

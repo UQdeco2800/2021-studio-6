@@ -97,14 +97,14 @@ public class ForestGameArea extends GameArea {
     spawnCobweb();
     spawnBush();
     playMusic();
-    spawnLargeEnemy();
-    spawnSmallEnemy();
+    //spawnLargeEnemy();
+    //spawnSmallEnemy();
     spawnBullet();
     spawnSafehouse();
 
-    spawnLongRangeEnemies();
+    //spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
-//    playMusic();
+    playMusic();
   }
 
   public Entity getPlayer() {

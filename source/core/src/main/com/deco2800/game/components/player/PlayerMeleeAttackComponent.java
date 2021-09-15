@@ -69,6 +69,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private long disposeTime = 0;
     private IndependentAnimator weaponAnimator;
     private boolean gotWeapon = false;
+    private long attackStart = 0;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
         fixtureDef = new FixtureDef();
@@ -85,7 +86,7 @@ public class PlayerMeleeAttackComponent extends Component {
         // event listeners to check if enemy is within range of melee attack or not
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
-        entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("attackStart", this::attack);
         entity.getEvents().addListener("walk", this::walk);
         setWeapon(weaponFile);
     }
@@ -111,15 +112,16 @@ public class PlayerMeleeAttackComponent extends Component {
                 new IndependentAnimator(
                     ServiceLocator.getResourceService()
                         .getAsset(atlasFile, TextureAtlas.class));
-            weaponAnimator.addAnimation("attackUp", 0.1f, Animation.PlayMode.NORMAL);
-            weaponAnimator.addAnimation("attackDown", 0.1f, Animation.PlayMode.NORMAL);
-            weaponAnimator.addAnimation("attackLeft", 0.1f, Animation.PlayMode.NORMAL);
-            weaponAnimator.addAnimation("attackRight", 0.1f, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackUp", stats.animationLength, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackDown", stats.animationLength, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackLeft", stats.animationLength, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackRight", stats.animationLength, Animation.PlayMode.NORMAL);
             weaponAnimator.setCamera(true);
             weaponAnimator.setScale(length * stats.scale[0], height * stats.scale[1]);
             setAnimations(setWeapon);
             gotWeapon = true;
         }
+        setShapes();
     }
 
     /**
@@ -177,6 +179,7 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     private void setShapes() {
+        System.out.println("setting");
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
         bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)0.8), 0f);
@@ -246,27 +249,27 @@ public class PlayerMeleeAttackComponent extends Component {
      * Afterwards, goes through the set of killed enemies and removes them.
      */
     private void damage() {
-        for (Fixture enemy: closeEnemies) {
-            Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
-            CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-            // enemy within range and player clicked melee attack button
-            if (closeToAttack && meleeAttackClicked && targetStats != null) {
-                targetStats.hit(damage);
-                // enemy will now despawn
-                if (targetStats.isDead()) {
-                    removingEnemies.add(enemy);
+            for (Fixture enemy : closeEnemies) {
+                Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
+                CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+                // enemy within range and player clicked melee attack button
+                if (closeToAttack && meleeAttackClicked && targetStats != null) {
+                    targetStats.hit(damage);
+                    // enemy will now despawn
+                    if (targetStats.isDead()) {
+                        removingEnemies.add(enemy);
 
-                    if (ServiceLocator.getGameArea() != null) {
-                        ServiceLocator.getGameArea().despawnEntity(target);
+                        if (ServiceLocator.getGameArea() != null) {
+                            ServiceLocator.getGameArea().despawnEntity(target);
+                        }
                     }
                 }
             }
-        }
-        this.meleeAttackClicked = false;
-        for (Fixture removable: removingEnemies) {
-            closeEnemies.removeIf(removable::equals);
-        }
-        removingEnemies.clear();
+            this.meleeAttackClicked = false;
+            for (Fixture removable : removingEnemies) {
+                closeEnemies.removeIf(removable::equals);
+            }
+            removingEnemies.clear();
     }
 
     /**
@@ -274,22 +277,24 @@ public class PlayerMeleeAttackComponent extends Component {
      * the fixtures for the attack and prepping before actual the damage/hit.
      */
     private void attack() {
-        if (canAttack) {
-            fixtureDef = getFixDirection();
-            if (fixtureDef != null) {
-                canAttack = false;
-                if (!setShapes) {
-                    setShapes();
-                    setShapes = true;
-                }
+        System.out.println(attackStart);
+        System.out.println(timeSource.getTime());
+        if (timeSource.getTime() >= attackLength + attackStart) {
+            if (canAttack) {
+                fixtureDef = getFixDirection();
+                if (fixtureDef != null) {
+                    canAttack = false;
 
-                this.meleeAttackClicked = true;
-                Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-                fixture = physBody.createFixture(fixtureDef);
-                fixture.getFilterData().categoryBits = PhysicsLayer.WEAPON;
-                // if sensor is false, NPC will not be able to collide with player's fixture
-                setSensor(true);
-                disposeTimeSet();
+                    this.meleeAttackClicked = true;
+                    Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+                    fixture = physBody.createFixture(fixtureDef);
+                    fixture.getFilterData().categoryBits = PhysicsLayer.WEAPON;
+                    // if sensor is false, NPC will not be able to collide with player's fixture
+                    setSensor(true);
+                    disposeTimeSet();
+                    attackStart = timeSource.getTime();
+                    entity.getEvents().trigger("attack");
+                }
             }
         }
     }

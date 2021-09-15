@@ -1,9 +1,10 @@
 {
-  "attackLength": 100,
+  "attackLength": 500,
   "attackDamage": 10,
   "knockback": 20,
   "length": 2,
   "height" : 1.2,
+  "animationLength" : 0.1,
   "atlasPath": "images/weapon/axe.atlas",
   "animationCord": [ ["0", "-0.2f"], ["1.2f", "0.8f"], ["1.2f", 0], [0, 0]],
   "scale" : ["1.2f", "1.2f"]

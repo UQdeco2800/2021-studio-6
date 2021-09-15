@@ -4,6 +4,7 @@ public class BaseWeaponConfig {
   public int attackLength;
   public float length;
   public float height;
+  public float animationLength;
   public int knockback;
   public int attackDamage;
   public String atlasPath;

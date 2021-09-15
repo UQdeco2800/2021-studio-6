@@ -27,7 +27,7 @@ public class Level2 extends GameArea {
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 7);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
@@ -42,6 +42,8 @@ public class Level2 extends GameArea {
     "images/level_2/level2_grass_4.png",
     "images/level_2/level2_grass_5.png",
     "images/level_2/level2_grass_6.png",
+    "images/level_2/level2_tree_1-1.png",
+    "images/level_2/level2_tree_2-1.png",
     "images/gunman.png",
     "images/eye.png",
     "images/blood_ball.png",
@@ -86,8 +88,8 @@ public class Level2 extends GameArea {
     player = spawnPlayer();
     spawnSafehouse();
     spawnBullet();
-    spawnCobweb();
-    spawnBush();
+    //spawnCobweb();
+    //spawnBush();
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
@@ -163,7 +165,7 @@ public class Level2 extends GameArea {
   }
 
   public void spawnSafehouse() {
-    GridPoint2 center = new GridPoint2(15, 15);
+    GridPoint2 center = new GridPoint2(28, 8);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
@@ -189,35 +191,55 @@ public class Level2 extends GameArea {
   }
 
   private void spawnSmallEnemy() {//this da noo 1
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(8, 5),
+            new GridPoint2(8,12),
+            new GridPoint2(25, 4),
+            new GridPoint2(25,3),
+            new GridPoint2(25, 2),
+            new GridPoint2(20,6),
+            new GridPoint2(16,9),
+            new GridPoint2(12, 10),
+            new GridPoint2(21,12),
+            new GridPoint2(27,12),
+    };
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    for (int i = 0; i < spawnLocations.length; i++) {
       Entity smallEnemy = NPCFactory.createSmallEnemy(player);
-      spawnEntityAt(smallEnemy, randomPos, true, true);
+      spawnEntityAt(smallEnemy, spawnLocations[i], true, true);
     }
   }
 
-
   private void spawnLargeEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2[] spawnLocations = {
+    new GridPoint2(2, 2),
+    new GridPoint2(4,12),
+    new GridPoint2(10, 3),
+    new GridPoint2(27,3),
+    new GridPoint2(29, 12),
+    new GridPoint2(18,13),
+    new GridPoint2(24,8)
+  };
 
-    for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    for (int i = 0; i < spawnLocations.length; i++) {
       Entity largeEnemy = NPCFactory.createLargeEnemy(player);
-      spawnEntityAt(largeEnemy, randomPos, true, true);
+      spawnEntityAt(largeEnemy, spawnLocations[i], true, true);
     }
   }
 
   private void spawnLongRangeEnemies() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    for (int i = 0; i < NUM_LONGRANGE; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(14, 3),
+            new GridPoint2(16,3),
+            new GridPoint2(12, 8),
+            new GridPoint2(13,8),
+            new GridPoint2(24, 11),
+            new GridPoint2(24,13)
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
-      spawnEntityAt(archer, randomPos, true, true);
+      spawnEntityAt(archer, spawnLocations[i], true, true);
     }
   }
 

@@ -50,7 +50,7 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
+  private static final String backgroundMusic = "sounds/safehouse-music.mp3";
   private static final String[] safehouseMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -164,7 +164,7 @@ public class SafehouseGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
-    resourceService.loadSounds(forestSounds);
+    resourceService.loadSounds(safehouseSounds);
     resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {

@@ -84,7 +84,7 @@ public class Level1 extends GameArea {
       "images/weapon/sword.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -110,13 +110,14 @@ public class Level1 extends GameArea {
     spawnBullet();
     //spawnCobweb();
     //spawnBush();
-    playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
 
     spawnLongRangeEnemies();
-    playMusic();
+
+    //Listener for prologue finished to play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished", this::playMusic);
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -295,7 +296,7 @@ public class Level1 extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.1f);
     music.play();
   }
 

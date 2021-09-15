@@ -89,8 +89,8 @@ public class Level2 extends GameArea {
     spawnPineTrees();
     spawnBigTrees();
     spawnSafehouse();
-    //spawnCobweb();
-    //spawnBush();
+    spawnCobweb();
+    spawnBush();
 
     player = spawnPlayer();
     spawnBullet();
@@ -273,10 +273,10 @@ public class Level2 extends GameArea {
   private void spawnSmallEnemy() {//this da noo 1
     GridPoint2[] spawnLocations = {
       new GridPoint2(8, 5),
-      new GridPoint2(8,12),
+      new GridPoint2(7,12),
       new GridPoint2(20, 2),
       new GridPoint2(22,2),
-      new GridPoint2(25, 2),
+      new GridPoint2(19, 4),
       new GridPoint2(20,6),
       new GridPoint2(16,7),
       new GridPoint2(12, 12),
@@ -295,7 +295,7 @@ public class Level2 extends GameArea {
       new GridPoint2(2, 2),
       new GridPoint2(4,12),
       new GridPoint2(10, 2),
-      new GridPoint2(27,2),
+      new GridPoint2(24,2),
       new GridPoint2(29, 12),
       new GridPoint2(18,13),
       new GridPoint2(25,7)
@@ -324,32 +324,56 @@ public class Level2 extends GameArea {
   }
 
   private void spawnCobweb() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2[] spawnLocations = {
+      new GridPoint2(7, 3),
+      new GridPoint2(8, 10),
+      new GridPoint2(12,3),
+      new GridPoint2(21, 2),
 
-    for (int i = 0; i < NUM_COBWEBS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      new GridPoint2(20, 3),
+      new GridPoint2(19,7),
+      new GridPoint2(18, 6),
+
+      new GridPoint2(16, 11),
+      new GridPoint2(20,13),
+      new GridPoint2(27, 10),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
       Entity cobweb = ObstacleFactory.createCobweb();
-      spawnEntityAt(cobweb, randomPos, true, false);
+      spawnEntityAt(cobweb, spawnLocations[i], true, false);
     }
   }
 
   private void spawnBush() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2[] spawnLocations = {
+      new GridPoint2(3, 4),
+      new GridPoint2(8, 8),
 
-    for (int i = 0; i < NUM_BUSH; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      new GridPoint2(7, 12),
+      new GridPoint2(26,3),
+      new GridPoint2(14, 11),
+
+      new GridPoint2(16, 13),
+      new GridPoint2(23,11),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
       Entity bush = ObstacleFactory.createBush();
-      spawnEntityAt(bush, randomPos, true, false);
+      spawnEntityAt(bush, spawnLocations[i], true, false);
     }
   }
 
   private void spawnPickupItems() {
     GridPoint2[] ammoSpawnLocations = {
       new GridPoint2(1, 13),
-      new GridPoint2(28,1),
+      new GridPoint2(27,2),
       new GridPoint2(13, 13),
+    };
+
+    GridPoint2[] bandageSpawnLocations = {
+      new GridPoint2(28, 2),
+      new GridPoint2(12,13),
     };
 
     GridPoint2[] coinSpawnLocations = {
@@ -357,7 +381,6 @@ public class Level2 extends GameArea {
       new GridPoint2(4,2),
       new GridPoint2(8, 2),
       new GridPoint2(18, 2),
-      new GridPoint2(28,2),
       new GridPoint2(15, 12),
       new GridPoint2(23,12),
       new GridPoint2(27, 9),
@@ -368,6 +391,12 @@ public class Level2 extends GameArea {
       Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
     }
+
+//    for (int i = 0; i < bandageSpawnLocations.length; i++) {
+//      int randomAmmoQuantity = RandomUtils.randomInt(5);
+//      Entity pickupAmmo = ItemFactory.create;
+//      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
+//    }
 
     for (int i = 0; i < coinSpawnLocations.length; i++) {
       int randomCoinQuantity = RandomUtils.randomInt(5);

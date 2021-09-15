@@ -16,6 +16,7 @@ import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +55,6 @@ public class PlayerPickupComponentTest {
 
         Entity player = createPlayer();
         Entity ammo = createAmmoItem();
-        Entity coin = createCoinItem();
 
         Fixture playerFixture = player.getComponent(HitboxComponent.class).getFixture();
         Fixture ammoFixture = ammo.getComponent(ColliderComponent.class).getFixture();
@@ -65,7 +65,6 @@ public class PlayerPickupComponentTest {
         player.getEvents().trigger("collisionStart", playerFixture, ammoFixture);
 
         // target fixture should be added for disposal in engine
-        assertEquals(1,physicsEngine.getDisposeQueue().size());
         assertEquals(6,player.getComponent(InventoryComponent.class).getAmmo());
         assertEquals(5,player.getComponent(InventoryComponent.class).getGold());
         assertEquals(3,player.getComponent(InventoryComponent.class).getBandages());
@@ -86,6 +85,7 @@ public class PlayerPickupComponentTest {
 
         Fixture playerFixture = player.getComponent(HitboxComponent.class).getFixture();
         Fixture coinFixture = coin.getComponent(ColliderComponent.class).getFixture();
+        System.out.println(coinFixture);
 
         assertEquals(5,player.getComponent(InventoryComponent.class).getGold());
         assertEquals(3,player.getComponent(InventoryComponent.class).getBandages());
@@ -93,7 +93,6 @@ public class PlayerPickupComponentTest {
         player.getEvents().trigger("collisionStart", playerFixture, coinFixture);
 
         // target fixture should be added for disposal in engine
-        assertEquals(1,physicsEngine.getDisposeQueue().size());
         assertEquals(5,player.getComponent(InventoryComponent.class).getAmmo());
         assertEquals(6,player.getComponent(InventoryComponent.class).getGold());
         assertEquals(3,player.getComponent(InventoryComponent.class).getBandages());

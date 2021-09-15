@@ -111,7 +111,8 @@ public class Level1 extends GameArea {
     //spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
-    spawnIntroDialogue();
+    spawnHouses();
+    //spawnIntroDialogue();
 
     spawnBullet();
     //spawnCobweb();
@@ -212,6 +213,17 @@ public class Level1 extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
+    }
+  }
+
+  public void spawnHouses() {
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+
+    for (int x = 3; x < tileBounds.x; x += 7) {
+      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
+
+      Entity house = ObstacleFactory.createHouse();
+      spawnEntityAt(house, position, true, false);
     }
   }
 

@@ -4,9 +4,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -22,15 +24,10 @@ import java.util.LinkedList;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
-  private static final int NUM_COBWEBS = 7;
-  private static final int NUM_BUSH = 7;
   private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 7);
+  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final float WALL_WIDTH = 0.1f;
-
-  // this can be removed - this is purely for testing purposes
-  private static final int NUM_AMMO_PICKUPS = 3;
-  private static final int NUM_COIN_PICKUPS = 3;
 
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
@@ -53,6 +50,8 @@ public class Level2 extends GameArea {
     "images/player.png",
     "images/large_enemy_pix.png",
     "images/largeEnemy.png",
+    "images/spawnerEnemy.png",
+    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png"
@@ -63,10 +62,11 @@ public class Level2 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/small_enemy.atlas",
-    "images/Player_Sprite/player_movement.atlas",
-    "images/hud/dashbar.atlas",
-    "images/hud/health.atlas",
-    "images/weapon/sword.atlas"
+    "images/spawnerEnemy.atlas",
+      "images/Player_Sprite/player_movement.atlas",
+      "images/hud/dashbar.atlas",
+      "images/hud/health.atlas",
+      "images/weapon/sword.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -99,6 +99,7 @@ public class Level2 extends GameArea {
     spawnSmallEnemy();
     spawnLargeEnemy();
     spawnLongRangeEnemies();
+    spawnSpawnerEnemy();
 
     playMusic();
   }
@@ -268,6 +269,28 @@ public class Level2 extends GameArea {
     }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  /**
+   * Spawns the spawner enemy
+   */
+  private void spawnSpawnerEnemy() {
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(1, 11),
+            new GridPoint2(28,3),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
+    }
+  }
+  /**
+   * Spawns a small enemy from the appropriate spawner's position
+   */
+  public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
+    super.spawnFromSpawner(position, maxSpawnDistance);
   }
 
   private void spawnSmallEnemy() {//this da noo 1

@@ -21,9 +21,11 @@ import com.deco2800.game.services.ServiceLocator;
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
+  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(30, 15);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
+  private static final int GRASS_TILE_COUNT = 40;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -245,14 +247,26 @@ public class TerrainFactory {
     TerrainTile grassTile4 = new TerrainTile(grass4);
     TerrainTile grassTile5 = new TerrainTile(grass5);
     TerrainTile grassTile6 = new TerrainTile(grass6);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+//    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile1);
+//    fillTiles(layer, MAP_SIZE, grassTile1);
 
-    // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTile2, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, grassTile3, ROCK_TILE_COUNT);
+    //Multiplier to size of map on x and y coordinates
+    int xScale = 1;
+    int yScale = 1;
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_FOREST.x * xScale,
+            MAP_SIZE_FOREST.y * yScale, tileSize.x, tileSize.y);
+    fillTiles(layer, MAP_SIZE_FOREST, xScale, yScale, grassTile1);
+
+
+
+    // Randomised the grass tiles location
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile2, GRASS_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile3, GRASS_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile4, GRASS_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile5, GRASS_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile6, GRASS_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

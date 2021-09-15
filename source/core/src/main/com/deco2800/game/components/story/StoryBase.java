@@ -12,11 +12,13 @@ public interface StoryBase {
 
     /**
      * Advance the story. Returns true if there is story left
+     * @return true if there is story left
      */
     boolean advance();
 
     /**
      * Displays the story. Throws exception when story has not been created yet
+     * @throws Exception when story has not been created yet
      */
     void display() throws Exception;
 

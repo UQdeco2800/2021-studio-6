@@ -79,8 +79,8 @@ public class MenuUtility {
 
   /**
    * Sets the style for all the buttons within the menu's table
-   * @Table table - the table of menu buttons to alter
-   * @Skin skin - the default skin config file
+   * @param table - the table of menu buttons to alter
+   * @param skin - the default skin config file
    * @param style - The LibGDX style to set the button to
    * @param buttonPad - The padding for each button of the table
    * @param cellPad - The padding for each cell of the table

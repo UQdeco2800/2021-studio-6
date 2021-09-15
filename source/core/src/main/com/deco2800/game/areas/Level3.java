@@ -74,8 +74,8 @@ public class Level3 extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas"  };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
+  private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
 
@@ -276,10 +276,10 @@ public class Level3 extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-    music.setLooping(true);
-    music.setVolume(0f);
-    music.play();
+    Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
+    gameOverSong.setLooping(true);
+    gameOverSong.setVolume(0.07f);
+    gameOverSong.play();
   }
 
   private void loadAssets() {
@@ -288,7 +288,7 @@ public class Level3 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    resourceService.loadMusic(LEVEL3_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -302,14 +302,14 @@ public class Level3 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(LEVEL3_MUSIC);
   }
 
   @Override
   public void dispose() {
 
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 }

@@ -84,6 +84,8 @@ public abstract class GameArea implements Disposable {
 
   /**
    * Spawns a small enemy from the appropriate spawner's position
+   * @param position position to spawn
+   * @param maxSpawnDistance maximum spawn distance
    */
   public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
     int x = Math.round(position.x);

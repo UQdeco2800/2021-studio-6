@@ -50,7 +50,7 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
+  private static final String backgroundMusic = "sounds/safehouse-music.mp3";
   private static final String[] safehouseMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -73,7 +73,8 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnBullet();
-    //playMusic();
+
+    playMusic();
   }
 
   public Entity getPlayer() {
@@ -164,7 +165,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
     resourceService.loadSounds(safehouseSounds);
-    //resourceService.loadMusic(safehouseMusic);
+    resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -178,14 +179,14 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(safehouseSounds);
-    //resourceService.unloadAssets(safehouseMusic);
+    resourceService.unloadAssets(safehouseMusic);
   }
 
   @Override
   public void dispose() {
     door.getComponent(DisposingComponent.class).toBeDisposed();
     super.dispose();
-    //ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 }

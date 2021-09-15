@@ -45,7 +45,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/hud/health.atlas", TextureAtlas.class));
     healthAnimator.setCamera(true);
-    healthAnimator.setPositions(10, (float) -2.7);
+    healthAnimator.setPositions(9, (float) 4.3);
     healthAnimator.setScale( 3, 1);
     healthAnimator.addAnimation("health1", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health2", 0.1f, Animation.PlayMode.NORMAL);
@@ -69,7 +69,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
     dashAnimator.setCamera(true);
-    dashAnimator.setPositions(10, (float) -2);
+    dashAnimator.setPositions(9, (float) 5);
     dashAnimator.setScale( 3, (float) 0.5);
 
     entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
@@ -106,7 +106,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableHealth = new Table();
     tableHealth.top().left();
     tableHealth.setFillParent(true);
-    tableHealth.padTop(150f);
+    tableHealth.padTop(300f);
     tableHealth.add(healthBar).size(110f, 32f);
 
     // Heart image
@@ -157,26 +157,25 @@ public class PlayerInterfaceDisplay extends UIComponent {
     CharSequence bandageText = String.format(": %d", bandages);
     CharSequence ammoText = String.format(" : %d", ammo);
     CharSequence cointText = String.format(" : %d", coins);
-    CharSequence magazineText = " Left";
     CharSequence reloadText = "No ammo! Press R to reload!";
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
     coinLabel = new Label(cointText, skin, "large");
-    bulletMagazineLabel = new Label(magazineText, skin, "large");
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
-    tableCoin.padTop(200f);
+    tableCoin.padTop(520f).padLeft(270f);
     tableCoin.add(coinImage);
     tableCoin.add(coinLabel);
 
     tableBandage = new Table();
-    tableBandage.padLeft(-10);
+    tableBandage.padLeft(260f);
     tableBandage.add(bandageImage).size(bandageSideLength);
     tableBandage.add(bandageLabel);
 
     tableAmmo = new Table();
+    tableAmmo.padLeft(270f);
     tableAmmo.add(ammoImage);
     tableAmmo.add(ammoLabel);
 
@@ -186,7 +185,6 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableGunMagazine.add(bulletImage3);
     tableGunMagazine.add(bulletImage4);
     tableGunMagazine.add(bulletImage5);
-    tableGunMagazine.add(bulletMagazineLabel);
 
     tableReload = new Table();
     tableReload.add(reloadLabel);

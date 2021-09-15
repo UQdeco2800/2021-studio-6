@@ -1,0 +1,76 @@
+
+sword.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+sword0
+  rotate: false
+  xy: 2, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword1
+  rotate: false
+  xy: 350, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword2
+  rotate: false
+  xy: 698, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword3
+  rotate: false
+  xy: 1046, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword4
+  rotate: false
+  xy: 1394, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword_left0
+  rotate: false
+  xy: 2, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword_left1
+  rotate: false
+  xy: 350, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword_left2
+  rotate: false
+  xy: 698, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword_left3
+  rotate: false
+  xy: 1046, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword_left4
+  rotate: false
+  xy: 1394, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1

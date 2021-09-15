@@ -13,10 +13,20 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int gold;
   private int ammo;
+  private int bandages;
 
-  public InventoryComponent(int gold, int ammo) {
-    setGold(gold);
-    setAmmo(ammo);
+  public InventoryComponent(int gold, int ammo, int bandages) {
+    this.gold = gold;
+    this.ammo = ammo;
+    this.bandages = bandages;
+  }
+
+  @Override
+  public void create() {
+    super.create();
+    entity.getEvents().trigger("updateBandageHUD",this.bandages);
+    entity.getEvents().trigger("updateAmmoHUD",this.ammo);
+    entity.getEvents().trigger("updateCoinHUD",this.gold);
   }
 
   /**
@@ -45,6 +55,7 @@ public class InventoryComponent extends Component {
   public void setAmmo(int ammo) {
     this.ammo = Math.max(ammo, 0);
     logger.debug("Setting ammo to {}", this.ammo);
+    entity.getEvents().trigger("updateAmmoHUD",this.ammo);
   }
 
   /**
@@ -79,12 +90,9 @@ public class InventoryComponent extends Component {
    * @param gold gold
    */
   public void setGold(int gold) {
-    if (gold >= 0) {
-      this.gold = gold;
-    } else {
-      this.gold = 0;
-    }
+    this.gold = Math.max(gold, 0);
     logger.debug("Setting gold to {}", this.gold);
+    entity.getEvents().trigger("updateCoinHUD",this.gold);
   }
 
   /**
@@ -93,5 +101,42 @@ public class InventoryComponent extends Component {
    */
   public void addGold(int gold) {
     setGold(this.gold + gold);
+  }
+
+  /**
+   * Returns the player's bandage number left to use.
+   *
+   * @return entity's bandage item quantity
+   */
+  public int getBandages() {
+    return this.bandages;
+  }
+
+  /**
+   * Returns if the player has a certain amount of bandages.
+   * @param bandages required amount of bandages to be checked against
+   * @return player has greater than or equal to the required amount of bandages
+   */
+  public Boolean hasBandages(int bandages) {
+    return this.bandages >= bandages;
+  }
+
+  /**
+   * Sets the player's bandage. Bandage has a minimum bound of 0.
+   *
+   * @param bandages bandage to be set
+   */
+  public void setBandages(int bandages) {
+    this.bandages = Math.max(bandages, 0);
+    logger.debug("Setting ammo to {}", this.bandages);
+    entity.getEvents().trigger("updateBandageHUD",this.bandages);
+  }
+
+  /**
+   * Adds to the player's bandage. The amount added can be negative.
+   * @param bandages to add or subtract
+   */
+  public void addBandages(int bandages) {
+    setBandages(this.bandages + bandages);
   }
 }

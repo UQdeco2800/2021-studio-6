@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level2 extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+  private static final Logger logger = LoggerFactory.getLogger(Level1.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
@@ -30,8 +30,8 @@ public class Level2 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/Player_Sprite/front.png",
-    "images/player_placeholders/PROJECTILE.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
+    "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
@@ -64,9 +64,10 @@ public class Level2 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/small_enemy.atlas",
-    "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
-      "images/hud/health.atlas"
+      "images/hud/health.atlas",
+      "images/weapon/sword.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -97,10 +98,9 @@ public class Level2 extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
-    spawnSafehouse();
 
     spawnLongRangeEnemies();
-//    playMusic();
+    playMusic();
   }
 
   public Entity getPlayer() {

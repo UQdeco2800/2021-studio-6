@@ -1,7 +1,7 @@
 package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.Level1;
 import com.deco2800.game.areas.SafehouseGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -36,13 +36,11 @@ public class TouchTeleportComponent extends Component {
             return;
         }
 
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-            // Doesn't match our target layer, ignore
-            return;
+        if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
+            // Try to teleport entity
+            MainGameScreen.changeLevel();
         }
 
-        // Try to teleport entity
-        MainGameScreen.changeLevel();
-        System.out.println("Touched Safehouse");
+
     }
 }

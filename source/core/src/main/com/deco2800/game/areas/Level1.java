@@ -7,13 +7,14 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.components.dialoguebox.DialogueImage;
-import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+<<<<<<< HEAD:source/core/src/main/com/deco2800/game/areas/ForestGameArea.java
 import com.deco2800.game.components.player.hud.PlayerHudFactory;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
+=======
+>>>>>>> origin:source/core/src/main/com/deco2800/game/areas/Level1.java
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -27,8 +28,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
-public class ForestGameArea extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+public class Level1 extends GameArea {
+  private static final Logger logger = LoggerFactory.getLogger(Level1.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
@@ -38,19 +39,29 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  // this can be removed - this is purely for testing purposes
+  private static final int NUM_AMMO_PICKUPS = 3;
+  private static final int NUM_COIN_PICKUPS = 3;
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/Player_Sprite/front.png",
-    "images/player_placeholders/PROJECTILE.png",
+    "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
-    "images/obstacle_sprite/bush.png",
+    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
+    "images/level_1/road_tile_black.png",
+    "images/level_1/sidewalk.png",
+    "images/level_1/curbUpper.png",
+    "images/level_1/curbLower.png",
+    "images/level_1/road_tile_cracked.png",
+    "images/level_1/placeholder_road.png",
+    "images/level_1/road_tile_white.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -69,7 +80,8 @@ public class ForestGameArea extends GameArea {
     "images/hud/dashbarFull.png",
       "images/hud/healthFull.png"
   };
-  private static final String[] forestTextureAtlases = {
+
+  private static final String[] cityTextureAtlases = {
       "images/terrain_iso_grass.atlas",
       "images/largeEnemy.atlas",
       "images/ghost.atlas",
@@ -77,16 +89,18 @@ public class ForestGameArea extends GameArea {
       "images/small_enemy.atlas",
       "images/spawnerEnemy.atlas",
       "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
-      "images/hud/health.atlas"
+      "images/hud/health.atlas",
+      "images/weapon/sword.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+  private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
 
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public Level1(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
   }
@@ -99,23 +113,25 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnIntroDialogue();
 
     spawnBullet();
-    spawnCobweb();
-    spawnBush();
+    //spawnCobweb();
+    //spawnBush();
     playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
     spawnBullet();
-    spawnSafehouse();
 
     spawnLongRangeEnemies();
-//    playMusic();
+    playMusic();
+
+    // this is used for testing purposes for player pick up
+    spawnPickupItems();
   }
 
   public Entity getPlayer() {
@@ -131,7 +147,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.CITY);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -172,6 +188,25 @@ public class ForestGameArea extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
+  private void spawnPickupItems() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_AMMO_PICKUPS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int randomAmmoQuantity = RandomUtils.randomInt(5);
+      Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
+      spawnEntityAt(pickupAmmo, randomPos, true, false);
+    }
+
+    for (int i = 0; i < NUM_COIN_PICKUPS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int randomCoinQuantity = RandomUtils.randomInt(5);
+      Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
+      spawnEntityAt(pickupCoin, randomPos, true, false);
+    }
+  }
+
   private void spawnTrees() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -184,11 +219,11 @@ public class ForestGameArea extends GameArea {
   }
 
   public void spawnSafehouse() {
-    GridPoint2 center = new GridPoint2(15, 15);
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    GridPoint2 position  = new GridPoint2((int)(tileBounds.x * 0.9), tileBounds.y/3);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
-    // Position is currently procedurally (kidding, just randomly) generated.
-    spawnEntityAt(safehouse, center, true, false);
+    spawnEntityAt(safehouse, position, true, false);
   }
 
   private Entity spawnPlayer() {
@@ -206,7 +241,7 @@ public class ForestGameArea extends GameArea {
       spawnEntity(newBullet);
     }
 
-    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
   /**
   * Spawns the spawner enemy
@@ -317,8 +352,8 @@ public class ForestGameArea extends GameArea {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
-    resourceService.loadTextureAtlases(forestTextureAtlases);
-    resourceService.loadSounds(forestSounds);
+    resourceService.loadTextureAtlases(cityTextureAtlases);
+    resourceService.loadSounds(citySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -331,8 +366,8 @@ public class ForestGameArea extends GameArea {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(forestTextures);
-    resourceService.unloadAssets(forestTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
+    resourceService.unloadAssets(cityTextureAtlases);
+    resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

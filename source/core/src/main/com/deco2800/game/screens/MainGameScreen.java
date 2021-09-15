@@ -46,6 +46,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
   public static boolean levelChange = false;
+  private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
@@ -57,7 +58,7 @@ public class MainGameScreen extends ScreenAdapter {
     this.game = game;
 
     // Sets background to light yellow
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
+    Gdx.gl.glClearColor(50/255f, 50/255f, 50/255f, 1);
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -81,7 +82,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new ForestGameArea(terrainFactory);
+    gameArea = new Level1(terrainFactory);
     gameArea.create();
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
@@ -89,7 +90,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   private void checkGameOver() {
     logger.info("Game Over");
-    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
 
     Timer.schedule(new Timer.Task() {
@@ -103,7 +104,10 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
+      timeSource = ServiceLocator.getTimeSource();
+      timeSource.pause();
       generateNewLevel();
+      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
@@ -218,6 +222,7 @@ public class MainGameScreen extends ScreenAdapter {
               .walkDirection.add(walkingDirection);
     } else if (CurrentLevel == 4) {
       System.out.println("You win");
+      gameArea.dispose();
       ui.getEvents().trigger("exit");
     }
     levelChange = false;

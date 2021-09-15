@@ -118,7 +118,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     // Relevant images used alongside labels
     bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
     ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin.png", Texture.class));
+    coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin/coin1.png", Texture.class));
     bulletImage1 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
     bulletImage2 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
     bulletImage3 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));

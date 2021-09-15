@@ -94,23 +94,23 @@ public class ObstacleFactory {
    * @param height How much to scale the height of the image
    */
   public static Entity createObject(String image, float height) {
-    Entity tree =
+    Entity object =
         new Entity()
             .addComponent(new TextureRenderComponent(image))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(height);
-    PhysicsUtils.setScaledCollider(tree, 1f, 1f);
-    return tree;
+    object.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    object.getComponent(TextureRenderComponent.class).scaleEntity();
+    object.scaleHeight(height);
+    PhysicsUtils.setScaledCollider(object, 1f, 1f);
+    return object;
   }
 
   public static Entity createBuilding() {
     Entity building =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/level_1/building1-day1-latest.png"))
+            .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 

@@ -16,6 +16,8 @@ public class PhysicsLayer {
   // Paraphernalia
   public static final short PARAPHERNALIA = (1 << 4);
 
+  public static final short ENEMYBULLET = (1 << 7);
+
   public static boolean contains(short filterBits, short layer) {
     return (filterBits & layer) != 0;
   }

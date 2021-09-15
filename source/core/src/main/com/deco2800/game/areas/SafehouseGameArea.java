@@ -31,7 +31,8 @@ public class SafehouseGameArea extends GameArea {
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
   private static final String[] safehouseTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/coin.png", "images/playeritems/bandage/bandage01.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
+    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/pickupammo.png",
     "images/safehouse/interior-day1-tile-ground1-latest.png",
     "images/safehouse/interior-day1-tile-door1-latest.png",

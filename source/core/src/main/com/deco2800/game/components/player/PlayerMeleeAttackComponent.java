@@ -91,6 +91,12 @@ public class PlayerMeleeAttackComponent extends Component {
         setWeapon(weaponFile);
     }
 
+    /**
+     * Used to set the weapon stats and animations. Called either when the component is first instanced
+     * or later when the player changes weapon. Has to check if the player already
+     * had a weapon to cancel and remove any previous lingering elements.
+     * @param weaponConfig The config file for the specified weapon to be set to
+     */
     public void setWeapon(String weaponConfig) {
         weaponFile = weaponConfig;
         BaseWeaponConfig stats =
@@ -127,6 +133,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
     /**
      * Sets the animations for the weaponAnimator after a certain point to allow assets to load
+     * @param setWeapon the reference to the animation controller to be set on
      */
     public void setAnimations(PlayerWeaponAnimationController setWeapon) {
         setWeapon.setter(animationCords);
@@ -155,7 +162,7 @@ public class PlayerMeleeAttackComponent extends Component {
     /**
      * Getter for direction of player movement.
      *
-     * @return player last walked direction
+     * @return FixtureDef for the last walked direction
      */
     private FixtureDef getFixDirection() {
         KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
@@ -179,6 +186,9 @@ public class PlayerMeleeAttackComponent extends Component {
         return fixtureDefLast;
     }
 
+    /**
+     * Sets the bounding boxes of the weapon collision based on the weapons stats
+     */
     private void setShapes() {
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
@@ -218,8 +228,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * will be allowed to damage them.
      *
      * @param me is the fixture of current component
-     * @param other is the other fixture which current component is in contact
-     *              with
+     * @param other is the other fixture which current component is in contact with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
         // By default, should only try detect NPC layers only
@@ -273,8 +282,9 @@ public class PlayerMeleeAttackComponent extends Component {
     }
 
     /**
-     * Triggered when the player presses the attack button. Handles creating
-     * the fixtures for the attack and prepping before actual the damage/hit.
+     * Triggered when the player presses the attack button. Handles creating the
+     * fixtures for the attack and prepping before actual the damage/hit. Also handles
+     * attack length and duration.
      */
     private void attack() {
         if (timeSource.getTime() >= attackEnd) {
@@ -296,10 +306,16 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
+    /**
+     * Timed used to dispose of the weapon fixture based on attack length.
+     */
     private void disposeTimeSet() {
         disposeTime = timeSource.getTime() + attackLength;
     }
 
+    /**
+     * Checks to dispose of the weapon fixture.
+     */
     @Override
     public void update() {
         if (disposeTime < timeSource.getTime()) {
@@ -307,6 +323,10 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
+    /**
+     * Dispose for the weapon requires stopping the animation (visual element)
+     * and changing/disposing the attack fixture.
+     */
     @Override
     public void dispose() {
         if (weaponAnimator != null) {

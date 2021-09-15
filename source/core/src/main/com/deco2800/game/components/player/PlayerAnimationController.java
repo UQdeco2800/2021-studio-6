@@ -10,8 +10,7 @@ import com.deco2800.game.services.ServiceLocator;
 
 /**
  * This class listens to events relevant to a player's state and plays the animation when one
- * of the events is triggered. Currently not implemented as the animations do
- * not yet exist. Can be expanded later on to include other animation events.
+ * of the events is triggered. Animations are stored in arrays to allow indexing.
  */
 public class PlayerAnimationController extends Component {
   AnimationRenderComponent animator;
@@ -38,6 +37,9 @@ public class PlayerAnimationController extends Component {
   private final String[][][] animationArmour = {animationsLeftArmour, animationsRightArmour, animationsDownArmour, animationsUpArmour};
   private final String[][][][] animations = {animationNoArmor, animationHelmet, animationArmour};
 
+  /**
+   * Sets up relevant event trigger for getting hurt and starts default animation.
+   */
   @Override
   public void create() {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
@@ -45,6 +47,16 @@ public class PlayerAnimationController extends Component {
     animator.startAnimation("front");
   }
 
+  /**
+   * Player animations are updated and checked each update call. Goes through a
+   * number of if statements and checks to determine the correct index location for
+   * the relevant player animation. This index system was used to reduce complexity,
+   * as otherwise the function would require an obscene amount of nested if statements
+   * and switches.
+   *
+   * Checks if the player is moving, if they are hurt and what type of armour they have on.
+   * Also checks if the identical animation is already in progress.
+   */
   @Override
   public void update() {
     if (timeSource.getTimeSince(hurtTime) >= hurtDuration) {
@@ -96,6 +108,9 @@ public class PlayerAnimationController extends Component {
     }
   }
 
+  /**
+   * Gets trigger when the player gets hurt and sets local variable for it.
+   */
   void animateHurt() {
     hurtActive = true;
     hurtTime = timeSource.getTime();

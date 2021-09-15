@@ -50,6 +50,10 @@ public class ServiceLocator {
     return resourceService;
   }
 
+  public static GameArea getGameArea() {
+    return gameArea;
+  }
+
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
     entityService = service;
@@ -82,15 +86,9 @@ public class ServiceLocator {
 
 
   public static void registerGameArea(GameArea source) {
-    logger.debug("Registering resource service {}", source);
+    logger.debug("Registering local game area reference {}", source);
     gameArea = source;
   }
-
-  public static GameArea getGameArea() {
-    return gameArea;
-  }
-
-
 
 
   public static void clear() {
@@ -100,6 +98,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    gameArea = null;
   }
 
   private ServiceLocator() {

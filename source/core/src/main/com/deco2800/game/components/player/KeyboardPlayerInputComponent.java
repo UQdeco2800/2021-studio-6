@@ -47,6 +47,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Triggers player events on specific keycodes.
+   * Split up into 2 separate if statements that depend on other variables to reduce complexity.
    *
    * @return whether the input was processed
    * @see InputProcessor#keyDown(int)

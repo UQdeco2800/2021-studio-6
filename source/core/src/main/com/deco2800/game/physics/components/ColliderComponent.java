@@ -6,7 +6,6 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
-import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -207,12 +206,13 @@ public class ColliderComponent extends Component {
   }
 
   @Override
+  public void update() {
+  }
+
+  @Override
   public void dispose() {
+    fixtureDef.shape = null;
     super.dispose();
-    Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-    if (physBody.getFixtureList().contains(fixture, true)) {
-//      physBody.destroyFixture(fixture);
-    }
   }
 
   private Shape makeBoundingBox() {

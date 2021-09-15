@@ -129,7 +129,6 @@ public class SafehouseGameArea extends GameArea {
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
-
   }
 
   private Entity spawnPlayer() {
@@ -183,7 +182,7 @@ public class SafehouseGameArea extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    door.getComponent(DisposingComponent.class).toBeDisposed();
+    door.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }

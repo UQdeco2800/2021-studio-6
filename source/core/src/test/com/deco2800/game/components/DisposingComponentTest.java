@@ -51,7 +51,6 @@ public class DisposingComponentTest {
         anotherEntity.create();
         anotherEntity.update();
 
-        entity.getComponent(DisposingComponent.class).toBeDisposed();
         anotherEntity.getComponent(DisposingComponent.class).toBeReused();
 
         assertNotNull(physicsEngine.getReuseQueue());

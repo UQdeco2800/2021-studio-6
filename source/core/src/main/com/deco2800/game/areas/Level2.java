@@ -33,7 +33,8 @@ public class Level2 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
+    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
       "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
       "images/playeritems/ax/ax_right2.png",
@@ -76,7 +77,8 @@ public class Level2 extends GameArea {
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
-      "images/weapon/axe.atlas"
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";

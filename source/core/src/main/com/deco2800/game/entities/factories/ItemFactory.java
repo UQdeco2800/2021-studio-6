@@ -43,7 +43,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.COINS, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/coin.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/coin/coin2.png"))
                 .addComponent(new DisposingComponent());
         coin.setScale(0.7f, 0.7f);
         return coin;
@@ -124,7 +124,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AXE, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/ax/ax_right2.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/axe/ax_right2.png"))
                 .addComponent(new DisposingComponent());
         return axe;
     }

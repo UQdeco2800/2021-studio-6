@@ -70,7 +70,10 @@ public class PlayerPickupComponent extends Component {
                  weapon.setWeapon("configs/Sword.json");
             } else if (item.getItemType() == Items.AXE) {
                 weapon.setWeapon("configs/Axe.json");
+            } else if (item.getItemType() == Items.DAGGER) {
+                weapon.setWeapon("configs/Dagger.json");
             }
+
 
             if (ServiceLocator.getGameArea() != null) {
                 ServiceLocator.getGameArea().despawnEntity(target);

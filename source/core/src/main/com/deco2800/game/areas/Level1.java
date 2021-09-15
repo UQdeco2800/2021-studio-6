@@ -43,9 +43,10 @@ public class Level1 extends GameArea {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
+    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
-    "images/playeritems/ax/ax_right2.png",
+    "images/playeritems/axe/ax_right2.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -91,7 +92,8 @@ public class Level1 extends GameArea {
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
-      "images/weapon/axe.atlas"
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";

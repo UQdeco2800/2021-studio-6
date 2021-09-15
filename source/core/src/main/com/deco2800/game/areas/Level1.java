@@ -57,6 +57,7 @@ public class Level1 extends GameArea {
     "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
     "images/level_1/road_tile_white.png",
+    "images/level_1/building1-day1-latest.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -73,7 +74,7 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+    "images/hud/healthFull.png"
   };
 
   private static final String[] cityTextureAtlases = {
@@ -111,8 +112,8 @@ public class Level1 extends GameArea {
     //spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
-    spawnHouses();
-    //spawnIntroDialogue();
+    spawnBuildings();
+    spawnIntroDialogue();
 
     spawnBullet();
     //spawnCobweb();
@@ -216,13 +217,13 @@ public class Level1 extends GameArea {
     }
   }
 
-  public void spawnHouses() {
+  public void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
 
     for (int x = 3; x < tileBounds.x; x += 7) {
       GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
 
-      Entity house = ObstacleFactory.createHouse();
+      Entity house = ObstacleFactory.createBuilding();
       spawnEntityAt(house, position, true, false);
     }
   }
@@ -339,7 +340,7 @@ public class Level1 extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.1f);
+    music.setVolume(0.3f);
     music.play();
   }
 

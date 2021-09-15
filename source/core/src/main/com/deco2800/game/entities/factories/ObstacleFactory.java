@@ -88,17 +88,17 @@ public class ObstacleFactory {
     return wall;
   }
 
-  public static Entity createHouse() {
-    Entity house =
+  public static Entity createBuilding() {
+    Entity building =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/safehouse/exterior-day1-latest.png"))
+            .addComponent(new TextureRenderComponent("images/level_1/building1-day1-latest.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    house.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    house.getComponent(TextureRenderComponent.class).scaleEntity();
-    house.scaleHeight(5f);
-    return house;
+    building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    building.getComponent(TextureRenderComponent.class).scaleEntity();
+    building.scaleHeight(10f);
+    return building;
   }
 
   private ObstacleFactory() {

@@ -18,6 +18,12 @@
     "health": 10,
     "baseAttack": 5,
     "speed": 2
+  },
+  "spawnerEnemy": {
+    "health": 20,
+    "baseAttack": 0,
+    "speed_x": 0,
+    "speed_y": 0
   }
 }
 

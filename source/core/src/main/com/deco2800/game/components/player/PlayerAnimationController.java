@@ -40,7 +40,6 @@ public class PlayerAnimationController extends Component {
 
   @Override
   public void create() {
-    super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     entity.getEvents().addListener("hurt",this::animateHurt);
     animator.startAnimation("front");
@@ -99,6 +98,6 @@ public class PlayerAnimationController extends Component {
 
   void animateHurt() {
     hurtActive = true;
-    hurtTime = timeSource.getTime() + hurtDuration;
+    hurtTime = timeSource.getTime();
   }
 }

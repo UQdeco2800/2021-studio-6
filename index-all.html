@@ -661,6 +661,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates a small enemy entity.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/NPCFactory.html#createSpawnerEnemy(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">createSpawnerEnemy(Entity, GameArea)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/NPCFactory.html" title="class in com.deco2800.game.entities.factories">NPCFactory</a></dt>
+<dd>
+<div class="block">Creates a spawner enemy entity.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/terrain/TerrainFactory.html#createTerrain(com.deco2800.game.areas.terrain.TerrainFactory.TerrainType)">createTerrain(TerrainFactory.TerrainType)</a></span> - Method in class com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainFactory.html" title="class in com.deco2800.game.areas.terrain">TerrainFactory</a></dt>
 <dd>
 <div class="block">Create a terrain of the given type, using the orientation of the factory.</div>
@@ -1393,6 +1397,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/DistanceFireBulletTask.html#getPriority()">getPriority()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/DistanceFireBulletTask.html" title="class in com.deco2800.game.components.tasks">DistanceFireBulletTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/FireBulletTask.html#getPriority()">getPriority()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/FireBulletTask.html" title="class in com.deco2800.game.components.tasks">FireBulletTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html#getPriority()">getPriority()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html" title="class in com.deco2800.game.components.tasks">SpawnerEnemyTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/WanderTask.html#getPriority()">getPriority()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/WanderTask.html" title="class in com.deco2800.game.components.tasks">WanderTask</a></dt>
 <dd>&nbsp;</dd>
@@ -2807,6 +2813,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Spawn entity on a given tile.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/NPCConfigs.html#spawnerEnemy">spawnerEnemy</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/NPCConfigs.html" title="class in com.deco2800.game.entities.configs">NPCConfigs</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html" title="class in com.deco2800.game.entities.configs"><span class="typeNameLink">SpawnerEnemyConfig</span></a> - Class in <a href="com/deco2800/game/entities/configs/package-summary.html">com.deco2800.game.entities.configs</a></dt>
+<dd>
+<div class="block">Defines the properties stored in spawner enemy config files to be loaded by the NPC Factory.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html#%3Cinit%3E()">SpawnerEnemyConfig()</a></span> - Constructor for class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html" title="class in com.deco2800.game.entities.configs">SpawnerEnemyConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html" title="class in com.deco2800.game.components.tasks"><span class="typeNameLink">SpawnerEnemyTask</span></a> - Class in <a href="com/deco2800/game/components/tasks/package-summary.html">com.deco2800.game.components.tasks</a></dt>
+<dd>
+<div class="block">Spawns small enemies while the player is in range</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html#%3Cinit%3E(com.deco2800.game.entities.Entity,int,float,float,com.deco2800.game.areas.GameArea,com.deco2800.game.entities.Entity)">SpawnerEnemyTask(Entity, int, float, float, GameArea, Entity)</a></span> - Constructor for class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html" title="class in com.deco2800.game.components.tasks">SpawnerEnemyTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/GameArea.html#spawnFromSpawner(com.badlogic.gdx.math.Vector2,int)">spawnFromSpawner(Vector2, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a></dt>
+<dd>
+<div class="block">Spawns a small enemy from the appropriate spawner's position</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/Level1.html#spawnFromSpawner(com.badlogic.gdx.math.Vector2,int)">spawnFromSpawner(Vector2, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/Level1.html" title="class in com.deco2800.game.areas">Level1</a></dt>
+<dd>
+<div class="block">Spawns a small enemy from the appropriate spawner's position</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/Level2.html#spawnFromSpawner(com.badlogic.gdx.math.Vector2,int)">spawnFromSpawner(Vector2, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/Level2.html" title="class in com.deco2800.game.areas">Level2</a></dt>
+<dd>
+<div class="block">Spawns a small enemy from the appropriate spawner's position</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/Level3.html#spawnFromSpawner(com.badlogic.gdx.math.Vector2,int)">spawnFromSpawner(Vector2, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/Level3.html" title="class in com.deco2800.game.areas">Level3</a></dt>
+<dd>
+<div class="block">Spawns a small enemy from the appropriate spawner's position</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/Level1.html#spawnSafehouse()">spawnSafehouse()</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/Level1.html" title="class in com.deco2800.game.areas">Level1</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/Level2.html#spawnSafehouse()">spawnSafehouse()</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/Level2.html" title="class in com.deco2800.game.areas">Level2</a></dt>
@@ -2817,7 +2853,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/LargeEnemyConfig.html#speed_x">speed_x</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/LargeEnemyConfig.html" title="class in com.deco2800.game.entities.configs">LargeEnemyConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html#speed_x">speed_x</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html" title="class in com.deco2800.game.entities.configs">SpawnerEnemyConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/LargeEnemyConfig.html#speed_y">speed_y</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/LargeEnemyConfig.html" title="class in com.deco2800.game.entities.configs">LargeEnemyConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html#speed_y">speed_y</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/SpawnerEnemyConfig.html" title="class in com.deco2800.game.entities.configs">SpawnerEnemyConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/utils/SortedIntMap.html#spliterator()">spliterator()</a></span> - Method in class com.deco2800.game.utils.<a href="com/deco2800/game/utils/SortedIntMap.html" title="class in com.deco2800.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
@@ -2843,6 +2883,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/MovementTask.html#start()">start()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/MovementTask.html" title="class in com.deco2800.game.components.tasks">MovementTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html#start()">start()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html" title="class in com.deco2800.game.components.tasks">SpawnerEnemyTask</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/WaitTask.html#start()">start()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/WaitTask.html" title="class in com.deco2800.game.components.tasks">WaitTask</a></dt>
 <dd>
 <div class="block">Start waiting from now until duration has passed.</div>
@@ -2866,6 +2908,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/DistanceFireBulletTask.html#stop()">stop()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/DistanceFireBulletTask.html" title="class in com.deco2800.game.components.tasks">DistanceFireBulletTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/MovementTask.html#stop()">stop()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/MovementTask.html" title="class in com.deco2800.game.components.tasks">MovementTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html#stop()">stop()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html" title="class in com.deco2800.game.components.tasks">SpawnerEnemyTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/WanderTask.html#stop()">stop()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/WanderTask.html" title="class in com.deco2800.game.components.tasks">WanderTask</a></dt>
 <dd>&nbsp;</dd>
@@ -3186,6 +3230,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/MovementTask.html#update()">update()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/MovementTask.html" title="class in com.deco2800.game.components.tasks">MovementTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html#update()">update()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/SpawnerEnemyTask.html" title="class in com.deco2800.game.components.tasks">SpawnerEnemyTask</a></dt>
+<dd>
+<div class="block">Each update, the timer is checked to see if enough time has passed for an enemy to be spawned</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/WaitTask.html#update()">update()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/WaitTask.html" title="class in com.deco2800.game.components.tasks">WaitTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/WanderTask.html#update()">update()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/WanderTask.html" title="class in com.deco2800.game.components.tasks">WanderTask</a></dt>

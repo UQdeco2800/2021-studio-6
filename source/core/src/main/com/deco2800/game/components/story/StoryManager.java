@@ -28,6 +28,7 @@ public class StoryManager extends Component {
     private boolean prevPauseState = false;
 
     private StoryBase loadedStory;
+    private StoryNames loadedStoryName = StoryNames.NONE;
 
     private StoryManager(){
         scenesConfigs.put(StoryNames.TEST, new TestCutscene());
@@ -55,6 +56,7 @@ public class StoryManager extends Component {
             return;
         }
 
+        loadedStoryName = name;
         loadedStory = config.initialiseStory();
         loadedStory.create();
     }
@@ -115,7 +117,8 @@ public class StoryManager extends Component {
         if (!prevPauseState) {
             ServiceLocator.getTimeSource().unpause();
         }
-        entity.getEvents().trigger("story-finished");
+        entity.getEvents().trigger("story-finished:" + loadedStoryName);
+        loadedStoryName = StoryNames.NONE;
     }
 
     /**

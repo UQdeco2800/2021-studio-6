@@ -244,7 +244,8 @@ public class MainGameScreen extends ScreenAdapter {
   private void spawnOutroDialogue(){
     StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
     StoryManager.getInstance().displayStory();
-    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished", this::onOutroFinish);
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.EPILOGUE,
+            this::onOutroFinish);
   }
 
   private void onOutroFinish() {

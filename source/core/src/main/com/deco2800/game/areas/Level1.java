@@ -117,7 +117,8 @@ public class Level1 extends GameArea {
     spawnLongRangeEnemies();
 
     //Listener for prologue finished to play music
-    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished", this::playMusic);
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
+            this::playMusic);
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -328,6 +329,7 @@ public class Level1 extends GameArea {
 
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    StoryManager.getInstance().getEntity().getEvents().removeListener("finished-story");
     this.unloadAssets();
   }
 }

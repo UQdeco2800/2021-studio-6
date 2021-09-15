@@ -88,6 +88,19 @@ public class ObstacleFactory {
     return wall;
   }
 
+  public static Entity createHouse() {
+    Entity house =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/safehouse/exterior-day1-latest.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    house.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    house.getComponent(TextureRenderComponent.class).scaleEntity();
+    house.scaleHeight(5f);
+    return house;
+  }
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

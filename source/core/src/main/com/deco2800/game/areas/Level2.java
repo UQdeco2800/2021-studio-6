@@ -64,10 +64,10 @@ public class Level2 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/small_enemy.atlas",
-      "images/Player_Sprite/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/sword.atlas"
+    "images/Player_Sprite/player_movement.atlas",
+    "images/hud/dashbar.atlas",
+    "images/hud/health.atlas",
+    "images/weapon/sword.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";

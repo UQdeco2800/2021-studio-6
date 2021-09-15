@@ -66,6 +66,7 @@ public class TerrainFactory {
         TextureRegion orthoRocks =
             new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
+
       case CITY:
         TextureRegion cityBackground =
             new TextureRegion(resourceService.getAsset("images/level_1/placeholder_road.png", Texture.class));
@@ -83,22 +84,22 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/level_1/road_tile_white.png", Texture.class));
         return createCityTerrain(1f, cityRoad, citySidewalk, cityCurbUpper, cityCurbLower, crackedRoad,
             cityBackground, laneMarkings);
-      case FOREST_DEMO_ISO:
-        TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
-        TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        TextureRegion isoRocks =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
-      case FOREST_DEMO_HEX:
-        TextureRegion hexGrass =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
-        TextureRegion hexTuft =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_2.png", Texture.class));
-        TextureRegion hexRocks =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
+
+      case FOREST:
+        TextureRegion grass1 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_1.png", Texture.class));
+        TextureRegion grass2 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_2.png", Texture.class));
+        TextureRegion grass3 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_3.png", Texture.class));
+        TextureRegion grass4 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_4.png", Texture.class));
+        TextureRegion grass5 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_5.png", Texture.class));
+        TextureRegion grass6 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_6.png", Texture.class));
+        return createForestTerrain(1f, grass1, grass2, grass3, grass4, grass5, grass6);
+
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
@@ -125,6 +126,16 @@ public class TerrainFactory {
     GridPoint2 tilePixelSize = new GridPoint2(cityRoad.getRegionWidth(), cityRoad.getRegionHeight());
     TiledMap tiledMap = createCityTiles(tilePixelSize, cityRoad, citySidewalk, cityCurbUpper, cityCurbLower,
         crackedRoad, cityBackground, laneMarkings);
+    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
+  private TerrainComponent createForestTerrain(
+          float tileWorldSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
+          TextureRegion grass4, TextureRegion grass5, TextureRegion grass6
+  ) {
+    GridPoint2 tilePixelSize = new GridPoint2(grass1.getRegionWidth(), grass1.getRegionHeight());
+    TiledMap tiledMap = createForestTiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, grass6);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -222,6 +233,33 @@ public class TerrainFactory {
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
+
+  private TiledMap createForestTiles(
+          GridPoint2 tileSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
+          TextureRegion grass4, TextureRegion grass5, TextureRegion grass6
+  ) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile grassTile1 = new TerrainTile(grass1);
+    TerrainTile grassTile2 = new TerrainTile(grass2);
+    TerrainTile grassTile3 = new TerrainTile(grass3);
+    TerrainTile grassTile4 = new TerrainTile(grass4);
+    TerrainTile grassTile5 = new TerrainTile(grass5);
+    TerrainTile grassTile6 = new TerrainTile(grass6);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
+    // Create base grass
+    fillTiles(layer, MAP_SIZE, grassTile1);
+
+    // Add some grass and rocks
+    fillTilesAtRandom(layer, MAP_SIZE, grassTile2, TUFT_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE, grassTile3, ROCK_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+  }
+
+
+
 
   private TiledMap createSafehouseTiles(
           GridPoint2 tileSize,
@@ -363,9 +401,8 @@ public class TerrainFactory {
    */
   public enum TerrainType {
     FOREST_DEMO,
-    FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX,
     SAFEHOUSE,
-    CITY
+    CITY,
+    FOREST
   }
 }

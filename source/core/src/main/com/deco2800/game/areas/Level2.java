@@ -22,15 +22,16 @@ import java.util.LinkedList;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
-  private static final int NUM_TREES = 7;
   private static final int NUM_COBWEBS = 7;
   private static final int NUM_BUSH = 7;
-  private static final int NUM_LARGE_ENEMY = 2;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 7);
   private static final float WALL_WIDTH = 0.1f;
+
+  // this can be removed - this is purely for testing purposes
+  private static final int NUM_AMMO_PICKUPS = 3;
+  private static final int NUM_COIN_PICKUPS = 3;
+
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png",
@@ -93,6 +94,7 @@ public class Level2 extends GameArea {
 
     player = spawnPlayer();
     spawnBullet();
+    spawnPickupItems();
 
     spawnSmallEnemy();
     spawnLargeEnemy();
@@ -340,6 +342,37 @@ public class Level2 extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity bush = ObstacleFactory.createBush();
       spawnEntityAt(bush, randomPos, true, false);
+    }
+  }
+
+  private void spawnPickupItems() {
+    GridPoint2[] ammoSpawnLocations = {
+      new GridPoint2(1, 13),
+      new GridPoint2(28,1),
+      new GridPoint2(13, 13),
+    };
+
+    GridPoint2[] coinSpawnLocations = {
+      new GridPoint2(2, 12),
+      new GridPoint2(4,2),
+      new GridPoint2(8, 2),
+      new GridPoint2(18, 2),
+      new GridPoint2(28,2),
+      new GridPoint2(15, 12),
+      new GridPoint2(23,12),
+      new GridPoint2(27, 9),
+    };
+
+    for (int i = 0; i < ammoSpawnLocations.length; i++) {
+      int randomAmmoQuantity = RandomUtils.randomInt(5);
+      Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
+      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
+    }
+
+    for (int i = 0; i < coinSpawnLocations.length; i++) {
+      int randomCoinQuantity = RandomUtils.randomInt(5);
+      Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
+      spawnEntityAt(pickupCoin, coinSpawnLocations[i], true, false);
     }
   }
 

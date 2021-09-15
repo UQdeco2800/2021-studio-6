@@ -4,9 +4,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -27,6 +29,7 @@ public class Level2 extends GameArea {
   private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
+  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -53,6 +56,7 @@ public class Level2 extends GameArea {
     "images/player.png",
     "images/large_enemy_pix.png",
     "images/largeEnemy.png",
+    "images/spawnerEnemy.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
       "images/hud/dashbarFull.png",
@@ -64,6 +68,7 @@ public class Level2 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/small_enemy.atlas",
+    "images/spawnerEnemy.atlas",
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
@@ -98,6 +103,7 @@ public class Level2 extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
+    spawnSpawnerEnemy();
 
     spawnLongRangeEnemies();
     playMusic();
@@ -192,6 +198,27 @@ public class Level2 extends GameArea {
     }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  /**
+   * Spawns the spawner enemy
+   */
+  private void spawnSpawnerEnemy() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnEntityAt(spawnerEnemy, randomPos, true, true);
+    }
+  }
+  /**
+   * Spawns a small enemy from the appropriate spawner's position
+   */
+  public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
+    super.spawnFromSpawner(position, maxSpawnDistance);
   }
 
   private void spawnSmallEnemy() {//this da noo 1

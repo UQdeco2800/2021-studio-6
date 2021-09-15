@@ -70,7 +70,7 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+    "images/hud/healthFull.png"
   };
 
   private static final String[] cityTextureAtlases = {

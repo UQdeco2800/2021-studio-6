@@ -36,27 +36,21 @@ public class Level2 extends GameArea {
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
     "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/iso_grass_3.png",
+    "images/level_2/level2_grass_1.png",
+    "images/level_2/level2_grass_2.png",
+    "images/level_2/level2_grass_3.png",
+    "images/level_2/level2_grass_4.png",
+    "images/level_2/level2_grass_5.png",
+    "images/level_2/level2_grass_6.png",
     "images/gunman.png",
     "images/eye.png",
     "images/blood_ball.png",
     "images/player.png",
     "images/large_enemy_pix.png",
     "images/largeEnemy.png",
-    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
-      "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+    "images/hud/dashbarFull.png",
+    "images/hud/healthFull.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -116,7 +110,7 @@ public class Level2 extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.FOREST);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls

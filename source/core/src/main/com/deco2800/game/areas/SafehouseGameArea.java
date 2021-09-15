@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class SafehouseGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SafehouseGameArea.class);
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 2);
   private static final int NUM_BULLETS = 5;
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
@@ -50,11 +50,14 @@ public class SafehouseGameArea extends GameArea {
       "images/weapon/axe.atlas"
   };
 
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
+  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
+  private static final String[] safehouseMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
+
+  private GridPoint2 tileBounds;
+  private Vector2 worldBounds;
 
   public SafehouseGameArea(TerrainFactory terrainFactory) {
     super();
@@ -91,8 +94,8 @@ public class SafehouseGameArea extends GameArea {
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    tileBounds = terrain.getMapBounds(0);
+    worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
@@ -112,9 +115,7 @@ public class SafehouseGameArea extends GameArea {
             GridPoint2Utils.ZERO, false,false);
   }
 
-  public static void spawnDoor() {
-    GridPoint2 center = new GridPoint2(15, 15);
-
+  public void spawnDoor() {
     // Create entity
     door = new Entity()
             .addComponent(new TextureRenderComponent("images/safehouse/interior-day1-tile-door1-latest.png"))
@@ -126,8 +127,7 @@ public class SafehouseGameArea extends GameArea {
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
     door.getComponent(TextureRenderComponent.class).scaleEntity();
     door.scaleHeight(2.5f);
-    door.setPosition(10, 10);
-    //PhysicsUtils.setScaledCollider(door, 0.3f, 0.5f);
+    door.setPosition(worldBounds.x - 2, (worldBounds.y / 2) - 1);
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
@@ -136,7 +136,7 @@ public class SafehouseGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(tileBounds.x / 4, tileBounds.y / 2), true, true);
     return newPlayer;
   }
 
@@ -155,7 +155,7 @@ public class SafehouseGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.3f);
     music.play();
   }
 
@@ -164,8 +164,8 @@ public class SafehouseGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
-    resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    resourceService.loadSounds(safehouseSounds);
+    //resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -178,16 +178,15 @@ public class SafehouseGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(safehouseSounds);
+    //resourceService.unloadAssets(safehouseMusic);
   }
 
   @Override
   public void dispose() {
     door.getComponent(DisposingComponent.class).toBeDisposed();
-
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    //ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 }

@@ -24,7 +24,6 @@ public class DisposingComponentTest {
     @Test
     void queueShouldBeEmpty() {
         PhysicsEngine engine = new PhysicsEngine(world, gameTime);
-        assertTrue(engine.getDisposeQueue().isEmpty());
         assertTrue(engine.getReuseQueue().isEmpty());
     }
 
@@ -38,7 +37,6 @@ public class DisposingComponentTest {
 
         PhysicsEngine physicsEngine = physicsService.getPhysics();
 
-        assertTrue(physicsEngine.getDisposeQueue().isEmpty());
         assertTrue(physicsEngine.getReuseQueue().isEmpty());
 
         Entity entity = new Entity();
@@ -51,13 +49,9 @@ public class DisposingComponentTest {
         anotherEntity.create();
         anotherEntity.update();
 
-        entity.getComponent(DisposingComponent.class).toBeDisposed();
         anotherEntity.getComponent(DisposingComponent.class).toBeReused();
 
         assertNotNull(physicsEngine.getReuseQueue());
         assertEquals(1, physicsEngine.getReuseQueue().size());
-
-        assertNotNull(physicsEngine.getDisposeQueue());
-        assertEquals(1, physicsEngine.getDisposeQueue().size());
     }
 }

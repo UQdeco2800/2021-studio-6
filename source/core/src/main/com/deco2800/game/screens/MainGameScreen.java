@@ -236,11 +236,8 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
     }
-<<<<<<< HEAD
     ServiceLocator.registerGameArea(gameArea);
-=======
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
->>>>>>> main
     levelChange = false;
   }
 

@@ -84,13 +84,10 @@ public class Level1 extends GameArea {
       "images/ghost.atlas",
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
-<<<<<<< HEAD
       "images/Player_Animations/player_movement.atlas",
-=======
       "images/spawnerEnemy.atlas",
       "images/player.atlas",
       "images/Player_Sprite/player_movement.atlas",
->>>>>>> main
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",

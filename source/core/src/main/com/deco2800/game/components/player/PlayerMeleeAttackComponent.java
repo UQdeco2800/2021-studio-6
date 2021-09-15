@@ -148,7 +148,6 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void walk(Vector2 walkDirection) {
         if (fixture != null) {
-            weaponAnimator.stopAnimation();
             dispose();
         }
     }
@@ -310,7 +309,9 @@ public class PlayerMeleeAttackComponent extends Component {
 
     @Override
     public void dispose() {
-        weaponAnimator.stopAnimation();
+        if (weaponAnimator != null) {
+            weaponAnimator.stopAnimation();
+        }
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;

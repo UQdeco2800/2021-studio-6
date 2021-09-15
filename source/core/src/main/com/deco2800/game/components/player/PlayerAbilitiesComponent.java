@@ -12,12 +12,12 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class PlayerAbilitiesComponent extends Component {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static final int delayLength = 60000; // in milliseconds
+    private static final int DELAY_LENGTH = 60000; // in milliseconds
     private long delayEndTime = 0;
     private Abilities ability;
     // Ability Specific Variables
-    private static final long dashLength = 200; // in milliseconds
-    private static final long invincibilityLength = 3000;
+    private static final long DASH_LENGTH = 200; // in milliseconds
+    private static final long INVINCIBILITY_LENGTH = 3000;
     /**
      * Basic constructor for setting the players chosen ability
      * @param ability is the ability state to set the player to
@@ -53,15 +53,16 @@ public class PlayerAbilitiesComponent extends Component {
      * @param direction Used for the implementation of abilities
      */
     void triggerAbility(Vector2 direction) {
-        if (ability != Abilities.NONE && (ability != Abilities.LONG_DASH || !direction.isZero())) { // ensuring that abilities which require movement have it
-            if (timeSource.getTime() >= delayEndTime) {
-                delayEndTime = timeSource.getTime() + delayLength;
-                switch (this.ability) {
-                    case LONG_DASH:
-                        entity.getEvents().trigger("longDash", dashLength+timeSource.getTime());
-                    case INVINCIBILITY:
-                        entity.getEvents().trigger("invincibility", invincibilityLength);
-                }
+        if (ability != Abilities.NONE && (ability != Abilities.LONG_DASH || !direction.isZero()) && (timeSource.getTime() >= delayEndTime)) { // ensuring that abilities which require movement have it
+            delayEndTime = timeSource.getTime() + DELAY_LENGTH;
+            switch (this.ability) {
+                case LONG_DASH:
+                    entity.getEvents().trigger("longDash", DASH_LENGTH+timeSource.getTime());
+                    break;
+                case INVINCIBILITY:
+                    entity.getEvents().trigger("invincibility", INVINCIBILITY_LENGTH);
+                    break;
+                // default not required as all set enums should have function in switch
             }
         }
     }

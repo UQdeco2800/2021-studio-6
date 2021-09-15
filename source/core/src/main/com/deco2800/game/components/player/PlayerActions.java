@@ -23,20 +23,20 @@ public class PlayerActions extends Component {
   private Vector2 maxSpeed; // Metres per second
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
   // Dashing
-  private final float dashSpeed = 20f;
+  private static final float DASH_SPEED = 20f;
   private boolean dashing = false;
   private Vector2 dashVelocity;
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final int delayLength = 2000; // in milliseconds
-  private static final int dashLength = 100; // in milliseconds
+  private static final int DELAY_LENGTH = 2000; // in milliseconds
+  private static final int DASH_LENGTH = 100; // in milliseconds
   private long delayEndTime = 0;
   private long dashEndTime = 0;
   // Timing for reloading along with additional variables relevant to reloading
-  private static final int delayReloadLength = 2000; // in milliseconds
-  private static long timeStartReload = 0;
+  private static final int DELAY_RELOAD_LENGTH = 2000; // in milliseconds
+  private static long TIME_TO_START_RELOAD = 0;
   private boolean checkForReload = false;
-  private final int BULLET_MAGAZINE_FULL = 5;
+  private static final int BULLET_MAGAZINE_FULL = 5;
   private int ammoToReload;
 
   /**
@@ -174,9 +174,9 @@ public class PlayerActions extends Component {
   void regularDash() {
     if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
       this.getEntity().getEvents().trigger("dashBar");
-      delayEndTime = timeSource.getTime() + delayLength;
-      dashEndTime = timeSource.getTime() + dashLength;
-      setDash(dashSpeed);
+      delayEndTime = timeSource.getTime() + DELAY_LENGTH;
+      dashEndTime = timeSource.getTime() + DASH_LENGTH;
+      setDash(DASH_SPEED);
     }
   }
 
@@ -186,7 +186,7 @@ public class PlayerActions extends Component {
    */
   void longDash(long endTime) {
     dashEndTime = endTime;
-    setDash(dashSpeed*2);
+    setDash(DASH_SPEED*2);
   }
 
   /**
@@ -211,7 +211,7 @@ public class PlayerActions extends Component {
       // simulate a reloading process by setting reload to happen later in game
       // this will trigger update method to continuously check when it is time
       // to reload
-      timeStartReload = timeSource.getTime() + delayReloadLength;
+      TIME_TO_START_RELOAD = timeSource.getTime() + DELAY_RELOAD_LENGTH;
       checkForReload = true;
     }
   }
@@ -223,7 +223,7 @@ public class PlayerActions extends Component {
    * @return a true or false to reload gun magazine
    */
   private boolean canReload() {
-    return (timeSource.getTime() >= timeStartReload);
+    return (timeSource.getTime() >= TIME_TO_START_RELOAD);
   }
 
 

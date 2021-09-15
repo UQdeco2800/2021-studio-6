@@ -16,7 +16,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerAnimationController extends Component {
   AnimationRenderComponent animator;
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final long hurtDuration = 1000;
+  private static final long hurtDuration = 500;
   private boolean hurtActive = false;
   private long hurtTime;
   private Directions lastDirection;

@@ -21,7 +21,7 @@ public class PlayerHudAnimationController extends Component{
     public void setter() {
         statsDisplay = this.entity.getComponent(PlayerInterfaceDisplay.class);
         hudAnimator = statsDisplay.getDashAnimator();
-        entity.getEvents().addListener("dashBar", this::dashStart);
+        entity.getEvents().addListener("abilityCooldown", this::abilityStart);
         entity.getEvents().addListener("start", this::start);
         entity.getEvents().addListener("dispose", this::disposeAnimation);
         hudAnimator.startAnimation("dashbarFull");
@@ -30,7 +30,7 @@ public class PlayerHudAnimationController extends Component{
     void start() {hudAnimator.startAnimation("dashbarFull");
     }
 
-    void dashStart() {
+    void abilityStart() {
         hudAnimator.startAnimation("dashbar");
     }
 

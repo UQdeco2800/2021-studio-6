@@ -48,8 +48,8 @@ public class PlayerHudAnimationControllerTest {
     }
 
     @Test
-    void shouldDashStart() {
-        player.getEvents().trigger("dashBar");
+    void shouldCooldownStart() {
+        player.getEvents().trigger("abilityCooldown");
         verify(anim).startAnimation("dashbar"); // already called once by setter so calls twice
     }
 

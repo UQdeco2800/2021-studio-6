@@ -91,7 +91,8 @@ public class Level1 extends GameArea {
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
-      "images/weapon/axe.atlas"
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";

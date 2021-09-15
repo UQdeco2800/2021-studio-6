@@ -76,7 +76,8 @@ public class Level2 extends GameArea {
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
-      "images/weapon/axe.atlas"
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";

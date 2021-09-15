@@ -55,6 +55,7 @@ public class PlayerAbilitiesComponent extends Component {
     void triggerAbility(Vector2 direction) {
         if (ability != Abilities.NONE && (ability != Abilities.LONG_DASH || !direction.isZero()) && (timeSource.getTime() >= delayEndTime)) { // ensuring that abilities which require movement have it
             delayEndTime = timeSource.getTime() + DELAY_LENGTH;
+            entity.getEvents().trigger("abilityCooldown");
             switch (this.ability) {
                 case LONG_DASH:
                     entity.getEvents().trigger("longDash", DASH_LENGTH+timeSource.getTime());

@@ -277,14 +277,11 @@ public class PlayerMeleeAttackComponent extends Component {
      * the fixtures for the attack and prepping before actual the damage/hit.
      */
     private void attack() {
-        System.out.println(attackStart);
-        System.out.println(timeSource.getTime());
-        if (timeSource.getTime() >= attackLength + attackStart) {
+        if (timeSource.getTime() >= attackStart) {
             if (canAttack) {
                 fixtureDef = getFixDirection();
                 if (fixtureDef != null) {
                     canAttack = false;
-
                     this.meleeAttackClicked = true;
                     Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
                     fixture = physBody.createFixture(fixtureDef);
@@ -292,7 +289,7 @@ public class PlayerMeleeAttackComponent extends Component {
                     // if sensor is false, NPC will not be able to collide with player's fixture
                     setSensor(true);
                     disposeTimeSet();
-                    attackStart = timeSource.getTime();
+                    attackStart = attackLength + timeSource.getTime();
                     entity.getEvents().trigger("attack");
                 }
             }

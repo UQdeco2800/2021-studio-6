@@ -276,8 +276,8 @@ public class Level2 extends GameArea {
    */
   private void spawnSpawnerEnemy() {
     GridPoint2[] spawnLocations = {
-            new GridPoint2(1, 11),
-            new GridPoint2(28,3),
+            new GridPoint2(8, 13),
+            new GridPoint2(26,2),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -373,8 +373,6 @@ public class Level2 extends GameArea {
       new GridPoint2(3, 4),
       new GridPoint2(8, 8),
 
-      new GridPoint2(7, 12),
-      new GridPoint2(26,3),
       new GridPoint2(14, 11),
 
       new GridPoint2(16, 13),
@@ -390,14 +388,14 @@ public class Level2 extends GameArea {
   private void spawnPickupItems() {
     GridPoint2[] ammoSpawnLocations = {
       new GridPoint2(1, 13),
-      new GridPoint2(27,2),
+      new GridPoint2(28,2),
       new GridPoint2(13, 13),
     };
 
-    GridPoint2[] bandageSpawnLocations = {
-      new GridPoint2(28, 2),
-      new GridPoint2(12,13),
-    };
+//    GridPoint2[] bandageSpawnLocations = {
+//      new GridPoint2(28, 3),
+//      new GridPoint2(12,13),
+//    };
 
     GridPoint2[] coinSpawnLocations = {
       new GridPoint2(2, 12),
@@ -417,7 +415,7 @@ public class Level2 extends GameArea {
 
 //    for (int i = 0; i < bandageSpawnLocations.length; i++) {
 //      int randomAmmoQuantity = RandomUtils.randomInt(5);
-//      Entity pickupAmmo = ItemFactory.create;
+//      Entity pickupAmmo = ItemFactory.creat;
 //      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
 //    }
 

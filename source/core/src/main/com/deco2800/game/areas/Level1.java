@@ -10,11 +10,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.components.dialoguebox.DialogueImage;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
-<<<<<<< HEAD:source/core/src/main/com/deco2800/game/areas/ForestGameArea.java
-import com.deco2800.game.components.player.hud.PlayerHudFactory;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
-=======
->>>>>>> origin:source/core/src/main/com/deco2800/game/areas/Level1.java
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -261,15 +257,7 @@ public class Level1 extends GameArea {
    * Spawns a small enemy from the appropriate spawner's position
    */
   public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
-    int x = Math.round(2 * position.x);
-    int y = Math.round(2 * position.y);
-
-    GridPoint2 minPos = new GridPoint2(x - maxSpawnDistance, y - maxSpawnDistance);
-    GridPoint2 maxPos = new GridPoint2(x + maxSpawnDistance, y + maxSpawnDistance);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity smallEnemy = NPCFactory.createSmallEnemy(player);
-    spawnEntityAt(smallEnemy, randomPos, true, true);
+    super.spawnFromSpawner(position, maxSpawnDistance);
   }
 
   /**

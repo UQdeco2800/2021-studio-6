@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
@@ -49,10 +49,10 @@ public class NPCFactory {
    * Creates a spawner enemy entity.
    *
    * @param target entity to chase
-   * @param forestGameArea the current game area
+   * @param gameArea the current game area
    * @return entity
    */
-  public static Entity createSpawnerEnemy(Entity target, ForestGameArea forestGameArea) {
+  public static Entity createSpawnerEnemy(Entity target, GameArea gameArea) {
     SpawnerEnemyConfig config = configs.spawnerEnemy;
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 

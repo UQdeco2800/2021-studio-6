@@ -68,7 +68,7 @@ public class TerrainFactory {
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
       case CITY:
         TextureRegion cityBackground =
-            new TextureRegion(resourceService.getAsset("images/level_1/placeholder_road.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
         TextureRegion cityRoad =
             new TextureRegion(resourceService.getAsset("images/level_1/road_tile_black.png", Texture.class));
         TextureRegion citySidewalk =

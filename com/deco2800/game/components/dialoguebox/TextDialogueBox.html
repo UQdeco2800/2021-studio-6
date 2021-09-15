@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -103,12 +103,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section class="description">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></code>, <code><a href="../story/StoryBase.html" title="interface in com.deco2800.game.components.story">StoryBase</a></code>, <code><a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a></code>, <code>java.lang.Comparable&lt;<a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a>&gt;</code></dd>
+<dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></code>, <code><a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a></code>, <code>java.lang.Comparable&lt;<a href="../../rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">TextDialogueBox</span>
-extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a>
-implements <a href="../story/StoryBase.html" title="interface in com.deco2800.game.components.story">StoryBase</a></pre>
+extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a></pre>
 <div class="block">Text display of dialogue
  TODO: Move texture atlas component to screen to prevent loading multiple times</div>
 </section>
@@ -246,6 +245,13 @@ float&nbsp;padding)</code></th>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forceUpdate()">forceUpdate</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Removes the dialogue box then adds it again in its current state</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
 <td class="colFirst"><code><a href="Dialogue.html" title="class in com.deco2800.game.components.dialoguebox">Dialogue</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDialogue()">getDialogue</a></span>()</code></th>
 <td class="colLast">
@@ -397,10 +403,13 @@ float&nbsp;padding)</span></div>
 <h3><a id="advance()">advance</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">advance</span>()</div>
 <div class="block">Advances dialogue and updates text display</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../story/StoryBase.html#advance()">advance</a></code>&nbsp;in interface&nbsp;<code><a href="../story/StoryBase.html" title="interface in com.deco2800.game.components.story">StoryBase</a></code></dd>
-</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="forceUpdate()">forceUpdate</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">forceUpdate</span>()</div>
+<div class="block">Removes the dialogue box then adds it again in its current state</div>
 </section>
 </li>
 <li class="blockList">

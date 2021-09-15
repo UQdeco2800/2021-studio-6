@@ -19,8 +19,8 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+<script type="text/javascript">var data = {"i0":42};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -104,8 +104,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/input/GestureDetector.GestureListener.html?is-external=true" title="class or interface in com.badlogic.gdx.input" class="externalLink">GestureDetector.GestureListener</a></code>, <code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/InputProcessor.html?is-external=true" title="class or interface in com.badlogic.gdx" class="externalLink">InputProcessor</a></code></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">DialogueInputComponent</span>
+<pre>@Deprecated
+public class <span class="typeNameLabel">DialogueInputComponent</span>
 extends <a href="../../input/InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">Replaced with story input component that handles all story input</div>
+</div>
 <div class="block">Input handler for dialogue</div>
 </section>
 <section class="summary">
@@ -146,7 +150,9 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <tbody>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">DialogueInputComponent</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -160,7 +166,7 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 </a>
 <h2>Method Summary</h2>
 <div class="memberSummary">
-<div role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="memberSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="tableTab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="tableTab" onclick="show(8);">Concrete Methods</button></div>
+<div role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="memberSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="tableTab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="tableTab" onclick="show(8);">Concrete Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t6" class="tableTab" onclick="show(32);">Deprecated Methods</button></div>
 <div id="memberSummary_tabpanel" role="tabpanel">
 <table aria-labelledby="t0">
 <thead>
@@ -175,6 +181,7 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keyDown(int)">keyDown</a></span>&#8203;(int&nbsp;keycode)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Triggers advance dialogue event on ADVANCE_KEY</div>
 </td>
 </tr>
@@ -214,6 +221,7 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <section class="detail">
 <h3><a id="&lt;init&gt;()">DialogueInputComponent</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">DialogueInputComponent</span>()</div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </section>
 </li>
 </ul>
@@ -230,6 +238,7 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <section class="detail">
 <h3><a id="keyDown(int)">keyDown</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">keyDown</span>&#8203;(<span class="arguments">int&nbsp;keycode)</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Triggers advance dialogue event on ADVANCE_KEY</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>

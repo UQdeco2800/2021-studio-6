@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":6};
+<script type="text/javascript">var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -94,10 +94,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section class="description">
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="CutScene.html" title="class in com.deco2800.game.components.story">CutScene</a></code>, <code><a href="ImageSequence.html" title="class in com.deco2800.game.components.story">ImageSequence</a></code>, <code><a href="../dialoguebox/TextDialogueBox.html" title="class in com.deco2800.game.components.dialoguebox">TextDialogueBox</a></code></dd>
+<dd><code><a href="basicdialogue/BasicDialogue.html" title="class in com.deco2800.game.components.story.basicdialogue">BasicDialogue</a></code>, <code><a href="cutscene/CutScene.html" title="class in com.deco2800.game.components.story.cutscene">CutScene</a></code></dd>
 </dl>
 <hr>
 <pre>public interface <span class="typeNameLabel">StoryBase</span></pre>
+<div class="block">A story base object is what the manager calls upon to control the story.</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -120,9 +121,39 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </thead>
 <tbody>
 <tr class="altColor" id="i0">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#advance()">advance</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Advance the story.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Creates the story</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#display()">display</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Displays the story.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Dispose the story</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDead()">isDead</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns if the story has already been disposed</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -143,8 +174,50 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
+<h3><a id="create()">create</a></h3>
+<div class="memberSignature"><span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
+<div class="block">Creates the story</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="advance()">advance</a></h3>
-<div class="memberSignature"><span class="returnType">void</span>&nbsp;<span class="memberName">advance</span>()</div>
+<div class="memberSignature"><span class="returnType">boolean</span>&nbsp;<span class="memberName">advance</span>()</div>
+<div class="block">Advance the story. Returns true if there is story left</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if there is story left</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="display()">display</a></h3>
+<div class="memberSignature"><span class="returnType">void</span>&nbsp;<span class="memberName">display</span>()
+      throws <span class="exceptions">java.lang.Exception</span></div>
+<div class="block">Displays the story. Throws exception when story has not been created yet</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code> - when story has not been created yet</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="dispose()">dispose</a></h3>
+<div class="memberSignature"><span class="returnType">void</span>&nbsp;<span class="memberName">dispose</span>()</div>
+<div class="block">Dispose the story</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="isDead()">isDead</a></h3>
+<div class="memberSignature"><span class="returnType">boolean</span>&nbsp;<span class="memberName">isDead</span>()</div>
+<div class="block">Returns if the story has already been disposed</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>if the story is dead</dd>
+</dl>
 </section>
 </li>
 </ul>

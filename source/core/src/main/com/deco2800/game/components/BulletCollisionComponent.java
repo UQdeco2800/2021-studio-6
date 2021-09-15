@@ -19,7 +19,6 @@ public class BulletCollisionComponent extends Component {
     short playerLayer = PhysicsLayer.PLAYER;
     short obstacleLayer = PhysicsLayer.OBSTACLE;
     private boolean launchStatus = false;
-    private boolean collideStatus = false;
     private PlayerCombatStatsComponent bulletCombatStats;
 
     public BulletCollisionComponent() {
@@ -33,16 +32,6 @@ public class BulletCollisionComponent extends Component {
 
     @Override
     public void update() {
-    }
-
-    /**
-     * To update collision status of bullet
-     *
-     * @param collided is to let system know whether bullet has collided. Depending on how frame
-     *                 is refreshed, bullet can sometimes collide twice
-     */
-    public void setBulletCollisionStatus(boolean collided) {
-        this.collideStatus = false;
     }
 
     /**
@@ -77,20 +66,18 @@ public class BulletCollisionComponent extends Component {
 
 
         // collision can occur twice for 1 bullet and ensure that bullet has not been launched yet
-        if (this.launchStatus && !this.collideStatus) {
+        if (this.launchStatus) {
             if (PhysicsLayer.contains(playerLayer, other.getFilterData().categoryBits)) {
                 logger.debug("Bullet may have collided with player's layer");
                 // bullet collide with obstacles
             } else if (PhysicsLayer.contains(obstacleLayer, other.getFilterData().categoryBits)) {
                 logger.debug("Bullet collided with obstacle's layer");
-                setBulletCollisionStatus(true);
 
                 entity.getComponent(DisposingComponent.class).toBeReused();
 
             } else if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
                 // bullet collides with NPC
                 logger.debug("Bullet collided with NPC's layer");
-                setBulletCollisionStatus(true);
 
                 if (targetStats != null) {
                     targetStats.hit(bulletCombatStats.getBaseAttack());

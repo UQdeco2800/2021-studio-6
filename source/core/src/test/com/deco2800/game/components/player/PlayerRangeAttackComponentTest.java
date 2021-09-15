@@ -88,22 +88,22 @@ public class PlayerRangeAttackComponentTest {
         Vector2 directionL = new Vector2(-1,0);
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionL);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(playerPostion)
-                .epsilonEquals(-15,0));
+                .epsilonEquals(-1000,0));
 
         Vector2 directionR = Vector2Utils.RIGHT;
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionR);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(playerPostion)
-                .epsilonEquals(15,0));
+                .epsilonEquals(1000,0));
 
         Vector2 directionD = new Vector2(0,-1);
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionD);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(playerPostion)
-                .epsilonEquals(0,-15));
+                .epsilonEquals(0,-1000));
 
         Vector2 directionU = new Vector2(0,1);
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionU);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(playerPostion)
-                .epsilonEquals(0,15));
+                .epsilonEquals(0,1000));
     }
 
     @Test
@@ -138,7 +138,7 @@ public class PlayerRangeAttackComponentTest {
         assertTrue(bulletAlmostFired.getPosition().epsilonEquals(0,0));
         assertTrue(bulletAlmostFired.getComponent(BulletCollisionComponent.class).getBulletLaunchStatus());
 
-        Vector2 targetCoord = new Vector2(15, 0);
+        Vector2 targetCoord = new Vector2(1000, 0);
         assertEquals(targetCoord.cpy(), bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget()); //
     }
 }

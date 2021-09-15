@@ -94,9 +94,9 @@ public class Level2 extends GameArea {
     player = spawnPlayer();
     spawnBullet();
 
-//    spawnSmallEnemy();
-//    spawnLargeEnemy();
-//    spawnLongRangeEnemies();
+    spawnSmallEnemy();
+    spawnLargeEnemy();
+    spawnLongRangeEnemies();
 
     playMusic();
   }
@@ -272,12 +272,12 @@ public class Level2 extends GameArea {
     GridPoint2[] spawnLocations = {
       new GridPoint2(8, 5),
       new GridPoint2(8,12),
-      new GridPoint2(25, 4),
-      new GridPoint2(25,3),
+      new GridPoint2(20, 2),
+      new GridPoint2(22,2),
       new GridPoint2(25, 2),
       new GridPoint2(20,6),
-      new GridPoint2(16,9),
-      new GridPoint2(12, 10),
+      new GridPoint2(16,7),
+      new GridPoint2(12, 12),
       new GridPoint2(21,12),
       new GridPoint2(27,12),
     };
@@ -293,10 +293,10 @@ public class Level2 extends GameArea {
       new GridPoint2(2, 2),
       new GridPoint2(4,12),
       new GridPoint2(10, 2),
-      new GridPoint2(27,3),
+      new GridPoint2(27,2),
       new GridPoint2(29, 12),
       new GridPoint2(18,13),
-      new GridPoint2(24,8)
+      new GridPoint2(25,7)
   };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -309,10 +309,10 @@ public class Level2 extends GameArea {
     GridPoint2[] spawnLocations = {
       new GridPoint2(14, 2),
       new GridPoint2(16,2),
-      new GridPoint2(12, 8),
-      new GridPoint2(13,8),
-      new GridPoint2(24, 11),
-      new GridPoint2(24,13)
+      new GridPoint2(12, 7),
+      new GridPoint2(14,7),
+      new GridPoint2(25, 10),
+      new GridPoint2(25,12)
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {

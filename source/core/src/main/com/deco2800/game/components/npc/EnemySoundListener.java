@@ -24,7 +24,6 @@ public class EnemySoundListener extends Component {
      * Plays a sound
      */
     void playSound() {
-        MusicPlayer music = new MusicPlayer();
-        music.playSound(assetPath);
+        EnemySoundPlayer.playSound(this.assetPath);
     }
 }

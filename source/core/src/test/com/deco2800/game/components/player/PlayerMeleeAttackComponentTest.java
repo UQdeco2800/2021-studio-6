@@ -34,7 +34,10 @@ public class PlayerMeleeAttackComponentTest {
 
     @Test
     void checkStatesAfterBeforeAttack() {
-        when(gameTime.getTime()).thenReturn(0L);
+        long START_TIME = 0L;
+        long PAST_TIME = 1000L;
+
+        when(gameTime.getTime()).thenReturn(START_TIME);
         Entity player = createPlayer();
 
         // there should not be any fixtures yet
@@ -47,7 +50,7 @@ public class PlayerMeleeAttackComponentTest {
         assertEquals(PhysicsLayer.WEAPON, player.getComponent(PlayerMeleeAttackComponent.class).getLayer());
 
         // fixture should be null after attack and time steps
-        when(gameTime.getTime()).thenReturn(1000L);
+        when(gameTime.getTime()).thenReturn(PAST_TIME);
         player.getComponent(PlayerMeleeAttackComponent.class).update();
 
         assertNull(player.getComponent(PlayerMeleeAttackComponent.class).getFixture());
@@ -58,6 +61,7 @@ public class PlayerMeleeAttackComponentTest {
         // by default a fixture will be created in the north direction of player
         Entity player = createPlayer();
         Entity enemy = createEnemy();
+        int ENEMY_DAMAGED_HEALTH = 15;
 
         player.getEvents().trigger("attack");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
@@ -65,13 +69,14 @@ public class PlayerMeleeAttackComponentTest {
 
         player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
         player.getEvents().trigger("attack");
-        assertEquals(15, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(ENEMY_DAMAGED_HEALTH, enemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
     @Test
     void shouldNotAttackAfterMoving() {
         Entity player = createPlayer();
         Entity enemy = createEnemy();
+        int FULL_ENEMY_HEALTH = 20;
 
         player.getEvents().trigger("attack");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
@@ -79,35 +84,38 @@ public class PlayerMeleeAttackComponentTest {
 
         player.getEvents().trigger("walk", Vector2Utils.RIGHT);
         player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
-        assertEquals(20, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(FULL_ENEMY_HEALTH, enemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
     @Test
     void shouldAttackAfterMoving() {
         Entity player = createPlayer();
         Entity enemy = createEnemy();
+        int ENEMY_DAMAGED_HEALTH = 15;
         player.getEvents().trigger("walk", Vector2Utils.RIGHT);
 
         player.getEvents().trigger("attack");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture enemyFixture = enemy.getComponent(HitboxComponent.class).getFixture();
         player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
-        assertEquals(15, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(ENEMY_DAMAGED_HEALTH, enemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
     @Test
     void shouldNotAttackIfNoCollision() {
         Entity player = createPlayer();
         Entity enemy = createEnemy();
+        int FULL_ENEMY_HEALTH = 20;
 
         player.getEvents().trigger("attack");
-        assertEquals(20, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(FULL_ENEMY_HEALTH, enemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
     @Test
     void shouldNotAttackIfNotEnemy() {
         Entity player = createPlayer();
         Entity nonEnemy = createNonEnemy();
+        int FULL_ENEMY_HEALTH = 20;
 
         player.getEvents().trigger("attack");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
@@ -115,7 +123,7 @@ public class PlayerMeleeAttackComponentTest {
 
         player.getEvents().trigger("attack");
         player.getEvents().trigger("collisionStart", playerFixture, nonEnemyFixture);
-        assertEquals(20, nonEnemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(FULL_ENEMY_HEALTH, nonEnemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
     @Test
@@ -125,6 +133,7 @@ public class PlayerMeleeAttackComponentTest {
         Entity player = createPlayer();
         Entity enemy1 = createEnemy();
         Entity enemy2 = createEnemy();
+        int ENEMY_DAMAGED_HEALTH = 15;
 
         player.getEvents().trigger("attack");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
@@ -135,12 +144,14 @@ public class PlayerMeleeAttackComponentTest {
         player.getEvents().trigger("attack");
 
         player.getEvents().trigger("collisionStart", playerFixture, enemy1Fixture);
-        assertEquals(15, enemy1.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(ENEMY_DAMAGED_HEALTH, enemy1.getComponent(CombatStatsComponent.class).getHealth());
 //        player.getEvents().trigger("collisionStart", playerFixture, enemy2Fixture);
 //        assertEquals(15, enemy2.getComponent(CombatStatsComponent.class).getHealth());
     }
 
     Entity createPlayer() {
+        // these are arbitrary values used purely for testing and it is based real values extracted from the config
+        // file, currently not in used because may change depending on game balancing - this may change - beware of test
         String sword = "configs/Sword.json";
         Entity player = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -150,6 +161,7 @@ public class PlayerMeleeAttackComponentTest {
     }
 
     Entity createEnemy() {
+        // arbitrary values are used here as game balancing may occur
         Entity entity =
                 new Entity()
                         .addComponent(new CombatStatsComponent(20, 2))
@@ -160,6 +172,7 @@ public class PlayerMeleeAttackComponentTest {
     }
 
     Entity createNonEnemy() {
+        // arbitrary values are used here as game balancing may occur
         Entity entity =
                 new Entity()
                         .addComponent(new CombatStatsComponent(20, 2))

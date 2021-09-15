@@ -46,7 +46,7 @@ public class EnemyBulletFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
                 .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));

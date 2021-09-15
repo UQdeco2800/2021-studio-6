@@ -7,8 +7,6 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()

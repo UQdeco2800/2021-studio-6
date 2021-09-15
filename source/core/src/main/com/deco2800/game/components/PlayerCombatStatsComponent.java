@@ -50,6 +50,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         }
         if (invincibleActive && (timeSource.getTime() >= invincibilityEndTime)) {
             invincibleActive = false;
+            entity.getEvents().trigger("enableAttack");
         }
     }
 
@@ -285,6 +286,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     public void invincibleStart(long length) {
         invincibilityEndTime = timeSource.getTime() + length;
+        entity.getEvents().trigger("disableAttack");
         invincibleActive = true;
     }
 

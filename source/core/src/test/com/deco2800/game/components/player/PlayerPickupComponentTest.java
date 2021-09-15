@@ -122,7 +122,6 @@ public class PlayerPickupComponentTest {
         player.getEvents().trigger("collisionStart", playerFixture, nonItemFixture);
 
         // target fixture should be added for disposal in engine
-        assertEquals(NOTHING_TO_DIPOSE,physicsEngine.getDisposeQueue().size());
         assertEquals(AMMO_BEFORE_PICKUP,player.getComponent(InventoryComponent.class).getAmmo());
         assertEquals(GOLD_BEFORE_PICKUP,player.getComponent(InventoryComponent.class).getGold());
         assertEquals(BANDAGE_BEFORE_PICKUP,player.getComponent(InventoryComponent.class).getBandages());

@@ -1,10 +1,8 @@
 package com.deco2800.game.components.player;
 
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.items.Directions;
-import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -31,7 +29,7 @@ public class PlayerWeaponAnimationControllerTest {
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerTimeSource(time);
-        Float[] arrayOne = {0f, 1f}; // setting uniaue values to each array position to test correct is grabbed later
+        Float[] arrayOne = {0f, 1f}; // setting unique values to each array position to test correct is grabbed later
         Float[] arrayTwo = {2f, 3f};
         Float[] arrayThree = {4f, 5f};
         Float[] arrayFour = {6f, 7f};

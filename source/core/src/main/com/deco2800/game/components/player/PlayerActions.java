@@ -49,6 +49,9 @@ public class PlayerActions extends Component {
     setSpeed(woundState);
   }
 
+  /**
+   * Initial settings on creation such as adding listeners and collecting components references
+   */
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -62,6 +65,10 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("reload", this::reload);
   }
 
+  /**
+   * On each call the update will reload (if it is the time to do so) as well as setting the players movement
+   * dash/walking/not moving
+   */
   @Override
   public void update() {
     if (dashing) {
@@ -69,7 +76,6 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateSpeed();
     }
-
     // check for reload ensures canReload method will not be called needlessly
     // and will only be true when player has clicked R to reload
     if (checkForReload) {
@@ -259,7 +265,6 @@ public class PlayerActions extends Component {
 
   /**
    * Moves the player towards a given direction.
-   *
    * @param direction direction to move in
    */
   void walk(Vector2 direction) {

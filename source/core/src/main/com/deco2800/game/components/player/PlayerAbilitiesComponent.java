@@ -26,6 +26,9 @@ public class PlayerAbilitiesComponent extends Component {
         setAbility(ability);
     }
 
+    /**
+     * Adds the listener for triggering the ability alongside other creation of components
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("tryAbility", this::triggerAbility);

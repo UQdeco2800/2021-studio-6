@@ -33,6 +33,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     super(5);
   }
 
+  /**
+   * Adding relevant listeners to the component
+   */
   @Override
   public void create() {
     super.create();
@@ -52,7 +55,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
-
 
     if (timeSource == null || !timeSource.isPaused()) {
       switch (keycode) {
@@ -152,6 +154,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     movementDirections.removeIf(movementKey -> movementKey == direction);
   }
 
+  /**
+   * Triggers to the movement controller the players current walking state and direction
+   */
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
@@ -189,10 +194,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     this.canDashAttack = false;
   }
 
+  /**
+   * Gets the direction the player is currently walking in
+   * @return the players current walking direction
+   */
   public Vector2 getVector() {
     return walkDirection;
   }
 
+  /**
+   * Getting the last direction the player moved in
+   * @return the direction enum that represents the last direction the player moved in
+   */
   public Directions getDirection() {
     if (movementDirections.size() > 0) {
       lastDirection = movementDirections.get(movementDirections.size() - 1);

@@ -58,6 +58,7 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     movementTask.start();
 
+    this.owner.getEntity().getEvents().trigger("chaseStart");
     this.owner.getEntity().getEvents().trigger("spawnerStart"); //reference for animation and sound
   }
 

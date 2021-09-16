@@ -25,7 +25,6 @@ public class EnemyBulletFactory {
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in (could instead implement a listener
      * @param source the source of the bullet
-     * @return the bullet entity
      */
     public static void createBullet(Entity source, Entity target, GameArea gameArea) {
 

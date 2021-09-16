@@ -137,7 +137,7 @@ public class PlayerRangeAttackComponent extends Component {
      * @param movingAttackDir would be vectors used to deploy projectiles in a direction (would only
      *                        be either north, south, east or west for now)
      */
-    void fire(Vector2 movingAttackDir) {
+    public void fire(Vector2 movingAttackDir) {
         Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
 
@@ -147,7 +147,7 @@ public class PlayerRangeAttackComponent extends Component {
         }
 
         // check if there are bullets left to shoot in magazine currently and if player is currently reloading
-        if (magazineCapacity != 0 && !getReloadingStatus()) {
+        if (this.magazineCapacity != 0 && !getReloadingStatus()) {
             // player has not moved before, use default direction attack (to the right)
             if (getDirection().isZero()) {
                 bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
@@ -167,8 +167,14 @@ public class PlayerRangeAttackComponent extends Component {
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
 
                 // update current gun magazine
-                magazineCapacity--;
+                decreaseGunMagazine();
             }
+        }
+
+        // used to let player know that there is no ammo left and it is time
+        // to reload - this event is triggered in interface display
+        if (this.magazineCapacity == 0) {
+            entity.getEvents().trigger("gunMagazineEmpty");
         }
     }
 
@@ -181,6 +187,8 @@ public class PlayerRangeAttackComponent extends Component {
     public void reloadGunMagazine(int ammo) {
         setReloadingStatus(false);
         this.magazineCapacity += ammo;
+        entity.getEvents().trigger("updateGunMagImageHUD",
+                this.magazineCapacity, true);
     }
 
     /**
@@ -209,5 +217,14 @@ public class PlayerRangeAttackComponent extends Component {
      */
     public int getGunMagazine() {
         return this.magazineCapacity;
+    }
+
+    /**
+     * Called to decrease gun magazine when a bullet is shot by player
+     */
+    private void decreaseGunMagazine() {
+        --this.magazineCapacity;
+        entity.getEvents().trigger("updateGunMagImageHUD",
+                this.magazineCapacity, false);
     }
 }

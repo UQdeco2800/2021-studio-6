@@ -11,6 +11,9 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.story.StoryInputComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -38,7 +41,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png","images/hud/22highbar6.png",
+  private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
@@ -46,6 +49,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
   public static boolean levelChange = false;
+  private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
@@ -57,7 +61,7 @@ public class MainGameScreen extends ScreenAdapter {
     this.game = game;
 
     // Sets background to light yellow
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
+    Gdx.gl.glClearColor(50/255f, 50/255f, 50/255f, 1);
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -81,7 +85,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new ForestGameArea(terrainFactory);
+    gameArea = new Level1(terrainFactory);
     gameArea.create();
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
@@ -89,7 +93,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   private void checkGameOver() {
     logger.info("Game Over");
-    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
 
     Timer.schedule(new Timer.Task() {
@@ -103,7 +107,10 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     if (levelChange) {
+      timeSource = ServiceLocator.getTimeSource();
+      timeSource.pause();
       generateNewLevel();
+      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
@@ -186,7 +193,9 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
+        .addComponent(new TerminalDisplay())
+        .addComponent(StoryManager.getInstance())
+        .addComponent(new StoryInputComponent());
 
     ServiceLocator.getEntityService().register(ui);
   }
@@ -199,6 +208,11 @@ public class MainGameScreen extends ScreenAdapter {
     CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+
+    if (CurrentLevel == 4) {
+      victory();
+      return;
+    }
     gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {
@@ -216,10 +230,25 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel == 4) {
-      System.out.println("You win");
-      ui.getEvents().trigger("exit");
     }
+    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;
+  }
+
+  private void victory() {
+    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource.pause();
+    spawnOutroDialogue();
+  }
+
+  private void spawnOutroDialogue(){
+    StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
+    StoryManager.getInstance().displayStory();
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.EPILOGUE,
+            this::onOutroFinish);
+  }
+
+  private void onOutroFinish() {
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 }

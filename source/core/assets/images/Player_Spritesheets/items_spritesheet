@@ -1,0 +1,90 @@
+
+items_spritesheet.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+armour
+  rotate: false
+  xy: 2, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+ax
+  rotate: false
+  xy: 350, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+bandage01
+  rotate: false
+  xy: 698, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+bandage02
+  rotate: false
+  xy: 1046, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+dagger
+  rotate: false
+  xy: 1394, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+explosion_0
+  rotate: false
+  xy: 2, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+explosion_2
+  rotate: false
+  xy: 350, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+explosion_1
+  rotate: false
+  xy: 350, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+firecracker
+  rotate: false
+  xy: 698, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+halmet
+  rotate: false
+  xy: 1046, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 1394, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+tourch
+  rotate: false
+  xy: 2, 700
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1

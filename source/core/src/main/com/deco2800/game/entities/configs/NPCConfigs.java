@@ -8,4 +8,5 @@ public class NPCConfigs {
   public BaseEntityConfig ghost = new BaseEntityConfig();
   public GhostKingConfig ghostKing = new GhostKingConfig();
   public LargeEnemyConfig largeEnemy = new LargeEnemyConfig();
+  public SpawnerEnemyConfig spawnerEnemy = new SpawnerEnemyConfig();
 }

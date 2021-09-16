@@ -10,10 +10,13 @@ public class PhysicsLayer {
   public static final short NPC = (1 << 3);
   public static final short ALL = ~0;
   public static final short WEAPON = (1 << 5);
+  public static final short ITEM = (1 << 6);
   // Safehouse object
   public static final short SAFEHOUSE = (1 << 4);
   // Paraphernalia
   public static final short PARAPHERNALIA = (1 << 4);
+
+  public static final short ENEMYBULLET = (1 << 7);
 
   public static boolean contains(short filterBits, short layer) {
     return (filterBits & layer) != 0;

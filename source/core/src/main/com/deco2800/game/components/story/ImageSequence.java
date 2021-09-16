@@ -29,7 +29,7 @@ public class ImageSequence extends UIComponent {
      */
     @Override
     protected void draw(SpriteBatch batch) {
-
+        //Nothing needs to be updated per frame
     }
 
     /**

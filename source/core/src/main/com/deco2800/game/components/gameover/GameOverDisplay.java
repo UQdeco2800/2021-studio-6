@@ -27,7 +27,7 @@ public class GameOverDisplay extends UIComponent {
   private static final float CELL_PADDING_SMALL = 2;
   private static final String MENU_BUTTON_STYLE = "menu-button-large";
   private static final String MUSIC_FILE_PATH = "sounds/game-over-music.mp3";
-  private static final String BACKGROUND = "images/gameover.png";
+  private static final String BACKGROUND_FILE_PATH = "images/gameover.png";
   private static final Logger logger = LoggerFactory.getLogger(GameOverDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
@@ -49,7 +49,7 @@ public class GameOverDisplay extends UIComponent {
 
     playMusic();
 
-    background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND, Texture.class));
+    background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
 
     TextButton restartBtn = new TextButton("Restart Game", skin, MENU_BUTTON_STYLE);
     TextButton menuBtn = new TextButton("Return to Menu", skin, MENU_BUTTON_STYLE);

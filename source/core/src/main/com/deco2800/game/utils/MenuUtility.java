@@ -21,6 +21,13 @@ public class MenuUtility {
   private static Boolean rolloverActivated = false;
 
   /**
+   * This private constructor stops other classes from instantiating the static utility class
+   */
+  private MenuUtility() {
+    throw new IllegalStateException("Utility class");
+  }
+
+  /**
    * Adds a listener to a button that triggers an event when the user selects the button
    * @param entity the entity that the trigger will be called to
    * @param button the button to add the select listener to
@@ -31,7 +38,7 @@ public class MenuUtility {
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Button clicked with trigger of: " + eventTrigger);
+            logger.debug(String.format("Button clicked with trigger of: %s", eventTrigger));
 
             Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
             buttonClickSound.stop();
@@ -89,7 +96,7 @@ public class MenuUtility {
     for (Cell<Actor> cell : table.getCells()) {
       cell.pad(cellPad);
       Actor cellContents = cell.getActor();
-      if (Button.class.isInstance(cellContents)) {
+      if (cellContents instanceof Button) {
         Button cellButton = (Button) cellContents;
         Button.ButtonStyle newButtonStyle = skin.get(style, TextButton.TextButtonStyle.class);
         cellButton.setStyle(newButtonStyle);

@@ -4,7 +4,7 @@ import com.deco2800.game.components.story.cutscene.CutSceneConfig;
 
 public class PrologueCutScene extends CutSceneConfig {
 
-    public static final String[] DIALOGUE =
+    public static final String[] DIALOGUE_RAW =
             {
                     //Screen 0
                     "Darkness",
@@ -45,11 +45,16 @@ public class PrologueCutScene extends CutSceneConfig {
                     "The darkness is coming.",
                     "I have to leave and follow the fireflies."
             };
-    public static final String[] IMAGES =
+    protected static final String BLACK_IMAGE = "utils/blackpixel.png";
+    protected static final String SEC_IMAGE = "prologue/2.png";
+    protected static final String FOUR_IMAGE = "prologue/4.png";
+    protected static final String FIVE_IMAGE = "prologue/5.png";
+    protected static final String SIX_BASIC_IMAGE = "prologue/6/6 basic.png";
+    public static final String[] IMAGES_RAW =
             {
                     //Screen 0
-                    "utils/blackpixel.png",
-                    "utils/blackpixel.png",
+                    BLACK_IMAGE,
+                    BLACK_IMAGE,
 
                     //Screen 1
                     "prologue/1 simple/1.1.png",
@@ -57,11 +62,11 @@ public class PrologueCutScene extends CutSceneConfig {
                     "prologue/1 simple/1.3.png",
 
                     //Screen 2
-                    "utils/blackpixel.png",
-                    "utils/blackpixel.png",
-                    "prologue/2.png",
-                    "prologue/2.png",
-                    "prologue/2.png",
+                    BLACK_IMAGE,
+                    BLACK_IMAGE,
+                    SEC_IMAGE,
+                    SEC_IMAGE,
+                    SEC_IMAGE,
 
                     //Screen 3
                     "prologue/3 simple/3.0.png",
@@ -69,30 +74,30 @@ public class PrologueCutScene extends CutSceneConfig {
                     "prologue/3 simple/3.2.png",
 
                     //Screen 4
-                    "utils/blackpixel.png",
-                    "prologue/4.png",
-                    "prologue/4.png",
-                    "prologue/4.png",
-                    "prologue/4.png",
+                    BLACK_IMAGE,
+                    FOUR_IMAGE,
+                    FOUR_IMAGE,
+                    FOUR_IMAGE,
+                    FOUR_IMAGE,
 
                     //Screen 5
-                    "prologue/5.png",
-                    "prologue/5.png",
-                    "prologue/5.png",
+                    FIVE_IMAGE,
+                    FIVE_IMAGE,
+                    FIVE_IMAGE,
 
                     //Screen 6
                     "prologue/6/6 background.png",
-                    "prologue/6/6 basic.png",
-                    "prologue/6/6 basic.png",
-                    "utils/blackpixel.png"
+                    SIX_BASIC_IMAGE,
+                    SIX_BASIC_IMAGE,
+                    BLACK_IMAGE
             };
-    public static final String MUSIC = "sounds/title-screen-music.mp3";
+    public static final String MUSIC_RAW = "sounds/title-screen-music.mp3";
     private static final int LENGTH = 25;
 
     public PrologueCutScene() {
-        dialogueText = DIALOGUE;
-        imagePaths = IMAGES;
-        musicPath = MUSIC;
+        dialogueText = DIALOGUE_RAW;
+        imagePaths = IMAGES_RAW;
+        musicPath = MUSIC_RAW;
     }
 
     /**

@@ -91,6 +91,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerGameArea(gameArea);
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+
   }
 
   private void checkGameOver() {
@@ -242,7 +243,6 @@ public class MainGameScreen extends ScreenAdapter {
   }
 
   private void victory() {
-    GameTime timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
     spawnOutroDialogue();
   }

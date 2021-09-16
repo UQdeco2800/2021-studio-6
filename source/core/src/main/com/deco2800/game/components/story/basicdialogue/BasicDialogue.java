@@ -2,6 +2,7 @@ package com.deco2800.game.components.story.basicdialogue;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.dialoguebox.TextDialogueBox;
+import com.deco2800.game.components.story.NoStoryLoadedException;
 import com.deco2800.game.components.story.StoryBase;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.DialogueBoxFactory;
@@ -55,7 +56,7 @@ public class BasicDialogue extends Component implements StoryBase {
      * Displays the story. Throws exception when story has not been created yet
      */
     @Override
-    public void display() throws Exception {
+    public void display() throws NoStoryLoadedException {
         ServiceLocator.getEntityService().register(dialogue);
     }
 

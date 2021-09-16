@@ -70,7 +70,8 @@ public class NPCFactory {
                     .addComponent(new GhostAnimationController())
                     .addComponent(new PhysicsMovementComponent(speed)) //remove?
                     .addComponent(animator)
-                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                    .addComponent(new ItemDrop(gameArea));
 
     AITaskComponent aiComponent =
             new AITaskComponent()
@@ -160,12 +161,12 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(new ItemDrop(gameArea))
                     .addComponent(new TextureRenderComponent("images/eye.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
-                    .addComponent(new DisposingComponent())
-                    .addComponent(new ItemDrop(gameArea));
+                    .addComponent(new DisposingComponent());
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
   }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.ComponentType;
+import com.deco2800.game.components.npc.ItemDrop;
 import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -201,11 +202,26 @@ public class Entity {
 
   /** Dispose of the entity. This will dispose of all components on this entity. */
   public void dispose() {
-    this.getEvents().trigger("dropItem");
+    if(this.getComponent(ItemDrop.class) != null){
+      this.getComponent(ItemDrop.class).dropItem();
+    }
+
     for (Component component : createdComponents) {
       component.dispose();
     }
     ServiceLocator.getEntityService().unregister(this);
+  }
+  public void cleanup() {
+    for (Component component : createdComponents) {
+      component.dispose();
+    }
+    ServiceLocator.getEntityService().unregister(this);
+  }
+
+  public void kill() {
+    if(this.getComponent(ItemDrop.class) != null){
+      this.getComponent(ItemDrop.class).dropItem();
+    }
   }
 
   /**

@@ -2,47 +2,51 @@ package com.deco2800.game.components.npc;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.areas.GameArea;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.ItemFactory;
+import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.services.GameTime;
 
 public class ItemDrop extends Component {
     private GameArea gameArea;
     private Entity itemDrop;
+    private CombatStatsComponent combatStatsComponent;
     public ItemDrop(GameArea gameArea) {
         this.gameArea = gameArea;
     }
     public void create() {
-        this.entity.getEvents().addListener("dropItem", this::dropItem);
+//        this.entity.getEvents().addListener("dropItem", this::dropItem);
+//        this.combatStatsComponent = entity.getComponent(CombatStatsComponent.class);
+
     }
 
 
     public void dropItem(){
         int itemTypeGen = MathUtils.random(10);
 
-        if(itemTypeGen > 7){
+        if (itemTypeGen > 7) {
             int amount = MathUtils.random(10);
-            if(amount > 4){
-                itemDrop = ItemFactory.createCoinPickup(1);
-            }
-            else {
+            if (amount > 4) {
+                itemDrop = ItemFactory.createCoinPickup(5);
+
+            } else {
                 itemDrop = ItemFactory.createCoinPickup(5);
             }
-        }else {
+        } else {
 
             int amount = MathUtils.random(10);
-            if(amount > 4){
+            if (amount > 4) {
                 itemDrop = ItemFactory.createAmmoPickup(1);
-            }
-            else {
+            } else {
                 itemDrop = ItemFactory.createAmmoPickup(5);
             }
         }
 
-
         itemDrop.setPosition(entity.getCenterPosition().x - itemDrop.getScale().x / 2, entity.getCenterPosition().y - itemDrop.getScale().y / 2);
         gameArea.spawnEntity(itemDrop);
+
     }
 
     /**
@@ -58,12 +62,12 @@ public class ItemDrop extends Component {
      * component is disabled.
      */
     public void update() {
-        // No action by default.
+
     }
 
     /** Called when the component is disposed. Dispose of any internal resources here. */
     public void dispose() {
-        // No action by default.
+
     }
 
 }

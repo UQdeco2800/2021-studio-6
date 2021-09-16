@@ -33,10 +33,9 @@ public abstract class GameArea implements Disposable {
   /** Dispose of all internal entities in the area */
   public void dispose() {
     for (Entity entity : areaEntities) {
-      entity.dispose();
+      entity.cleanup();
     }
   }
-
   /**
    * Despawns and disposes an entity from the gameArea
    * @param entity The entity to despawn

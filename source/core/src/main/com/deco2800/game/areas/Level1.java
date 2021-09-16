@@ -222,7 +222,7 @@ public class Level1 extends GameArea {
     }
   }
 
-  public void spawnBuildings() {
+  private void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
 
     for (int x = 3; x < tileBounds.x * 0.75; x += 7) {
@@ -233,7 +233,7 @@ public class Level1 extends GameArea {
     }
   }
 
-  public void spawnSigns() {
+  private void spawnSigns() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     GridPoint2 position  = new GridPoint2(tileBounds.x - 14, tileBounds.y - 5);
     Entity sign = ObstacleFactory.createObject("images/level_1/leaving_city_sign.png", 4f);
@@ -243,7 +243,7 @@ public class Level1 extends GameArea {
     spawnEntityAt(sign, position, true, false);
   }
 
-  public void spawnSafehouse() {
+  private void spawnSafehouse() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     GridPoint2 position  = new GridPoint2(tileBounds.x - 5, tileBounds.y - 5);
 
@@ -327,7 +327,7 @@ public class Level1 extends GameArea {
 
   private void spawnToughLongRangeEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);

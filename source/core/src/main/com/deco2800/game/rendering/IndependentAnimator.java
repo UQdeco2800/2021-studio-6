@@ -82,7 +82,7 @@ public class IndependentAnimator  extends AnimationRenderComponent {
   /**
    * Used to set the z index of the animation now that it is independent to entity.
    * A higher index corresponds to appearing 'above' or infront other visual elements.
-   * @param index
+   * @param index index
    */
   public void setZIndex(float index) {
     zIndex = index;

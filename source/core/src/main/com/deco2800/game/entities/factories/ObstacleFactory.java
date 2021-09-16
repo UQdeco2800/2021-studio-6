@@ -110,6 +110,7 @@ public class ObstacleFactory {
    * Creates an object given the path to its image and its size
    * @param image Path to the image to be used for object
    * @param height How much to scale the height of the image
+   * @return entity
    */
   public static Entity createObject(String image, float height) {
     Entity object =

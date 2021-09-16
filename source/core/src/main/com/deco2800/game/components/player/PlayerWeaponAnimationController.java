@@ -21,6 +21,7 @@ public class PlayerWeaponAnimationController extends Component {
    * instanced to get around some annoying issues.
    *
    * Index is used to keep track of what health state the player is at.
+   * @param cords coordinates
    */
   public void setter(Float[][] cords) {
     animationCords = cords;

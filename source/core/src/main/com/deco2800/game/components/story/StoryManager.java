@@ -133,6 +133,23 @@ public class StoryManager extends Component {
     }
 
     /**
+     * The map of story configs
+     * @return the map of stories
+     */
+    public EnumMap<StoryNames, StoryConfig> getScenesConfigs() {
+        return scenesConfigs;
+    }
+
+
+    /**
+     * The loaded story
+     * @return the loaded story
+     */
+    public StoryBase getLoadedStory() {
+        return loadedStory;
+    }
+
+    /**
      * Returns if a story is loaded or not
      * @return story is loaded or not
      */

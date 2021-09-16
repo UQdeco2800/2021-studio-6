@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.components.story.StoryManager;
@@ -120,12 +121,13 @@ public class Level1 extends GameArea {
     spawnIntroDialogue();
 
     spawnBullet();
+    spawnBomb();
     //spawnCobweb();
     //spawnBush();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
-    spawnBullet();
+    //spawnBullet();
 
     spawnLongRangeEnemies();
 
@@ -285,6 +287,18 @@ public class Level1 extends GameArea {
     }
 
     getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  private void spawnBomb() {
+    Array<Entity> bombs = new Array<>();
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBomb = BombFactory.createBomb();
+      bombs.add(newBomb);
+      spawnEntity(newBomb);
+    }
+
+    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
   }
   /**
   * Spawns the spawner enemy

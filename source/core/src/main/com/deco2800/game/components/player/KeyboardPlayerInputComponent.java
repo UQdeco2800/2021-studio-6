@@ -93,6 +93,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
       switch (keycode) {
+        //case Keys.G:
+          //entity.getEvents().trigger("rangeAOE", RangeAttack);
+          //return true;
         case Keys.SPACE:
             entity.getEvents().trigger("attack");
           return true;
@@ -105,6 +108,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.NUM_1:
             entity.getEvents().trigger("useBandage");
           return true;
+
+
+
       }
     }
     return false;

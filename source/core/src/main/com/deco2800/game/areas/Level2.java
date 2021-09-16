@@ -206,6 +206,18 @@ public class Level2 extends GameArea {
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
+  private void spawnBomb() {
+    Array<Entity> bombs = new Array<>();
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBomb = BombFactory.createBomb();
+      bombs.add(newBomb);
+      spawnEntity(newBomb);
+    }
+
+    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bombs);
+  }
+
   /**
    * Spawns the spawner enemy
    */

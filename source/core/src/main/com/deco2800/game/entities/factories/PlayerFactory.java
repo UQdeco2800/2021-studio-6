@@ -90,6 +90,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerAbilitiesComponent(stats.ability))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerRangeAttackComponent())
+                    .addComponent(new PlayerRangeAOEComponent())
                     .addComponent(new PlayerReusableComponent())
                     .addComponent(new DisposingComponent())
                     .addComponent(new PlayerInterfaceDisplay())

@@ -89,7 +89,6 @@ public class PhysicsComponent extends Component {
 
   @Override
   public void dispose() {
-    //System.out.println("destryoing body");
     physics.destroyBody(body);
   }
 

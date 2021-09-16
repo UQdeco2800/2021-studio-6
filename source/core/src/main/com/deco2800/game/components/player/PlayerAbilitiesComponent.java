@@ -2,10 +2,9 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.items.Abilities;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Ability component for specific player abilities, utilises triggers to trigger effects within other components.
@@ -13,21 +12,23 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerAbilitiesComponent extends Component {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static final Logger logger = LoggerFactory.getLogger(PlayerAbilitiesComponent.class);
-    private static final int delayLength = 60000; // in milliseconds
+    private static final int DELAY_LENGTH = 60000; // in milliseconds
     private long delayEndTime = 0;
-    private int ability;
+    private Abilities ability;
     // Ability Specific Variables
-    private static final long dashLength = 200; // in milliseconds
-    private static final long invincbilityLength = 3000;
+    private static final long DASH_LENGTH = 200; // in milliseconds
+    private static final long INVINCIBILITY_LENGTH = 3000;
     /**
      * Basic constructor for setting the players chosen ability
      * @param ability is the ability state to set the player to
      */
-    public PlayerAbilitiesComponent (int ability) {
+    public PlayerAbilitiesComponent (Abilities ability) {
         setAbility(ability);
     }
 
+    /**
+     * Adds the listener for triggering the ability alongside other creation of components
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("tryAbility", this::triggerAbility);
@@ -35,21 +36,17 @@ public class PlayerAbilitiesComponent extends Component {
 
     /**
      * Changes the players chosen ability through int code
-     * @param ability is int indicator the chosen ability of the player (must be between 0 and 3)
+     * @param ability is the chosen ability of the player
      */
-    public void setAbility(int ability) {
-        if(ability < 0 || ability > 3) {
-            logger.error("Invalid ability indicator");
-        } else {
-            this.ability = ability;
-        }
+    public void setAbility(Abilities ability) {
+        this.ability = ability;
     }
 
     /**
-     * Returns an int code indicating the players chosen ability
+     * Returns the players chosen ability
      * @return returns the ability
      */
-    public int getAbility() {
+    public Abilities getAbility() {
         return ability;
     }
 
@@ -59,19 +56,17 @@ public class PlayerAbilitiesComponent extends Component {
      * @param direction Used for the implementation of abilities
      */
     void triggerAbility(Vector2 direction) {
-        if (ability != 0 || !direction.isZero()) { // ensuring that abilities which require movement have it
-            if (timeSource.getTime() >= delayEndTime) {
-                delayEndTime = timeSource.getTime() + delayLength;
-                switch (this.ability) {
-                    case 0:
-                        entity.getEvents().trigger("longDash", dashLength+timeSource.getTime());
-                    case 1:
-                        entity.getEvents().trigger("invincibility", invincbilityLength);
-                    case 2:
-                        entity.getEvents().trigger("knockback");
-                    case 3:
-                        entity.getEvents().trigger("rangedAOE");
-                }
+        if (ability != Abilities.NONE && (ability != Abilities.LONG_DASH || !direction.isZero()) && (timeSource.getTime() >= delayEndTime)) { // ensuring that abilities which require movement have it
+            delayEndTime = timeSource.getTime() + DELAY_LENGTH;
+            entity.getEvents().trigger("abilityCooldown");
+            switch (this.ability) {
+                case LONG_DASH:
+                    entity.getEvents().trigger("longDash", DASH_LENGTH+timeSource.getTime());
+                    break;
+                case INVINCIBILITY:
+                    entity.getEvents().trigger("invincibility", INVINCIBILITY_LENGTH);
+                    break;
+                // default not required as all set enums should have function in switch
             }
         }
     }

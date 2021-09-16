@@ -16,30 +16,42 @@ public class PlayerReusableComponentTest {
     @Test
     void shouldApplyAndUseBandage() {
         Entity player = createPlayer();
-        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(2);
-        assertEquals(3, player.getComponent(InventoryComponent.class).getBandages());
+        int BANDAGE_COUNT = 3;
+        int BANDAGE_USED = 2;
+        int WOUNDED_STATE = 2;
+        int FULL_STATE = 3;
+
+        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(WOUNDED_STATE);
+        assertEquals(BANDAGE_COUNT, player.getComponent(InventoryComponent.class).getBandages());
         player.getEvents().trigger("useBandage");
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
-        assertEquals(2, player.getComponent(InventoryComponent.class).getBandages());
+        assertEquals(FULL_STATE, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(BANDAGE_USED, player.getComponent(InventoryComponent.class).getBandages());
     }
 
     @Test
     void shouldNotApplyBandageWithoutAnyInInventory() {
         Entity player = createPlayer();
-        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(2);
-        player.getComponent(InventoryComponent.class).setBandages(0);
+        int WOUNDED_STATE = 2;
+        int NO_BANDAGE = 0;
+
+        player.getComponent(PlayerCombatStatsComponent.class).setWoundState(WOUNDED_STATE);
+        player.getComponent(InventoryComponent.class).setBandages(NO_BANDAGE);
         player.getEvents().trigger("useBandage");
-        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(WOUNDED_STATE, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
     }
 
     @Test
     void shouldNotApplyBandageWhenHealthIsMax() {
         Entity player = createPlayer();
+        int BANDAGE_COUNT = 3;
+
         player.getEvents().trigger("useBandage");
-        assertEquals(3, player.getComponent(InventoryComponent.class).getBandages());
+        assertEquals(BANDAGE_COUNT, player.getComponent(InventoryComponent.class).getBandages());
     }
 
     Entity createPlayer() {
+        // these are arbitrary values used purely for testing and it is based real values extracted from the config
+        // file, currently not in used because may change depending on game balancing
         Entity player = new Entity()
                 .addComponent(new PlayerCombatStatsComponent(3, 10, 3, 2, 1))
                 .addComponent(new InventoryComponent(5, 5, 3))

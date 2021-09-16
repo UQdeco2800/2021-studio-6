@@ -43,9 +43,89 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.COINS, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/coin.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/coin/coin2.png"))
                 .addComponent(new DisposingComponent());
         coin.setScale(0.7f, 0.7f);
         return coin;
+    }
+
+    /**
+     * Armor is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of armor quantity
+     * @return armour pickup for player to use in game
+     */
+    public static Entity createArmour(int itemQuantity) {
+        Entity armour = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.ARMOUR, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/armour.png"))
+                .addComponent(new DisposingComponent());
+        return armour;
+    }
+
+    /**
+     * Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of helmet quantity
+     * @return helmet pickup for player to use in game
+     */
+    public static Entity createHelmet(int itemQuantity) {
+        Entity helmet = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.HELMET, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/halmet.png"))
+                .addComponent(new DisposingComponent());
+        return helmet;
+    }
+
+    /**
+     * Sword is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of sword quantity
+     * @return sword pickup for player to use in game
+     */
+    public static Entity createSword(int itemQuantity) {
+        Entity sword = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.SWORD, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/sword/sword1.png"))
+                .addComponent(new DisposingComponent());
+        return sword;
+    }
+
+    /**
+     * Dagger is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of dagger quantity
+     * @return dagger pickup for player to use in game
+     */
+    public static Entity createDagger(int itemQuantity) {
+        Entity dagger = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.DAGGER, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/dagger.png"))
+                .addComponent(new DisposingComponent());
+        return dagger;
+    }
+
+    /**
+     * Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of helmet quantity
+     * @return helmet pickup for player to use in game
+     */
+    public static Entity createAxe(int itemQuantity) {
+        Entity axe = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.AXE, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/axe/ax_right2.png"))
+                .addComponent(new DisposingComponent());
+        return axe;
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.components.story.StoryManager;
@@ -43,8 +44,11 @@ public class Level1 extends GameArea {
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
-    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png",
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
+    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
+    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
+      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/ax_right2.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -86,12 +90,15 @@ public class Level1 extends GameArea {
       "images/ghost.atlas",
       "images/ghostKing.atlas",
       "images/small_enemy.atlas",
+      "images/Player_Animations/player_movement.atlas",
       "images/spawnerEnemy.atlas",
       "images/player.atlas",
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
-      "images/weapon/sword.atlas"
+      "images/weapon/sword.atlas",
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
@@ -120,12 +127,13 @@ public class Level1 extends GameArea {
     spawnIntroDialogue();
 
     spawnBullet();
+    spawnBomb();
     //spawnCobweb();
     //spawnBush();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
-    spawnBullet();
+    //spawnBullet();
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
@@ -209,6 +217,46 @@ public class Level1 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, randomPos, true, false);
     }
+
+    // CREATED 3 ARMOURS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int armourQuantity = 1;
+      Entity armour = ItemFactory.createArmour(armourQuantity);
+      spawnEntityAt(armour, randomPos, true, false);
+    }
+
+    // CREATED 3 HELMETS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int helmetQuantity = 1;
+      Entity helmet = ItemFactory.createHelmet(helmetQuantity);
+      spawnEntityAt(helmet, randomPos, true, false);
+    }
+
+    // CREATED 3 DAGGERS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int daggerQuantity = 1;
+      Entity dagger = ItemFactory.createDagger(daggerQuantity);
+      spawnEntityAt(dagger, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int axeQuantity = 1;
+      Entity axe = ItemFactory.createAxe(axeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int swordQuantity = 1;
+      Entity sword = ItemFactory.createSword(swordQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
   }
 
   private void spawnTrees() {
@@ -268,11 +316,23 @@ public class Level1 extends GameArea {
 
     getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
+
+  private void spawnBomb() {
+    Array<Entity> bombs = new Array<>();
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBomb = BombFactory.createBomb();
+      bombs.add(newBomb);
+      spawnEntity(newBomb);
+    }
+
+    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
+  }
   /**
   * Spawns the spawner enemy
   */
   private void spawnSpawnerEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
@@ -293,7 +353,7 @@ public class Level1 extends GameArea {
    * Spawns the small enemy
    */
   private void spawnSmallEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
@@ -305,7 +365,7 @@ public class Level1 extends GameArea {
 
 
   private void spawnLargeEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
@@ -316,8 +376,9 @@ public class Level1 extends GameArea {
   }
 
   private void spawnLongRangeEnemies() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
+
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
@@ -328,6 +389,7 @@ public class Level1 extends GameArea {
   private void spawnToughLongRangeEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
+
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);

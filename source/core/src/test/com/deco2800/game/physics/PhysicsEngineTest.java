@@ -97,25 +97,7 @@ class PhysicsEngineTest {
   void disposeReuseQueueShouldBeEmpty() {
     PhysicsEngine engine = new PhysicsEngine(world, gameTime);
 
-    assertTrue(engine.getDisposeQueue().isEmpty());
     assertTrue(engine.getReuseQueue().isEmpty());
-  }
-
-  @Test
-  void disposeQueueShouldDispose() {
-    EntityService entityService = new EntityService();
-    ServiceLocator.registerEntityService(entityService);
-    PhysicsEngine engine = new PhysicsEngine(world, gameTime);
-
-    assertTrue(engine.getDisposeQueue().isEmpty());
-    Entity testDud1 = new Entity();
-    testDud1.create();
-    engine.addToDisposeQueue(testDud1);
-
-    assertFalse(engine.getDisposeQueue().isEmpty());
-    assertEquals(1,engine.getDisposeQueue().size());
-    engine.update();
-    assertTrue(engine.getDisposeQueue().isEmpty());
   }
 
   @Test

@@ -23,9 +23,6 @@ import java.util.List;
  */
 public class PlayerInterfaceDisplay extends UIComponent {
   Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload, tableTemp;
-  private Image heartImage;
-  private Label woundLabel;
-  private Label healthLabel;
   private Image healthBar;
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
@@ -45,7 +42,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/hud/health.atlas", TextureAtlas.class));
     healthAnimator.setCamera(true);
-    healthAnimator.setPositions(10, (float) -2.7);
+    healthAnimator.setPositions(9, (float) 4);
     healthAnimator.setScale( 3, 1);
     healthAnimator.addAnimation("health1", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health2", 0.1f, Animation.PlayMode.NORMAL);
@@ -65,15 +62,13 @@ public class PlayerInterfaceDisplay extends UIComponent {
         new IndependentAnimator(
             ServiceLocator.getResourceService()
                 .getAsset("images/hud/dashbar.atlas", TextureAtlas.class));
-    dashAnimator.addAnimation("dashbar", 0.04f, Animation.PlayMode.NORMAL);
+    dashAnimator.addAnimation("dashbar", 1.2f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
     dashAnimator.setCamera(true);
-    dashAnimator.setPositions(10, (float) -2);
+    dashAnimator.setPositions(9, (float) 4.7);
     dashAnimator.setScale( 3, (float) 0.5);
 
-    entity.getEvents().addListener("updateWound", this::updatePlayerWoundUI);
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("firstHit", this::removeHealth);
     entity.getEvents().addListener("updateBandageHUD", this::updatePlayerBandageUI);
     entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
@@ -106,29 +101,15 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableHealth = new Table();
     tableHealth.top().left();
     tableHealth.setFillParent(true);
-    tableHealth.padTop(150f);
+    tableHealth.padTop(250f);
     tableHealth.add(healthBar).size(110f, 32f);
 
-    // Heart image
-    float imageSideLength = 30f;
+
     float bandageSideLength = 50f;
-    heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
 
     healthBar = new Image(ServiceLocator.getResourceService().getAsset
         ("images/hud/healthFull.png", Texture.class));
-
-    // Health text
-    int wounds = entity.getComponent(PlayerCombatStatsComponent.class).getWoundState();
-    int health = entity.getComponent(PlayerCombatStatsComponent.class).getHealth();
-    CharSequence woundText = String.format("Wounds: %d", wounds);
-    CharSequence healthText = String.format("Health: %d", health);
-    woundLabel = new Label(woundText, skin, "large");
-    healthLabel = new Label(healthText, skin, "large");
-    tableTemp = new Table();
-    tableTemp.add(healthLabel);
-    tableTemp.add(heartImage).size(imageSideLength).pad(6);
-    tableTemp.add(woundLabel);
 
     table.row().left();
     table.add(tableTemp);
@@ -137,7 +118,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     // Relevant images used alongside labels
     bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
     ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin.png", Texture.class));
+    coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin/coin1.png", Texture.class));
     bulletImage1 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
     bulletImage2 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
     bulletImage3 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
@@ -154,39 +135,38 @@ public class PlayerInterfaceDisplay extends UIComponent {
     int ammo = inventory.getAmmo();
     int coins = inventory.getGold();
 
-    CharSequence bandageText = String.format(": %d", bandages);
-    CharSequence ammoText = String.format(" : %d", ammo);
-    CharSequence cointText = String.format(" : %d", coins);
-    CharSequence magazineText = " Left";
+    CharSequence bandageText = String.format("x %d", bandages);
+    CharSequence ammoText = String.format(" x %d", ammo);
+    CharSequence cointText = String.format(" x %d", coins);
     CharSequence reloadText = "No ammo! Press R to reload!";
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
     coinLabel = new Label(cointText, skin, "large");
-    bulletMagazineLabel = new Label(magazineText, skin, "large");
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
-    tableCoin.padTop(200f);
+    tableCoin.padTop(500f).padLeft(270f);
     tableCoin.add(coinImage);
     tableCoin.add(coinLabel);
 
     tableBandage = new Table();
-    tableBandage.padLeft(-10);
+    tableBandage.padLeft(260f);
     tableBandage.add(bandageImage).size(bandageSideLength);
     tableBandage.add(bandageLabel);
 
     tableAmmo = new Table();
+    tableAmmo.padLeft(270f);
     tableAmmo.add(ammoImage);
     tableAmmo.add(ammoLabel);
 
     tableGunMagazine = new Table();
+    tableGunMagazine.padLeft(270f).padTop(-20f);
     tableGunMagazine.add(bulletImage1);
     tableGunMagazine.add(bulletImage2);
     tableGunMagazine.add(bulletImage3);
     tableGunMagazine.add(bulletImage4);
     tableGunMagazine.add(bulletImage5);
-    tableGunMagazine.add(bulletMagazineLabel);
 
     tableReload = new Table();
     tableReload.add(reloadLabel);
@@ -199,9 +179,9 @@ public class PlayerInterfaceDisplay extends UIComponent {
     table.row();
     table.add(tableAmmo).left();
     table.row();
+    table.add(tableReload).left().padLeft(600f);
+    table.row();
     table.add(tableGunMagazine).left();
-    table.row().expand().bottom().padBottom(180f);
-    table.add(tableReload);
 
     stage.addActor(table);
   }
@@ -256,24 +236,6 @@ public class PlayerInterfaceDisplay extends UIComponent {
   @Override
   public void draw(SpriteBatch batch)  {
     // draw is handled by the stage
-  }
-
-  /**
-   * Updates the player's wound state on the ui.
-   * @param wound player wound state
-   */
-  public void updatePlayerWoundUI(int wound) {
-    CharSequence text = String.format("Wounds: %d", wound);
-    woundLabel.setText(text);
-  }
-
-  /**
-   * Updates the player's state health on the ui.
-   * @param health player state health
-   */
-  public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
-    healthLabel.setText(text);
   }
 
   /**

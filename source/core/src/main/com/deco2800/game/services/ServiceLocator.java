@@ -1,5 +1,6 @@
 package com.deco2800.game.services;
 
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsService;
@@ -22,6 +23,7 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+  private static GameArea gameArea;
 
 
   public static EntityService getEntityService() {
@@ -46,6 +48,10 @@ public class ServiceLocator {
 
   public static ResourceService getResourceService() {
     return resourceService;
+  }
+
+  public static GameArea getGameArea() {
+    return gameArea;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -78,6 +84,13 @@ public class ServiceLocator {
     resourceService = source;
   }
 
+
+  public static void registerGameArea(GameArea source) {
+    logger.debug("Registering local game area reference {}", source);
+    gameArea = source;
+  }
+
+
   public static void clear() {
     entityService = null;
     renderService = null;
@@ -85,6 +98,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    gameArea = null;
   }
 
   private ServiceLocator() {

@@ -27,6 +27,7 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.physics.PhysicsUtils;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -59,6 +60,7 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/spawnerEnemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
     Entity spawnerEnemy =
             new Entity()
@@ -72,7 +74,8 @@ public class NPCFactory {
 
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f)); //remove once idle task is created
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f)) //remove once idle task is created
+                    .addTask(new ChaseTask(target, 10, 3f, 4f));
     spawnerEnemy.addComponent(aiComponent);
 
     spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -88,7 +91,6 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createSmallEnemy(Entity target) {
-    Entity smallEnemy = createBaseNPC(target);
     BaseEntityConfig config = configs.smallEnemy;
     Vector2 speed = new Vector2(config.speed, config.speed);
 
@@ -98,13 +100,27 @@ public class NPCFactory {
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
-    smallEnemy
-            .addComponent(new GhostAnimationController())
-            .addComponent(new PhysicsMovementComponent(speed))
-            .addComponent(animator)
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+
+    Entity smallEnemy =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 2f))
+                    .addComponent(aiComponent)
+                    .addComponent(new DisposingComponent())
+                    .addComponent(new GhostAnimationController())
+                    .addComponent(new PhysicsMovementComponent(speed))
+                    .addComponent(animator)
+                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     smallEnemy.setScale(0.75f, 0.75f);
+    PhysicsUtils.setScaledCollider(smallEnemy, 0.6f, 0.3f);
     return smallEnemy;
   }
 
@@ -130,11 +146,13 @@ public class NPCFactory {
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
+            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
             .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(new GhostAnimationController());
 
     //Increase the size of the enemy
     largeEnemy.setScale(2f,2f);
+    PhysicsUtils.setScaledCollider(largeEnemy, 0.8f, 0.3f);
 
     return largeEnemy;
   }
@@ -154,9 +172,9 @@ public class NPCFactory {
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new ColliderComponent())
+                    //.addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(new TextureRenderComponent("images/eye.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
@@ -200,17 +218,17 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+                    .addTask(new ChaseTask(target, 10, 4f, 5f));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+            //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 3f))
             .addComponent(aiComponent)
             .addComponent(new DisposingComponent());
 
-    //PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    //PhysicsUtils.setScaledCollider(npc, 0.8f, 0.3f);
     return npc;
   }
 

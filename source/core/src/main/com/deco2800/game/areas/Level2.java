@@ -8,6 +8,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -30,8 +31,12 @@ public class Level2 extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
 
   private static final String[] forestTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png", "images/playeritems/coin.png",
-    "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png",
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
+    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
+    "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+      "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
+      "images/playeritems/ax/ax_right2.png",
+      "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
@@ -62,11 +67,14 @@ public class Level2 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/small_enemy.atlas",
+      "images/Player_Animations/player_movement.atlas",
     "images/spawnerEnemy.atlas",
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
-      "images/weapon/sword.atlas"
+      "images/weapon/sword.atlas",
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -94,6 +102,7 @@ public class Level2 extends GameArea {
 
     player = spawnPlayer();
     spawnBullet();
+    spawnBomb();
     spawnPickupItems();
 
     spawnSmallEnemy();
@@ -270,6 +279,18 @@ public class Level2 extends GameArea {
     }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  private void spawnBomb() {
+    Array<Entity> bombs = new Array<>();
+
+    for (int i = 0; i < NUM_BULLETS; i++) {
+      Entity newBomb = BombFactory.createBomb();
+      bombs.add(newBomb);
+      spawnEntity(newBomb);
+    }
+
+    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
   }
 
   /**

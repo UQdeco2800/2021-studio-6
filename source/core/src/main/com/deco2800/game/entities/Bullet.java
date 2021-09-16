@@ -7,7 +7,7 @@ public class Bullet extends Entity {
 
 
     public void Bullet() {
-        //
+        //Bullet
     }
 
     public void fireAt(Vector2 source, Vector2 dest) {

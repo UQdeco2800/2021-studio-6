@@ -1,146 +1,118 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
+
 /**
  * This class listens to events relevant to a player's state and plays the animation when one
- * of the events is triggered. Currently not implemented as the animations do
- * not yet exist. Can be expanded later on to include other animation events.
+ * of the events is triggered. Animations are stored in arrays to allow indexing.
  */
 public class PlayerAnimationController extends Component {
   AnimationRenderComponent animator;
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final long hurtDuration = 1000;
+  private static final long hurtDuration = 500;
   private boolean hurtActive = false;
   private long hurtTime;
-  private int lastDirection;
+  private Directions lastDirection;
+  private String lastAnimation;
+  private final String[][] animationsLeft = {{"left", "left-run"}, {"left-hurt", "left-run-hurt"}};
+  private final String[][] animationsRight = {{"right", "right-run"}, {"right-hurt", "right-run-hurt"}};
+  private final String[][] animationsUp = {{"back", "back-run"}, {"back-hurt", "back-run-hurt"}};
+  private final String[][] animationsDown = {{"front", "front-run"}, {"front-hurt", "front-run-hurt"}};
+  private final String[][][] animationNoArmor = {animationsLeft, animationsRight, animationsDown, animationsUp};
+  private final String[][] animationsLeftHelmet = {{"left-helmet", "left-run-helmet"}, {"left-hurt", "left-run-hurt"}};
+  private final String[][] animationsRightHelmet = {{"right-helmet", "right-run-helmet"}, {"right-hurt", "right-run-hurt"}};
+  private final String[][] animationsUpHelmet = {{"back-helmet", "back-run-helmet"}, {"back-hurt", "back-run-hurt"}};
+  private final String[][] animationsDownHelmet = {{"front-helmet", "front-run-helmet"}, {"front-hurt", "front-run-hurt"}};
+  private final String[][][] animationHelmet = {animationsLeftHelmet, animationsRightHelmet, animationsDownHelmet, animationsUpHelmet};
+  private final String[][] animationsLeftArmour = {{"left-armour", "left-run-armour"}, {"left-hurt", "left-run-hurt"}};
+  private final String[][] animationsRightArmour = {{"right-armour", "right-run-armour"}, {"right-hurt", "right-run-hurt"}};
+  private final String[][] animationsUpArmour = {{"back-armour", "back-run-armour"}, {"back-hurt", "back-run-hurt"}};
+  private final String[][] animationsDownArmour = {{"front-armour", "front-run-armour"}, {"front-hurt", "front-run-hurt"}};
+  private final String[][][] animationArmour = {animationsLeftArmour, animationsRightArmour, animationsDownArmour, animationsUpArmour};
+  private final String[][][][] animations = {animationNoArmor, animationHelmet, animationArmour};
 
+  /**
+   * Sets up relevant event trigger for getting hurt and starts default animation.
+   */
   @Override
   public void create() {
-    super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
-    entity.getEvents().addListener("moveLeft", this::animateMoveLeft);
-    entity.getEvents().addListener("moveRight", this::animateMoveRight);
-    entity.getEvents().addListener("moveUp", this::animateMoveUp);
-    entity.getEvents().addListener("moveDown", this::animateMoveDown);
-    entity.getEvents().addListener("walkStop", this::animateIdle);
     entity.getEvents().addListener("hurt",this::animateHurt);
-    entity.getEvents().addListener("dead",this::animateDead);
-    lastDirection = 1;
     animator.startAnimation("front");
   }
 
+  /**
+   * Player animations are updated and checked each update call. Goes through a
+   * number of if statements and checks to determine the correct index location for
+   * the relevant player animation. This index system was used to reduce complexity,
+   * as otherwise the function would require an obscene amount of nested if statements
+   * and switches.
+   *
+   * Checks if the player is moving, if they are hurt and what type of armour they have on.
+   * Also checks if the identical animation is already in progress.
+   */
   @Override
   public void update() {
     if (timeSource.getTimeSince(hurtTime) >= hurtDuration) {
       hurtActive = false;
-      if (!entity.getComponent(PlayerActions.class).isMoving()) {
-        animateIdle();
-      }
+    }
+    int idleIndex = 1;
+    int hurtIndex = 0;
+    int directIndex = 0;
+    int armourIndex = 0;
+    if (!entity.getComponent(PlayerActions.class).isMoving()) {
+      idleIndex = 0;
+    }
+    if (hurtActive) {
+      hurtIndex = 1;
+    }
+    switch (entity.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel()) {
+      case 1:
+        hurtIndex = 0;
+        armourIndex = 1;
+        break;
+      case 2:
+        hurtIndex = 0;
+        armourIndex = 2;
+        break;
+      default:
+        break;
+    }
+    String anim;
+    KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
+    Directions direct = key.getDirection();
+    switch (direct) {
+      case MOVE_DOWN:
+        directIndex = 2;
+        break;
+      case MOVE_LEFT:
+        directIndex = 0;
+        break;
+      case MOVE_UP:
+        directIndex = 3;
+        break;
+      case MOVE_RIGHT:
+        directIndex = 1;
+        break;
+    }
+    anim = animations[armourIndex][directIndex][hurtIndex][idleIndex];
+    if (!anim.equals(lastAnimation)) {
+      animator.startAnimation(anim);
+      lastAnimation = anim;
     }
   }
 
   /**
-   * Checks if the player is currently in the process of the hurt animation.
-   * @return true if getting hurt, false otherwise
+   * Gets trigger when the player gets hurt and sets local variable for it.
    */
-  private boolean checkHurt() {
-    return hurtActive;
-  }
-
-  void animateDead() {
-    animator.startAnimation("dead-right");
-  }
-
-  void animateMoveDown() {
-    if (checkHurt()) {
-      animator.startAnimation("front-run-hurt");
-    } else {
-      animator.startAnimation("front-run");
-    }
-    lastDirection = 1;
-  }
-
-  void animateMoveRight() {
-    if (checkHurt()) {
-      animator.startAnimation("right-run-hurt");
-    } else {
-      animator.startAnimation("right-run");
-    }
-    lastDirection = 2;
-  }
-
-  void animateMoveUp() {
-    if (checkHurt()) {
-      animator.startAnimation("back-run-hurt");
-    } else {
-      animator.startAnimation("back-run");
-    }
-    lastDirection = 3;
-  }
-
-  void animateMoveLeft() {
-    if (checkHurt()) {
-      animator.startAnimation("left-run-hurt");
-    } else {
-      animator.startAnimation("left-run");
-    }
-    lastDirection = 4;
-  }
-
   void animateHurt() {
     hurtActive = true;
-    hurtTime = timeSource.getTime() + hurtDuration;
-    switch (lastDirection) {
-      case 1:
-        animator.startAnimation("front-hurt");
-        break;
-      case 2:
-        animator.startAnimation("right-hurt");
-        break;
-      case 3:
-        animator.startAnimation("back-hurt");
-        break;
-      case 4:
-        animator.startAnimation("left-hurt");
-        break;
-    }
-  }
-  void animateIdle() {
-    if(checkHurt()) {
-      switch (lastDirection) {
-        case 1:
-          animator.startAnimation("front-hurt");
-          break;
-        case 2:
-          animator.startAnimation("right-hurt");
-          break;
-        case 3:
-          animator.startAnimation("back-hurt");
-          break;
-        case 4:
-          animator.startAnimation("left-hurt");
-          break;
-      }
-    } else {
-      switch (lastDirection) {
-        case 1:
-          animator.startAnimation("front");
-          break;
-        case 2:
-          animator.startAnimation("right");
-          break;
-        case 3:
-          animator.startAnimation("back");
-          break;
-        case 4:
-          animator.startAnimation("left");
-          break;
-      }
-    }
+    hurtTime = timeSource.getTime();
   }
 }

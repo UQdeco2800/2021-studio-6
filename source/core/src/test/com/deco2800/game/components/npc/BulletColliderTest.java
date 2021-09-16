@@ -60,7 +60,7 @@ public class BulletColliderTest {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new BulletCollider(player, gameArea));
+                .addComponent(new BulletCollider(player, gameArea, PhysicsLayer.PLAYER));
 
         //create both player and bullet
         bullet.create();

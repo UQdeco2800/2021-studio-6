@@ -11,6 +11,7 @@ public class IndependentAnimator  extends AnimationRenderComponent {
   private float yPos = 0;
   private float xScale = 1;
   private float yScale = 1;
+  private float zIndex = 10;
   private boolean cameraFollow = true;
 
   /**
@@ -78,6 +79,21 @@ public class IndependentAnimator  extends AnimationRenderComponent {
     cameraFollow = to;
   }
 
+  /**
+   * Used to set the z index of the animation now that it is independent to entity.
+   * A higher index corresponds to appearing 'above' or infront other visual elements.
+   * @param index
+   */
+  public void setZIndex(float index) {
+    zIndex = index;
+  }
+
+  /**
+   * Uses a very similar draw method to AnimationRender component but the main
+   * difference is the removal of entity and the replacement of it's position
+   * with the positions given by setPositions.
+   * @param batch the animation sprites to render
+   */
   @Override
   protected void draw(SpriteBatch batch) {
     if (super.getFullAnimation() != null) {
@@ -103,8 +119,6 @@ public class IndependentAnimator  extends AnimationRenderComponent {
 
   @Override
   public float getZIndex() {
-    // The smaller the Y value, the higher the Z index, so that closer entities are drawn in front
-    //Placeholder value
-    return 100;
+    return zIndex;
   }
 }

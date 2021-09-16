@@ -37,53 +37,33 @@ class KeyboardPlayerInputComponentTest {
     }
 
     @Test
-    public void shouldTriggerWalkingAnimationVertical() {
-        player.getEvents().addListener("moveUp", listener0);
-        player.getEvents().addListener("moveDown", listener0_2);
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
-        verify(listener0).handle();
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.S);
-        verify(listener0_2).handle();
-    }
-
-    @Test
     public void shouldTriggerWalkingVertical() {
         player.getEvents().addListener("walk", listener1);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
-        verify(listener1).handle(new Vector2(0f, 1f));
+        verify(listener1).handle(new Vector2(0f, 1f)); // vector corresponds to W input key
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.S);
-        verify(listener1).handle(new Vector2(0f, 0f));
-    }
-
-    @Test
-    public void shouldTriggerWalkingAnimationHorizontal() {
-        player.getEvents().addListener("moveLeft", listener0);
-        player.getEvents().addListener("moveRight", listener0_2);
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.A);
-        verify(listener0).handle();
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.D);
-        verify(listener0_2).handle();
+        verify(listener1).handle(new Vector2(0f, 0f)); // vector corresponds to S input key
     }
 
     @Test
     public void shouldSetWalkingHorizontal() {
         player.getEvents().addListener("walk", listener1);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.A);
-        verify(listener1).handle(new Vector2(-1f,0f));
+        verify(listener1).handle(new Vector2(-1f,0f)); // vector corresponds to A input key
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.D);
-        verify(listener1).handle(new Vector2(0f,0f));
+        verify(listener1).handle(new Vector2(0f,0f)); // vector corresponds to D input key
     }
 
     @Test
     public void shouldStopWalking() {
         player.getEvents().addListener("walkStop", listener0);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.A);
-        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.D);
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.D); // opposite direction sets walking to stopped
         verify(listener0).handle();
     }
 
     @Test
-    public void shouldntTriggerDashOnPause() {
+    public void shouldntTriggerOnPause() {
         player.getEvents().addListener("dash", listener0);
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.SHIFT_LEFT);
         verify(listener0).handle();

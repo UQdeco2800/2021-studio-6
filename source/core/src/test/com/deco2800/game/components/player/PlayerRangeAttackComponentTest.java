@@ -10,6 +10,7 @@ import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,36 +35,43 @@ public class PlayerRangeAttackComponentTest {
     void shouldGetAndRestockBullets() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
+        Vector2 BULLET_HIDDING_COORD = new Vector2(-10,-10);
+        Vector2 BULLET_SPEED = new Vector2(-5f,5f);
+        int BULLET_COUNT = 5;
+        int RESTOCK_EXTRA_BULLET = 6;
 
         Array<Entity> bullets = new Array<>();
         int NUM_BULLETS = 5;
         for (int i = 0; i < NUM_BULLETS; i++) {
-            Entity newBullet = new Entity().addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)));
+            Entity newBullet = new Entity().addComponent(new PhysicsMovementComponent(BULLET_SPEED));
 
             // hide bullet out of game screen
-            newBullet.setPosition(-10,-10);
+            newBullet.setPosition(BULLET_HIDDING_COORD);
             bullets.add(newBullet);
         }
         player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
-        assertEquals(5, PlayerRangeAttackComponent.getActiveBullets().size);
+        assertEquals(BULLET_COUNT, PlayerRangeAttackComponent.getActiveBullets().size);
 
         Entity dudBullet = new Entity();
         PlayerRangeAttackComponent.restockBulletShot(dudBullet);
-        assertEquals(6, PlayerRangeAttackComponent.getActiveBullets().size);
+        assertEquals(RESTOCK_EXTRA_BULLET, PlayerRangeAttackComponent.getActiveBullets().size);
     }
 
     @Test
     void checkReloadingStatusAndGunMagazineCapacity() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
+        int BULLET_COUNT = 5;
+        int RELOAD_AMMO = 1;
+        int RESTOCK_EXTRA_BULLET = 6;
 
         assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
         player.getComponent(PlayerRangeAttackComponent.class).setReloadingStatus(true);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
 
-        assertEquals(5, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-        player.getComponent(PlayerRangeAttackComponent.class).reloadGunMagazine(1);
-        assertEquals(6, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        assertEquals(BULLET_COUNT, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        player.getComponent(PlayerRangeAttackComponent.class).reloadGunMagazine(RELOAD_AMMO);
+        assertEquals(RESTOCK_EXTRA_BULLET, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
         assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
     }
 
@@ -71,79 +79,83 @@ public class PlayerRangeAttackComponentTest {
     void checkAndSetPlayerDirection() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
+        Vector2 ORIGINAL_FACING_DIR = new Vector2(0,0);
+        Vector2 FACING_RIGHT_DIR = new Vector2(1,0);
 
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(0,0));
-        Vector2 direction = new Vector2(1,0);
-        player.getComponent(PlayerRangeAttackComponent.class).setDirection(direction);
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(1,0));
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(ORIGINAL_FACING_DIR));
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_RIGHT_DIR);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_RIGHT_DIR));
     }
 
     @Test
     void shouldScaleVectors() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
-        player.setPosition(0,0);
+        Vector2 PLAYER_POS = new Vector2(0,0);
+        Vector2 FACING_LEFT_DIR = new Vector2(-1,0);
+        Vector2 FACING_RIGHT_DIR = new Vector2(1,0);
+        Vector2 FACING_DOWN_DIR = new Vector2(0,-1);
+        Vector2 FACING_UP_DIR = new Vector2(0,1);
+        Vector2 SCALED_LEFT = new Vector2(-1000,0);
+        Vector2 SCALED_RIGHT = new Vector2(1000,0);
+        Vector2 SCALED_UP = new Vector2(0,1000);
+        Vector2 SCALED_DOWN = new Vector2(0,-1000);
 
-        Vector2 directionL = new Vector2(-1,0);
-        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionL);
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition())
-                .epsilonEquals(-15,0));
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_LEFT_DIR);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
+                .epsilonEquals(SCALED_LEFT));
 
-        Vector2 directionD = new Vector2(0,-1);
-        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionD);
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition())
-                .epsilonEquals(0,-15));
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_RIGHT_DIR);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
+                .epsilonEquals(SCALED_RIGHT));
 
-        Vector2 directionU = new Vector2(0,1);
-        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionU);
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition())
-                .epsilonEquals(0,15));
-    }
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_DOWN_DIR);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
+                .epsilonEquals(SCALED_DOWN));
 
-    @Test
-    void shouldScaleRight() {
-        Entity player = new Entity();
-        player.addComponent(new PlayerRangeAttackComponent());
-        player.setPosition(0,0);
-
-        Vector2 directionR = new Vector2(1,0);
-        player.getComponent(PlayerRangeAttackComponent.class).setDirection(directionR.cpy());
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(player.getPosition()).cpy()
-                .epsilonEquals(15,0));
+        player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_UP_DIR);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
+                .epsilonEquals(SCALED_UP));
     }
 
     @Test
     void shouldFireCorrectly() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
+        Vector2 BULLET_HIDDING_COORD = new Vector2(-10,-10);
+        Vector2 BULLET_SPEED = new Vector2(5f,5f);
+        Vector2 PLAYER_POS = new Vector2(0,0);
+        Vector2 SHOOT = new Vector2(0,0);
+        Vector2 FACING_RIGHT_DIR = new Vector2(1,0);
+        int NO_BULLETS_SHOT = 0;
+        int BULLET_COUNT = 4;
+        Vector2 SCALED_RIGHT = new Vector2(1000,0);
 
         Array<Entity> bullets = new Array<>();
         int NUM_BULLETS = 5;
         for (int i = 0; i < NUM_BULLETS; i++) {
             Entity newBullet = new Entity()
-                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                    .addComponent(new PhysicsMovementComponent(BULLET_SPEED))
                     .addComponent(new BulletCollisionComponent());
-
             // hide bullet out of game screen
-            newBullet.setPosition(-10,-10);
+            newBullet.setPosition(BULLET_HIDDING_COORD);
             bullets.add(newBullet);
         }
         player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
-        player.setPosition(0,0);
+        player.setPosition(PLAYER_POS);
 
-        Vector2 movingDirection = new Vector2(1,0);
-        player.getComponent(PlayerRangeAttackComponent.class).fire(movingDirection);
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(1,0));
+        player.getComponent(PlayerRangeAttackComponent.class).fire(FACING_RIGHT_DIR);
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_RIGHT_DIR));
 
-        Vector2 shot = new Vector2(0,0);
-        Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(0);
-        player.getComponent(PlayerRangeAttackComponent.class).fire(shot);
+        Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(NO_BULLETS_SHOT);
+        player.getComponent(PlayerRangeAttackComponent.class).fire(SHOOT);
 
-        assertEquals(4, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-        assertEquals(4, PlayerRangeAttackComponent.getActiveBullets().size);
+        assertEquals(BULLET_COUNT, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        assertEquals(BULLET_COUNT, PlayerRangeAttackComponent.getActiveBullets().size);
 
         assertTrue(bulletAlmostFired.getPosition().epsilonEquals(0,0));
         assertTrue(bulletAlmostFired.getComponent(BulletCollisionComponent.class).getBulletLaunchStatus());
-        assertTrue(bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget().epsilonEquals(15,0));
+
+        assertEquals(SCALED_RIGHT.cpy(), bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget()); //
     }
 }

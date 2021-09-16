@@ -5,10 +5,12 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.items.Directions;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import java.util.ArrayList;
+
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -19,16 +21,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   // Method requirement for player to execute long range attack
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private final IntSet downKeys = new IntSet(20);
-  private final ArrayList<Integer> movementKeys = new ArrayList<>();
+  //private final ArrayList<Integer> movementKeys = new ArrayList<>();
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   // Variable for allowing attacks
   private boolean canAttack = true;
   private boolean canDashAttack = true;
+  private final ArrayList<Directions> movementDirections = new ArrayList<>();
+  private Directions lastDirection = Directions.MOVE_DOWN;
 
   public KeyboardPlayerInputComponent() {
     super(5);
   }
 
+  /**
+   * Adding relevant listeners to the component
+   */
   @Override
   public void create() {
     super.create();
@@ -40,6 +47,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Triggers player events on specific keycodes.
+   * Split up into 2 separate if statements that depend on other variables to reduce complexity.
    *
    * @return whether the input was processed
    * @see InputProcessor#keyDown(int)
@@ -49,77 +57,68 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
-    // keep track of player's current facing direction
     if (timeSource == null || !timeSource.isPaused()) {
-      if (keycode == Keys.D) {
-        entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
-      } else if (keycode == Keys.A) {
-        entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
-      } else if (keycode == Keys.W) {
-        entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
-      } else if (keycode == Keys.S) {
-        entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
+      switch (keycode) {
+        case Keys.W:
+          entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
+       //   entity.getEvents().trigger("rangeAOE", Vector2Utils.UP.cpy());
+          walkDirection.add(Vector2Utils.UP);
+          triggerWalkEvent();
+          movementDirections.add(Directions.MOVE_UP);
+          return true;
+        case Keys.A:
+          entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
+        //  entity.getEvents().trigger("rangeAOE", Vector2Utils.LEFT.cpy());
+          walkDirection.add(Vector2Utils.LEFT);
+          triggerWalkEvent();
+          movementDirections.add(Directions.MOVE_LEFT);
+          return true;
+        case Keys.S:
+          entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
+        //  entity.getEvents().trigger("rangeAOE", Vector2Utils.DOWN.cpy());
+          walkDirection.add(Vector2Utils.DOWN);
+          triggerWalkEvent();
+          movementDirections.add(Directions.MOVE_DOWN);
+          return true;
+        case Keys.D:
+          entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
+        //  entity.getEvents().trigger("rangeAOE", Vector2Utils.RIGHT.cpy());
+          walkDirection.add(Vector2Utils.RIGHT);
+          triggerWalkEvent();
+          movementDirections.add(Directions.MOVE_RIGHT);
+          return true;
+        case Keys.R:
+          entity.getEvents().trigger("reload");
+          return true;
+        case Keys.SHIFT_LEFT:
+          entity.getEvents().trigger("dash");
+          return true;
       }
     }
 
-    switch (keycode) {
-      case Keys.W:
-        movementKeys.add(keycode);
-        walkDirection.add(Vector2Utils.UP);
-        triggerWalkEvent();
-        animationHandle();
-        return true;
-      case Keys.A:
-        movementKeys.add(keycode);
-        walkDirection.add(Vector2Utils.LEFT);
-        triggerWalkEvent();
-        animationHandle();
-        return true;
-      case Keys.S:
-        movementKeys.add(keycode);
-        walkDirection.add(Vector2Utils.DOWN);
-        triggerWalkEvent();
-        animationHandle();
-        return true;
-      case Keys.D:
-        movementKeys.add(keycode);
-        walkDirection.add(Vector2Utils.RIGHT);
-        triggerWalkEvent();
-        animationHandle();
-        return true;
-      case Keys.R:
-        if (timeSource == null || !timeSource.isPaused()) {
-          entity.getEvents().trigger("reload");
-        }
-        return true;
-      case Keys.SHIFT_LEFT:
-        if (timeSource == null || !timeSource.isPaused()) {
-          //this.getEntity().getEvents().trigger("dash");
-          entity.getEvents().trigger("dash");
-        }
-        return true;
-      case Keys.SPACE:
-        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          entity.getEvents().trigger("attack");
-        }
-        return true;
-      case Keys.ENTER:
-        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          entity.getEvents().trigger("rangeAttack", RangeAttack);
-        }
-        return true;
-      case Keys.E:
-        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          entity.getEvents().trigger("tryAbility", walkDirection);
-        }
-        return true;
-      case Keys.NUM_1:
-        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
-          entity.getEvents().trigger("useBandage");
-        }
-      default:
-        return false;
+    if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
+      switch (keycode) {
+        //case Keys.G:
+          //entity.getEvents().trigger("rangeAOE", RangeAttack);
+          //return true;
+        case Keys.SPACE:
+            entity.getEvents().trigger("attackStart");
+          return true;
+        case Keys.ENTER:
+            entity.getEvents().trigger("rangeAttack", RangeAttack);
+          return true;
+        case Keys.E:
+            entity.getEvents().trigger("tryAbility", walkDirection);
+          return true;
+        case Keys.NUM_1:
+            entity.getEvents().trigger("useBandage");
+          return true;
+
+
+
+      }
     }
+    return false;
   }
 
   /**
@@ -133,84 +132,42 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.remove(keycode);
     switch (keycode) {
       case Keys.W:
-        removeMovementKey(keycode);
+        removeMovementKey(Directions.MOVE_UP);
         walkDirection.sub(Vector2Utils.UP);
         triggerWalkEvent();
-        animationHandle();
         return true;
       case Keys.A:
-        removeMovementKey(keycode);
+        removeMovementKey(Directions.MOVE_LEFT);
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
-        animationHandle();
         return true;
       case Keys.S:
-        removeMovementKey(keycode);
+        removeMovementKey(Directions.MOVE_DOWN);
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
-        animationHandle();
         return true;
       case Keys.D:
-        removeMovementKey(keycode);
+        removeMovementKey(Directions.MOVE_RIGHT);
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        animationHandle();
         return true;
       default:
         return false;
-    }
-
-  }
-
-  /**
-   * Function to handle trigger the required player animation. Gets called after
-   * each change to player movement i.e. keydown or keyup.
-   */
-  private void animationHandle() {
-    PlayerMeleeAttackComponent tempAttack = this.entity.getComponent(PlayerMeleeAttackComponent.class);
-    if (movementKeys.size() > 0) {
-      switch (movementKeys.get(movementKeys.size() - 1)) {
-        case Keys.W:
-          this.getEntity().getEvents().trigger("moveUp");
-          break;
-        case Keys.A:
-          this.getEntity().getEvents().trigger("moveLeft");
-          break;
-        case Keys.S:
-          this.getEntity().getEvents().trigger("moveDown");
-          break;
-        case Keys.D:
-          this.getEntity().getEvents().trigger("moveRight");
-          break;
-      }
-      if (tempAttack != null) {
-        switch (movementKeys.get(movementKeys.size() - 1)) {
-          case Keys.W:
-            tempAttack.setDirection(1);
-            break;
-          case Keys.A:
-            tempAttack.setDirection(3);
-            break;
-          case Keys.S:
-            tempAttack.setDirection(2);
-            break;
-          case Keys.D:
-            tempAttack.setDirection(4);
-            break;
-        }
-      }
     }
   }
 
   /**
    * Removes the necessary movement key from the list of current keys
    *
-   * @param keycode the keycode to remove from movementKeys
+   * @param direction the direction to remove from movementKeys
    */
-  private void removeMovementKey(int keycode) {
-    movementKeys.removeIf(movementKey -> movementKey == keycode);
+  private void removeMovementKey(Directions direction) {
+    movementDirections.removeIf(movementKey -> movementKey == direction);
   }
 
+  /**
+   * Triggers to the movement controller the players current walking state and direction
+   */
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
@@ -246,6 +203,26 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   void disableDashAttack() {
     this.canDashAttack = false;
+  }
+
+  /**
+   * Gets the direction the player is currently walking in
+   * @return the players current walking direction
+   */
+  public Vector2 getVector() {
+    return walkDirection;
+  }
+
+  /**
+   * Getting the last direction the player moved in
+   * @return the direction enum that represents the last direction the player moved in
+   */
+  public Directions getDirection() {
+    if (movementDirections.size() > 0) {
+      lastDirection = movementDirections.get(movementDirections.size() - 1);
+      return movementDirections.get(movementDirections.size() - 1);
+    }
+    return lastDirection;
   }
 }
 

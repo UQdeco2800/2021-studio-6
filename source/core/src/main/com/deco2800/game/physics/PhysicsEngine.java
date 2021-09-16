@@ -38,7 +38,6 @@ public class PhysicsEngine implements Disposable {
   private final AllHitCallback allHitCallback = new AllHitCallback();
   private float accumulator;
   private List<Body> toDelete;
-  private List<Entity> toDispose = new ArrayList<>();
   private List<Entity> toReuse = new ArrayList<>();
 
   public PhysicsEngine() {
@@ -77,17 +76,9 @@ public class PhysicsEngine implements Disposable {
         entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
 
         entity.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(false);
-        entity.getComponent(BulletCollisionComponent.class).setBulletCollisionStatus(false);
         PlayerRangeAttackComponent.restockBulletShot(entity);
       }
       toReuse.clear();
-    }
-
-    if (!toDispose.isEmpty()) {
-      for (Entity entity : toDispose) {
-        entity.dispose();
-      }
-      toDispose.clear();
     }
   }
 
@@ -179,24 +170,6 @@ public class PhysicsEngine implements Disposable {
   @Override
   public void dispose() {
     world.dispose();
-  }
-
-  /**
-   * Used to register entity that will be dispose outside of physics time step
-   *
-   * @param entity that will be dispose and removed from world
-   */
-  public void addToDisposeQueue(Entity entity) {
-    this.toDispose.add(entity);
-  }
-
-  /**
-   * Used to acquire dispose queue if required
-   *
-   * @return array of entities that will need to be disposed outside of physic time step
-   */
-  public List<Entity> getDisposeQueue() {
-    return new ArrayList<>(toDispose);
   }
 
   /**

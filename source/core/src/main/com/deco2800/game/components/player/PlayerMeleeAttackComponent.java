@@ -13,6 +13,7 @@ import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseWeaponConfig;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -25,10 +26,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * When entity is within range of enemy and melee attack button is clicked, damage is dealt
@@ -51,16 +49,12 @@ public class PlayerMeleeAttackComponent extends Component {
     private Fixture fixture;
     private boolean meleeAttackClicked;
     private boolean closeToAttack;
-    private Vector2 directionMove;
     short targetLayer = PhysicsLayer.NPC;
     private final Set<Fixture> closeEnemies = new HashSet<>();
     private final Set<Fixture> removingEnemies = new HashSet<>();
 
 
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private long attackStart;
-    private long attackEnd;
-    private Timer attackTimer;
     private boolean canAttack = true;
     private boolean setShapes = false;
 
@@ -69,27 +63,22 @@ public class PlayerMeleeAttackComponent extends Component {
     private float length;
     private float height;
     private int attackLength; // in milliseconds
+    private String atlasFile;
+    private String weaponFile;
+    private Float[][] animationCords;
     private long disposeTime = 0;
-
     private IndependentAnimator weaponAnimator;
-    private int lastDirection = 2;
+    private boolean gotWeapon = false;
+    private long attackEnd = 0;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
-       // String filename = weaponConfig.getPath();
-        BaseWeaponConfig stats =
-            FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
         fixtureDef = new FixtureDef();
         fixtureDefW = new FixtureDef();
         fixtureDefA = new FixtureDef();
         fixtureDefS = new FixtureDef();
         fixtureDefD = new FixtureDef();
         fixtureDefLast = fixtureDefW;
-
-        damage = stats.attackDamage;
-        knockback = stats.knockback;
-        length = stats.length;
-        height = stats.height;
-        attackLength = stats.attackLength; // in milliseconds
+        weaponFile = weaponConfig;
     }
 
     @Override
@@ -97,30 +86,57 @@ public class PlayerMeleeAttackComponent extends Component {
         // event listeners to check if enemy is within range of melee attack or not
         entity.getEvents().addListener("collisionStart", this::onEnemyClose);
         entity.getEvents().addListener("collisionEnd", this::onEnemyFar);
-        entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("attackStart", this::attack);
         entity.getEvents().addListener("walk", this::walk);
+        setWeapon(weaponFile);
+    }
 
-        if (this.entity.getComponent(PlayerWeaponAnimationController.class) != null) {
+    /**
+     * Used to set the weapon stats and animations. Called either when the component is first instanced
+     * or later when the player changes weapon. Has to check if the player already
+     * had a weapon to cancel and remove any previous lingering elements.
+     * @param weaponConfig The config file for the specified weapon to be set to
+     */
+    public void setWeapon(String weaponConfig) {
+        weaponFile = weaponConfig;
+        BaseWeaponConfig stats =
+            FileLoader.readClass(BaseWeaponConfig.class, weaponConfig);
+
+        damage = stats.attackDamage;
+        knockback = stats.knockback;
+        length = stats.length;
+        height = stats.height;
+        attackLength = stats.attackLength; // in milliseconds
+        atlasFile = stats.atlasPath;
+        animationCords = stats.animationCord;
+        PlayerWeaponAnimationController setWeapon = this.entity.getComponent(PlayerWeaponAnimationController.class);
+        if (gotWeapon) {
+            setWeapon.stop();
+        }
+        if (setWeapon != null) {
             weaponAnimator =
                 new IndependentAnimator(
                     ServiceLocator.getResourceService()
-                        .getAsset("images/weapon/sword.atlas", TextureAtlas.class));
-            weaponAnimator.addAnimation("attackUp", 0.1f, Animation.PlayMode.NORMAL);
-            weaponAnimator.addAnimation("attackDown", 0.1f, Animation.PlayMode.NORMAL);
-            weaponAnimator.addAnimation("attackLeft", 0.1f, Animation.PlayMode.NORMAL);
-            weaponAnimator.addAnimation("attackRight", 0.1f, Animation.PlayMode.NORMAL);
+                        .getAsset(atlasFile, TextureAtlas.class));
+            weaponAnimator.addAnimation("attackUp", stats.animationLength, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackDown", stats.animationLength, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackLeft", stats.animationLength, Animation.PlayMode.NORMAL);
+            weaponAnimator.addAnimation("attackRight", stats.animationLength, Animation.PlayMode.NORMAL);
             weaponAnimator.setCamera(true);
-            weaponAnimator.setScale(length * 1.5f, height * 1.5f);
-            setAnimations();
+            weaponAnimator.setScale(length * stats.scale[0], height * stats.scale[1]);
+            setAnimations(setWeapon);
+            gotWeapon = true;
         }
+        attackEnd = 0;
+        setShapes();
     }
 
     /**
      * Sets the animations for the weaponAnimator after a certain point to allow assets to load
+     * @param setWeapon the reference to the animation controller to be set on
      */
-    public void setAnimations() {
-        PlayerWeaponAnimationController setWeapon = this.entity.getComponent(PlayerWeaponAnimationController.class);
-        setWeapon.setter();
+    public void setAnimations(PlayerWeaponAnimationController setWeapon) {
+        setWeapon.setter(animationCords);
     }
 
     /**
@@ -131,6 +147,7 @@ public class PlayerMeleeAttackComponent extends Component {
         return weaponAnimator;
     }
 
+
     /**
      * Triggered when the player walks in a direction.
      *
@@ -138,47 +155,30 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void walk(Vector2 walkDirection) {
         if (fixture != null) {
-            dispose();
+            toggleFixtures();
         }
-        setDirection(walkDirection);
     }
 
     /**
      * Getter for direction of player movement.
      *
-     * @return player last walked direction
-     */
-    public Vector2 getDirection() {
-        return directionMove;
-    }
-
-    /**
-     * Setter for direction of player movement.
-     *
-     * @param lastDirectionSet what int value to set the lastDirection as
-     */
-    public void setDirection(int lastDirectionSet) {
-        this.lastDirection = lastDirectionSet;
-    }
-
-    /**
-     * Getter for direction of player movement.
-     *
-     * @return player last walked direction
+     * @return FixtureDef for the last walked direction
      */
     private FixtureDef getFixDirection() {
-        if (directionMove != null) {
-            switch (lastDirection) {
-                case 1:
+        KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
+        if (key != null) {
+            Directions direct = key.getDirection();
+            switch (direct) {
+                case MOVE_UP:
                     fixtureDefLast = fixtureDefW;
                     return fixtureDefW;
-                case 2:
+                case MOVE_DOWN:
                     fixtureDefLast = fixtureDefS;
                     return fixtureDefS;
-                case 3:
+                case MOVE_LEFT:
                     fixtureDefLast = fixtureDefA;
                     return fixtureDefA;
-                case 4:
+                case MOVE_RIGHT:
                     fixtureDefLast = fixtureDefD;
                     return fixtureDefD;
             }
@@ -186,6 +186,9 @@ public class PlayerMeleeAttackComponent extends Component {
         return fixtureDefLast;
     }
 
+    /**
+     * Sets the bounding boxes of the weapon collision based on the weapons stats
+     */
     private void setShapes() {
         PolygonShape bbox = new PolygonShape();
         Vector2 center = entity.getScale().scl(0.5f);
@@ -203,18 +206,7 @@ public class PlayerMeleeAttackComponent extends Component {
         center = entity.getScale().scl(0.5f);
         bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)-0.8), 0f);
         fixtureDefS.shape = bbox;
-        directionMove = new Vector2((float)0.0,(float)0.0);
     }
-
-    /**
-     * Setter for direction of player movement.
-     *
-     * @param direction the direction that the player last walked in.
-     */
-    private void setDirection(Vector2 direction) {
-        this.directionMove = direction.cpy();
-    }
-
 
     /**
      * When player and enemy no longer in contact, reset variable closeToAttack. Only resets closeToAttack
@@ -235,8 +227,7 @@ public class PlayerMeleeAttackComponent extends Component {
      * will be allowed to damage them.
      *
      * @param me is the fixture of current component
-     * @param other is the other fixture which current component is in contact
-     *              with
+     * @param other is the other fixture which current component is in contact with
      */
     private void onEnemyClose(Fixture me, Fixture other) {
         // By default, should only try detect NPC layers only
@@ -258,10 +249,6 @@ public class PlayerMeleeAttackComponent extends Component {
         }
     }
 
-    private void attackTrigger() {
-
-    }
-
     /**
      * Function to handle actually hitting an enemy. Gets called after the melee
      * attack has been triggered and the collision and fixtures are set.
@@ -270,80 +257,102 @@ public class PlayerMeleeAttackComponent extends Component {
      * Afterwards, goes through the set of killed enemies and removes them.
      */
     private void damage() {
-        for (Fixture enemy: closeEnemies) {
-            Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
-            CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-            attackTrigger();
-            // enemy within range and player clicked melee attack button
-            if (closeToAttack && meleeAttackClicked && targetStats != null) {
-                targetStats.hit(damage);
-                // freezes enemy - will need to be replaced to despawn enemy entity
-                if (targetStats.isDead()) {
-                    removingEnemies.add(enemy);
-                    target.getComponent(DisposingComponent.class).toBeDisposed();
+            for (Fixture enemy : closeEnemies) {
+                Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
+                CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+                // enemy within range and player clicked melee attack button
+                if (closeToAttack && meleeAttackClicked && targetStats != null) {
+                    targetStats.hit(damage);
+                    // enemy will now despawn
+                    if (targetStats.isDead()) {
+                        removingEnemies.add(enemy);
+
+                        if (ServiceLocator.getGameArea() != null) {
+                            ServiceLocator.getGameArea().despawnEntity(target);
+                        }
+                    }
                 }
             }
-        }
-        this.meleeAttackClicked = false;
-        for (Fixture removable: removingEnemies) {
-            closeEnemies.removeIf(removable::equals);
-        }
-        removingEnemies.clear();
+            this.meleeAttackClicked = false;
+            for (Fixture removable : removingEnemies) {
+                closeEnemies.removeIf(removable::equals);
+            }
+            removingEnemies.clear();
     }
+
     /**
-     * Triggered when the player presses the attack button. Handles creating
-     * the fixtures for the attack and prepping before actual the damage/hit.
+     * Triggered when the player presses the attack button. Handles creating the
+     * fixtures for the attack and prepping before actual the damage/hit. Also handles
+     * attack length and duration.
      */
     private void attack() {
-        if (canAttack) {
-            fixtureDef = getFixDirection();
-            if (fixtureDef != null) {
-                canAttack = false;
-                if (!setShapes) {
-                    setShapes();
-                    setShapes = true;
-                    //fixtureDef.shape = makeBoundingBox();
+        if (timeSource.getTime() >= attackEnd) {
+            if (canAttack) {
+                fixtureDef = getFixDirection();
+                if (fixtureDef != null) {
+                    canAttack = false;
+                    this.meleeAttackClicked = true;
+                    Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+                    fixture = physBody.createFixture(fixtureDef);
+                    fixture.getFilterData().categoryBits = PhysicsLayer.WEAPON;
+                    // if sensor is false, NPC will not be able to collide with player's fixture
+                    setSensor(true);
+                    disposeTimeSet();
+                    attackEnd = attackLength + timeSource.getTime();
+                    entity.getEvents().trigger("attack");
                 }
-
-                this.meleeAttackClicked = true;
-                Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-                fixture = physBody.createFixture(fixtureDef);
-                fixture.getFilterData().categoryBits = PhysicsLayer.WEAPON;
-                // if sensor is false, NPC will not be able to collide with player's fixture
-                setSensor(true);
-                //damage();
-                disposeTimeSet();
             }
         }
     }
 
+    /**
+     * Timed used to dispose of the weapon fixture based on attack length.
+     */
     private void disposeTimeSet() {
         disposeTime = timeSource.getTime() + attackLength;
     }
 
+    /**
+     * Checks to dispose of the weapon fixture.
+     */
     @Override
     public void update() {
-        if (disposeTime < timeSource.getTime()) {
-            dispose();
+        if (disposeTime < timeSource.getTime() && fixture != null) {
+            toggleFixtures();
         }
     }
 
-    @Override
-    public void dispose() {
-        //super.dispose();
-        PhysicsComponent test = entity.getComponent(PhysicsComponent.class);
-        //fixtureDef.shape = null;
-        //Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-        //ServiceLocator.getPhysicsService().getPhysics().destroyBody(physBody);
-
-        //test.dispose();
+    /**
+     * Similar to dispose() but also destroys the weapon fixture.
+     * Doing so in dispose() crashes things on account of update locks.
+     */
+    public void toggleFixtures() {
+        if (weaponAnimator != null) {
+            weaponAnimator.stopAnimation();
+        }
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
             physBody.destroyFixture(fixture);
             fixture = null;
         }
+        canAttack = true;
+    }
 
+    /**
+     * Dispose for the weapon requires stopping the animation (visual element)
+     * and changing/disposing the attack fixture.
+     */
+    @Override
+    public void dispose() {
+        if (weaponAnimator != null) {
+            weaponAnimator.stopAnimation();
+        }
+        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+        if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
+            fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
+            fixture = null;
+        }
         canAttack = true;
     }
 
@@ -387,14 +396,5 @@ public class PlayerMeleeAttackComponent extends Component {
             return fixtureDef.filter.categoryBits;
         }
         return fixture.getFilterData().categoryBits;
-    }
-
-    /**
-     * Public function to get the last direction the player attacked in
-     * @return returns an int corresponding to the direction
-     * 1 = up, 2 = down, 3 = left and 4 = right (can be changed to ENUMS)
-     */
-    public int getLastDirection() {
-        return lastDirection;
     }
 }

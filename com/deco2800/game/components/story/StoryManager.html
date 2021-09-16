@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,13 +190,27 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </td>
 </tr>
 <tr class="rowColor" id="i5">
+<td class="colFirst"><code><a href="StoryBase.html" title="interface in com.deco2800.game.components.story">StoryBase</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLoadedStory()">getLoadedStory</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The loaded story</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>java.util.EnumMap&lt;<a href="StoryNames.html" title="enum in com.deco2800.game.components.story">StoryNames</a>,&#8203;<a href="StoryConfig.html" title="interface in com.deco2800.game.components.story">StoryConfig</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScenesConfigs()">getScenesConfigs</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The map of story configs</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDisplaying()">isDisplaying</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If a story is being displayed</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadCutScene(com.deco2800.game.components.story.StoryNames)">loadCutScene</a></span>&#8203;(<a href="StoryNames.html" title="enum in com.deco2800.game.components.story">StoryNames</a>&nbsp;name)</code></th>
 <td class="colLast">
@@ -318,6 +332,28 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the StoryManager instance</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getScenesConfigs()">getScenesConfigs</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.EnumMap&lt;<a href="StoryNames.html" title="enum in com.deco2800.game.components.story">StoryNames</a>,&#8203;<a href="StoryConfig.html" title="interface in com.deco2800.game.components.story">StoryConfig</a>&gt;</span>&nbsp;<span class="memberName">getScenesConfigs</span>()</div>
+<div class="block">The map of story configs</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the map of stories</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getLoadedStory()">getLoadedStory</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="StoryBase.html" title="interface in com.deco2800.game.components.story">StoryBase</a></span>&nbsp;<span class="memberName">getLoadedStory</span>()</div>
+<div class="block">The loaded story</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the loaded story</dd>
 </dl>
 </section>
 </li>

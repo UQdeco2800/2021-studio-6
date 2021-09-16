@@ -6,6 +6,8 @@ import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,11 @@ public class PlayerRangeAOEComponent extends Component {
     private int magazineCapacity = 5;
     private boolean currentlyReloading = false;
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
+    private final GameTime timeSource = ServiceLocator.getTimeSource();
+    private static final long bombFuse = 4000;
+    private long bombEnd = 0;
+    private boolean bombActive;
+    private Entity firedBomb;
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets
@@ -78,6 +85,11 @@ public class PlayerRangeAOEComponent extends Component {
 
     @Override
     public void update() {
+        if (bombEnd < timeSource.getTime() && bombActive) {
+            System.out.println("here");
+            ServiceLocator.getGameArea().despawnEntity(firedBomb);
+            bombActive = false;
+        }
     }
 
     /**
@@ -98,19 +110,19 @@ public class PlayerRangeAOEComponent extends Component {
 
             // player has moved before
         } else if (longAttackDir.epsilonEquals(Vector2Utils.RIGHT)) {
-            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(10,0));
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(5,0));
             longAttackDir = Vector2Utils.RIGHT;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.LEFT)) {
-            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(-10,0));
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(-5,0));
             longAttackDir = Vector2Utils.LEFT;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.UP)) {
-            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(0,10));
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(0,5));
             longAttackDir = Vector2Utils.UP;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.DOWN)) {
-            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(0,-10));
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(0,-5));
             longAttackDir = Vector2Utils.DOWN;
         }
         return scaledVector.cpy();
@@ -163,8 +175,8 @@ public class PlayerRangeAOEComponent extends Component {
             }
 
             // bomb triggred
-            if (movingAttackDir.isZero() && activeBomb != null) {
-                Entity firedBomb = activeBomb.get(0);
+            if (movingAttackDir.isZero() && activeBomb != null && !bombActive) {
+                firedBomb = activeBomb.get(0);
                 activeBomb.removeIndex(0);
                 firedBomb.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
 
@@ -177,6 +189,8 @@ public class PlayerRangeAOEComponent extends Component {
 
                 // update current gun magazine
                 decreaseGunMagazine();
+                bombEnd = bombFuse + timeSource.getTime();
+                bombActive = true;
             }
         }
 

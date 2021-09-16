@@ -206,7 +206,6 @@ public class PlayerMeleeAttackComponent extends Component {
         center = entity.getScale().scl(0.5f);
         bbox.setAsBox(center.x * length, center.y*height, center.add( 0 , (float)-0.8), 0f);
         fixtureDefS.shape = bbox;
-        //directionMove = new Vector2((float)0.0,(float)0.0);
     }
 
     /**
@@ -259,7 +258,6 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void damage() {
             for (Fixture enemy : closeEnemies) {
-                System.out.println("damaging");
                 Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
                 CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
                 // enemy within range and player clicked melee attack button

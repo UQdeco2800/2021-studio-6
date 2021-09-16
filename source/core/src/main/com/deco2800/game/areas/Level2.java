@@ -8,6 +8,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -35,6 +36,7 @@ public class Level2 extends GameArea {
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
       "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
       "images/playeritems/ax/ax_right2.png",
+      "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
@@ -100,6 +102,7 @@ public class Level2 extends GameArea {
 
     player = spawnPlayer();
     spawnBullet();
+    spawnBomb();
     spawnPickupItems();
 
     spawnSmallEnemy();
@@ -286,7 +289,7 @@ public class Level2 extends GameArea {
       spawnEntity(newBomb);
     }
 
-    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bombs);
+    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
   }
 
   /**

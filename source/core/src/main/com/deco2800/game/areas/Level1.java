@@ -47,7 +47,7 @@ public class Level1 extends GameArea {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
-    "images/playeritems/axe/ax_right2.png",
+      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/ax_right2.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",

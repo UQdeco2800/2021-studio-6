@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
@@ -38,6 +39,7 @@ public class Level3 extends GameArea {
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
       "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
       "images/playeritems/ax/ax_right2.png",
+      "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
@@ -102,6 +104,7 @@ public class Level3 extends GameArea {
     player = spawnPlayer();
     spawnSafehouse();
     spawnBullet();
+    spawnBomb();
     spawnCobweb();
     spawnBush();
     playMusic();
@@ -214,7 +217,7 @@ public class Level3 extends GameArea {
       spawnEntity(newBomb);
     }
 
-    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bombs);
+    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
   }
 
   /**

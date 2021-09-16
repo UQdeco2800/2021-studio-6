@@ -30,7 +30,7 @@ public class BombFactory {
      */
     public static Entity createBomb() {
         Entity bomb = new Entity()
-                .addComponent(new TextureRenderComponent("images/playeritems/shootingammo.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/firecracker/firecracker.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new BombColliderComponent().setSensor(true))
@@ -41,7 +41,7 @@ public class BombFactory {
 
         // hide bomb out of game screen
         bomb.setPosition(HIDDEN_COORD);
-        bomb.setScale(0.7f, 0.7f);
+        bomb.setScale(1.5f, 1.5f);
         return bomb;
     }
 }

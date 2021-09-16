@@ -52,7 +52,7 @@ public class PlayerRangeAOEComponent extends Component {
      *
      * @return array of bullet entities that are currently active and ready to be used
      */
-    public static Array<Entity> getActiveBullets() {
+    public static Array<Entity> getActiveBombs() {
         return activeBomb;
     }
 
@@ -100,7 +100,7 @@ public class PlayerRangeAOEComponent extends Component {
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.LEFT)) {
             scaledVector = new Vector2(-MAX_COORDINATE,yPosPlayer);
-            longAttackDir = Vector2Utils.LEFT;;
+            longAttackDir = Vector2Utils.LEFT;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.UP)) {
             scaledVector = new Vector2(xPosPlayer, MAX_COORDINATE);

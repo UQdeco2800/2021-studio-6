@@ -61,24 +61,28 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       switch (keycode) {
         case Keys.W:
           entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
+          entity.getEvents().trigger("rangeAOE", Vector2Utils.UP.cpy());
           walkDirection.add(Vector2Utils.UP);
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_UP);
           return true;
         case Keys.A:
           entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
+          entity.getEvents().trigger("rangeAOE", Vector2Utils.LEFT.cpy());
           walkDirection.add(Vector2Utils.LEFT);
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_LEFT);
           return true;
         case Keys.S:
           entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
+          entity.getEvents().trigger("rangeAOE", Vector2Utils.DOWN.cpy());
           walkDirection.add(Vector2Utils.DOWN);
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_DOWN);
           return true;
         case Keys.D:
           entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
+          entity.getEvents().trigger("rangeAOE", Vector2Utils.RIGHT.cpy());
           walkDirection.add(Vector2Utils.RIGHT);
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_RIGHT);
@@ -94,9 +98,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
       switch (keycode) {
-        //case Keys.G:
-          //entity.getEvents().trigger("rangeAOE", RangeAttack);
-          //return true;
+        case Keys.G:
+          entity.getEvents().trigger("rangeAOE", RangeAttack);
+          return true;
         case Keys.SPACE:
             entity.getEvents().trigger("attackStart");
           return true;

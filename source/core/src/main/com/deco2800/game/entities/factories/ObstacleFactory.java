@@ -106,6 +106,38 @@ public class ObstacleFactory {
     return wall;
   }
 
+  /**
+   * Creates an object given the path to its image and its size
+   * @param image Path to the image to be used for object
+   * @param height How much to scale the height of the image
+   */
+  public static Entity createObject(String image, float height) {
+    Entity object =
+        new Entity()
+            .addComponent(new TextureRenderComponent(image))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    object.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    object.getComponent(TextureRenderComponent.class).scaleEntity();
+    object.scaleHeight(height);
+    PhysicsUtils.setScaledCollider(object, 1f, 1f);
+    return object;
+  }
+
+  public static Entity createBuilding() {
+    Entity building =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    building.getComponent(TextureRenderComponent.class).scaleEntity();
+    building.scaleHeight(10f);
+    return building;
+  }
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

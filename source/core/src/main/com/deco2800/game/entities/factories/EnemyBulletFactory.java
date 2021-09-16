@@ -46,10 +46,10 @@ public class EnemyBulletFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea));
+                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
         bullet.setScale(0.8f, 0.8f);
         //centers the bullet to the source
         bullet.setPosition(
@@ -110,7 +110,7 @@ public class EnemyBulletFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea));
+                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
         Entity bulletUp = new Entity()
                 .addComponent(new TextureRenderComponent("images/blood_ball.png", rotationUp))
@@ -120,7 +120,7 @@ public class EnemyBulletFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea));
+                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
         Entity bulletDown = new Entity()
                 .addComponent(new TextureRenderComponent("images/blood_ball.png", rotationDown))
@@ -130,7 +130,7 @@ public class EnemyBulletFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea));
+                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
 
         bulletStraight.setScale(0.8f, 0.8f);

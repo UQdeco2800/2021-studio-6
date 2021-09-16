@@ -20,11 +20,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   private final IntSet downKeys = new IntSet(20);
   private final ArrayList<Integer> movementKeys = new ArrayList<>();
-  private boolean isPaused = false;  // variable for PAUSING in keyDown method
   private final GameTime timeSource = ServiceLocator.getTimeSource();
+  // Variable for allowing attacks
+  private boolean canAttack = true;
+  private boolean canDashAttack = true;
 
   public KeyboardPlayerInputComponent() {
     super(5);
+  }
+
+  @Override
+  public void create() {
+    super.create();
+    entity.getEvents().addListener("enableAttack", this::enableAttack);
+    entity.getEvents().addListener("disableAttack", this::disableAttack);
+    entity.getEvents().addListener("enableDashAttack", this::enableDashAttack);
+    entity.getEvents().addListener("disableDashAttack", this::disableDashAttack);
   }
 
   /**
@@ -38,7 +49,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     downKeys.add(keycode);
     int numKeysPressed = downKeys.size;
 
-    if (!isPaused) {
+    // keep track of player's current facing direction
+    if (timeSource == null || !timeSource.isPaused()) {
       if (keycode == Keys.D) {
         entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
       } else if (keycode == Keys.A) {
@@ -75,35 +87,36 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         animationHandle();
         return true;
+      case Keys.R:
+        if (timeSource == null || !timeSource.isPaused()) {
+          entity.getEvents().trigger("reload");
+        }
+        return true;
       case Keys.SHIFT_LEFT:
-        if (!isPaused) {
+        if (timeSource == null || !timeSource.isPaused()) {
+          //this.getEntity().getEvents().trigger("dash");
           entity.getEvents().trigger("dash");
         }
         return true;
       case Keys.SPACE:
-        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
           entity.getEvents().trigger("attack");
         }
         return true;
       case Keys.ENTER:
-        if (!isPaused && !this.entity.getComponent(PlayerActions.class).isDashing()) {
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
           entity.getEvents().trigger("rangeAttack", RangeAttack);
         }
         return true;
-      /*
-      Pauses the game when ESC key is pressed, more like "freezes" the assets
-      if anything because the ESC key just controls the time scale in the game from
-      0f for "pause" and 1f for "resume".
-       */
-      case Keys.ESCAPE:
-        if (isPaused) {
-          timeSource.setTimeScale(1f);
-          isPaused = false;
-        } else {
-          timeSource.setTimeScale(0f);
-          isPaused = true;
+      case Keys.E:
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
+          entity.getEvents().trigger("tryAbility", walkDirection);
         }
         return true;
+      case Keys.NUM_1:
+        if ((timeSource == null || !timeSource.isPaused()) && canAttack && canDashAttack) {
+          entity.getEvents().trigger("useBandage");
+        }
       default:
         return false;
     }
@@ -122,7 +135,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         removeMovementKey(keycode);
         walkDirection.sub(Vector2Utils.UP);
-
         triggerWalkEvent();
         animationHandle();
         return true;
@@ -155,6 +167,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * each change to player movement i.e. keydown or keyup.
    */
   private void animationHandle() {
+    PlayerMeleeAttackComponent tempAttack = this.entity.getComponent(PlayerMeleeAttackComponent.class);
     if (movementKeys.size() > 0) {
       switch (movementKeys.get(movementKeys.size() - 1)) {
         case Keys.W:
@@ -169,6 +182,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.D:
           this.getEntity().getEvents().trigger("moveRight");
           break;
+      }
+      if (tempAttack != null) {
+        switch (movementKeys.get(movementKeys.size() - 1)) {
+          case Keys.W:
+            tempAttack.setDirection(1);
+            break;
+          case Keys.A:
+            tempAttack.setDirection(3);
+            break;
+          case Keys.S:
+            tempAttack.setDirection(2);
+            break;
+          case Keys.D:
+            tempAttack.setDirection(4);
+            break;
+        }
       }
     }
   }
@@ -189,4 +218,34 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("walk", walkDirection);
     }
   }
+
+  /**
+   * Sets the player able to attack
+   */
+  void enableAttack() {
+    this.canAttack = true;
+  }
+
+  /**
+   * Sets the player to be unable to attack
+   */
+  void disableAttack() {
+    this.canAttack = false;
+  }
+
+
+  /**
+   * Sets the player able to attack
+   */
+  void enableDashAttack() {
+    this.canDashAttack = true;
+  }
+
+  /**
+   * Sets the player to be unable to attack
+   */
+  void disableDashAttack() {
+    this.canDashAttack = false;
+  }
 }
+

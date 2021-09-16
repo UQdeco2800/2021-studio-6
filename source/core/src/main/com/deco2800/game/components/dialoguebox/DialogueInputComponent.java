@@ -6,9 +6,11 @@ import com.deco2800.game.input.InputComponent;
 
 /**
  * Input handler for dialogue
+ * @deprecated Replaced with story input component that handles all story input
  */
+@Deprecated
 public class DialogueInputComponent extends InputComponent {
-    private static final int ADVANCE_KEY = Input.Keys.SPACE;
+    private static final int ADVANCE_KEY = Input.Keys.M;
 
     public DialogueInputComponent() {
         super(7);

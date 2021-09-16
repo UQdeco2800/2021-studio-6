@@ -59,6 +59,18 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 0
 	}
+	modal-background: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0.3
+	}
+	pausemenu: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0.8
+	}
 	white: {
 		r: 1
 		g: 1
@@ -236,6 +248,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	window-w: {
 		name: window
 		color: window
+	}
+	pausemenu-w: {
+		name: pausemenu
+		color: pausemenu
+	}
+	modalbackground: {
+		name: modalbackground
+		color: modal-background
 	}
 	button-p: {
 		name: button
@@ -507,6 +527,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: window-w
+		titleFont: font
+		titleFontColor: white
+	}
+	"pausemenu": {
+		background: pausemenu-w
+		stageBackground: modalbackground
 		titleFont: font
 		titleFontColor: white
 	}

@@ -24,10 +24,12 @@ public class BulletCollider extends Component {
      * Creates a collider between self entity and target entity
      * @param target the target to collide with
      * @param gameArea reference to the game area (used to spawn entity)
+     * @param targetLayer the target layer to set locally
      */
-    public BulletCollider(Entity target, GameArea gameArea) {
+    public BulletCollider(Entity target, GameArea gameArea, short targetLayer) {
         this.target = target;
         this.gameArea = gameArea;
+        this.targetLayer = targetLayer;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class BulletCollider extends Component {
         super.create();
         entity.getEvents().addListener("collisionStart", this::collide);
         this.hitboxComponent = entity.getComponent(HitboxComponent.class);
-        this.targetLayer = this.hitboxComponent.getLayer();
+
     }
 
     /**

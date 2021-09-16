@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
@@ -15,6 +16,7 @@ import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.LargeEnemyConfig;
+import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -40,6 +42,43 @@ public class NPCFactory {
   private static final NPCConfigs configs =
           FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+
+  /**
+   *
+   * Creates a spawner enemy entity.
+   *
+   * @param target entity to chase
+   * @param gameArea the current game area
+   * @return entity
+   */
+  public static Entity createSpawnerEnemy(Entity target, GameArea gameArea) {
+    SpawnerEnemyConfig config = configs.spawnerEnemy;
+    Vector2 speed = new Vector2(config.speed_x, config.speed_y);
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/spawnerEnemy.atlas", TextureAtlas.class));
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+    Entity spawnerEnemy =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new DisposingComponent())
+                    .addComponent(new GhostAnimationController())
+                    .addComponent(new PhysicsMovementComponent(speed)) //remove?
+                    .addComponent(animator)
+                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f)); //remove once idle task is created
+    spawnerEnemy.addComponent(aiComponent);
+
+    spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
+    spawnerEnemy.setScale(1f, 1f);
+    return spawnerEnemy;
+  }
 
   /**
    * 

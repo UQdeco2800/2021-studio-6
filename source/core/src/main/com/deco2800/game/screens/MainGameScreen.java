@@ -1,15 +1,19 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.terrain.TerrainFactory;
-import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.KeyboardLevelInputComponent;
+import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.story.StoryInputComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -25,7 +29,7 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
-import com.deco2800.game.components.maingame.MainGameExitDisplay;
+import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,32 +41,27 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png"};
-  private static final String[] shortGreen = {"images/hud/22highbar6.png"};
-  private static final String[] shortEmpty = {"images/hud/22highbar1.png"};
-  private static final String[] mediumGreen = {"images/hud/27highbar7.png"};
-  private static final String[] mediumOrange = {"images/hud/27highbar6.png"};
-  private static final String[] mediumEmpty = {"images/hud/27highbar1.png"};
-  private static final String[] longGreen = {"images/hud/32highbar8.png"};
-  private static final String[] longOrange = {"images/hud/32highbar7.png"};
-  private static final String[] longRed = {"images/hud/32highbar6.png"};
-  private static final String[] longEmpty = {"images/hud/32highbar1.png"};
-
+  private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
+  "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
+  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png"};
+  private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double CurrentLevel = 1;
   public static boolean levelChange = false;
+  private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private GameArea gameArea;
   private Entity ui;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
     // Sets background to light yellow
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
+    Gdx.gl.glClearColor(50/255f, 50/255f, 50/255f, 1);
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -86,20 +85,39 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new ForestGameArea(terrainFactory);
+    gameArea = new Level1(terrainFactory);
     gameArea.create();
+
+    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+  }
+
+  private void checkGameOver() {
+    logger.info("Game Over");
+    timeSource = ServiceLocator.getTimeSource();
+    timeSource.pause();
+
+    Timer.schedule(new Timer.Task() {
+      @Override
+      public void run() {
+        game.setScreen(GdxGame.ScreenType.GAME_OVER);
+      }
+    }, 1f);
   }
 
   @Override
   public void render(float delta) {
     if (levelChange) {
+      timeSource = ServiceLocator.getTimeSource();
+      timeSource.pause();
       generateNewLevel();
+      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
 
     CAMERA_POSITION.set(gameArea.player.getPosition());
+    ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
   }
 
@@ -143,15 +161,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainGameTextures);
-    resourceService.loadTextures(shortGreen);
-    resourceService.loadTextures(shortEmpty);
-    resourceService.loadTextures(mediumEmpty);
-    resourceService.loadTextures(mediumGreen);
-    resourceService.loadTextures(mediumOrange);
-    resourceService.loadTextures(longEmpty);
-    resourceService.loadTextures(longGreen);
-    resourceService.loadTextures(longOrange);
-    resourceService.loadTextures(longRed);
+    resourceService.loadSounds(menuSounds);
 
     ServiceLocator.getResourceService().loadAll();
   }
@@ -160,15 +170,8 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainGameTextures);
-    resourceService.unloadAssets(shortGreen);
-    resourceService.unloadAssets(shortEmpty);
-    resourceService.unloadAssets(mediumEmpty);
-    resourceService.unloadAssets(mediumGreen);
-    resourceService.unloadAssets(mediumOrange);
-    resourceService.unloadAssets(longEmpty);
-    resourceService.unloadAssets(longGreen);
-    resourceService.unloadAssets(longOrange);
-    resourceService.unloadAssets(longRed);
+    resourceService.unloadAssets(menuSounds);
+
   }
 
   /**
@@ -178,17 +181,21 @@ public class MainGameScreen extends ScreenAdapter {
   private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
+
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
     this.ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
+        .addComponent(new KeyboardLevelInputComponent())
+        .addComponent(new PauseMenuActions(this.game))
+        .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
+        .addComponent(new TerminalDisplay())
+        .addComponent(StoryManager.getInstance())
+        .addComponent(new StoryInputComponent());
 
     ServiceLocator.getEntityService().register(ui);
   }
@@ -201,6 +208,12 @@ public class MainGameScreen extends ScreenAdapter {
     CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+
+    if (CurrentLevel == 4) {
+      victory();
+      return;
+    }
+    gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {
       gameArea = new Level2(terrainFactory);
@@ -217,10 +230,25 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel == 4) {
-      System.out.println("You win");
-      ui.getEvents().trigger("exit");
     }
+    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;
+  }
+
+  private void victory() {
+    GameTime timeSource = ServiceLocator.getTimeSource();
+    timeSource.pause();
+    spawnOutroDialogue();
+  }
+
+  private void spawnOutroDialogue(){
+    StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
+    StoryManager.getInstance().displayStory();
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.EPILOGUE,
+            this::onOutroFinish);
+  }
+
+  private void onOutroFinish() {
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 }

@@ -1,5 +1,6 @@
 package com.deco2800.game.physics;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
@@ -11,8 +12,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.deco2800.game.components.BulletCollisionComponent;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -23,6 +31,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class PhysicsEngineTest {
   @Mock GameTime gameTime;
   @Mock World world;
+
+  @BeforeEach
+  void beforeEach() {
+    ServiceLocator.registerTimeSource(gameTime);
+  }
 
   @Test
   void shouldNotStepWithoutEnoughTime() {
@@ -81,8 +94,53 @@ class PhysicsEngineTest {
   }
 
   @Test
-  void disposeQueueShouldBeEmpty() {
+  void disposeReuseQueueShouldBeEmpty() {
     PhysicsEngine engine = new PhysicsEngine(world, gameTime);
 
+    assertTrue(engine.getDisposeQueue().isEmpty());
+    assertTrue(engine.getReuseQueue().isEmpty());
   }
+
+  @Test
+  void disposeQueueShouldDispose() {
+    EntityService entityService = new EntityService();
+    ServiceLocator.registerEntityService(entityService);
+    PhysicsEngine engine = new PhysicsEngine(world, gameTime);
+
+    assertTrue(engine.getDisposeQueue().isEmpty());
+    Entity testDud1 = new Entity();
+    testDud1.create();
+    engine.addToDisposeQueue(testDud1);
+
+    assertFalse(engine.getDisposeQueue().isEmpty());
+    assertEquals(1,engine.getDisposeQueue().size());
+    engine.update();
+    assertTrue(engine.getDisposeQueue().isEmpty());
+  }
+
+  @Test
+  void reuseQueueShouldReuse() {
+    PhysicsEngine engine = new PhysicsEngine(world, gameTime);
+    EntityService entityService = new EntityService();
+    PhysicsService physicsService = new PhysicsService(engine);
+
+    ServiceLocator.registerTimeSource(gameTime);
+    ServiceLocator.registerEntityService(entityService);
+    ServiceLocator.registerPhysicsService(physicsService);
+
+    assertTrue(engine.getReuseQueue().isEmpty());
+    Entity testDud1 = new Entity()
+            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new BulletCollisionComponent())
+            .addComponent(new PlayerRangeAttackComponent());
+    testDud1.create();
+    engine.addToReuseQueue(testDud1);
+
+    assertFalse(engine.getReuseQueue().isEmpty());
+    assertEquals(1,engine.getReuseQueue().size());
+
+    engine.update();
+    assertTrue(engine.getReuseQueue().isEmpty());
+  }
+
 }

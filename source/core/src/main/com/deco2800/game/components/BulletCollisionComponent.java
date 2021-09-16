@@ -62,7 +62,13 @@ public class BulletCollisionComponent extends Component {
         return this.launchStatus;
     }
 
-    public void bulletHit(Fixture me, Fixture other) {
+    /**
+     * Dictates what happens to bullets when it collides with different objects
+     * in the game world
+     * @param me the bullet that has been launched and moving in game world
+     * @param other object which bullet collide with
+     */
+    private void bulletHit(Fixture me, Fixture other) {
 
         // Get data of current bullet for checking
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
@@ -86,7 +92,7 @@ public class BulletCollisionComponent extends Component {
                 setBulletCollisionStatus(true);
 
                 if (targetStats != null) {
-                    targetStats.hit(bulletCombatStats);
+                    targetStats.hit(bulletCombatStats.getBaseAttack());
 
                     if (targetStats.isDead()) {
                         target.getComponent(DisposingComponent.class).toBeDisposed();

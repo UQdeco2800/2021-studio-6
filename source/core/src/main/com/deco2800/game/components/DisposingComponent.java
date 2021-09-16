@@ -14,7 +14,6 @@ public class DisposingComponent extends Component {
      * Register entity to be disposed of in physics engine - outside of stepping function
      */
     public void toBeDisposed() {
-        System.out.println(entity);
         ServiceLocator.getPhysicsService().getPhysics().addToDisposeQueue(entity);
     }
 

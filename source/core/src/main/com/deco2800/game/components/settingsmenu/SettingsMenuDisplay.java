@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SettingsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
+  private static final String BUTTON_LABEL_SKIN = "white";
   private final GdxGame game;
 
   private Table rootTable;
@@ -34,6 +35,9 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+  private Boolean changeBackButton = false;
+  private Boolean changeTable = false;
+  private TextButton exitBtn;
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
@@ -46,13 +50,30 @@ public class SettingsMenuDisplay extends UIComponent {
     addActors();
   }
 
+  public void setTable(Table table) {
+    rootTable = table;
+  }
+
+  public void changeBackLocation(Boolean changeBackButton) {
+    this.changeBackButton = changeBackButton;
+  }
+  public void changeTableLocation(Boolean changeTable) {
+    this.changeTable = changeTable;
+  }
+
+  public TextButton getExitBtn() {
+    return exitBtn;
+  }
+
   private void addActors() {
     Label title = new Label("Settings", skin, "title");
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
 
-    rootTable = new Table();
-    rootTable.setFillParent(true);
+    if (Boolean.FALSE.equals(changeTable)) {
+      rootTable = new Table();
+      rootTable.setFillParent(true);
+    }
 
     rootTable.align(Align.center | Align.bottom);
     rootTable.add(title).expandX().bottom();
@@ -72,23 +93,23 @@ public class SettingsMenuDisplay extends UIComponent {
     UserSettings.Settings settings = UserSettings.get();
 
     // Create components
-    Label fpsLabel = new Label("FPS Cap:", skin, "white");
+    Label fpsLabel = new Label("FPS Cap:", skin, BUTTON_LABEL_SKIN);
     fpsText = new TextField(Integer.toString(settings.fps), skin);
 
-    Label fullScreenLabel = new Label("Fullscreen:", skin, "white");
+    Label fullScreenLabel = new Label("Fullscreen:", skin, BUTTON_LABEL_SKIN);
     fullScreenCheck = new CheckBox("", skin);
     fullScreenCheck.setChecked(settings.fullscreen);
 
-    Label vsyncLabel = new Label("VSync:", skin, "white");
+    Label vsyncLabel = new Label("VSync:", skin, BUTTON_LABEL_SKIN);
     vsyncCheck = new CheckBox("", skin);
     vsyncCheck.setChecked(settings.vsync);
 
-    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, "white");
+    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, BUTTON_LABEL_SKIN);
     uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
     uiScaleSlider.setValue(settings.uiScale);
-    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, "white");
+    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, BUTTON_LABEL_SKIN);
 
-    Label displayModeLabel = new Label("Resolution:", skin, "white");
+    Label displayModeLabel = new Label("Resolution:", skin, BUTTON_LABEL_SKIN);
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
@@ -161,17 +182,20 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private Table makeMenuBtns() {
-    TextButton exitBtn = new TextButton("Exit", skin);
+    exitBtn = new TextButton("Exit", skin);
     TextButton applyBtn = new TextButton("Apply", skin);
 
-    exitBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Exit button clicked");
-            exitMenu();
-          }
-        });
+    if (Boolean.FALSE.equals(changeBackButton)) {
+
+      exitBtn.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+              logger.debug("Exit button clicked");
+              exitMenu();
+            }
+          });
+    }
 
     applyBtn.addListener(
         new ChangeListener() {

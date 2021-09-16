@@ -1,10 +1,8 @@
 package com.deco2800.game.components;
-
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Timer;
-import java.util.TimerTask;
-import com.deco2800.game.GdxGame;
 
 /**
  * Component used to store information related to combat for the player such as
@@ -22,12 +20,17 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     // Modifiers
     private final int[] stateGates = new int[] {0, 5, 4, 3};
     private final double[] attackModifiers = new double[] {0, 0.6, 0.9, 1};
-    // Regeneration timer
-    private Timer regenTimer;
+    // Regeneration/Invincibility timer
+    private final GameTime timeSource = ServiceLocator.getTimeSource();
     private boolean regenActive = false;
     private boolean invincibleActive = false;
-    private final int regenCooldown = 5000;
-    private final int invincibilityCooldown = 500;
+    private static final long regenCooldown = 5000;
+    private static final long initialRegenOffset = 3000;
+    private long nextRegen;
+    private static final long invincibilityLength = 400; // in ms
+    private long invincibilityEndTime;
+    private final int[] woundex = new int[] {7, 3, 0};
+    private final int[] statex = new int[] {1, 2, 3, 4, 5};
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -35,6 +38,27 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         setHealth(health); // overrides the parents setting of health
         setBaseRangedAttack(baseRangedAttack);
         setDefenceLevel(defenceLevel);
+    }
+
+    /**
+     * Linking into update for player regeneration and disabling invincibility frames
+     */
+    @Override
+    public void update() {
+        if (regenActive && (timeSource.getTime() >= nextRegen)) {
+            regenerate();
+        }
+        if (invincibleActive && (timeSource.getTime() >= invincibilityEndTime)) {
+            invincibleActive = false;
+        }
+    }
+
+    /**
+     * Allowing invincibility to be called without knowing about this classF
+     */
+    @Override
+    public void create() {
+        entity.getEvents().addListener("invincibility", this::invincibleStart);
     }
 
     /**
@@ -54,6 +78,21 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     public Boolean atMax() {
         return woundState == woundMax;
+    }
+
+    /**
+     * This unwieldy function is used to communicate with the health interface
+     * to give it the necessary health index for the current state. Will
+     * hopefully be improved later on.
+     * @return the int relating to the health animation index
+     */
+    public int getindex() {
+        if (woundState == 0) {
+            return 13;
+        }
+        int woundIndex = woundex[getWoundState() - 1];
+        int healthIndex = statex[getStateMax() - getHealth()];
+        return woundIndex + healthIndex;
     }
 
     /**
@@ -143,11 +182,17 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             this.woundState = 0;
             setStateMax(0);
             if (this.getEntity() != null) {
+                entity.getEvents().trigger("dispose");
                 this.getEntity().getComponent(DisposingComponent.class).toBeDisposed();
             }
         }
         if (entity != null) {
+            // update player HUD interface when bandage is used to improve wound state
             entity.getEvents().trigger("updateWound", this.woundState);
+            entity.getEvents().trigger("health", getindex());
+            if (woundState == 0) {
+                entity.getEvents().trigger("dead");
+            }
         }
     }
 
@@ -177,6 +222,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 setWoundState(getWoundState() - 1);
             }
         }
+        if (getHealth() != getStateMax()) {
+            regenStart();
+        }
     }
 
     /**
@@ -203,7 +251,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     public void hit(CombatStatsComponent attacker) {
         if (!invincibleActive) {
             if (regenActive) {
-                regenTimer.cancel();
                 regenActive = false;
             }
             int damage = attacker.getBaseAttack() - this.defenceLevel;
@@ -215,7 +262,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
-            invincibleStart(invincibilityCooldown);
+            entity.getEvents().trigger("hurt");
+            entity.getEvents().trigger("health", getindex());
+            invincibleStart(invincibilityLength);
         }
     }
 
@@ -223,18 +272,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Starts health regeneration that increases player's state health
      * periodically until it reaches max, at which point it stops itself.
      */
-    public void regenStart() {
+    private void regenStart() {
         regenActive = true;
-        regenTimer = new Timer(true);
-        regenTimer.schedule( new TimerTask() {
-            public void run() {
-                setHealth(getHealth() + 1);
-                if (getHealth() >= getStateMax()) {
-                    regenActive = false;
-                    cancel();
-                }
-            }
-        }, regenCooldown, regenCooldown);
+        entity.getEvents().trigger("heal");
+        nextRegen = timeSource.getTime() + regenCooldown + initialRegenOffset; // Extra 3 second so it takes longer to start regen
     }
 
     /**
@@ -242,15 +283,23 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      *
      * @param length parameter for how long to set inivisibility for (in milliseconds)
      */
-    public void invincibleStart(int length) {
+    public void invincibleStart(long length) {
+        invincibilityEndTime = timeSource.getTime() + length;
         invincibleActive = true;
-        Timer invincibleTimer = new Timer(true);
-        invincibleTimer.schedule(new TimerTask() {
-            public void run() {
-                invincibleActive = false;
-                cancel();
+    }
+
+    /**
+     * Increases the players current health, unless health is full for their wound state
+     */
+    private void regenerate() {
+        if (!timeSource.isPaused()) {
+            setHealth(getHealth() + 1);
+            entity.getEvents().trigger("health", getindex());
+            if (getHealth() >= getStateMax()) {
+                regenActive = false;
             }
-        }, length);
+            nextRegen = timeSource.getTime() + regenCooldown;
+        }
     }
 
 }

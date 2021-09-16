@@ -1,7 +1,6 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -22,7 +21,7 @@ public class SafehouseFactory {
         Entity safehouse = new Entity()
                 .addComponent(new TextureRenderComponent("images/safehouse/exterior-day1-latest.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.SAFEHOUSE))
+                .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SAFEHOUSE))
                 .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
         safehouse.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

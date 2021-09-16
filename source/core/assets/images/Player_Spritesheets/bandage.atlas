@@ -1,0 +1,20 @@
+
+bandage.png
+size: 1024, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bandage01
+  rotate: false
+  xy: 350, 2
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+bandage02
+  rotate: false
+  xy: 2, 2
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1

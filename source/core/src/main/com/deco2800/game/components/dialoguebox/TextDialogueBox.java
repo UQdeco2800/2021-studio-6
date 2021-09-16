@@ -4,21 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.deco2800.game.components.story.StoryBase;
 import com.deco2800.game.ui.UIComponent;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 /**
  * Text display of dialogue
  * TODO: Move texture atlas component to screen to prevent loading multiple times
  */
-public class TextDialogueBox extends UIComponent implements DialogueBox{
+public class TextDialogueBox extends UIComponent {
     private Dialogue dialogue;
     protected Table rootTable;
     private Label displayText;
@@ -30,8 +27,10 @@ public class TextDialogueBox extends UIComponent implements DialogueBox{
 
     private static final float DEFAULT_WIDTH = 1000f;
     private static final float DEFAULT_HEIGHT = 100f;
-    private static final float DEFAULT_PADDING = 15f;
+    private static final float DEFAULT_PADDING = 30f;
     private static final float IMAGE_OFFSET = 250f;
+
+    private boolean isDead = false;
 
     /**
      * Creates a new TextDialogueBox
@@ -64,7 +63,7 @@ public class TextDialogueBox extends UIComponent implements DialogueBox{
     public void create() {
         super.create();
         addActors();
-        entity.getEvents().addListener("advanceDialogue", this::advanceDialogue);
+        entity.getEvents().addListener("advanceDialogue", this::advance);
     }
 
     /**
@@ -121,13 +120,22 @@ public class TextDialogueBox extends UIComponent implements DialogueBox{
     /**
      * Advances dialogue and updates text display
      */
-    @Override
-    public void advanceDialogue(){
+    public void advance(){
         if (!dialogue.hasNext()) {
-            entity.getEvents().trigger("closeDialogue");
+            dispose();
             return;
         }
         displayText.setText(dialogue.next());
+    }
+
+    /**
+     * Removes the dialogue box then adds it again in its current state
+     */
+    public void forceUpdate(){
+        if (!isDead) {
+            rootTable.remove();
+            stage.addActor(rootTable);
+        }
     }
 
     @Override
@@ -143,7 +151,9 @@ public class TextDialogueBox extends UIComponent implements DialogueBox{
     @Override
     public void dispose() {
         super.dispose();
+        isDead = true;
         displayText.remove();
         rootTable.remove();
     }
+
 }

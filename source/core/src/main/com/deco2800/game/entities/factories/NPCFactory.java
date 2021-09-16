@@ -224,7 +224,7 @@ public class NPCFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 3f))
+            //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 3f))
             .addComponent(aiComponent)
             .addComponent(new DisposingComponent());
 

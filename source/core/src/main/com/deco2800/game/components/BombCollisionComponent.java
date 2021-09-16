@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Used to listen for collisions. Collisions for obstacles and NPCs (causing damage to it) will
- * cause bullet to be kept and reuse again and since bullet spawns in the same location as player,
+ * cause bomb to be kept and reuse again and since bomb spawns in the same location as player,
  * player layer will be ignored.
  */
 public class BombCollisionComponent extends Component {
@@ -26,7 +26,7 @@ public class BombCollisionComponent extends Component {
 
     @Override
     public void create() {
-        entity.getEvents().addListener("collisionStart", this::bulletHit);
+        entity.getEvents().addListener("collisionStart", this::bombHit);
         bulletCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
     }
 
@@ -39,7 +39,7 @@ public class BombCollisionComponent extends Component {
      *
      * @param launched is to let system know whether bullet has been launched by system
      */
-    public void setBulletLaunchStatus(boolean launched) {
+    public void setBombLaunchStatus(boolean launched) {
         this.launchStatus = launched;
     }
 
@@ -48,7 +48,7 @@ public class BombCollisionComponent extends Component {
      * game before launching bullets
      * @return the launch status of bullets
      */
-    public boolean getBulletLaunchStatus() {
+    public boolean getBombLaunchStatus() {
         return this.launchStatus;
     }
 
@@ -58,7 +58,7 @@ public class BombCollisionComponent extends Component {
      * @param me the bullet that has been launched and moving in game world
      * @param other object which bullet collide with
      */
-    private void bulletHit(Fixture me, Fixture other) {
+    private void bombHit(Fixture me, Fixture other) {
 
         // Get data of current bullet for checking
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;

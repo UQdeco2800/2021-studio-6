@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Bomb extends Entity {
 
 
-    public void Bullet() {
+    public void Bomb() {
         //Bullet
     }
 

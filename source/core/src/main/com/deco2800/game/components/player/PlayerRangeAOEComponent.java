@@ -10,6 +10,8 @@ import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.text.html.HTMLDocument;
+
 
 /**
  * Used to listen and wait for player's range button to be clicked (L key). Once clicked,
@@ -26,6 +28,7 @@ public class PlayerRangeAOEComponent extends Component {
     private static final int MAX_COORDINATE = 1000;
     private int magazineCapacity = 5;
     private boolean currentlyReloading = false;
+    private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
 
     /**
      * Create listener on player specifically when game is loaded and ready bullets
@@ -59,7 +62,7 @@ public class PlayerRangeAOEComponent extends Component {
     /**
      * Used to load after spawning in game area for firing in game
      *
-     * @param bombs is the number of bullets player will be able to spawn into the game world
+     * @param bombs is the number of bombs player will be able to spawn into the game world
      */
     public void addBombs(Array<Entity> bombs) {
         activeBomb = new Array<>(bombs);
@@ -78,7 +81,7 @@ public class PlayerRangeAOEComponent extends Component {
     }
 
     /**
-     * Returns Vector2 coordinates that will be used for target coordinates for bullets. These vectors
+     * Returns Vector2 coordinates that will be used for target coordinates for bombs. These vectors
      * are then scaled to reach the end of the game screen relative to player's position.
      *
      * @param playerCoord is the current player's position. It is used to launch bullet from player's position
@@ -95,19 +98,19 @@ public class PlayerRangeAOEComponent extends Component {
 
             // player has moved before
         } else if (longAttackDir.epsilonEquals(Vector2Utils.RIGHT)) {
-            scaledVector = new Vector2(MAX_COORDINATE,yPosPlayer);
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(10,0));
             longAttackDir = Vector2Utils.RIGHT;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.LEFT)) {
-            scaledVector = new Vector2(-MAX_COORDINATE,yPosPlayer);
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(-10,0));
             longAttackDir = Vector2Utils.LEFT;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.UP)) {
-            scaledVector = new Vector2(xPosPlayer, MAX_COORDINATE);
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(0,10));
             longAttackDir = Vector2Utils.UP;
 
         } else if (longAttackDir.epsilonEquals(Vector2Utils.DOWN)) {
-            scaledVector = new Vector2(xPosPlayer, -MAX_COORDINATE);
+            scaledVector = new Vector2(xPosPlayer,yPosPlayer).add(new Vector2(0,-10));
             longAttackDir = Vector2Utils.DOWN;
         }
         return scaledVector.cpy();
@@ -140,7 +143,7 @@ public class PlayerRangeAOEComponent extends Component {
      */
     public void fire(Vector2 movingAttackDir) {
         Vector2 playerPos = entity.getPosition();
-        Vector2 bulletTargetPos;
+        Vector2 bombTargetPos;
 
 
         // when player attacks, (0,0) vector is sent over, only directional information is important now
@@ -152,21 +155,25 @@ public class PlayerRangeAOEComponent extends Component {
         if (this.magazineCapacity != 0 && !getReloadingStatus()) {
             // player has not moved before, use default direction attack (to the right)
             if (getDirection().isZero()) {
-                bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
-                bulletTargetPos.y = playerPos.y;
+                bombTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
+                bombTargetPos.y = playerPos.y;
             } else {
                 // player has moved before, last button clicked to move as direction
-                bulletTargetPos = scaleVector(playerPos);
+                bombTargetPos = scaleVector(playerPos);
             }
 
             // bomb triggred
             if (movingAttackDir.isZero() && activeBomb != null) {
-                Entity firedBullet = activeBomb.get(0);
+                Entity firedBomb = activeBomb.get(0);
                 activeBomb.removeIndex(0);
-                firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
+                firedBomb.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
 
-                firedBullet.setPosition(playerPos);
-                firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+                firedBomb.setPosition(playerPos);
+                firedBomb.getComponent(PhysicsMovementComponent.class).setTarget(bombTargetPos);
+                System.out.println(playerPos);
+                System.out.println(bombTargetPos);
+
+
 
                 // update current gun magazine
                 decreaseGunMagazine();

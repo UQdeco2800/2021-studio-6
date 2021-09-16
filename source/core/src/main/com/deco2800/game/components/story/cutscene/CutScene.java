@@ -3,6 +3,7 @@ package com.deco2800.game.components.story.cutscene;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.dialoguebox.TextDialogueBox;
 import com.deco2800.game.components.story.ImageSequence;
+import com.deco2800.game.components.story.NoStoryLoadedException;
 import com.deco2800.game.components.story.StoryBase;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.DialogueBoxFactory;
@@ -67,7 +68,7 @@ public class CutScene extends Component implements StoryBase {
      * Shows and displays the cutscene
      */
     @Override
-    public void display() throws Exception{
+    public void display() throws NoStoryLoadedException {
         ServiceLocator.getEntityService().register(imageEntity);
         ServiceLocator.getEntityService().register(dialogueEntity);
         config.music.setLooping(true);

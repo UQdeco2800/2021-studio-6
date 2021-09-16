@@ -4,7 +4,7 @@ import com.deco2800.game.components.story.cutscene.CutSceneConfig;
 
 public class EpilogueCutScene extends CutSceneConfig {
 
-    public static final String[] DIALOGUE =
+    protected static final String[] DIALOGUE_RAW =
             {
                     //Screen 0
                     "There it is!",
@@ -28,37 +28,41 @@ public class EpilogueCutScene extends CutSceneConfig {
                     //Screen 3
                     "A shadow crawler!",
             };
-    public static final String[] IMAGES =
+
+    protected static final String DOCK_IMAGE = "epilogue/1-the-docks.png";
+    protected static final String GLOW_IMAGE = "epilogue/2-the-glow.png";
+    protected static final String SHADOW_IMAGE = "epilogue/3-the-shadow.png";
+    protected static final String[] IMAGES_RAW =
             {
                     //Screen 0
-                    "epilogue/1-the-docks.png",
-                    "epilogue/1-the-docks.png",
-                    "epilogue/1-the-docks.png",
-                    "epilogue/1-the-docks.png",
+                    DOCK_IMAGE,
+                    DOCK_IMAGE,
+                    DOCK_IMAGE,
+                    DOCK_IMAGE,
 
                     //Screen 1
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
-                    "epilogue/2-the-glow.png",
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
+                    GLOW_IMAGE,
 
                     //Screen 3
-                    "epilogue/3-the-shadow.png",
-                    "epilogue/3-the-shadow.png",
-                    "epilogue/3-the-shadow.png"
+                    SHADOW_IMAGE,
+                    SHADOW_IMAGE,
+                    SHADOW_IMAGE
             };
-    public static final String MUSIC = "sounds/title-screen-music.mp3";
+    protected static final String MUSIC_RAW = "sounds/title-screen-music.mp3";
     private static final int LENGTH = 16;
 
     public EpilogueCutScene() {
-        dialogueText = DIALOGUE;
-        imagePaths = IMAGES;
-        musicPath = MUSIC;
+        dialogueText = DIALOGUE_RAW;
+        imagePaths = IMAGES_RAW;
+        musicPath = MUSIC_RAW;
     }
 
     /**

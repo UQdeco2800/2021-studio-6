@@ -5,19 +5,19 @@ import com.deco2800.game.components.story.cutscene.CutSceneConfig;
  * Asset paths for the test cutscene
  */
 public class TestCutscene extends CutSceneConfig {
-    public static final String[] dialogueTextRaw = {"Hello World!", "This is me speaking", "I love the world"};
-    public static final String[] imagePathsRaw = {"title-screen/0001.png", "title-screen/0021.png",
+    protected static final String[] DIALOGUE_RAW = {"Hello World!", "This is me speaking", "I love the world"};
+    protected static final String[] IMAGES_RAW = {"title-screen/0001.png", "title-screen/0021.png",
             "title-screen/0001.png"};
-    public static final String musicPathRaw = "sounds/title-screen-music.mp3";
+    protected static final String MUSIC_RAW = "sounds/title-screen-music.mp3";
     private static final int LENGTH = 3;
 
     /**
      * Sets asset paths for use
      */
     public TestCutscene(){
-        dialogueText = dialogueTextRaw;
-        imagePaths = imagePathsRaw;
-        musicPath = musicPathRaw;
+        dialogueText = DIALOGUE_RAW;
+        imagePaths = IMAGES_RAW;
+        musicPath = MUSIC_RAW;
     }
 
     /**

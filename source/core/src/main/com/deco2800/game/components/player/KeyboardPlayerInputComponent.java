@@ -47,6 +47,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Triggers player events on specific keycodes.
+   * Split up into 2 separate if statements that depend on other variables to reduce complexity.
    *
    * @return whether the input was processed
    * @see InputProcessor#keyDown(int)
@@ -97,7 +98,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           //entity.getEvents().trigger("rangeAOE", RangeAttack);
           //return true;
         case Keys.SPACE:
-            entity.getEvents().trigger("attack");
+            entity.getEvents().trigger("attackStart");
           return true;
         case Keys.ENTER:
             entity.getEvents().trigger("rangeAttack", RangeAttack);

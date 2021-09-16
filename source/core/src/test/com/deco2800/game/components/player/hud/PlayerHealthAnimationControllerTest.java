@@ -57,25 +57,6 @@ public class PlayerHealthAnimationControllerTest {
     }
 
     @Test
-    void shouldHit() {
-        player.getEvents().trigger("hit", 1); // set to remove one health
-        verify(anim).startAnimation("health2"); // player starts with 1 (full health), player is hit for one damage = 2
-
-        player.getEvents().trigger("hit", 10); // set to remove ten health
-        verify(anim).startAnimation("health12"); // player has index of 2, player is hit for 10 damage = 12
-    }
-
-    @Test
-    void shouldHeal() {
-        player.getEvents().trigger("heal"); // set to add one health
-        verify(anim, times(2)).startAnimation("health1"); // if index is less than one, should set to one
-
-        player.getEvents().trigger("hit", 7); // set to remove 7 health (now at index 8)
-        player.getEvents().trigger("heal"); // set to heal +1
-        verify(anim).startAnimation("health7"); // sets back to index of 7
-    }
-
-    @Test
     void shouldDispose() {
         player.getEvents().trigger("dispose");
         verify(anim).dispose();

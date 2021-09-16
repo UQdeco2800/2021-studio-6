@@ -7,7 +7,6 @@ import com.deco2800.game.rendering.IndependentAnimator;
 public class PlayerHealthAnimationController  extends Component{
 
   private IndependentAnimator healthAnimator;
-    private int index;
     private boolean hit;
 
     @Override
@@ -23,37 +22,25 @@ public class PlayerHealthAnimationController  extends Component{
    */
     public void setter() {
       hit = false;
-      index = 1;
       PlayerInterfaceDisplay statsDisplayHealth = this.entity.getComponent(PlayerInterfaceDisplay.class);
       healthAnimator = statsDisplayHealth.getHealthAnimator();
-      entity.getEvents().addListener("health", this::change);
-      entity.getEvents().addListener("hit", this::hit);
-      entity.getEvents().addListener("heal", this::heal);
+      entity.getEvents().addListener("health", this::changeHealthAnimation);
       entity.getEvents().addListener("dispose", this::disposeAnimation);
       healthAnimator.startAnimation("health1");
     }
 
-
-  void change(int set) {
+  /**
+   * Single function that handles changing the health interface animation.
+   * @param index The index of the animation to be set. Low index is higher health, high index is lower health.
+   *              Calculated and triggered from the PlayerCombatStatsComponent.
+   */
+  void changeHealthAnimation(int index) {
       if (!hit) {
         entity.getEvents().trigger("firstHit");
       }
       hit = true;
-    healthAnimator.startAnimation("health" + set);
-  }
-
-    void hit(int damage) {
-      index += damage;
-      healthAnimator.startAnimation("health" + index);
-    }
-
-  void heal() {
-      index--;
-      if (index < 1) {
-        index = 1;
-      }
     healthAnimator.startAnimation("health" + index);
-   }
+  }
 
   void disposeAnimation() {
     healthAnimator.dispose();

@@ -126,7 +126,7 @@ public class SafehouseGameArea extends GameArea {
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
     door.getComponent(TextureRenderComponent.class).scaleEntity();
     door.scaleHeight(2.5f);
-    door.setPosition(worldBounds.x - 2, (worldBounds.y / 2) - 1);
+    door.setPosition(worldBounds.x - 3, (worldBounds.y / 2) - 1);
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
@@ -153,7 +153,7 @@ public class SafehouseGameArea extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(0.6f);
     music.play();
   }
 

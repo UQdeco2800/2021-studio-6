@@ -44,7 +44,7 @@ public class PlayerMeleeAttackComponentTest {
         assertNull(player.getComponent(PlayerMeleeAttackComponent.class).getFixture());
         assertEquals(PhysicsLayer.DEFAULT, player.getComponent(PlayerMeleeAttackComponent.class).getLayer());
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         // fixture created melee attack executed
         assertNotNull(player.getComponent(PlayerMeleeAttackComponent.class).getFixture());
         assertEquals(PhysicsLayer.WEAPON, player.getComponent(PlayerMeleeAttackComponent.class).getLayer());
@@ -63,12 +63,12 @@ public class PlayerMeleeAttackComponentTest {
         Entity enemy = createEnemy();
         int ENEMY_DAMAGED_HEALTH = 15;
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture enemyFixture = enemy.getComponent(HitboxComponent.class).getFixture();
 
         player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         assertEquals(ENEMY_DAMAGED_HEALTH, enemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
@@ -78,7 +78,7 @@ public class PlayerMeleeAttackComponentTest {
         Entity enemy = createEnemy();
         int FULL_ENEMY_HEALTH = 20;
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture enemyFixture = enemy.getComponent(HitboxComponent.class).getFixture();
 
@@ -94,7 +94,7 @@ public class PlayerMeleeAttackComponentTest {
         int ENEMY_DAMAGED_HEALTH = 15;
         player.getEvents().trigger("walk", Vector2Utils.RIGHT);
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture enemyFixture = enemy.getComponent(HitboxComponent.class).getFixture();
         player.getEvents().trigger("collisionStart", playerFixture, enemyFixture);
@@ -107,7 +107,7 @@ public class PlayerMeleeAttackComponentTest {
         Entity enemy = createEnemy();
         int FULL_ENEMY_HEALTH = 20;
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         assertEquals(FULL_ENEMY_HEALTH, enemy.getComponent(CombatStatsComponent.class).getHealth());
     }
 
@@ -117,11 +117,11 @@ public class PlayerMeleeAttackComponentTest {
         Entity nonEnemy = createNonEnemy();
         int FULL_ENEMY_HEALTH = 20;
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture nonEnemyFixture = nonEnemy.getComponent(HitboxComponent.class).getFixture();
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         player.getEvents().trigger("collisionStart", playerFixture, nonEnemyFixture);
         assertEquals(FULL_ENEMY_HEALTH, nonEnemy.getComponent(CombatStatsComponent.class).getHealth());
     }
@@ -135,13 +135,13 @@ public class PlayerMeleeAttackComponentTest {
         Entity enemy2 = createEnemy();
         int ENEMY_DAMAGED_HEALTH = 15;
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
         Fixture enemy1Fixture = enemy1.getComponent(HitboxComponent.class).getFixture();
 //        Fixture enemy2Fixture = enemy2.getComponent(HitboxComponent.class).getFixture();
         player.getComponent(PlayerMeleeAttackComponent.class).update();
 
-        player.getEvents().trigger("attack");
+        player.getEvents().trigger("attackStart");
 
         player.getEvents().trigger("collisionStart", playerFixture, enemy1Fixture);
         assertEquals(ENEMY_DAMAGED_HEALTH, enemy1.getComponent(CombatStatsComponent.class).getHealth());

@@ -71,6 +71,6 @@ public class GameTime {
   public void unpause() {
     timeScale = 1f;
     isPaused = false;
-    timeOffset +=addtoOffset;
+    timeOffset += getTimeSince(addtoOffset);
   }
 }

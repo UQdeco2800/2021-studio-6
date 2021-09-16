@@ -168,7 +168,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setter()">setter</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setter(java.lang.Float%5B%5D%5B%5D)">setter</a></span>&#8203;(java.lang.Float[][]&nbsp;cords)</code></th>
 <td class="colLast">
 <div class="block">Setter has to be called after creation from wherever the Controller was
  instanced to get around some annoying issues.</div>
@@ -178,7 +178,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+<div class="block">Checks to stop animation once it is finished</div>
 </td>
 </tr>
 </tbody>
@@ -239,8 +239,8 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setter()">setter</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setter</span>()</div>
+<h3><a id="setter(java.lang.Float[][])">setter</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setter</span>&#8203;(<span class="arguments">java.lang.Float[][]&nbsp;cords)</span></div>
 <div class="block">Setter has to be called after creation from wherever the Controller was
  instanced to get around some annoying issues.
 
@@ -251,9 +251,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <section class="detail">
 <h3><a id="update()">update</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">update</span>()</div>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#update()">Component</a></code></span></div>
-<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
- component is disabled.</div>
+<div class="block">Checks to stop animation once it is finished</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>

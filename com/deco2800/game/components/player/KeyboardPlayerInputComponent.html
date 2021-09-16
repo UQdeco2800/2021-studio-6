@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -195,17 +195,31 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Adding relevant listeners to the component</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
+<td class="colFirst"><code><a href="../../items/Directions.html" title="enum in com.deco2800.game.items">Directions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDirection()">getDirection</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Getting the last direction the player moved in</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVector()">getVector</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gets the direction the player is currently walking in</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keyDown(int)">keyDown</a></span>&#8203;(int&nbsp;keycode)</code></th>
 <td class="colLast">
 <div class="block">Triggers player events on specific keycodes.</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keyUp(int)">keyUp</a></span>&#8203;(int&nbsp;keycode)</code></th>
 <td class="colLast">
@@ -280,9 +294,7 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <section class="detail">
 <h3><a id="create()">create</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Adding relevant listeners to the component</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../input/InputComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a></code></dd>
@@ -293,7 +305,8 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <section class="detail">
 <h3><a id="keyDown(int)">keyDown</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">keyDown</span>&#8203;(<span class="arguments">int&nbsp;keycode)</span></div>
-<div class="block">Triggers player events on specific keycodes.</div>
+<div class="block">Triggers player events on specific keycodes.
+ Split up into 2 separate if statements that depend on other variables to reduce complexity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/InputProcessor.html?is-external=true#keyDown(int)" title="class or interface in com.badlogic.gdx" class="externalLink">keyDown</a></code>&nbsp;in interface&nbsp;<code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/InputProcessor.html?is-external=true" title="class or interface in com.badlogic.gdx" class="externalLink">InputProcessor</a></code></dd>
@@ -320,6 +333,28 @@ extends <a href="../../input/InputComponent.html" title="class in com.deco2800.g
 <dd>whether the input was processed</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/InputProcessor.html?is-external=true#keyUp(int)" title="class or interface in com.badlogic.gdx" class="externalLink"><code>InputProcessor.keyUp(int)</code></a></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getVector()">getVector</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></span>&nbsp;<span class="memberName">getVector</span>()</div>
+<div class="block">Gets the direction the player is currently walking in</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the players current walking direction</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getDirection()">getDirection</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../../items/Directions.html" title="enum in com.deco2800.game.items">Directions</a></span>&nbsp;<span class="memberName">getDirection</span>()</div>
+<div class="block">Getting the last direction the player moved in</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the direction enum that represents the last direction the player moved in</dd>
 </dl>
 </section>
 </li>

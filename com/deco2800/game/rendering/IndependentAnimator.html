@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -180,7 +180,9 @@ extends <a href="AnimationRenderComponent.html" title="class in com.deco2800.gam
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/SpriteBatch.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">SpriteBatch</a>&nbsp;batch)</code></th>
 <td class="colLast">
-<div class="block">Draw the renderable.</div>
+<div class="block">Uses a very similar draw method to AnimationRender component but the main
+ difference is the removal of entity and the replacement of it's position
+ with the positions given by setPositions.</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
@@ -226,6 +228,13 @@ float&nbsp;y)</code></th>
 float&nbsp;y)</code></th>
 <td class="colLast">
 <div class="block">Sets the scale of the animation</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setZIndex(float)">setZIndex</a></span>&#8203;(float&nbsp;index)</code></th>
+<td class="colLast">
+<div class="block">Used to set the z index of the animation now that it is independent to entity.</div>
 </td>
 </tr>
 </tbody>
@@ -357,15 +366,28 @@ float&nbsp;y)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="setZIndex(float)">setZIndex</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setZIndex</span>&#8203;(<span class="arguments">float&nbsp;index)</span></div>
+<div class="block">Used to set the z index of the animation now that it is independent to entity.
+ A higher index corresponds to appearing 'above' or infront other visual elements.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - </dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">draw</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/SpriteBatch.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">SpriteBatch</a>&nbsp;batch)</span></div>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Uses a very similar draw method to AnimationRender component but the main
+ difference is the removal of entity and the replacement of it's position
+ with the positions given by setPositions.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="AnimationRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>batch</code> - Batch to render to.</dd>
+<dd><code>batch</code> - the animation sprites to render</dd>
 </dl>
 </section>
 </li>

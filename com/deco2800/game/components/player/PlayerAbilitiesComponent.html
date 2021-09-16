@@ -135,7 +135,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">PlayerAbilitiesComponent</a></span>&#8203;(int&nbsp;ability)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.items.Abilities)">PlayerAbilitiesComponent</a></span>&#8203;(<a href="../../items/Abilities.html" title="enum in com.deco2800.game.items">Abilities</a>&nbsp;ability)</code></th>
 <td class="colLast">
 <div class="block">Basic constructor for setting the players chosen ability</div>
 </td>
@@ -167,19 +167,19 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Adds the listener for triggering the ability alongside other creation of components</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
-<td class="colFirst"><code>int</code></td>
+<td class="colFirst"><code><a href="../../items/Abilities.html" title="enum in com.deco2800.game.items">Abilities</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAbility()">getAbility</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns an int code indicating the players chosen ability</div>
+<div class="block">Returns the players chosen ability</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAbility(int)">setAbility</a></span>&#8203;(int&nbsp;ability)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAbility(com.deco2800.game.items.Abilities)">setAbility</a></span>&#8203;(<a href="../../items/Abilities.html" title="enum in com.deco2800.game.items">Abilities</a>&nbsp;ability)</code></th>
 <td class="colLast">
 <div class="block">Changes the players chosen ability through int code</div>
 </td>
@@ -213,8 +213,8 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(int)">PlayerAbilitiesComponent</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">PlayerAbilitiesComponent</span>&#8203;(<span class="arguments">int&nbsp;ability)</span></div>
+<h3><a id="&lt;init&gt;(com.deco2800.game.items.Abilities)">PlayerAbilitiesComponent</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">PlayerAbilitiesComponent</span>&#8203;(<span class="arguments"><a href="../../items/Abilities.html" title="enum in com.deco2800.game.items">Abilities</a>&nbsp;ability)</span></div>
 <div class="block">Basic constructor for setting the players chosen ability</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -236,9 +236,7 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <section class="detail">
 <h3><a id="create()">create</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Adds the listener for triggering the ability alongside other creation of components</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
@@ -247,20 +245,20 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setAbility(int)">setAbility</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setAbility</span>&#8203;(<span class="arguments">int&nbsp;ability)</span></div>
+<h3><a id="setAbility(com.deco2800.game.items.Abilities)">setAbility</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setAbility</span>&#8203;(<span class="arguments"><a href="../../items/Abilities.html" title="enum in com.deco2800.game.items">Abilities</a>&nbsp;ability)</span></div>
 <div class="block">Changes the players chosen ability through int code</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ability</code> - is int indicator the chosen ability of the player (must be between 0 and 3)</dd>
+<dd><code>ability</code> - is the chosen ability of the player</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getAbility()">getAbility</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getAbility</span>()</div>
-<div class="block">Returns an int code indicating the players chosen ability</div>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../../items/Abilities.html" title="enum in com.deco2800.game.items">Abilities</a></span>&nbsp;<span class="memberName">getAbility</span>()</div>
+<div class="block">Returns the players chosen ability</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>returns the ability</dd>

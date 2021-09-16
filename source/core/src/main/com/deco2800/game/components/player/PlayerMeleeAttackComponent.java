@@ -155,7 +155,7 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void walk(Vector2 walkDirection) {
         if (fixture != null) {
-            dispose();
+            toggleFixtures();
         }
     }
 
@@ -259,6 +259,7 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     private void damage() {
             for (Fixture enemy : closeEnemies) {
+                System.out.println("damaging");
                 Entity target = ((BodyUserData) enemy.getBody().getUserData()).entity;
                 CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
                 // enemy within range and player clicked melee attack button
@@ -318,9 +319,26 @@ public class PlayerMeleeAttackComponent extends Component {
      */
     @Override
     public void update() {
-        if (disposeTime < timeSource.getTime()) {
-            dispose();
+        if (disposeTime < timeSource.getTime() && fixture != null) {
+            toggleFixtures();
         }
+    }
+
+    /**
+     * Similar to dispose() but also destroys the weapon fixture.
+     * Doing so in dispose() crashes things on account of update locks.
+     */
+    public void toggleFixtures() {
+        if (weaponAnimator != null) {
+            weaponAnimator.stopAnimation();
+        }
+        Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+        if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
+            fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
+            physBody.destroyFixture(fixture);
+            fixture = null;
+        }
+        canAttack = true;
     }
 
     /**
@@ -335,7 +353,6 @@ public class PlayerMeleeAttackComponent extends Component {
         Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
         if (physBody.getFixtureList().contains(fixture, true) && fixture != null) {
             fixture.getFilterData().categoryBits = PhysicsLayer.DEFAULT;
-            physBody.destroyFixture(fixture);
             fixture = null;
         }
         canAttack = true;

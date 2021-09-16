@@ -73,6 +73,11 @@ public class TouchAttackComponent extends Component {
       Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
+
+      Body enemyBody = entity.getComponent(physicsComponent.getClass()).getBody();
+      direction = entity.getCenterPosition().sub(target.getCenterPosition());
+      impulse = direction.setLength(knockbackForce);
+      enemyBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
   }
 }

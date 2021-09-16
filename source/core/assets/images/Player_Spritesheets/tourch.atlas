@@ -1,0 +1,20 @@
+
+tourch.png
+size: 1024, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+tourch
+  rotate: false
+  xy: 2, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+tourch1
+  rotate: false
+  xy: 350, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1

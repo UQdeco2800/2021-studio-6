@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.deco2800.game.ui.UIComponent;
 
 import java.util.List;
-public class ImageSequence extends UIComponent implements StoryBase {
+public class ImageSequence extends UIComponent {
 
     private final List<Image> images;
     private int index;
@@ -29,14 +29,32 @@ public class ImageSequence extends UIComponent implements StoryBase {
      */
     @Override
     protected void draw(SpriteBatch batch) {
-
+        //Nothing needs to be updated per frame
     }
 
-    @Override
+    /**
+     * Advances the image sequence. Disposes of itself when done
+     */
     public void advance() {
-        index++;
-        stage.clear();
-        stage.addActor(images.get(index));
-        stage.draw();
+        if (index < images.size() - 1) {
+            index++;
+            images.get(index - 1).remove();
+            stage.addActor(images.get(index));
+            stage.draw();
+        } else {
+            images.get(index).remove();
+            super.dispose();
+        }
+    }
+
+    /**
+     * Removes all images
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
+        for (Image image: images) {
+            image.remove();
+        }
     }
 }

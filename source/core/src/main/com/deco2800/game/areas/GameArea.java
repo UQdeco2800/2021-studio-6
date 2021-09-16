@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public abstract class GameArea implements Disposable {
     for (Entity entity : areaEntities) {
       entity.dispose();
     }
+    areaEntities.clear();
   }
 
   /**
@@ -41,8 +44,11 @@ public abstract class GameArea implements Disposable {
    */
   public void despawnEntity(Entity entity) {
     int entityIdx = areaEntities.indexOf(entity);
-    Entity temp = areaEntities.remove(entityIdx);
-    temp.dispose();
+    //array out of bounds check if something tries to despawn twice
+    if (entityIdx != -1) {
+      Entity temp = areaEntities.remove(entityIdx);
+      temp.dispose();
+    }
   }
 
   /**
@@ -75,5 +81,22 @@ public abstract class GameArea implements Disposable {
     }
     entity.setPosition(worldPos);
     spawnEntity(entity);
+  }
+
+  /**
+   * Spawns a small enemy from the appropriate spawner's position
+   * @param position position to spawn
+   * @param maxSpawnDistance maximum spawn distance
+   */
+  public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
+    int x = Math.round(position.x);
+    int y = Math.round(position.y);
+
+    GridPoint2 minPos = new GridPoint2(x - maxSpawnDistance, y - maxSpawnDistance);
+    GridPoint2 maxPos = new GridPoint2(x + maxSpawnDistance, y + maxSpawnDistance);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+    spawnEntityAt(smallEnemy, randomPos, true, true);
   }
 }

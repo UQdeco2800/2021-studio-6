@@ -22,20 +22,38 @@ import java.awt.*;
 public class ObstacleFactory {
 
   /**
-   * Creates a tree entity.
+   * Creates a wide tree entity.
    * @return entity
    */
-  public static Entity createTree() {
+  public static Entity createBigTree() {
     Entity tree =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_tree_1-1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
     tree.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
+    PhysicsUtils.setScaledCollider(tree, 0.75f, 0.75f);
+    return tree;
+  }
+
+  /**
+   * Creates a pine tree entity.
+   * @return entity
+   */
+  public static Entity createPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_tree_2-1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.5f);
+    PhysicsUtils.setScaledCollider(tree, 0.75f, 0.55f);
     return tree;
   }
 
@@ -106,6 +124,39 @@ public class ObstacleFactory {
 
     wall.setScale(width, height);
     return wall;
+  }
+
+  /**
+   * Creates an object given the path to its image and its size
+   * @param image Path to the image to be used for object
+   * @param height How much to scale the height of the image
+   * @return entity
+   */
+  public static Entity createObject(String image, float height) {
+    Entity object =
+        new Entity()
+            .addComponent(new TextureRenderComponent(image))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    object.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    object.getComponent(TextureRenderComponent.class).scaleEntity();
+    object.scaleHeight(height);
+    PhysicsUtils.setScaledCollider(object, 1f, 1f);
+    return object;
+  }
+
+  public static Entity createBuilding() {
+    Entity building =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    building.getComponent(TextureRenderComponent.class).scaleEntity();
+    building.scaleHeight(10f);
+    return building;
   }
 
   private ObstacleFactory() {

@@ -12,10 +12,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
-  private static final float buttonClickDuration = 0.3f;
+  private static final float BUTTON_CLICK_DURATION = 0.3f;
   private GdxGame game;
-  private boolean gameStarted = false;
-  private boolean gameQuiting = false;
+  private boolean loading = false;
 
 
   public MainMenuActions(GdxGame game) {
@@ -25,7 +24,6 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
   }
@@ -35,24 +33,16 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
-    if (!gameQuiting && !gameStarted) {
-      gameStarted = true;
+    if (!loading) {
+      loading = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
           game.setScreen(GdxGame.ScreenType.MAIN_GAME);
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
-  }
-
-  /**
-   * Intended for loading a saved game state.
-   * Load functionality is not actually implemented.
-   */
-  private void onLoad() {
-    logger.info("Load game");
   }
 
   /**
@@ -60,15 +50,15 @@ public class MainMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    if (!gameQuiting && !gameStarted) {
-      gameQuiting = true;
+    if (!loading) {
+      loading = true;
       // starts the game after the button click sound has finished
       Timer.schedule(new Timer.Task() {
         @Override
         public void run() {
           game.exit();
         }
-      }, buttonClickDuration);
+      }, BUTTON_CLICK_DURATION);
     }
   }
 
@@ -77,7 +67,7 @@ public class MainMenuActions extends Component {
    */
   private void onSettings() {
     logger.info("Launching settings screen");
-    if (!gameQuiting && !gameStarted) {
+    if (!loading) {
       game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
   }

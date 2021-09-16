@@ -12,6 +12,9 @@ public class GameTime {
   private float timeScale = 1f;
   private boolean isPaused = false;
 
+  private long timeOffset;
+  private long addtoOffset;
+
   public GameTime() {
     startTime = TimeUtils.millis();
     logger.debug("Setting game start time to {}", startTime);
@@ -39,7 +42,7 @@ public class GameTime {
 
   /** @return time passed since the game started in milliseconds */
   public long getTime() {
-    return TimeUtils.timeSinceMillis(startTime);
+    return TimeUtils.timeSinceMillis(startTime) - timeOffset;
   }
 
   public long getTimeSince(long lastTime) {
@@ -59,6 +62,7 @@ public class GameTime {
   public void pause() {
     timeScale = 0f;
     isPaused = true;
+    addtoOffset = this.getTime();
   }
 
   /**
@@ -67,5 +71,6 @@ public class GameTime {
   public void unpause() {
     timeScale = 1f;
     isPaused = false;
+    timeOffset += getTimeSince(addtoOffset);
   }
 }

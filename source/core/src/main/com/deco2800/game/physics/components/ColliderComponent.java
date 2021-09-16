@@ -206,12 +206,13 @@ public class ColliderComponent extends Component {
   }
 
   @Override
+  public void update() {
+  }
+
+  @Override
   public void dispose() {
+    fixtureDef.shape = null;
     super.dispose();
-    Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
-    if (physBody.getFixtureList().contains(fixture, true)) {
-//      physBody.destroyFixture(fixture);
-    }
   }
 
   private Shape makeBoundingBox() {

@@ -7,8 +7,6 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -25,18 +23,20 @@ public class PlayerActions extends Component {
   private Vector2 maxSpeed; // Metres per second
   private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
   // Dashing
-  private final float dashSpeed = 20f;
+  private static final float DASH_SPEED = 20f;
   private boolean dashing = false;
   private Vector2 dashVelocity;
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final int delayLength = 2000; // in milliseconds
-  private static final int dashLength = 100; // in milliseconds
+  private static final int DELAY_LENGTH = 2000; // in milliseconds
+  private static final int DASH_LENGTH = 100; // in milliseconds
   private long delayEndTime = 0;
   private long dashEndTime = 0;
   // Timing for reloading along with additional variables relevant to reloading
-  private static final int delayReloadLength = 3000; // in milliseconds
-  private final int BULLET_MAGAZINE_FULL = 5;
+  private static final int DELAY_RELOAD_LENGTH = 2000; // in milliseconds
+  private static long TIME_TO_START_RELOAD = 0;
+  private boolean checkForReload = false;
+  private static final int BULLET_MAGAZINE_FULL = 5;
   private int ammoToReload;
 
   /**
@@ -49,6 +49,9 @@ public class PlayerActions extends Component {
     setSpeed(woundState);
   }
 
+  /**
+   * Initial settings on creation such as adding listeners and collecting components references
+   */
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -62,12 +65,29 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("reload", this::reload);
   }
 
+  /**
+   * On each call the update will reload (if it is the time to do so) as well as setting the players movement
+   * dash/walking/not moving
+   */
   @Override
   public void update() {
     if (dashing) {
       updateDash();
     } else if (moving) {
       updateSpeed();
+    }
+    // check for reload ensures canReload method will not be called needlessly
+    // and will only be true when player has clicked R to reload
+    if (checkForReload) {
+      // display reloading text to player on interface
+      entity.getEvents().trigger("gunMagazineReloading");
+
+      // it is time to reload, game time exceeds time to reload
+      if (canReload()) {
+        checkForReload = false;
+        playerRangeAttackComponent.reloadGunMagazine(ammoToReload);
+        entity.getEvents().trigger("hideReloadingStatus");
+      }
     }
   }
 
@@ -160,9 +180,9 @@ public class PlayerActions extends Component {
   void regularDash() {
     if (canDash() && !walkDirection.isZero()) { // Check if player is allowed to dash again & moving
       this.getEntity().getEvents().trigger("dashBar");
-      delayEndTime = timeSource.getTime() + delayLength;
-      dashEndTime = timeSource.getTime() + dashLength;
-      setDash(dashSpeed);
+      delayEndTime = timeSource.getTime() + DELAY_LENGTH;
+      dashEndTime = timeSource.getTime() + DASH_LENGTH;
+      setDash(DASH_SPEED);
     }
   }
 
@@ -172,13 +192,13 @@ public class PlayerActions extends Component {
    */
   void longDash(long endTime) {
     dashEndTime = endTime;
-    setDash(dashSpeed*2);
+    setDash(DASH_SPEED*2);
   }
 
   /**
    * Reloads player's range attack weapon for firing again
    */
-  void reload() {
+  private void reload() {
     inventory = entity.getComponent(InventoryComponent.class);
     playerRangeAttackComponent = entity.getComponent(PlayerRangeAttackComponent.class);
     boolean reloadingStatus = playerRangeAttackComponent.getReloadingStatus();
@@ -187,7 +207,6 @@ public class PlayerActions extends Component {
     int magazineNum = playerRangeAttackComponent.getGunMagazine();
     int ammoLeft = inventory.getAmmo();
 
-    Timer reloadTimer = new Timer(true);
     // if bullet magazine is full or reloading is currently occurring or there is no ammo, do nothing
     if (magazineNum != BULLET_MAGAZINE_FULL && !reloadingStatus && ammoLeft >= 1) {
       playerRangeAttackComponent.setReloadingStatus(true);
@@ -195,15 +214,24 @@ public class PlayerActions extends Component {
       // acquire ammo to reload and update ammo in inventory
       ammoToReload = getAmmo(magazineNum, ammoLeft, inventory);
 
-      // simulate a reloading period
-      reloadTimer.schedule( new TimerTask() {
-        public void run() {
-          playerRangeAttackComponent.reloadGunMagazine(ammoToReload);
-          cancel();
-        }
-      }, delayReloadLength);
+      // simulate a reloading process by setting reload to happen later in game
+      // this will trigger update method to continuously check when it is time
+      // to reload
+      TIME_TO_START_RELOAD = timeSource.getTime() + DELAY_RELOAD_LENGTH;
+      checkForReload = true;
     }
   }
+
+  /**
+   * Lets you know when it is time for player to reload. Reload should not happen
+   * immediately, so need to simulate idea of reloading which delays time
+   *
+   * @return a true or false to reload gun magazine
+   */
+  private boolean canReload() {
+    return (timeSource.getTime() >= TIME_TO_START_RELOAD);
+  }
+
 
   /**
    * Gets ammo for reloading and updates ammo in player's inventory component
@@ -237,12 +265,19 @@ public class PlayerActions extends Component {
 
   /**
    * Moves the player towards a given direction.
-   *
    * @param direction direction to move in
    */
   void walk(Vector2 direction) {
     this.walkDirection = direction;
     moving = true;
+  }
+
+  /**
+   * Public function to return the movement status of the player
+   * @return true if the player is moving, false otherwise
+   */
+  public boolean isMoving() {
+    return moving;
   }
 
   /**

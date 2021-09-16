@@ -16,7 +16,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private int woundState;
     private int stateMax;
     private int defenceLevel;
-    private static final int woundMax = 3;
+    private static final int WOUND_MAX = 3;
     // Modifiers
     private final int[] stateGates = new int[] {0, 5, 4, 3};
     private final double[] attackModifiers = new double[] {0, 0.6, 0.9, 1};
@@ -24,11 +24,12 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private boolean regenActive = false;
     private boolean invincibleActive = false;
-    private final long regenCooldown = 5000;
+    private static final long REGEN_COOLDOWN = 5000;
+    private static final long INITIAL_REGEN_OFFSET = 3000;
     private long nextRegen;
-    private final long invincibilityLength = 400; // in ms
+    private static final long INVINCIBILITY_LENGTH = 400; // in ms
     private long invincibilityEndTime;
-    private final int[] Woundex = new int[] {7, 3, 0};
+    private final int[] woundex = new int[] {7, 3, 0};
     private final int[] statex = new int[] {1, 2, 3, 4, 5};
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
@@ -44,11 +45,12 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      */
     @Override
     public void update() {
-        if (regenActive && timeSource.getTime() >= nextRegen) {
+        if (regenActive && (timeSource.getTime() >= nextRegen)) {
             regenerate();
         }
-        if (invincibleActive && timeSource.getTime() >= invincibilityEndTime) {
+        if (invincibleActive && (timeSource.getTime() >= invincibilityEndTime)) {
             invincibleActive = false;
+            entity.getEvents().trigger("enableAttack");
         }
     }
 
@@ -76,7 +78,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * @return is player full wound state
      */
     public Boolean atMax() {
-        return woundState == woundMax;
+        return woundState == WOUND_MAX;
     }
 
     /**
@@ -86,10 +88,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * @return the int relating to the health animation index
      */
     public int getindex() {
-        if (isDead()) {
+        if (woundState == 0) {
             return 13;
         }
-        int woundIndex = Woundex[getWoundState() - 1];
+        int woundIndex = woundex[getWoundState() - 1];
         int healthIndex = statex[getStateMax() - getHealth()];
         return woundIndex + healthIndex;
     }
@@ -173,20 +175,23 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     public void setWoundState(int wound) {
         if (wound > 0) {
             this.woundState = wound;
-            if (getWoundState() > woundMax) {
-                this.woundState = woundMax;
+            if (getWoundState() > WOUND_MAX) {
+                this.woundState = WOUND_MAX;
             }
             setStateMax(stateGates[getWoundState()]);
         } else {
             this.woundState = 0;
             setStateMax(0);
-            if (this.getEntity() != null) {
-                this.getEntity().getComponent(DisposingComponent.class).toBeDisposed();
+            if (this.getEntity() != null && ServiceLocator.getGameArea() != null) {
+                entity.getEvents().trigger("dispose");
+                ServiceLocator.getGameArea().despawnEntity(entity);
             }
         }
         if (entity != null) {
+            // update player HUD interface when bandage is used to improve wound state
             entity.getEvents().trigger("updateWound", this.woundState);
-            if (isDead()) {
+            entity.getEvents().trigger("health", getindex());
+            if (woundState == 0) {
                 entity.getEvents().trigger("dead");
             }
         }
@@ -218,8 +223,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 setWoundState(getWoundState() - 1);
             }
         }
-        if (getHealth() < getStateMax()) {
-            regenActive = true;
+        if (getHealth() != getStateMax()) {
+            regenStart();
         }
     }
 
@@ -258,8 +263,9 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (getHealth() != getStateMax()) {
                 regenStart();
             }
+            entity.getEvents().trigger("hurt");
             entity.getEvents().trigger("health", getindex());
-            invincibleStart(invincibilityLength);
+            invincibleStart(INVINCIBILITY_LENGTH);
         }
     }
 
@@ -267,10 +273,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Starts health regeneration that increases player's state health
      * periodically until it reaches max, at which point it stops itself.
      */
-    public void regenStart() {
+    private void regenStart() {
         regenActive = true;
         entity.getEvents().trigger("heal");
-        nextRegen = timeSource.getTime() + regenCooldown + 3000; // Extra 3 second so it takes longer to start regen
+        nextRegen = timeSource.getTime() + REGEN_COOLDOWN + INITIAL_REGEN_OFFSET; // Extra 3 second so it takes longer to start regen
     }
 
     /**
@@ -279,7 +285,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * @param length parameter for how long to set inivisibility for (in milliseconds)
      */
     public void invincibleStart(long length) {
-        invincibilityEndTime = timeSource.getTime() + invincibilityLength;
+        invincibilityEndTime = timeSource.getTime() + length;
+        entity.getEvents().trigger("disableAttack");
         invincibleActive = true;
     }
 
@@ -292,9 +299,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             entity.getEvents().trigger("health", getindex());
             if (getHealth() >= getStateMax()) {
                 regenActive = false;
-                System.out.println("NO REGEN");
             }
-            nextRegen = timeSource.getTime() + regenCooldown;
+            nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
         }
     }
 

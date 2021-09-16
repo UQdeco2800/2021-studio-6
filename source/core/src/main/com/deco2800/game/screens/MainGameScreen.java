@@ -3,7 +3,9 @@ package com.deco2800.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.*;
@@ -34,6 +36,8 @@ import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * The game screen containing the main game.
  *
@@ -51,9 +55,9 @@ public class MainGameScreen extends ScreenAdapter {
   public static boolean levelChange = false;
   private GameTime timeSource;
   private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
-  private final TerrainFactory terrainFactory;
+  private  Renderer renderer;
+  private  PhysicsEngine physicsEngine;
+  private  TerrainFactory terrainFactory;
   private GameArea gameArea;
   private Entity ui;
 
@@ -208,14 +212,41 @@ public class MainGameScreen extends ScreenAdapter {
     CurrentLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+    gameArea.dispose();
 
     if (CurrentLevel == 4) {
       victory();
+      levelChange = false;
       return;
     }
-    gameArea.player.getEvents().trigger("dispose");
-    gameArea.dispose();
+
+    ServiceLocator.getPhysicsService().getPhysics().dispose();
+    ServiceLocator.getEntityService().dispose();
+    ServiceLocator.getRenderService().dispose();
+
+    PhysicsService physicsService = new PhysicsService();
+    ServiceLocator.registerPhysicsService(physicsService);
+    physicsEngine = physicsService.getPhysics();
+
+    ServiceLocator.registerInputService(new InputService());
+    ServiceLocator.registerResourceService(new ResourceService());
+
+    ServiceLocator.registerEntityService(new EntityService());
+    ServiceLocator.registerRenderService(new RenderService());
+
+    renderer = RenderFactory.createRenderer();
+    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+
+    loadAssets();
+    createUI();
+
+    logger.debug("Initialising main game screen entities");
+    this.terrainFactory = new TerrainFactory(renderer.getCamera());
+
+
     if (CurrentLevel == 2) {
+
       gameArea = new Level2(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)

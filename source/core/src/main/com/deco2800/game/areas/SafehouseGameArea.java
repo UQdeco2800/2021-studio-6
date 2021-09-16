@@ -186,7 +186,10 @@ public class SafehouseGameArea extends GameArea {
   public void dispose() {
     door.getComponent(DisposingComponent.class).toBeDisposed();
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    if(ServiceLocator.getResourceService().containsAsset(backgroundMusic, Music.class)){
+      ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+
+    }
     this.unloadAssets();
   }
 }

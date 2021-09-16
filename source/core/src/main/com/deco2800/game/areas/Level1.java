@@ -243,8 +243,8 @@ public class Level1 extends GameArea {
   * Spawns the spawner enemy
   */
   private void spawnSpawnerEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(1, 1);
 
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -264,7 +264,7 @@ public class Level1 extends GameArea {
    * Spawns the small enemy
    */
   private void spawnSmallEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
@@ -276,7 +276,7 @@ public class Level1 extends GameArea {
 
 
   private void spawnLargeEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
@@ -287,7 +287,7 @@ public class Level1 extends GameArea {
   }
 
   private void spawnLongRangeEnemies() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);

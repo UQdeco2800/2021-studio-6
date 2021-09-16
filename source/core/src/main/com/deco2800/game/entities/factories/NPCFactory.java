@@ -11,16 +11,15 @@ import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
-import com.deco2800.game.entities.configs.GhostKingConfig;
 import com.deco2800.game.entities.configs.LargeEnemyConfig;
 import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -104,7 +103,6 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(animator)
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     smallEnemy.setScale(0.75f, 0.75f);
     return smallEnemy;
@@ -166,6 +164,29 @@ public class NPCFactory {
                     .addComponent(new DisposingComponent());
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
+  }
+
+  public static Entity createToughLongRangeEnemy(Entity target, GameArea gameArea) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
+
+    Entity toughLongRangeEnemy = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+            .addComponent(new TextureRenderComponent("images/eye.png"))
+            .addComponent(new CombatStatsComponent(3, 1))
+            .addComponent(aiComponent)
+            .addComponent(new ToughFireBulletListener(target, gameArea))
+            .addComponent(new DisposingComponent());
+
+    toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
+
+    return toughLongRangeEnemy;
   }
 
 

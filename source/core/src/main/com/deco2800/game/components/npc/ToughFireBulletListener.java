@@ -5,11 +5,7 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EnemyBulletFactory;
 
-/**
- * This class listens for the fire event then spawns and fires a bullet from
- * the entity to the target entity
- */
-public class FireBulletListener extends Component {
+public class ToughFireBulletListener extends Component {
     private Entity target;
     private GameArea gameArea;
 
@@ -18,7 +14,7 @@ public class FireBulletListener extends Component {
      * @param target the target to fire at
      * @param gameArea the gamearea to spawn the bullet in
      */
-    public FireBulletListener(Entity target, GameArea gameArea) {
+    public ToughFireBulletListener(Entity target, GameArea gameArea) {
         this.target = target;
         this.gameArea = gameArea;
     }
@@ -36,7 +32,9 @@ public class FireBulletListener extends Component {
      * 'fires' a bullet from the entity to the target
      */
     void fire() {
-        EnemyBulletFactory.createBullet(this.entity, target, gameArea);
+        EnemyBulletFactory.createToughBullet(this.entity, target, gameArea);
     }
 
 }
+
+

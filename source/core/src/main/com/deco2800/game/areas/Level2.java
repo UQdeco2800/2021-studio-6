@@ -100,6 +100,7 @@ public class Level2 extends GameArea {
     spawnLargeEnemy();
     spawnLongRangeEnemies();
     spawnSpawnerEnemy();
+    spawnToughLongRangeEnemies();
 
     playMusic();
   }
@@ -343,6 +344,18 @@ public class Level2 extends GameArea {
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, spawnLocations[i], true, true);
+    }
+  }
+
+  private void spawnToughLongRangeEnemies() {
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(8, 10),
+            new GridPoint2(23,2),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity toughArcher = NPCFactory.createToughLongRangeEnemy(player, this);
+      spawnEntityAt(toughArcher, spawnLocations[i], true, true);
     }
   }
 

@@ -21,6 +21,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
@@ -127,6 +128,7 @@ public class Level1 extends GameArea {
     spawnBullet();
 
     spawnLongRangeEnemies();
+    spawnToughLongRangeEnemies();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -320,6 +322,16 @@ public class Level1 extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
+    }
+  }
+
+  private void spawnToughLongRangeEnemies() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    for (int i = 0; i < NUM_LONGRANGE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
+      spawnEntityAt(touchArcher, randomPos, true, true);
     }
   }
 

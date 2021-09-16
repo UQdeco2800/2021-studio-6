@@ -25,6 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  */
 @ExtendWith(GameExtension.class)
 class ColliderComponentTest {
+
   @BeforeEach
   void beforeEach() {
     ServiceLocator.registerPhysicsService(new PhysicsService());

@@ -5,6 +5,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -30,6 +31,8 @@ public class PointLightComponent extends Component implements Disposable {
         rayHandler = ServiceLocator.getLightingService().getRayHandler();
         pointLight = new PointLight(rayHandler, rays, Color.ORANGE, distance, 0f, 0f);
         pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), offsetx, offsety);
+        pointLight.setIgnoreAttachedBody(true);
+        pointLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
     }
     @Override
     public void dispose() {

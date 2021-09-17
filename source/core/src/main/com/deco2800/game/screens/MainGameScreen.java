@@ -57,6 +57,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
+  private final boolean LIGHTINGON = false;
   private GameArea gameArea;
   private Entity ui;
 
@@ -127,8 +128,11 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     lighting.update();
     renderer.render();
-    lighting.setCamera(renderer.getCamera().getCamera());
-    lighting.render();
+    if(LIGHTINGON){
+      lighting.setCamera(renderer.getCamera().getCamera());
+      lighting.render();
+    }
+
     renderer.renderUI();
 
 

@@ -132,21 +132,12 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.renderUI();
 
 
-<<<<<<< HEAD
-    CAMERA_POSITION.set(gameArea.player.getPosition());
-    ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
-    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
-
-
-
-=======
 
     if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
       CAMERA_POSITION.set(gameArea.player.getPosition());
       ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
       renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     }
->>>>>>> main
   }
 
   @Override

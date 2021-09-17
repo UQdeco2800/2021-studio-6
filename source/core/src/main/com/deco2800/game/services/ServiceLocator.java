@@ -105,12 +105,11 @@ public class ServiceLocator {
     physicsService = null;
     timeSource = null;
     inputService = null;
-    resourceService = null;
-<<<<<<< HEAD
+
     lightingService = null;
-=======
+
     gameArea = null;
->>>>>>> main
+
   }
 
   private ServiceLocator() {

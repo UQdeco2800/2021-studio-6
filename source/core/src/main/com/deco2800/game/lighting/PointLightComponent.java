@@ -29,8 +29,9 @@ public class PointLightComponent extends Component implements Disposable {
     @Override
     public void create() {
         rayHandler = ServiceLocator.getLightingService().getRayHandler();
-        pointLight = new PointLight(rayHandler, rays, Color.ORANGE, distance, 0f, 0f);
-        pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), offsetx, offsety);
+
+        pointLight = new PointLight(rayHandler, rays, Color.ORANGE, distance, 0, 0);
+        pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2);
         pointLight.setIgnoreAttachedBody(true);
         pointLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
     }

@@ -57,7 +57,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private final boolean LIGHTINGON = false;
+  private final boolean LIGHTINGON = true;
   private GameArea gameArea;
   private Entity ui;
 
@@ -134,8 +134,6 @@ public class MainGameScreen extends ScreenAdapter {
     }
 
     renderer.renderUI();
-
-
 
     if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
       CAMERA_POSITION.set(gameArea.player.getPosition());

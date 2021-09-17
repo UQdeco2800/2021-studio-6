@@ -73,11 +73,7 @@ public class GameOverScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().register(WispFactory.createWisp(23));
     ServiceLocator.getEntityService().register(WispFactory.createWisp(25));
     ServiceLocator.getEntityService().register(WispFactory.createWisp(27));
-//    ServiceLocator.getEntityService().register(WispFactory.createWisp(30));
-//    ServiceLocator.getEntityService().register(WispFactory.createWisp(35));
-//    ServiceLocator.getEntityService().register(WispFactory.createWisp(40));
-//    ServiceLocator.getEntityService().register(WispFactory.createWisp(25));
-//    ServiceLocator.getEntityService().register(WispFactory.createWisp(25));
+
   }
 
   @Override
@@ -111,11 +107,15 @@ public class GameOverScreen extends ScreenAdapter {
   @Override
   public void dispose() {
     logger.debug("Disposing game over screen");
-    gameOverDisplay.dispose();
+
     renderer.dispose();
-    unloadAssets();
+
+
     ServiceLocator.getRenderService().dispose();
     ServiceLocator.getEntityService().dispose();
+    ServiceLocator.getPhysicsService().getPhysics().dispose();
+    lighting.dispose();
+    unloadAssets();
     ServiceLocator.clear();
   }
 

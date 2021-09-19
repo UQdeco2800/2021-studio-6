@@ -8,5 +8,6 @@ public enum Items {
     HELMET,
     SWORD,
     AXE,
-    DAGGER
+    DAGGER,
+    SHOP
 }

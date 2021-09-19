@@ -18,9 +18,9 @@ public interface StoryBase {
 
     /**
      * Displays the story. Throws exception when story has not been created yet
-     * @throws Exception when story has not been created yet
+     * @throws NoStoryLoadedException when story has not been created yet
      */
-    void display() throws Exception;
+    void display() throws NoStoryLoadedException;
 
     /**
      * Dispose the story

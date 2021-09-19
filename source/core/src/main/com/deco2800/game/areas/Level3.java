@@ -114,6 +114,7 @@ public class Level3 extends GameArea {
     spawnSpawnerEnemy();
 
     spawnLongRangeEnemies();
+    spawnToughLongRangeEnemies();
     playMusic();
   }
 
@@ -271,6 +272,16 @@ public class Level3 extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
+    }
+  }
+
+  private void spawnToughLongRangeEnemies() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    for (int i = 0; i < NUM_LONGRANGE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
+      spawnEntityAt(touchArcher, randomPos, true, true);
     }
   }
 

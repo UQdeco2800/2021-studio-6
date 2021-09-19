@@ -22,6 +22,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
@@ -39,6 +40,7 @@ public class Level1 extends GameArea {
   private static final int NUM_AMMO_PICKUPS = 3;
   private static final int NUM_COIN_PICKUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
+
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
@@ -100,8 +102,8 @@ public class Level1 extends GameArea {
       "images/weapon/dagger.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
+  private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
 
@@ -135,6 +137,7 @@ public class Level1 extends GameArea {
     //spawnBullet();
 
     spawnLongRangeEnemies();
+    spawnToughLongRangeEnemies();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -268,7 +271,7 @@ public class Level1 extends GameArea {
     }
   }
 
-  public void spawnBuildings() {
+  private void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
 
     for (int x = 3; x < tileBounds.x * 0.75; x += 7) {
@@ -279,7 +282,7 @@ public class Level1 extends GameArea {
     }
   }
 
-  public void spawnSigns() {
+  private void spawnSigns() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     GridPoint2 position  = new GridPoint2(tileBounds.x - 14, tileBounds.y - 5);
     Entity sign = ObstacleFactory.createObject("images/level_1/leaving_city_sign.png", 4f);
@@ -289,7 +292,7 @@ public class Level1 extends GameArea {
     spawnEntityAt(sign, position, true, false);
   }
 
-  public void spawnSafehouse() {
+  private void spawnSafehouse() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     GridPoint2 position  = new GridPoint2(tileBounds.x - 5, tileBounds.y - 5);
 
@@ -300,6 +303,12 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+
+    // this will be removed - purely for testing
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
+
+    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 
@@ -330,7 +339,7 @@ public class Level1 extends GameArea {
   * Spawns the spawner enemy
   */
   private void spawnSpawnerEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
@@ -351,7 +360,7 @@ public class Level1 extends GameArea {
    * Spawns the small enemy
    */
   private void spawnSmallEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
@@ -363,7 +372,7 @@ public class Level1 extends GameArea {
 
 
   private void spawnLargeEnemy() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
@@ -374,12 +383,24 @@ public class Level1 extends GameArea {
   }
 
   private void spawnLongRangeEnemies() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
+
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
+    }
+  }
+
+  private void spawnToughLongRangeEnemies() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
+
+    for (int i = 0; i < NUM_LONGRANGE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
+      spawnEntityAt(touchArcher, randomPos, true, true);
     }
   }
 
@@ -411,7 +432,7 @@ public class Level1 extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     music.setLooping(true);
     music.setVolume(0.3f);
     music.play();
@@ -444,7 +465,7 @@ public class Level1 extends GameArea {
   public void dispose() {
 
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 }

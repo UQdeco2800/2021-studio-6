@@ -36,7 +36,7 @@ public class FireBulletListener extends Component {
      * 'fires' a bullet from the entity to the target
      */
     void fire() {
-        gameArea.spawnEntity(EnemyBulletFactory.createBullet(this.entity, target, gameArea));
+        EnemyBulletFactory.createBullet(this.entity, target, gameArea);
     }
 
 }

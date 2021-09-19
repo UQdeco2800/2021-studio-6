@@ -29,7 +29,7 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
   private static final int MAX_SPAWN_DISTANCE = 1;
   private final GameTime timeSource;
   private long endTime;
-  private static final float INTERVAL = 10;
+  private static final float INTERVAL = 5;
 
   /**
    * @param target The entity to chase.
@@ -58,6 +58,7 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     movementTask.start();
 
+    this.owner.getEntity().getEvents().trigger("chaseStart");
     this.owner.getEntity().getEvents().trigger("spawnerStart"); //reference for animation and sound
   }
 

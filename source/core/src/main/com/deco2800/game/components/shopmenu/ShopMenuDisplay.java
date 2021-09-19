@@ -1,14 +1,12 @@
 package com.deco2800.game.components.shopmenu;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -27,9 +25,14 @@ public class ShopMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
     private final GdxGame game;
     private boolean isEnabled = false;
-    private Table container, headerTable ,shopKeeperTable, itemsButtonTable, itemsDescriptionTable;
+    private Table container;
     private Label shopTitleLabel;
     private Image background;
+    private static final float MAX_BOX_WIDTH = 1000;
+    private static final float MAX_BOX_HEIGHT = 600;
+    private static final float TABLE_HEADER_HEIGHT = 50;
+    private static final int COL_NUM = 100;
+    private static final int CELL_PADDING = 10;
 
     public ShopMenuDisplay(GdxGame game) {
         this.game = game;
@@ -44,7 +47,6 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     public void toggleShopBox() {
-        logger.info("SHOP BOX TOGGLE CALL");
         GameTime timeSource = ServiceLocator.getTimeSource();
 
         if (!isEnabled) {
@@ -71,12 +73,10 @@ public class ShopMenuDisplay extends UIComponent {
         background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
         container = new Table();
 
+        container.row().colspan(COL_NUM).expandX().height(TABLE_HEADER_HEIGHT);
         createTableTitle();
-        container.row();
-        container.add(headerTable).center();
-        container.padTop(0);
-        container.padBottom(0);
-        container.setSize(500,500);
+        container.setSize(MAX_BOX_WIDTH,MAX_BOX_HEIGHT);
+        background.setSize(MAX_BOX_WIDTH,MAX_BOX_HEIGHT);
         container.debug();
 
         stage.addActor(background);
@@ -89,9 +89,6 @@ public class ShopMenuDisplay extends UIComponent {
      * Configures position of menu box
      */
     private void setShopBoxPosSize() {
-        float stageWidth = stage.getWidth();
-        float stageHeight = stage.getHeight();
-
         container.setPosition(stage.getWidth() / 2 - container.getWidth() / 2,
                 stage.getHeight() / 2 - container.getHeight() / 2);
         background.setPosition(stage.getWidth() / 2 - container.getWidth() / 2,
@@ -99,20 +96,22 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     private void createTableTitle() {
-        headerTable = new Table();
         CharSequence titleText = "SHOP";
-        shopTitleLabel = new Label(titleText, skin, "large");
-        headerTable.add(shopTitleLabel);
+        shopTitleLabel = new Label(titleText, skin, "white");
+        container.add(shopTitleLabel).colspan(99).align(Align.center).padLeft(100);
 
-        TextButton closeBtn = new TextButton("Close", skin, MENU_BUTTON_STYLE);
-
+        TextButton closeBtn = new TextButton("X", skin, MENU_BUTTON_STYLE);
         // Closes shop box when close button is clicked
         MenuUtility.addButtonSelectListener(entity, closeBtn, "toggleShopBox");
-        headerTable.add(closeBtn);
+        container.add(closeBtn).colspan(1).align(Align.right);
+    }
+
+    public boolean checkShopPopupVisibility() {
+        return container.isVisible();
     }
 
     @Override
     protected void draw(SpriteBatch batch) {
-
+        setShopBoxPosSize();
     }
 }

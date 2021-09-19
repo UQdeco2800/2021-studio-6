@@ -108,7 +108,6 @@ public class PauseMenuDisplay extends UIComponent {
     TextButton menuBtn = new TextButton("Exit to Menu", skin, MENU_BUTTON_STYLE);
     TextButton exitBtn = new TextButton("Exit Game", skin, MENU_BUTTON_STYLE);
 
-    
     // Triggers an event when the button is pressed
     MenuUtility.addButtonSelectListener(entity, continueBtn, "continue");
     MenuUtility.addButtonSelectListener(entity, settingsBtn, "pause-settings");

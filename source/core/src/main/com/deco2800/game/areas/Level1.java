@@ -40,6 +40,7 @@ public class Level1 extends GameArea {
   private static final int NUM_AMMO_PICKUPS = 3;
   private static final int NUM_COIN_PICKUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
+
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
@@ -302,6 +303,12 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+
+    // this will be removed - purely for testing
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
+
+    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 

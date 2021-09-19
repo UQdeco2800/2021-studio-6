@@ -243,7 +243,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param bandages number left in player's inventory
    */
   public void updatePlayerBandageUI(int bandages) {
-    CharSequence text = String.format(": %d", bandages);
+    CharSequence text = String.format(" x %d", bandages);
     bandageLabel.setText(text);
   }
 
@@ -252,7 +252,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param ammo number left in player's inventory
    */
   public void updatePlayerAmmoUI(int ammo) {
-    CharSequence text = String.format(" : %d", ammo);
+    CharSequence text = String.format(" x %d", ammo);
     ammoLabel.setText(text);
   }
 
@@ -261,7 +261,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param coin number left in player's inventory
    */
   public void updatePlayerCoinUI(int coin) {
-    CharSequence text = String.format(" : %d", coin);
+    CharSequence text = String.format(" x %d", coin);
     coinLabel.setText(text);
   }
 

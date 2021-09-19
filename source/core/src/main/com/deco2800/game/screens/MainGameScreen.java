@@ -12,6 +12,7 @@ import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.shopmenu.ShopMenuDisplay;
 import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
@@ -92,6 +93,16 @@ public class MainGameScreen extends ScreenAdapter {
 
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
 
+    // this is used for when player collides with NPC shopkeeper
+    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+  }
+
+  /**
+   * This creates a shop box popup for player to interact and purchase items
+   */
+  private void createShopBox() {
+    logger.info("Shop box created");
+    ui.getComponent(ShopMenuDisplay.class).toggleShopBox();
   }
 
   private void checkGameOver() {
@@ -197,6 +208,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new KeyboardLevelInputComponent())
         .addComponent(new PauseMenuActions(this.game))
         .addComponent(new PauseMenuDisplay(this.game))
+        .addComponent(new ShopMenuDisplay(this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())

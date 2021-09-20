@@ -22,7 +22,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     public void create() {
         super.create();
         entity.getEvents().addListener("collisionStart", this::collisionStart);
-        entity.getEvents().addListener("collisionEnd", () -> isInNPCRange = false);
+        entity.getEvents().addListener("collisionEnd", this::collisionEnd);
     }
 
 
@@ -40,5 +40,9 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
         if (PhysicsLayer.contains(PhysicsLayer.PLAYER, other.getFilterData().categoryBits)) {
             isInNPCRange = true;
         }
+    }
+
+    private void collisionEnd(Fixture me, Fixture other){
+        isInNPCRange = false;
     }
 }

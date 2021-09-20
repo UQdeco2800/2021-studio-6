@@ -138,6 +138,8 @@ public class Level1 extends GameArea {
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
 
+    spawnNPC();
+
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
             this::playMusic);
@@ -422,6 +424,12 @@ public class Level1 extends GameArea {
   private void spawnIntroDialogue(){
     StoryManager.getInstance().loadCutScene(StoryNames.PROLOGUE);
     StoryManager.getInstance().displayStory();
+  }
+
+  private void spawnNPC() {
+    GridPoint2 pos = new GridPoint2(10,8);
+    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.INTRO_DIALOGUE);
+    spawnEntityAt(npc, pos, true, true);
   }
 
   private void playMusic() {

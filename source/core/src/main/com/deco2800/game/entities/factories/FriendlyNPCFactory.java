@@ -14,13 +14,14 @@ public class FriendlyNPCFactory {
         throw new IllegalStateException("Utility Class");
     }
 
+    //TODO: Replace big rock with actual Friendly NPCs
     public static Entity createNewFriendlyNPC(StoryNames story) {
         Entity npc = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.FRIENDLY_NPC))
                 .addComponent(new FriendlyNPCTriggerComponent(story))
                 .addComponent(new TextureRenderComponent("images/playeritems/pickupammo.png"));
-        npc.setScale(0.7f, 0.7f);
+        npc.setScale(2f, 2f);
         return npc;
     }
 }

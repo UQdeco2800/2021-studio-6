@@ -137,12 +137,12 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
     CharSequence bandageText = String.format("x %d", bandages);
     CharSequence ammoText = String.format(" x %d", ammo);
-    CharSequence cointText = String.format(" x %d", coins);
+    CharSequence coinText = String.format(" x %d", coins);
     CharSequence reloadText = "No ammo! Press R to reload!";
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
-    coinLabel = new Label(cointText, skin, "large");
+    coinLabel = new Label(coinText, skin, "large");
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();

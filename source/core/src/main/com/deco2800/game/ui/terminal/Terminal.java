@@ -31,7 +31,7 @@ public class Terminal extends Component {
     addCommand("printDialogue",new PrintDialogueCommand());
     addCommand("pd", new PrintStarterImageDialogue());
     addCommand("sTest", new StartTestCutSceneCommand());
-
+    addCommand("sEpilogue", new StartEpilogueCutSceneCommand());
   }
 
   /** @return message entered by user */

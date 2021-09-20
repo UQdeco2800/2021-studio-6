@@ -36,6 +36,7 @@ public class Renderer implements Disposable {
     DebugRenderer debugRenderer = new DebugRenderer();
     debugRenderer.setActive(true);
 
+
     init(
         camera,
         GAME_SCREEN_WIDTH,
@@ -101,6 +102,10 @@ public class Renderer implements Disposable {
     batch.end();
     debugRenderer.render(projMatrix);
 
+
+  }
+
+  public void renderUI() {
     stage.act();
     stage.draw();
   }

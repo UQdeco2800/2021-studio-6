@@ -11,6 +11,7 @@ import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
@@ -26,6 +27,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private MainMenuDisplay mainMenuDisplay;
+
   private static final String[] mainMenuTextures = {};
   private static final String[] mainMenuSounds = {"sounds/rollover.mp3"};
   // Transitional sounds can play between screens by not unloading on screen change
@@ -45,6 +47,8 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerPhysicsService(new PhysicsService());
+
 
     renderer = RenderFactory.createRenderer();
 
@@ -57,6 +61,7 @@ public class MainMenuScreen extends ScreenAdapter {
     mainMenuDisplay.render(delta);
     ServiceLocator.getEntityService().update();
     renderer.render();
+    renderer.renderUI();
   }
 
   @Override

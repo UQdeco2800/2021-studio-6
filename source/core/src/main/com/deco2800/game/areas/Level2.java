@@ -104,9 +104,10 @@ public class Level2 extends GameArea {
     spawnBomb();
     spawnPickupItems();
 
-    spawnSmallEnemy();
-    spawnLargeEnemy();
-    spawnLongRangeEnemies();
+    // Temporary solution to reduce the difficulty for level 2 so can test level 3
+//    spawnSmallEnemy();
+//    spawnLargeEnemy();
+//    spawnLongRangeEnemies();
     spawnSpawnerEnemy();
     spawnToughLongRangeEnemies();
 

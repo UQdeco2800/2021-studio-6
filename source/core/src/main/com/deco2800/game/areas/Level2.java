@@ -81,7 +81,6 @@ public class Level2 extends GameArea {
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
-
   public Level2(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;

@@ -18,6 +18,9 @@ public class PhysicsLayer {
 
   public static final short ENEMYBULLET = (1 << 7);
 
+  //Friendly NPC
+  public static final short FRIENDLY_NPC = (1 << 8);
+
   public static boolean contains(short filterBits, short layer) {
     return (filterBits & layer) != 0;
   }

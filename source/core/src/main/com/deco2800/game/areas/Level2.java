@@ -34,7 +34,7 @@ public class Level2 extends GameArea {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-      "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
+      "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
       "images/playeritems/axe/axe_right2.png",
       "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",

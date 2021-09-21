@@ -32,10 +32,10 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/front01.png";
     private static final String SWORD_UP_IMAGE_FILE_PATH = "images/playeritems/sword/sword2.png";
     private static final String SWORD_DOWN_IMAGE_FILE_PATH = "images/playeritems/sword/sword3.png";
-    private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/playeritems/dagger.png";
+    private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/playeritems/dagger/dagger.png";
     private static final String DAGGER_DOWN_IMAGE_FILE_PATH = "images/playeritems/dagger/dagger.png";
-    private static final String AXE_UP_IMAGE_FILE_PATH = "images/playeritems/axe/ax_left2.png";
-    private static final String AXE_DOWN_IMAGE_FILE_PATH = "images/playeritems/axe.png";
+    private static final String AXE_UP_IMAGE_FILE_PATH = "images/playeritems/axe/axe_left2.png";
+    private static final String AXE_DOWN_IMAGE_FILE_PATH = "images/playeritems/axe/axe_right4.png";
     private static final String ARMOR_UP_IMAGE_FILE_PATH = "images/playeritems/armour.png";
     private static final String ARMOR_DOWN_IMAGE_FILE_PATH = "images/playeritems/armour.png";
     private static final String HELMET_UP_IMAGE_FILE_PATH = "images/playeritems/halmet.png";

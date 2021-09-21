@@ -23,10 +23,10 @@ public class FriendlyNPCFactory {
         throw new IllegalStateException("Utility Class");
     }
 
-    
+
     public static Entity createNewFriendlyNPC(StoryNames story, boolean wandering) {
         AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/Player_Animations/player_movement.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/npc_movement/npc_movement.atlas", TextureAtlas.class));
         animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);

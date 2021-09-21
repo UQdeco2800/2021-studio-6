@@ -98,7 +98,8 @@ public class Level1 extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas"
+      "images/weapon/dagger.atlas",
+      "images/npc_movement/npc_movement.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
@@ -428,7 +429,7 @@ public class Level1 extends GameArea {
 
   private void spawnNPC() {
     GridPoint2 pos = new GridPoint2(10,8);
-    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.INTRO_DIALOGUE, true);
+    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TOWN_GUIDE, true);
     spawnEntityAt(npc, pos, true, true);
   }
 

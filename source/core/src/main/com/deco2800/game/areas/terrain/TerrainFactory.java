@@ -208,7 +208,7 @@ public class TerrainFactory {
     setTilesInRegion(layer, sidewalkTile, start, end);
 
     start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.6);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.7);
+    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 1);
     setTilesInRegion(layer, sidewalkTile, start, end);
 
     //Set road tiles

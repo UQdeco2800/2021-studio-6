@@ -284,7 +284,7 @@ public class Level1 extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
 
     for (int x = 3; x < tileBounds.x * 0.75; x += 7) {
-      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
+      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.65));
 
       Entity house = ObstacleFactory.createBuilding();
       spawnEntityAt(house, position, true, false);

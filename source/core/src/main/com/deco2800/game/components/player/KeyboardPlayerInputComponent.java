@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  public final Vector2 walkDirection = Vector2.Zero.cpy();
+  public Vector2 walkDirection = Vector2.Zero.cpy();
   // Method requirement for player to execute long range attack
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
   //private final ArrayList<Integer> movementKeys = new ArrayList<>();
@@ -45,6 +45,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().addListener("disableAttack", this::disableAttack);
     entity.getEvents().addListener("enableDashAttack", this::enableDashAttack);
     entity.getEvents().addListener("disableDashAttack", this::disableDashAttack);
+  }
+
+  /**
+   * This is used to reset all checking conditions for player movement. This method is used
+   * purely to bugs from arising due player pressing movement keys before or after game has been paused or started
+   */
+  private void resetConditions() {
+    up = false;
+    down = false;
+    left = false;
+    right = false;
+    walkDirection = Vector2.Zero.cpy();
+    entity.getEvents().trigger("walkStop");
   }
 
   /**
@@ -97,6 +110,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("dash");
           return true;
+        case Keys.ESCAPE:
+          resetConditions();
+          return true;
       }
     }
 
@@ -130,6 +146,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
+
     if (timeSource == null || !timeSource.isPaused() && (up || down || left || right)) {
       switch (keycode) {
         case Keys.W:
@@ -154,7 +171,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           removeMovementKey(Directions.MOVE_RIGHT);
           walkDirection.sub(Vector2Utils.RIGHT);
           triggerWalkEvent();
-          right = false;
+          return true;
+        case Keys.ESCAPE:
+          resetConditions();
           return true;
         default:
           return false;

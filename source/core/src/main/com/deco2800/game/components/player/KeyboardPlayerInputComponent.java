@@ -57,7 +57,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (timeSource == null || !timeSource.isPaused()) {
       switch (keycode) {
         case Keys.W:
-          System.out.println("CLCICKED");
           entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
        //   entity.getEvents().trigger("rangeAOE", Vector2Utils.UP.cpy());
           walkDirection.add(Vector2Utils.UP);
@@ -72,7 +71,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           movementDirections.add(Directions.MOVE_LEFT);
           return true;
         case Keys.S:
-          System.out.println("CLICKED S?");
           entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
         //  entity.getEvents().trigger("rangeAOE", Vector2Utils.DOWN.cpy());
           walkDirection.add(Vector2Utils.DOWN);
@@ -131,7 +129,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (timeSource == null || !timeSource.isPaused()) {
       switch (keycode) {
         case Keys.W:
-          System.out.println("LONG W");
           removeMovementKey(Directions.MOVE_UP);
           walkDirection.sub(Vector2Utils.UP);
           triggerWalkEvent();
@@ -142,7 +139,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
           return true;
         case Keys.S:
-          System.out.println("LONG S");
           removeMovementKey(Directions.MOVE_DOWN);
           walkDirection.sub(Vector2Utils.DOWN);
           triggerWalkEvent();

@@ -19,6 +19,7 @@ public class FriendlyNPCAnimationController extends Component {
   private static final String[] ANIMATIONS_BACK = {"back", "back-run"};
   private static final int WALKING = 1;
   private String currentDirection;
+  private Vector2 currentWalkingTarget;
   AnimationRenderComponent animator;
   private String lastAnimation;
 
@@ -36,7 +37,8 @@ public class FriendlyNPCAnimationController extends Component {
     PhysicsMovementComponent npcMovement = entity.getComponent(PhysicsMovementComponent.class);
     Vector2 walkTarget = npcMovement.getTarget();
 
-    if (walkTarget != null) {
+    if (walkTarget != null && walkTarget != currentWalkingTarget) {
+      currentWalkingTarget = walkTarget;
       updateAnimationDirection(walkTarget, WALKING);
     }
 

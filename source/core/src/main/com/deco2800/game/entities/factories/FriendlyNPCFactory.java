@@ -23,10 +23,8 @@ public class FriendlyNPCFactory {
         throw new IllegalStateException("Utility Class");
     }
 
-
-
-    //TODO: Replace big rock with actual Friendly NPCs
-    public static Entity createNewFriendlyNPC(StoryNames story) {
+    
+    public static Entity createNewFriendlyNPC(StoryNames story, boolean wandering) {
         AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/Player_Animations/player_movement.atlas", TextureAtlas.class));
         animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
@@ -39,8 +37,10 @@ public class FriendlyNPCFactory {
         animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
-        AITaskComponent aiComponent = new AITaskComponent()
-                .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+        AITaskComponent aiComponent = new AITaskComponent();
+        if (wandering) {
+            aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+        }
 
         Entity npc = new Entity()
                 .addComponent(new PhysicsComponent())

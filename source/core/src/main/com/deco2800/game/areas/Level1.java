@@ -428,7 +428,7 @@ public class Level1 extends GameArea {
 
   private void spawnNPC() {
     GridPoint2 pos = new GridPoint2(10,8);
-    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.INTRO_DIALOGUE);
+    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.INTRO_DIALOGUE, true);
     spawnEntityAt(npc, pos, true, true);
   }
 

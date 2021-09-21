@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
@@ -38,7 +39,7 @@ public class FriendlyNPCFactory {
 
         AITaskComponent aiComponent = new AITaskComponent()
                 .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-                
+
         Entity npc = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
@@ -49,8 +50,8 @@ public class FriendlyNPCFactory {
                 .addComponent(new FriendlyNPCAnimationController())
                 .addComponent(aiComponent);
 
+        npc.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
 
-        //npc.setScale(2f, 2f);
         return npc;
     }
 }

@@ -9,5 +9,10 @@ public enum Items {
     SWORD,
     AXE,
     DAGGER,
-    SHOP
+    SHOP,
+
+    // used in shop popup box for categorization
+    MELEE_WEAPONS,
+    SHIELDS,
+    ABILITIES
 }

@@ -118,11 +118,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           //entity.getEvents().trigger("rangeAOE", RangeAttack);
           //return true;
         case Keys.SPACE:
-          System.out.println("melee attack");
           entity.getEvents().trigger("attackStart");
           return true;
         case Keys.ENTER:
-          System.out.println("rangee attack");
           entity.getEvents().trigger("rangeAttack", RangeAttack);
           return true;
         case Keys.E:

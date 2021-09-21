@@ -51,7 +51,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * This is used to reset all checking conditions for player movement. This method is used
    * purely to bugs from arising due player pressing movement keys before or after game has been paused or started
    */
-  public void resetConditions() {
+  private void resetConditions() {
     up = false;
     down = false;
     left = false;

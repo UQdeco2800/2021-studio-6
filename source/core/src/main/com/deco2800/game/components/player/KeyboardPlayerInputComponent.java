@@ -20,7 +20,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public final Vector2 walkDirection = Vector2.Zero.cpy();
   // Method requirement for player to execute long range attack
   private final Vector2 RangeAttack = Vector2.Zero.cpy();
-  private final IntSet downKeys = new IntSet(20);
   //private final ArrayList<Integer> movementKeys = new ArrayList<>();
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   // Variable for allowing attacks
@@ -54,12 +53,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
-    downKeys.add(keycode);
-    int numKeysPressed = downKeys.size;
 
     if (timeSource == null || !timeSource.isPaused()) {
       switch (keycode) {
         case Keys.W:
+          System.out.println("CLCICKED");
           entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
        //   entity.getEvents().trigger("rangeAOE", Vector2Utils.UP.cpy());
           walkDirection.add(Vector2Utils.UP);
@@ -74,6 +72,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           movementDirections.add(Directions.MOVE_LEFT);
           return true;
         case Keys.S:
+          System.out.println("CLICKED S?");
           entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
         //  entity.getEvents().trigger("rangeAOE", Vector2Utils.DOWN.cpy());
           walkDirection.add(Vector2Utils.DOWN);
@@ -129,31 +128,35 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
-    downKeys.remove(keycode);
-    switch (keycode) {
-      case Keys.W:
-        removeMovementKey(Directions.MOVE_UP);
-        walkDirection.sub(Vector2Utils.UP);
-        triggerWalkEvent();
-        return true;
-      case Keys.A:
-        removeMovementKey(Directions.MOVE_LEFT);
-        walkDirection.sub(Vector2Utils.LEFT);
-        triggerWalkEvent();
-        return true;
-      case Keys.S:
-        removeMovementKey(Directions.MOVE_DOWN);
-        walkDirection.sub(Vector2Utils.DOWN);
-        triggerWalkEvent();
-        return true;
-      case Keys.D:
-        removeMovementKey(Directions.MOVE_RIGHT);
-        walkDirection.sub(Vector2Utils.RIGHT);
-        triggerWalkEvent();
-        return true;
-      default:
-        return false;
+    if (timeSource == null || !timeSource.isPaused()) {
+      switch (keycode) {
+        case Keys.W:
+          System.out.println("LONG W");
+          removeMovementKey(Directions.MOVE_UP);
+          walkDirection.sub(Vector2Utils.UP);
+          triggerWalkEvent();
+          return true;
+        case Keys.A:
+          removeMovementKey(Directions.MOVE_LEFT);
+          walkDirection.sub(Vector2Utils.LEFT);
+          triggerWalkEvent();
+          return true;
+        case Keys.S:
+          System.out.println("LONG S");
+          removeMovementKey(Directions.MOVE_DOWN);
+          walkDirection.sub(Vector2Utils.DOWN);
+          triggerWalkEvent();
+          return true;
+        case Keys.D:
+          removeMovementKey(Directions.MOVE_RIGHT);
+          walkDirection.sub(Vector2Utils.RIGHT);
+          triggerWalkEvent();
+          return true;
+        default:
+          return false;
+      }
     }
+    return false;
   }
 
   /**

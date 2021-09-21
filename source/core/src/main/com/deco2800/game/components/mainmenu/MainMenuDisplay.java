@@ -1,17 +1,32 @@
 package com.deco2800.game.components.mainmenu;
 
+
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
+
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.MenuUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * A ui component for displaying the Main menu.
@@ -38,13 +53,16 @@ public class MainMenuDisplay extends UIComponent {
   private Animation<TextureRegion> backgroundAnimation;
   private float elapsedTime = 0f;
 
+
   @Override
   public void create() {
     super.create();
     logger.debug("Creating Main menu screen");
     addActors();
+
     logger.debug("Finished creating Main menu screen");
   }
+
 
   /**
    * Adds all the assets (buttons, background, sound, music) for the menu into the stage
@@ -101,9 +119,11 @@ public class MainMenuDisplay extends UIComponent {
    * @param delta - the time that has elapsed
    */
   public void render(float delta) {
+
       elapsedTime += delta;
       Image nextBackgroundImage = new Image(backgroundAnimation.getKeyFrame(elapsedTime,true));
       background.setDrawable(nextBackgroundImage.getDrawable());
+
   }
 
   /**

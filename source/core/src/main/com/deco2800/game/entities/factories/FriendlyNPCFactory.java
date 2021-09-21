@@ -2,7 +2,6 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
@@ -16,7 +15,6 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 public class FriendlyNPCFactory {
@@ -35,6 +33,10 @@ public class FriendlyNPCFactory {
         animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
         AITaskComponent aiComponent = new AITaskComponent()

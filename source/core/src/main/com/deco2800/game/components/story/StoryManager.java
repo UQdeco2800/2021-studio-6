@@ -33,6 +33,7 @@ public class StoryManager extends Component {
         scenesConfigs.put(StoryNames.PROLOGUE, new PrologueCutScene());
         scenesConfigs.put(StoryNames.EPILOGUE, new EpilogueCutScene());
         scenesConfigs.put(StoryNames.TOWN_GUIDE, new TownGuideDialogue());
+        scenesConfigs.put(StoryNames.TUTORIAL_GUIDE, new TutorialDiologue());
     }
 
     @Override

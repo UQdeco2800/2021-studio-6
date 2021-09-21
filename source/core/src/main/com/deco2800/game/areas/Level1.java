@@ -99,7 +99,8 @@ public class Level1 extends GameArea {
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
-      "images/npc_movement/npc_movement.atlas"
+      "images/npc_movement/npc_movement.atlas",
+      "images/npc_movement/tut_npc1.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
@@ -140,6 +141,7 @@ public class Level1 extends GameArea {
     spawnToughLongRangeEnemies();
 
     spawnNPC();
+    spawnNPC1();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -431,6 +433,12 @@ public class Level1 extends GameArea {
     GridPoint2 pos = new GridPoint2(10,8);
     Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TOWN_GUIDE, true);
     spawnEntityAt(npc, pos, true, true);
+  }
+
+  private void spawnNPC1() {
+    GridPoint2 pos = new GridPoint2(8,8);
+    Entity npcTut = TutorialNPCFactory.createNewTutorialNPC(StoryNames.TUTORIAL_GUIDE, true);
+    spawnEntityAt(npcTut, pos, true, true);
   }
 
   private void playMusic() {

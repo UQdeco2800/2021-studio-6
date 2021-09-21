@@ -27,6 +27,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private boolean canDashAttack = true;
   private final ArrayList<Directions> movementDirections = new ArrayList<>();
   private Directions lastDirection = Directions.MOVE_DOWN;
+  // bug where if player presses movement keys before game initiates - player will moving in the opposite direction
+  // of the key pressed prior to game starting. Tracking if each key has been clicked would be the temporary solution
+  private boolean up, down, left, right = false;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -60,6 +63,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
        //   entity.getEvents().trigger("rangeAOE", Vector2Utils.UP.cpy());
           walkDirection.add(Vector2Utils.UP);
+          up = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_UP);
           return true;
@@ -67,6 +71,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
         //  entity.getEvents().trigger("rangeAOE", Vector2Utils.LEFT.cpy());
           walkDirection.add(Vector2Utils.LEFT);
+          left = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_LEFT);
           return true;
@@ -74,6 +79,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
         //  entity.getEvents().trigger("rangeAOE", Vector2Utils.DOWN.cpy());
           walkDirection.add(Vector2Utils.DOWN);
+          down = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_DOWN);
           return true;
@@ -81,6 +87,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
         //  entity.getEvents().trigger("rangeAOE", Vector2Utils.RIGHT.cpy());
           walkDirection.add(Vector2Utils.RIGHT);
+          right = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_RIGHT);
           return true;
@@ -110,9 +117,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.NUM_1:
             entity.getEvents().trigger("useBandage");
           return true;
-
-
-
       }
     }
     return false;
@@ -126,27 +130,31 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
-    if (timeSource == null || !timeSource.isPaused()) {
+    if (timeSource == null || !timeSource.isPaused() && (up || down || left || right)) {
       switch (keycode) {
         case Keys.W:
           removeMovementKey(Directions.MOVE_UP);
           walkDirection.sub(Vector2Utils.UP);
           triggerWalkEvent();
+          up = false;
           return true;
         case Keys.A:
           removeMovementKey(Directions.MOVE_LEFT);
           walkDirection.sub(Vector2Utils.LEFT);
           triggerWalkEvent();
+          left = false;
           return true;
         case Keys.S:
           removeMovementKey(Directions.MOVE_DOWN);
           walkDirection.sub(Vector2Utils.DOWN);
           triggerWalkEvent();
+          down = false;
           return true;
         case Keys.D:
           removeMovementKey(Directions.MOVE_RIGHT);
           walkDirection.sub(Vector2Utils.RIGHT);
           triggerWalkEvent();
+          right = false;
           return true;
         default:
           return false;
@@ -170,7 +178,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
-    } else {
+    } else if (up || down || right || left) {
       entity.getEvents().trigger("walk", walkDirection);
     }
   }

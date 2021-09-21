@@ -3,7 +3,6 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.IntSet;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.services.GameTime;
@@ -45,13 +44,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().addListener("disableAttack", this::disableAttack);
     entity.getEvents().addListener("enableDashAttack", this::enableDashAttack);
     entity.getEvents().addListener("disableDashAttack", this::disableDashAttack);
+    entity.getEvents().addListener("resetPlayerMovements", this::resetConditions);
   }
 
   /**
    * This is used to reset all checking conditions for player movement. This method is used
    * purely to bugs from arising due player pressing movement keys before or after game has been paused or started
    */
-  private void resetConditions() {
+  public void resetConditions() {
     up = false;
     down = false;
     left = false;
@@ -69,7 +69,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
-
     if (timeSource == null || !timeSource.isPaused()) {
       switch (keycode) {
         case Keys.W:
@@ -110,9 +109,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("dash");
           return true;
-        case Keys.ESCAPE:
-          resetConditions();
-          return true;
       }
     }
 
@@ -122,17 +118,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           //entity.getEvents().trigger("rangeAOE", RangeAttack);
           //return true;
         case Keys.SPACE:
-            entity.getEvents().trigger("attackStart");
+          System.out.println("melee attack");
+          entity.getEvents().trigger("attackStart");
           return true;
         case Keys.ENTER:
-            entity.getEvents().trigger("rangeAttack", RangeAttack);
+          System.out.println("rangee attack");
+          entity.getEvents().trigger("rangeAttack", RangeAttack);
           return true;
         case Keys.E:
-            entity.getEvents().trigger("tryAbility", walkDirection);
+          entity.getEvents().trigger("tryAbility", walkDirection);
           return true;
         case Keys.NUM_1:
-            entity.getEvents().trigger("useBandage");
+          entity.getEvents().trigger("useBandage");
           return true;
+        default:
+          return false;
       }
     }
     return false;
@@ -171,9 +171,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           removeMovementKey(Directions.MOVE_RIGHT);
           walkDirection.sub(Vector2Utils.RIGHT);
           triggerWalkEvent();
-          return true;
-        case Keys.ESCAPE:
-          resetConditions();
           return true;
         default:
           return false;

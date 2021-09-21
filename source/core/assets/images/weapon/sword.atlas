@@ -4,70 +4,140 @@ size: 2048, 1024
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-sword0
+attackDown
   rotate: false
   xy: 2, 4
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword1
+attackDown
   rotate: false
   xy: 350, 4
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword2
+attackDown
   rotate: false
   xy: 698, 4
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword3
+attackDown
   rotate: false
   xy: 1046, 4
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword4
+attackDown
   rotate: false
   xy: 1394, 4
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword_left0
+attackRight
+  rotate: false
+  xy: 2, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 350, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 698, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 1046, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 1394, 4
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackLeft
   rotate: false
   xy: 2, 352
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword_left1
+attackLeft
   rotate: false
   xy: 350, 352
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword_left2
+attackLeft
   rotate: false
   xy: 698, 352
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword_left3
+attackLeft
   rotate: false
   xy: 1046, 352
   size: 346, 346
   orig: 346, 346
   offset: 0, 0
   index: -1
-sword_left4
+attackLeft
+  rotate: false
+  xy: 1394, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 2, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 350, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 698, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 1046, 352
+  size: 346, 346
+  orig: 346, 346
+  offset: 0, 0
+  index: -1
+attackUp
   rotate: false
   xy: 1394, 352
   size: 346, 346

@@ -6,9 +6,13 @@ import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.services.GameTime;
+import org.slf4j.LoggerFactory;
+
+import java.util.logging.Logger;
 
 public class FriendlyNPCTriggerComponent extends InputComponent {
-
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(FriendlyNPCTriggerComponent.class);
     private boolean isInNPCRange = false;
     private StoryNames name;
     private static final int INTERACT_KEY = Input.Keys.SPACE;
@@ -16,6 +20,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     public FriendlyNPCTriggerComponent(StoryNames name) {
         super(6);
         this.name = name;
+        logger.info("Friendly NPC {} created", name);
     }
 
     @Override
@@ -43,6 +48,8 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     }
 
     private void collisionEnd(Fixture me, Fixture other){
-        isInNPCRange = false;
+        if (other.getFilterData().categoryBits == PhysicsLayer.PLAYER) {
+            isInNPCRange = false;
+        }
     }
 }

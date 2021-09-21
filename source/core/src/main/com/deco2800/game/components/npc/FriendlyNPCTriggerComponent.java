@@ -54,8 +54,8 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
 
         if (yOffset > 0 && yOffset > -xOffset && yOffset > xOffset) { animator.setDirection("front"); }
         if (yOffset < 0 && yOffset < -xOffset && yOffset < xOffset) { animator.setDirection("back"); }
-        if (xOffset > 0 && yOffset > -xOffset && yOffset < xOffset) { animator.setDirection("left"); }
-        if (xOffset < 0 && yOffset < -xOffset && yOffset > xOffset) { animator.setDirection("right"); }
+        if (xOffset > 0 && yOffset >= -xOffset && yOffset <= xOffset) { animator.setDirection("left"); }
+        if (xOffset < 0 && yOffset <= -xOffset && yOffset >= xOffset) { animator.setDirection("right"); }
     }
 
 

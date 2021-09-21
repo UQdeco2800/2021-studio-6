@@ -2,6 +2,7 @@ package com.deco2800.game.components.npc;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -9,6 +10,7 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
  * of the events is triggered. 
  */
 public class FriendlyNPCAnimationController extends Component {
+  private static org.slf4j.Logger logger = LoggerFactory.getLogger(FriendlyNPCAnimationController.class);
   AnimationRenderComponent animator;
   private String lastAnimation;
 
@@ -21,18 +23,10 @@ public class FriendlyNPCAnimationController extends Component {
     animator.startAnimation("front");
   }
 
-  /**
-   * Friendly NPC animations are updated and checked each update call. 
-   * Also checks if the identical animation is already in progress.
-   */
-  @Override
-  public void update() { 
-    String anim;
-    anim = "front";
-
-    if (!anim.equals(lastAnimation)) {
-      animator.startAnimation(anim);
-      lastAnimation = anim;
+  public void setDirection(String direction) {
+    if (!direction.equals(lastAnimation)) {
+      animator.startAnimation(direction);
+      lastAnimation = direction;
     }
   }
 }

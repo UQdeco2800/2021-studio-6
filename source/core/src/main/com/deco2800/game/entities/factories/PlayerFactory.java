@@ -87,23 +87,7 @@ public class PlayerFactory {
     animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
 
-    ArrayList<Float> prepwave =  new ArrayList<>();
-    for (float i = -10; i < 10; i += 0.1) {
-      prepwave.add(MathUtils.sin(i));
-      prepwave.add(i);
-    }
 
-    float[] wave = new float[prepwave.size()];
-    int i = 0;
-
-    for (Float f : prepwave) {
-      wave[i++] = f; // Or whatever default you want.
-    }
-
-    System.out.println(prepwave.size());
-    for (Float f : wave) {
-      System.out.println(f);
-    }
     Entity player = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
@@ -126,8 +110,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerHudAnimationController())
                     .addComponent(new PlayerWeaponAnimationController())
                     .addComponent(new PlayerHealthAnimationController())
-                    .addComponent(new ChainLightComponent(Colors.get("BROWN"), 10f, 1, wave) );
-//                    .addComponent(new PointLightComponent(Colors.get("ORANGE"), 10f, 0, 0));
+                    .addComponent(new PointLightComponent(Colors.get("ORANGE"), 10f, 0, 0));
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

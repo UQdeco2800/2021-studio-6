@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.entities.configs.ShopItemInfoConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.items.Items;
@@ -60,8 +61,6 @@ public class ShopMenuDisplay extends UIComponent {
     private Label itemSelectedTitleLabel, itemSelectedDescriptionLabel, pricingValueLabel,
             itemSelectedMoreInfoLabel;
     private Label bandageLabel, ammoLabel, coinLabel, feedbackLabel;
-    // values below will be checked and will load values from config file that saves player's states
-    private int ammoNum, coinNum, bandageNum;
     private Image background;
     private static final float MAX_BOX_WIDTH = 1200;
     private static final float MAX_BOX_HEIGHT = 450;
@@ -84,12 +83,16 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int FOURTH_COL_NUM_TAKEN = 30;
     private static final int IMAGE_BUTTON_HEIGHT = 70;
     private static final float BANDAGE_SIDE_LENGTH = 50f;
-    private static ImageButton swordImageButton, daggerImageButton, axeImageButton, armorImageButton,
+    private ImageButton swordImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton;
     private ArrayList<ImageButton> imageButtons = new ArrayList<>();
-    private int itemPrice, playerCoin, itemDefenceLevel = 0;
+    private int itemPrice, itemDefenceLevel = 0;
     private String itemName;
     private ImageButton storeButtonClicked = null;
+    private PlayerConfig playerState;
+    // values below will be checked and will load values from config file that saves player's states
+    private int playerAmmo, playerGold, playerBandage, playerDefenceLevel;
+    private String playerAbility, playerMeleeWeaponType;
 
     public ShopMenuDisplay(GdxGame game) {
         this.game = game;
@@ -98,6 +101,7 @@ public class ShopMenuDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        loadPlayerState();
         addActors();
 
         entity.getEvents().addListener("toggleShopBox", this::toggleShopBox);
@@ -193,6 +197,10 @@ public class ShopMenuDisplay extends UIComponent {
                 "configs/ShopSwordInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(swordImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
+        // indicate that this button is by default - clicked
+        swordImageButton.setChecked(true);
+        storeButtonClicked = swordImageButton;
+
         Drawable daggerUp = createImagesForButtons(DAGGER_UP_IMAGE_FILE_PATH);
         Drawable daggerDown = createImagesForButtons(DAGGER_DOWN_IMAGE_FILE_PATH);
         daggerImageButton = new ImageButton(daggerUp, daggerDown, daggerDown);
@@ -268,11 +276,6 @@ public class ShopMenuDisplay extends UIComponent {
 //        Drawable grenadeDown = createImagesForButtons(GRENADE_DOWN_IMAGE_FILE_PATH);
 //        ImageButton grenadeImageButton = new ImageButton(grenadeUp, grenadeDown, grenadeDown);
 //        itemsLabelImages.add(grenadeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT).padLeft(40).padRight(40);
-
-        List<ImageButton> imageButtonList = Arrays.asList(swordImageButton, daggerImageButton, axeImageButton,
-                armorImageButton, helmetImageButton, torchImageButton, bandageImageButton, dashImageButton,
-                invincibleImageButton);
-
         container.add(itemsLabelImages).colspan(SEC_COL_NUM_TAKEN).top();
     }
 
@@ -286,7 +289,7 @@ public class ShopMenuDisplay extends UIComponent {
         itemsDescriptionLabels.add(itemSelectedDescriptionTitle).colspan(THIRD_COL_NUM_TAKEN)
                 .height(COMMON_LABEL_HEIGHT);
 
-        // for description of item selected - default is for sword; for now #TODO: update description when item selected by player
+        // for description of item selected - default is for sword;
         // second row of item description col
         CharSequence itemDescriptionText = "The sword is the most common weapon there is but it has decent range, " +
                 "damage and it is versatile enough to fend off any enemies in the game - especially night crawlers!";
@@ -307,7 +310,6 @@ public class ShopMenuDisplay extends UIComponent {
 
         // price of item selected (clicked by user) - default is for sword; for now
         // fourth row of item description col
-        // #TODO: update price of item when item selected by player
         CharSequence priceText = "PRICE: 70";
         pricingValueLabel = new Label(priceText, skin, "white");
 
@@ -357,12 +359,11 @@ public class ShopMenuDisplay extends UIComponent {
         playerInfoLabelsImages.add(playerImage).colspan(10).height(LARGER_IMAGE_SIZE)
                 .width(LARGER_IMAGE_SIZE).top();
 
-        // #TODO: update bandage number, ammo number and coin number when shop popup box toggles
-        // currently used purely for styling and testing purposes
+        // uses most current player state now
         Table playerInfo = new Table();
-        CharSequence bandageText = String.format(" x %d", 3);
-        CharSequence ammoText = String.format(" x %d", 10);
-        CharSequence coinText = String.format(" x %d", 100);
+        CharSequence bandageText = String.format(" x %d", playerBandage);
+        CharSequence ammoText = String.format(" x %d", playerAmmo);
+        CharSequence coinText = String.format(" x %d", playerGold);
 
         bandageLabel = new Label(bandageText, skin, "white-font");
         ammoLabel = new Label(ammoText, skin, "white-font");
@@ -454,6 +455,16 @@ public class ShopMenuDisplay extends UIComponent {
                 }
             }
         }
+    }
+
+    private void loadPlayerState() {
+        playerState = FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
+        playerAmmo = playerState.ammo;
+        playerGold = playerState.gold;
+        playerBandage = playerState.bandages;
+        playerDefenceLevel = playerState.defenceLevel;
+        playerAbility = playerState.ability;
+        playerMeleeWeaponType = playerState.meleeWeaponType;
     }
 
     @Override

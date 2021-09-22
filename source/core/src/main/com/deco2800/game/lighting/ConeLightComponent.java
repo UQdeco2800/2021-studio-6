@@ -1,0 +1,71 @@
+package com.deco2800.game.lighting;
+
+import box2dLight.ConeLight;
+import box2dLight.RayHandler;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.components.Component;
+import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
+
+/** ConeLightComponent
+ *
+ * **/
+public class ConeLightComponent extends Component implements Disposable {
+    private RayHandler rayHandler;
+    private ConeLight coneLight;
+
+    private Color color;
+
+    private float distance;
+    private float offsetx;
+    private float offsety;
+    private float directionDegree;
+    float coneDegree;
+    private int rays = 500;
+    /**
+     * ConeLightComponent
+     * Creates a light shaped like a cone
+     * @param color The color of the light
+     * @param distance How far the light will travel (in meters)
+     * @param offsetx x offset from body
+     * @param offsety y offset from body
+     * @param directionDegree the direction the light is facing
+     * @param coneDegree the width/size of the cone light
+     * **/
+    public ConeLightComponent(Color color, float distance, float offsetx, float offsety, float directionDegree, float coneDegree) {
+        this.color = color;
+        this.distance = distance;
+        this.offsetx = offsetx;
+        this.offsety = offsety;
+        this.directionDegree = directionDegree;
+        this.coneDegree = coneDegree;
+    }
+
+    @Override
+    public void create() {
+
+        //@todo add condition to check if lighitng servcie and error  log if it isn't there
+        rayHandler = ServiceLocator.getLightingService().getRayHandler();
+
+        coneLight = new ConeLight(rayHandler, rays, this.color, distance, 0, 0, this.directionDegree, this.coneDegree);
+        coneLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2, this.directionDegree);
+        coneLight.setIgnoreAttachedBody(true);
+
+        this.updateDirection(180f);
+        coneLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
+        coneLight.setSoftnessLength(8f);
+    }
+
+    public void updateDirection(float direction) {
+        this.directionDegree = direction;
+        coneLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2, this.directionDegree);
+    }
+    @Override
+    public void dispose() {
+        coneLight.remove();
+    }
+
+
+}

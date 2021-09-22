@@ -12,6 +12,9 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.lighting.ChainLightComponent;
+import com.deco2800.game.lighting.ConeLightComponent;
+import com.deco2800.game.lighting.DirectionalLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -102,7 +105,8 @@ public class PlayerFactory {
                     .addComponent(new PlayerHudAnimationController())
                     .addComponent(new PlayerWeaponAnimationController())
                     .addComponent(new PlayerHealthAnimationController())
-                    .addComponent(new PointLightComponent(Colors.get("RED"), 10f, 0, 0));
+                    .addComponent(new ChainLightComponent(Colors.get("ORANGE"), 10f, 0, new float[]{1, 2, 3, 4} ) );
+//                    .addComponent(new PointLightComponent(Colors.get("ORANGE"), 10f, 0, 0));
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

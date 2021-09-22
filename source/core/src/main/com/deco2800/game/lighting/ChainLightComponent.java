@@ -20,7 +20,7 @@ public class ChainLightComponent extends Component implements Disposable {
 
     private float distance;
 
-    private float directionDegree;
+    private int directionDegree;
     float[] chain;
     private int rays = 500;
     /**
@@ -31,7 +31,7 @@ public class ChainLightComponent extends Component implements Disposable {
      * @param directionDegree the direction the light is facing
      * @param chain (x, y)
      * **/
-    public ChainLightComponent(Color color, float distance, float directionDegree, float[] chain) {
+    public ChainLightComponent(Color color, float distance, int directionDegree, float[] chain) {
         this.color = color;
         this.distance = distance;
 
@@ -46,7 +46,7 @@ public class ChainLightComponent extends Component implements Disposable {
         rayHandler = ServiceLocator.getLightingService().getRayHandler();
 
         chainLight = new ChainLight(rayHandler, rays, this.color, distance, this.directionDegree, this.chain);
-        chainLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2, this.directionDegree);
+        chainLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody());
         chainLight.setIgnoreAttachedBody(true);
 
         chainLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);

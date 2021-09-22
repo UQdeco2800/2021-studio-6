@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
@@ -24,6 +25,9 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory to create a player entity.
@@ -83,6 +87,23 @@ public class PlayerFactory {
     animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
 
+    ArrayList<Float> prepwave =  new ArrayList<>();
+    for (float i = -10; i < 10; i += 0.1) {
+      prepwave.add(MathUtils.sin(i));
+      prepwave.add(i);
+    }
+
+    float[] wave = new float[prepwave.size()];
+    int i = 0;
+
+    for (Float f : prepwave) {
+      wave[i++] = f; // Or whatever default you want.
+    }
+
+    System.out.println(prepwave.size());
+    for (Float f : wave) {
+      System.out.println(f);
+    }
     Entity player = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
@@ -105,7 +126,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerHudAnimationController())
                     .addComponent(new PlayerWeaponAnimationController())
                     .addComponent(new PlayerHealthAnimationController())
-                    .addComponent(new ChainLightComponent(Colors.get("ORANGE"), 10f, 0, new float[]{1, 2, 3, 4} ) );
+                    .addComponent(new ChainLightComponent(Colors.get("BROWN"), 10f, 1, wave) );
 //                    .addComponent(new PointLightComponent(Colors.get("ORANGE"), 10f, 0, 0));
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

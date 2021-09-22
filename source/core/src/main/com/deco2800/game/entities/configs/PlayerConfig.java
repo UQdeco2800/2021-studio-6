@@ -18,4 +18,5 @@ public class PlayerConfig extends BaseEntityConfig  {
   public String ability;
   public String meleeFilePath;
   public String meleeWeaponType;
+  public String armorType;
 }

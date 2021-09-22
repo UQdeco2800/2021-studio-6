@@ -10,5 +10,6 @@
   "bandages": 3,
   "ability": "LONG_DASH",
   "meleeWeaponType": "SWORD",
+  "armorType": "NONE",
   "meleeFilePath": "configs/Sword.json"
 }

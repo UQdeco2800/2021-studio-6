@@ -60,13 +60,14 @@ public class ShopMenuDisplay extends UIComponent {
     private Table container;
     private Label itemSelectedTitleLabel, itemSelectedDescriptionLabel, pricingValueLabel,
             itemSelectedMoreInfoLabel;
-    private Label bandageLabel, ammoLabel, coinLabel, feedbackLabel;
+    private Label bandageLabel, ammoLabel, coinLabel;
     private Image background;
     private static final float MAX_BOX_WIDTH = 1200;
     private static final float MAX_BOX_HEIGHT = 450;
     private static final float SMALL_PAD_TOP = 5;
     private static final float PAD_TOP = 10;
     private static final float EXTRA_PAD_TOP = 30;
+    private static final float EXTRA_PAD_BOTTOM = 30;
     private static final float PAD_TO_CENTER_PRICING = 38;
     private static final float TABLE_HEADER_HEIGHT = 50;
     private static final float COMMON_LABEL_HEIGHT = 50;
@@ -83,6 +84,9 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int FOURTH_COL_NUM_TAKEN = 30;
     private static final int IMAGE_BUTTON_HEIGHT = 70;
     private static final float BANDAGE_SIDE_LENGTH = 50f;
+    private static final int NO_FUNDS_INDEX = 0;
+    private static final int EQUIPPED_INDEX = 1;
+    private static final int PURCHASED_INDEX = 2;
     private ImageButton swordImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton;
     private ArrayList<ImageButton> imageButtons = new ArrayList<>();
@@ -92,7 +96,9 @@ public class ShopMenuDisplay extends UIComponent {
     private PlayerConfig playerState;
     // values below will be checked and will load values from config file that saves player's states
     private int playerAmmo, playerGold, playerBandage, playerDefenceLevel;
-    private String playerAbility, playerMeleeWeaponType;
+    private String playerAbility, playerMeleeWeaponType, playerArmorType;
+    private Items typeOfItem;
+    private Stack feedbackStack;
 
     public ShopMenuDisplay(GdxGame game) {
         this.game = game;
@@ -106,6 +112,7 @@ public class ShopMenuDisplay extends UIComponent {
 
         entity.getEvents().addListener("toggleShopBox", this::toggleShopBox);
         entity.getEvents().addListener("updateItemDescription", this::updateItemDetails);
+        entity.getEvents().addListener("purchaseItem", this::isItemPurchasable);
     }
 
     public void toggleShopBox() {
@@ -182,11 +189,15 @@ public class ShopMenuDisplay extends UIComponent {
     private void addItemButtonImagesToTable() {
         Table itemsLabelImages = new Table();
 
+        // by default - sword will be pre-selected first
         CharSequence titleText = "SWORD";
+        itemName = "SWORD";
+        typeOfItem = Items.MELEE_WEAPONS;
         itemSelectedTitleLabel = new Label(titleText, skin, "white");
         // for weapon label selected - default is sword. For now
         itemsLabelImages.row();
-        itemsLabelImages.add(itemSelectedTitleLabel).colspan(SEC_COL_NUM_TAKEN).height(COMMON_LABEL_HEIGHT);
+        itemSelectedTitleLabel.setAlignment(Align.center);
+        itemsLabelImages.add(itemSelectedTitleLabel).colspan(SEC_COL_NUM_TAKEN).height(COMMON_LABEL_HEIGHT).width(250);
 
         // first row for weapon image buttons
         itemsLabelImages.row();
@@ -199,6 +210,7 @@ public class ShopMenuDisplay extends UIComponent {
 
         // indicate that this button is by default - clicked
         swordImageButton.setChecked(true);
+        swordImageButton.setDisabled(true);
         storeButtonClicked = swordImageButton;
 
         Drawable daggerUp = createImagesForButtons(DAGGER_UP_IMAGE_FILE_PATH);
@@ -291,7 +303,7 @@ public class ShopMenuDisplay extends UIComponent {
 
         // for description of item selected - default is for sword;
         // second row of item description col
-        CharSequence itemDescriptionText = "The sword is the most common weapon there is but it has decent range, " +
+        CharSequence itemDescriptionText = "The sword is the most common weapon there is but it has decent range " +
                 "damage and it is versatile enough to fend off any enemies in the game - especially night crawlers!";
         itemSelectedDescriptionLabel = new Label(itemDescriptionText, skin, "white-font");
         itemSelectedDescriptionLabel.setWrap(true);
@@ -300,7 +312,7 @@ public class ShopMenuDisplay extends UIComponent {
                 .height(ITEM_LABEL_DESCRIPTION_HEIGHT).width(280);
 
         // third row of item description col (if there is one - dependent on time of item clicked)
-        CharSequence itemMoreDescription = "Attack Duration: Long, Damage: 10 & Knockback: Strong";
+        CharSequence itemMoreDescription = "Attack Duration: Decent, Damage: 5 & Knockback: Moderate";
         itemSelectedMoreInfoLabel = new Label(itemMoreDescription, skin, "white-font");
         itemSelectedMoreInfoLabel.setWrap(true);
         itemsDescriptionLabels.row().colspan(THIRD_COL_NUM_TAKEN);
@@ -310,7 +322,7 @@ public class ShopMenuDisplay extends UIComponent {
 
         // price of item selected (clicked by user) - default is for sword; for now
         // fourth row of item description col
-        CharSequence priceText = "PRICE: 70";
+        CharSequence priceText = "PRICE: 50";
         pricingValueLabel = new Label(priceText, skin, "white");
 
         itemsDescriptionLabels.row().height(COMMON_LABEL_HEIGHT).padTop(EXTRA_PAD_TOP).center();
@@ -383,22 +395,37 @@ public class ShopMenuDisplay extends UIComponent {
         // purchased and feedback will be produced depending on if conditions were met
         // feedback will not be visible initially - until equip button is clicked
         playerInfoLabelsImages.row().height(COMMON_LABEL_HEIGHT).colspan(FOURTH_COL_NUM_TAKEN);
-        CharSequence feedbackText = "INSUFFICIENT COINS";
-        feedbackLabel = new Label(feedbackText, skin, "red");
-        playerInfoLabelsImages.add(feedbackLabel).padTop(PAD_TOP);
+
+        Label noFundsLabel = new Label("NOT ENOUGH COINS", skin, "red");
+        Label equippedLabel = new Label("ALREADY EQUIPPED", skin, "white-font");
+        Label successPurchaseLabel = new Label("SUCCESSFUL PURCHASE", skin, "green");
+        equippedLabel.setVisible(false);
+        equippedLabel.setAlignment(Align.center);
+        noFundsLabel.setVisible(false);
+        noFundsLabel.setAlignment(Align.center);
+        successPurchaseLabel.setVisible(false);
+        successPurchaseLabel.setAlignment(Align.center);
+        feedbackStack = new Stack();
+        feedbackStack.add(noFundsLabel);
+        feedbackStack.add(equippedLabel);
+        feedbackStack.add(successPurchaseLabel);
+        playerInfoLabelsImages.add(feedbackStack).padTop(EXTRA_PAD_TOP).padBottom(EXTRA_PAD_BOTTOM).width(300).center();
+        playerInfoLabelsImages.debug();
 
         // button that triggers event for data checking from player current state
         playerInfoLabelsImages.row().height(COMMON_LABEL_HEIGHT).colspan(FOURTH_COL_NUM_TAKEN);
-        String equipTextButton = "EQUIP";
+        String equipTextButton = "PURCHASE";
         TextButton equipBtn = new TextButton(equipTextButton, skin, MENU_BUTTON_STYLE);
+        MenuUtility.addButtonSelectListener(entity, equipBtn, "purchaseItem");
         playerInfoLabelsImages.add(equipBtn).padTop(PAD_TOP);
 
         container.add(playerInfoLabelsImages).colspan(FOURTH_COL_NUM_TAKEN).top();
     }
 
     private void updateItemDetails(String configFilename, Items itemType) {
-        logger.debug("Button image clicked, buying system update");
+        logger.info("Button image clicked, buying system update");
         uncheckImageButton();
+        hideFeedbackLabels();
 
         // all item files must have the 2 following data variables
         ShopItemInfoConfig itemData =
@@ -406,6 +433,7 @@ public class ShopMenuDisplay extends UIComponent {
         itemName = itemData.itemName;
         String description = itemData.description;
         itemPrice = itemData.price;
+        typeOfItem = itemType;
         CharSequence priceText = String.format("PRICE: %d", itemPrice);
 
         itemSelectedTitleLabel.setText(itemName);
@@ -433,7 +461,21 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     private void isItemPurchasable() {
+        hideFeedbackLabels();
+        if (playerMeleeWeaponType.equals(itemName) || playerArmorType.equals(itemName) ||
+                playerAbility.equals(itemName)) {
+            feedbackStack.getChild(EQUIPPED_INDEX).setVisible(true);
+        } else if (playerGold >= itemPrice) {
+            feedbackStack.getChild(PURCHASED_INDEX).setVisible(true);
+        } else {
+            feedbackStack.getChild(NO_FUNDS_INDEX).setVisible(true);
+        }
+    }
 
+    private void hideFeedbackLabels() {
+        for (int i = 0; i < 3; i++) {
+            feedbackStack.getChild(i).setVisible(false);
+        }
     }
 
     private void uncheckImageButton() {
@@ -443,15 +485,21 @@ public class ShopMenuDisplay extends UIComponent {
         imageButtons.addAll(imageButtonList);
 
         for (ImageButton imageButton : imageButtonList) {
+            System.out.println(imageButton);
             if (imageButton.isChecked()) {
                 if (storeButtonClicked == null) {
                     storeButtonClicked = imageButton;
                 } else {
-                    storeButtonClicked.setChecked(false);
-
-                    // store new button that is clicked and set check false to old button that
-                    // was already clicked in the past
-                    storeButtonClicked = imageButton;
+                    if (imageButton.equals(storeButtonClicked)) {
+                        System.out.println("same stored button clicked");
+                    } else {
+                        // store new button that is clicked and set check false to old button that
+                        // was already clicked in the past
+                        System.out.println("diff button clicked");
+                        storeButtonClicked.setChecked(false);
+                        storeButtonClicked.setDisabled(false);
+                        storeButtonClicked = imageButton;
+                    }
                 }
             }
         }
@@ -465,6 +513,7 @@ public class ShopMenuDisplay extends UIComponent {
         playerDefenceLevel = playerState.defenceLevel;
         playerAbility = playerState.ability;
         playerMeleeWeaponType = playerState.meleeWeaponType;
+        playerArmorType = playerState.armorType;
     }
 
     @Override

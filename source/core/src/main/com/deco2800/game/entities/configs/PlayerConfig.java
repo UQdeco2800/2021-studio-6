@@ -11,9 +11,11 @@ public class PlayerConfig extends BaseEntityConfig  {
   public int woundState;
   public int defenceLevel;
   public int baseRangedAttack;
+  public int baseAttack;
   public int health;
   public int ammo;
   public int bandages;
   public String ability;
   public String meleeFilePath;
+  public String meleeWeaponType;
 }

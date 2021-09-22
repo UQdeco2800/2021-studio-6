@@ -11,11 +11,9 @@ public class ShopItemInfoConfig {
     public String knockback;
     public int attackDamage;
 
+    // anythin other than melee weapon will have effects in json file - inclusive of armor
+    public String effects;
+
     // for armor
     public String defenceLevel;
-
-    // for abilities #TODO: include description and other essential details
-    public String abilityEffect;
-
-    // others - torches, bandage #TODO: include description and other essential details
 }

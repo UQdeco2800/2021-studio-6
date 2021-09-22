@@ -396,19 +396,14 @@ public class ShopMenuDisplay extends UIComponent {
         pricingValueLabel.setText(priceText);
         itemSelectedDescriptionLabel.setText(description);
 
-//                itemSelectedMoreInfoLabel;
-
         if (itemType == Items.MELEE_WEAPONS) {
             String knockbackMelee = data.knockback;
             String attackLength = data.attackLength;
             int attackDamage = data.attackDamage;
-
-
+            CharSequence itemMoreDescription = String.format("Attack Duration: %s, Damage: %d & Knockback: %s",
+                    attackLength, attackDamage, knockbackMelee);
+            itemSelectedMoreInfoLabel.setText(itemMoreDescription);
         }
-
-        System.out.println("Image button clicked");
-        System.out.println(description);
-        System.out.println(price);
     }
 
     private void isItemPurchasable() {

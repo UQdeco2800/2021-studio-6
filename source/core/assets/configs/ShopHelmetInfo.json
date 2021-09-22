@@ -1,0 +1,6 @@
+{
+  "itemName": "HELMET",
+  "description": "A helmet to protect yourself. A good player would be prepared for anything! This item can be found anywhere though",
+  "price": 30,
+  "effects": "Increases defence level by 1"
+}

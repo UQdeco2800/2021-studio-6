@@ -6,11 +6,13 @@ public enum Abilities {
     INVINCIBILITY;
 
     public static Abilities getAbility(String ability) {
-        if (ability.equals("LONG_DASH")) {
-            return LONG_DASH;
-        } else if (ability.equals("INVINCIBILITY")) {
-            return INVINCIBILITY;
+        switch (ability) {
+            case "LONG_DASH":
+                return LONG_DASH;
+            case "INVINCIBILITY":
+                return INVINCIBILITY;
+            default:
+                return NONE;
         }
-        return NONE;
     }
 }

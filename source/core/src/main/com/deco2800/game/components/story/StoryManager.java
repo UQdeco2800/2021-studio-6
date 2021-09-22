@@ -77,6 +77,9 @@ public class StoryManager extends Component {
         }
 
         prevPauseState = ServiceLocator.getTimeSource().isPaused();
+        if (ServiceLocator.getGameArea() != null) {
+            ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
+        }
         ServiceLocator.getTimeSource().pause();
 
         displaying = true;

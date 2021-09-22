@@ -56,6 +56,7 @@ public class PauseMenuDisplay extends UIComponent {
 
   public void togglePauseScreen() {
     GameTime timeSource = ServiceLocator.getTimeSource();
+    ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
 
     if (!isEnabled) {
       timeSource.pause();

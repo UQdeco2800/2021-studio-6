@@ -44,6 +44,7 @@ public class SettingsScreen extends ScreenAdapter {
   public void render(float delta) {
     ServiceLocator.getEntityService().update();
     renderer.render();
+    renderer.renderUI();
   }
 
   @Override

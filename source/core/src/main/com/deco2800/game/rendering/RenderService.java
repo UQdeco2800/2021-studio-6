@@ -1,10 +1,13 @@
 package com.deco2800.game.rendering;
 
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.SortedIntMap;
 
 /**
@@ -56,14 +59,19 @@ public class RenderService implements Disposable {
    * @param batch batch to render to.
    */
   public void render(SpriteBatch batch) {
+
     for (Array<Renderable> layer : renderables) {
       // Sort into rendering order
       layer.sort();
 
       for (Renderable renderable : layer) {
+
         renderable.render(batch);
       }
+
+
     }
+
   }
 
   public void setStage(Stage stage) {

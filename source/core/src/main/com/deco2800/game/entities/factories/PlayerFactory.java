@@ -12,6 +12,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.items.Abilities;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -30,9 +31,9 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class PlayerFactory {
   private static final PlayerConfig stats =
-          FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+          FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
 
-  private static String sword = "configs/Sword.json";
+  private static String meleeWeapon = stats.meleeFilePath;
 
   /**
    * Create a player entity.
@@ -83,13 +84,13 @@ public class PlayerFactory {
     Entity player = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
-                    .addComponent(new PlayerMeleeAttackComponent(sword))
+                    .addComponent(new PlayerMeleeAttackComponent(meleeWeapon))
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new PlayerActions(stats.woundState))
                     .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                             stats.baseRangedAttack, stats.defenceLevel))
                     .addComponent(new InventoryComponent(stats.gold, stats.ammo, stats.bandages))
-                    .addComponent(new PlayerAbilitiesComponent(stats.ability))
+                    .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(stats.ability)))
                     .addComponent(inputComponent)
                     .addComponent(new PlayerRangeAttackComponent())
                     .addComponent(new PlayerRangeAOEComponent())

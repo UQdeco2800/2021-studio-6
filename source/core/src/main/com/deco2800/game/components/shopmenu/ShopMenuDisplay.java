@@ -104,6 +104,7 @@ public class ShopMenuDisplay extends UIComponent {
 
     public void toggleShopBox() {
         GameTime timeSource = ServiceLocator.getTimeSource();
+        ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
 
         if (!isEnabled) {
             timeSource.pause();
@@ -258,7 +259,6 @@ public class ShopMenuDisplay extends UIComponent {
                 armorImageButton, helmetImageButton, torchImageButton, bandageImageButton, dashImageButton,
                 invincibleImageButton);
 
-        itemsLabelImages.debug();
         container.add(itemsLabelImages).colspan(SEC_COL_NUM_TAKEN).top();
     }
 

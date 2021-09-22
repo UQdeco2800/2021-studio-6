@@ -1,0 +1,13 @@
+{
+  "woundState": 3,
+  "baseAttack": 10,
+  "baseRangedAttack": 5,
+  "defenceLevel": 0,
+  "gold": 50,
+  "ammo": 10,
+  "favouriteColour": "peach",
+  "health" : 3,
+  "bandages": 3,
+  "ability": "LONG_DASH",
+  "meleeFilePath": "configs/Sword.json"
+}

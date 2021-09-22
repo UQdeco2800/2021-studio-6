@@ -35,7 +35,6 @@ public class FriendlyNPCFactory {
         animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
         AITaskComponent aiComponent = new AITaskComponent();
         if (wandering) {

@@ -10,7 +10,7 @@ public class TutorialDiologue extends BasicDialogueConfig {
             "Press Space to attack enemies with your melee weapon.",
             "Press Enter to throw rocks. If you run out of rocks, you can press R key to reload.",
             "Good luck have fun!"};
-    protected static final String[] PORTRAIT = {"npc-portrait"};
+    protected static final String[] PORTRAIT = {"npc-tut1-portrait"};
     private static final int LENGTH = 7;
 
     public TutorialDiologue(){

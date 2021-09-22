@@ -42,4 +42,26 @@ npc-portrait
   orig: 1200, 1200
   offset: 0, 0
   index: -1
+  
+npc-tut1-dialogue.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+dialogue-box-background
+  rotate: false
+  xy: 2, 2
+  size: 90, 90
+  split: 40, 40, 40, 40
+  pad: 40, 40, 40, 40
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
+npc-tut1-portrait
+  rotate: false
+  xy: 2, 94
+  size: 1200, 1200
+  orig: 1200, 1200
+  offset: 0, 0
+  index: -1
 

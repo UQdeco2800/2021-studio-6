@@ -24,9 +24,9 @@ public class FriendlyNPCFactory {
     }
 
 
-    public static Entity createNewFriendlyNPC(StoryNames story, boolean wandering) {
+    public static Entity createNewFriendlyNPC(StoryNames story, String atlasFileName, boolean wandering) {
         AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/npc_movement/npc_movement.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset(atlasFileName, TextureAtlas.class));
         animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);

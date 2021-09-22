@@ -95,8 +95,9 @@ public class ShopMenuDisplay extends UIComponent {
     private ImageButton storeButtonClicked = null;
     private PlayerConfig playerState;
     // values below will be checked and will load values from config file that saves player's states
-    private int playerAmmo, playerGold, playerBandage, playerDefenceLevel;
-    private String playerAbility, playerMeleeWeaponType, playerArmorType;
+    private int playerAmmo, playerGold, playerBandage, playerDefenceLevel, playerWoundState, playerBaseAttack,
+            playerBaseRangedAttack, playerHealth;
+    private String playerAbility, playerMeleeWeaponType, playerArmorType, playerFavColor, playerMeleeFilePath;
     private Items typeOfItem;
     private Stack feedbackStack;
 
@@ -514,6 +515,12 @@ public class ShopMenuDisplay extends UIComponent {
         playerAbility = playerState.ability;
         playerMeleeWeaponType = playerState.meleeWeaponType;
         playerArmorType = playerState.armorType;
+        playerWoundState = playerState.woundState;
+        playerBaseAttack = playerState.baseAttack;
+        playerBaseRangedAttack = playerState.baseRangedAttack;
+        playerFavColor = playerState.favouriteColour;
+        playerHealth = playerState.health;
+        playerMeleeFilePath = playerState.meleeFilePath;
     }
 
     @Override

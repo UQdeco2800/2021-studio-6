@@ -15,4 +15,14 @@ public enum Abilities {
                 return NONE;
         }
     }
+
+    public boolean checkAbility(String ability) {
+        switch (ability) {
+            case "LONG_DASH":
+            case "INVINCIBILITY":
+                return true;
+            default:
+                return false;
+        }
+    }
 }

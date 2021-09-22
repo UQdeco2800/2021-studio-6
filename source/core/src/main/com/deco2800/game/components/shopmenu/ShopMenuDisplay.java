@@ -84,10 +84,12 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int FOURTH_COL_NUM_TAKEN = 30;
     private static final int IMAGE_BUTTON_HEIGHT = 70;
     private static final float BANDAGE_SIDE_LENGTH = 50f;
-    private static final int CELL_PADDING = 10;
     private static ImageButton swordImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton;
-    private ArrayList<ImageButton> itemsImageButton = new ArrayList<>();
+    private ArrayList<ImageButton> imageButtons = new ArrayList<>();
+    private int itemPrice, playerCoin, itemDefenceLevel = 0;
+    private String itemName;
+    private ImageButton storeButtonClicked = null;
 
     public ShopMenuDisplay(GdxGame game) {
         this.game = game;
@@ -211,16 +213,22 @@ public class ShopMenuDisplay extends UIComponent {
         Drawable armorUp = createImagesForButtons(ARMOR_UP_IMAGE_FILE_PATH);
         Drawable armorDown = createImagesForButtons(ARMOR_DOWN_IMAGE_FILE_PATH);
         armorImageButton = new ImageButton(armorUp, armorDown, armorDown);
+        MenuUtility.addButtonSelectListener(entity, armorImageButton, "updateItemDescription",
+                "configs/ShopArmourInfo.json", Items.SHIELDS);
         itemsLabelImages.add(armorImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable helmetUp = createImagesForButtons(HELMET_UP_IMAGE_FILE_PATH);
         Drawable helmetDown = createImagesForButtons(HELMET_DOWN_IMAGE_FILE_PATH);
         helmetImageButton = new ImageButton(helmetUp, helmetDown, helmetDown);
+        MenuUtility.addButtonSelectListener(entity, helmetImageButton, "updateItemDescription",
+                "configs/ShopHelmetInfo.json", Items.SHIELDS);
         itemsLabelImages.add(helmetImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable torchUp = createImagesForButtons(TORCH_UP_IMAGE_FILE_PATH);
         Drawable torchDown = createImagesForButtons(TORCH_DOWN_IMAGE_FILE_PATH);
         torchImageButton = new ImageButton(torchUp, torchDown, torchDown);
+        MenuUtility.addButtonSelectListener(entity, torchImageButton, "updateItemDescription",
+                "configs/ShopTorchInfo.json", Items.OTHERS);
         itemsLabelImages.add(torchImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         // third row for weapon image buttons
@@ -229,16 +237,22 @@ public class ShopMenuDisplay extends UIComponent {
         Drawable dashUp = createImagesForButtons(DASH_UP_IMAGE_FILE_PATH);
         Drawable dashDown = createImagesForButtons(DASH_DOWN_IMAGE_FILE_PATH);
         dashImageButton = new ImageButton(dashUp, dashDown, dashDown);
+        MenuUtility.addButtonSelectListener(entity, dashImageButton, "updateItemDescription",
+                "configs/ShopLongDashAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(dashImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable bandageUp = createImagesForButtons(BANDAGE_UP_IMAGE_FILE_PATH);
         Drawable bandageDown = createImagesForButtons(BANDAGE_DOWN_IMAGE_FILE_PATH);
         bandageImageButton = new ImageButton(bandageUp, bandageDown, bandageDown);
+        MenuUtility.addButtonSelectListener(entity, bandageImageButton, "updateItemDescription",
+                "configs/ShopBandageInfo.json", Items.OTHERS);
         itemsLabelImages.add(bandageImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable invincibleUp = createImagesForButtons(INVINCIBLE_UP_IMAGE_FILE_PATH);
         Drawable invincibleDown = createImagesForButtons(INVINCIBLE_DOWN_IMAGE_FILE_PATH);
         invincibleImageButton = new ImageButton(invincibleUp, invincibleDown, invincibleDown);
+        MenuUtility.addButtonSelectListener(entity, invincibleImageButton, "updateItemDescription",
+                "configs/ShopInvincibilityAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(invincibleImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
 //        #TODO: add 3 more new weapons when done, process should be the same as how rest of weapons are loaded
@@ -383,25 +397,36 @@ public class ShopMenuDisplay extends UIComponent {
 
     private void updateItemDetails(String configFilename, Items itemType) {
         logger.debug("Button image clicked, buying system update");
+        uncheckImageButton();
 
         // all item files must have the 2 following data variables
-        ShopItemInfoConfig data =
+        ShopItemInfoConfig itemData =
                 FileLoader.readClass(ShopItemInfoConfig.class, configFilename);
-        String title = data.itemName;
-        String description = data.description;
-        int price = data.price;
-        CharSequence priceText = String.format("PRICE: %d", price);
+        itemName = itemData.itemName;
+        String description = itemData.description;
+        itemPrice = itemData.price;
+        CharSequence priceText = String.format("PRICE: %d", itemPrice);
 
-        itemSelectedTitleLabel.setText(title);
+        itemSelectedTitleLabel.setText(itemName);
         pricingValueLabel.setText(priceText);
         itemSelectedDescriptionLabel.setText(description);
 
         if (itemType == Items.MELEE_WEAPONS) {
-            String knockbackMelee = data.knockback;
-            String attackLength = data.attackLength;
-            int attackDamage = data.attackDamage;
+            String knockbackMelee = itemData.knockback;
+            String attackLength = itemData.attackLength;
+            int attackDamage = itemData.attackDamage;
             CharSequence itemMoreDescription = String.format("Attack Duration: %s, Damage: %d & Knockback: %s",
                     attackLength, attackDamage, knockbackMelee);
+            itemSelectedMoreInfoLabel.setText(itemMoreDescription);
+
+        } else if (itemType == Items.SHIELDS) {
+            itemDefenceLevel = itemData.defenceLevel;
+            CharSequence itemMoreDescription = String.format("Effect: %s",
+                    itemData.effects);
+            itemSelectedMoreInfoLabel.setText(itemMoreDescription);
+        } else if (itemType == Items.OTHERS) {
+            CharSequence itemMoreDescription = String.format("Effect: %s",
+                    itemData.effects);
             itemSelectedMoreInfoLabel.setText(itemMoreDescription);
         }
     }
@@ -411,7 +436,24 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     private void uncheckImageButton() {
+        List<ImageButton> imageButtonList = Arrays.asList(swordImageButton, daggerImageButton, axeImageButton,
+                armorImageButton, helmetImageButton, torchImageButton, bandageImageButton, dashImageButton,
+                invincibleImageButton);
+        imageButtons.addAll(imageButtonList);
 
+        for (ImageButton imageButton : imageButtonList) {
+            if (imageButton.isChecked()) {
+                if (storeButtonClicked == null) {
+                    storeButtonClicked = imageButton;
+                } else {
+                    storeButtonClicked.setChecked(false);
+
+                    // store new button that is clicked and set check false to old button that
+                    // was already clicked in the past
+                    storeButtonClicked = imageButton;
+                }
+            }
+        }
     }
 
     @Override

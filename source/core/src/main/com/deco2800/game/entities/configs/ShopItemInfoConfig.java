@@ -15,5 +15,5 @@ public class ShopItemInfoConfig {
     public String effects;
 
     // for armor
-    public String defenceLevel;
+    public int defenceLevel;
 }

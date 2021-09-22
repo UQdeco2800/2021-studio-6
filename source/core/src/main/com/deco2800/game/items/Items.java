@@ -14,7 +14,7 @@ public enum Items {
     // used in shop popup box for categorization
     MELEE_WEAPONS,
     SHIELDS,
-    ABILITIES;
+    OTHERS;
 
     public static String getWeaponFilepath(String meleeWeapon) {
         switch (meleeWeapon) {
@@ -26,6 +26,17 @@ public enum Items {
                 return "configs/Sword.json";
             default:
                 return "";
+        }
+    }
+
+    public boolean checkMeleeWeapon(String meleeWeapon) {
+        switch (meleeWeapon) {
+            case "SWORD":
+            case "AXE":
+            case "DAGGER":
+                return true;
+            default:
+                return false;
         }
     }
 }

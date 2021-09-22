@@ -2,5 +2,6 @@
   "itemName": "ARMOUR",
   "description": "This is an item that can rarely be found in the game. Gives you the ultimate defense against all sorts of attack!",
   "price": 60,
-  "effects": "Increases defence level by 2"
+  "effects": "Increases defence level by 2",
+  "defenceLevel": 2
 }

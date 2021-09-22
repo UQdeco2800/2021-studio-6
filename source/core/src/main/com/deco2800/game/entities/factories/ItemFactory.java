@@ -108,7 +108,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.DAGGER, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/dagger.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/dagger/dagger.png"))
                 .addComponent(new DisposingComponent());
         return dagger;
     }
@@ -124,7 +124,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AXE, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/axe/ax_right2.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/axe/axe_right2.png"))
                 .addComponent(new DisposingComponent());
         return axe;
     }

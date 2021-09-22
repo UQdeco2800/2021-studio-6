@@ -4,4 +4,25 @@ public enum Abilities {
     NONE,
     LONG_DASH,
     INVINCIBILITY;
+
+    public static Abilities getAbility(String ability) {
+        switch (ability) {
+            case "LONG_DASH":
+                return LONG_DASH;
+            case "INVINCIBILITY":
+                return INVINCIBILITY;
+            default:
+                return NONE;
+        }
+    }
+
+    public boolean checkAbility(String ability) {
+        switch (ability) {
+            case "LONG_DASH":
+            case "INVINCIBILITY":
+                return true;
+            default:
+                return false;
+        }
+    }
 }

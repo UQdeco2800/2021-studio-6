@@ -39,6 +39,7 @@ public class PlayerAbilitiesComponent extends Component {
      * @param ability is the chosen ability of the player
      */
     public void setAbility(Abilities ability) {
+        System.out.println(ability);
         this.ability = ability;
     }
 

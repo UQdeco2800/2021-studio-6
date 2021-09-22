@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.items.Items;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,33 @@ public class MenuUtility {
             entity.getEvents().trigger(eventTrigger);
           }
         });
+  }
+
+  /**
+   * Adds a listener to a button that triggers an event and passes a specific argument when the user selects the button.
+   * This listener is used specifically for shop popup box to distinguish between different buttons
+   * @param entity the entity that the trigger will be called to
+   * @param button the button to add the select listener to
+   * @param eventTrigger the event to be triggered when button is selected
+   * @param argument that will be used to pass to the relevant method that will be triggered
+   */
+  public static void addButtonSelectListener(Entity entity, Button button, String eventTrigger, String argument,
+                                             Items itemType) {
+    button.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug(String.format("Button clicked with trigger of: %s", eventTrigger));
+
+                Sound buttonClickSound = ServiceLocator.getResourceService().getAsset(CLICK_SOUND_FILE_PATH, Sound.class);
+                buttonClickSound.stop();
+                buttonClickSound.play(CLICK_VOLUME);
+
+                if (button.isChecked()) {
+                  entity.getEvents().trigger(eventTrigger, argument, itemType);
+                }
+              }
+            });
   }
 
   /**

@@ -22,6 +22,7 @@ import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.lighting.Lighting;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
@@ -47,7 +48,7 @@ public class MainGameScreen extends ScreenAdapter {
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png",
           "images/Player_Sprite/front01.png", "images/playeritems/sword/sword2.png", "images/playeritems/sword/sword3.png",
-  "images/playeritems/dagger/dagger.png", "images/playeritems/dagger.png", "images/playeritems/axe/ax_left2.png", "images/playeritems/axe.png",
+  "images/playeritems/dagger/dagger.png", "images/playeritems/dagger/dagger.png", "images/playeritems/axe/axe_left2.png", "images/playeritems/axe/axe_right4.png",
   "images/playeritems/tourch/tourch.png", "images/playeritems/armour.png", "images/playeritems/halmet.png",
   "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
   "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
@@ -62,8 +63,12 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
+  private final Lighting lighting;
+  private final boolean LIGHTINGON = false;
   private GameArea gameArea;
   private Entity ui;
+
+
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -84,9 +89,13 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
+    ServiceLocator.registerLightingService(new Lighting(ServiceLocator.getPhysicsService().getPhysics().getWorld()));
+
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+
+    lighting = ServiceLocator.getLightingService();
 
     loadAssets();
     createUI();
@@ -134,7 +143,15 @@ public class MainGameScreen extends ScreenAdapter {
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    lighting.update();
     renderer.render();
+    if(LIGHTINGON){
+      lighting.setCamera(renderer.getCamera().getCamera());
+      lighting.render();
+    }
+
+    renderer.renderUI();
+
 
 
     if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {

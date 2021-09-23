@@ -21,7 +21,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  */
 public class EnemyBulletFactory {
 
-    /** Creates a bullet entity firing from a source entity through a  target entity
+    /** Creates a bullet entity firing from a source entity ssssssssssssthrough a  target entity
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in (could instead implement a listener
      * @param source the source of the bullet
@@ -41,7 +41,7 @@ public class EnemyBulletFactory {
         float rotation = (MathUtils.radiansToDegrees * MathUtils.atan2(newTarget.y - y1, newTarget.x - x1));
 
         Entity bullet = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotation))
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/blood_ball.png", rotation))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
@@ -102,7 +102,7 @@ public class EnemyBulletFactory {
         float rotationDown = (MathUtils.radiansToDegrees * MathUtils.atan2(downRotate.y - y1, downRotate.x - x1));
 
         Entity bulletStraight = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotation))
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/blood_ball.png", rotation))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
@@ -112,7 +112,7 @@ public class EnemyBulletFactory {
                 .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
         Entity bulletUp = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotationUp))
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/blood_ball.png", rotationUp))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
@@ -122,7 +122,7 @@ public class EnemyBulletFactory {
                 .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
         Entity bulletDown = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotationDown))
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/blood_ball.png", rotationDown))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())

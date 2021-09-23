@@ -16,28 +16,65 @@ import com.deco2800.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 
+/**
+ * Lighting
+ * The dynamic Lighting engine for the game, mostly just a wrapper for box2dLight.RayHandler;
+ */
 public class Lighting implements Disposable {
     private RayHandler rayHandler;
-    private ArrayList<Light> pointLight;
-    private float time;
 
+    /**
+     * Lighting Constructor initalises the rayhandler (currently sets a default ambient light)
+     * @param world the physics world which is passed to the rayhandler
+     */
     public Lighting(World world) {
         rayHandler = new RayHandler(world);
+        setAmbientLight(0.2f, 0.3f, 0.4f, 0.1f);
     }
+
+    /**
+     * getRayHandler
+     * @return rayhandler used for rendering the lighting
+     */
     public RayHandler getRayHandler() {
         return rayHandler;
     }
 
+    /**
+     * update
+     * calls rayHandler.update()
+     */
     public void update(){
         rayHandler.update();
     }
 
+    /**
+     * setAmbientLight
+     * sets the ambient light for a scene
+     * @param r red value
+     * @param g green value
+     * @param b blue value
+     * @param a alpha value
+     */
+    public void setAmbientLight(float r, float g, float b, float a) {
+        rayHandler.setAmbientLight(r, g, b, a);
+    }
+
+    /**
+     * setCamera
+     * sets the camera for the scene
+     * @param camera rendering camera need for the rayhandler to draw light
+     */
     public void setCamera(Camera camera) {
         rayHandler.setCombinedMatrix(camera.combined, camera.position.x , camera.position.y, camera.viewportWidth * 1, camera.viewportHeight * 1 );
     }
+
+    /**
+     * render
+     * calls rayhandler.render()
+     */
     public void render() {
         rayHandler.render();
-        rayHandler.setAmbientLight(0.2f, 0.3f, 0.4f, 0.1f);
     }
 
     @Override

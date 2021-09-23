@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
@@ -12,6 +13,9 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.lighting.ChainLightComponent;
+import com.deco2800.game.lighting.ConeLightComponent;
+import com.deco2800.game.lighting.DirectionalLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -21,6 +25,9 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory to create a player entity.
@@ -80,6 +87,7 @@ public class PlayerFactory {
     animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
 
+
     Entity player = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
@@ -102,8 +110,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerHudAnimationController())
                     .addComponent(new PlayerWeaponAnimationController())
                     .addComponent(new PlayerHealthAnimationController())
-                    .addComponent(new PointLightComponent(Colors.get("RED"), 10f, 0, 0));
-
+                    .addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 0, 0, 90f, 45f));
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     return player;

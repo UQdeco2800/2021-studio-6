@@ -21,7 +21,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  */
 public class EnemyBulletFactory {
 
-    /** Creates a bullet entity firing from a source entity ssssssssssssthrough a  target entity
+    /** Creates a bullet entity firing from a source entity through a  target entity
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in (could instead implement a listener
      * @param source the source of the bullet

@@ -14,6 +14,8 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.items.Abilities;
 import com.deco2800.game.lighting.PointLightComponent;
+import com.deco2800.game.memento.Player;
+import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -31,8 +33,9 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
-
-  private static String meleeWeapon = stats.meleeFilePath;
+  private static String meleeWeaponFilePath = stats.meleeFilePath;
+  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel;
+  private static String ability, meleeFilePath, meleeWeaponType, armorType;
 
   /**
    * Create a player entity.
@@ -80,34 +83,61 @@ public class PlayerFactory {
     animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
 
+    loadPlayerData();
     Entity player = new Entity()
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent())
-                    .addComponent(new PlayerMeleeAttackComponent(meleeWeapon))
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                    .addComponent(new PlayerActions(stats.woundState))
-                    .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
-                            stats.baseRangedAttack, stats.defenceLevel))
-                    .addComponent(new InventoryComponent(stats.gold, stats.ammo, stats.bandages))
-                    .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(stats.ability)))
-                    .addComponent(inputComponent)
-                    .addComponent(new PlayerRangeAttackComponent())
-                    .addComponent(new PlayerRangeAOEComponent())
-                    .addComponent(new PlayerReusableComponent())
-                    .addComponent(new DisposingComponent())
-                    .addComponent(new PlayerInterfaceDisplay())
-                    .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
-                    .addComponent(animator)
-                    .addComponent(new PlayerAnimationController())
-                    .addComponent(new PlayerHudAnimationController())
-                    .addComponent(new PlayerWeaponAnimationController())
-                    .addComponent(new PlayerHealthAnimationController())
-                    .addComponent(new PointLightComponent(Colors.get("RED"), 10f, 0, 0));
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent())
+            .addComponent(new PlayerMeleeAttackComponent(meleeWeaponFilePath))
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+            .addComponent(new PlayerActions(woundState))
+            .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
+                    baseRangedAttack, defenceLevel))
+            .addComponent(new InventoryComponent(gold, ammo, bandages))
+            .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
+            .addComponent(inputComponent)
+            .addComponent(new PlayerRangeAttackComponent())
+            .addComponent(new PlayerRangeAOEComponent())
+            .addComponent(new PlayerReusableComponent())
+            .addComponent(new DisposingComponent())
+            .addComponent(new PlayerInterfaceDisplay())
+            .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
+            .addComponent(animator)
+            .addComponent(new PlayerAnimationController())
+            .addComponent(new PlayerHudAnimationController())
+            .addComponent(new PlayerWeaponAnimationController())
+            .addComponent(new PlayerHealthAnimationController())
+            .addComponent(new PointLightComponent(Colors.get("RED"), 10f, 0, 0));
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     return player;
   }
+
+  private static void loadPlayerData() {
+    // manages player states for carrying over and restoring in game
+    PlayerStateManager playerManager = PlayerStateManager.getInstance();
+
+    if (playerManager.currentPlayerState() == null) {
+      // set initial state of player when game starts for the very first time, load from config file
+      playerManager.createPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
+              stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.ability, stats.meleeFilePath,
+              stats.meleeWeaponType, stats.armorType);
+    }
+
+    baseAttack = stats.baseAttack;
+    baseRangedAttack = stats.baseAttack;
+    health = stats.health;
+    ammo = stats.ammo;
+    bandages = stats.bandages;
+    gold = stats.gold;
+    woundState = stats.woundState;
+    defenceLevel = stats.defenceLevel;
+    ability = stats.ability;
+    meleeFilePath = stats.meleeFilePath;
+    meleeWeaponType = stats.meleeWeaponType;
+    armorType = stats.armorType;
+  }
+
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

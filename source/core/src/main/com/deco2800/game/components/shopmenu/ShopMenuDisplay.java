@@ -455,7 +455,6 @@ public class ShopMenuDisplay extends UIComponent {
         feedbackStack.add(equippedLabel);
         feedbackStack.add(successPurchaseLabel);
         playerInfoLabelsImages.add(feedbackStack).padTop(EXTRA_PAD_TOP).padBottom(EXTRA_PAD_BOTTOM).width(300).center();
-        playerInfoLabelsImages.debug();
 
         // button that triggers event for data checking from player current state
         playerInfoLabelsImages.row().height(COMMON_LABEL_HEIGHT).colspan(FOURTH_COL_NUM_TAKEN);

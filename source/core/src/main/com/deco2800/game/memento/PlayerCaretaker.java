@@ -24,4 +24,22 @@ public class PlayerCaretaker {
             logger.info("Player ID = " + memento.getId() +  " stored with message = " + mementoMessage + ".\n");
         }
     }
+
+    public PlayerMemento getMemento(int id, String mementoMessage) {
+        PlayerMemento memento = null;
+        if (mementoMessage != null && mementoMessage.trim().length() != 0) {
+            Map<String, PlayerMemento> mementoMessageMap = mementoHistory.get(id);
+
+            if (mementoMessageMap != null) {
+                memento = mementoMessageMap.get(mementoMessage);
+
+                if (memento != null) {
+                    logger.info("Player ID = " + memento.getId() +  " restored with message = " + mementoMessage + ".\n");
+                } else {
+                    logger.info("Not able ot find memento");
+                }
+            }
+        }
+        return memento;
+    }
 }

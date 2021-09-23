@@ -34,7 +34,7 @@ public class ConeLightComponent extends Component implements Disposable {
      * @param distance How far the light will travel (in meters)
      * @param offsetx x offset from body
      * @param offsety y offset from body
-     * @param directionDegree the direction the light is facing
+     * @param directionDegree the direction the light is facing in degrees
      * @param coneDegree the width/size of the cone light
      * **/
     public ConeLightComponent(Color color, float distance, float offsetx, float offsety, float directionDegree, float coneDegree) {
@@ -60,8 +60,6 @@ public class ConeLightComponent extends Component implements Disposable {
                 (entity.getScale().y / 2) + this.offsety,
                 this.directionDegree);
         coneLight.setIgnoreAttachedBody(true);
-
-
         coneLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
         coneLight.setSoftnessLength(8f);
         logger.info("Cone light added to scene");

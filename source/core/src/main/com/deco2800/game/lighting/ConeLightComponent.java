@@ -54,11 +54,14 @@ public class ConeLightComponent extends Component implements Disposable {
             logger.warn("Lighting Engine not initialised Cone light will not render");
             return;
         }
-        coneLight = new ConeLight(rayHandler, rays, this.color, distance, 0, 0, this.directionDegree, this.coneDegree);
-        coneLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2, this.directionDegree);
+        coneLight = new ConeLight(rayHandler, rays, this.color, this.distance, 0, 0, this.directionDegree, this.coneDegree);
+        coneLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(),
+                (entity.getScale().x / 2) + this.offsetx,
+                (entity.getScale().y / 2) + this.offsety,
+                this.directionDegree);
         coneLight.setIgnoreAttachedBody(true);
 
-        this.updateDirection(180f);
+
         coneLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
         coneLight.setSoftnessLength(8f);
         logger.info("Cone light added to scene");
@@ -67,7 +70,9 @@ public class ConeLightComponent extends Component implements Disposable {
 
     public void updateDirection(float direction) {
         this.directionDegree = direction;
-        coneLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2, this.directionDegree);
+        coneLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(),
+                entity.getScale().x / 2 + this.offsetx,
+                entity.getScale().y / 2 + this.offsety, this.directionDegree);
     }
     @Override
     public void dispose() {

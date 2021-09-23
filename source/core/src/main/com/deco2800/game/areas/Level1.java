@@ -50,6 +50,7 @@ public class Level1 extends GameArea {
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
       "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe_right2.png",
+      "images/playeritems/dualdagger/dualdagger.png", "images/playeritems/katana/katana.png", "images/playeritems/greataxe/greataxe.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -99,7 +100,10 @@ public class Level1 extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas"
+      "images/weapon/dagger.atlas",
+      "images/weapon/katana.atlas",
+      "images/weapon/greataxe.atlas",
+      "images/weapon/dualdagger.atlas"
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
@@ -257,6 +261,30 @@ public class Level1 extends GameArea {
       int swordQuantity = 1;
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 DAGGERS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int dualdaggerQuantity = 1;
+      Entity dualdagger = ItemFactory.createDualDagger(dualdaggerQuantity);
+      spawnEntityAt(dualdagger, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int greataxeQuantity = 1;
+      Entity greataxe = ItemFactory.createGreatAxe(greataxeQuantity);
+      spawnEntityAt(greataxe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int katanaQuantity = 1;
+      Entity katana = ItemFactory.createKatana(katanaQuantity);
+      spawnEntityAt(katana, randomPos, true, false);
     }
   }
 

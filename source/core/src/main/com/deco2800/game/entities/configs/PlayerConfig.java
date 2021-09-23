@@ -15,6 +15,7 @@ public class PlayerConfig extends BaseEntityConfig  {
   public int health;
   public int ammo;
   public int bandages;
+  public int currentGameLevel;
   public String ability;
   public String meleeFilePath;
   public String meleeWeaponType;

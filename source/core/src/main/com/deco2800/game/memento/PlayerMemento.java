@@ -1,7 +1,8 @@
 package com.deco2800.game.memento;
 
 public class PlayerMemento {
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id,
+            currentGameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
     public PlayerMemento(int id, int ammo, int gold, int bandage, int defenceLevel, int woundState,
@@ -47,9 +48,44 @@ public class PlayerMemento {
         return woundState;
     }
 
+    public int getBaseAttack() {
+        return baseAttack;
+    }
+
+    public int getBaseRangedAttack() {
+        return baseRangedAttack;
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public int getCurrentGameLevel() {
+        return this.currentGameLevel;
+    }
+
+    public String getAbility() {
+        return this.ability;
+    }
+
+    public String getMeleeWeaponType() {
+        return this.meleeWeaponType;
+    }
+
+    public String getArmorType() {
+        return this.armorType;
+    }
+
+    public String getMeleeFilePath() {
+        return this.meleeFilePath;
+    }
+
     @Override
     public String toString() {
-        return "Player [ID = " + id + ", ammo = " + ammo + ", gold = " + gold + " bandage = " + bandage + " defenceLevel = "
-                + defenceLevel + " woundState = " + woundState;
+        return "Player [ID = " + id + "], ammo = " + ammo + ", gold = " + gold + ", bandage = " + bandage + ", defenceLevel = "
+                + defenceLevel + ", woundState = " + woundState + ", baseAttack = " + baseAttack +
+                ", baseRangedAttack = " + baseRangedAttack + ", health = " + health + "\n abiliy: " +
+                ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType + ", meleeFilePath: " +
+                meleeFilePath + "\n Player is currently at level " + currentGameLevel;
     }
 }

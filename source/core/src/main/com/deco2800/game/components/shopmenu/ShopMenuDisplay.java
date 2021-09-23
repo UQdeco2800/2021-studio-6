@@ -553,7 +553,6 @@ public class ShopMenuDisplay extends UIComponent {
         imageButtons.addAll(imageButtonList);
 
         for (ImageButton imageButton : imageButtonList) {
-            System.out.println(imageButton);
             if (imageButton.isChecked()) {
                 if (storeButtonClicked == null) {
                     storeButtonClicked = imageButton;

@@ -11,5 +11,6 @@
   "ability": "LONG_DASH",
   "meleeWeaponType": "SWORD",
   "armorType": "NONE",
-  "meleeFilePath": "configs/Sword.json"
+  "meleeFilePath": "configs/Sword.json",
+  "currentGameLevel": 0
 }

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 public class Player {
     private static final Logger logger = LoggerFactory.getLogger(Player.class);
     protected int id;
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, currentGameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
     public Player(int id) {
@@ -90,6 +90,15 @@ public class Player {
         return this.health;
     }
 
+    public Player setCurrentGameLevel(int level) {
+        this.currentGameLevel = level;
+        return this;
+    }
+
+    public int getCurrentGameLevel() {
+        return this.currentGameLevel;
+    }
+
     public Player setAbility(String ability) {
         this.ability = ability;
         return this;
@@ -128,8 +137,11 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player [ID = " + id + ", ammo = " + ammo + ", gold = " + gold + " bandage = " + bandage + " defenceLevel = "
-                + defenceLevel + " woundState = " + woundState;
+        return "Player [ID = " + id + "], ammo = " + ammo + ", gold = " + gold + ", bandage = " + bandage + ", defenceLevel = "
+                + defenceLevel + ", woundState = " + woundState + ", baseAttack = " + baseAttack +
+                ", baseRangedAttack = " + baseRangedAttack + ", health = " + health + "\n abiliy: " +
+                ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType + ", meleeFilePath: " +
+                meleeFilePath + "\n Player is currently at level " + currentGameLevel;
     }
 
     public PlayerMemento createMemento() {

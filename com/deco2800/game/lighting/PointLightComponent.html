@@ -105,6 +105,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">PointLightComponent</span>
 extends <a href="../components/Component.html" title="class in com.deco2800.game.components">Component</a>
 implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></pre>
+<div class="block">PointLightComponent
+ Wraps box2dLight.PointLight into a component you can add to an entity;</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -142,7 +144,10 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 float&nbsp;distance,
 float&nbsp;offsetx,
 float&nbsp;offsety)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">ConeLightComponent
+ Creates a light point light attached to an entity</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -215,6 +220,15 @@ float&nbsp;offsety)</code></th>
 float&nbsp;distance,
 float&nbsp;offsetx,
 float&nbsp;offsety)</span></div>
+<div class="block">ConeLightComponent
+ Creates a light point light attached to an entity</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>color</code> - The color of the light</dd>
+<dd><code>distance</code> - How far the light will travel (in meters)</dd>
+<dd><code>offsetx</code> - x offset from body</dd>
+<dd><code>offsety</code> - y offset from body</dd>
+</dl>
 </section>
 </li>
 </ul>

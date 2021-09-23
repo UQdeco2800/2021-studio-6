@@ -72,6 +72,12 @@ public class PlayerPickupComponent extends Component {
                 weapon.setWeapon("configs/Axe.json");
             } else if (item.getItemType() == Items.DAGGER) {
                 weapon.setWeapon("configs/Dagger.json");
+            } else if (item.getItemType() == Items.KATANA) {
+                weapon.setWeapon("configs/Katana.json");
+            } else if (item.getItemType() == Items.GREATAXE) {
+                weapon.setWeapon("configs/GreatAxe.json");
+            } else if (item.getItemType() == Items.DUALDAGGER) {
+                weapon.setWeapon("configs/DualDagger.json");
             }
 
             if (ServiceLocator.getGameArea() != null && item.getItemType() != Items.SHOP) {

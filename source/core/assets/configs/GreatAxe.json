@@ -1,0 +1,11 @@
+{
+  "attackLength": 600,
+  "attackDamage": 15,
+  "knockback": 20,
+  "length": 2,
+  "height" : 1.2,
+  "animationLength" : 0.1,
+  "atlasPath": "images/weapon/greataxe.atlas",
+  "animationCord": [ ["0f", "0f"], ["0f", "0f"], ["0f", "0f"], ["0f", "0f"]],
+  "scale" : ["0.8f", "0.8f"]
+}

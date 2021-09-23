@@ -10,13 +10,17 @@ public enum Items {
     AXE,
     DAGGER,
     SHOP,
+    KATANA,
+    GREATAXE,
+    DUALDAGGER,
 
     // used in shop popup box for categorization
     MELEE_WEAPONS,
     SHIELDS,
     OTHERS;
 
-    public static String getWeaponFilepath(String meleeWeapon) {
+
+  public static String getWeaponFilepath(String meleeWeapon) {
         switch (meleeWeapon) {
             case "AXE":
                 return "configs/Axe.json";

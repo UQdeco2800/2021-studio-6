@@ -1,0 +1,11 @@
+{
+  "attackLength": 300,
+  "attackDamage": 8,
+  "knockback": 10,
+  "length": 1.5,
+  "height" : 0.8,
+  "animationLength" : 0.06,
+  "atlasPath": "images/weapon/katana.atlas",
+  "animationCord": [ ["0f", "0f"], ["0f", "0f"], ["0f", "0f"], ["0f", "0f"]],
+  "scale" : ["1.5f", "1.5f"]
+}

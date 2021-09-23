@@ -9,8 +9,8 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
 
-/** ConeLightComponent
- *
+/** DirectionalLightComponent
+ *  not going to implement this one gunna keep it here for now but could really get it to work right
  * **/
 public class DirectionalLightComponent extends Component implements Disposable {
     private RayHandler rayHandler;
@@ -24,14 +24,8 @@ public class DirectionalLightComponent extends Component implements Disposable {
     private float directionDegree;
 
     private int rays = 500;
-    /**
-     * ConeLightComponent
-     * Creates a light shaped like a cone
-     * @param color The color of the light
-     * @param offsetx x offset from body
-     * @param offsety y offset from body
-     * @param directionDegree the direction the light is facing
-     * **/
+
+
     public DirectionalLightComponent(Color color, float offsetx, float offsety, float directionDegree) {
         this.color = color;
         this.offsetx = offsetx;
@@ -48,7 +42,6 @@ public class DirectionalLightComponent extends Component implements Disposable {
         directionalLight = new DirectionalLight(rayHandler, rays, this.color, this.directionDegree);
         directionalLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody());
         directionalLight.setIgnoreAttachedBody(true);
-
 
         directionalLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
         directionalLight.setSoftnessLength(8f);

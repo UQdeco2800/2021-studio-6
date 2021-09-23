@@ -116,6 +116,10 @@ public class ShopMenuDisplay extends UIComponent {
         entity.getEvents().addListener("purchaseItem", this::isItemPurchasable);
     }
 
+    /**
+     * Creates and destroy shop popup box. If player collides with shop keeper entity, popup pox will be
+     * created and when player closest (with esc or clicking X button), popup box closes as well
+     */
     public void toggleShopBox() {
         GameTime timeSource = ServiceLocator.getTimeSource();
         ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
@@ -138,7 +142,12 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
-     * Creates all relevant tables related to the shop popup box in game
+     * Creates all relevant tables related to the shop popup box in game. Mainly consist of 4 major columns -
+     * a column for a full blown image of shop keeper image, a column for all items that can be bought from
+     * shop, a column for description of each item which dynamically changes upon clicking a different weapon on
+     * popup box and a column for player's current inventory and buttons to purchase items (along with feedback
+     * when a purchase is attempted by player). All labels, buttons and image buttons are added to container
+     * (table)
      */
     private void addActors() {
         background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
@@ -159,7 +168,7 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
-     * Configures position of menu box
+     * Configures position of menu box to the middle of screen
      */
     private void setShopBoxPosSize() {
         container.setPosition(stage.getWidth() / 2 - container.getWidth() / 2,
@@ -168,6 +177,9 @@ public class ShopMenuDisplay extends UIComponent {
                 stage.getHeight() / 2 - container.getHeight() / 2);
     }
 
+    /**
+     * Adds title of popup box along with button to close popup box
+     */
     private void addHeaderToTable() {
         CharSequence titleText = "SHOP";
         Label shopTitleLabel = new Label(titleText, skin, "white");
@@ -180,6 +192,9 @@ public class ShopMenuDisplay extends UIComponent {
         container.add(closeBtn).colspan(1).align(Align.right).expandX().row();
     }
 
+    /**
+     * Creates the first column of the table which only include image of shop keeper
+     */
     private void addShopKeeperImageToTable() {
         Image shopkeeperImage = new Image(ServiceLocator.getResourceService().getAsset(SHOP_KEEPER_IMAGE_FILE_PATH,
                 Texture.class));
@@ -187,6 +202,9 @@ public class ShopMenuDisplay extends UIComponent {
                 .width(SHOPKEEPER_IMAGE_WIDTH).top();
     }
 
+    /**
+     * Creates image buttons for items that can be clicked and bought from shop
+     */
     private void addItemButtonImagesToTable() {
         Table itemsLabelImages = new Table();
 
@@ -292,6 +310,10 @@ public class ShopMenuDisplay extends UIComponent {
         container.add(itemsLabelImages).colspan(SEC_COL_NUM_TAKEN).top();
     }
 
+    /**
+     * Creates third column of table - name of item and description of item clicked. Dynamically
+     * changes with different item clicked
+     */
     private void addItemDescriptionToTable() {
         Table itemsDescriptionLabels = new Table();
 
@@ -336,10 +358,20 @@ public class ShopMenuDisplay extends UIComponent {
         container.add(itemsDescriptionLabels).colspan(THIRD_COL_NUM_TAKEN).top();
     }
 
+    /**
+     * Checks of shop popup box is visible. This is used to prevent pause menu from appearing
+     * when shop popup box appears
+     * @return true when shop is visible and false otherwise
+     */
     public boolean checkShopPopupVisibility() {
         return container.isVisible();
     }
 
+    /**
+     * Creates a drawable object to be used for image buttons.
+     * @param filePath related to image uploaded with image button
+     * @return drawable images for image button
+     */
     private Drawable createImagesForButtons(String filePath) {
         TextureRegionDrawable drawable = new TextureRegionDrawable(
                 new TextureRegion(ServiceLocator.getResourceService()
@@ -349,6 +381,13 @@ public class ShopMenuDisplay extends UIComponent {
         return drawable;
     }
 
+    /**
+     * Creates first half of fourth column of table which gives user information of player's current state
+     * @param playerInfo table involved for better styling of rows
+     * @param coinImage that is used to display player's coin
+     * @param bandageImage that is used to display player's bandage
+     * @param ammoImage that is used to display player's ammo
+     */
     private void createPlayerInfoLabels(Table playerInfo, Image coinImage, Image bandageImage, Image ammoImage) {
         playerInfo.row();
         playerInfo.add(coinImage).colspan(10).height(50);
@@ -361,6 +400,11 @@ public class ShopMenuDisplay extends UIComponent {
         playerInfo.add(ammoLabel).colspan(10).left();
     }
 
+    /**
+     * Creates second half of fourth column (calls first half first before creating the second half) - which
+     * has relevant buttons that will enable player to click to purchase clicked item and receive feedback
+     * if an item can be bought or not
+     */
     private void addPlayerInfoAndBuyingButtonToTable() {
         Table playerInfoLabelsImages = new Table();
 
@@ -423,6 +467,13 @@ public class ShopMenuDisplay extends UIComponent {
         container.add(playerInfoLabelsImages).colspan(FOURTH_COL_NUM_TAKEN).top();
     }
 
+    /**
+     * Will be triggered whenever any of the image button (for each item displayed in second row) is clicked
+     * this method is called to dynamically change the text and title of information positioned in the third
+     * column of the table
+     * @param configFilename called based on specific item that is clicked on shop popup box
+     * @param itemType used to categorize the kinds of item that are clicked for better logic management
+     */
     private void updateItemDetails(String configFilename, Items itemType) {
         logger.info("Button image clicked, buying system update");
         uncheckImageButton();
@@ -461,6 +512,12 @@ public class ShopMenuDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Called when player attempts to purchase an item. 3 kinds of feedback can be displayed depending on
+     * player's state - when an item has been successfully purchased, when an item is already equipped and when
+     * player does not have sufficient funds to make the purchase. This method dynamically resets and change
+     * the feedback label accordingly for user feedback
+     */
     private void isItemPurchasable() {
         hideFeedbackLabels();
         if (playerMeleeWeaponType.equals(itemName) || playerArmorType.equals(itemName) ||
@@ -473,12 +530,23 @@ public class ShopMenuDisplay extends UIComponent {
         }
     }
 
+    /**
+     * Hides all feedback labels. Currently, there are 3 labels stacked on each other in the same position
+     * whenever user attempts to purchase, all labels will be hidden again before a label is set to be visible.
+     * This method ensures no 2 label can be visible at the same time.
+     */
     private void hideFeedbackLabels() {
         for (int i = 0; i < 3; i++) {
             feedbackStack.getChild(i).setVisible(false);
         }
     }
 
+    /**
+     * Used to reset the image allocated for each image button in the third column. This method ensures that
+     * when a different image button is clicked, the previous clicked image button would be resetted to its original
+     * 'down' image and it keeps track of the first image button that was clicked - to ensure that if a button is
+     * already clicked - and is clicked again - nothing will happen for performance sake.
+     */
     private void uncheckImageButton() {
         List<ImageButton> imageButtonList = Arrays.asList(swordImageButton, daggerImageButton, axeImageButton,
                 armorImageButton, helmetImageButton, torchImageButton, bandageImageButton, dashImageButton,
@@ -506,6 +574,10 @@ public class ShopMenuDisplay extends UIComponent {
         }
     }
 
+    /**
+     * This is used to load player's most current state. This method is temporary for testing purposes
+     * for now as the buying system will need to update player's state when a player buys an item, ability or weapon.
+     */
     private void loadPlayerState() {
         playerState = FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
         playerAmmo = playerState.ammo;

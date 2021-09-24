@@ -23,7 +23,7 @@ public class EnemyBulletFactory {
 
     /** Creates a bullet entity firing from a source entity through a  target entity
      * @param target the target entity to be fired at
-     * @param gameArea need to spawn the entity in (could instead implement a listener
+     * @param gameArea need to spawn the entity in
      * @param source the source of the bullet
      */
     public static void createBullet(Entity source, Entity target, GameArea gameArea) {
@@ -115,6 +115,15 @@ public class EnemyBulletFactory {
         gameArea.spawnEntity(bulletDown);
     }
 
+    /**
+     * Makes a bullet entity with a given rotation
+     * @param rotation the rotation of the bullet in radians
+     * @param destination the vector the bullet follows
+     * @param target the target of the bullet
+     * @param gameArea the area to spawn the entity in
+     * @param imagePath the image path for the bullet texture
+     * @return the bullet entity
+     */
     private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea, String imagePath) {
         Entity bullet = new Entity()
                 .addComponent(new TextureRenderComponent(imagePath, rotation))

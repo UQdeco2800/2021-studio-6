@@ -44,6 +44,7 @@ public class BasicDialogue extends Component implements StoryBase {
 
             if (index == config.getLength()) {
                 dispose();
+                return false;
             }
             return true;
         } else {

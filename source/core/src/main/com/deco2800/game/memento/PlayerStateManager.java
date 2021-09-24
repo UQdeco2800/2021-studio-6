@@ -9,9 +9,11 @@ import com.deco2800.game.items.Items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Singleton manager class used to manage player state. Currently, there is only 1 player state and it is updated
+ * when a new level is generated and when game is restarted/started. This class is responsible for updating, restoring
+ * and carrying that state from one level to another.
+ */
 public class PlayerStateManager {
     private static final Logger logger = LoggerFactory.getLogger(PlayerStateManager.class);
 
@@ -64,6 +66,12 @@ public class PlayerStateManager {
         caretaker.addMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE, playerMemento);
     }
 
+    /**
+     * Adds a new player state to internal memory and at the same time updates current player state that
+     * will be used in current game level and for checkpointing
+     * @param player entity that is used to extract relevant information to be stored in player state
+     * @param gameLevel track which level player is currently at for storage and restoring purposes
+     */
     public void addAndUpdatePlayerState(Entity player, double gameLevel) {
         // these are localized variables to that will be used to update and store player's state
         int ammo = player.getComponent(InventoryComponent.class).getAmmo();
@@ -89,10 +97,18 @@ public class PlayerStateManager {
         caretaker.addMemento(playerState.getId(), mementoMessageOtherLevels, playerMemento);
     }
 
+    /**
+     * Used specifically for logging purposes and debugging. Will be useful to track player's current state
+     * @param playerState print most recent player state to logging
+     */
     public void trackPlayerState(Player playerState) {
         logger.info(playerState.toString());
     }
 
+    /**
+     * Reverts player state to the first player state used when game was started and removes all other player
+     * state stored previously
+     */
     public void restorePlayerState() {
         PlayerMemento initialPlayerMemento = caretaker.getMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE);
         playerState.restore(initialPlayerMemento);

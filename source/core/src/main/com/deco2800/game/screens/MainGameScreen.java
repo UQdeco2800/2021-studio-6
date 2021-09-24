@@ -57,7 +57,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double CurrentLevel = 1;
+  private double gameLevel = 1;
   public static boolean levelChange = false;
   private GameTime timeSource;
   private final GdxGame game;
@@ -247,30 +247,30 @@ public class MainGameScreen extends ScreenAdapter {
   }
 
   public void generateNewLevel() {
-    CurrentLevel += 0.5;
+    gameLevel += 0.5;
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
 
-    if (CurrentLevel == 4) {
+    if (gameLevel == 4) {
       victory();
       return;
     }
 
     // before disposing everything, update and store player's state
-    PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player);
+    PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
     gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
-    if (CurrentLevel == 2) {
+    if (gameLevel == 2) {
       gameArea = new Level2(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel == 3) {
+    } else if (gameLevel == 3) {
       gameArea = new Level3(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel % 1 == 0.5){
+    } else if (gameLevel % 1 == 0.5){
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)

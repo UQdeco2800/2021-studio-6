@@ -14,6 +14,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseWeaponConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.items.Directions;
+import com.deco2800.game.items.Items;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -70,6 +71,7 @@ public class PlayerMeleeAttackComponent extends Component {
     private IndependentAnimator weaponAnimator;
     private boolean gotWeapon = false;
     private long attackEnd = 0;
+    private Items weaponType;
 
     public PlayerMeleeAttackComponent(String weaponConfig) {
         fixtureDef = new FixtureDef();
@@ -129,6 +131,31 @@ public class PlayerMeleeAttackComponent extends Component {
         }
         attackEnd = 0;
         setShapes();
+    }
+
+    /**
+     * Returns the config filepath that player currently uses for melee weapon.
+     * @return file path of weapon config file
+     */
+    public String getWeapon() {
+        return weaponFile;
+    }
+
+    /**
+     * Keeps track of the type of weapon player is currently holding using ENUMs created. Used for player
+     * state tracking and shop popup box differentiation of different types of melee weapons
+     * @return type of weapon player is currently holding
+     */
+    public Items getMeleeWeaponType() {
+        return weaponType;
+    }
+
+    /**
+     * Set melee weapon type that player is currently holding
+     * @param weaponType that player is holding
+     */
+    public void setMeleeWeaponType(Items weaponType) {
+        this.weaponType = weaponType;
     }
 
     /**

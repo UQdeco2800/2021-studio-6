@@ -2,7 +2,10 @@ package com.deco2800.game.memento;
 
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.InventoryComponent;
+import com.deco2800.game.components.player.PlayerAbilitiesComponent;
+import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.items.Items;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,27 +56,41 @@ public class PlayerStateManager {
      * @param armorType armor type of current player's state
      */
     public void createStartingPlayerState(int baseRangedAttack, int baseAttack, int health, int ammo, int bandages, int gold,
-                                  int woundState, int defenceLevel, int currentGameLevel,String ability, String meleeFilePath,
-                                  String meleeWeaponType, String armorType) {
+                                  int woundState, int defenceLevel,String ability, String meleeFilePath,
+                                  String meleeWeaponType, String armorType, double currentGameLevel) {
         playerState = new Player(playerID).setBaseRangedAttack(baseRangedAttack).setBaseAttack(baseAttack)
                 .setHealth(health).setAmmo(ammo).setBandage(bandages).setGold(gold).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
                 .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel);
         trackPlayerState(playerState);
         playerMemento = playerState.createMemento();
-        caretaker.addMemento(playerState.getId(), "Starting player state", playerMemento);
-        mementoMessages.add("Starting player state");
+        caretaker.addMemento(playerState.getId(), "Player state at level 1", playerMemento);
+        mementoMessages.add("Player state at level 1");
     }
 
-    public void addAndUpdatePlayerState(Entity player) {
-        // these are localized variables to that will be used to update player state
+    public void addAndUpdatePlayerState(Entity player, double gameLevel) {
+        // these are localized variables to that will be used to update and store player's state
         int ammo = player.getComponent(InventoryComponent.class).getAmmo();
         int bandage = player.getComponent(InventoryComponent.class).getBandages();
         int gold = player.getComponent(InventoryComponent.class).getGold();
         int health = player.getComponent(PlayerCombatStatsComponent.class).getHealth();
         int woundState = player.getComponent(PlayerCombatStatsComponent.class).getWoundState();
         int defenceLevel = player.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel();
-//        int
+        String ability = player.getComponent(PlayerAbilitiesComponent.class).getAbility().toString();
+        String meleeFilePath = player.getComponent(PlayerMeleeAttackComponent.class).getWeapon();
+        String meleeWeaponType = player.getComponent(PlayerMeleeAttackComponent.class).getMeleeWeaponType().toString();
+        String armorType = Items.getArmorType(defenceLevel);
+        double currentGameLevel = gameLevel;
+        playerState.setAmmo(ammo).setBandage(bandage).setGold(gold).setHealth(health).setWoundState(woundState)
+                .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
+                .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel);
+
+        trackPlayerState(playerState);
+        playerMemento = playerState.createMemento();
+
+        // message will change when player progresses in game - must be unique
+        String mementoMessageOtherLevels = "Player state at level " + currentGameLevel;
+        caretaker.addMemento(playerState.getId(), mementoMessageOtherLevels, playerMemento);
     }
 
     public void trackPlayerState(Player playerState) {

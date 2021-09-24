@@ -585,7 +585,6 @@ public class ShopMenuDisplay extends UIComponent {
         playerWoundState = playerState.woundState;
         playerBaseAttack = playerState.baseAttack;
         playerBaseRangedAttack = playerState.baseRangedAttack;
-        playerFavColor = playerState.favouriteColour;
         playerHealth = playerState.health;
         playerMeleeFilePath = playerState.meleeFilePath;
     }

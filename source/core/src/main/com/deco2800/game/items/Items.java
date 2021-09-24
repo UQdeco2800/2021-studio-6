@@ -19,8 +19,18 @@ public enum Items {
     SHIELDS,
     OTHERS;
 
+    public static String getArmorType(int defenceLevel) {
+        switch (defenceLevel) {
+            case 2:
+                return "ARMOUR";
+            case 1:
+                return "HELMET";
+            default:
+                return "";
+        }
+    }
 
-  public static String getWeaponFilepath(String meleeWeapon) {
+    public static String getWeaponFilepath(String meleeWeapon) {
         switch (meleeWeapon) {
             case "AXE":
                 return "configs/Axe.json";
@@ -30,6 +40,25 @@ public enum Items {
                 return "configs/Sword.json";
             default:
                 return "";
+        }
+    }
+
+    public static Items getMeleeWeapon(String meleeWeapon) {
+        switch (meleeWeapon) {
+            case "SWORD":
+                return SWORD;
+            case "AXE":
+                return AXE;
+            case "DAGGER":
+                return DAGGER;
+            case "KATANA":
+                return KATANA;
+            case "GREATAXE":
+                return GREATAXE;
+            case "DUALDAGGER":
+                return DUALDAGGER;
+            default:
+                return null;
         }
     }
 

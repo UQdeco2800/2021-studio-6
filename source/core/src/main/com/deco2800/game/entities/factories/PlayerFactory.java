@@ -13,6 +13,7 @@ import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.items.Abilities;
+import com.deco2800.game.items.Items;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.memento.Player;
 import com.deco2800.game.memento.PlayerStateManager;
@@ -83,6 +84,7 @@ public class PlayerFactory {
     animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
 
+    // when changing melee weapon file path, remember to also change weapon type player currently holds
     loadPlayerData();
     Entity player = new Entity()
             .addComponent(new PhysicsComponent())
@@ -110,6 +112,7 @@ public class PlayerFactory {
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
+    player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(meleeWeaponType));
     return player;
   }
 
@@ -122,26 +125,38 @@ public class PlayerFactory {
       // #TODO: This must be done whenever a game is started even if player loads a different config file.
       // #TODO: This state will be used as a reset point in game when player decides to restart entire game
       playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
-              stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.currentGameLevel, stats.ability,
-              stats.meleeFilePath, stats.meleeWeaponType, stats.armorType);
+              stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.ability,
+              stats.meleeFilePath, stats.meleeWeaponType, stats.armorType, stats.currentGameLevel);
+
+      baseAttack = stats.baseAttack;
+      baseRangedAttack = stats.baseAttack;
+      health = stats.health;
+      ammo = stats.ammo;
+      bandages = stats.bandages;
+      gold = stats.gold;
+      woundState = stats.woundState;
+      defenceLevel = stats.defenceLevel;
+      ability = stats.ability;
+      meleeFilePath = stats.meleeFilePath;
+      meleeWeaponType = stats.meleeWeaponType;
+      armorType = stats.armorType;
+
     } else {
 
-      // to load must current player state
-      // baseAttack = playerManager.currentPlayerState().getBaseAttack();
+      Player currentPlayerState = playerManager.currentPlayerState();
+      baseAttack = currentPlayerState.getBaseAttack();
+      baseRangedAttack = currentPlayerState.getBaseRangedAttack();
+      health = currentPlayerState.getHealth();
+      ammo = currentPlayerState.getAmmo();
+      bandages = currentPlayerState.getBandage();
+      gold = currentPlayerState.getGold();
+      woundState = currentPlayerState.getWoundState();
+      defenceLevel = currentPlayerState.getDefenceLevel();
+      ability = currentPlayerState.getAbility();
+      meleeFilePath = currentPlayerState.getMeleeFilePath();
+      meleeWeaponType = currentPlayerState.getMeleeWeaponType();
+      armorType = currentPlayerState.getArmorType();
     }
-
-    baseAttack = stats.baseAttack;
-    baseRangedAttack = stats.baseAttack;
-    health = stats.health;
-    ammo = stats.ammo;
-    bandages = stats.bandages;
-    gold = stats.gold;
-    woundState = stats.woundState;
-    defenceLevel = stats.defenceLevel;
-    ability = stats.ability;
-    meleeFilePath = stats.meleeFilePath;
-    meleeWeaponType = stats.meleeWeaponType;
-    armorType = stats.armorType;
   }
 
   private PlayerFactory() {

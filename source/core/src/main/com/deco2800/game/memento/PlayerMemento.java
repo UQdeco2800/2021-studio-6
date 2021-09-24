@@ -1,13 +1,14 @@
 package com.deco2800.game.memento;
 
 public class PlayerMemento {
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id,
-            currentGameLevel;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id;
+    protected double currentGameLevel;
+    protected double gameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
     public PlayerMemento(int id, int ammo, int gold, int bandage, int defenceLevel, int woundState,
                          int baseRangedAttack, int baseAttack, int health, String ability, String meleeFilePath,
-                         String meleeWeaponType, String armorType) {
+                         String meleeWeaponType, String armorType, double currentGameLevel) {
         super();
         this.id = id;
         this.ammo = ammo;
@@ -22,6 +23,8 @@ public class PlayerMemento {
         this.meleeFilePath = meleeFilePath;
         this.meleeWeaponType = meleeWeaponType;
         this.armorType = armorType;
+        this.gameLevel = gameLevel;
+        this.currentGameLevel = currentGameLevel;
     }
 
     public int getId() {
@@ -60,7 +63,7 @@ public class PlayerMemento {
         return this.health;
     }
 
-    public int getCurrentGameLevel() {
+    public double getCurrentGameLevel() {
         return this.currentGameLevel;
     }
 

@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 public class Player {
     private static final Logger logger = LoggerFactory.getLogger(Player.class);
     protected int id;
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, currentGameLevel;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health;
+    protected double currentGameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
     public Player(int id) {
@@ -90,12 +91,12 @@ public class Player {
         return this.health;
     }
 
-    public Player setCurrentGameLevel(int level) {
+    public Player setCurrentGameLevel(double level) {
         this.currentGameLevel = level;
         return this;
     }
 
-    public int getCurrentGameLevel() {
+    public double getCurrentGameLevel() {
         return this.currentGameLevel;
     }
 
@@ -146,7 +147,7 @@ public class Player {
 
     public PlayerMemento createMemento() {
         return new PlayerMemento(id, ammo, gold, bandage, defenceLevel, woundState, baseRangedAttack, baseAttack,
-                health, ability, meleeFilePath, meleeWeaponType, armorType);
+                health, ability, meleeFilePath, meleeWeaponType, armorType, currentGameLevel);
     }
 
     public void restore(PlayerMemento memento) {
@@ -164,6 +165,7 @@ public class Player {
             this.meleeFilePath = memento.meleeFilePath;
             this.meleeWeaponType = memento.meleeWeaponType;
             this.armorType = memento.armorType;
+            this.currentGameLevel = memento.currentGameLevel;
         } else {
             logger.info("Can't restore without memento object");
         }

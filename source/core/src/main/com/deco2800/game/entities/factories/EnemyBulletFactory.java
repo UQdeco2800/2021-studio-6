@@ -36,7 +36,7 @@ public class EnemyBulletFactory {
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
         Entity bullet = makeBullet(rotateVector(newTarget, source, x1, y1), newTarget, target, gameArea,
-                source, x1, y1, "images/blood_ball.png");
+                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
         gameArea.spawnEntity(bullet);
     }
@@ -67,13 +67,13 @@ public class EnemyBulletFactory {
         Vector2 downRotate = new Vector2( (float) downX, (float) downY);
 
         Entity bulletStraight = makeBullet(rotateVector(straightTarget, source, x1, y1), straightTarget, target, gameArea,
-                source, x1, y1, "images/blood_ball.png");
+                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
         Entity bulletUp = makeBullet(rotateVector(upRotate, source, x1, y1), upRotate, target, gameArea,
-                source, x1, y1, "images/blood_ball.png");
+                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
         Entity bulletDown = makeBullet(rotateVector(downRotate, source, x1, y1), downRotate, target, gameArea,
-                source, x1, y1, "images/blood_ball.png");
+                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
         gameArea.spawnEntity(bulletStraight);
         gameArea.spawnEntity(bulletUp);

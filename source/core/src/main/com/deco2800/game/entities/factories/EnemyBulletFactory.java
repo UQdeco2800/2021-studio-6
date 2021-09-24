@@ -35,7 +35,8 @@ public class EnemyBulletFactory {
 
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
-        Entity bullet = makeBullet(rotateVector(newTarget, source, x1, y1), newTarget, target, gameArea, source, x1, y1, "images/blood_ball.png");
+        Entity bullet = makeBullet(rotateVector(newTarget, source, x1, y1), newTarget, target, gameArea,
+                source, x1, y1, "images/blood_ball.png");
 
         gameArea.spawnEntity(bullet);
     }
@@ -80,6 +81,14 @@ public class EnemyBulletFactory {
     }
 
 
+    /**
+     * Calculates the rotation of the vector for the bullet and returns it in radians
+     * @param rotate the vector to the target
+     * @param source the source of the bullet
+     * @param x_1 the x coordinate of the source
+     * @param y_1 the y coordinate of the source
+     * @return the rotation of the vector in radians
+     */
     private static float rotateVector(Vector2 rotate, Entity source, float x_1, float y_1) {
         rotate = rotate.scl(100);
         rotate = rotate.add(source.getPosition());
@@ -93,6 +102,9 @@ public class EnemyBulletFactory {
      * @param destination the vector the bullet follows
      * @param target the target of the bullet
      * @param gameArea the area to spawn the entity in
+     * @param source the source of the bullet
+     * @param x_1 the x coordinate of the source
+     * @param y_1 the y coordinate of the source
      * @param imagePath the image path for the bullet texture
      * @return the bullet entity
      */

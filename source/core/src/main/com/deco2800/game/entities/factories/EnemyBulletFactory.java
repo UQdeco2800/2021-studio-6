@@ -40,25 +40,14 @@ public class EnemyBulletFactory {
 
         float rotation = (MathUtils.radiansToDegrees * MathUtils.atan2(newTarget.y - y1, newTarget.x - x1));
 
-        Entity bullet = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotation))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
-                .addComponent(new CombatStatsComponent(1, 2))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
-        bullet.setScale(0.8f, 0.8f);
+        Entity bullet = makeBullet(rotation, newTarget, target, gameArea, "images/blood_ball.png");
+
         //centers the bullet to the source
         bullet.setPosition(
                 x1 - bullet.getScale().x / 2 + source.getScale().x / 2,
                 y1  - bullet.getScale().y / 2  + source.getScale().y / 2);
 
 
-        bullet.getComponent(PhysicsMovementComponent.class).setTarget(newTarget);
-        bullet.getComponent(PhysicsMovementComponent.class).setMoving(true);
-        bullet.getComponent(ColliderComponent.class).setSensor(true);
         gameArea.spawnEntity(bullet);
     }
 
@@ -75,7 +64,7 @@ public class EnemyBulletFactory {
         float x2 = target.getPosition().x;
         float y2 = target.getPosition().y;
 
-        Vector2 straightTarget = new Vector2(x2 - x1, y2 - y1); //straight through player
+        Vector2 straightTarget = new Vector2(x2 - x1, y2 - y1); //vector straight through player
 
         //Shifted up 45 degrees from the straight vector
         double upX = (Math.cos((Math.PI)/4) * straightTarget.x) - (Math.sin((Math.PI)/4) * straightTarget.y);
@@ -101,40 +90,12 @@ public class EnemyBulletFactory {
         float rotationUp = (MathUtils.radiansToDegrees * MathUtils.atan2(upRotate.y - y1, upRotate.x - x1));
         float rotationDown = (MathUtils.radiansToDegrees * MathUtils.atan2(downRotate.y - y1, downRotate.x - x1));
 
-        Entity bulletStraight = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotation))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
-                .addComponent(new CombatStatsComponent(1, 2))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
+        Entity bulletStraight = makeBullet(rotation, straightTarget, target, gameArea, "images/blood_ball.png");
 
-        Entity bulletUp = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotationUp))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
-                .addComponent(new CombatStatsComponent(1, 2))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
+        Entity bulletUp = makeBullet(rotationUp, upRotate, target, gameArea, "images/blood_ball.png");
 
-        Entity bulletDown = new Entity()
-                .addComponent(new TextureRenderComponent("images/blood_ball.png", rotationDown))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
-                .addComponent(new CombatStatsComponent(1, 2))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
+        Entity bulletDown = makeBullet(rotationDown, downRotate, target, gameArea, "images/blood_ball.png");
 
-
-        bulletStraight.setScale(0.8f, 0.8f);
-        bulletUp.setScale(0.8f, 0.8f);
-        bulletDown.setScale(0.8f, 0.8f);
 
         //centers the bullet to the source
         bulletStraight.setPosition(
@@ -149,22 +110,29 @@ public class EnemyBulletFactory {
                 x1 - bulletDown.getScale().x / 2 + source.getScale().x / 2,
                 y1  - bulletDown.getScale().y / 2  + source.getScale().y / 2);
 
-
-        bulletStraight.getComponent(PhysicsMovementComponent.class).setTarget(straightTarget);
-        bulletStraight.getComponent(PhysicsMovementComponent.class).setMoving(true);
-        bulletStraight.getComponent(ColliderComponent.class).setSensor(true);
-
-        bulletUp.getComponent(PhysicsMovementComponent.class).setTarget(upRotate);
-        bulletUp.getComponent(PhysicsMovementComponent.class).setMoving(true);
-        bulletUp.getComponent(ColliderComponent.class).setSensor(true);
-
-        bulletDown.getComponent(PhysicsMovementComponent.class).setTarget(downRotate);
-        bulletDown.getComponent(PhysicsMovementComponent.class).setMoving(true);
-        bulletDown.getComponent(ColliderComponent.class).setSensor(true);
-
         gameArea.spawnEntity(bulletStraight);
         gameArea.spawnEntity(bulletUp);
         gameArea.spawnEntity(bulletDown);
+    }
+
+    private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea, String imagePath) {
+        Entity bullet = new Entity()
+                .addComponent(new TextureRenderComponent(imagePath, rotation))
+                .addComponent(new PhysicsComponent())
+                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
+                .addComponent(new ColliderComponent())
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
+                .addComponent(new CombatStatsComponent(1, 2))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
+                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
+
+        bullet.setScale(0.8f, 0.8f);
+
+        bullet.getComponent(PhysicsMovementComponent.class).setTarget(destination);
+        bullet.getComponent(PhysicsMovementComponent.class).setMoving(true);
+        bullet.getComponent(ColliderComponent.class).setSensor(true);
+
+        return bullet;
     }
 
 }

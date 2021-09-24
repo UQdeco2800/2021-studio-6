@@ -557,12 +557,9 @@ public class ShopMenuDisplay extends UIComponent {
                 if (storeButtonClicked == null) {
                     storeButtonClicked = imageButton;
                 } else {
-                    if (imageButton.equals(storeButtonClicked)) {
-                        System.out.println("same stored button clicked");
-                    } else {
+                    if (!imageButton.equals(storeButtonClicked)) {
                         // store new button that is clicked and set check false to old button that
                         // was already clicked in the past
-                        System.out.println("diff button clicked");
                         storeButtonClicked.setChecked(false);
                         storeButtonClicked.setDisabled(false);
                         storeButtonClicked = imageButton;

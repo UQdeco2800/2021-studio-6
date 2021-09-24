@@ -119,7 +119,9 @@ public class PlayerFactory {
 
     if (playerManager.currentPlayerState() == null) {
       // set initial state of player when game starts for the very first time, load from config file
-      playerManager.createPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
+      // #TODO: This must be done whenever a game is started even if player loads a different config file.
+      // #TODO: This state will be used as a reset point in game when player decides to restart entire game
+      playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
               stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.currentGameLevel, stats.ability,
               stats.meleeFilePath, stats.meleeWeaponType, stats.armorType);
     } else {

@@ -23,6 +23,7 @@ import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.lighting.Lighting;
+import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
@@ -254,6 +255,9 @@ public class MainGameScreen extends ScreenAdapter {
       victory();
       return;
     }
+
+    // before disposing everything, update and store player's state
+    PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player);
     gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {

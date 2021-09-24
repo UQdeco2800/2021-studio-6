@@ -236,27 +236,24 @@ public class MainGameScreen extends ScreenAdapter {
       victory();
       return;
     }
-    gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (CurrentLevel == 2) {
       gameArea = new Level2(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-      gameArea.player.getEvents().trigger("resetPlayerMovements");
     } else if (CurrentLevel == 3) {
       gameArea = new Level3(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-      gameArea.player.getEvents().trigger("resetPlayerMovements");
     } else if (CurrentLevel % 1 == 0.5){
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
-      gameArea.player.getEvents().trigger("resetPlayerMovements");
     }
+    gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;

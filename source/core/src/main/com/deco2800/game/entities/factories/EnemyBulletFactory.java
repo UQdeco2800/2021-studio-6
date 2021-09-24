@@ -35,18 +35,7 @@ public class EnemyBulletFactory {
 
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
-        newTarget = newTarget.scl(100);
-        newTarget = newTarget.add(source.getPosition());
-
-        float rotation = (MathUtils.radiansToDegrees * MathUtils.atan2(newTarget.y - y1, newTarget.x - x1));
-
-        Entity bullet = makeBullet(rotation, newTarget, target, gameArea, "images/blood_ball.png");
-
-        //centers the bullet to the source
-        bullet.setPosition(
-                x1 - bullet.getScale().x / 2 + source.getScale().x / 2,
-                y1  - bullet.getScale().y / 2  + source.getScale().y / 2);
-
+        Entity bullet = makeBullet(rotateVector(newTarget, source, x1, y1), newTarget, target, gameArea, source, x1, y1, "images/blood_ball.png");
 
         gameArea.spawnEntity(bullet);
     }
@@ -76,43 +65,26 @@ public class EnemyBulletFactory {
         double downY = (Math.sin(-(Math.PI)/4) * straightTarget.x) + (Math.cos(-(Math.PI)/4) * straightTarget.y);
         Vector2 downRotate = new Vector2( (float) downX, (float) downY);
 
+        Entity bulletStraight = makeBullet(rotateVector(straightTarget, source, x1, y1), straightTarget, target, gameArea,
+                source, x1, y1, "images/blood_ball.png");
 
-        straightTarget = straightTarget.scl(100);
-        straightTarget = straightTarget.add(source.getPosition());
+        Entity bulletUp = makeBullet(rotateVector(upRotate, source, x1, y1), upRotate, target, gameArea,
+                source, x1, y1, "images/blood_ball.png");
 
-        downRotate = downRotate.scl(100);
-        downRotate = downRotate.add(source.getPosition());
-
-        upRotate = upRotate.scl(100);
-        upRotate = upRotate.add(source.getPosition());
-
-        float rotation = (MathUtils.radiansToDegrees * MathUtils.atan2(straightTarget.y - y1, straightTarget.x - x1));
-        float rotationUp = (MathUtils.radiansToDegrees * MathUtils.atan2(upRotate.y - y1, upRotate.x - x1));
-        float rotationDown = (MathUtils.radiansToDegrees * MathUtils.atan2(downRotate.y - y1, downRotate.x - x1));
-
-        Entity bulletStraight = makeBullet(rotation, straightTarget, target, gameArea, "images/blood_ball.png");
-
-        Entity bulletUp = makeBullet(rotationUp, upRotate, target, gameArea, "images/blood_ball.png");
-
-        Entity bulletDown = makeBullet(rotationDown, downRotate, target, gameArea, "images/blood_ball.png");
-
-
-        //centers the bullet to the source
-        bulletStraight.setPosition(
-                x1 - bulletStraight.getScale().x / 2 + source.getScale().x / 2,
-                y1  - bulletStraight.getScale().y / 2  + source.getScale().y / 2);
-
-        bulletUp.setPosition(
-                x1 - bulletUp.getScale().x / 2 + source.getScale().x / 2,
-                y1  - bulletUp.getScale().y / 2  + source.getScale().y / 2);
-
-        bulletDown.setPosition(
-                x1 - bulletDown.getScale().x / 2 + source.getScale().x / 2,
-                y1  - bulletDown.getScale().y / 2  + source.getScale().y / 2);
+        Entity bulletDown = makeBullet(rotateVector(downRotate, source, x1, y1), downRotate, target, gameArea,
+                source, x1, y1, "images/blood_ball.png");
 
         gameArea.spawnEntity(bulletStraight);
         gameArea.spawnEntity(bulletUp);
         gameArea.spawnEntity(bulletDown);
+    }
+
+
+    private static float rotateVector(Vector2 rotate, Entity source, float x_1, float y_1) {
+        rotate = rotate.scl(100);
+        rotate = rotate.add(source.getPosition());
+
+        return (MathUtils.radiansToDegrees * MathUtils.atan2(rotate.y - y_1, rotate.x - x_1));
     }
 
     /**
@@ -124,7 +96,8 @@ public class EnemyBulletFactory {
      * @param imagePath the image path for the bullet texture
      * @return the bullet entity
      */
-    private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea, String imagePath) {
+    private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea,
+                                     Entity source, float x_1, float y_1, String imagePath) {
         Entity bullet = new Entity()
                 .addComponent(new TextureRenderComponent(imagePath, rotation))
                 .addComponent(new PhysicsComponent())
@@ -140,6 +113,10 @@ public class EnemyBulletFactory {
         bullet.getComponent(PhysicsMovementComponent.class).setTarget(destination);
         bullet.getComponent(PhysicsMovementComponent.class).setMoving(true);
         bullet.getComponent(ColliderComponent.class).setSensor(true);
+
+        bullet.setPosition(
+                x_1 - bullet.getScale().x / 2 + source.getScale().x / 2,
+                y_1  - bullet.getScale().y / 2  + source.getScale().y / 2);
 
         return bullet;
     }

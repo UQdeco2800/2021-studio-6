@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
@@ -14,6 +15,9 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.items.Abilities;
 import com.deco2800.game.items.Items;
+import com.deco2800.game.lighting.ChainLightComponent;
+import com.deco2800.game.lighting.ConeLightComponent;
+import com.deco2800.game.lighting.DirectionalLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.memento.Player;
 import com.deco2800.game.memento.PlayerStateManager;
@@ -108,7 +112,7 @@ public class PlayerFactory {
             .addComponent(new PlayerHudAnimationController())
             .addComponent(new PlayerWeaponAnimationController())
             .addComponent(new PlayerHealthAnimationController())
-            .addComponent(new PointLightComponent(Colors.get("RED"), 10f, 0, 0));
+            .addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 0, 0, 90f, 45f));
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

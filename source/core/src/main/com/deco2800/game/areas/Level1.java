@@ -42,6 +42,8 @@ public class Level1 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
 
   private static final float WALL_WIDTH = 0.1f;
+  private static final String npcSampleAtlasFilename = "images/npc_movement/npc_movement.atlas";
+  private static final String npcTut1AtlasFilename = "images/npc_movement/tut_npc1.atlas";
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
@@ -73,27 +75,28 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/iso_grass_3.png",
     "images/gunman.png",
-    "images/eye.png",
-    "images/blood_ball.png",
+    "images/Enemy_Assets/LongRangeEnemy/eye.png",
+    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
     "images/player.png",
-    "images/large_enemy_pix.png",
-    "images/largeEnemy.png",
+    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
-    "images/level_1/forest_sign.png"
+    "images/level_1/forest_sign.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"
   };
 
   private static final String[] cityTextureAtlases = {
       "images/terrain_iso_grass.atlas",
-      "images/largeEnemy.atlas",
+      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
       "images/ghost.atlas",
       "images/ghostKing.atlas",
-      "images/small_enemy.atlas",
+      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
       "images/Player_Animations/player_movement.atlas",
-      "images/spawnerEnemy.atlas",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
       "images/player.atlas",
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
@@ -103,7 +106,9 @@ public class Level1 extends GameArea {
       "images/weapon/dagger.atlas",
       "images/weapon/katana.atlas",
       "images/weapon/greataxe.atlas",
-      "images/weapon/dualdagger.atlas"
+      "images/weapon/dualdagger.atlas",
+      npcSampleAtlasFilename,
+      npcTut1AtlasFilename
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
@@ -142,6 +147,9 @@ public class Level1 extends GameArea {
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
+
+    spawnNPC();
+    spawnNPC1();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -457,6 +465,18 @@ public class Level1 extends GameArea {
   private void spawnIntroDialogue(){
     StoryManager.getInstance().loadCutScene(StoryNames.PROLOGUE);
     StoryManager.getInstance().displayStory();
+  }
+
+  private void spawnNPC() {
+    GridPoint2 pos = new GridPoint2(10,2);
+    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TOWN_GUIDE, npcSampleAtlasFilename, true);
+    spawnEntityAt(npc, pos, true, true);
+  }
+
+  private void spawnNPC1() {
+    GridPoint2 pos = new GridPoint2(12,8);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, false);
+    spawnEntityAt(npcTut, pos, true, true);
   }
 
   private void playMusic() {

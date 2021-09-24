@@ -75,7 +75,7 @@ public class SettingsMenuDisplay extends UIComponent {
       rootTable.setFillParent(true);
     }
 
-    rootTable.align(Align.center | Align.bottom);
+    rootTable.align(Align.center | Align.center);
     rootTable.add(title).expandX().bottom();
 
     rootTable.row().padTop(30f);
@@ -83,7 +83,6 @@ public class SettingsMenuDisplay extends UIComponent {
 
     rootTable.row();
     rootTable.add(menuBtns).padTop(30f);
-    rootTable.padBottom(90f);
 
     stage.addActor(rootTable);
   }

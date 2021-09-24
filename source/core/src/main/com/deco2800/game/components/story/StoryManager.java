@@ -2,10 +2,7 @@ package com.deco2800.game.components.story;
 
 
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.story.stories.EpilogueCutScene;
-import com.deco2800.game.components.story.stories.IntroDialogue;
-import com.deco2800.game.components.story.stories.PrologueCutScene;
-import com.deco2800.game.components.story.stories.TestCutscene;
+import com.deco2800.game.components.story.stories.*;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +32,8 @@ public class StoryManager extends Component {
         scenesConfigs.put(StoryNames.INTRO_DIALOGUE, new IntroDialogue());
         scenesConfigs.put(StoryNames.PROLOGUE, new PrologueCutScene());
         scenesConfigs.put(StoryNames.EPILOGUE, new EpilogueCutScene());
+        scenesConfigs.put(StoryNames.TOWN_GUIDE, new TownGuideDialogue());
+        scenesConfigs.put(StoryNames.TUTORIAL_GUIDE, new TutorialDiologue());
     }
 
     @Override
@@ -78,6 +77,9 @@ public class StoryManager extends Component {
         }
 
         prevPauseState = ServiceLocator.getTimeSource().isPaused();
+        if (ServiceLocator.getGameArea() != null) {
+            ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
+        }
         ServiceLocator.getTimeSource().pause();
 
         displaying = true;

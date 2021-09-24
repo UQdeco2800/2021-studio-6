@@ -71,7 +71,9 @@ public class GdxGame extends Game {
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case MAIN_GAME:
-        return new MainGameScreen(this);
+        return new MainGameScreen(this, GameType.RESTART_OR_START);
+      case REVERT_CHECKPOINT:
+        return new MainGameScreen(this, GameType.REVERT_CLOSEST_CHECKPOINT);
       case SETTINGS:
         return new SettingsScreen(this);
       case GAME_OVER:
@@ -82,7 +84,11 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, GAME_OVER
+    MAIN_MENU, MAIN_GAME, SETTINGS, GAME_OVER, REVERT_CHECKPOINT
+  }
+
+  public enum GameType {
+    RESTART_OR_START, REVERT_CLOSEST_CHECKPOINT
   }
 
   /**

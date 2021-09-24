@@ -15,7 +15,7 @@ import java.util.List;
 public class PlayerStateManager {
     private static final Logger logger = LoggerFactory.getLogger(PlayerStateManager.class);
 
-    private static final int MOST_RECENT_PLAYER_STATE_INDEX = 0;
+    private static final String MEMENTO_MESSAGE_INITIAL_STATE = "Player state at level 1";
     private static PlayerStateManager manager = null;
     private static final PlayerCaretaker caretaker = new PlayerCaretaker();
     private static Player playerState = null;
@@ -23,9 +23,6 @@ public class PlayerStateManager {
 
     // this id is used to track player - can be extended to track different objects in game
     private static final int playerID = 0;
-
-    // used to track player's different states during game
-    private static List<String> mementoMessages = new ArrayList();
 
     public static PlayerStateManager getInstance() {
         if (manager == null) {
@@ -64,8 +61,7 @@ public class PlayerStateManager {
                 .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel);
         trackPlayerState(playerState);
         playerMemento = playerState.createMemento();
-        caretaker.addMemento(playerState.getId(), "Player state at level 1", playerMemento);
-        mementoMessages.add("Player state at level 1");
+        caretaker.addMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE, playerMemento);
     }
 
     public void addAndUpdatePlayerState(Entity player, double gameLevel) {
@@ -95,5 +91,10 @@ public class PlayerStateManager {
 
     public void trackPlayerState(Player playerState) {
         logger.info(playerState.toString());
+    }
+
+    public void restorePlayerState() {
+        PlayerMemento initialPlayerMemento = caretaker.getMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE);
+        playerState.restore(initialPlayerMemento);
     }
 }

@@ -23,6 +23,7 @@ import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.lighting.Lighting;
+import com.deco2800.game.memento.Player;
 import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
@@ -71,7 +72,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 
 
-  public MainGameScreen(GdxGame game) {
+  public MainGameScreen(GdxGame game, GdxGame.GameType gameType) {
     this.game = game;
 
     // Sets background to light yellow
@@ -103,14 +104,40 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new Level1(terrainFactory);
-    gameArea.create();
-    ServiceLocator.registerGameArea(gameArea);
 
-    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+    doGameLevelLogic(gameType);
+  }
 
-    // this is used for when player collides with NPC shopkeeper
-    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+  /**
+   * This method does logic to decide which level would be generated based on whether game is restarted, checkpoint
+   * is being reverted or game will proceed to a new level
+   *
+   * @param
+   */
+  private void doGameLevelLogic(GdxGame.GameType gameType) {
+    // when game is started for the first time or it is restarted by user
+    if (gameType == GdxGame.GameType.RESTART_OR_START) {
+
+      // ensure player states are restored to its original first state if it has been created before
+      if (PlayerStateManager.getInstance().currentPlayerState() != null) {
+        PlayerStateManager.getInstance().restorePlayerState();
+      }
+      gameArea = new Level1(terrainFactory);
+      gameArea.create();
+      ServiceLocator.registerGameArea(gameArea);
+      this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+      this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+
+      // revert checkpoint initiated
+    } else {
+      Player currentPlayerState = PlayerStateManager.getInstance().currentPlayerState();
+      logger.info("Reverting to closest checkpoint with this information - " + currentPlayerState);
+
+      // level where most recent checkpoint was saved for player will be used to determine which level will be
+      // generated
+      gameLevel = currentPlayerState.getCurrentGameLevel();
+      generateNewLevel(true);
+    }
   }
 
   /**
@@ -139,7 +166,7 @@ public class MainGameScreen extends ScreenAdapter {
     if (levelChange) {
       timeSource = ServiceLocator.getTimeSource();
       timeSource.pause();
-      generateNewLevel();
+      generateNewLevel(false);
       timeSource.unpause();
     }
     physicsEngine.update();
@@ -246,18 +273,22 @@ public class MainGameScreen extends ScreenAdapter {
     levelChange = true;
   }
 
-  public void generateNewLevel() {
-    gameLevel += 0.5;
+  public void generateNewLevel(boolean reverting) {
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+
+    // before disposing everything, update and store player's state - this only occurs when game
+    // is not reverting to player's most recent checkpoint (going back in game time in a way)
+    if (!reverting) {
+      gameLevel += 0.5;
+      PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
+    }
 
     if (gameLevel == 4) {
       victory();
       return;
     }
 
-    // before disposing everything, update and store player's state
-    PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
     gameArea.player.getEvents().trigger("dispose");
     gameArea.dispose();
     if (gameLevel == 2) {

@@ -35,10 +35,10 @@ public class PlayerHealthAnimationController  extends Component{
    *              Calculated and triggered from the PlayerCombatStatsComponent.
    */
   void changeHealthAnimation(int index) {
-      if (!hit) {
-        entity.getEvents().trigger("firstHit");
-      }
-      hit = true;
+    if (!hit) {
+      entity.getEvents().trigger("firstHit");
+    }
+    hit = true;
     healthAnimator.startAnimation("health" + index);
   }
 

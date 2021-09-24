@@ -67,10 +67,13 @@ public class MainGameScreen extends ScreenAdapter {
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
   private final boolean LIGHTINGON = false;
-  private GameArea gameArea;
+  private GameArea gameArea = null;
   private Entity ui;
-
-
+  private final int LEVEL_1 = 1;
+  private final int LEVEL_2 = 2;
+  private final int LEVEL_3 = 3;
+  private final int LEVEL_4 = 4;
+  private final double LEVEL_SAVEHOUSE = 0.5;
 
   public MainGameScreen(GdxGame game, GdxGame.GameType gameType) {
     this.game = game;
@@ -105,7 +108,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    doGameLevelLogic(gameType);
+    manageGameLevel(gameType);
   }
 
   /**
@@ -114,7 +117,7 @@ public class MainGameScreen extends ScreenAdapter {
    *
    * @param
    */
-  private void doGameLevelLogic(GdxGame.GameType gameType) {
+  private void manageGameLevel(GdxGame.GameType gameType) {
     // when game is started for the first time or it is restarted by user
     if (gameType == GdxGame.GameType.RESTART_OR_START) {
 
@@ -273,40 +276,49 @@ public class MainGameScreen extends ScreenAdapter {
     levelChange = true;
   }
 
+  /**
+   * This method generates a new level whenever player enters or leaves safehouse. It is used to not only
+   * generate specific levels with different terrains etc. but it is also used to manage logic of when to
+   * revert player back to the latest saved state checkpoint
+   * @param reverting true when user decided to revert game to latest saved checkpoint and false when game
+   *                  is to generate next new level
+   */
   public void generateNewLevel(boolean reverting) {
-    Vector2 walkingDirection
-            = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
-
     // before disposing everything, update and store player's state - this only occurs when game
     // is not reverting to player's most recent checkpoint (going back in game time in a way)
     if (!reverting) {
       gameLevel += 0.5;
       PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
     }
+    logger.info("Generating game level " + gameLevel);
 
-    if (gameLevel == 4) {
+    // TODO: This should not be here as this should be for boss fight
+    if (gameLevel == LEVEL_4) {
       victory();
       return;
     }
 
-    gameArea.player.getEvents().trigger("dispose");
-    gameArea.dispose();
-    if (gameLevel == 2) {
-      gameArea = new Level2(terrainFactory);
-      gameArea.create();
-      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-              .walkDirection.add(walkingDirection);
-    } else if (gameLevel == 3) {
-      gameArea = new Level3(terrainFactory);
-      gameArea.create();
-      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-              .walkDirection.add(walkingDirection);
-    } else if (gameLevel % 1 == 0.5){
-      gameArea = new SafehouseGameArea(terrainFactory);
-      gameArea.create();
-      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-              .walkDirection.add(walkingDirection);
+    // when game reverts to closest checkpoint, gameArea will already be disposed of
+    if (gameArea != null) {
+      gameArea.player.getEvents().trigger("dispose");
+      gameArea.dispose();
     }
+
+    // user may want to revert to closest checkpoint on level 1
+    if (gameLevel == LEVEL_1) {
+      gameArea = new Level1(terrainFactory);
+
+    } else if (gameLevel == LEVEL_2) {
+      gameArea = new Level2(terrainFactory);
+
+    } else if (gameLevel == LEVEL_3) {
+      gameArea = new Level3(terrainFactory);
+
+    } else {
+      gameArea = new SafehouseGameArea(terrainFactory);
+    }
+    gameArea.create();
+    gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;

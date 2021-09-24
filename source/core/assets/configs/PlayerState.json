@@ -12,5 +12,5 @@
   "meleeWeaponType": "SWORD",
   "armorType": "NONE",
   "meleeFilePath": "configs/Sword.json",
-  "currentGameLevel": 0
+  "currentGameLevel": 1
 }

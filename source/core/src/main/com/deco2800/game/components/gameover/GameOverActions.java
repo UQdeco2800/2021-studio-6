@@ -26,6 +26,24 @@ public class GameOverActions extends Component {
     entity.getEvents().addListener("restart", this::onRestart);
     entity.getEvents().addListener("menu", this::onMenu);
     entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("revertLastCheckpoint", this::onRevertLastCheckpoint);
+  }
+
+  /**
+   * Swaps to the main game screen
+   */
+  private void onRevertLastCheckpoint() {
+    logger.info("Revert game to last checkpoint");
+    if (!loading) {
+      loading = true;
+      // restarts the game after the button click sound has finished
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          game.setScreen(GdxGame.ScreenType.REVERT_CHECKPOINT);
+        }
+      }, BUTTON_CLICK_DURATION);
+    }
   }
 
   /**

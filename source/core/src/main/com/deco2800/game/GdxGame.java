@@ -88,7 +88,7 @@ public class GdxGame extends Game {
   }
 
   public enum GameType {
-    RESTART_OR_START, REVERT_CLOSEST_CHECKPOINT
+    RESTART_OR_START, REVERT_CLOSEST_CHECKPOINT, GENERATE_NEXT_LEVEL
   }
 
   /**

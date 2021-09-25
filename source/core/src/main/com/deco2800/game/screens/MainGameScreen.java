@@ -11,7 +11,6 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
-import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.shopmenu.ShopMenuDisplay;
 import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.components.story.StoryManager;
@@ -60,6 +59,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
   private double gameLevel = 1;
   public static boolean levelChange = false;
+  private static boolean revert = false;
   private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
@@ -128,16 +128,21 @@ public class MainGameScreen extends ScreenAdapter {
       this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
 
     } else {
-      // revert player to closest checkpoint - will take player to most recent safehouse and if player is still
-      // in level 1, player will be spawned in level 1
-      PlayerStateManager.getInstance().restorePlayerStateToClosestSafehouse();
-      Player currentPlayerState = PlayerStateManager.getInstance().currentPlayerState();
-      logger.info("Reverting to closest checkpoint with this information - " + currentPlayerState);
 
-      // level where most recent checkpoint was saved for player will be used to determine which level will be
-      // generated
+      // revert player to closest checkpoint - will take player to most recent safehouse and if player is still
+      // in level 1, player will be spawned in level 1. PLAYER SHOULD NEVER DIE IN SAFEHOUSE
+      if (gameType == GdxGame.GameType.REVERT_CLOSEST_CHECKPOINT) {
+        revert = true;
+        PlayerStateManager.getInstance().restorePlayerStateToClosestSafehouse();
+        logger.info("Player state is reverted");
+      } else {
+        revert = false;
+        logger.info("Player state is carried forward");
+      }
+
+      Player currentPlayerState = PlayerStateManager.getInstance().currentPlayerState();
       gameLevel = currentPlayerState.getCurrentGameLevel();
-      generateNewLevel(true);
+      generateNewLevel(revert);
     }
   }
 

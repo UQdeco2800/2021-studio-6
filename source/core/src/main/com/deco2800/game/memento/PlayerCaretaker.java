@@ -35,7 +35,7 @@ public class PlayerCaretaker {
             }
 
             mementoMessageMap.put(mementoMessage, memento);
-            logger.info("Player ID = " + memento.getId() +  " stored with message = " + mementoMessage + ".\n");
+            logger.debug("Player ID = " + memento.getId() +  " stored with message = " + mementoMessage + ".\n");
         }
     }
 
@@ -54,9 +54,9 @@ public class PlayerCaretaker {
                 memento = mementoMessageMap.get(mementoMessage);
 
                 if (memento != null) {
-                    logger.info("Player ID = " + memento.getId() +  " restored with message = " + mementoMessage + ".\n");
+                    logger.debug("Player ID = " + memento.getId() +  " restored with message = " + mementoMessage + ".\n");
                 } else {
-                    logger.info("Not able ot find memento");
+                    logger.debug("Not able ot find memento");
                 }
             }
         }

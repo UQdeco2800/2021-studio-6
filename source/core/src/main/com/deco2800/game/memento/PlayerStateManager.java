@@ -18,6 +18,9 @@ public class PlayerStateManager {
     private static final Logger logger = LoggerFactory.getLogger(PlayerStateManager.class);
 
     private static final String MEMENTO_MESSAGE_INITIAL_STATE = "Player state at level 1";
+    private static final String MEMENTO_MESSAGE_CHECKPOINT = "Player state at level ";
+    private static int LEVEL_ONE = 1;
+    private static double LEVEL_INCREMENT = 0.5;
     private static PlayerStateManager manager = null;
     private static final PlayerCaretaker caretaker = new PlayerCaretaker();
     private static Player playerState = null;
@@ -26,6 +29,10 @@ public class PlayerStateManager {
     // this id is used to track player - can be extended to track different objects in game
     private static final int playerID = 0;
 
+    /**
+     * Returns single instance of singletone
+     * @return player state manager instance
+     */
     public static PlayerStateManager getInstance() {
         if (manager == null) {
             manager = new PlayerStateManager();
@@ -33,6 +40,10 @@ public class PlayerStateManager {
         return manager;
     }
 
+    /**
+     * Acquire current player state
+     * @return most recent created player state
+     */
     public Player currentPlayerState() {
         return playerState;
     }
@@ -112,5 +123,20 @@ public class PlayerStateManager {
     public void restorePlayerState() {
         PlayerMemento initialPlayerMemento = caretaker.getMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE);
         playerState.restore(initialPlayerMemento);
+    }
+
+    /**
+     * Reverts player state to the most recent safehouse visited before current level where player died. This
+     * method will only be called when player dies in levels that are not in safehouse. This is assuming player
+     * cannot die in safehouse and should not be able to anyway. This function is not meant to be used when or if
+     * player dies in safehouse - and this should not happen either way which is not the intention of the game
+     */
+    public void restorePlayerStateToClosestSafehouse() {
+        if (playerState.getCurrentGameLevel() > LEVEL_ONE) {
+            double safehouseLevel = playerState.getCurrentGameLevel() - LEVEL_INCREMENT;
+            String mementoMessageSafehouse = MEMENTO_MESSAGE_CHECKPOINT + safehouseLevel;
+            PlayerMemento safehousePlayerMemento = caretaker.getMemento(playerState.getId(), mementoMessageSafehouse);
+            playerState.restore(safehousePlayerMemento);
+        }
     }
 }

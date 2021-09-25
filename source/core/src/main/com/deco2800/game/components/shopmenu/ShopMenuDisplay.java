@@ -16,6 +16,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.entities.configs.ShopItemInfoConfig;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.items.Abilities;
 import com.deco2800.game.items.Items;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -89,16 +90,17 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float BANDAGE_SIDE_LENGTH = 50f;
     private static final int NO_FUNDS_INDEX = 0;
     private static final int EQUIPPED_INDEX = 1;
+    public static final int ADD_BANDAGE = 1;
     private static final int PURCHASED_INDEX = 2;
     private ImageButton swordImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton;
-    private ArrayList<ImageButton> imageButtons = new ArrayList<>();
+    private final ArrayList<ImageButton> imageButtons = new ArrayList<>();
     private int itemPrice, itemDefenceLevel = 0;
     private String itemName;
     private ImageButton storeButtonClicked = null;
     // values below will be checked and will load values from config file that saves player's states
     private int playerAmmo, playerGold, playerBandage, playerDefenceLevel;
-    private String playerAbility, playerMeleeWeaponType, playerArmorType, playerMeleeFilePath;
+    private String playerAbility, playerMeleeWeaponType, playerArmorType;
     private Items typeOfItem;
     private Stack feedbackStack;
     private Entity playerState;
@@ -522,14 +524,63 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void isItemPurchasable() {
         hideFeedbackLabels();
-        if (playerMeleeWeaponType.equals(itemName) || playerArmorType.equals(itemName) ||
-                playerAbility.equals(itemName)) {
-            feedbackStack.getChild(EQUIPPED_INDEX).setVisible(true);
+        if (playerMeleeWeaponType.equals(itemName) || typeOfItem == Items.SHIELDS || playerAbility.equals(itemName)) {
+            // player may have different types of armor, and player's armor may be worse than
+            // armor item clicked in shop which player can then purchase - there needs to be a separate logic for this
+            if (typeOfItem == Items.SHIELDS) {
+                if (itemDefenceLevel <= playerDefenceLevel) {
+                    feedbackStack.getChild(EQUIPPED_INDEX).setVisible(true);
+                } else {
+                    if (playerGold >= itemPrice) {
+                        feedbackStack.getChild(PURCHASED_INDEX).setVisible(true);
+                        processPurchasedItem();
+                    } else {
+                        feedbackStack.getChild(NO_FUNDS_INDEX).setVisible(true);
+                    }
+                }
+
+            } else {
+                feedbackStack.getChild(EQUIPPED_INDEX).setVisible(true);
+            }
+
         } else if (playerGold >= itemPrice) {
             feedbackStack.getChild(PURCHASED_INDEX).setVisible(true);
+            processPurchasedItem();
+
         } else {
             feedbackStack.getChild(NO_FUNDS_INDEX).setVisible(true);
         }
+    }
+
+    /**
+     * Process purchased item to update player data. This method can only be called when player has sufficient amount
+     * of coins to purchase a clicked item
+     */
+    private void processPurchasedItem() {
+        if (typeOfItem == Items.MELEE_WEAPONS) {
+            // melee weapon needs to be registered in item enum file to be valid
+            if (Items.checkMeleeWeapon(itemName)) {
+                String weaponConfigFile = Items.getWeaponFilepath(itemName);
+                playerState.getComponent(PlayerMeleeAttackComponent.class).setWeapon(weaponConfigFile);
+            }
+        } else if (typeOfItem == Items.SHIELDS) {
+            // armor type need to registered just like melee weapon
+            if (Items.checkShieldType(itemName)) {
+                int defenceLevel = Items.getDefenceLevel(itemName);
+                playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
+            }
+        } else {
+            // other item type includes abilities and bandages
+            if (Abilities.checkAbility(itemName)) {
+                Abilities ability = Abilities.getAbility(itemName);
+                playerState.getComponent(PlayerAbilitiesComponent.class).setAbility(ability);
+            } else if (itemName.equals(Items.BANDAGE.toString())) {
+                playerState.getComponent(InventoryComponent.class).addBandages(ADD_BANDAGE);
+            }
+        }
+        int updatePlayerGold = playerGold - itemPrice;
+        playerState.getComponent(InventoryComponent.class).setGold(updatePlayerGold);
+        loadPlayerData();
     }
 
     /**
@@ -555,7 +606,7 @@ public class ShopMenuDisplay extends UIComponent {
                 invincibleImageButton);
         imageButtons.addAll(imageButtonList);
 
-        for (ImageButton imageButton : imageButtonList) {
+        for (ImageButton imageButton : imageButtons) {
             if (imageButton.isChecked()) {
                 if (storeButtonClicked == null) {
                     storeButtonClicked = imageButton;
@@ -573,10 +624,10 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
-     * This is used to load player's most current state and update all relevant labels.
+     * This is used to load player's most current data and update all relevant labels on shop popup box.
      */
     private void loadPlayerData() {
-        Entity playerState = ServiceLocator.getGameArea().player;
+        playerState = ServiceLocator.getGameArea().player;
         playerAmmo = playerState.getComponent(InventoryComponent.class).getAmmo();
         playerGold = playerState.getComponent(InventoryComponent.class).getGold();
         playerBandage = playerState.getComponent(InventoryComponent.class).getBandages();
@@ -585,7 +636,6 @@ public class ShopMenuDisplay extends UIComponent {
         playerMeleeWeaponType = playerState.getComponent(PlayerMeleeAttackComponent.class).getMeleeWeaponType()
                 .toString();
         playerArmorType = Items.getArmorType(playerDefenceLevel);
-        playerMeleeFilePath = playerState.getComponent(PlayerMeleeAttackComponent.class).getWeapon();
 
         CharSequence bandageText = String.format(" x %d", playerBandage);
         CharSequence ammoText = String.format(" x %d", playerAmmo);

@@ -30,6 +30,17 @@ public enum Items {
         }
     }
 
+    public static int getDefenceLevel(String shield) {
+        switch (shield) {
+            case "ARMOUR":
+                return 2;
+            case "HELMET":
+                return 1;
+            default:
+                return 0;
+        }
+    }
+
     public static String getWeaponFilepath(String meleeWeapon) {
         switch (meleeWeapon) {
             case "AXE":
@@ -62,11 +73,24 @@ public enum Items {
         }
     }
 
-    public boolean checkMeleeWeapon(String meleeWeapon) {
+    public static boolean checkMeleeWeapon(String meleeWeapon) {
         switch (meleeWeapon) {
             case "SWORD":
             case "AXE":
             case "DAGGER":
+            case "KATANA":
+            case "GREATAXE":
+            case "DUALDAGGER":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean checkShieldType(String shield) {
+        switch (shield) {
+            case "ARMOUR":
+            case "HELMET":
                 return true;
             default:
                 return false;

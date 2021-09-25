@@ -16,7 +16,7 @@ public enum Abilities {
         }
     }
 
-    public boolean checkAbility(String ability) {
+    public static boolean checkAbility(String ability) {
         switch (ability) {
             case "LONG_DASH":
             case "INVINCIBILITY":

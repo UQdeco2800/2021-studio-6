@@ -110,7 +110,7 @@ public class PlayerFactory {
                     .addComponent(new PlayerHudAnimationController())
                     .addComponent(new PlayerWeaponAnimationController())
                     .addComponent(new PlayerHealthAnimationController())
-                    .addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 0, 0, 90f, 45f));
+                    .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0, 0));
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     return player;

@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
@@ -157,6 +158,24 @@ public class ObstacleFactory {
     building.getComponent(TextureRenderComponent.class).scaleEntity();
     building.scaleHeight(10f);
     return building;
+  }
+
+  /**
+   * Creates a torch entity, lightens the background of the map.
+   * @return entity
+   */
+  public static Entity createTorch() {
+    Entity torch =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent())
+                    .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f));
+
+    torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    torch.getComponent(TextureRenderComponent.class).scaleEntity();
+    torch.scaleHeight(1.0f);
+    return torch;
   }
 
   private ObstacleFactory() {

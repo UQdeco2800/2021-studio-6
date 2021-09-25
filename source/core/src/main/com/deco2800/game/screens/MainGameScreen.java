@@ -57,7 +57,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private final boolean LIGHTINGON = false;
+  private final boolean LIGHTINGON = true;
   private GameArea gameArea;
   private Entity ui;
 

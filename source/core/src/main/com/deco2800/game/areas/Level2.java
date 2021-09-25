@@ -59,7 +59,8 @@ public class Level2 extends GameArea {
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
-    "images/hud/healthFull.png"
+    "images/hud/healthFull.png",
+    "images/level_2/level2_torch_frame1_ver1.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -99,6 +100,7 @@ public class Level2 extends GameArea {
     spawnSafehouse();
     spawnCobweb();
     spawnBush();
+    spawnTorch();
 
     player = spawnPlayer();
     spawnBullet();
@@ -458,6 +460,17 @@ public class Level2 extends GameArea {
       int randomCoinQuantity = RandomUtils.randomInt(5);
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, coinSpawnLocations[i], true, false);
+    }
+  }
+
+  private void spawnTorch() {
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(4,7)
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createTorch();
+      spawnEntityAt(bush, spawnLocations[i], true, false);
     }
   }
 

@@ -8,6 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.player.InventoryComponent;
+import com.deco2800.game.components.player.PlayerAbilitiesComponent;
+import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.entities.configs.ShopItemInfoConfig;
 import com.deco2800.game.files.FileLoader;
@@ -43,8 +48,6 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String HELMET_DOWN_IMAGE_FILE_PATH = "images/playeritems/halmet.png";
     private static final String TORCH_UP_IMAGE_FILE_PATH = "images/playeritems/tourch/tourch.png";
     private static final String TORCH_DOWN_IMAGE_FILE_PATH = "images/playeritems/tourch/tourch.png";
-    private static final String AMMO_UP_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
-    private static final String AMMO_DOWN_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
     private static final String DASH_UP_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
     private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
     private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
@@ -93,22 +96,21 @@ public class ShopMenuDisplay extends UIComponent {
     private int itemPrice, itemDefenceLevel = 0;
     private String itemName;
     private ImageButton storeButtonClicked = null;
-    private PlayerConfig playerState;
     // values below will be checked and will load values from config file that saves player's states
-    private int playerAmmo, playerGold, playerBandage, playerDefenceLevel, playerWoundState, playerBaseAttack,
-            playerBaseRangedAttack, playerHealth;
-    private String playerAbility, playerMeleeWeaponType, playerArmorType, playerFavColor, playerMeleeFilePath;
+    private int playerAmmo, playerGold, playerBandage, playerDefenceLevel;
+    private String playerAbility, playerMeleeWeaponType, playerArmorType, playerMeleeFilePath;
     private Items typeOfItem;
     private Stack feedbackStack;
+    private Entity playerState;
 
     public ShopMenuDisplay(GdxGame game) {
         this.game = game;
+
     }
 
     @Override
     public void create() {
         super.create();
-        loadPlayerState();
         addActors();
 
         entity.getEvents().addListener("toggleShopBox", this::toggleShopBox);
@@ -125,6 +127,7 @@ public class ShopMenuDisplay extends UIComponent {
         ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
 
         if (!isEnabled) {
+            loadPlayerData();
             timeSource.pause();
             container.setVisible(true);
             background.setVisible(true);
@@ -570,23 +573,26 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
-     * This is used to load player's most current state. This method is temporary for testing purposes
-     * for now as the buying system will need to update player's state when a player buys an item, ability or weapon.
+     * This is used to load player's most current state and update all relevant labels.
      */
-    private void loadPlayerState() {
-        playerState = FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
-        playerAmmo = playerState.ammo;
-        playerGold = playerState.gold;
-        playerBandage = playerState.bandages;
-        playerDefenceLevel = playerState.defenceLevel;
-        playerAbility = playerState.ability;
-        playerMeleeWeaponType = playerState.meleeWeaponType;
-        playerArmorType = playerState.armorType;
-        playerWoundState = playerState.woundState;
-        playerBaseAttack = playerState.baseAttack;
-        playerBaseRangedAttack = playerState.baseRangedAttack;
-        playerHealth = playerState.health;
-        playerMeleeFilePath = playerState.meleeFilePath;
+    private void loadPlayerData() {
+        Entity playerState = ServiceLocator.getGameArea().player;
+        playerAmmo = playerState.getComponent(InventoryComponent.class).getAmmo();
+        playerGold = playerState.getComponent(InventoryComponent.class).getGold();
+        playerBandage = playerState.getComponent(InventoryComponent.class).getBandages();
+        playerDefenceLevel = playerState.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel();
+        playerAbility = playerState.getComponent(PlayerAbilitiesComponent.class).getAbility().toString();;
+        playerMeleeWeaponType = playerState.getComponent(PlayerMeleeAttackComponent.class).getMeleeWeaponType()
+                .toString();
+        playerArmorType = Items.getArmorType(playerDefenceLevel);
+        playerMeleeFilePath = playerState.getComponent(PlayerMeleeAttackComponent.class).getWeapon();
+
+        CharSequence bandageText = String.format(" x %d", playerBandage);
+        CharSequence ammoText = String.format(" x %d", playerAmmo);
+        CharSequence coinText = String.format(" x %d", playerGold);
+        bandageLabel.setText(bandageText);
+        ammoLabel.setText(ammoText);
+        coinLabel.setText(coinText);
     }
 
     @Override

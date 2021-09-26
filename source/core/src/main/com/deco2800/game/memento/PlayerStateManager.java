@@ -89,6 +89,9 @@ public class PlayerStateManager {
         int bandage = player.getComponent(InventoryComponent.class).getBandages();
         int gold = player.getComponent(InventoryComponent.class).getGold();
         int health = player.getComponent(PlayerCombatStatsComponent.class).getHealth();
+        if (health != player.getComponent(PlayerCombatStatsComponent.class).getStateMax()) {
+            health = player.getComponent(PlayerCombatStatsComponent.class).getStateMax();
+        }
         int woundState = player.getComponent(PlayerCombatStatsComponent.class).getWoundState();
         int defenceLevel = player.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel();
         String ability = player.getComponent(PlayerAbilitiesComponent.class).getAbility().toString();

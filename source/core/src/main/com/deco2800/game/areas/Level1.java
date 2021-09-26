@@ -104,9 +104,6 @@ public class Level1 extends GameArea {
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
-      "images/weapon/katana.atlas",
-      "images/weapon/greataxe.atlas",
-      "images/weapon/dualdagger.atlas",
       npcSampleAtlasFilename,
       npcTut1AtlasFilename
   };
@@ -269,30 +266,6 @@ public class Level1 extends GameArea {
       int swordQuantity = 1;
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
-    }
-
-    // CREATED 3 DAGGERS FOR TESTING
-    for (int i = 0; i < 3; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      int dualdaggerQuantity = 1;
-      Entity dualdagger = ItemFactory.createDualDagger(dualdaggerQuantity);
-      spawnEntityAt(dualdagger, randomPos, true, false);
-    }
-
-    // CREATED 3 AXES FOR TESTING
-    for (int i = 0; i < 3; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      int greataxeQuantity = 1;
-      Entity greataxe = ItemFactory.createGreatAxe(greataxeQuantity);
-      spawnEntityAt(greataxe, randomPos, true, false);
-    }
-
-    // CREATED 3 SWORDS FOR TESTING
-    for (int i = 0; i < 3; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      int katanaQuantity = 1;
-      Entity katana = ItemFactory.createKatana(katanaQuantity);
-      spawnEntityAt(katana, randomPos, true, false);
     }
   }
 

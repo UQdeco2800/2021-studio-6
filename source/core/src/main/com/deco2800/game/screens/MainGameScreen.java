@@ -111,7 +111,8 @@ public class MainGameScreen extends ScreenAdapter {
    * This method does logic to decide which level would be generated based on whether game is restarted, checkpoint
    * is being reverted or game will proceed to a new level
    *
-   * @param
+   * @param gameType this dictates what method will be called on player state and which level will be generated
+   *                 depending on what happens to player during game
    */
   private void manageGameLevel(GdxGame.GameType gameType) {
     // when game is started for the first time or it is restarted by user

@@ -71,6 +71,7 @@ public class SafehouseGameArea extends GameArea {
     spawnDoor();
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
+    spawnShopKeeper();
     spawnBullet();
 
     playMusic();
@@ -130,6 +131,15 @@ public class SafehouseGameArea extends GameArea {
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
+  }
+
+  private Entity spawnShopKeeper() {
+    // this will be removed - purely for testing
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
+
+    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
+    return shopKeeperNPC;
   }
 
   private Entity spawnPlayer() {

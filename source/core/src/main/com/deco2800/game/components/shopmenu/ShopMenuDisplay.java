@@ -49,10 +49,10 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String HELMET_DOWN_IMAGE_FILE_PATH = "images/playeritems/halmet.png";
     private static final String TORCH_UP_IMAGE_FILE_PATH = "images/playeritems/tourch/tourch.png";
     private static final String TORCH_DOWN_IMAGE_FILE_PATH = "images/playeritems/tourch/tourch.png";
-    private static final String DASH_UP_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
-    private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
-    private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
-    private static final String INVINCIBLE_DOWN_IMAGE_FILE_PATH = "images/playeritems/shootingammo.png";
+    private static final String DASH_UP_IMAGE_FILE_PATH = "images/Ability_Sprites/dash.png";
+    private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/Ability_Sprites/dash.png";
+    private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/Ability_Sprites/invincibility.png";
+    private static final String INVINCIBLE_DOWN_IMAGE_FILE_PATH = "images/Ability_Sprites/invincibility.png";
     private static final String GRENADE_UP_IMAGE_FILE_PATH = "images/playeritems/firecracker/firecracker8.png";
     private static final String GRENADE_DOWN_IMAGE_FILE_PATH = "images/playeritems/firecracker/firecracker7.png";
     private static final String BANDAGE_UP_IMAGE_FILE_PATH = "images/playeritems/bandage/bandage01.png";

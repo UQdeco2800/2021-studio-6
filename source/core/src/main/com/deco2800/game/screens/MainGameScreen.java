@@ -53,7 +53,7 @@ public class MainGameScreen extends ScreenAdapter {
   "images/playeritems/tourch/tourch.png", "images/playeritems/armour.png", "images/playeritems/halmet.png",
   "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
   "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
-  "images/playeritems/coin/coin1.png"};
+  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -328,6 +328,7 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new SafehouseGameArea(terrainFactory);
     }
     gameArea.create();
+    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
     gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);

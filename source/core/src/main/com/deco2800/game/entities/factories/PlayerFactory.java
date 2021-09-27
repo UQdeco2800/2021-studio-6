@@ -39,7 +39,7 @@ public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
   private static String meleeWeaponFilePath = stats.meleeFilePath;
-  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel;
+  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel, bulletMagazine;
   private static String ability, meleeFilePath, meleeWeaponType, armorType;
 
   /**
@@ -118,6 +118,7 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(meleeWeaponType));
     player.getComponent(PlayerMeleeAttackComponent.class).setWeapon(meleeFilePath);
+    player.getComponent(PlayerRangeAttackComponent.class).setBulletMagazine(bulletMagazine);
     return player;
   }
 
@@ -128,7 +129,7 @@ public class PlayerFactory {
     if (playerManager.currentPlayerState() == null) {
       // set initial state of player when game starts for the very first time, load from config file
       playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
-              stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.ability,
+              stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.bulletMagazine, stats.ability,
               stats.meleeFilePath, stats.meleeWeaponType, stats.armorType, stats.currentGameLevel);
 
       baseAttack = stats.baseAttack;
@@ -143,9 +144,9 @@ public class PlayerFactory {
       meleeFilePath = stats.meleeFilePath;
       meleeWeaponType = stats.meleeWeaponType;
       armorType = stats.armorType;
+      bulletMagazine = stats.bulletMagazine;
 
     } else {
-
       Player currentPlayerState = playerManager.currentPlayerState();
       baseAttack = currentPlayerState.getBaseAttack();
       baseRangedAttack = currentPlayerState.getBaseRangedAttack();
@@ -159,6 +160,7 @@ public class PlayerFactory {
       meleeFilePath = currentPlayerState.getMeleeFilePath();
       meleeWeaponType = currentPlayerState.getMeleeWeaponType();
       armorType = currentPlayerState.getArmorType();
+      bulletMagazine = currentPlayerState.getBulletMagazine();
     }
   }
 

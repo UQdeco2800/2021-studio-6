@@ -5,6 +5,7 @@
   "defenceLevel": 0,
   "gold": 50,
   "ammo": 10,
+  "bulletMagazine": 5,
   "favouriteColour": "peach",
   "health" : 3,
   "bandages": 3,

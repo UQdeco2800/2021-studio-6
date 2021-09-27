@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class Player {
     private static final Logger logger = LoggerFactory.getLogger(Player.class);
     protected int id;
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, bulletMagazine;
     protected double currentGameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
@@ -30,6 +30,23 @@ public class Player {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Bullets left in current player magazine
+     * @return bullet number in player's magazine
+     */
+    public int getBulletMagazine() {
+        return bulletMagazine;
+    }
+
+    /**
+     * Modify bullet count of player magazine
+     * @param bullet number to set
+     */
+    public Player setBulletMagazine(int bullet) {
+        this.bulletMagazine = bullet;
+        return this;
     }
 
     /**
@@ -255,11 +272,11 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player [ID = " + id + "], ammo = " + ammo + ", gold = " + gold + ", bandage = " + bandage + ", defenceLevel = "
-                + defenceLevel + ", woundState = " + woundState + ", baseAttack = " + baseAttack +
-                ", baseRangedAttack = " + baseRangedAttack + ", health = " + health + "\n abiliy: " +
-                ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType + ", meleeFilePath: " +
-                meleeFilePath + "\n Player is currently at level " + currentGameLevel;
+        return "Player [ID = " + id + "], ammo = " + ammo + ", magazine = " + bulletMagazine + ", gold = " + gold +
+                ", bandage = " + bandage + ", defenceLevel = " + defenceLevel + ", woundState = " + woundState +
+                ", baseAttack = " + baseAttack + ", baseRangedAttack = " + baseRangedAttack + ", health = " + health +
+                "\n abiliy: " + ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType +
+                ", meleeFilePath: " + meleeFilePath + "\n Player is currently at level " + currentGameLevel;
     }
 
     /**
@@ -268,7 +285,7 @@ public class Player {
      */
     public PlayerMemento createMemento() {
         return new PlayerMemento(id, ammo, gold, bandage, defenceLevel, woundState, baseRangedAttack, baseAttack,
-                health, ability, meleeFilePath, meleeWeaponType, armorType, currentGameLevel);
+                health, bulletMagazine, ability, meleeFilePath, meleeWeaponType, armorType, currentGameLevel);
     }
 
     /**
@@ -291,6 +308,7 @@ public class Player {
             this.meleeWeaponType = memento.meleeWeaponType;
             this.armorType = memento.armorType;
             this.currentGameLevel = memento.currentGameLevel;
+            this.bulletMagazine = memento.bulletMagazine;
         } else {
             logger.info("Can't restore without memento object");
         }

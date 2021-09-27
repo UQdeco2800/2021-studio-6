@@ -13,6 +13,8 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +24,13 @@ import java.util.List;
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerInterfaceDisplay extends UIComponent {
+  private static final Logger logger = LoggerFactory.getLogger(PlayerInterfaceDisplay.class);
   Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload, tableTemp;
   private Image healthBar;
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
   private ArrayList<Image> bulletImages = new ArrayList<>();
+  private final int MAGAZINE_FULL_COUNT = 5;
 
   private Image bandageImage, ammoImage, coinImage, bulletImage1, bulletImage2, bulletImage3, bulletImage4,
           bulletImage5;
@@ -79,6 +83,9 @@ public class PlayerInterfaceDisplay extends UIComponent {
     entity.getEvents().addListener("hideReloadingStatus", this::hideReloadingStatus);
     addActors();
     setAnimations();
+
+    int bulletCount = entity.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
+    updateBulletImageHUD(bulletCount);
   }
 
   public void setAnimations() {
@@ -203,6 +210,18 @@ public class PlayerInterfaceDisplay extends UIComponent {
       for (int i = 0; i < index; i++) {
         bulletImages.get(i).setVisible(true);
       }
+    }
+  }
+
+  /**
+   * Updates images of bullet left in magazine on player's HUD
+   * @param bulletCount used to display number of bullets left on player's magazine's HUD
+   */
+  public void updateBulletImageHUD(int bulletCount) {
+    logger.info("Bullet count is " + bulletCount);
+    // for when bullets are shot
+    for (int i = MAGAZINE_FULL_COUNT - 1; i >= bulletCount; i--) {
+      bulletImages.get(i).setVisible(false);
     }
   }
 

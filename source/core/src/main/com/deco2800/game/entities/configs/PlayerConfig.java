@@ -14,6 +14,7 @@ public class PlayerConfig extends BaseEntityConfig  {
   public int baseAttack;
   public int health;
   public int ammo;
+  public int bulletMagazine;
   public int bandages;
   public double currentGameLevel;
   public String ability;

@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -199,41 +199,62 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i5">
+<td class="colFirst"><code><a href="../../items/Items.html" title="enum in com.deco2800.game.items">Items</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeleeWeaponType()">getMeleeWeaponType</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Keeps track of the type of weapon player is currently holding using ENUMs created.</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWeapon()">getWeapon</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the config filepath that player currently uses for melee weapon.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#meleeAttackClicked(boolean)">meleeAttackClicked</a></span>&#8203;(boolean&nbsp;clicked)</code></th>
 <td class="colLast">
 <div class="block">This is an indication that the melee attack button has been clicked</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAnimations(com.deco2800.game.components.player.PlayerWeaponAnimationController)">setAnimations</a></span>&#8203;(<a href="PlayerWeaponAnimationController.html" title="class in com.deco2800.game.components.player">PlayerWeaponAnimationController</a>&nbsp;setWeapon)</code></th>
 <td class="colLast">
 <div class="block">Sets the animations for the weaponAnimator after a certain point to allow assets to load</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="rowColor" id="i9">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeleeWeaponType(com.deco2800.game.items.Items)">setMeleeWeaponType</a></span>&#8203;(<a href="../../items/Items.html" title="enum in com.deco2800.game.items">Items</a>&nbsp;weaponType)</code></th>
+<td class="colLast">
+<div class="block">Set melee weapon type that player is currently holding</div>
+</td>
+</tr>
+<tr class="altColor" id="i10">
 <td class="colFirst"><code><a href="PlayerMeleeAttackComponent.html" title="class in com.deco2800.game.components.player">PlayerMeleeAttackComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSensor(boolean)">setSensor</a></span>&#8203;(boolean&nbsp;isSensor)</code></th>
 <td class="colLast">
 <div class="block">Set whether this physics component is a sensor.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWeapon(java.lang.String)">setWeapon</a></span>&#8203;(java.lang.String&nbsp;weaponConfig)</code></th>
 <td class="colLast">
 <div class="block">Used to set the weapon stats and animations.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toggleFixtures()">toggleFixtures</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Similar to dispose() but also destroys the weapon fixture.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="rowColor" id="i13">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -306,6 +327,40 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>weaponConfig</code> - The config file for the specified weapon to be set to</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getWeapon()">getWeapon</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getWeapon</span>()</div>
+<div class="block">Returns the config filepath that player currently uses for melee weapon.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>file path of weapon config file</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getMeleeWeaponType()">getMeleeWeaponType</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../../items/Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">getMeleeWeaponType</span>()</div>
+<div class="block">Keeps track of the type of weapon player is currently holding using ENUMs created. Used for player
+ state tracking and shop popup box differentiation of different types of melee weapons</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>type of weapon player is currently holding</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setMeleeWeaponType(com.deco2800.game.items.Items)">setMeleeWeaponType</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setMeleeWeaponType</span>&#8203;(<span class="arguments"><a href="../../items/Items.html" title="enum in com.deco2800.game.items">Items</a>&nbsp;weaponType)</span></div>
+<div class="block">Set melee weapon type that player is currently holding</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>weaponType</code> - that player is holding</dd>
 </dl>
 </section>
 </li>

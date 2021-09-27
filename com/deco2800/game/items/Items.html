@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -161,10 +161,38 @@ extends java.lang.Enum&lt;<a href="Items.html" title="enum in com.deco2800.game.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DUALDAGGER">DUALDAGGER</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GREATAXE">GREATAXE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#HELMET">HELMET</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#KATANA">KATANA</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MELEE_WEAPONS">MELEE_WEAPONS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#OTHERS">OTHERS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SHIELDS">SHIELDS</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SHOP">SHOP</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SWORD">SWORD</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -192,13 +220,43 @@ extends java.lang.Enum&lt;<a href="Items.html" title="enum in com.deco2800.game.
 </thead>
 <tbody>
 <tr class="altColor" id="i0">
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkMeleeWeapon(java.lang.String)">checkMeleeWeapon</a></span>&#8203;(java.lang.String&nbsp;meleeWeapon)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i1">
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkShieldType(java.lang.String)">checkShieldType</a></span>&#8203;(java.lang.String&nbsp;shield)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArmorType(int)">getArmorType</a></span>&#8203;(int&nbsp;defenceLevel)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefenceLevel(java.lang.String)">getDefenceLevel</a></span>&#8203;(java.lang.String&nbsp;shield)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>static <a href="Items.html" title="enum in com.deco2800.game.items">Items</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeleeWeapon(java.lang.String)">getMeleeWeapon</a></span>&#8203;(java.lang.String&nbsp;meleeWeapon)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWeaponFilepath(java.lang.String)">getWeaponFilepath</a></span>&#8203;(java.lang.String&nbsp;meleeWeapon)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>static <a href="Items.html" title="enum in com.deco2800.game.items">Items</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valueOf(java.lang.String)">valueOf</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i1">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>static <a href="Items.html" title="enum in com.deco2800.game.items">Items</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#values()">values</a></span>()</code></th>
 <td class="colLast">
@@ -281,6 +339,48 @@ the order they are declared.</div>
 <div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">DAGGER</span></div>
 </section>
 </li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="SHOP">SHOP</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">SHOP</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="KATANA">KATANA</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">KATANA</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="GREATAXE">GREATAXE</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">GREATAXE</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="DUALDAGGER">DUALDAGGER</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">DUALDAGGER</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="MELEE_WEAPONS">MELEE_WEAPONS</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">MELEE_WEAPONS</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="SHIELDS">SHIELDS</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">SHIELDS</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="OTHERS">OTHERS</a></h3>
+<div class="memberSignature"><span class="modifiers">public static final</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">OTHERS</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -320,6 +420,42 @@ not permitted.)</div>
 <dd><code>java.lang.IllegalArgumentException</code> - if this enum type has no constant with the specified name</dd>
 <dd><code>java.lang.NullPointerException</code> - if the argument is null</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getArmorType(int)">getArmorType</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getArmorType</span>&#8203;(<span class="arguments">int&nbsp;defenceLevel)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getDefenceLevel(java.lang.String)">getDefenceLevel</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getDefenceLevel</span>&#8203;(<span class="arguments">java.lang.String&nbsp;shield)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getWeaponFilepath(java.lang.String)">getWeaponFilepath</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getWeaponFilepath</span>&#8203;(<span class="arguments">java.lang.String&nbsp;meleeWeapon)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getMeleeWeapon(java.lang.String)">getMeleeWeapon</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="Items.html" title="enum in com.deco2800.game.items">Items</a></span>&nbsp;<span class="memberName">getMeleeWeapon</span>&#8203;(<span class="arguments">java.lang.String&nbsp;meleeWeapon)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="checkMeleeWeapon(java.lang.String)">checkMeleeWeapon</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">checkMeleeWeapon</span>&#8203;(<span class="arguments">java.lang.String&nbsp;meleeWeapon)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="checkShieldType(java.lang.String)">checkShieldType</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">checkShieldType</span>&#8203;(<span class="arguments">java.lang.String&nbsp;shield)</span></div>
 </section>
 </li>
 </ul>

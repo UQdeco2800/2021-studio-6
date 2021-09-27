@@ -154,7 +154,8 @@ extends <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badl
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.GdxGame)">MainGameScreen</a></span>&#8203;(<a href="../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.GdxGame,com.deco2800.game.GdxGame.GameType)">MainGameScreen</a></span>&#8203;(<a href="../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game,
+<a href="../GdxGame.GameType.html" title="enum in com.deco2800.game">GdxGame.GameType</a>&nbsp;gameType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -192,8 +193,10 @@ extends <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badl
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateNewLevel()">generateNewLevel</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateNewLevel(boolean)">generateNewLevel</a></span>&#8203;(boolean&nbsp;reverting)</code></th>
+<td class="colLast">
+<div class="block">This method generates a new level whenever player enters or leaves safehouse.</div>
+</td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
@@ -265,8 +268,9 @@ int&nbsp;height)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(com.deco2800.game.GdxGame)">MainGameScreen</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">MainGameScreen</span>&#8203;(<span class="arguments"><a href="../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game)</span></div>
+<h3><a id="&lt;init&gt;(com.deco2800.game.GdxGame,com.deco2800.game.GdxGame.GameType)">MainGameScreen</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">MainGameScreen</span>&#8203;(<span class="arguments"><a href="../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game,
+<a href="../GdxGame.GameType.html" title="enum in com.deco2800.game">GdxGame.GameType</a>&nbsp;gameType)</span></div>
 </section>
 </li>
 </ul>
@@ -350,8 +354,16 @@ int&nbsp;height)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="generateNewLevel()">generateNewLevel</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">generateNewLevel</span>()</div>
+<h3><a id="generateNewLevel(boolean)">generateNewLevel</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">generateNewLevel</span>&#8203;(<span class="arguments">boolean&nbsp;reverting)</span></div>
+<div class="block">This method generates a new level whenever player enters or leaves safehouse. It is used to not only
+ generate specific levels with different terrains etc. but it is also used to manage logic of when to
+ revert player back to the latest saved state checkpoint</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>reverting</code> - true when user decided to revert game to latest saved checkpoint and false when game
+                  is to generate next new level</dd>
+</dl>
 </section>
 </li>
 </ul>

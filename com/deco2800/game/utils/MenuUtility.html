@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -137,6 +137,17 @@ java.lang.String&nbsp;eventTrigger)</code></th>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addButtonSelectListener(com.deco2800.game.entities.Entity,com.badlogic.gdx.scenes.scene2d.ui.Button,java.lang.String,java.lang.String,com.deco2800.game.items.Items)">addButtonSelectListener</a></span>&#8203;(<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Button.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Button</a>&nbsp;button,
+java.lang.String&nbsp;eventTrigger,
+java.lang.String&nbsp;argument,
+<a href="../items/Items.html" title="enum in com.deco2800.game.items">Items</a>&nbsp;itemType)</code></th>
+<td class="colLast">
+<div class="block">Adds a listener to a button that triggers an event and passes a specific argument when the user selects the button.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changeMenuButtonStyles(com.badlogic.gdx.scenes.scene2d.ui.Table,com.badlogic.gdx.scenes.scene2d.ui.Skin,java.lang.String,float,float)">changeMenuButtonStyles</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Table.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Table</a>&nbsp;table,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Skin.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Skin</a>&nbsp;skin,
 java.lang.String&nbsp;style,
@@ -180,6 +191,25 @@ java.lang.String&nbsp;eventTrigger)</span></div>
 <dd><code>entity</code> - the entity that the trigger will be called to</dd>
 <dd><code>button</code> - the button to add the select listener to</dd>
 <dd><code>eventTrigger</code> - the event to be triggered when button is selected</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="addButtonSelectListener(com.deco2800.game.entities.Entity,com.badlogic.gdx.scenes.scene2d.ui.Button,java.lang.String,java.lang.String,com.deco2800.game.items.Items)">addButtonSelectListener</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addButtonSelectListener</span>&#8203;(<span class="arguments"><a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Button.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d.ui" class="externalLink">Button</a>&nbsp;button,
+java.lang.String&nbsp;eventTrigger,
+java.lang.String&nbsp;argument,
+<a href="../items/Items.html" title="enum in com.deco2800.game.items">Items</a>&nbsp;itemType)</span></div>
+<div class="block">Adds a listener to a button that triggers an event and passes a specific argument when the user selects the button.
+ This listener is used specifically for shop popup box to distinguish between different buttons</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>entity</code> - the entity that the trigger will be called to</dd>
+<dd><code>button</code> - the button to add the select listener to</dd>
+<dd><code>eventTrigger</code> - the event to be triggered when button is selected</dd>
+<dd><code>argument</code> - that will be used to pass to the relevant method that will be triggered</dd>
 </dl>
 </section>
 </li>

@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":10,"i10":10,"i11":10,"i12":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -237,19 +237,26 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </tr>
 <tr class="altColor" id="i10">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBulletMagazine(int)">setBulletMagazine</a></span>&#8203;(int&nbsp;bullet)</code></th>
+<td class="colLast">
+<div class="block">Sets bullet magazine count of player</div>
+</td>
+</tr>
+<tr class="rowColor" id="i11">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDirection(com.badlogic.gdx.math.Vector2)">setDirection</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;direction)</code></th>
 <td class="colLast">
 <div class="block">Set the current direction player is currently facing for range attack</div>
 </td>
 </tr>
-<tr class="rowColor" id="i11">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReloadingStatus(boolean)">setReloadingStatus</a></span>&#8203;(boolean&nbsp;reloading)</code></th>
 <td class="colLast">
 <div class="block">Updates reloading status of player - used to prevent player from shooting while reloading</div>
 </td>
 </tr>
-<tr class="altColor" id="i12">
+<tr class="rowColor" id="i13">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -309,6 +316,17 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>bulletShot</code> - is the bullet that has been shot and removed from activeBullets array</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setBulletMagazine(int)">setBulletMagazine</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setBulletMagazine</span>&#8203;(<span class="arguments">int&nbsp;bullet)</span></div>
+<div class="block">Sets bullet magazine count of player</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>bullet</code> - number that will be used to set bullet count in magazine of player</dd>
 </dl>
 </section>
 </li>

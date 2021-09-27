@@ -13,6 +13,7 @@ com.deco2800.game.components.pausemenu
 com.deco2800.game.components.player
 com.deco2800.game.components.player.hud
 com.deco2800.game.components.settingsmenu
+com.deco2800.game.components.shopmenu
 com.deco2800.game.components.story
 com.deco2800.game.components.story.basicdialogue
 com.deco2800.game.components.story.cutscene
@@ -28,6 +29,7 @@ com.deco2800.game.files
 com.deco2800.game.input
 com.deco2800.game.items
 com.deco2800.game.lighting
+com.deco2800.game.memento
 com.deco2800.game.physics
 com.deco2800.game.physics.components
 com.deco2800.game.physics.raycast

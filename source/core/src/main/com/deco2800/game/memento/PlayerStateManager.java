@@ -20,6 +20,7 @@ public class PlayerStateManager {
 
     private static final String MEMENTO_MESSAGE_INITIAL_STATE = "Player state at level 1";
     private static final String MEMENTO_MESSAGE_CHECKPOINT = "Player state at level ";
+    private static final int FULL_MAGAZINE = 5;
     private static int LEVEL_ONE = 1;
     private static double LEVEL_INCREMENT = 0.5;
     private static PlayerStateManager manager = null;
@@ -60,6 +61,7 @@ public class PlayerStateManager {
      * @param gold amount of gold used to purchase items at player's current state
      * @param woundState wound state based on player's current state
      * @param defenceLevel of player in current state
+     * @param bullet left in magazine of player
      * @param currentGameLevel current game level of player's current state
      * @param ability being used in player's current state
      * @param meleeFilePath loads data relevant to melee weapon which will correspond to player's current state
@@ -67,12 +69,13 @@ public class PlayerStateManager {
      * @param armorType armor type of current player's state
      */
     public void createStartingPlayerState(int baseRangedAttack, int baseAttack, int health, int ammo, int bandages, int gold,
-                                  int woundState, int defenceLevel,String ability, String meleeFilePath,
+                                  int woundState, int defenceLevel, int bullet, String ability, String meleeFilePath,
                                   String meleeWeaponType, String armorType, double currentGameLevel) {
         playerState = new Player(playerID).setBaseRangedAttack(baseRangedAttack).setBaseAttack(baseAttack)
                 .setHealth(health).setAmmo(ammo).setBandage(bandages).setGold(gold).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
-                .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel);
+                .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel)
+                .setBulletMagazine(bullet);
         trackPlayerState(playerState);
         playerMemento = playerState.createMemento();
         caretaker.addMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE, playerMemento);
@@ -87,8 +90,15 @@ public class PlayerStateManager {
     public void addAndUpdatePlayerState(Entity player, double gameLevel) {
         // these are localized variables to that will be used to update and store player's state
         int ammo = player.getComponent(InventoryComponent.class).getAmmo();
-        ammo += player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
-        ammo -= 5;
+
+        // player is currently reloading when player enters safehouse, assume magazine will be filled
+        int bulletMagazine;
+        if (player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus()) {
+            bulletMagazine = FULL_MAGAZINE;
+        } else {
+            bulletMagazine = player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
+        }
+
         int bandage = player.getComponent(InventoryComponent.class).getBandages();
         int gold = player.getComponent(InventoryComponent.class).getGold();
         int health = player.getComponent(PlayerCombatStatsComponent.class).getHealth();
@@ -101,16 +111,16 @@ public class PlayerStateManager {
         String meleeFilePath = player.getComponent(PlayerMeleeAttackComponent.class).getWeapon();
         String meleeWeaponType = player.getComponent(PlayerMeleeAttackComponent.class).getMeleeWeaponType().toString();
         String armorType = Items.getArmorType(defenceLevel);
-        double currentGameLevel = gameLevel;
         playerState.setAmmo(ammo).setBandage(bandage).setGold(gold).setHealth(health).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
-                .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel);
+                .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(gameLevel)
+                .setBulletMagazine(bulletMagazine);
 
         trackPlayerState(playerState);
         playerMemento = playerState.createMemento();
 
         // message will change when player progresses in game - must be unique
-        String mementoMessageOtherLevels = "Player state at level " + currentGameLevel;
+        String mementoMessageOtherLevels = "Player state at level " + gameLevel;
         caretaker.addMemento(playerState.getId(), mementoMessageOtherLevels, playerMemento);
     }
 

@@ -6,7 +6,7 @@ package com.deco2800.game.memento;
  * itself
  */
 public class PlayerMemento {
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id, bulletMagazine;
     protected double currentGameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
@@ -29,11 +29,13 @@ public class PlayerMemento {
      * @param armorType armor type of current player's state
      */
     public PlayerMemento(int id, int ammo, int gold, int bandage, int defenceLevel, int woundState,
-                         int baseRangedAttack, int baseAttack, int health, String ability, String meleeFilePath,
-                         String meleeWeaponType, String armorType, double currentGameLevel) {
+                         int baseRangedAttack, int baseAttack, int health, int bulletMagazine,
+                         String ability, String meleeFilePath, String meleeWeaponType, String armorType,
+                         double currentGameLevel) {
         super();
         this.id = id;
         this.ammo = ammo;
+        this.bulletMagazine = bulletMagazine;
         this.gold = gold;
         this.bandage = bandage;
         this.defenceLevel = defenceLevel;
@@ -62,6 +64,14 @@ public class PlayerMemento {
      */
     public int getAmmo() {
         return ammo;
+    }
+
+    /**
+     * Bullet magazine of current player state
+     * @return bullet number in player's magazine count
+     */
+    public int getBulletMagazine() {
+        return bulletMagazine;
     }
 
     /**
@@ -162,10 +172,10 @@ public class PlayerMemento {
 
     @Override
     public String toString() {
-        return "Player [ID = " + id + "], ammo = " + ammo + ", gold = " + gold + ", bandage = " + bandage + ", defenceLevel = "
-                + defenceLevel + ", woundState = " + woundState + ", baseAttack = " + baseAttack +
-                ", baseRangedAttack = " + baseRangedAttack + ", health = " + health + "\n abiliy: " +
-                ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType + ", meleeFilePath: " +
-                meleeFilePath + "\n Player is currently at level " + currentGameLevel;
+        return "Player [ID = " + id + "], ammo = " + ammo + ", magazine = " + bulletMagazine + ", gold = " + gold +
+                ", bandage = " + bandage + ", defenceLevel = " + defenceLevel + ", woundState = " + woundState +
+                ", baseAttack = " + baseAttack + ", baseRangedAttack = " + baseRangedAttack + ", health = " + health +
+                "\n abiliy: " + ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType +
+                ", meleeFilePath: " + meleeFilePath + "\n Player is currently at level " + currentGameLevel;
     }
 }

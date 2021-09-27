@@ -40,6 +40,7 @@ public class Level1 extends GameArea {
   private static final int NUM_AMMO_PICKUPS = 3;
   private static final int NUM_COIN_PICKUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
+
   private static final float WALL_WIDTH = 0.1f;
   private static final String npcSampleAtlasFilename = "images/npc_movement/npc_movement.atlas";
   private static final String npcTut1AtlasFilename = "images/npc_movement/tut_npc1.atlas";
@@ -49,8 +50,9 @@ public class Level1 extends GameArea {
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
-      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/ax_right2.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe_right2.png",
+      "images/playeritems/dualdagger/dualdagger.png", "images/playeritems/katana/katana.png", "images/playeritems/greataxe/greataxe.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -310,6 +312,12 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+
+    // this will be removed - purely for testing
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
+
+    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 
@@ -476,7 +484,6 @@ public class Level1 extends GameArea {
 
   @Override
   public void dispose() {
-
     super.dispose();
     ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();

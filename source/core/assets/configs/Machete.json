@@ -1,11 +1,11 @@
 {
-  "attackLength": 400,
+  "attackLength": 300,
   "attackDamage": 8,
   "knockback": 2,
-  "length": 1,
-  "height" : 0.6,
-  "animationLength" : 0.08,
+  "length": 1.2,
+  "height" : 0.8,
+  "animationLength" : 0.075,
   "atlasPath": "images/weapon/machete.atlas",
-  "animationCord": [ ["1.34f", "0.55f"], ["1.7f", "0.98f"], ["1.6f", "0.72f"], ["1.1f", "0.73f"]],
-  "scale" : ["4f", "4f"]
+  "animationCord": [ ["1.65f", "0.65f"], ["1.7f", "1.1f"], ["1.7f", "0.8f"], ["1.1f", "0.8f"]],
+  "scale" : ["3.5f", "3.5f"]
 }

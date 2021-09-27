@@ -53,7 +53,7 @@ public class PlayerWeaponAnimationController extends Component {
     weaponAnimator.setZIndex(10);
     switch (direct) {
       case MOVE_UP:
-        weaponAnimator.setZIndex(-this.getEntity().getCenterPosition().y - 10); //Need to find the z index of player and enemy to adjust properly
+        weaponAnimator.setZIndex(-this.getEntity().getCenterPosition().y - 1); //Need to find the z index of player and enemy to adjust properly
         weaponAnimator.setPositions(animationCords[0][0], animationCords[0][1]);
         weaponAnimator.startAnimation("attackUp");
         break;

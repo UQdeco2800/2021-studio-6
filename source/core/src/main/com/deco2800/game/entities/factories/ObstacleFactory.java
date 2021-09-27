@@ -166,16 +166,34 @@ public class ObstacleFactory {
    */
   public static Entity createTorch() {
     Entity torch =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent())
-                    .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f));
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent())
+        .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f));
 
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     torch.getComponent(TextureRenderComponent.class).scaleEntity();
     torch.scaleHeight(1.0f);
     return torch;
+  }
+
+  /**
+   * Creates a triangle group pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_tree_2_group_ver1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
   }
 
   private ObstacleFactory() {

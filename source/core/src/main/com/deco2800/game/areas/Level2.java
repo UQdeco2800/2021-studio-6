@@ -60,7 +60,8 @@ public class Level2 extends GameArea {
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png",
     "images/level_2/level2_torch_frame1_ver1.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"
+    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+    "images/level_2/level2_tree_2_group_ver1.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -100,6 +101,7 @@ public class Level2 extends GameArea {
     spawnCobweb();
     spawnBush();
     spawnTorch();
+    spawnTriPineTrees();
 
     player = spawnPlayer();
     spawnBullet();
@@ -208,6 +210,21 @@ public class Level2 extends GameArea {
       Entity tree = ObstacleFactory.createPineTree();
       spawnEntityAt(tree, spawnLocations.get(i), true, false);
     }
+  }
+
+  private void spawnTriPineTrees() {
+    GridPoint2[] spawnLocations = {
+      new GridPoint2(6,5),
+      new GridPoint2(7,5),
+      new GridPoint2(6,6)
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity tree = ObstacleFactory.createTriPineTree();
+      spawnEntityAt(tree, spawnLocations[i], true, false);
+    }
+
+
   }
 
   private void spawnBigTrees() {

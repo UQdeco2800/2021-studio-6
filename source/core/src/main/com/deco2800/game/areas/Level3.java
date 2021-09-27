@@ -115,7 +115,6 @@ public class Level3 extends GameArea {
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
-    playMusic();
   }
 
   public Entity getPlayer() {

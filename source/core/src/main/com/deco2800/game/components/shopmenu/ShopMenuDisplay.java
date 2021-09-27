@@ -131,6 +131,10 @@ public class ShopMenuDisplay extends UIComponent {
         if (!isEnabled) {
             loadPlayerData();
             timeSource.pause();
+
+            // feedback tend to remain on shop menu display in different safe house areas, this ensures it doesn't
+            hideFeedbackLabels();
+
             container.setVisible(true);
             background.setVisible(true);
             background.toFront();
@@ -561,13 +565,16 @@ public class ShopMenuDisplay extends UIComponent {
             // melee weapon needs to be registered in item enum file to be valid
             if (Items.checkMeleeWeapon(itemName)) {
                 String weaponConfigFile = Items.getWeaponFilepath(itemName);
+                Items meleeWeaponType = Items.getMeleeWeapon(itemName);
                 playerState.getComponent(PlayerMeleeAttackComponent.class).setWeapon(weaponConfigFile);
+                playerState.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(meleeWeaponType);
             }
         } else if (typeOfItem == Items.SHIELDS) {
             // armor type need to registered just like melee weapon
             if (Items.checkShieldType(itemName)) {
                 int defenceLevel = Items.getDefenceLevel(itemName);
                 playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
+
             }
         } else {
             // other item type includes abilities and bandages
@@ -617,6 +624,7 @@ public class ShopMenuDisplay extends UIComponent {
                         storeButtonClicked.setChecked(false);
                         storeButtonClicked.setDisabled(false);
                         storeButtonClicked = imageButton;
+                        storeButtonClicked.setDisabled(true);
                     }
                 }
             }

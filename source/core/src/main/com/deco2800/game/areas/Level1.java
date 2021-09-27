@@ -484,7 +484,6 @@ public class Level1 extends GameArea {
 
   @Override
   public void dispose() {
-
     super.dispose();
     ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();

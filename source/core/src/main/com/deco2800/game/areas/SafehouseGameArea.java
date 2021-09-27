@@ -135,7 +135,7 @@ public class SafehouseGameArea extends GameArea {
 
   private Entity spawnShopKeeper() {
     // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(1, 1);
 
     Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
     spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
@@ -188,6 +188,10 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(safehouseSounds);
     resourceService.unloadAssets(safehouseMusic);
+  }
+
+  public void stopMusic() {
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
   }
 
   @Override

@@ -69,7 +69,6 @@ public class MainGameScreen extends ScreenAdapter {
   private final boolean LIGHTINGON = false;
   private GameArea gameArea = null;
   private Entity ui;
-  private final double LEVEL_INCREMENT = 0.5;
 
   public MainGameScreen(GdxGame game, GdxGame.GameType gameType) {
     this.game = game;
@@ -187,12 +186,12 @@ public class MainGameScreen extends ScreenAdapter {
 
     renderer.renderUI();
 
-
-
-    if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
-      CAMERA_POSITION.set(gameArea.player.getPosition());
-      ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
-      renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    if (gameArea != null) {
+      if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
+        CAMERA_POSITION.set(gameArea.player.getPosition());
+        ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
+        renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+      }
     }
   }
 
@@ -291,6 +290,7 @@ public class MainGameScreen extends ScreenAdapter {
     // before disposing everything, update and store player's state - this only occurs when game
     // is not reverting to player's most recent checkpoint (going back in game time in a way)
     if (!reverting) {
+      double LEVEL_INCREMENT = 0.5;
       gameLevel += LEVEL_INCREMENT;
       PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
     }
@@ -299,36 +299,43 @@ public class MainGameScreen extends ScreenAdapter {
     // TODO: This should not be here as this should be for boss fight
     int LEVEL_4 = 4;
     if (gameLevel == LEVEL_4) {
+      logger.info("Victory epilogue");
       victory();
       return;
     }
 
-    // when game reverts to closest checkpoint, gameArea will already be disposed of
+    // when game reverts to closest checkpoint, current gameArea will be disposed of
     if (gameArea != null) {
       gameArea.player.getEvents().trigger("dispose");
       gameArea.dispose();
     }
 
+    logger.info("Generating level");
     // user may want to revert to closest checkpoint on level 1
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
     int LEVEL_1 = 1;
+    double LEVEL_SAFEHOUSE = 0.5;
+    int SAFEHOUSE_CHECK = 1;
     if (gameLevel == LEVEL_1) {
       gameArea = new Level1(terrainFactory);
+      gameArea.create();
 
     } else if (gameLevel == LEVEL_2) {
       gameArea = new Level2(terrainFactory);
+      gameArea.create();
 
     } else if (gameLevel == LEVEL_3) {
       gameArea = new Level3(terrainFactory);
+      gameArea.create();
 
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
-    } else {
+    } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
       gameArea = new SafehouseGameArea(terrainFactory);
+      gameArea.create();
     }
-    gameArea.create();
     this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
     gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);

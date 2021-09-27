@@ -26,7 +26,7 @@ public enum Items {
             case 1:
                 return "HELMET";
             default:
-                return "";
+                return "NONE";
         }
     }
 

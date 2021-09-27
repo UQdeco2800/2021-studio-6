@@ -4,6 +4,7 @@ import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerAbilitiesComponent;
 import com.deco2800.game.components.player.PlayerMeleeAttackComponent;
+import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Items;
 import org.slf4j.Logger;
@@ -86,6 +87,8 @@ public class PlayerStateManager {
     public void addAndUpdatePlayerState(Entity player, double gameLevel) {
         // these are localized variables to that will be used to update and store player's state
         int ammo = player.getComponent(InventoryComponent.class).getAmmo();
+        ammo += player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
+        ammo -= 5;
         int bandage = player.getComponent(InventoryComponent.class).getBandages();
         int gold = player.getComponent(InventoryComponent.class).getGold();
         int health = player.getComponent(PlayerCombatStatsComponent.class).getHealth();

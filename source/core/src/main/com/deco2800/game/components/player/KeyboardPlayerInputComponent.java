@@ -72,32 +72,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (timeSource == null || !timeSource.isPaused()) {
       switch (keycode) {
         case Keys.W:
-          entity.getEvents().trigger("rangeAttack", Vector2Utils.UP.cpy());
-       //   entity.getEvents().trigger("rangeAOE", Vector2Utils.UP.cpy());
           walkDirection.add(Vector2Utils.UP);
           up = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_UP);
           return true;
         case Keys.A:
-          entity.getEvents().trigger("rangeAttack", Vector2Utils.LEFT.cpy());
-        //  entity.getEvents().trigger("rangeAOE", Vector2Utils.LEFT.cpy());
           walkDirection.add(Vector2Utils.LEFT);
           left = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_LEFT);
           return true;
         case Keys.S:
-          entity.getEvents().trigger("rangeAttack", Vector2Utils.DOWN.cpy());
-        //  entity.getEvents().trigger("rangeAOE", Vector2Utils.DOWN.cpy());
           walkDirection.add(Vector2Utils.DOWN);
           down = true;
           triggerWalkEvent();
           movementDirections.add(Directions.MOVE_DOWN);
           return true;
         case Keys.D:
-          entity.getEvents().trigger("rangeAttack", Vector2Utils.RIGHT.cpy());
-        //  entity.getEvents().trigger("rangeAOE", Vector2Utils.RIGHT.cpy());
           walkDirection.add(Vector2Utils.RIGHT);
           right = true;
           triggerWalkEvent();
@@ -121,7 +113,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("attackStart");
           return true;
         case Keys.ENTER:
-          entity.getEvents().trigger("rangeAttack", RangeAttack);
+          entity.getEvents().trigger("rangeAttack");
           return true;
         case Keys.E:
           entity.getEvents().trigger("tryAbility", walkDirection);

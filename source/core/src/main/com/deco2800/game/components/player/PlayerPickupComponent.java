@@ -77,7 +77,7 @@ public class PlayerPickupComponent extends Component {
             } else if (item.getItemType() == Items.MACHETE) {
                 weapon.setWeapon("configs/Machete.json");
             } else if (item.getItemType() == Items.BAT) {
-                weapon.setWeapon("configs/Bat.json");
+                weapon.setWeapon("configs/Baseball.json");
             }
 
             if (ServiceLocator.getGameArea() != null && item.getItemType() != Items.SHOP) {

@@ -49,7 +49,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double CurrentLevel = 1;
+  private double CurrentLevel = 3; //change this back to 1
   public static boolean levelChange = false;
   private GameTime timeSource;
   private final GdxGame game;
@@ -232,7 +232,7 @@ public class MainGameScreen extends ScreenAdapter {
     Vector2 walkingDirection
             = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
 
-    if (CurrentLevel == 4) {
+    if (CurrentLevel == 5) {
       victory();
       return;
     }
@@ -245,6 +245,11 @@ public class MainGameScreen extends ScreenAdapter {
               .walkDirection.add(walkingDirection);
     } else if (CurrentLevel == 3) {
       gameArea = new Level3(terrainFactory);
+      gameArea.create();
+      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
+              .walkDirection.add(walkingDirection);
+    } else if (CurrentLevel == 4) {
+      gameArea = new Level4(terrainFactory);
       gameArea.create();
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);

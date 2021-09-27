@@ -23,14 +23,14 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level3 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level3.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_COBWEBS = 7;
-  private static final int NUM_BUSH = 7;
-  private static final int NUM_LARGE_ENEMY = 2;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_LONGRANGE = 2;
-  private static final int NUM_BULLETS = 5;
-  private static final int NUM_SPAWNER_ENEMY = 2;
+  private static final int NUM_TREES = 0;
+  private static final int NUM_COBWEBS = 0;//change these back
+  private static final int NUM_BUSH = 0;
+  private static final int NUM_LARGE_ENEMY = 0;
+  private static final int NUM_GHOSTS = 0;
+  private static final int NUM_LONGRANGE = 0;
+  private static final int NUM_BULLETS = 0;
+  private static final int NUM_SPAWNER_ENEMY = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {

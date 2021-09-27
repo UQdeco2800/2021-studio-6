@@ -106,10 +106,29 @@ public class TerrainFactory {
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
         return createSafehouseTerrain(1f, orthoGround);
+
+      case BOSS:
+        TextureRegion grassB =
+                new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
+        TextureRegion tuftB =
+                new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
+        TextureRegion rocksB =
+                new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
+        return createBossTerrain(1f, grassB, tuftB, rocksB);
+
       default:
         System.out.println("default");
         return null;
     }
+  }
+
+  private TerrainComponent createBossTerrain(
+          float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks
+  ) {
+    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
+    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
+    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
   private TerrainComponent createForestDemoTerrain(
@@ -417,6 +436,7 @@ public class TerrainFactory {
     FOREST_DEMO,
     SAFEHOUSE,
     CITY,
-    FOREST
+    FOREST,
+    BOSS
   }
 }

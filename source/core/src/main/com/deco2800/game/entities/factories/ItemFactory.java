@@ -137,14 +137,14 @@ public class ItemFactory {
      * @param itemQuantity the number of sword quantity
      * @return sword pickup for player to use in game
      */
-    public static Entity createKatana(int itemQuantity) {
-        Entity katana = new Entity()
+    public static Entity createMachete(int itemQuantity) {
+        Entity machete = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
-            .addComponent(new ItemComponent(Items.KATANA, itemQuantity))
-            .addComponent(new TextureRenderComponent("images/playeritems/katana/katana.png"))
+            .addComponent(new ItemComponent(Items.MACHETE, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/machete/machete.png"))
             .addComponent(new DisposingComponent());
-        return katana;
+        return machete;
     }
 
     /**
@@ -153,14 +153,14 @@ public class ItemFactory {
      * @param itemQuantity the number of dagger quantity
      * @return dagger pickup for player to use in game
      */
-    public static Entity createDualDagger(int itemQuantity) {
-        Entity dualdagger = new Entity()
+    public static Entity createSledge(int itemQuantity) {
+        Entity sledge = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
-            .addComponent(new ItemComponent(Items.DUALDAGGER, itemQuantity))
-            .addComponent(new TextureRenderComponent("images/playeritems/dualdagger/dualdagger.png"))
+            .addComponent(new ItemComponent(Items.SLEDGE, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/sledge/sledge.png"))
             .addComponent(new DisposingComponent());
-        return dualdagger;
+        return sledge;
     }
 
     /**
@@ -169,13 +169,13 @@ public class ItemFactory {
      * @param itemQuantity the number of helmet quantity
      * @return helmet pickup for player to use in game
      */
-    public static Entity createGreatAxe(int itemQuantity) {
-        Entity greataxe = new Entity()
+    public static Entity createBat(int itemQuantity) {
+        Entity baseball = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
-            .addComponent(new ItemComponent(Items.GREATAXE, itemQuantity))
-            .addComponent(new TextureRenderComponent("images/playeritems/greataxe/greataxe.png"))
+            .addComponent(new ItemComponent(Items.BAT, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/bat/baseball.png"))
             .addComponent(new DisposingComponent());
-        return greataxe;
+        return baseball;
     }
 }

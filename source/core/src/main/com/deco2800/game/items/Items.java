@@ -10,16 +10,17 @@ public enum Items {
     AXE,
     DAGGER,
     SHOP,
-    KATANA,
-    GREATAXE,
-    DUALDAGGER,
+    SLEDGE,
+    MACHETE,
+    BAT,
 
     // used in shop popup box for categorization
     MELEE_WEAPONS,
     SHIELDS,
     OTHERS;
 
-    public static String getArmorType(int defenceLevel) {
+
+  public static String getArmorType(int defenceLevel) {
         switch (defenceLevel) {
             case 2:
                 return "ARMOUR";
@@ -62,12 +63,12 @@ public enum Items {
                 return AXE;
             case "DAGGER":
                 return DAGGER;
-            case "KATANA":
-                return KATANA;
-            case "GREATAXE":
-                return GREATAXE;
-            case "DUALDAGGER":
-                return DUALDAGGER;
+            case "SLEDGE":
+                return SLEDGE;
+            case "BAT":
+                return BAT;
+            case "MACHETE":
+                return MACHETE;
             default:
                 return null;
         }
@@ -78,9 +79,9 @@ public enum Items {
             case "SWORD":
             case "AXE":
             case "DAGGER":
-            case "KATANA":
-            case "GREATAXE":
-            case "DUALDAGGER":
+            case "SLEDGE":
+            case "BAT":
+            case "MACHETE":
                 return true;
             default:
                 return false;

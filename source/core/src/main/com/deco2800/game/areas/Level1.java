@@ -52,7 +52,7 @@ public class Level1 extends GameArea {
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
       "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe_right2.png",
-      "images/playeritems/dualdagger/dualdagger.png", "images/playeritems/katana/katana.png", "images/playeritems/greataxe/greataxe.png",
+      "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -104,6 +104,9 @@ public class Level1 extends GameArea {
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
+      "images/weapon/sledge.atlas",
+      "images/weapon/machete.atlas",
+      "images/weapon/baseball.atlas",
       npcSampleAtlasFilename,
       npcTut1AtlasFilename
   };
@@ -266,6 +269,30 @@ public class Level1 extends GameArea {
       int swordQuantity = 1;
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int sledgeQuantity = 1;
+      Entity axe = ItemFactory.createSledge(sledgeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword = ItemFactory.createMachete(macheteQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword1 = ItemFactory.createBat(macheteQuantity);
+      spawnEntityAt(sword1, randomPos, true, false);
     }
   }
 

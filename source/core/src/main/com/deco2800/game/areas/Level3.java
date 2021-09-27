@@ -38,6 +38,7 @@ public class Level3 extends GameArea {
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
       "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
       "images/playeritems/ax/ax_right2.png",
       "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
@@ -80,6 +81,9 @@ public class Level3 extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
+      "images/weapon/sledge.atlas",
+      "images/weapon/machete.atlas",
+      "images/weapon/baseball.atlas",
       "images/weapon/dagger.atlas"  };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";

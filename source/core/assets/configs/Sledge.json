@@ -1,0 +1,11 @@
+{
+  "attackLength": 700,
+  "attackDamage": 12,
+  "knockback": 20,
+  "length": 2.2,
+  "height" : 1.4,
+  "animationLength" : 0.14,
+  "atlasPath": "images/weapon/sledge.atlas",
+  "animationCord": [ ["1", "0.8f"], ["1.8f", "1f"], ["1.6f", "0.6f"], ["0.9f", "0.6f"]],
+  "scale" : ["1.7f", "1.7f"]
+}

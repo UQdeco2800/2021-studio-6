@@ -214,7 +214,7 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
+    fillTiles(layer, MAP_SIZE, xScale, yScale, grassTile);
 
     // Add some grass and rocks
     fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);

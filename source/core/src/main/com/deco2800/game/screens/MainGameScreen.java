@@ -346,11 +346,17 @@ public class MainGameScreen extends ScreenAdapter {
     levelChange = false;
   }
 
+  /**
+   * Pauses the game and plays the victory epilogue
+   */
   private void victory() {
     timeSource.pause();
     spawnOutroDialogue();
   }
 
+  /**
+   * Display the outro scene
+   */
   private void spawnOutroDialogue(){
     StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
     StoryManager.getInstance().displayStory();
@@ -358,6 +364,9 @@ public class MainGameScreen extends ScreenAdapter {
             this::onOutroFinish);
   }
 
+  /**
+   * Sets the screen back to the main menu screen
+   */
   private void onOutroFinish() {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }

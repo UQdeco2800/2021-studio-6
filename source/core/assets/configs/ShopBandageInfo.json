@@ -1,0 +1,6 @@
+{
+  "itemName": "BANDAGE",
+  "description": "You may regenerate your health but not wound states! Bandages will be handy to patch heavy wounds sustained!",
+  "price": 10,
+  "effects": "Restores wound state by 1"
+}

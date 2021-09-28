@@ -108,7 +108,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.DAGGER, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/dagger.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/dagger/dagger.png"))
                 .addComponent(new DisposingComponent());
         return dagger;
     }
@@ -124,8 +124,58 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AXE, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/axe/ax_right2.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/axe/axe_right2.png"))
                 .addComponent(new DisposingComponent());
         return axe;
+    }
+
+
+
+    /**
+     * Sword is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of sword quantity
+     * @return sword pickup for player to use in game
+     */
+    public static Entity createKatana(int itemQuantity) {
+        Entity katana = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.KATANA, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/katana/katana.png"))
+            .addComponent(new DisposingComponent());
+        return katana;
+    }
+
+    /**
+     * Dagger is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of dagger quantity
+     * @return dagger pickup for player to use in game
+     */
+    public static Entity createDualDagger(int itemQuantity) {
+        Entity dualdagger = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.DUALDAGGER, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/dualdagger/dualdagger.png"))
+            .addComponent(new DisposingComponent());
+        return dualdagger;
+    }
+
+    /**
+     * Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of helmet quantity
+     * @return helmet pickup for player to use in game
+     */
+    public static Entity createGreatAxe(int itemQuantity) {
+        Entity greataxe = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.GREATAXE, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/greataxe/greataxe.png"))
+            .addComponent(new DisposingComponent());
+        return greataxe;
     }
 }

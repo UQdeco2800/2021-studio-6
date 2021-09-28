@@ -47,6 +47,15 @@ public class PlayerRangeAttackComponent extends Component {
     }
 
     /**
+     * Sets bullet magazine count of player
+     *
+     * @param bullet number that will be used to set bullet count in magazine of player
+     */
+    public void setBulletMagazine(int bullet) {
+        magazineCapacity = bullet;
+    }
+
+    /**
      * To return bullet of entities that are spawned in the game world. These will continuously
      * be used for performance sake
      *

@@ -1,0 +1,34 @@
+
+katana.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+attackUp
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1

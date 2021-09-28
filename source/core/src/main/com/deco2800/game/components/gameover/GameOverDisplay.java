@@ -54,22 +54,28 @@ public class GameOverDisplay extends UIComponent {
     TextButton restartBtn = new TextButton("Restart Game", skin, MENU_BUTTON_STYLE);
     TextButton menuBtn = new TextButton("Return to Menu", skin, MENU_BUTTON_STYLE);
     TextButton exitBtn = new TextButton("Exit", skin, MENU_BUTTON_STYLE);
+    TextButton revertBtn = new TextButton("Reload Last Checkpoint", skin, MENU_BUTTON_STYLE);
 
     restartBtn.pad(BUTTON_PADDING_FOR_LARGE_FONT);
     menuBtn.pad(BUTTON_PADDING_FOR_LARGE_FONT);
     exitBtn.pad(BUTTON_PADDING_FOR_LARGE_FONT);
+    revertBtn.pad(BUTTON_PADDING_FOR_LARGE_FONT);
 
     // Triggers an event when the button is pressed
     MenuUtility.addButtonSelectListener(entity, restartBtn, "restart");
     MenuUtility.addButtonSelectListener(entity, menuBtn, "menu");
     MenuUtility.addButtonSelectListener(entity, exitBtn, "exit");
+    MenuUtility.addButtonSelectListener(entity, revertBtn, "revertLastCheckpoint");
 
     // Triggers an event when the user has triggered the button rollover
     MenuUtility.addButtonRolloverListener(restartBtn);
     MenuUtility.addButtonRolloverListener(menuBtn);
     MenuUtility.addButtonRolloverListener(exitBtn);
+    MenuUtility.addButtonRolloverListener(revertBtn);
 
     table.add(restartBtn).pad(CELL_PADDING_LARGE);
+    table.row();
+    table.add(revertBtn).pad(CELL_PADDING_LARGE);
     table.row();
     table.add(menuBtn).pad(CELL_PADDING_LARGE);
     table.row();

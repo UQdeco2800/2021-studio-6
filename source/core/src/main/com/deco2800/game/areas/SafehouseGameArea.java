@@ -45,6 +45,7 @@ public class SafehouseGameArea extends GameArea {
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
+      "images/weapon/dagger.atlas",
       "images/weapon/axe.atlas"
   };
 
@@ -71,6 +72,7 @@ public class SafehouseGameArea extends GameArea {
     spawnDoor();
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
+    spawnShopKeeper();
     spawnBullet();
 
     playMusic();
@@ -132,6 +134,15 @@ public class SafehouseGameArea extends GameArea {
     ServiceLocator.getEntityService().register(door);
   }
 
+  private Entity spawnShopKeeper() {
+    // this will be removed - purely for testing
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(1, 1);
+
+    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
+    return shopKeeperNPC;
+  }
+
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, new GridPoint2(tileBounds.x / 4, tileBounds.y / 2), true, true);
@@ -178,6 +189,10 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(safehouseSounds);
     resourceService.unloadAssets(safehouseMusic);
+  }
+
+  public void stopMusic() {
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
   }
 
   @Override

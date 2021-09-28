@@ -1,0 +1,11 @@
+{
+  "attackLength": 200,
+  "attackDamage": 4,
+  "knockback": 2,
+  "length": 1,
+  "height" : 0.6,
+  "animationLength" : 0.2,
+  "atlasPath": "images/weapon/dualdagger.atlas",
+  "animationCord": [ ["0f", "0f"], ["0f", "0f"], ["0f", "0f"], ["0f", "0f"]],
+  "scale" : ["1f", "1f"]
+}

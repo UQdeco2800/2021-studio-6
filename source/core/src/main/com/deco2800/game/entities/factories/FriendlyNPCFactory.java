@@ -23,8 +23,13 @@ public class FriendlyNPCFactory {
         throw new IllegalStateException("Utility Class");
     }
 
-
+    /**
+     * Create a friendly NPC entity.
+     * @return entity
+     */
     public static Entity createNewFriendlyNPC(StoryNames story, String atlasFileName, boolean wandering) {
+
+        // create an animator and add each movement directions animation
         AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset(atlasFileName, TextureAtlas.class));
         animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
@@ -36,11 +41,13 @@ public class FriendlyNPCFactory {
         animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
 
+        // add the wandering task AI component
         AITaskComponent aiComponent = new AITaskComponent();
         if (wandering) {
             aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
         }
 
+        // create the friendly npc entity
         Entity npc = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
@@ -51,6 +58,7 @@ public class FriendlyNPCFactory {
                 .addComponent(new FriendlyNPCAnimationController())
                 .addComponent(aiComponent);
 
+        // set the npc hitbox to be larger than normal
         npc.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
 
         return npc;

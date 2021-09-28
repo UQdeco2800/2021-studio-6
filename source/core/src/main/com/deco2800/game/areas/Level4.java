@@ -12,6 +12,7 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -65,7 +66,8 @@ public class Level4 extends GameArea {
             "images/hud/healthFull.png",
             "images/grass_1.png",
             "images/grass_2.png",
-            "images/grass_3.png"
+            "images/grass_3.png",
+            "images/placeholder.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -115,7 +117,10 @@ public class Level4 extends GameArea {
 
         spawnLongRangeEnemies();
         spawnToughLongRangeEnemies();
+        spawnFinalBoss();
         playMusic();
+
+
     }
 
     public Entity getPlayer() {
@@ -283,6 +288,12 @@ public class Level4 extends GameArea {
             Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
             spawnEntityAt(touchArcher, randomPos, true, true);
         }
+    }
+
+    private void spawnFinalBoss() {
+        GridPoint2 pos = new GridPoint2(15,30);
+        Entity boss = FinalBossFactory.createFinalBoss(player);
+        spawnEntityAt(boss, pos, true, true);
     }
 
     private void spawnCobweb() {

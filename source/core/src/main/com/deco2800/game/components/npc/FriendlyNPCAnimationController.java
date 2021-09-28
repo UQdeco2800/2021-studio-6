@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * of the events is triggered. 
  */
 public class FriendlyNPCAnimationController extends Component {
-  private static org.slf4j.Logger logger = LoggerFactory.getLogger(FriendlyNPCAnimationController.class);
   // arrays are used to easily index into the stationary and running states of the animation
   private static final String[] ANIMATIONS_LEFT = {"left", "left-run"};
   private static final String[] ANIMATIONS_RIGHT = {"right", "right-run"};
@@ -30,7 +29,7 @@ public class FriendlyNPCAnimationController extends Component {
   @Override
   public void create() {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
-    animator.startAnimation("front");
+    animator.startAnimation(ANIMATIONS_FRONT[STATIONARY]);
   }
 
   /**

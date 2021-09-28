@@ -91,7 +91,7 @@ public class MainMenuDisplay extends UIComponent {
   private void playMusic() {
     Music menuSong = ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class);
     menuSong.setLooping(true);
-    menuSong.setVolume(0f);
+    menuSong.setVolume(0.3f);
     menuSong.play();
   }
 

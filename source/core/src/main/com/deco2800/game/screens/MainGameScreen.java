@@ -124,7 +124,7 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new Level1(terrainFactory);
       gameArea.create();
       ServiceLocator.registerGameArea(gameArea);
-      this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+      this.gameArea.player.getEvents().addListener("dead", this::gameOver);
       this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
 
     } else {
@@ -154,7 +154,10 @@ public class MainGameScreen extends ScreenAdapter {
     ui.getComponent(ShopMenuDisplay.class).toggleShopBox();
   }
 
-  private void checkGameOver() {
+  /**
+   * Pauses the game and sets the screen to the GAME_OVER screen
+   */
+  private void gameOver() {
     logger.info("Game Over");
     timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
@@ -339,7 +342,7 @@ public class MainGameScreen extends ScreenAdapter {
     this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
     gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
-    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+    this.gameArea.player.getEvents().addListener("dead", this::gameOver);
     levelChange = false;
   }
 

@@ -6,13 +6,19 @@ import com.deco2800.game.items.Abilities;
  * Defines the properties stored in player config files to be loaded by the Player Factory.
  */
 public class PlayerConfig extends BaseEntityConfig  {
-  public int gold = 1;
+  public int gold;
   public String favouriteColour = "none";
-  public int woundState = 3;
-  public int defenceLevel = 0;
-  public int baseRangedAttack = 2;
-  public int health = 3;
-  public int ammo = 10;
-  public int bandages = 3;
-  public Abilities ability = Abilities.LONG_DASH;
+  public int woundState;
+  public int defenceLevel;
+  public int baseRangedAttack;
+  public int baseAttack;
+  public int health;
+  public int ammo;
+  public int bulletMagazine;
+  public int bandages;
+  public double currentGameLevel;
+  public String ability;
+  public String meleeFilePath;
+  public String meleeWeaponType;
+  public String armorType;
 }

@@ -21,7 +21,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  */
 public class BombFactory {
     private static final PlayerConfig stats =
-            FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+            FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
 
     /**

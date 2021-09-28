@@ -40,6 +40,7 @@ public class Level1 extends GameArea {
   private static final int NUM_AMMO_PICKUPS = 3;
   private static final int NUM_COIN_PICKUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
+
   private static final float WALL_WIDTH = 0.1f;
   private static final String npcSampleAtlasFilename = "images/npc_movement/npc_movement.atlas";
   private static final String npcTut1AtlasFilename = "images/npc_movement/tut_npc1.atlas";
@@ -49,8 +50,9 @@ public class Level1 extends GameArea {
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
-      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/ax_right2.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe_right2.png",
+      "images/playeritems/dualdagger/dualdagger.png", "images/playeritems/katana/katana.png", "images/playeritems/greataxe/greataxe.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -73,27 +75,28 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/iso_grass_3.png",
     "images/gunman.png",
-    "images/eye.png",
-    "images/blood_ball.png",
+    "images/Enemy_Assets/LongRangeEnemy/eye.png",
+    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
     "images/player.png",
-    "images/large_enemy_pix.png",
-    "images/largeEnemy.png",
+    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
-    "images/level_1/forest_sign.png"
+    "images/level_1/forest_sign.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"
   };
 
   private static final String[] cityTextureAtlases = {
       "images/terrain_iso_grass.atlas",
-      "images/largeEnemy.atlas",
+      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
       "images/ghost.atlas",
       "images/ghostKing.atlas",
-      "images/small_enemy.atlas",
+      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
       "images/Player_Animations/player_movement.atlas",
-      "images/spawnerEnemy.atlas",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
       "images/player.atlas",
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
@@ -309,6 +312,12 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+
+    // this will be removed - purely for testing
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
+
+    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 
@@ -475,7 +484,6 @@ public class Level1 extends GameArea {
 
   @Override
   public void dispose() {
-
     super.dispose();
     ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();

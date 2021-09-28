@@ -14,7 +14,7 @@ public class RandomUtils {
   }
 
   public static int randomInt(int maxRandomInt) {
-    return MathUtils.random(maxRandomInt);
+    return MathUtils.random(1,maxRandomInt);
   }
 
   private RandomUtils() {

@@ -1,7 +1,7 @@
 {
   "attackLength": 160,
-  "attackDamage": 2,
-  "knockback": 2,
+  "attackDamage": 1,
+  "knockback": 1,
   "length": 1,
   "height" : 0.6,
   "animationLength" : 0.08,

@@ -105,6 +105,10 @@ public class Renderer implements Disposable {
 
   }
 
+  public void setZoom(int zoom) {
+    camera.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), zoom);
+  }
+
   public void renderUI() {
     stage.act();
     stage.draw();

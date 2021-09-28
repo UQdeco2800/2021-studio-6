@@ -126,7 +126,7 @@ public class TerrainFactory {
           float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
+    TiledMap tiledMap = createBossTiles(tilePixelSize, grass, grassTuft, rocks);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -193,6 +193,28 @@ public class TerrainFactory {
 
     // Create base grass
     fillTiles(layer, MAP_SIZE, grassTile);
+
+    // Add some grass and rocks
+    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+  }
+
+  private TiledMap createBossTiles(
+          GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile grassTile = new TerrainTile(grass);
+    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
+    TerrainTile rockTile = new TerrainTile(rocks);
+
+    int xScale = 2;
+    int yScale = 1;
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
+
+    // Create base grass
+    fillTiles(layer, MAP_SIZE, xScale, yScale, grassTile);
 
     // Add some grass and rocks
     fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);

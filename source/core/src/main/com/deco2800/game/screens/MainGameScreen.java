@@ -251,6 +251,7 @@ public class MainGameScreen extends ScreenAdapter {
     } else if (CurrentLevel == 4) {
       gameArea = new Level4(terrainFactory);
       gameArea.create();
+      renderer.setZoom(50);
       gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
               .walkDirection.add(walkingDirection);
     } else if (CurrentLevel % 1 == 0.5){

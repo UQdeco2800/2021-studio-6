@@ -15,7 +15,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     private static final int STATIONARY = 0;
     private boolean isInNPCRange = false;
     private StoryNames name;
-    private static final int INTERACT_KEY = Input.Keys.SPACE;
+    private static final int INTERACT_KEY = Input.Keys.E;
 
     public FriendlyNPCTriggerComponent(StoryNames name) {
         super(6);
@@ -33,7 +33,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (isInNPCRange && keycode == INTERACT_KEY) {
+        if (isInNPCRange && keycode == INTERACT_KEY && !StoryManager.getInstance().isDisplaying()) {
             FriendlyNPCAnimationController animator = entity.getComponent(FriendlyNPCAnimationController.class);
             entity.getComponent(PhysicsMovementComponent.class).setTarget(entity.getPosition());
             animator.updateAnimationDirection(ServiceLocator.getGameArea().player.getPosition(), STATIONARY);

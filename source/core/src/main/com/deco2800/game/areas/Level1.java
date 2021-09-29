@@ -134,11 +134,11 @@ public class Level1 extends GameArea {
     spawnBomb();
     //spawnLargeEnemy();
     spawnSmallEnemy();
-    //spawnSpawnerEnemy();
+    spawnSpawnerEnemy();
     //spawnBullet();
 
     spawnLongRangeEnemies();
-    //spawnToughLongRangeEnemies();
+    spawnToughLongRangeEnemies();
 
     spawnNPC();
     spawnNPC1();
@@ -344,6 +344,16 @@ public class Level1 extends GameArea {
   * Spawns the spawner enemy
   */
   private void spawnSpawnerEnemy() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(70, 6));
+    enemyPositions.add(new GridPoint2(84, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnEntityAt(spawnerEnemy, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -353,6 +363,7 @@ public class Level1 extends GameArea {
       spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, randomPos, true, true);
     }
+    */
   }
   /**
    * Spawns a small enemy from the appropriate spawner's position
@@ -420,6 +431,15 @@ public class Level1 extends GameArea {
   }
 
   private void spawnToughLongRangeEnemies() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(60, 6));
+    enemyPositions.add(new GridPoint2(80, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
+      spawnEntityAt(touchArcher, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -428,6 +448,7 @@ public class Level1 extends GameArea {
       Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
       spawnEntityAt(touchArcher, randomPos, true, true);
     }
+    */
   }
 
   private void spawnIntroDialogue(){

@@ -206,7 +206,7 @@ public class Level1 extends GameArea {
   }
 
   private void spawnPickupItems() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(25, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_AMMO_PICKUPS; i++) {

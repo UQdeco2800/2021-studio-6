@@ -137,7 +137,7 @@ public class Level1 extends GameArea {
     //spawnSpawnerEnemy();
     //spawnBullet();
 
-    //spawnLongRangeEnemies();
+    spawnLongRangeEnemies();
     //spawnToughLongRangeEnemies();
 
     spawnNPC();
@@ -393,6 +393,10 @@ public class Level1 extends GameArea {
   }
 
   private void spawnLongRangeEnemies() {
+    GridPoint2 enemyPos = new GridPoint2(38, 6);
+    Entity archer = NPCFactory.createLongRangeEnemy(player, this);
+    spawnEntityAt(archer, enemyPos, true, true);
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -401,6 +405,7 @@ public class Level1 extends GameArea {
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
     }
+    */
   }
 
   private void spawnToughLongRangeEnemies() {

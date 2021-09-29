@@ -421,8 +421,8 @@ public class Level1 extends GameArea {
   private void spawnLongRangeEnemies() {
     Array<GridPoint2> enemyPositions = new Array<>();
     enemyPositions.add(new GridPoint2(38, 6));
-    enemyPositions.add(new GridPoint2(48, 2));
-    enemyPositions.add(new GridPoint2(48, 10));
+    enemyPositions.add(new GridPoint2(48, 4));
+    enemyPositions.add(new GridPoint2(48, 8));
 
     for (GridPoint2 enemyPos : enemyPositions) {
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);

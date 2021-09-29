@@ -108,6 +108,11 @@ public class Level1 extends GameArea {
       npcTut1AtlasFilename
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
+  private static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
@@ -465,6 +470,7 @@ public class Level1 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
+    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -479,6 +485,7 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
+    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(forestMusic);
   }
 

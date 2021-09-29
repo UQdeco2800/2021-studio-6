@@ -50,6 +50,11 @@ public class SafehouseGameArea extends GameArea {
   };
 
   private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
+  private static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
   private static final String backgroundMusic = "sounds/safehouse-music.mp3";
   private static final String[] safehouseMusic = {backgroundMusic};
 
@@ -174,6 +179,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
     resourceService.loadSounds(safehouseSounds);
+    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -188,6 +194,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(safehouseSounds);
+    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(safehouseMusic);
   }
 

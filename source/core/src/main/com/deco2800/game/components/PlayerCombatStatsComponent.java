@@ -1,4 +1,5 @@
 package com.deco2800.game.components;
+import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -221,6 +222,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             super.setHealth(0);
             if (getWoundState() != 0) {
                 setWoundState(getWoundState() - 1);
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class);
+                sound.play();
             }
         }
         if (getHealth() != getStateMax()) {

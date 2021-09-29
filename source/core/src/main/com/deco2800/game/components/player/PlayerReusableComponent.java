@@ -1,7 +1,9 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,9 @@ public class PlayerReusableComponent extends Component {
 
                 updateBandageCount(bandageCount - BANDAGE_USED);
                 playerStats.setWoundState(currentWoundState + INCREASE_WOUND_STATE);
+
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class);
+                sound.play();
             }
         }
     }

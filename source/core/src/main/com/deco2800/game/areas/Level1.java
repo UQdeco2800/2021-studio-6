@@ -132,7 +132,7 @@ public class Level1 extends GameArea {
 
     spawnBullet();
     spawnBomb();
-    //spawnLargeEnemy();
+    spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
     //spawnBullet();
@@ -398,6 +398,14 @@ public class Level1 extends GameArea {
 
 
   private void spawnLargeEnemy() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(100, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity largeEnemy = NPCFactory.createLargeEnemy(player);
+      spawnEntityAt(largeEnemy, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -406,6 +414,7 @@ public class Level1 extends GameArea {
       Entity largeEnemy = NPCFactory.createLargeEnemy(player);
       spawnEntityAt(largeEnemy, randomPos, true, true);
     }
+    */
   }
 
   private void spawnLongRangeEnemies() {

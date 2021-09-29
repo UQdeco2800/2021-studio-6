@@ -65,6 +65,7 @@ public class Level1 extends GameArea {
     "images/level_1/curbLower.png",
     "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
+    "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
     "images/level_1/building2-day1-latest.png",
     "images/hex_grass_1.png",
@@ -126,7 +127,7 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
+    spawnBarriers();
     player = spawnPlayer();
     spawnSafehouse();
     spawnBuildings();
@@ -299,6 +300,18 @@ public class Level1 extends GameArea {
     position  = new GridPoint2(tileBounds.x - 2, tileBounds.y - 5);
     sign = ObstacleFactory.createObject("images/level_1/forest_sign.png", 3f);
     spawnEntityAt(sign, position, true, false);
+  }
+
+  private void spawnBarriers() {
+    for (int i = 0; i < 11; i++) {
+      if (i == 6) {
+        //leave a gap in the middle
+        continue;
+      }
+      GridPoint2 position = new GridPoint2(18, i);
+      Entity barrier = ObstacleFactory.createObject("images/level_1/placeholder_curb.png", 1f);
+      spawnEntityAt(barrier, position, true, true);
+    }
   }
 
   private void spawnSafehouse() {

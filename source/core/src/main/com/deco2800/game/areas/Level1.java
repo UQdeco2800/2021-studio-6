@@ -27,13 +27,9 @@ import java.util.ArrayList;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_COBWEBS = 7;
-  private static final int NUM_BUSH = 7;
   private static final int NUM_LARGE_ENEMY = 2;
   private static final int NUM_SMALL_ENEMY = 2;
   private static final int NUM_SPAWNER_ENEMY = 2;
-  private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
   // this can be removed - this is purely for testing purposes
@@ -126,7 +122,6 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnBuildings();
@@ -135,8 +130,6 @@ public class Level1 extends GameArea {
 
     spawnBullet();
     spawnBomb();
-    //spawnCobweb();
-    //spawnBush();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
@@ -266,17 +259,6 @@ public class Level1 extends GameArea {
       int swordQuantity = 1;
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
-    }
-  }
-
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createBigTree();
-      spawnEntityAt(tree, randomPos, true, false);
     }
   }
 
@@ -410,28 +392,6 @@ public class Level1 extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
       spawnEntityAt(touchArcher, randomPos, true, true);
-    }
-  }
-
-  private void spawnCobweb() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_COBWEBS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cobweb = ObstacleFactory.createCobweb();
-      spawnEntityAt(cobweb, randomPos, true, false);
-    }
-  }
-
-  private void spawnBush() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_BUSH; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity bush = ObstacleFactory.createBush();
-      spawnEntityAt(bush, randomPos, true, false);
     }
   }
 

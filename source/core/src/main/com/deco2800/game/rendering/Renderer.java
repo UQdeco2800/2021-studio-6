@@ -106,6 +106,7 @@ public class Renderer implements Disposable {
   }
 
   public void setZoom(int zoom) {
+    this.gameWidth = zoom;
     camera.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), zoom);
   }
 

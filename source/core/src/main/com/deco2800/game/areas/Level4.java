@@ -109,7 +109,7 @@ public class Level4 extends GameArea {
         spawnBomb();
         spawnCobweb();
         spawnBush();
-        playMusic();
+        //playMusic();
         spawnLargeEnemy();
         spawnSmallEnemy();
         spawnBullet();
@@ -118,7 +118,7 @@ public class Level4 extends GameArea {
         spawnLongRangeEnemies();
         spawnToughLongRangeEnemies();
         spawnFinalBoss();
-        playMusic();
+        //playMusic();
 
 
     }

@@ -23,6 +23,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(30, 15);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
+  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(60, 30);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
   private static final int GRASS_TILE_COUNT = 40;
@@ -214,11 +215,11 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, xScale, yScale, grassTile);
+    fillTiles(layer, MAP_SIZE_BOSS, xScale, yScale, grassTile);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_BOSS, grassTuftTile, TUFT_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_BOSS, rockTile, ROCK_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

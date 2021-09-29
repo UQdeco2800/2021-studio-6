@@ -277,7 +277,7 @@ public class Level1 extends GameArea {
 
   private void spawnSigns() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    GridPoint2 position  = new GridPoint2(tileBounds.x - 14, tileBounds.y - 5);
+    GridPoint2 position  = new GridPoint2(tileBounds.x - 28, tileBounds.y - 5);
     Entity sign = ObstacleFactory.createObject("images/level_1/leaving_city_sign.png", 4f);
     spawnEntityAt(sign, position, true, false);
     position  = new GridPoint2(tileBounds.x - 2, tileBounds.y - 5);

@@ -287,7 +287,7 @@ public class Level1 extends GameArea {
 
   private void spawnBarriers() {
     for (int i = 0; i < 11; i++) {
-      if (i == 6) {
+      if (i == 4 || i == 5 || i == 6) {
         //leave a gap in the middle
         continue;
       }

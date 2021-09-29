@@ -33,8 +33,8 @@ public class Level1 extends GameArea {
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
   // this can be removed - this is purely for testing purposes
-  private static final int NUM_AMMO_PICKUPS = 3;
-  private static final int NUM_COIN_PICKUPS = 3;
+  private static final int NUM_AMMO_PICKUPS = 10;
+  private static final int NUM_COIN_PICKUPS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
 
   private static final float WALL_WIDTH = 0.1f;
@@ -148,7 +148,7 @@ public class Level1 extends GameArea {
             this::playMusic);
 
     // this is used for testing purposes for player pick up
-    //spawnPickupItems();
+    spawnPickupItems();
   }
 
   public Entity getPlayer() {
@@ -222,7 +222,7 @@ public class Level1 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, randomPos, true, false);
     }
-
+    /*
     // CREATED 3 ARMOURS FOR TESTING
     for (int i = 0; i < 3; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -262,6 +262,7 @@ public class Level1 extends GameArea {
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
     }
+    */
   }
 
   private void spawnBuildings() {

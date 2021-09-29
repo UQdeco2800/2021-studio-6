@@ -365,9 +365,14 @@ public class Level1 extends GameArea {
    * Spawns the small enemy
    */
   private void spawnSmallEnemy() {
-    GridPoint2 enemyPos = new GridPoint2(30, 6);
-    Entity smallEnemy = NPCFactory.createSmallEnemy(player);
-    spawnEntityAt(smallEnemy, enemyPos, true, true);
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(30, 6));
+    enemyPositions.add(new GridPoint2(50, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+      spawnEntityAt(smallEnemy, enemyPos, true, true);
+    }
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
@@ -393,9 +398,15 @@ public class Level1 extends GameArea {
   }
 
   private void spawnLongRangeEnemies() {
-    GridPoint2 enemyPos = new GridPoint2(38, 6);
-    Entity archer = NPCFactory.createLongRangeEnemy(player, this);
-    spawnEntityAt(archer, enemyPos, true, true);
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(38, 6));
+    enemyPositions.add(new GridPoint2(48, 2));
+    enemyPositions.add(new GridPoint2(48, 10));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity archer = NPCFactory.createLongRangeEnemy(player, this);
+      spawnEntityAt(archer, enemyPos, true, true);
+    }
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);

@@ -92,7 +92,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.SWORD, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/sword/sword1.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/sword/sword.png"))
                 .addComponent(new DisposingComponent());
         return sword;
     }
@@ -124,7 +124,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AXE, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/axe/axe_right2.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/axe/axe.png"))
                 .addComponent(new DisposingComponent());
         return axe;
     }

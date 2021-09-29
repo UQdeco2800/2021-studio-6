@@ -146,7 +146,7 @@ public class Level1 extends GameArea {
             this::playMusic);
 
     // this is used for testing purposes for player pick up
-    spawnPickupItems();
+    //spawnPickupItems();
   }
 
   public Entity getPlayer() {
@@ -351,7 +351,9 @@ public class Level1 extends GameArea {
    * Spawns the small enemy
    */
   private void spawnSmallEnemy() {
-    //GridPoint2 enemyPos = new GridPoint2
+    GridPoint2 enemyPos = new GridPoint2(30, 6);
+    Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+    spawnEntityAt(smallEnemy, enemyPos, true, true);
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);

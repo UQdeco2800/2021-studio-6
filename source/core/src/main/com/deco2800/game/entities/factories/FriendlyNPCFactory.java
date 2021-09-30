@@ -7,6 +7,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.FriendlyNPCTriggerComponent;
 import com.deco2800.game.components.npc.FriendlyNPCAnimationController;
+import com.deco2800.game.components.npc.SpeechIconComponent;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
@@ -55,6 +56,7 @@ public class FriendlyNPCFactory {
                 .addComponent(new DisposingComponent())
                 .addComponent(new FriendlyNPCTriggerComponent(story))
                 .addComponent(animator)
+                .addComponent(new SpeechIconComponent(0.6f))
                 .addComponent(new FriendlyNPCAnimationController())
                 .addComponent(aiComponent);
 

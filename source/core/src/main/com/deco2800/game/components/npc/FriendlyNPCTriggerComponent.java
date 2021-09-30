@@ -15,6 +15,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     private static final int STATIONARY = 0;
     private boolean isInNPCRange = false;
     private StoryNames name;
+    private boolean storyAlreadyPlayed = false;
     private static final int INTERACT_KEY = Input.Keys.E;
 
     public FriendlyNPCTriggerComponent(StoryNames name) {
@@ -28,6 +29,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
         super.create();
         entity.getEvents().addListener("collisionStart", this::collisionStart);
         entity.getEvents().addListener("collisionEnd", this::collisionEnd);
+        StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + name, this::storyEnded);
     }
 
 
@@ -46,6 +48,16 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
         return false;
     }
 
+    /**
+     * Removes the speech bubble icon when the story ends
+     */
+    private void storyEnded() {
+        if (!storyAlreadyPlayed) {
+            logger.debug("NPC {} - story marked as read", name);
+            entity.getComponent(SpeechIconComponent.class).displayOff();
+            storyAlreadyPlayed = true;
+        }
+    }
 
     private void collisionStart(Fixture me, Fixture other) {
         if (PhysicsLayer.contains(PhysicsLayer.PLAYER, other.getFilterData().categoryBits)) {

@@ -11,7 +11,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
-import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.shopmenu.ShopMenuDisplay;
 import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
@@ -22,6 +22,8 @@ import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.lighting.Lighting;
+import com.deco2800.game.memento.Player;
+import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
@@ -45,12 +47,19 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
-  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png"};
+  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png",
+          "images/Player_Sprite/front01.png", "images/playeritems/sword/sword2.png", "images/playeritems/sword/sword3.png",
+  "images/playeritems/dagger/dagger.png", "images/playeritems/dagger/dagger.png", "images/playeritems/axe/axe_left2.png", "images/playeritems/axe/axe_right4.png",
+  "images/playeritems/tourch/tourch.png", "images/playeritems/armour.png", "images/playeritems/halmet.png",
+  "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
+  "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
+  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double CurrentLevel = 1;
+  private double gameLevel = 1;
   public static boolean levelChange = false;
+  private static boolean revert = false;
   private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
@@ -58,12 +67,11 @@ public class MainGameScreen extends ScreenAdapter {
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
   private final boolean LIGHTINGON = true;
-  private GameArea gameArea;
+  private GameArea gameArea = null;
+
   private Entity ui;
 
-
-
-  public MainGameScreen(GdxGame game) {
+  public MainGameScreen(GdxGame game, GdxGame.GameType gameType) {
     this.game = game;
 
     // Sets background to light yellow
@@ -95,12 +103,56 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     this.terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new Level1(terrainFactory);
-    gameArea.create();
-    ServiceLocator.registerGameArea(gameArea);
 
-    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+    manageGameLevel(gameType);
+  }
 
+  /**
+   * This method does logic to decide which level would be generated based on whether game is restarted, checkpoint
+   * is being reverted or game will proceed to a new level
+   *
+   * @param gameType this dictates what method will be called on player state and which level will be generated
+   *                 depending on what happens to player during game
+   */
+  private void manageGameLevel(GdxGame.GameType gameType) {
+    // when game is started for the first time or it is restarted by user
+    if (gameType == GdxGame.GameType.RESTART_OR_START) {
+
+      // ensure player states are restored to its original first state if it has been created before
+      if (PlayerStateManager.getInstance().currentPlayerState() != null) {
+        PlayerStateManager.getInstance().restorePlayerState();
+      }
+      gameArea = new Level1(terrainFactory);
+      gameArea.create();
+      ServiceLocator.registerGameArea(gameArea);
+      this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+      this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+
+    } else {
+
+      // revert player to closest checkpoint - will take player to most recent safehouse and if player is still
+      // in level 1, player will be spawned in level 1. PLAYER SHOULD NEVER DIE IN SAFEHOUSE
+      if (gameType == GdxGame.GameType.REVERT_CLOSEST_CHECKPOINT) {
+        revert = true;
+        PlayerStateManager.getInstance().restorePlayerStateToClosestSafehouse();
+        logger.info("Player state is reverted");
+      } else {
+        revert = false;
+        logger.info("Player state is carried forward");
+      }
+
+      Player currentPlayerState = PlayerStateManager.getInstance().currentPlayerState();
+      gameLevel = currentPlayerState.getCurrentGameLevel();
+      generateNewLevel(revert);
+    }
+  }
+
+  /**
+   * This creates a shop box popup for player to interact and purchase items
+   */
+  private void createShopBox() {
+    logger.info("Shop box created");
+    ui.getComponent(ShopMenuDisplay.class).toggleShopBox();
   }
 
   private void checkGameOver() {
@@ -121,7 +173,7 @@ public class MainGameScreen extends ScreenAdapter {
     if (levelChange) {
       timeSource = ServiceLocator.getTimeSource();
       timeSource.pause();
-      generateNewLevel();
+      generateNewLevel(false);
       timeSource.unpause();
     }
     physicsEngine.update();
@@ -135,12 +187,12 @@ public class MainGameScreen extends ScreenAdapter {
 
     renderer.renderUI();
 
-
-
-    if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
-      CAMERA_POSITION.set(gameArea.player.getPosition());
-      ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
-      renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    if (gameArea != null) {
+      if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
+        CAMERA_POSITION.set(gameArea.player.getPosition());
+        ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
+        renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+      }
     }
   }
 
@@ -214,6 +266,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new KeyboardLevelInputComponent())
         .addComponent(new PauseMenuActions(this.game))
         .addComponent(new PauseMenuDisplay(this.game))
+        .addComponent(new ShopMenuDisplay(this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
@@ -227,33 +280,65 @@ public class MainGameScreen extends ScreenAdapter {
     levelChange = true;
   }
 
-  public void generateNewLevel() {
-    CurrentLevel += 0.5;
-    Vector2 walkingDirection
-            = gameArea.player.getComponent(KeyboardPlayerInputComponent.class).walkDirection;
+  /**
+   * This method generates a new level whenever player enters or leaves safehouse. It is used to not only
+   * generate specific levels with different terrains etc. but it is also used to manage logic of when to
+   * revert player back to the latest saved state checkpoint
+   * @param reverting true when user decided to revert game to latest saved checkpoint and false when game
+   *                  is to generate next new level
+   */
+  public void generateNewLevel(boolean reverting) {
+    // before disposing everything, update and store player's state - this only occurs when game
+    // is not reverting to player's most recent checkpoint (going back in game time in a way)
+    if (!reverting) {
+      double LEVEL_INCREMENT = 0.5;
+      gameLevel += LEVEL_INCREMENT;
+      PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
+    }
+    logger.info("Generating game level " + gameLevel);
 
-    if (CurrentLevel == 4) {
+    // TODO: This should not be here as this should be for boss fight
+    int LEVEL_4 = 4;
+    if (gameLevel == LEVEL_4) {
+      logger.info("Victory epilogue");
       victory();
       return;
     }
-    gameArea.player.getEvents().trigger("dispose");
-    gameArea.dispose();
-    if (CurrentLevel == 2) {
+
+    // when game reverts to closest checkpoint, current gameArea will be disposed of
+    if (gameArea != null) {
+      gameArea.player.getEvents().trigger("dispose");
+      gameArea.dispose();
+    }
+
+    logger.info("Generating level");
+    // user may want to revert to closest checkpoint on level 1
+    int LEVEL_3 = 3;
+    int LEVEL_2 = 2;
+    int LEVEL_1 = 1;
+    double LEVEL_SAFEHOUSE = 0.5;
+    int SAFEHOUSE_CHECK = 1;
+    if (gameLevel == LEVEL_1) {
+      gameArea = new Level1(terrainFactory);
+      gameArea.create();
+
+    } else if (gameLevel == LEVEL_2) {
       gameArea = new Level2(terrainFactory);
       gameArea.create();
-      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-              .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel == 3) {
+
+    } else if (gameLevel == LEVEL_3) {
       gameArea = new Level3(terrainFactory);
       gameArea.create();
-      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-              .walkDirection.add(walkingDirection);
-    } else if (CurrentLevel % 1 == 0.5){
+
+    // for safehouse - created in between every level
+    // #TODO: Will need to have specific else if statement right after final boss fight level that will call
+    // #TODO: victory() method
+    } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
-      gameArea.player.getComponent(KeyboardPlayerInputComponent.class)
-              .walkDirection.add(walkingDirection);
     }
+    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+    gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
     this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
     levelChange = false;

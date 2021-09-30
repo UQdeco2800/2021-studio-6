@@ -80,7 +80,7 @@ public class BulletCollisionComponent extends Component {
                 logger.debug("Bullet collided with NPC's layer");
 
                 if (targetStats != null) {
-                    targetStats.hit(bulletCombatStats.getBaseAttack());
+                    targetStats.hit(bulletCombatStats.getBaseRangedAttack());
 
                     if (targetStats.isDead()) {
                         ServiceLocator.getGameArea().despawnEntity(target);

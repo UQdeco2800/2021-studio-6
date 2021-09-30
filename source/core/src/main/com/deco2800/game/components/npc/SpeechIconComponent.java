@@ -11,7 +11,7 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class SpeechIconComponent extends RenderComponent {
     private static final float ANIMATION_RANGE = 0.03f;
-    private static final float ANIMATION_PER_TICK = 0.001f;
+    private static final float ANIMATION_PER_TICK = 0.003f;
     private float offsetY;
     private float minOffsetY;
     private float maxOffsetY;
@@ -38,16 +38,27 @@ public class SpeechIconComponent extends RenderComponent {
         visible = false;
     }
 
+    /**
+     * Adjusts the y offset to the next y offset in the animation. The animation causes the speech bubble to bob up
+     * and down above the entity.
+     */
     private void nextAnimationYOffset() {
+        // calculates the ratio from the top and bottom of the range. This is used for animation tweening.
+        float currentProgressRatioFromTop = (offsetY - minOffsetY)/(maxOffsetY - minOffsetY);
+        float currentProgressRatioFromBottom = (maxOffsetY - offsetY)/(maxOffsetY - minOffsetY);
+
+        // calculates the ratio to the closest edge of the animation range. This is used for animation tweening.
+        float minimalProgressRatio = Math.min(currentProgressRatioFromTop, currentProgressRatioFromBottom);
+
         if (animationDescending) {
             if (offsetY > minOffsetY) {
-                offsetY -= ANIMATION_PER_TICK;
+                offsetY -= ANIMATION_PER_TICK * Math.max(minimalProgressRatio, 0.2);
             } else {
                 animationDescending = false;
             }
         } else {
             if (offsetY < maxOffsetY) {
-                offsetY += ANIMATION_PER_TICK;
+                offsetY += ANIMATION_PER_TICK * Math.max(minimalProgressRatio, 0.2);
             } else {
                 animationDescending = true;
             }

@@ -21,11 +21,11 @@ import com.deco2800.game.services.ServiceLocator;
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
-  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(30, 15);
+  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
-  private static final int GRASS_TILE_COUNT = 40;
+  private static final int GRASS_TILE_COUNT = 100;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;

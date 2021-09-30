@@ -26,7 +26,7 @@ import java.util.LinkedList;
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_BULLETS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 7);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final float WALL_WIDTH = 0.1f;
 
@@ -95,25 +95,25 @@ public class Level2 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnPineTrees();
-    spawnBigTrees();
-    spawnSafehouse();
-    spawnCobweb();
-    spawnBush();
-    spawnTorch();
-    spawnTriPineTrees();
+    spawnTerrainPineTrees();
+//    spawnBigTrees();
+//    spawnSafehouse();
+//    spawnCobweb();
+//    spawnBush();
+//    spawnTorch();
+//    spawnTriPineTrees();
 
     player = spawnPlayer();
     spawnBullet();
     spawnBomb();
-    spawnPickupItems();
+//    spawnPickupItems();
 
     // Temporary solution to reduce the difficulty for level 2 so can test level 3
 //    spawnSmallEnemy();
 //    spawnLargeEnemy();
 //    spawnLongRangeEnemies();
-    spawnSpawnerEnemy();
-    spawnToughLongRangeEnemies();
+//    spawnSpawnerEnemy();
+//    spawnToughLongRangeEnemies();
 
     playMusic();
   }
@@ -172,107 +172,120 @@ public class Level2 extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
-  private void spawnPineTrees() {
+  private void spawnTerrainPineTrees() {
     LinkedList<GridPoint2> spawnLocations = new LinkedList<>();
 
-    // Add horizontal BOTTOM and TOP outer out of bound tree edge
-    for (int i = 0; i < 30; ++i) {
-      spawnLocations.add(new GridPoint2(i,0));  // bottom
-      spawnLocations.add(new GridPoint2(i,14)); // top
+    // Add horizontal TOP outer out of bound tree edge
+    for (int i = 0; i < 63; ++i) {
+      spawnLocations.add(new GridPoint2(i,36)); // top
     }
 
-    // Add vertical LEFT outer out of bound tree edge
-    int gapLeftBottom = 6;
-    int gapLeftTop = 8;
-    for (int y = 0; y < 14; ++y) {
-      if (y < gapLeftBottom || y > gapLeftTop ) {
-        spawnLocations.add(new GridPoint2(0,y));
+    // Add horizontal BOTTOM INNER out of bound tree edge
+    int gapBottomLeft1 = 37;
+    int gapBottomRight1 = 44;
+    for (int x = 0; x < 62; ++x) {
+      if (x < gapBottomLeft1 || x > gapBottomRight1) {
+        spawnLocations.add(new GridPoint2(x, 9));
       }
     }
 
-    // Add vertical RIGHT outer out of bound tree edge
-    int gapRightBottom = 4;
-    int gapRightTop = 7;
-    for (int y = 0; y < 14; ++y) {
+    // Add horizontal BOTTOM OUTER out of bound tree edge
+    int gapBottomLeft2 = 17;
+    int gapBottomRight2= 46;
+    for (int x = 0; x < 62; ++x) {
+      if (x > gapBottomLeft2 && x < gapBottomRight2) {
+        spawnLocations.add(new GridPoint2(x, 0));
+      }
+    }
+
+    // Add vertical LEFT OUTER out of bound tree edge
+    int gapLeftBottom = 21;
+    int gapLeftTop = 24;
+    for (int y = 9; y < 36; ++y) {
+      if (y < gapLeftBottom || y > gapLeftTop) {
+        spawnLocations.add(new GridPoint2(0, y));
+      }
+    }
+
+    // Add vertical LEFT INNER BOTTOM out of bound tree edge
+    for (int y = 0; y < 9; ++y) {
+      spawnLocations.add(new GridPoint2(18, y));
+    }
+
+    // Add vertical RIGHT INNER BOTTOM out of bound tree edge
+    for (int y = 0; y < 9; ++y) {
+      spawnLocations.add(new GridPoint2(45, y));
+    }
+
+    // Add vertical RIGHT OUTER out of bound tree edge
+    int gapRightBottom = 21;
+    int gapRightTop = 24;
+    for (int y = 9; y < 36; ++y) {
       if (y < gapRightBottom || y > gapRightTop ) {
-        spawnLocations.add(new GridPoint2(29, y));
+        spawnLocations.add(new GridPoint2(62, y));
       }
     }
 
     // Add bottom-left inner bound tree edge
-    spawnLocations.add(new GridPoint2(5,1));
-    spawnLocations.add(new GridPoint2(5,2));
-    spawnLocations.add(new GridPoint2(5,3));
-    spawnLocations.add(new GridPoint2(5,4));
+//    spawnLocations.add(new GridPoint2(5,1));
+//    spawnLocations.add(new GridPoint2(5,2));
+//    spawnLocations.add(new GridPoint2(5,3));
+//    spawnLocations.add(new GridPoint2(5,4));
 
     // Spawn the pine trees at designated positions
     for (int i = 0; i < spawnLocations.size(); i++) {
-      Entity tree = ObstacleFactory.createPineTree();
-      spawnEntityAt(tree, spawnLocations.get(i), true, false);
-    }
-  }
-
-  private void spawnTriPineTrees() {
-    GridPoint2[] spawnLocations = {
-      new GridPoint2(6,5),
-      new GridPoint2(7,5),
-      new GridPoint2(6,6)
-    };
-
-    for (int i = 0; i < spawnLocations.length; i++) {
       Entity tree = ObstacleFactory.createTriPineTree();
-      spawnEntityAt(tree, spawnLocations[i], true, false);
-    }
-
-
-  }
-
-  private void spawnBigTrees() {
-    GridPoint2[] spawnLocations = {
-      // Left side
-      new GridPoint2(1, 9),
-      new GridPoint2(3, 9),
-      new GridPoint2(5, 9),
-
-      // "L" shape middle
-      new GridPoint2(10, 4),
-      new GridPoint2(12, 4),
-      new GridPoint2(14, 4),
-      new GridPoint2(16, 4),
-
-      new GridPoint2(10, 5),
-      new GridPoint2(10, 6),
-      new GridPoint2(10, 7),
-      new GridPoint2(10, 8),
-      new GridPoint2(10, 9),
-      new GridPoint2(10, 10),
-      new GridPoint2(10, 11),
-      new GridPoint2(10, 12),
-      new GridPoint2(10, 13),
-
-      // Right Side
-      new GridPoint2(28, 4),
-      new GridPoint2(26, 4),
-      new GridPoint2(24, 4),
-      new GridPoint2(22, 4),
-
-      new GridPoint2(22, 5),
-      new GridPoint2(22, 6),
-      new GridPoint2(22, 7),
-      new GridPoint2(22, 8),
-
-      new GridPoint2(22, 8),
-      new GridPoint2(20, 8),
-      new GridPoint2(18, 8),
-      new GridPoint2(16, 8),
-      new GridPoint2(14, 8),
-    };
-
-    for (int i = 0; i < spawnLocations.length; i++) {
-      Entity tree = ObstacleFactory.createBigTree();
-      spawnEntityAt(tree, spawnLocations[i], true, false);
+      spawnEntityAt(tree, spawnLocations.get(i), false, false);
     }
   }
+
+
+//  private void spawnBigTrees() {
+//    GridPoint2[] spawnLocations = {
+//      // Left side
+//      new GridPoint2(1, 9),
+//      new GridPoint2(3, 9),
+//      new GridPoint2(5, 9),
+//
+//      // "L" shape middle
+//      new GridPoint2(10, 4),
+//      new GridPoint2(12, 4),
+//      new GridPoint2(14, 4),
+//      new GridPoint2(16, 4),
+//
+//      new GridPoint2(10, 5),
+//      new GridPoint2(10, 6),
+//      new GridPoint2(10, 7),
+//      new GridPoint2(10, 8),
+//      new GridPoint2(10, 9),
+//      new GridPoint2(10, 10),
+//      new GridPoint2(10, 11),
+//      new GridPoint2(10, 12),
+//      new GridPoint2(10, 13),
+//
+//      // Right Side
+//      new GridPoint2(28, 4),
+//      new GridPoint2(26, 4),
+//      new GridPoint2(24, 4),
+//      new GridPoint2(22, 4),
+//
+//      new GridPoint2(22, 5),
+//      new GridPoint2(22, 6),
+//      new GridPoint2(22, 7),
+//      new GridPoint2(22, 8),
+//
+//      new GridPoint2(22, 8),
+//      new GridPoint2(20, 8),
+//      new GridPoint2(18, 8),
+//      new GridPoint2(16, 8),
+//      new GridPoint2(14, 8),
+//    };
+//
+//    for (int i = 0; i < spawnLocations.length; i++) {
+//      Entity tree = ObstacleFactory.createBigTree();
+//      spawnEntityAt(tree, spawnLocations[i], true, false);
+//    }
+//  }
 
   public void spawnSafehouse() {
     GridPoint2 center = new GridPoint2(28, 6);

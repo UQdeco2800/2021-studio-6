@@ -47,6 +47,8 @@ class SpeechIconComponentTest {
     speechIconComponent = new SpeechIconComponent(SPEECH_Y_OFFSET);
     Entity npc = new Entity()
         .addComponent(speechIconComponent);
+
+    // Set some dummy position and scale values
     npc.setPosition(new Vector2(NPC_X_POS, NPC_Y_POS));
     npc.setScale(new Vector2(NPC_X_SCALE, NPC_Y_SCALE));
   }
@@ -54,8 +56,9 @@ class SpeechIconComponentTest {
   @Test
   void displayOffTest() {
     speechIconComponent.displayOff();
-
     speechIconComponent.draw(spriteBatch);
+
+    // Verify that the draw method was never called
     verify(spriteBatch, Mockito.never()).draw(
         any(Texture.class),
         anyFloat(),
@@ -80,6 +83,7 @@ class SpeechIconComponentTest {
   void drawAnythingTest() {
     speechIconComponent.draw(spriteBatch);
 
+    // verify that the draw method was called
     verify(spriteBatch).draw(
         any(Texture.class),
         anyFloat(),
@@ -104,8 +108,7 @@ class SpeechIconComponentTest {
   void drawSpeechBubbleTest() {
     speechIconComponent.draw(spriteBatch);
 
-    // Verify that the draw method was called with correct parameters and animation is using
-    // the correct y offset
+    // Verify that the draw method was called with correct parameters and animation is using the correct y offset
     verify(spriteBatch).draw(
         speechIconTexture,
         NPC_X_POS,

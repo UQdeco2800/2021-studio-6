@@ -38,8 +38,10 @@ class FriendlyNPCFactoryTest {
     ServiceLocator.getResourceService().loadTextureAtlases(npcMovementAtlas);
     ServiceLocator.getResourceService().loadAll();
 
+    // Register the physics service
     ServiceLocator.registerPhysicsService(new PhysicsService());
 
+    // Create the npc
     npc = FriendlyNPCFactory.createNewFriendlyNPC(
         StoryNames.PROLOGUE, "images/npc_movement/atlas_for_testing.atlas", false);
   }

@@ -38,7 +38,10 @@ class FriendlyNPCAnimationControllerTest {
 
   @BeforeEach
   void beforeEach() {
+    // Register a physics service
     ServiceLocator.registerPhysicsService(new PhysicsService());
+
+    // Create a new entity with minimal components
     friendlyNPCAnimationController = Mockito.spy(new FriendlyNPCAnimationController());
     npcMovement = Mockito.spy(new PhysicsMovementComponent());
     npc = new Entity()
@@ -46,7 +49,11 @@ class FriendlyNPCAnimationControllerTest {
         .addComponent(friendlyNPCAnimationController)
         .addComponent(npcMovement)
         .addComponent(new PhysicsComponent());
+
+    // Set the initial position of the npc
     npc.setPosition(new Vector2(NPC_X_POS, NPC_Y_POS));
+
+    // Run the initial setup method of components
     friendlyNPCAnimationController.create();
     npcMovement.create();
   }
@@ -58,9 +65,11 @@ class FriendlyNPCAnimationControllerTest {
 
   @Test
   void updateWalkingToTargetTest() {
+    // checks that getTarget is still called even if no target set
     friendlyNPCAnimationController.update();
     verify(npcMovement).getTarget();
 
+    // when a new direction is set check that the direction matches
     Vector2 newDirection = new Vector2(1, 1);
     npcMovement.setTarget(newDirection);
     friendlyNPCAnimationController.update();
@@ -70,11 +79,13 @@ class FriendlyNPCAnimationControllerTest {
 
   @Test
   void updateWalkingToSameTargetTwiceTest() {
+    // set a new direction and verify that it updated the animation direction
     Vector2 newDirection = new Vector2(10, 0);
     npcMovement.setTarget(newDirection);
     friendlyNPCAnimationController.update();
     verify(friendlyNPCAnimationController, Mockito.times(1)).updateAnimationDirection(newDirection, WALKING);
 
+    // keep the same direction and verify that it doesn't updated the animation direction again
     friendlyNPCAnimationController.update();
     verify(friendlyNPCAnimationController, Mockito.times(1)).updateAnimationDirection(newDirection, WALKING);
   }
@@ -88,9 +99,12 @@ class FriendlyNPCAnimationControllerTest {
 
   @Test
   void updateNotMovingDifferentDirectionTest() {
+    // Set a target direction to the right
     Vector2 newDirection = new Vector2(10, 0);
     npcMovement.setTarget(newDirection);
     friendlyNPCAnimationController.update();
+
+    // Stop all movement, check that the direction is stationary facing the right
     npcMovement.setMoving(false);
     friendlyNPCAnimationController.update();
     verify(friendlyNPCAnimationController, Mockito.times(1)).setDirection(ANIMATIONS_RIGHT[STATIONARY]);
@@ -103,21 +117,25 @@ class FriendlyNPCAnimationControllerTest {
     Vector2 lookPositionSouth = new Vector2(0, -1);
     Vector2 lookPositionWest = new Vector2(-1, 0);
 
+    // check the stationary and walking animations are set if looking to the north
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorth, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_BACK[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorth, WALKING);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_BACK[WALKING]);
 
+    // check the stationary and walking animations are set if looking to the east
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionEast, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_RIGHT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionEast, WALKING);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_RIGHT[WALKING]);
 
+    // check the stationary and walking animations are set if looking to the south
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouth, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_FRONT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouth, WALKING);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_FRONT[WALKING]);
 
+    // check the stationary and walking animations are set if looking to the west
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionWest, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_LEFT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionWest, WALKING);
@@ -126,8 +144,10 @@ class FriendlyNPCAnimationControllerTest {
 
   @Test
   void updateAnimationDirectionDefaultEntityPositionOriginLookPositionTest() {
+    // Set the look position as the same position as the entity
     Vector2 lookPositionOrigin = new Vector2(0, 0);
 
+    // Check that updating the direction keeps the animation facing the front
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionOrigin, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_FRONT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionOrigin, WALKING);
@@ -141,21 +161,25 @@ class FriendlyNPCAnimationControllerTest {
     Vector2 lookPositionSouthEast = new Vector2(5, -5);
     Vector2 lookPositionSouthWest = new Vector2(-5, -5);
 
+    // If facing the northeast then the animation should face the right
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorthEast, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_RIGHT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorthEast, WALKING);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_RIGHT[WALKING]);
 
+    // If facing the northwest then the animation should face the left
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorthWest, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_LEFT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorthWest, WALKING);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_LEFT[WALKING]);
 
+    // If facing the southeast then the animation should face the front
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouthEast, STATIONARY);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_FRONT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouthEast, WALKING);
     verify(friendlyNPCAnimationController).setDirection(ANIMATIONS_FRONT[WALKING]);
 
+    // If facing the southwest then the animation should face the front
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouthWest, STATIONARY);
     verify(friendlyNPCAnimationController, Mockito.times(2)).setDirection(ANIMATIONS_FRONT[STATIONARY]);
     friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouthWest, WALKING);
@@ -165,6 +189,7 @@ class FriendlyNPCAnimationControllerTest {
   @Test
   void updateAnimationDirectionDefaultEntityPositionVariableUnitLookPositionTest() {
     int count = 1;
+    // Try different X and Y coordinates for the looking direction, where i is the dominant direction and j is always less
     for (int i = 0; i < 10; i++) {
       for (int j = -i + 1; j < i; j++) {
         Vector2 lookPositionNorth = new Vector2(j, i);
@@ -172,21 +197,25 @@ class FriendlyNPCAnimationControllerTest {
         Vector2 lookPositionSouth = new Vector2(j, -i);
         Vector2 lookPositionWest = new Vector2(-i, j);
 
+        // check the stationary and walking animations are set if looking to the north
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorth, STATIONARY);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_BACK[STATIONARY]);
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorth, WALKING);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_BACK[WALKING]);
 
+        // check the stationary and walking animations are set if looking to the east
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionEast, STATIONARY);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_RIGHT[STATIONARY]);
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionEast, WALKING);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_RIGHT[WALKING]);
 
+        // check the stationary and walking animations are set if looking to the south
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouth, STATIONARY);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_FRONT[STATIONARY]);
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouth, WALKING);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_FRONT[WALKING]);
 
+        // check the stationary and walking animations are set if looking to the west
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionWest, STATIONARY);
         verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_LEFT[STATIONARY]);
         friendlyNPCAnimationController.updateAnimationDirection(lookPositionWest, WALKING);
@@ -200,9 +229,11 @@ class FriendlyNPCAnimationControllerTest {
   @Test
   void updateAnimationDirectionVariableEntityPositionVariableUnitLookPositionTest() {
     int count = 1;
+    // Set different X and Y coordinates for the entity
     for (int k = -2; k <= 2; k++) {
       for (int l = -2; l <= 2; l++) {
         npc.setPosition(new Vector2(k, l));
+// Try different X and Y coordinates for the looking direction, where i is the dominant direction and j is always less
         for (int i = 0; i <= 2; i++) {
           for (int j = -i + 1; j < i; j++) {
             Vector2 lookPositionNorth = new Vector2(k + j, l + i);
@@ -210,21 +241,25 @@ class FriendlyNPCAnimationControllerTest {
             Vector2 lookPositionSouth = new Vector2(k + j, l + -i);
             Vector2 lookPositionWest = new Vector2(k + -i, l + j);
 
+            // check the stationary and walking animations are set if looking to the north
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorth, STATIONARY);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_BACK[STATIONARY]);
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionNorth, WALKING);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_BACK[WALKING]);
 
+            // check the stationary and walking animations are set if looking to the east
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionEast, STATIONARY);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_RIGHT[STATIONARY]);
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionEast, WALKING);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_RIGHT[WALKING]);
 
+            // check the stationary and walking animations are set if looking to the south
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouth, STATIONARY);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_FRONT[STATIONARY]);
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionSouth, WALKING);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_FRONT[WALKING]);
 
+            // check the stationary and walking animations are set if looking to the west
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionWest, STATIONARY);
             verify(friendlyNPCAnimationController, times(count)).setDirection(ANIMATIONS_LEFT[STATIONARY]);
             friendlyNPCAnimationController.updateAnimationDirection(lookPositionWest, WALKING);
@@ -239,22 +274,26 @@ class FriendlyNPCAnimationControllerTest {
 
   @Test
   void setDirectionTest() {
+    // Check the animation direction is set correctly for the back direction
     friendlyNPCAnimationController.setDirection(ANIMATIONS_BACK[STATIONARY]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_BACK[STATIONARY]);
     friendlyNPCAnimationController.setDirection(ANIMATIONS_BACK[WALKING]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_BACK[WALKING]);
 
+    // Check the animation direction is set correctly for the right direction
     friendlyNPCAnimationController.setDirection(ANIMATIONS_RIGHT[STATIONARY]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_RIGHT[STATIONARY]);
     friendlyNPCAnimationController.setDirection(ANIMATIONS_RIGHT[WALKING]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_RIGHT[WALKING]);
 
+    // Check the animation direction is set correctly for the front direction
     friendlyNPCAnimationController.setDirection(ANIMATIONS_FRONT[STATIONARY]);
     // Note this runs two times as one is for the default direction
     verify(animator, Mockito.times(2)).startAnimation(ANIMATIONS_FRONT[STATIONARY]);
     friendlyNPCAnimationController.setDirection(ANIMATIONS_FRONT[WALKING]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_FRONT[WALKING]);
 
+    // Check the animation direction is set correctly for the left direction
     friendlyNPCAnimationController.setDirection(ANIMATIONS_LEFT[STATIONARY]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_LEFT[STATIONARY]);
     friendlyNPCAnimationController.setDirection(ANIMATIONS_LEFT[WALKING]);
@@ -266,6 +305,7 @@ class FriendlyNPCAnimationControllerTest {
     friendlyNPCAnimationController.setDirection(ANIMATIONS_RIGHT[STATIONARY]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_RIGHT[STATIONARY]);
 
+    // Setting the same direction twice should only change the animation once
     friendlyNPCAnimationController.setDirection(ANIMATIONS_RIGHT[STATIONARY]);
     verify(animator, Mockito.times(1)).startAnimation(ANIMATIONS_RIGHT[STATIONARY]);
   }

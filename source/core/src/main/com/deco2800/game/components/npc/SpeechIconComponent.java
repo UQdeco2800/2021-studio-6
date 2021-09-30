@@ -12,6 +12,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class SpeechIconComponent extends RenderComponent {
     private static final float ANIMATION_RANGE = 0.03f;
     private static final float ANIMATION_PER_TICK = 0.003f;
+    private static final float ANIMATION_MIN_RATIO = 0.2f;
     private float offsetY;
     private float minOffsetY;
     private float maxOffsetY;
@@ -23,7 +24,7 @@ public class SpeechIconComponent extends RenderComponent {
      * Creates a speech bubble above an entity
      */
     public SpeechIconComponent(float offsetY) {
-        speechIconTexture = ServiceLocator.getResourceService().getAsset("images/dialogue/raw/npc_indicator.png", Texture.class);;
+        speechIconTexture = ServiceLocator.getResourceService().getAsset("images/dialogue/raw/npc_indicator.png", Texture.class);
         this.visible = true;
         this.offsetY = offsetY;
         this.maxOffsetY = offsetY;
@@ -50,15 +51,18 @@ public class SpeechIconComponent extends RenderComponent {
         // calculates the ratio to the closest edge of the animation range. This is used for animation tweening.
         float minimalProgressRatio = Math.min(currentProgressRatioFromTop, currentProgressRatioFromBottom);
 
+        // if the animation should be descending then remove from the offsetY
         if (animationDescending) {
             if (offsetY > minOffsetY) {
-                offsetY -= ANIMATION_PER_TICK * Math.max(minimalProgressRatio, 0.2);
+                offsetY -= ANIMATION_PER_TICK * Math.max(minimalProgressRatio, ANIMATION_MIN_RATIO);
             } else {
                 animationDescending = false;
             }
+
+        // if the animation should be ascending then add to the offsetY
         } else {
             if (offsetY < maxOffsetY) {
-                offsetY += ANIMATION_PER_TICK * Math.max(minimalProgressRatio, 0.2);
+                offsetY += ANIMATION_PER_TICK * Math.max(minimalProgressRatio, ANIMATION_MIN_RATIO);
             } else {
                 animationDescending = true;
             }
@@ -96,6 +100,4 @@ public class SpeechIconComponent extends RenderComponent {
                 false);
         }
     }
-
-
 }

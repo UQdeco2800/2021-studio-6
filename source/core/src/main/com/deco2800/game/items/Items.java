@@ -48,6 +48,12 @@ public enum Items {
                 return "configs/Axe.json";
             case "DAGGER":
                 return "configs/Dagger.json";
+            case "SLEDGE":
+                return "configs/Sledge.json";
+            case "BAT":
+                return "configs/Baseball.json";
+            case "MACHETE":
+                return "configs/Machete.json";
             case "SWORD":
                 return "configs/Sword.json";
             default:

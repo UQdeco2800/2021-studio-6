@@ -128,8 +128,9 @@ public class PlayerStateManager {
      * Used specifically for logging purposes and debugging. Will be useful to track player's current state
      * @param playerState print most recent player state to logging
      */
-    public void trackPlayerState(Player playerState) {
+    public String trackPlayerState(Player playerState) {
         logger.info(playerState.toString());
+        return playerState.toString();
     }
 
     /**

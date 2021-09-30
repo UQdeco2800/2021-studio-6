@@ -9,6 +9,8 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -107,14 +109,19 @@ public class Level3 extends GameArea {
     spawnBomb();
     spawnCobweb();
     spawnBush();
-    playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
     spawnSpawnerEnemy();
 
+    spawnLevelThreeIntro();
+
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
+
+    // Listener for level 3 intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -304,6 +311,11 @@ public class Level3 extends GameArea {
       Entity bush = ObstacleFactory.createBush();
       spawnEntityAt(bush, randomPos, true, false);
     }
+  }
+
+  private void spawnLevelThreeIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.LEVEL3_INTRO);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {

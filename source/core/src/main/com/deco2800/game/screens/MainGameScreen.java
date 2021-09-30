@@ -174,9 +174,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     if (levelChange) {
       timeSource = ServiceLocator.getTimeSource();
-      timeSource.pause();
       generateNewLevel(false);
-      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();

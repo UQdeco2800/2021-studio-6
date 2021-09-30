@@ -22,8 +22,6 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
@@ -131,7 +129,7 @@ public class Level1 extends GameArea {
     spawnSafehouse();
     spawnBuildings();
     spawnSigns();
-    spawnIntroDialogue();
+    spawnPrologue();
 
     spawnBullet();
     spawnBomb();
@@ -435,7 +433,7 @@ public class Level1 extends GameArea {
     }
   }
 
-  private void spawnIntroDialogue(){
+  private void spawnPrologue(){
     StoryManager.getInstance().loadCutScene(StoryNames.PROLOGUE);
     StoryManager.getInstance().displayStory();
   }

@@ -9,6 +9,8 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.player.PlayerRangeAOEComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -103,6 +105,7 @@ public class Level2 extends GameArea {
     spawnBullet();
     spawnBomb();
     spawnPickupItems();
+    spawnLevelTwoIntro();
 
     // Temporary solution to reduce the difficulty for level 2 so can test level 3
 //    spawnSmallEnemy();
@@ -111,7 +114,9 @@ public class Level2 extends GameArea {
     spawnSpawnerEnemy();
     spawnToughLongRangeEnemies();
 
-    playMusic();
+    // Listener for level 2 intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -458,6 +463,11 @@ public class Level2 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, coinSpawnLocations[i], true, false);
     }
+  }
+
+  private void spawnLevelTwoIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.LEVEL2_INTRO);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {

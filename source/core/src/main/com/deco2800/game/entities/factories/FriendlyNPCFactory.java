@@ -26,6 +26,9 @@ public class FriendlyNPCFactory {
 
     /**
      * Create a friendly NPC entity.
+     * @param story the related story scene that contains the dialogue for the npc
+     * @param atlasFileName the atlas file that contains the animations for the npc
+     * @param wandering whether the npc should be wandering or not
      * @return entity
      */
     public static Entity createNewFriendlyNPC(StoryNames story, String atlasFileName, boolean wandering) {

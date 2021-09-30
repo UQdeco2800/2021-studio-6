@@ -22,6 +22,7 @@ public class SpeechIconComponent extends RenderComponent {
 
     /**
      * Creates a speech bubble above an entity
+     * @param offsetY the amount to offset the speech bubble above the entity (distance is from the center of entity)
      */
     public SpeechIconComponent(float offsetY) {
         speechIconTexture = ServiceLocator.getResourceService().getAsset("images/dialogue/raw/npc_indicator.png", Texture.class);

@@ -12,10 +12,11 @@ public class Level3IntroCutScene extends CutSceneConfig {
                     "The glow is so bright now",
                     "I need to get through this last stretch and make it to the docks"
             };
+    protected static final String BLACK_IMAGE = "utils/blackpixel.png";
     public static final String[] IMAGES_RAW =
             {
                     //Screen 0
-                    "images/cutscenes/level3Intro-scene-1.png",
+                    BLACK_IMAGE,
                     "images/cutscenes/level3Intro-scene-1.png",
                     "images/cutscenes/level3Intro-scene-1.png",
                     "images/cutscenes/level3Intro-scene-1.png"

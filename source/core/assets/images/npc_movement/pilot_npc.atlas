@@ -1,0 +1,76 @@
+
+pilot_npc.png
+size: 4096, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+pilot_backbig1
+  rotate: false
+  xy: 580, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_backbig2
+  rotate: false
+  xy: 2, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_backbig3
+  rotate: false
+  xy: 580, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_frontbig1
+  rotate: false
+  xy: 1158, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_frontbig2
+  rotate: false
+  xy: 1158, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_frontbig3
+  rotate: false
+  xy: 2, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_leftbig1
+  rotate: false
+  xy: 580, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_leftbig2
+  rotate: false
+  xy: 1736, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_rightbig1
+  rotate: false
+  xy: 1158, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+pilot_rightbig2
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1

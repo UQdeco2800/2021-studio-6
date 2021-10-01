@@ -2,7 +2,7 @@ package com.deco2800.game.components.story.stories;
 
 import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
-public class TutorialDiologue extends BasicDialogueConfig {
+public class NPCTutorialDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {"Greetings, young man.",
             "I heard you wanted to become a firefly.",
             "So I came to give you some advice.",
@@ -15,7 +15,7 @@ public class TutorialDiologue extends BasicDialogueConfig {
     protected static final String[] PORTRAIT = {"npc-tut1-portrait"};
     private static final int LENGTH = 9;
 
-    public TutorialDiologue(){
+    public NPCTutorialDialogue(){
         dialogueText = QUOTE;
         dialogueImages = PORTRAIT;
     }

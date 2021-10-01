@@ -20,6 +20,7 @@ public class ServiceLocator {
   private static final Logger logger = LoggerFactory.getLogger(ServiceLocator.class);
   private static EntityService entityService;
   private static RenderService renderService;
+  private static RenderService renderUnlitService;
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;
@@ -34,6 +35,10 @@ public class ServiceLocator {
 
   public static RenderService getRenderService() {
     return renderService;
+  }
+
+  public static RenderService getRenderUnlitService() {
+    return renderUnlitService;
   }
 
   public static PhysicsService getPhysicsService() {
@@ -72,6 +77,11 @@ public class ServiceLocator {
     renderService = service;
   }
 
+  public static void registerUnlitRenderService(RenderService service) {
+    logger.debug("Registering Unlit Render service {}", service);
+    renderUnlitService = service;
+  }
+
   public static void registerPhysicsService(PhysicsService service) {
     logger.debug("Registering physics service {}", service);
     physicsService = service;
@@ -102,14 +112,12 @@ public class ServiceLocator {
   public static void clear() {
     entityService = null;
     renderService = null;
+    renderUnlitService = null;
     physicsService = null;
     timeSource = null;
     inputService = null;
-
     lightingService = null;
-
     gameArea = null;
-
   }
 
   private ServiceLocator() {

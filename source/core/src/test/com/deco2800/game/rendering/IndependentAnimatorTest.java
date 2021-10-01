@@ -33,7 +33,7 @@ public class IndependentAnimatorTest {
     ServiceLocator.registerRenderService(service);
     assertNotNull(ServiceLocator.getRenderService());
     TextureAtlas atlas = createMockAtlas("test_name", 1);
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     verify(service).register(animator);
   }
 
@@ -41,7 +41,7 @@ public class IndependentAnimatorTest {
   void shouldSetPositions() {
     ServiceLocator.registerRenderService(service);
     TextureAtlas atlas = createMockAtlas("test_name", 1);
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     animator.setPositions(1.50f, (float) 2.5);
     float[] testArray = new float[]{1.50f, 2.5f};
     float[] getArray = animator.getPositions();
@@ -53,7 +53,7 @@ public class IndependentAnimatorTest {
   void shouldDefaultSetPositions() {
     ServiceLocator.registerRenderService(service);
     TextureAtlas atlas = createMockAtlas("test_name", 1);
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     float[] testArray = new float[]{0f, 0f};
     float[] getArray = animator.getPositions();
     assertEquals(testArray[0], getArray[0]);
@@ -64,7 +64,7 @@ public class IndependentAnimatorTest {
   void shouldSetScale() {
     ServiceLocator.registerRenderService(service);
     TextureAtlas atlas = createMockAtlas("test_name", 1);
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     animator.setScale(1.50f, (float) 2.5);
     float[] testArray = new float[]{1.50f, 2.5f};
     float[] getArray = animator.getScale();
@@ -76,7 +76,7 @@ public class IndependentAnimatorTest {
   void shouldDefaultSetScale() {
     ServiceLocator.registerRenderService(service);
     TextureAtlas atlas = createMockAtlas("test_name", 1);
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     float[] testArray = new float[]{1f, 1f};
     float[] getArray = animator.getScale();
     assertEquals(testArray[0], getArray[0]);
@@ -106,7 +106,7 @@ public class IndependentAnimatorTest {
     when(gameTime.getDeltaTime()).thenReturn(frameTime);
 
     // Start animation
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     animator.setCamera(true);
     animator.setPositions(4f, 2f);
     animator.setScale(1.50f, (float) 2.5);
@@ -148,7 +148,7 @@ public class IndependentAnimatorTest {
     when(gameTime.getDeltaTime()).thenReturn(frameTime);
 
     // Start animation
-    IndependentAnimator animator = new IndependentAnimator(atlas);
+    IndependentAnimator animator = new IndependentAnimator(atlas, true);
     animator.setCamera(false);
     animator.setPositions(3.50f, (float) 7.5);
     animator.setScale(1.50f, (float) 2.5);

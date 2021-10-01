@@ -44,7 +44,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     healthAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/health.atlas", TextureAtlas.class));
+                .getAsset("images/hud/health.atlas", TextureAtlas.class), false);
     healthAnimator.setCamera(true);
     healthAnimator.setPositions(9, (float) 4);
     healthAnimator.setScale( 3, 1);
@@ -65,7 +65,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     dashAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class));
+                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), false);
     dashAnimator.addAnimation("dashbar", 1.2f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 

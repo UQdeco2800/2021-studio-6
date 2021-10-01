@@ -40,10 +40,12 @@ public class FriendlyNPCFactory {
         animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+        if (wandering) {
+            animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+        }
 
         // add the wandering task AI component
         AITaskComponent aiComponent = new AITaskComponent();

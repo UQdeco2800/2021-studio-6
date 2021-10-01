@@ -52,41 +52,41 @@ public class PlayerFactory {
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/Player_Animations/player_movement.atlas", TextureAtlas.class));
-    animator.addAnimation("dead-left", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("dead-right", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead-left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead-right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-hurt", 1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-hurt", 1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-hurt", 1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-hurt", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
-
+    animator.addAnimation("back-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.setUnlit();
     // when changing melee weapon file path, remember to also change weapon type player currently holds
     loadPlayerData();
     Entity player = new Entity()
@@ -111,8 +111,8 @@ public class PlayerFactory {
             .addComponent(new PlayerHudAnimationController())
             .addComponent(new PlayerWeaponAnimationController())
             .addComponent(new PlayerHealthAnimationController())
-            .addComponent(new PlayerLightingComponent(Colors.get("RED"), 10f, 0, 0));
-            //.addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 0, 0, 90f, 45f));
+            .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));
+            //.addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 5, 5, 90f, 180f));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

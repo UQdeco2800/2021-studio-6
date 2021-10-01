@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.rendering.Renderer;
@@ -16,7 +17,11 @@ public class RenderFactory {
     ServiceLocator.getEntityService().register(camera);
     CameraComponent camComponent = camera.getComponent(CameraComponent.class);
 
-    return new Renderer(camComponent);
+    return new Renderer(camComponent, true, null);
+  }
+
+  public static Renderer createUnlitRenderer(CameraComponent camComponent, Stage stage) {
+    return new Renderer(camComponent, false, stage);
   }
 
   private RenderFactory() {

@@ -53,7 +53,7 @@ public class MainGameScreen extends ScreenAdapter {
   "images/playeritems/tourch/tourch.png", "images/playeritems/armour.png", "images/playeritems/halmet.png",
   "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
   "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
-  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png"};
+  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png", "images/safehouse/shopkeeper/portrait.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -63,6 +63,7 @@ public class MainGameScreen extends ScreenAdapter {
   private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
+  private final Renderer rendererUnlit;
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
@@ -88,12 +89,20 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerUnlitRenderService(new RenderService());
 
     ServiceLocator.registerLightingService(new Lighting(ServiceLocator.getPhysicsService().getPhysics().getWorld()));
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+    //rendererUnlit = RenderFactory.createRenderer();
+    rendererUnlit = RenderFactory.createUnlitRenderer(renderer.getCamera(), renderer.getStage());
+    //rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    //rendererUnlit.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+
+    //rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    //rendererUnlit.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     lighting = ServiceLocator.getLightingService();
 
@@ -183,13 +192,14 @@ public class MainGameScreen extends ScreenAdapter {
       lighting.setCamera(renderer.getCamera().getCamera());
       lighting.render();
     }
-
+    rendererUnlit.render();
     renderer.renderUI();
 
     if (gameArea != null) {
       if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
+        rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
       }
     }
@@ -198,6 +208,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
+    rendererUnlit.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
@@ -222,10 +233,12 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Disposing main game screen");
 
     renderer.dispose();
+    rendererUnlit.dispose();
     unloadAssets();
 
     ServiceLocator.getEntityService().dispose();
     ServiceLocator.getRenderService().dispose();
+    ServiceLocator.getRenderUnlitService().dispose();
     ServiceLocator.getResourceService().dispose();
 
     ServiceLocator.clear();

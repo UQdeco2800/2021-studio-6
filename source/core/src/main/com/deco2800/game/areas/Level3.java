@@ -100,21 +100,22 @@ public class Level3 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
-    spawnBullet();
-    spawnBomb();
-    spawnCobweb();
-    spawnBush();
+    //spawnBullet();
+    //spawnBomb();
+    //spawnCobweb();
+    //spawnBush();
     playMusic();
-    spawnLargeEnemy();
-    spawnSmallEnemy();
-    spawnBullet();
-    spawnSpawnerEnemy();
 
-    spawnLongRangeEnemies();
-    spawnToughLongRangeEnemies();
+    //spawnLargeEnemy();
+    //spawnSmallEnemy();
+    //spawnBullet();
+    //spawnSpawnerEnemy();
+
+    //spawnLongRangeEnemies();
+    //spawnToughLongRangeEnemies();
   }
 
   public Entity getPlayer() {

@@ -107,11 +107,11 @@ public class Level2 extends GameArea {
     spawnPickupItems();
 
     // Spawn enemy entities
-//    spawnSmallEnemy();
-//    spawnLargeEnemy();
-//    spawnLongRangeEnemies();
-//    spawnSpawnerEnemy();
-//    spawnToughLongRangeEnemies();
+    spawnSmallEnemy();
+    spawnLargeEnemy();
+    spawnLongRangeEnemies();
+    spawnSpawnerEnemy();
+    spawnToughLongRangeEnemies();
 
     playMusic();
   }

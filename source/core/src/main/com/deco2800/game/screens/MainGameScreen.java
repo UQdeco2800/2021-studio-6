@@ -121,7 +121,9 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new Level1(terrainFactory);
+      //Forces game to start into level 3 for testing purposes
+      //Do not push this change into main
+      gameArea = new Level3(terrainFactory);
       gameArea.create();
       ServiceLocator.registerGameArea(gameArea);
       this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);

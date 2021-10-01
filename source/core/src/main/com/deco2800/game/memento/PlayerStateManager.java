@@ -47,6 +47,8 @@ public class PlayerStateManager {
      */
     public void destroy() {
         manager = null;
+        playerState = null;
+        playerMemento = null;
     }
 
     /**

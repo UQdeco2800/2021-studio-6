@@ -39,7 +39,6 @@ public class Level1 extends GameArea {
   private static final String npcSampleAtlasFilename = "images/npc_movement/npc_movement.atlas";
   private static final String npcTut1AtlasFilename = "images/npc_movement/tut_npc1.atlas";
   private static final String npcInjuredAtlasFilename = "images/npc_movement/injured_npc.atlas";
-  private static final String npcDeadAtlasFilename = "images/npc_movement/dead_npc.atlas";
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
@@ -104,8 +103,7 @@ public class Level1 extends GameArea {
       "images/weapon/dagger.atlas",
       npcSampleAtlasFilename,
       npcTut1AtlasFilename,
-      npcInjuredAtlasFilename,
-      npcDeadAtlasFilename
+      npcInjuredAtlasFilename
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
@@ -141,7 +139,6 @@ public class Level1 extends GameArea {
     //spawnBullet();
 
     spawnInjuredNPC();
-    spawnDeadNPC();
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
@@ -481,14 +478,8 @@ public class Level1 extends GameArea {
   }
 
   private void spawnInjuredNPC() {
-    GridPoint2 pos = new GridPoint2(12,8);
+    GridPoint2 pos = new GridPoint2(98,10);
     Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_INJURED, npcInjuredAtlasFilename, false);
-    spawnEntityAt(npcTut, pos, true, true);
-  }
-
-  private void spawnDeadNPC() {
-    GridPoint2 pos = new GridPoint2(8,8);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, npcDeadAtlasFilename, false);
     spawnEntityAt(npcTut, pos, true, true);
   }
 

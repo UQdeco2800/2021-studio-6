@@ -31,7 +31,7 @@ public class Level2 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 7);
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final float WALL_WIDTH = 0.1f;
-
+  private static final String npcDeadAtlasFilename = "images/npc_movement/dead_npc.atlas";
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
@@ -61,7 +61,8 @@ public class Level2 extends GameArea {
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png",
-          "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"
+    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+    "images/dialogue/raw/npc_indicator.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
@@ -76,7 +77,8 @@ public class Level2 extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas"
+      "images/weapon/dagger.atlas",
+      npcDeadAtlasFilename
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -106,6 +108,8 @@ public class Level2 extends GameArea {
     spawnBomb();
     spawnPickupItems();
     spawnLevelTwoIntro();
+
+    spawnDeadNPC();
 
     // Temporary solution to reduce the difficulty for level 2 so can test level 3
 //    spawnSmallEnemy();
@@ -468,6 +472,12 @@ public class Level2 extends GameArea {
   private void spawnLevelTwoIntro() {
     StoryManager.getInstance().loadCutScene(StoryNames.LEVEL2_INTRO);
     StoryManager.getInstance().displayStory();
+  }
+
+  private void spawnDeadNPC() {
+    GridPoint2 pos = new GridPoint2(20,4);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, npcDeadAtlasFilename, false);
+    spawnEntityAt(npcTut, pos, true, true);
   }
 
   private void playMusic() {

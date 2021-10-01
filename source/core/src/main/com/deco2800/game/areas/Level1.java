@@ -1,5 +1,6 @@
 package com.deco2800.game.areas;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -138,9 +139,6 @@ public class Level1 extends GameArea {
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
-
-    spawnNPC();
-    spawnTutorialNpc();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -470,12 +468,6 @@ public class Level1 extends GameArea {
     StoryManager.getInstance().displayStory();
   }
 
-  private void spawnNPC() {
-    GridPoint2 pos = new GridPoint2(10,2);
-    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TOWN_GUIDE, npcSampleAtlasFilename, true);
-    spawnEntityAt(npc, pos, true, true);
-  }
-
   private void spawnTutorialNpc() {
     GridPoint2 pos = new GridPoint2(10,6);
     Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, true);
@@ -483,6 +475,7 @@ public class Level1 extends GameArea {
   }
 
   private void startTutorialAndMusic() {
+    spawnTutorialNpc();
     spawnTutorial();
     playMusic();
   }

@@ -48,7 +48,8 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     public boolean keyDown(int keycode) {
         if (isInNPCRange && keycode == INTERACT_KEY && !StoryManager.getInstance().isDisplaying()) {
             FriendlyNPCAnimationController animator = entity.getComponent(FriendlyNPCAnimationController.class);
-            entity.getComponent(PhysicsMovementComponent.class).setTarget(entity.getPosition());
+
+            entity.getComponent(PhysicsMovementComponent.class).setMoving(false);;
             animator.updateAnimationDirection(ServiceLocator.getGameArea().player.getPosition(), STATIONARY);
 
             StoryManager.getInstance().loadCutScene(name);

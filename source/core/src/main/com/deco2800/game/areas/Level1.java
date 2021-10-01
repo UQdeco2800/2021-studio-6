@@ -140,11 +140,11 @@ public class Level1 extends GameArea {
     spawnToughLongRangeEnemies();
 
     spawnNPC();
-    spawnNPC1();
+    spawnTutorialNpc();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
-            this::playMusic);
+            this::startTutorialAndMusic);
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -465,16 +465,26 @@ public class Level1 extends GameArea {
     StoryManager.getInstance().displayStory();
   }
 
+  private void spawnTutorial(){
+    StoryManager.getInstance().loadCutScene(StoryNames.TUTORIAL_GUIDE);
+    StoryManager.getInstance().displayStory();
+  }
+
   private void spawnNPC() {
     GridPoint2 pos = new GridPoint2(10,2);
     Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TOWN_GUIDE, npcSampleAtlasFilename, true);
     spawnEntityAt(npc, pos, true, true);
   }
 
-  private void spawnNPC1() {
-    GridPoint2 pos = new GridPoint2(12,8);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, false);
+  private void spawnTutorialNpc() {
+    GridPoint2 pos = new GridPoint2(10,6);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, true);
     spawnEntityAt(npcTut, pos, true, true);
+  }
+
+  private void startTutorialAndMusic() {
+    spawnTutorial();
+    playMusic();
   }
 
   private void playMusic() {

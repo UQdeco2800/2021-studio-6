@@ -20,14 +20,11 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedList;
-
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
-  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final float WALL_WIDTH = 0.1f;
 
   private static final String[] forestTextures = {
@@ -94,21 +91,22 @@ public class Level2 extends GameArea {
     loadAssets();
     displayUI();
 
+    // Spawn terrain/assets entities
     spawnTerrain();
     spawnTerrainPineTrees();
     spawnTerrainBigTrees();
-//    spawnSafehouse();
-//    spawnCobweb();
-//    spawnBush();
+    spawnSafehouse();
+    spawnCobweb();
+    spawnBush();
 //    spawnTorch();
-//    spawnTriPineTrees();
 
+    // Spawn player related entities
     player = spawnPlayer();
     spawnBullet();
     spawnBomb();
-//    spawnPickupItems();
+    spawnPickupItems();
 
-    // Temporary solution to reduce the difficulty for level 2 so can test level 3
+    // Spawn enemy entities
 //    spawnSmallEnemy();
 //    spawnLargeEnemy();
 //    spawnLongRangeEnemies();
@@ -295,11 +293,11 @@ public class Level2 extends GameArea {
   }
 
   public void spawnSafehouse() {
-    GridPoint2 center = new GridPoint2(60, 22);
+    GridPoint2 center = new GridPoint2(61, 22);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.
-    spawnEntityAt(safehouse, center, true, false);
+    spawnEntityAt(safehouse, center, false, false);
   }
 
   private Entity spawnPlayer() {
@@ -347,6 +345,7 @@ public class Level2 extends GameArea {
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
     }
   }
+
   /**
    * Spawns a small enemy from the appropriate spawner's position
    */
@@ -356,16 +355,17 @@ public class Level2 extends GameArea {
 
   private void spawnSmallEnemy() {//this da noo 1
     GridPoint2[] spawnLocations = {
-      new GridPoint2(8, 5),
-      new GridPoint2(7,12),
-      new GridPoint2(20, 2),
-      new GridPoint2(22,2),
-      new GridPoint2(19, 4),
-      new GridPoint2(20,6),
-      new GridPoint2(16,7),
-      new GridPoint2(12, 12),
-      new GridPoint2(21,12),
-      new GridPoint2(27,12),
+      new GridPoint2(35, 33),
+      new GridPoint2(7, 31),
+      new GridPoint2(53, 31),
+      new GridPoint2(31, 29),
+      new GridPoint2(51, 25),
+      new GridPoint2(23, 23),
+      new GridPoint2(48, 20),
+      new GridPoint2(41, 16),
+      new GridPoint2(22, 13),
+      new GridPoint2(39, 9),
+      new GridPoint2(33, 2),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -376,13 +376,12 @@ public class Level2 extends GameArea {
 
   private void spawnLargeEnemy() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(2, 2),
-      new GridPoint2(4,12),
-      new GridPoint2(10, 2),
-      new GridPoint2(24,2),
-      new GridPoint2(29, 12),
-      new GridPoint2(18,13),
-      new GridPoint2(25,7)
+      new GridPoint2(31, 23),
+      new GridPoint2(54, 23),
+      new GridPoint2(13, 22),
+      new GridPoint2(31, 14),
+      new GridPoint2(24, 7),
+      new GridPoint2(41, 3),
   };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -393,12 +392,11 @@ public class Level2 extends GameArea {
 
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(14, 2),
-      new GridPoint2(16,2),
-      new GridPoint2(12, 7),
-      new GridPoint2(14,7),
-      new GridPoint2(25, 10),
-      new GridPoint2(25,12)
+      new GridPoint2(3, 33),
+      new GridPoint2(58, 32),
+      new GridPoint2(41, 24),
+      new GridPoint2(14, 14),
+      new GridPoint2(57, 12),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -409,8 +407,10 @@ public class Level2 extends GameArea {
 
   private void spawnToughLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
-            new GridPoint2(8, 10),
-            new GridPoint2(23,2),
+      new GridPoint2(45, 32),
+      new GridPoint2(22, 22),
+      new GridPoint2(49, 15),
+      new GridPoint2(29, 5),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -421,18 +421,22 @@ public class Level2 extends GameArea {
 
   private void spawnCobweb() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(7, 3),
-      new GridPoint2(8, 10),
-      new GridPoint2(12,3),
-      new GridPoint2(21, 2),
-
-      new GridPoint2(20, 3),
-      new GridPoint2(19,7),
-      new GridPoint2(18, 6),
-
-      new GridPoint2(16, 11),
-      new GridPoint2(20,13),
-      new GridPoint2(27, 10),
+      new GridPoint2(10, 32),
+      new GridPoint2(19, 32),
+      new GridPoint2(18, 31),
+      new GridPoint2(22, 30),
+      new GridPoint2(38, 30),
+      new GridPoint2(54, 30),
+      new GridPoint2(32, 25),
+      new GridPoint2(15, 23),
+      new GridPoint2(50, 19),
+      new GridPoint2(3, 18),
+      new GridPoint2(19, 17),
+      new GridPoint2(36, 14),
+      new GridPoint2(34, 7),
+      new GridPoint2(25, 5),
+      new GridPoint2(38, 4),
+      new GridPoint2(28, 2),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -443,13 +447,19 @@ public class Level2 extends GameArea {
 
   private void spawnBush() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(3, 4),
-      new GridPoint2(8, 8),
-
-      new GridPoint2(14, 11),
-
-      new GridPoint2(16, 13),
-      new GridPoint2(23,11),
+      new GridPoint2(8, 34),
+      new GridPoint2(38, 34),
+      new GridPoint2(20, 30),
+      new GridPoint2(52, 29),
+      new GridPoint2(5, 25),
+      new GridPoint2(34, 25),
+      new GridPoint2(25, 20),
+      new GridPoint2(60, 19),
+      new GridPoint2(12, 15),
+      new GridPoint2(42, 15),
+      new GridPoint2(6, 12),
+      new GridPoint2(38, 7),
+      new GridPoint2(21, 4),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -460,24 +470,41 @@ public class Level2 extends GameArea {
 
   private void spawnPickupItems() {
     GridPoint2[] ammoSpawnLocations = {
-      new GridPoint2(1, 13),
-      new GridPoint2(28,2),
-      new GridPoint2(13, 13),
+      new GridPoint2(30, 34),
+      new GridPoint2(26, 30),
+      new GridPoint2(25, 26),
+      new GridPoint2(35, 11),
+      new GridPoint2(57, 11),
     };
 
-//    GridPoint2[] bandageSpawnLocations = {
-//      new GridPoint2(28, 3),
-//      new GridPoint2(12,13),
-//    };
+    GridPoint2[] bandageSpawnLocations = {
+      new GridPoint2(60, 33),
+      new GridPoint2(40, 13),
+      new GridPoint2(21, 8),
+    };
 
     GridPoint2[] coinSpawnLocations = {
-      new GridPoint2(2, 12),
-      new GridPoint2(4,2),
-      new GridPoint2(8, 2),
-      new GridPoint2(18, 2),
-      new GridPoint2(15, 12),
-      new GridPoint2(23,12),
-      new GridPoint2(27, 9),
+      new GridPoint2(26, 35),
+      new GridPoint2(46, 34),
+      new GridPoint2(13, 32),
+      new GridPoint2(2, 29),
+      new GridPoint2(61, 29),
+      new GridPoint2(22, 26),
+      new GridPoint2(43, 25),
+      new GridPoint2(61, 25),
+      new GridPoint2(30, 21),
+      new GridPoint2(2, 11),
+      new GridPoint2(27, 11),
+      new GridPoint2(48, 11),
+      new GridPoint2(52, 11),
+      new GridPoint2(60, 11),
+      new GridPoint2(20, 8),
+      new GridPoint2(20, 7),
+      new GridPoint2(20, 6),
+      new GridPoint2(20, 5),
+      new GridPoint2(20, 4),
+      new GridPoint2(20, 3),
+      new GridPoint2(37, 2),
     };
 
     for (int i = 0; i < ammoSpawnLocations.length; i++) {
@@ -488,7 +515,7 @@ public class Level2 extends GameArea {
 
 //    for (int i = 0; i < bandageSpawnLocations.length; i++) {
 //      int randomAmmoQuantity = RandomUtils.randomInt(5);
-//      Entity pickupAmmo = ItemFactory.creat;
+//      Entity pickupAmmo = ItemFactory.create;
 //      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
 //    }
 

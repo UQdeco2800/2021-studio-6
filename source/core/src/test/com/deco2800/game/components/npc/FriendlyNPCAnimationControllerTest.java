@@ -4,6 +4,7 @@ import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import com.badlogic.gdx.math.Vector2;
@@ -38,8 +39,9 @@ class FriendlyNPCAnimationControllerTest {
 
   @BeforeEach
   void beforeEach() {
-    // Register a physics service
+    // Register a physics and time service
     ServiceLocator.registerPhysicsService(new PhysicsService());
+    ServiceLocator.registerTimeSource(new GameTime());
 
     // Create a new entity with minimal components
     friendlyNPCAnimationController = Mockito.spy(new FriendlyNPCAnimationController());

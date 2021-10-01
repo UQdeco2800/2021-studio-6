@@ -32,7 +32,7 @@ public class PlayerStateManager {
     private static final int playerID = 0;
 
     /**
-     * Returns single instance of singletone
+     * Returns single instance of singleton
      * @return player state manager instance
      */
     public static PlayerStateManager getInstance() {
@@ -40,6 +40,13 @@ public class PlayerStateManager {
             manager = new PlayerStateManager();
         }
         return manager;
+    }
+
+    /**
+     * Destroys singleton instance
+     */
+    public void destroy() {
+        manager = null;
     }
 
     /**

@@ -9,7 +9,7 @@ public class NPCPilotDialogue extends BasicDialogueConfig {
         "Watch out for the green eggsacks",
         "They spawn those little shadow crawler bastards!",
         "Sure they may look small...",
-        "But when there are three coming straight for you",
+        "But when there are three coming straight for you...",
         "You may as well kiss your ass goodbye!"
     };
     protected static final String[] PORTRAIT = {"npc-pilot-portrait"};

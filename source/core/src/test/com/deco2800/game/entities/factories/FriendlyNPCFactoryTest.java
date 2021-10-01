@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class FriendlyNPCFactoryTest {
   private Entity npc;
+  private Entity nonWanderingNPC;
 
   @BeforeEach
   void beforeEach() {
@@ -41,8 +42,12 @@ class FriendlyNPCFactoryTest {
     // Register the physics service
     ServiceLocator.registerPhysicsService(new PhysicsService());
 
-    // Create the npc
+    // Create a wandering npc
     npc = FriendlyNPCFactory.createNewFriendlyNPC(
+        StoryNames.PROLOGUE, "images/npc_movement/atlas_for_testing.atlas", true);
+
+    // Create a non-wandering npc
+    nonWanderingNPC = FriendlyNPCFactory.createNewFriendlyNPC(
         StoryNames.PROLOGUE, "images/npc_movement/atlas_for_testing.atlas", false);
   }
 
@@ -70,6 +75,19 @@ class FriendlyNPCFactoryTest {
     assertTrue(animator.hasAnimation("right-run"));
     assertTrue(animator.hasAnimation("back-run"));
     assertTrue(animator.hasAnimation("front-run"));
+  }
+
+  @Test
+  void createNewFriendlyNPCNotWanderingPartialAnimationsTest() {
+    AnimationRenderComponent animator = nonWanderingNPC.getComponent(AnimationRenderComponent.class);
+    assertTrue(animator.hasAnimation("left"));
+    assertTrue(animator.hasAnimation("right"));
+    assertTrue(animator.hasAnimation("back"));
+    assertTrue(animator.hasAnimation("front"));
+    assertFalse(animator.hasAnimation("left-run"));
+    assertFalse(animator.hasAnimation("right-run"));
+    assertFalse(animator.hasAnimation("back-run"));
+    assertFalse(animator.hasAnimation("front-run"));
   }
 
   @Test

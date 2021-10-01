@@ -53,7 +53,7 @@ public class FriendlyNPCAnimationController extends Component {
 
 
     // Account for rounding errors, if the entity is close enough to the walk position then stop
-    if (Math.abs(walkTarget.x - myPosition.x) < 0.1 && Math.abs(walkTarget.y - myPosition.y) < 0.1) {
+    if (walkTarget != null && Math.abs(walkTarget.x - myPosition.x) < 0.1 && Math.abs(walkTarget.y - myPosition.y) < 0.1) {
       npcMovement.setMoving(false);
     }
 

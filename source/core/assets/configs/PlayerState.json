@@ -3,15 +3,15 @@
   "baseAttack": 10,
   "baseRangedAttack": 5,
   "defenceLevel": 0,
-  "gold": 50,
+  "gold": 100,
   "ammo": 10,
   "bulletMagazine": 5,
   "favouriteColour": "peach",
   "health" : 3,
   "bandages": 3,
   "ability": "LONG_DASH",
-  "meleeWeaponType": "BAT",
+  "meleeWeaponType": "SWORD",
   "armorType": "NONE",
-  "meleeFilePath": "configs/Baseball.json",
+  "meleeFilePath": "configs/Sword.json",
   "currentGameLevel": 1
 }

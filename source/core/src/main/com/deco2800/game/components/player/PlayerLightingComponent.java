@@ -22,11 +22,17 @@ public class PlayerLightingComponent extends PointLightComponent {
     }
 
     private void ToggleTorchState() {
+
+        System.out.println("swapped");
+        System.out.println(this.getPointLight());
+
         if (torchState) {
             this.torchState = false;
+            this.getPointLight().setActive(false);
         }
         else {
             this.torchState = true;
+            this.getPointLight().setActive(true);
         }
 
     }

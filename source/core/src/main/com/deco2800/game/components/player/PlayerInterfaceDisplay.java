@@ -218,7 +218,6 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param bulletCount used to display number of bullets left on player's magazine's HUD
    */
   public void updateBulletImageHUD(int bulletCount) {
-    logger.info("Bullet count is " + bulletCount);
     // for when bullets are shot
     for (int i = MAGAZINE_FULL_COUNT - 1; i >= bulletCount; i--) {
       bulletImages.get(i).setVisible(false);

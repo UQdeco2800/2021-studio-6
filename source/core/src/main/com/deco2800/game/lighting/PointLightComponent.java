@@ -58,5 +58,9 @@ public class PointLightComponent extends Component implements Disposable {
         pointLight.remove();
     }
 
+    public PointLight getPointLight() {
+        return this.pointLight;
+    }
+
 
 }

@@ -22,23 +22,17 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_COBWEBS = 7;
-  private static final int NUM_BUSH = 7;
   private static final int NUM_LARGE_ENEMY = 2;
   private static final int NUM_SMALL_ENEMY = 2;
   private static final int NUM_SPAWNER_ENEMY = 2;
-  private static final int NUM_GHOSTS = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
   // this can be removed - this is purely for testing purposes
-  private static final int NUM_AMMO_PICKUPS = 3;
-  private static final int NUM_COIN_PICKUPS = 3;
+  private static final int NUM_AMMO_PICKUPS = 10;
+  private static final int NUM_COIN_PICKUPS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
 
   private static final float WALL_WIDTH = 0.1f;
@@ -65,6 +59,7 @@ public class Level1 extends GameArea {
     "images/level_1/curbLower.png",
     "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
+    "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
     "images/level_1/building2-day1-latest.png",
     "images/hex_grass_1.png",
@@ -86,7 +81,8 @@ public class Level1 extends GameArea {
     "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"
+    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+    "images/dialogue/raw/npc_indicator.png"
   };
 
   private static final String[] cityTextureAtlases = {
@@ -126,17 +122,15 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
+    spawnBarriers();
     player = spawnPlayer();
     spawnSafehouse();
     spawnBuildings();
     spawnSigns();
-    spawnIntroDialogue();
+    spawnPrologue();
 
     spawnBullet();
     spawnBomb();
-    //spawnCobweb();
-    //spawnBush();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
@@ -211,8 +205,8 @@ public class Level1 extends GameArea {
   }
 
   private void spawnPickupItems() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
+    GridPoint2 minPos = new GridPoint2(25, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
     for (int i = 0; i < NUM_AMMO_PICKUPS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -227,7 +221,7 @@ public class Level1 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, randomPos, true, false);
     }
-
+    /*
     // CREATED 3 ARMOURS FOR TESTING
     for (int i = 0; i < 3; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -267,17 +261,7 @@ public class Level1 extends GameArea {
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
     }
-  }
-
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createBigTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
+    */
   }
 
   private void spawnBuildings() {
@@ -293,12 +277,24 @@ public class Level1 extends GameArea {
 
   private void spawnSigns() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    GridPoint2 position  = new GridPoint2(tileBounds.x - 14, tileBounds.y - 5);
+    GridPoint2 position  = new GridPoint2(tileBounds.x - 28, tileBounds.y - 5);
     Entity sign = ObstacleFactory.createObject("images/level_1/leaving_city_sign.png", 4f);
     spawnEntityAt(sign, position, true, false);
     position  = new GridPoint2(tileBounds.x - 2, tileBounds.y - 5);
     sign = ObstacleFactory.createObject("images/level_1/forest_sign.png", 3f);
     spawnEntityAt(sign, position, true, false);
+  }
+
+  private void spawnBarriers() {
+    for (int i = 0; i < 11; i++) {
+      if (i == 4 || i == 5 || i == 6) {
+        //leave a gap in the middle
+        continue;
+      }
+      GridPoint2 position = new GridPoint2(18, i);
+      Entity barrier = ObstacleFactory.createObject("images/level_1/placeholder_curb.png", 1f);
+      spawnEntityAt(barrier, position, true, true);
+    }
   }
 
   private void spawnSafehouse() {
@@ -348,6 +344,16 @@ public class Level1 extends GameArea {
   * Spawns the spawner enemy
   */
   private void spawnSpawnerEnemy() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(70, 6));
+    enemyPositions.add(new GridPoint2(84, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnEntityAt(spawnerEnemy, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -357,6 +363,7 @@ public class Level1 extends GameArea {
       spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, randomPos, true, true);
     }
+    */
   }
   /**
    * Spawns a small enemy from the appropriate spawner's position
@@ -369,6 +376,15 @@ public class Level1 extends GameArea {
    * Spawns the small enemy
    */
   private void spawnSmallEnemy() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(30, 6));
+    enemyPositions.add(new GridPoint2(50, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity smallEnemy = NPCFactory.createSmallEnemy(player);
+      spawnEntityAt(smallEnemy, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -377,10 +393,19 @@ public class Level1 extends GameArea {
       Entity smallEnemy = NPCFactory.createSmallEnemy(player);
       spawnEntityAt(smallEnemy, randomPos, true, true);
     }
+    */
   }
 
 
   private void spawnLargeEnemy() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(100, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity largeEnemy = NPCFactory.createLargeEnemy(player);
+      spawnEntityAt(largeEnemy, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -389,9 +414,20 @@ public class Level1 extends GameArea {
       Entity largeEnemy = NPCFactory.createLargeEnemy(player);
       spawnEntityAt(largeEnemy, randomPos, true, true);
     }
+    */
   }
 
   private void spawnLongRangeEnemies() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(38, 6));
+    enemyPositions.add(new GridPoint2(48, 4));
+    enemyPositions.add(new GridPoint2(48, 8));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity archer = NPCFactory.createLongRangeEnemy(player, this);
+      spawnEntityAt(archer, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -400,9 +436,19 @@ public class Level1 extends GameArea {
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
       spawnEntityAt(archer, randomPos, true, true);
     }
+    */
   }
 
   private void spawnToughLongRangeEnemies() {
+    Array<GridPoint2> enemyPositions = new Array<>();
+    enemyPositions.add(new GridPoint2(60, 6));
+    enemyPositions.add(new GridPoint2(80, 6));
+
+    for (GridPoint2 enemyPos : enemyPositions) {
+      Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
+      spawnEntityAt(touchArcher, enemyPos, true, true);
+    }
+    /*
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
 
@@ -411,31 +457,10 @@ public class Level1 extends GameArea {
       Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
       spawnEntityAt(touchArcher, randomPos, true, true);
     }
+    */
   }
 
-  private void spawnCobweb() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_COBWEBS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cobweb = ObstacleFactory.createCobweb();
-      spawnEntityAt(cobweb, randomPos, true, false);
-    }
-  }
-
-  private void spawnBush() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_BUSH; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity bush = ObstacleFactory.createBush();
-      spawnEntityAt(bush, randomPos, true, false);
-    }
-  }
-
-  private void spawnIntroDialogue(){
+  private void spawnPrologue(){
     StoryManager.getInstance().loadCutScene(StoryNames.PROLOGUE);
     StoryManager.getInstance().displayStory();
   }

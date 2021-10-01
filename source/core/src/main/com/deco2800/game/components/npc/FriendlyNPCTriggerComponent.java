@@ -18,7 +18,8 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
     private static final int STATIONARY = 0;
     private boolean isInNPCRange = false;
     private StoryNames name;
-    private static final int INTERACT_KEY = Input.Keys.SPACE;
+    private boolean storyAlreadyPlayed = false;
+    private static final int INTERACT_KEY = Input.Keys.E;
 
     public FriendlyNPCTriggerComponent(StoryNames name) {
         super(6);
@@ -34,6 +35,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
         super.create();
         entity.getEvents().addListener("collisionStart", this::collisionStart);
         entity.getEvents().addListener("collisionEnd", this::collisionEnd);
+        StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + name, this::storyEnded);
     }
 
 
@@ -44,7 +46,7 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
      */
     @Override
     public boolean keyDown(int keycode) {
-        if (isInNPCRange && keycode == INTERACT_KEY) {
+        if (isInNPCRange && keycode == INTERACT_KEY && !StoryManager.getInstance().isDisplaying()) {
             FriendlyNPCAnimationController animator = entity.getComponent(FriendlyNPCAnimationController.class);
             entity.getComponent(PhysicsMovementComponent.class).setTarget(entity.getPosition());
             animator.updateAnimationDirection(ServiceLocator.getGameArea().player.getPosition(), STATIONARY);
@@ -57,6 +59,16 @@ public class FriendlyNPCTriggerComponent extends InputComponent {
         return false;
     }
 
+    /**
+     * Removes the speech bubble icon when the story ends
+     */
+    private void storyEnded() {
+        if (!storyAlreadyPlayed) {
+            logger.debug("NPC {} - story marked as read", name);
+            entity.getComponent(SpeechIconComponent.class).displayOff();
+            storyAlreadyPlayed = true;
+        }
+    }
 
     /**
      * Sets isInNPCRange to true if player is in range

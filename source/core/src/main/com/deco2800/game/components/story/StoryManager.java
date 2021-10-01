@@ -35,6 +35,7 @@ public class StoryManager extends Component {
         scenesConfigs.put(StoryNames.TUTORIAL_GUIDE, new NPCTutorialDialogue());
         scenesConfigs.put(StoryNames.NPC_DEAD, new NPCDeadDialogue());
         scenesConfigs.put(StoryNames.NPC_INJURED, new NPCInjuredDialogue());
+        scenesConfigs.put(StoryNames.NPC_PILOT, new NPCPilotDialogue());
         scenesConfigs.put(StoryNames.LEVEL2_INTRO, new Level2IntroCutScene());
         scenesConfigs.put(StoryNames.LEVEL3_INTRO, new Level3IntroCutScene());
     }

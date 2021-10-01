@@ -46,7 +46,7 @@ npc-dead-portrait
   orig: 1200, 1200
   offset: 0, 0
   index: -1
-  
+
 npc-tut1-dialogue.png
 size: 2048, 2048
 format: RGBA8888
@@ -60,3 +60,16 @@ npc-tut1-portrait
   offset: 0, 0
   index: -1
 
+
+npc-dialogue-sample.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+npc-pilot-portrait
+  rotate: false
+  xy: 2, 94
+  size: 1200, 1200
+  orig: 1200, 1200
+  offset: 0, 0
+  index: -1

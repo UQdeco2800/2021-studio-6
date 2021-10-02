@@ -5,15 +5,17 @@ import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 public class NPCPilotDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
         "Hey kid",
-        "You heading to the safehouse?",
-        "Watch out for the green eggsacks",
-        "They spawn those little shadow crawler bastards!",
-        "Sure they may look small...",
-        "But when there are three coming straight for you...",
-        "You may as well kiss your ass goodbye!"
+        "You are going to be a firefly too?",
+        "Well, as someone who's been there and back...",
+        "You better watch out for the shadow crawlers.",
+        "It's hard to see them in the dark,",
+        "and by the time you see them with your light",
+        "You'll be done for!!!",
+        "Stay safe out there, the glow is a promised land.",
+        "This badge is a proof of bravery... *goes on about his achievements*"
     };
     protected static final String[] PORTRAIT = null;
-    private static final int LENGTH = 7;
+    private static final int LENGTH = 9;
 
     public NPCPilotDialogue(){
         dialogueText = QUOTE;

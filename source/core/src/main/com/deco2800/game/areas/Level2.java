@@ -27,13 +27,16 @@ public class Level2 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final float WALL_WIDTH = 0.1f;
 
+  /**
+   * Images and assets file path for Level 2 map generation.
+   */
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-      "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
-      "images/playeritems/axe/axe_right2.png",
-      "images/playeritems/firecracker/firecracker.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
+    "images/playeritems/axe/axe_right2.png",
+    "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/tree.png",
@@ -44,6 +47,9 @@ public class Level2 extends GameArea {
     "images/level_2/level2_grass_4.png",
     "images/level_2/level2_grass_5.png",
     "images/level_2/level2_grass_6.png",
+    "images/level_2/level2_grass_7.png",
+    "images/level_2/level2_grass_8.png",
+    "images/level_2/level2_background_tile.png",
     "images/level_2/level2_tree_1-1.png",
     "images/level_2/level2_tree_2-1.png",
     "images/gunman.png",
@@ -60,21 +66,27 @@ public class Level2 extends GameArea {
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/level_2/level2_tree_2_group_ver1.png"
   };
+
+  /**
+   * Texture atlases file path for Level 2.
+   */
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-      "images/Player_Animations/player_movement.atlas",
+    "images/Player_Animations/player_movement.atlas",
     "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-      "images/Player_Sprite/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/sword.atlas",
-      "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas"
+    "images/Player_Sprite/player_movement.atlas",
+    "images/hud/dashbar.atlas",
+    "images/hud/health.atlas",
+    "images/weapon/sword.atlas",
+    "images/weapon/axe.atlas",
+    "images/weapon/dagger.atlas"
   };
+
+  // Music and sound variables
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
@@ -116,10 +128,17 @@ public class Level2 extends GameArea {
     playMusic();
   }
 
+  /**
+   * Gets the player entity for Level 2.
+   * @return Player entity.
+   */
   public Entity getPlayer() {
     return player;
   }
 
+  /**
+   * Displays the name of the level on the top left screen.
+   */
   private void displayUI() {
     Entity ui = new Entity();
     // Can change level name here
@@ -127,6 +146,10 @@ public class Level2 extends GameArea {
     spawnEntity(ui);
   }
 
+  /**
+   * Spawns the Level 2 forrest tile layout and hard terrain boundaries to stop the player
+   * and enemies from going outside the map.
+   */
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(TerrainType.FOREST);
@@ -170,6 +193,9 @@ public class Level2 extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
+  /**
+   * Spawns the group pine trees that act as a visual terrain boundary.
+   */
   private void spawnTerrainPineTrees() {
     // This looks pretty ugly right now I know, this was generated with excel
     GridPoint2[] spawnLocations = {
@@ -262,6 +288,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the big trees that act as a visual terrain boundary.
+   */
   private void spawnTerrainBigTrees() {
     // This looks pretty ugly right now I know, this was generated with excel
     GridPoint2[] spawnLocations = {
@@ -292,6 +321,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the safehouse.
+   */
   public void spawnSafehouse() {
     GridPoint2 center = new GridPoint2(61, 22);
 
@@ -300,12 +332,19 @@ public class Level2 extends GameArea {
     spawnEntityAt(safehouse, center, false, false);
   }
 
+  /**
+   * Spawns the player entity onto the map..
+   * @return Player entity.
+   */
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
 
+  /**
+   * Spawns the bullets projectile when player shoots them out using the ENTER key.
+   */
   private void spawnBullet() {
     Array<Entity> bullets = new Array<>();
 
@@ -318,6 +357,9 @@ public class Level2 extends GameArea {
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
+  /**
+   * Spawns the bomb entity when player uses them.
+   */
   private void spawnBomb() {
     Array<Entity> bombs = new Array<>();
 
@@ -331,7 +373,7 @@ public class Level2 extends GameArea {
   }
 
   /**
-   * Spawns the spawner enemy
+   * Spawns the spawner enemy onto the map.
    */
   private void spawnSpawnerEnemy() {
     GridPoint2[] spawnLocations = {
@@ -347,12 +389,15 @@ public class Level2 extends GameArea {
   }
 
   /**
-   * Spawns a small enemy from the appropriate spawner's position
+   * Spawns a small enemy from the appropriate spawner's position.
    */
   public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
     super.spawnFromSpawner(position, maxSpawnDistance);
   }
 
+  /**
+   * Spawns the small enemies onto the map.
+   */
   private void spawnSmallEnemy() {//this da noo 1
     GridPoint2[] spawnLocations = {
       new GridPoint2(35, 33),
@@ -374,6 +419,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the large enemies onto the map.
+   */
   private void spawnLargeEnemy() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(31, 23),
@@ -390,6 +438,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the long range enemies onto the map.
+   */
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(3, 33),
@@ -405,6 +456,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the tough long range enemies onto the map.
+   */
   private void spawnToughLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(45, 32),
@@ -419,6 +473,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the cobwebs onto the map.
+   */
   private void spawnCobweb() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(10, 32),
@@ -445,6 +502,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the bushes onto the map.
+   */
   private void spawnBush() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(8, 34),
@@ -468,6 +528,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the items that can be picked up by the player onto the map.
+   */
   private void spawnPickupItems() {
     GridPoint2[] ammoSpawnLocations = {
       new GridPoint2(30, 34),
@@ -526,6 +589,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Spawns the torch entity that can emit out light onto the map.
+   */
   private void spawnTorch() {
     GridPoint2[] spawnLocations = {
             new GridPoint2(4,7)
@@ -537,6 +603,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Plays the music for Level 2.
+   */
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
@@ -544,6 +613,9 @@ public class Level2 extends GameArea {
     music.play();
   }
 
+  /**
+   * Load the assets needed to render Level 2.
+   */
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -558,6 +630,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Unload the assets when Level 2 GameArea is no longer active.
+   */
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -567,9 +642,11 @@ public class Level2 extends GameArea {
     resourceService.unloadAssets(forestMusic);
   }
 
+  /**
+   * Disposes the assets and music.
+   */
   @Override
   public void dispose() {
-
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();

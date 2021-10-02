@@ -4,7 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import org.slf4j.LoggerFactory;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * This class listens to events relevant to a NPCs state and plays the animation when one
@@ -22,6 +23,7 @@ public class FriendlyNPCAnimationController extends Component {
   private Vector2 currentWalkingTarget;
   AnimationRenderComponent animator;
   private String lastAnimation;
+  private GameTime gameTime;
 
   /**
    * Creates the animator and sets default animation.
@@ -30,6 +32,8 @@ public class FriendlyNPCAnimationController extends Component {
   public void create() {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     animator.startAnimation(ANIMATIONS_FRONT[STATIONARY]);
+    currentDirection = ANIMATIONS_FRONT;
+    gameTime = ServiceLocator.getTimeSource();
   }
 
   /**
@@ -38,18 +42,28 @@ public class FriendlyNPCAnimationController extends Component {
    */
   @Override
   public void update() {
+    if (gameTime.isPaused()) {
+      return;
+    }
+
     PhysicsMovementComponent npcMovement = entity.getComponent(PhysicsMovementComponent.class);
     Vector2 walkTarget = npcMovement.getTarget();
+    Vector2 myPosition = entity.getPosition();
 
-    // if there is target coordinates then update the animation direction to face it
-    if (walkTarget != null && walkTarget != currentWalkingTarget) {
-      currentWalkingTarget = walkTarget;
-      updateAnimationDirection(walkTarget, WALKING);
+
+
+    // Account for rounding errors, if the entity is close enough to the walk position then stop
+    if (walkTarget != null && Math.abs(walkTarget.x - myPosition.x) < 0.1 && Math.abs(walkTarget.y - myPosition.y) < 0.1) {
+      npcMovement.setMoving(false);
     }
 
     // if the npc is not moving then set the animation as the stationary animation facing the same direction
     if (!npcMovement.getMoving()) {
       setDirection(currentDirection[STATIONARY]);
+    // if there is target coordinates then update the animation direction to face it
+    } else if (walkTarget != null && walkTarget != currentWalkingTarget) {
+      currentWalkingTarget = walkTarget;
+      updateAnimationDirection(walkTarget, WALKING);
     }
   }
 
@@ -70,17 +84,17 @@ public class FriendlyNPCAnimationController extends Component {
       currentDirection = ANIMATIONS_BACK;
     }
     // if the coordinates are in a 45 degree cone below the NPC then set the animation to be the front
-    else if (yOffset < 0 && yOffset < -xOffset && yOffset < xOffset) {
+    else if (yOffset <= 0 && yOffset <= -xOffset && yOffset <= xOffset) {
       setDirection(ANIMATIONS_FRONT[state]);
       currentDirection = ANIMATIONS_FRONT;
     }
     // if the coordinates are in a 45 degree cone to the right the NPC then set the animation to be the right
-    else if (xOffset > 0 && yOffset >= -xOffset && yOffset <= xOffset) {
+    else if (xOffset > 0 && yOffset > -xOffset && yOffset <= xOffset) {
       setDirection(ANIMATIONS_RIGHT[state]);
       currentDirection = ANIMATIONS_RIGHT;
     }
     // if the coordinates are in a 45 degree cone to the left of the NPC then set the animation to be the left
-    else if (xOffset < 0 && yOffset <= -xOffset && yOffset >= xOffset) {
+    else if (xOffset < 0 && yOffset <= -xOffset && yOffset > xOffset) {
       setDirection(ANIMATIONS_LEFT[state]);
       currentDirection = ANIMATIONS_LEFT;
     }

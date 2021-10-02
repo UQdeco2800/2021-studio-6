@@ -32,8 +32,10 @@ public class StoryManager extends Component {
         scenesConfigs.put(StoryNames.INTRO_DIALOGUE, new IntroDialogue());
         scenesConfigs.put(StoryNames.PROLOGUE, new PrologueCutScene());
         scenesConfigs.put(StoryNames.EPILOGUE, new EpilogueCutScene());
-        scenesConfigs.put(StoryNames.TOWN_GUIDE, new TownGuideDialogue());
-        scenesConfigs.put(StoryNames.TUTORIAL_GUIDE, new TutorialDiologue());
+        scenesConfigs.put(StoryNames.TUTORIAL_GUIDE, new NPCTutorialDialogue());
+        scenesConfigs.put(StoryNames.NPC_DEAD, new NPCDeadDialogue());
+        scenesConfigs.put(StoryNames.NPC_INJURED, new NPCInjuredDialogue());
+        scenesConfigs.put(StoryNames.NPC_PILOT, new NPCPilotDialogue());
         scenesConfigs.put(StoryNames.LEVEL2_INTRO, new Level2IntroCutScene());
         scenesConfigs.put(StoryNames.LEVEL3_INTRO, new Level3IntroCutScene());
     }

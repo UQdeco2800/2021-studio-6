@@ -38,6 +38,8 @@ public class Level1 extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String npcSampleAtlasFilename = "images/npc_movement/npc_movement.atlas";
   private static final String npcTut1AtlasFilename = "images/npc_movement/tut_npc1.atlas";
+  private static final String npcInjuredAtlasFilename = "images/npc_movement/injured_npc.atlas";
+  private static final String npcPilotAtlasFilename = "images/npc_movement/pilot_npc.atlas";
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
@@ -81,7 +83,8 @@ public class Level1 extends GameArea {
     "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"
+    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+    "images/dialogue/raw/npc_indicator.png"
   };
 
   private static final String[] cityTextureAtlases = {
@@ -100,7 +103,9 @@ public class Level1 extends GameArea {
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
       npcSampleAtlasFilename,
-      npcTut1AtlasFilename
+      npcTut1AtlasFilename,
+      npcInjuredAtlasFilename,
+      npcPilotAtlasFilename
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
@@ -135,15 +140,15 @@ public class Level1 extends GameArea {
     spawnSpawnerEnemy();
     //spawnBullet();
 
+    spawnPilotNpc();
+    spawnInjuredNPC();
+
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
 
-    spawnNPC();
-    spawnNPC1();
-
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
-            this::playMusic);
+            this::startTutorialAndMusic);
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -464,16 +469,33 @@ public class Level1 extends GameArea {
     StoryManager.getInstance().displayStory();
   }
 
-  private void spawnNPC() {
-    GridPoint2 pos = new GridPoint2(10,2);
-    Entity npc = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TOWN_GUIDE, npcSampleAtlasFilename, true);
-    spawnEntityAt(npc, pos, true, true);
+  private void spawnTutorial(){
+    StoryManager.getInstance().loadCutScene(StoryNames.TUTORIAL_GUIDE);
+    StoryManager.getInstance().displayStory();
   }
 
-  private void spawnNPC1() {
-    GridPoint2 pos = new GridPoint2(12,8);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, false);
+  private void spawnTutorialNpc() {
+    GridPoint2 pos = new GridPoint2(10,6);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, true);
     spawnEntityAt(npcTut, pos, true, true);
+  }
+
+  private void spawnPilotNpc() {
+    GridPoint2 pos = new GridPoint2(15,7);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT, npcPilotAtlasFilename, true);
+    spawnEntityAt(npcTut, pos, true, true);
+  }
+
+  private void spawnInjuredNPC() {
+    GridPoint2 pos = new GridPoint2(98,10);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_INJURED, npcInjuredAtlasFilename, false);
+    spawnEntityAt(npcTut, pos, true, true);
+  }
+
+  private void startTutorialAndMusic() {
+    spawnTutorialNpc();
+    spawnTutorial();
+    playMusic();
   }
 
   private void playMusic() {

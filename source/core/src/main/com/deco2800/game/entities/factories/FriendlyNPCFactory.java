@@ -7,6 +7,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.FriendlyNPCTriggerComponent;
 import com.deco2800.game.components.npc.FriendlyNPCAnimationController;
+import com.deco2800.game.components.npc.SpeechIconComponent;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
@@ -25,6 +26,9 @@ public class FriendlyNPCFactory {
 
     /**
      * Create a friendly NPC entity.
+     * @param story the related story scene that contains the dialogue for the npc
+     * @param atlasFileName the atlas file that contains the animations for the npc
+     * @param wandering whether the npc should be wandering or not
      * @return entity
      */
     public static Entity createNewFriendlyNPC(StoryNames story, String atlasFileName, boolean wandering) {
@@ -36,10 +40,12 @@ public class FriendlyNPCFactory {
         animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+        if (wandering) {
+            animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+        }
 
         // add the wandering task AI component
         AITaskComponent aiComponent = new AITaskComponent();
@@ -55,6 +61,7 @@ public class FriendlyNPCFactory {
                 .addComponent(new DisposingComponent())
                 .addComponent(new FriendlyNPCTriggerComponent(story))
                 .addComponent(animator)
+                .addComponent(new SpeechIconComponent(0.6f))
                 .addComponent(new FriendlyNPCAnimationController())
                 .addComponent(aiComponent);
 

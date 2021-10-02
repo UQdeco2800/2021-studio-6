@@ -1,89 +1,89 @@
 
-pilot_npc.png
+tut_npc1.png
 size: 4096, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 back
   rotate: false
-  xy: 580, 580
+  xy: 2, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 back-run
   rotate: false
-  xy: 2, 1158
+  xy: 580, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 back-run
   rotate: false
-  xy: 580, 2
+  xy: 1158, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 front
   rotate: false
-  xy: 1158, 2
+  xy: 1736, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 front-run
   rotate: false
-  xy: 1158, 1158
+  xy: 2314, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 front-run
   rotate: false
-  xy: 2, 580
+  xy: 2892, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 left
   rotate: false
-  xy: 580, 1158
+  xy: 3470, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 left-run
   rotate: false
-  xy: 580, 1158
+  xy: 3470, 4
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
-  index: -1  
+  index: -1
 left-run
   rotate: false
-  xy: 1736, 1158
+  xy: 2, 582
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 right
   rotate: false
-  xy: 1158, 580
+  xy: 580, 582
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 right-run
   rotate: false
-  xy: 1158, 580
+  xy: 580, 582
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
 right-run
   rotate: false
-  xy: 2, 2
+  xy: 1158, 582
   size: 576, 576
   orig: 576, 576
   offset: 0, 0

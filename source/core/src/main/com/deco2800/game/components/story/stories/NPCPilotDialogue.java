@@ -12,7 +12,7 @@ public class NPCPilotDialogue extends BasicDialogueConfig {
         "But when there are three coming straight for you...",
         "You may as well kiss your ass goodbye!"
     };
-    protected static final String[] PORTRAIT = {"npc-pilot-portrait"};
+    protected static final String[] PORTRAIT = null;
     private static final int LENGTH = 7;
 
     public NPCPilotDialogue(){

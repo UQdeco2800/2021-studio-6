@@ -4,7 +4,7 @@ import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCInjuredDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {"Please...", "kill... me..."};
-    protected static final String[] PORTRAIT = {"npc-injured-portrait"};
+    protected static final String[] PORTRAIT = null;
     private static final int LENGTH = 2;
 
     public NPCInjuredDialogue(){

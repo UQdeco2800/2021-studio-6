@@ -37,7 +37,7 @@ public class SafehouseGameArea extends GameArea {
     "images/safehouse/interior-day1-tile-ground1-latest.png",
     "images/safehouse/interior-day1-tile-door1-latest.png",
       "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+      "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
@@ -98,25 +98,38 @@ public class SafehouseGameArea extends GameArea {
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
+    logger.info(String.valueOf(tileSize));
     tileBounds = terrain.getMapBounds(0);
+    logger.info(String.valueOf(tileBounds));
     worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            GridPoint2Utils.ZERO, false,false);
+            new GridPoint2(1, 0), false,false);
     // Right
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            new GridPoint2(tileBounds.x, 0), false,false);
+            new GridPoint2(tileBounds.x - 5, 0), false,false);
     // Top
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),false,false);
+            new GridPoint2(0, tileBounds.y - 2),false,false);
     // Bottom
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            GridPoint2Utils.ZERO, false,false);
+            new GridPoint2(0, 1), false,false);
+
+    // Counter walls
+    // horizontal wall
+    spawnEntityAt(
+            ObstacleFactory.createWall(worldBounds.x - 11, WALL_WIDTH),
+            new GridPoint2(0, 5), false,false);
+
+    // vertical wall
+    spawnEntityAt(
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y - 5),
+            new GridPoint2(5, 5), false,false);
   }
 
   public void spawnDoor() {

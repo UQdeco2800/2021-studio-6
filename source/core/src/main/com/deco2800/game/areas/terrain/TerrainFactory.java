@@ -22,7 +22,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(30, 15);
-  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
+  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(16, 9);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
   private static final int GRASS_TILE_COUNT = 40;
@@ -104,7 +104,7 @@ public class TerrainFactory {
 
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
-                        .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
+                        .getAsset("images/safehouse/safehouse-interior-layout.png", Texture.class));
         return createSafehouseTerrain(1f, orthoGround);
       default:
         System.out.println("default");
@@ -145,7 +145,8 @@ public class TerrainFactory {
   private TerrainComponent createSafehouseTerrain(
           float tileWorldSize, TextureRegion ground
   ) {
-    GridPoint2 tilePixelSize = new GridPoint2(ground.getRegionWidth(), ground.getRegionHeight());
+    GridPoint2 tilePixelSize = new GridPoint2(ground.getRegionWidth() / 16, ground.getRegionHeight() / 9);
+    System.out.println(tilePixelSize);
     TiledMap tiledMap = createSafehouseTiles(tilePixelSize, ground);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
@@ -284,7 +285,10 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_SAFEHOUSE.x, MAP_SIZE_SAFEHOUSE.y, tileSize.x, tileSize.y);
 
     // Create base ground
-    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
+//    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
+    Cell cell = new Cell();
+    cell.setTile(groundTile);
+    layer.setCell(0, 0, cell);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

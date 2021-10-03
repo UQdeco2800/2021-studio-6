@@ -18,6 +18,7 @@ com.deco2800.game.components.story
 com.deco2800.game.components.story.basicdialogue
 com.deco2800.game.components.story.cutscene
 com.deco2800.game.components.story.stories
+com.deco2800.game.components.story.test
 com.deco2800.game.components.tasks
 com.deco2800.game.concurrency
 com.deco2800.game.entities

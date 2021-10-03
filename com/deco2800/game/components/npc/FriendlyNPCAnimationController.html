@@ -171,20 +171,24 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDirection(java.lang.String)">setDirection</a></span>&#8203;(java.lang.String&nbsp;direction)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Starts a directional animation and stores as the last animation played</div>
+</td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+<div class="block">Extracts the current target coordinates and changes the animation to face that direction.</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnimationDirection(com.badlogic.gdx.math.Vector2,int)">updateAnimationDirection</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;lookPosition,
 int&nbsp;state)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Updates the direction the animation is facing based on the coordinates the animation should be facing towards.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -244,9 +248,8 @@ int&nbsp;state)</code></th>
 <section class="detail">
 <h3><a id="update()">update</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">update</span>()</div>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#update()">Component</a></code></span></div>
-<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
- component is disabled.</div>
+<div class="block">Extracts the current target coordinates and changes the animation to face that direction. For example if the
+ target coordinates are to the north than we will see the npc back so update the animation to the back animation.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
@@ -258,12 +261,24 @@ int&nbsp;state)</code></th>
 <h3><a id="updateAnimationDirection(com.badlogic.gdx.math.Vector2,int)">updateAnimationDirection</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">updateAnimationDirection</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;lookPosition,
 int&nbsp;state)</span></div>
+<div class="block">Updates the direction the animation is facing based on the coordinates the animation should be facing towards.
+ Chooses the correct animation state that should be set as well.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>lookPosition</code> - the coordinates that the animation should face</dd>
+<dd><code>state</code> - whether the npc is currently walking (value of 1) or stationary (value of 0)</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="setDirection(java.lang.String)">setDirection</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setDirection</span>&#8203;(<span class="arguments">java.lang.String&nbsp;direction)</span></div>
+<div class="block">Starts a directional animation and stores as the last animation played</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>direction</code> - the animation state to set the direction to</dd>
+</dl>
 </section>
 </li>
 </ul>

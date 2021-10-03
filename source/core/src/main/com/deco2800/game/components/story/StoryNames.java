@@ -9,6 +9,10 @@ public enum StoryNames {
     INTRO_DIALOGUE,
     PROLOGUE,
     EPILOGUE,
-    TOWN_GUIDE,
-    TUTORIAL_GUIDE
+    TUTORIAL_GUIDE,
+    NPC_INJURED,
+    NPC_DEAD,
+    NPC_PILOT,
+    LEVEL2_INTRO,
+    LEVEL3_INTRO
 }

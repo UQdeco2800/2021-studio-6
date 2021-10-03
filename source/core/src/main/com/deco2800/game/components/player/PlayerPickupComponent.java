@@ -82,19 +82,19 @@ public class PlayerPickupComponent extends Component {
             } else if (item.getItemType() == Items.DAGGER) {
                 weapon.setWeapon("configs/Dagger.json");
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
-            } else if (item.getItemType() == Items.KATANA) {
-                weapon.setWeapon("configs/Katana.json");
+                sound.play();				
+            } else if (item.getItemType() == Items.SLEDGE) {
+                weapon.setWeapon("configs/Sledge.json");
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
                 sound.play();
-            } else if (item.getItemType() == Items.GREATAXE) {
-                weapon.setWeapon("configs/GreatAxe.json");
+            } else if (item.getItemType() == Items.MACHETE) {
+                weapon.setWeapon("configs/Machete.json");
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
                 sound.play();
-            } else if (item.getItemType() == Items.DUALDAGGER) {
-                weapon.setWeapon("configs/DualDagger.json");
+            } else if (item.getItemType() == Items.BAT) {
+                weapon.setWeapon("configs/Baseball.json");
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
+                sound.play();				
             }
 
 

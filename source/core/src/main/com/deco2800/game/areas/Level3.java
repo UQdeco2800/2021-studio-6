@@ -99,6 +99,7 @@ public class Level3 extends GameArea {
 
     displayUI();
 
+    tileLevel();
     spawnTerrain();
     //spawnTrees();
     player = spawnPlayer();
@@ -170,6 +171,37 @@ public class Level3 extends GameArea {
     // Bottom
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+  }
+
+  private class Room {
+    private int x;
+    private int y;
+    private boolean up = false;
+    private boolean down = false;
+    private boolean left = false;
+    private boolean right = false;
+
+    private Room(int x, int y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    private int getX() {
+      return this.x;
+    }
+
+    private int getY() {
+      return this.y;
+    }
+  }
+  /**
+   * (In theory) randomly populates the level with rooms
+   * Top left = 0,0
+   */
+  private void tileLevel() {
+    Array<Room> rooms = new Array<>();
+    rooms.add(new Room(0,0));
+    System.out.println(rooms.get(0).getX() + "," + rooms.get(0).getY());
   }
 
   private void spawnTrees() {

@@ -68,6 +68,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final Lighting lighting;
   private final boolean LIGHTINGON = false;
   private GameArea gameArea = null;
+
   private Entity ui;
 
   public MainGameScreen(GdxGame game, GdxGame.GameType gameType) {

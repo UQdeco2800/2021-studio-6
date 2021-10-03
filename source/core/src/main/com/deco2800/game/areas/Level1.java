@@ -356,12 +356,6 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-
-    // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
-
-    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
-    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 

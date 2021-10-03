@@ -37,7 +37,8 @@ public class SafehouseGameArea extends GameArea {
     "images/safehouse/interior-day1-tile-ground1-latest.png",
     "images/safehouse/interior-day1-tile-door1-latest.png",
       "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png"
+      "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png",
+      "images/safehouse/shopkeeper/shopkeeperSprite.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
@@ -116,11 +117,11 @@ public class SafehouseGameArea extends GameArea {
     // Right
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            new GridPoint2(tileBounds.x - 5, 0), false,false);
+            new GridPoint2(tileBounds.x, 0), false,false);
     // Top
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y - 2),false,false);
+            new GridPoint2(0, tileBounds.y - 8),false,false);
     // Bottom
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
@@ -129,13 +130,23 @@ public class SafehouseGameArea extends GameArea {
     // Counter walls
     // horizontal wall
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x - 11, WALL_WIDTH),
+            ObstacleFactory.createWall(worldBounds.x - 8, WALL_WIDTH),
             new GridPoint2(0, 5), false,false);
 
     // vertical wall
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y - 5),
             new GridPoint2(5, 5), false,false);
+
+    // Cupboard horizontal
+    spawnEntityAt(
+        ObstacleFactory.createWall(worldBounds.x - 8, WALL_WIDTH),
+        new GridPoint2(10, 5), false,false);
+
+    // Cupboard vertical
+    spawnEntityAt(
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y - 5),
+        new GridPoint2(10, 5), false,false);
   }
 
   public void spawnDoor() {
@@ -148,24 +159,23 @@ public class SafehouseGameArea extends GameArea {
             .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
     door.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
-    door.setPosition(7, 8);
+    door.setPosition(5.5f, 5.5f);
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
   }
 
   private Entity spawnShopKeeper() {
-    // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(2, 6);
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(2, 7);
 
-    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    Entity shopKeeperNPC = FriendlyNPCFactory.createShopkeeperNPC();
     spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return shopKeeperNPC;
   }
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, new GridPoint2(7, 1), true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(7, 2), true, true);
     return newPlayer;
   }
 

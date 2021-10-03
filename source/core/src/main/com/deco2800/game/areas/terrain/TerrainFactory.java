@@ -117,7 +117,7 @@ public class TerrainFactory {
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/safehouse-interior-layout.png", Texture.class));
-        return createSafehouseTerrain(1f, orthoGround);
+        return createSafehouseTerrain(0.75f, orthoGround);
 
       case BOSS:
         TextureRegion grassB =

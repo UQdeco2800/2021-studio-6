@@ -125,7 +125,7 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new Level1(terrainFactory);
       gameArea.create();
       ServiceLocator.registerGameArea(gameArea);
-      this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+      this.gameArea.player.getEvents().addListener("dead", this::gameOver);
       this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
 
     } else {
@@ -155,7 +155,10 @@ public class MainGameScreen extends ScreenAdapter {
     ui.getComponent(ShopMenuDisplay.class).toggleShopBox();
   }
 
-  private void checkGameOver() {
+  /**
+   * Pauses the game and sets the screen to the GAME_OVER screen
+   */
+  private void gameOver() {
     logger.info("Game Over");
     timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
@@ -172,9 +175,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     if (levelChange) {
       timeSource = ServiceLocator.getTimeSource();
-      timeSource.pause();
       generateNewLevel(false);
-      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
@@ -346,15 +347,21 @@ public class MainGameScreen extends ScreenAdapter {
     this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
     gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
-    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+    this.gameArea.player.getEvents().addListener("dead", this::gameOver);
     levelChange = false;
   }
 
+  /**
+   * Pauses the game and plays the victory epilogue
+   */
   private void victory() {
     timeSource.pause();
     spawnOutroDialogue();
   }
 
+  /**
+   * Display the outro scene
+   */
   private void spawnOutroDialogue(){
     StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
     StoryManager.getInstance().displayStory();
@@ -362,6 +369,9 @@ public class MainGameScreen extends ScreenAdapter {
             this::onOutroFinish);
   }
 
+  /**
+   * Sets the screen back to the main menu screen
+   */
   private void onOutroFinish() {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }

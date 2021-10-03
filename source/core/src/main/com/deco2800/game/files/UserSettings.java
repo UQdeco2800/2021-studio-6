@@ -14,7 +14,7 @@ public class UserSettings {
   private static final String SETTINGS_FILE = "settings.json";
 
   private static final int WINDOW_WIDTH = 1280;
-  private static final int WINDOW_HEIGHT = 800;
+  private static final int WINDOW_HEIGHT = 720;
 
   /**
    * Get the stored user settings

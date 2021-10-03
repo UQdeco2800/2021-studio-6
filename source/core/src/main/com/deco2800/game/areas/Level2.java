@@ -9,6 +9,8 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.player.PlayerRangeAOEComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -26,6 +28,7 @@ public class Level2 extends GameArea {
   private static final int NUM_BULLETS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final float WALL_WIDTH = 0.1f;
+  private static final String npcDeadAtlasFilename = "images/npc_movement/dead_npc.atlas";
 
   /**
    * Images and assets file path for Level 2 map generation.
@@ -64,7 +67,8 @@ public class Level2 extends GameArea {
     "images/hud/healthFull.png",
     "images/level_2/level2_torch_frame1_ver1.png",
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
-    "images/level_2/level2_tree_2_group_ver1.png"
+    "images/level_2/level2_tree_2_group_ver1.png",
+    "images/dialogue/raw/npc_indicator.png"
   };
 
   /**
@@ -83,7 +87,8 @@ public class Level2 extends GameArea {
     "images/hud/health.atlas",
     "images/weapon/sword.atlas",
     "images/weapon/axe.atlas",
-    "images/weapon/dagger.atlas"
+    "images/weapon/dagger.atlas",
+    npcDeadAtlasFilename
   };
 
   // Music and sound variables
@@ -117,6 +122,9 @@ public class Level2 extends GameArea {
     spawnBullet();
     spawnBomb();
     spawnPickupItems();
+    spawnLevelTwoIntro();
+
+    spawnDeadNPC();
 
     // Spawn enemy entities
     spawnSmallEnemy();
@@ -125,7 +133,9 @@ public class Level2 extends GameArea {
     spawnSpawnerEnemy();
     spawnToughLongRangeEnemies();
 
-    playMusic();
+    // Listener for level 2 intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,
+        this::playMusic);
   }
 
   /**
@@ -587,6 +597,17 @@ public class Level2 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, coinSpawnLocations[i], true, false);
     }
+  }
+
+  private void spawnLevelTwoIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.LEVEL2_INTRO);
+    StoryManager.getInstance().displayStory();
+  }
+
+  private void spawnDeadNPC() {
+    GridPoint2 pos = new GridPoint2(43,20);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, npcDeadAtlasFilename, false);
+    spawnEntityAt(npcTut, pos, true, true);
   }
 
   /**

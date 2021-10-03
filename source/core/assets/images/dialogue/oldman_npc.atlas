@@ -1,0 +1,13 @@
+
+oldman_npc.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+oldmanbig
+  rotate: false
+  xy: 2, 2
+  size: 1104, 1284
+  orig: 1104, 1284
+  offset: 0, 0
+  index: -1

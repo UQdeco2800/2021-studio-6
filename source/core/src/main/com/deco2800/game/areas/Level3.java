@@ -193,15 +193,83 @@ public class Level3 extends GameArea {
     private int getY() {
       return this.y;
     }
+
+    private void setDirection(int direction, boolean state) {
+      switch(direction) {
+        case 1:
+          this.up = state;
+          break;
+        case 2:
+          this.down = state;
+          break;
+        case 3:
+          this.left = state;
+          break;
+        case 4:
+          this.right = state;
+          break;
+      }
+    }
+
+    public String toString() {
+      StringBuilder result = new StringBuilder();
+      if (this.left) {
+        result.append("<");
+      }
+      if (this.up) {
+        result.append("^");
+      }
+      result.append(this.x);
+      result.append(",");
+      result.append(this.y);
+      if (this.down) {
+        result.append("v");
+      }
+      if (this.right) {
+        result.append(">");
+      }
+      return result.toString();
+    }
   }
+
   /**
    * (In theory) randomly populates the level with rooms
    * Top left = 0,0
    */
   private void tileLevel() {
     Array<Room> rooms = new Array<>();
-    rooms.add(new Room(0,0));
-    System.out.println(rooms.get(0).getX() + "," + rooms.get(0).getY());
+    rooms.add(new Room(0, 0));
+    rooms.add(new Room(0, 1));
+    joinRooms(rooms.get(1), rooms.get(0));
+    for (Room room: rooms) {
+      System.out.println(room.toString());
+    }
+  }
+
+  /**
+   * Given 2 rooms, join them together by setting the appropriate directions in each room
+   * e.g. if room1 is left of room2, then set the "right" var of room1 and "left" var of room2 to true
+   * @param room1 first room to join
+   * @param room2 second room to join
+   */
+  private void joinRooms(Room room1, Room room2) {
+    if (room1.getX() == room2.getX()) {
+      if (room1.getY() + 1 == room2.getY()) {
+        room1.setDirection(2, true);
+        room2.setDirection(1, true);
+      } else if (room1.getY() - 1 == room2.getY()) {
+        room1.setDirection(1, true);
+        room2.setDirection(2, true);
+      }
+    } else if (room1.getY() == room2.getY()) {
+      if (room1.getX() + 1 == room2.getX()) {
+        room1.setDirection(4, true);
+        room2.setDirection(3, true);
+      } else if (room1.getX() - 1 == room2.getX()) {
+        room1.setDirection(3, true);
+        room2.setDirection(4, true);
+      }
+    }
   }
 
   private void spawnTrees() {

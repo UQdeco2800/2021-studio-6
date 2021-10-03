@@ -13,7 +13,7 @@ public class NPCTutorialDialogue extends BasicDialogueConfig {
             "Press Space to attack enemies with your melee weapon.",
             "Press Enter to throw rocks. If you run out of rocks, you can press R key to reload.",
             "I wish you best of luck in your journey."};
-    protected static final String[] PORTRAIT = {"npc-tut1-portrait"};
+    protected static final String[] PORTRAIT = {"npc-tutorial-portrait"};
     private static final int LENGTH = 10;
 
     public NPCTutorialDialogue(){

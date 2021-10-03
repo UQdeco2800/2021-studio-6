@@ -47,12 +47,12 @@ npc-dead-portrait
   offset: 0, 0
   index: -1
 
-npc-tut1-dialogue.png
+oldman_npc.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-npc-tut1-portrait
+npc-tutorial-portrait
   rotate: false
   xy: 2, 94
   size: 1200, 1200

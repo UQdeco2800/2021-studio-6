@@ -35,6 +35,7 @@ public class Level4 extends GameArea {
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(30, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
+            "images/Final_Boss/boss_head.png",
             "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
             "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
             "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
@@ -70,6 +71,7 @@ public class Level4 extends GameArea {
             "images/placeholder.png"
     };
     private static final String[] forestTextureAtlases = {
+            "images/Final_Boss/boss_head.atlas",
             "images/terrain_iso_grass.atlas",
             "images/largeEnemy.atlas",
             "images/ghost.atlas",
@@ -291,10 +293,14 @@ public class Level4 extends GameArea {
     }
 
     private void spawnFinalBoss() {
-        Entity boss = FinalBossFactory.createFinalBoss(player);
+        Entity boss = FinalBossFactory.createDarkness(player);
         GridPoint2 bounds = terrain.getMapBounds(0);
         GridPoint2 pos = new GridPoint2(bounds.x/2, bounds.y - 10);
         spawnEntityAt(boss, pos, true, true);
+
+        Entity bossHead = FinalBossFactory.createBossHead(player);
+        pos = new GridPoint2(bounds.x/2, bounds.y/2); //this should be changed
+        spawnEntityAt(bossHead, pos, true, true);
     }
 
     private void spawnCobweb() {

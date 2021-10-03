@@ -16,7 +16,7 @@ public class PlayerLightingComponent extends PointLightComponent {
 
     public PlayerLightingComponent (Color color, float distance, float offsetx, float offsety) {
         super(color, distance,offsetx,offsety);
-        torchState = false;
+        torchState = true;
     }
 
     @Override
@@ -39,16 +39,8 @@ public class PlayerLightingComponent extends PointLightComponent {
     }
 
     private void ToggleTorchState() {
-
-        if (torchState) {
-            this.torchState = false;
-            this.getPointLight().setActive(false);
-        }
-        else {
-            this.torchState = true;
-            this.getPointLight().setActive(true);
-        }
-
+        torchState = !torchState;
+        this.getPointLight().setActive(torchState);
     }
 
     public IndependentAnimator getTorchAnimator() {

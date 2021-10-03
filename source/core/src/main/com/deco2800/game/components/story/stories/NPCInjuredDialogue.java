@@ -3,9 +3,9 @@ package com.deco2800.game.components.story.stories;
 import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCInjuredDialogue extends BasicDialogueConfig {
-    protected static final String[] QUOTE= {"Please...", "kill... me..."};
+    protected static final String[] QUOTE = {"*urggh...*", "Those little buggers took my leg...", "How selfish!"};
     protected static final String[] PORTRAIT = {"injured-portrait"};
-    private static final int LENGTH = 2;
+    private static final int LENGTH = 3;
 
     public NPCInjuredDialogue(){
         dialogueText = QUOTE;

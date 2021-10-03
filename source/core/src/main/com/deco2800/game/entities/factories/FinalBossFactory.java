@@ -17,14 +17,14 @@ public class FinalBossFactory {
     public static Entity createFinalBoss(Entity target) {
         Entity boss = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent())
+                //.addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(new TextureRenderComponent("images/placeholder.png"))
-                .addComponent(new CombatStatsComponent(3, 0))
+                //.addComponent(new CombatStatsComponent(3, 0))
                 .addComponent(new DisposingComponent());
 
-        boss.setScale(new Vector2(4f, 4f));
+        boss.setScale(new Vector2(40f, 5f));
 
         return boss;
     }

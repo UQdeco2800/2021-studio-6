@@ -291,8 +291,9 @@ public class Level4 extends GameArea {
     }
 
     private void spawnFinalBoss() {
-        GridPoint2 pos = new GridPoint2(25,25);
         Entity boss = FinalBossFactory.createFinalBoss(player);
+        GridPoint2 bounds = terrain.getMapBounds(0);
+        GridPoint2 pos = new GridPoint2(bounds.x/2, bounds.y - 10);
         spawnEntityAt(boss, pos, true, true);
     }
 

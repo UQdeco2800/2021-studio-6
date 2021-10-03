@@ -23,7 +23,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(30, 15);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
-  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(60, 30);
+  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
   private static final int GRASS_TILE_COUNT = 40;
@@ -115,7 +115,7 @@ public class TerrainFactory {
                 new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
         TextureRegion rocksB =
                 new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
-        return createBossTerrain(1f, grassB, tuftB, rocksB);
+        return createBossTerrain(0.5f, grassB, tuftB, rocksB);
 
       default:
         System.out.println("default");
@@ -210,9 +210,9 @@ public class TerrainFactory {
     TerrainTile grassTuftTile = new TerrainTile(grassTuft);
     TerrainTile rockTile = new TerrainTile(rocks);
 
-    int xScale = 2;
+    int xScale = 1;
     int yScale = 1;
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x * xScale, MAP_SIZE.y * yScale, tileSize.x, tileSize.y);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, tileSize.x, tileSize.y);
 
     // Create base grass
     fillTiles(layer, MAP_SIZE_BOSS, xScale, yScale, grassTile);

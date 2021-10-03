@@ -26,7 +26,7 @@ import java.util.LinkedList;
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_BULLETS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 7);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 7);
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final float WALL_WIDTH = 0.1f;
 

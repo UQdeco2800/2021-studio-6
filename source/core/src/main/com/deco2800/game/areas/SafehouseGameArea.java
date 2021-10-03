@@ -135,16 +135,14 @@ public class SafehouseGameArea extends GameArea {
   public void spawnDoor() {
     // Create entity
     door = new Entity()
-            .addComponent(new TextureRenderComponent("images/safehouse/interior-day1-tile-door1-latest.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new DisposingComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-    door.getComponent(TextureRenderComponent.class).scaleEntity();
-    door.scaleHeight(2.5f);
-    door.setPosition(worldBounds.x - 3, (worldBounds.y / 2) - 1);
+    door.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
+    door.setPosition(7, 8);
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
@@ -152,7 +150,7 @@ public class SafehouseGameArea extends GameArea {
 
   private Entity spawnShopKeeper() {
     // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(1, 1);
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(2, 6);
 
     Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
     spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
@@ -161,7 +159,7 @@ public class SafehouseGameArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, new GridPoint2(tileBounds.x / 4, tileBounds.y / 2), true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(7, 1), true, true);
     return newPlayer;
   }
 

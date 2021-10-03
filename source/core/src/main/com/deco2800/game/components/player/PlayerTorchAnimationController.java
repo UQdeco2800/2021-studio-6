@@ -25,6 +25,7 @@ public class PlayerTorchAnimationController extends Component {
     lightingComponent = this.entity.getComponent(PlayerLightingComponent.class);
     torchAnimator = lightingComponent.getTorchAnimator();
     entity.getEvents().addListener("toggleTorch",this::stop);
+    entity.getEvents().addListener("dispose", this::disposeAnimation);
     torchAnimator.startAnimation("front");
     previous = Directions.MOVE_UP;
   }
@@ -66,6 +67,7 @@ public class PlayerTorchAnimationController extends Component {
   }
 
   void disposeAnimation() {
+    System.out.println("dispose");
     torchAnimator.dispose();
   }
 }

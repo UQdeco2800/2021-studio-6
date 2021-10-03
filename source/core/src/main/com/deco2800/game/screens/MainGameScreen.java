@@ -69,7 +69,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private final boolean LIGHTINGON = false;
+  private boolean LIGHTINGON = true;
   private GameArea gameArea = null;
 
   private Entity ui;
@@ -329,6 +329,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.info("Generating level");
     // user may want to revert to closest checkpoint on level 1
+    LIGHTINGON = true;
     int LEVEL_4 = 4;
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
@@ -356,6 +357,7 @@ public class MainGameScreen extends ScreenAdapter {
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
     } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
+      LIGHTINGON = false;
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
     }

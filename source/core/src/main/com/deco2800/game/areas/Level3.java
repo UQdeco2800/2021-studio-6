@@ -82,6 +82,7 @@ public class Level3 extends GameArea {
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/sledge.atlas",
+      "images/playeritems/tourch/torch.atlas",
       "images/weapon/machete.atlas",
       "images/weapon/baseball.atlas",
       "images/weapon/dagger.atlas"  };

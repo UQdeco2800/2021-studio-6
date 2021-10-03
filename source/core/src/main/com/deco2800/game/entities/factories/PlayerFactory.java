@@ -109,6 +109,7 @@ public class PlayerFactory {
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
             .addComponent(new PlayerHudAnimationController())
+            .addComponent(new PlayerTorchAnimationController())
             .addComponent(new PlayerWeaponAnimationController())
             .addComponent(new PlayerHealthAnimationController())
             .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));

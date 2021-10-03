@@ -1,0 +1,8 @@
+{
+  "itemName": "DAGGER",
+  "description": "Reliable and stabbing friendly - the dagger is the weapon you need to hurt enemies quickly without a care about timing. Ideal weapon for getting rid of enemies that are fast!",
+  "price": 40,
+  "knockback": "Weak",
+  "attackDamage": 2,
+  "attackLength": "Short"
+}

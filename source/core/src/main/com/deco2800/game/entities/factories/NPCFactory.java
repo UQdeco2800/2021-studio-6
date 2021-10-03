@@ -8,6 +8,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.ItemComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
@@ -20,6 +21,7 @@ import com.deco2800.game.entities.configs.LargeEnemyConfig;
 import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.items.Items;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -60,7 +62,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/spawnerEnemy.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
@@ -98,7 +100,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/small_enemy.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
@@ -141,7 +143,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/largeEnemy.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/LargeEnemy/largeEnemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
@@ -177,7 +179,7 @@ public class NPCFactory {
                     //.addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                    .addComponent(new TextureRenderComponent("images/eye.png"))
+                    .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/eye.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
@@ -198,7 +200,7 @@ public class NPCFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(new TextureRenderComponent("images/eye.png"))
+            .addComponent(new TextureRenderComponent("images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"))
             .addComponent(new CombatStatsComponent(3, 1))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
@@ -208,8 +210,6 @@ public class NPCFactory {
 
     return toughLongRangeEnemy;
   }
-
-
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
@@ -234,8 +234,19 @@ public class NPCFactory {
     return npc;
   }
 
-
-
+  /**
+   * Used to create shop keeper NPC in safehouse
+   *
+   * @return entity shopkeeper with all necessary components to trigger
+   * popup box shop
+   */
+  public static Entity createShopkeeperNPC() {
+    return new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.SHOP, 1))
+            .addComponent(new TextureRenderComponent("images/Player_Sprite/front01.png"));
+  }
 
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");

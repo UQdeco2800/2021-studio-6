@@ -14,7 +14,7 @@ public class NPCPilotDialogue extends BasicDialogueConfig {
         "Stay safe out there, the glow is a promised land.",
         "This badge is a proof of bravery... *goes on about his achievements*"
     };
-    protected static final String[] PORTRAIT = null;
+    protected static final String[] PORTRAIT = {"npc-pilot-portrait"};
     private static final int LENGTH = 9;
 
     public NPCPilotDialogue(){

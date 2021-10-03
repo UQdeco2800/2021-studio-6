@@ -61,15 +61,28 @@ npc-tut1-portrait
   index: -1
 
 
-npc-dialogue-sample.png
-size: 2048, 2048
+pixelsize1.png
+size: 100, 100
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 npc-pilot-portrait
   rotate: false
-  xy: 2, 94
-  size: 1200, 1200
-  orig: 1200, 1200
+  xy: 0, 0
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+
+injured-portrait.png
+size: 150, 100
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+injured-portrait
+  rotate: false
+  xy: 0, 0
+  size: 150, 150
+  orig: 150, 100
   offset: 0, 0
   index: -1

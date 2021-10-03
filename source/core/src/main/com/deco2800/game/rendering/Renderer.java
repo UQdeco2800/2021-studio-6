@@ -120,6 +120,11 @@ public class Renderer implements Disposable {
     debugRenderer.render(projMatrix);
   }
 
+  public void setZoom(int zoom) {
+    this.gameWidth = zoom;
+    camera.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), zoom);
+  }
+
   public void renderUI() {
     stage.act();
     stage.draw();

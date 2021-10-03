@@ -69,8 +69,9 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private final boolean LIGHTINGON = true;
+  private final boolean LIGHTINGON = false;
   private GameArea gameArea = null;
+
   private Entity ui;
 
   public MainGameScreen(GdxGame game, GdxGame.GameType gameType) {
@@ -135,7 +136,7 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new Level1(terrainFactory);
       gameArea.create();
       ServiceLocator.registerGameArea(gameArea);
-      this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+      this.gameArea.player.getEvents().addListener("dead", this::gameOver);
       this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
 
     } else {
@@ -165,7 +166,10 @@ public class MainGameScreen extends ScreenAdapter {
     ui.getComponent(ShopMenuDisplay.class).toggleShopBox();
   }
 
-  private void checkGameOver() {
+  /**
+   * Pauses the game and sets the screen to the GAME_OVER screen
+   */
+  private void gameOver() {
     logger.info("Game Over");
     timeSource = ServiceLocator.getTimeSource();
     timeSource.pause();
@@ -182,9 +186,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     if (levelChange) {
       timeSource = ServiceLocator.getTimeSource();
-      timeSource.pause();
       generateNewLevel(false);
-      timeSource.unpause();
     }
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
@@ -312,8 +314,8 @@ public class MainGameScreen extends ScreenAdapter {
     logger.info("Generating game level " + gameLevel);
 
     // TODO: This should not be here as this should be for boss fight
-    int LEVEL_4 = 4;
-    if (gameLevel == LEVEL_4) {
+    int LEVEL_5 = 5;
+    if (gameLevel == LEVEL_5) {
       logger.info("Victory epilogue");
       victory();
       return;
@@ -327,6 +329,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.info("Generating level");
     // user may want to revert to closest checkpoint on level 1
+    int LEVEL_4 = 4;
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
     int LEVEL_1 = 1;
@@ -344,6 +347,11 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new Level3(terrainFactory);
       gameArea.create();
 
+    } else if (gameLevel == LEVEL_4) {
+      gameArea = new Level4(terrainFactory);
+      gameArea.create();
+      renderer.setZoom(50); //zooms out the camera, value subject to change
+
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
@@ -354,15 +362,21 @@ public class MainGameScreen extends ScreenAdapter {
     this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
     gameArea.player.getEvents().trigger("resetPlayerMovements");
     ServiceLocator.registerGameArea(gameArea);
-    this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);
+    this.gameArea.player.getEvents().addListener("dead", this::gameOver);
     levelChange = false;
   }
 
+  /**
+   * Pauses the game and plays the victory epilogue
+   */
   private void victory() {
     timeSource.pause();
     spawnOutroDialogue();
   }
 
+  /**
+   * Display the outro scene
+   */
   private void spawnOutroDialogue(){
     StoryManager.getInstance().loadCutScene(StoryNames.EPILOGUE);
     StoryManager.getInstance().displayStory();
@@ -370,6 +384,9 @@ public class MainGameScreen extends ScreenAdapter {
             this::onOutroFinish);
   }
 
+  /**
+   * Sets the screen back to the main menu screen
+   */
   private void onOutroFinish() {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }

@@ -9,6 +9,8 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -23,14 +25,14 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level3 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level3.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_COBWEBS = 7;
-  private static final int NUM_BUSH = 7;
-  private static final int NUM_LARGE_ENEMY = 2;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_LONGRANGE = 2;
-  private static final int NUM_BULLETS = 5;
-  private static final int NUM_SPAWNER_ENEMY = 2;
+  private static final int NUM_TREES = 0;
+  private static final int NUM_COBWEBS = 0;//change these back
+  private static final int NUM_BUSH = 0;
+  private static final int NUM_LARGE_ENEMY = 0;
+  private static final int NUM_GHOSTS = 0;
+  private static final int NUM_LONGRANGE = 0;
+  private static final int NUM_BULLETS = 0;
+  private static final int NUM_SPAWNER_ENEMY = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -112,14 +114,19 @@ public class Level3 extends GameArea {
     spawnBomb();
     spawnCobweb();
     spawnBush();
-    playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
     spawnSpawnerEnemy();
 
+    spawnLevelThreeIntro();
+
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
+
+    // Listener for level 3 intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -309,6 +316,11 @@ public class Level3 extends GameArea {
       Entity bush = ObstacleFactory.createBush();
       spawnEntityAt(bush, randomPos, true, false);
     }
+  }
+
+  private void spawnLevelThreeIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.LEVEL3_INTRO);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {

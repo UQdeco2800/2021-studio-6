@@ -90,30 +90,30 @@ public class PlayerFactory {
     // when changing melee weapon file path, remember to also change weapon type player currently holds
     loadPlayerData();
     Entity player = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new PlayerMeleeAttackComponent(meleeWeaponFilePath))
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-            .addComponent(new PlayerActions(woundState))
-            .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
-                    baseRangedAttack, defenceLevel))
-            .addComponent(new InventoryComponent(gold, ammo, bandages))
-            .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
-            .addComponent(inputComponent)
-            .addComponent(new PlayerRangeAttackComponent())
-            .addComponent(new PlayerRangeAOEComponent())
-            .addComponent(new PlayerReusableComponent())
-            .addComponent(new DisposingComponent())
-            .addComponent(new PlayerInterfaceDisplay())
-            .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
-            .addComponent(animator)
-            .addComponent(new PlayerAnimationController())
-            .addComponent(new PlayerHudAnimationController())
-            .addComponent(new PlayerTorchAnimationController())
-            .addComponent(new PlayerWeaponAnimationController())
-            .addComponent(new PlayerHealthAnimationController())
-            .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));
-            //.addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 5, 5, 90f, 180f));
+          .addComponent(new PhysicsComponent())
+          .addComponent(new ColliderComponent())
+          .addComponent(new PlayerMeleeAttackComponent(meleeWeaponFilePath))
+          .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+          .addComponent(new PlayerActions(woundState))
+          .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
+                  baseRangedAttack, defenceLevel))
+          .addComponent(new InventoryComponent(gold, ammo, bandages))
+          .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
+          .addComponent(inputComponent)
+          .addComponent(new PlayerRangeAttackComponent())
+          .addComponent(new PlayerRangeAOEComponent())
+          .addComponent(new PlayerReusableComponent())
+          .addComponent(new DisposingComponent())
+          .addComponent(new PlayerInterfaceDisplay())
+          .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
+          .addComponent(animator)
+          .addComponent(new PlayerAnimationController())
+          .addComponent(new PlayerHudAnimationController())
+          .addComponent(new PlayerTorchAnimationController())
+          .addComponent(new PlayerWeaponAnimationController())
+          .addComponent(new PlayerHealthAnimationController())
+          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));
+          //.addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 5, 5, 90f, 180f));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

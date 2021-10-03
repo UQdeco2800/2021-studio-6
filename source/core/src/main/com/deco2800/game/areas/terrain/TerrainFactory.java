@@ -21,11 +21,12 @@ import com.deco2800.game.services.ServiceLocator;
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
-  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(30, 15);
-  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(16, 9);
+  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
+  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
+  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
-  private static final int GRASS_TILE_COUNT = 40;
+  private static final int GRASS_TILE_COUNT = 123;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -54,12 +55,13 @@ public class TerrainFactory {
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
    *
-   * @param terrainType Terrain to create
-   * @return Terrain component which renders the terrain
+   * @param terrainType Terrain to create.
+   * @return Terrain component which renders the terrain.
    */
   public TerrainComponent createTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
+      // Delete the FOREST_DEMO case code block once we no longer need a placeholder for other gamearea levels.
       case FOREST_DEMO:
         TextureRegion orthoGrass =
             new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
@@ -69,6 +71,7 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
         return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
 
+      // Level 1 tiles
       case CITY:
         TextureRegion cityBackground =
             new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
@@ -87,6 +90,7 @@ public class TerrainFactory {
         return createCityTerrain(1f, cityRoad, citySidewalk, cityCurbUpper, cityCurbLower, crackedRoad,
             cityBackground, laneMarkings);
 
+      // Level 2 tiles
       case FOREST:
         TextureRegion grass1 =
                 new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_1.png", Texture.class));
@@ -100,18 +104,46 @@ public class TerrainFactory {
                 new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_5.png", Texture.class));
         TextureRegion grass6 =
                 new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_6.png", Texture.class));
-        return createForestTerrain(1f, grass1, grass2, grass3, grass4, grass5, grass6);
+        TextureRegion grass7 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_7.png", Texture.class));
+        TextureRegion grass8 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_8.png", Texture.class));
+        TextureRegion backgroundTile =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_background_tile.png", Texture.class));
 
+        return createForestTerrain(1f, grass1, grass2, grass3, grass4, grass5, grass6, grass7, grass8, backgroundTile);
+
+      // Safehouse tiles
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/safehouse-interior-layout.png", Texture.class));
         return createSafehouseTerrain(1f, orthoGround);
+
+      case BOSS:
+        TextureRegion grassB =
+                new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
+        TextureRegion tuftB =
+                new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
+        TextureRegion rocksB =
+                new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
+        return createBossTerrain(0.5f, grassB, tuftB, rocksB);
+
       default:
         System.out.println("default");
         return null;
     }
   }
 
+  private TerrainComponent createBossTerrain(
+          float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks
+  ) {
+    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
+    TiledMap tiledMap = createBossTiles(tilePixelSize, grass, grassTuft, rocks);
+    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
+  // Delete this demo terrain component once we no longer need a placeholder for other gamearea levels.
   private TerrainComponent createForestDemoTerrain(
           float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks
   ) {
@@ -121,6 +153,18 @@ public class TerrainFactory {
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
+  /**
+   * Renders the Level 1 map terrain with the appropriate tileset, map scale at an orthogonal camera angle.
+   * @param tileWorldSize Scales the tile size for the map.
+   * @param cityRoad Road tileset.
+   * @param citySidewalk Side walk tileset.
+   * @param cityCurbUpper Upper curb tileset.
+   * @param cityCurbLower Lower curb tileset.
+   * @param crackedRoad Cracked road tileset.
+   * @param cityBackground Background city tileset.
+   * @param laneMarkings Lane marking tileset.
+   * @return Terrain component which renders the terrain for Level 1.
+   */
   private TerrainComponent createCityTerrain(
       float tileWorldSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurbUpper,
       TextureRegion cityCurbLower, TextureRegion crackedRoad, TextureRegion cityBackground, TextureRegion laneMarkings
@@ -132,16 +176,38 @@ public class TerrainFactory {
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
+  /**
+   * Renders the Level 2 map terrain with the appropriate tileset, map scale at an orthogonal camera angle.
+   * @param tileWorldSize Scales the tileset size for the map.
+   * @param grass1 Grass tileset 1.
+   * @param grass2 Grass tileset 2.
+   * @param grass3 Grass tileset 3.
+   * @param grass4 Grass tileset 4.
+   * @param grass5 Grass tileset 5.
+   * @param grass6 Grass tileset 6.
+   * @param grass7 Grass tileset 7.
+   * @param grass8 Grass tileset 8.
+   * @param backgroundTile Background tile that matches the MainGameScreen background colour.
+   * @return Terrain component which renders the terrain for Level 2.
+   */
   private TerrainComponent createForestTerrain(
           float tileWorldSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
-          TextureRegion grass4, TextureRegion grass5, TextureRegion grass6
+          TextureRegion grass4, TextureRegion grass5, TextureRegion grass6, TextureRegion grass7,
+          TextureRegion grass8, TextureRegion backgroundTile
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass1.getRegionWidth(), grass1.getRegionHeight());
-    TiledMap tiledMap = createForestTiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, grass6);
+    TiledMap tiledMap = createForestTiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, grass6,
+            grass7, grass8, backgroundTile);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
+  /**
+   * Renders the Safehouse map terrain with the appropriate tileset, map scale at an orthogonal camera angle.
+   * @param tileWorldSize
+   * @param ground Safehouse floor tileset.
+   * @return Terrain component which renders the terrain for Safehouse map.
+   */
   private TerrainComponent createSafehouseTerrain(
           float tileWorldSize, TextureRegion ground
   ) {
@@ -152,6 +218,13 @@ public class TerrainFactory {
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
+  /**
+   * Renders the tilemap of the gamearea levels in either the orthogonal, isometric or hexagonal orientation.
+   * In this game, it is in orthogonal.
+   * @param tiledMap Tileset positions of the gamearea level.
+   * @param tileScale Tileset scale.
+   * @return
+   */
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
     switch (orientation) {
       case ORTHOGONAL:
@@ -165,6 +238,7 @@ public class TerrainFactory {
     }
   }
 
+  // Delete this tilemap function once we no longer need a placeholder for other gamearea levels.
   private TiledMap createForestDemoTiles(
       GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
     TiledMap tiledMap = new TiledMap();
@@ -184,6 +258,40 @@ public class TerrainFactory {
     return tiledMap;
   }
 
+  private TiledMap createBossTiles(
+          GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile grassTile = new TerrainTile(grass);
+    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
+    TerrainTile rockTile = new TerrainTile(rocks);
+
+    int xScale = 1;
+    int yScale = 1;
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, tileSize.x, tileSize.y);
+
+    // Create base grass
+    fillTiles(layer, MAP_SIZE_BOSS, xScale, yScale, grassTile);
+
+    // Add some grass and rocks
+    fillTilesAtRandom(layer, MAP_SIZE_BOSS, grassTuftTile, TUFT_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_BOSS, rockTile, ROCK_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+  }
+
+  /**
+   * Renders the Level 1 tilesets at their appropriate position of the grid layout map.
+   * @param tileSize Scale of the tileset.
+   * @param cityRoad Road tileset.
+   * @param citySidewalk Side walk tileset.
+   * @param cityCurbUpper Upper curb tileset.
+   * @param cityCurbLower Lower curb tileset.
+   * @param crackedRoad Cracked road tileset.
+   * @param cityBackground Background city tileset.
+   * @param laneMarkings Lane marking tileset.
+   * @return Tileset map positions for Level 1.
+   */
   private TiledMap createCityTiles(
       GridPoint2 tileSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurbUpper,
       TextureRegion cityCurbLower, TextureRegion crackedRoad, TextureRegion cityBackground,
@@ -237,9 +345,24 @@ public class TerrainFactory {
     return tiledMap;
   }
 
+  /**
+   * Renders the Level 2 tilesets at their appropriate position of the grid layout map.
+   * @param tileSize Scale of the tileset.
+   * @param grass1 Grass tileset 1.
+   * @param grass2 Grass tileset 2.
+   * @param grass3 Grass tileset 3.
+   * @param grass4 Grass tileset 4.
+   * @param grass5 Grass tileset 5.
+   * @param grass6 Grass tileset 6.
+   * @param grass7 Grass tileset 7.
+   * @param grass8 Grass tileset 8.
+   * @param backgroundTile Background tile that matches the MainGameScreen background colour.
+   * @return Tileset map positions for Level 2.
+   */
   private TiledMap createForestTiles(
           GridPoint2 tileSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
-          TextureRegion grass4, TextureRegion grass5, TextureRegion grass6
+          TextureRegion grass4, TextureRegion grass5, TextureRegion grass6, TextureRegion grass7,
+          TextureRegion grass8, TextureRegion backgroundTile
   ) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile grassTile1 = new TerrainTile(grass1);
@@ -248,10 +371,9 @@ public class TerrainFactory {
     TerrainTile grassTile4 = new TerrainTile(grass4);
     TerrainTile grassTile5 = new TerrainTile(grass5);
     TerrainTile grassTile6 = new TerrainTile(grass6);
-//    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
-    // Create base grass
-//    fillTiles(layer, MAP_SIZE, grassTile1);
+    TerrainTile grassTile7 = new TerrainTile(grass7);
+    TerrainTile grassTile8 = new TerrainTile(grass8);
+    TerrainTile backgroundTile1 = new TerrainTile(backgroundTile);
 
     //Multiplier to size of map on x and y coordinates
     int xScale = 1;
@@ -260,22 +382,34 @@ public class TerrainFactory {
             MAP_SIZE_FOREST.y * yScale, tileSize.x, tileSize.y);
     fillTiles(layer, MAP_SIZE_FOREST, xScale, yScale, grassTile1);
 
-
-
     // Randomised the grass tiles location
     fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile2, GRASS_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile3, GRASS_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile4, GRASS_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile5, GRASS_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile6, GRASS_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile7, GRASS_TILE_COUNT);
+    fillTilesAtRandom(layer, MAP_SIZE_FOREST, grassTile8, GRASS_TILE_COUNT);
+
+    //Fill background tiles
+    GridPoint2 start = new GridPoint2(0,0);
+    GridPoint2 end = new GridPoint2(18,9);
+    setTilesInRegion(layer, backgroundTile1, start, end);
+
+    GridPoint2 start2 = new GridPoint2(47,0);
+    GridPoint2 end2 = new GridPoint2(64,9);
+    setTilesInRegion(layer, backgroundTile1, start2, end2);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
-
-
-
+  /**
+   * Renders the Safehouse tilesets at their appropriate position of the grid layout map.
+   * @param tileSize Scale of the tileset.
+   * @param ground Safehouse ground tileset.
+   * @return Tileset map positions for Safehouse.
+   */
   private TiledMap createSafehouseTiles(
           GridPoint2 tileSize,
           TextureRegion ground
@@ -294,6 +428,13 @@ public class TerrainFactory {
     return tiledMap;
   }
 
+  /**
+   * Renders the tiles at a random position on top of the level layer.
+   * @param layer Tilemap layer of the level.
+   * @param mapSize Grid map size (x, y).
+   * @param tile Tileset to be used to fill on top of the level map.
+   * @param amount Number of tileset used to render on top of the level map.
+   */
   private static void fillTilesAtRandom(
       TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
     GridPoint2 min = new GridPoint2(0, 0);
@@ -335,6 +476,12 @@ public class TerrainFactory {
     }
   }
 
+  /**
+   * Renders the tiles at a particular position on top of the level layer.
+   * @param layer Tilemap layer of the level.
+   * @param mapSize Grid map size (x, y).
+   * @param tile Tileset to be used to fill on top of the level map.
+   */
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
@@ -421,6 +568,7 @@ public class TerrainFactory {
     FOREST_DEMO,
     SAFEHOUSE,
     CITY,
-    FOREST
+    FOREST,
+    BOSS
   }
 }

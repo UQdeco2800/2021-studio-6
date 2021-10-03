@@ -9,6 +9,9 @@ import com.deco2800.game.GdxGame;
 public class DesktopLauncher {
   public static void main(String[] arg) {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+    config.setWindowSizeLimits(480, 270, 1920, 1080);
+    config.setTitle("Fireflies");
+    config.setWindowIcon("images/Ability_Sprites/invincibility.png");
     new Lwjgl3Application(new GdxGame(), config);
   }
 }

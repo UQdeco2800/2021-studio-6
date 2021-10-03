@@ -103,6 +103,7 @@ public class Level1 extends GameArea {
       "images/weapon/dagger.atlas",
       "images/weapon/sledge.atlas",
       "images/weapon/machete.atlas",
+      "images/playeritems/tourch/torch.atlas",
       "images/weapon/baseball.atlas",
       npcSampleAtlasFilename,
       npcTut1AtlasFilename

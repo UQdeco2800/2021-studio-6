@@ -48,6 +48,7 @@ public class SafehouseGameArea extends GameArea {
       "images/weapon/dagger.atlas",
       "images/weapon/sledge.atlas",
       "images/weapon/machete.atlas",
+      "images/playeritems/tourch/torch.atlas",
       "images/weapon/baseball.atlas",
       "images/weapon/axe.atlas"
   };

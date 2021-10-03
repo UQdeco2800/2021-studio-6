@@ -48,8 +48,15 @@ public class PlayerReusableComponent extends Component {
                 updateBandageCount(bandageCount - BANDAGE_USED);
                 playerStats.setWoundState(currentWoundState + INCREASE_WOUND_STATE);
 
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class);
-                sound.play();
+                // Bypass if ServiceLocator isn't loaded.
+                //TODO: Have to refactor this somehow...
+                Sound sound = ServiceLocator.getResourceService() != null
+                        ? ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class)
+                        : null;
+                if(sound != null) {
+                    sound.play();
+                }
+
             }
         }
     }

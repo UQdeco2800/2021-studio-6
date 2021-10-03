@@ -605,7 +605,7 @@ public class Level2 extends GameArea {
   }
 
   private void spawnDeadNPC() {
-    GridPoint2 pos = new GridPoint2(20,4);
+    GridPoint2 pos = new GridPoint2(43,20);
     Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, npcDeadAtlasFilename, false);
     spawnEntityAt(npcTut, pos, true, true);
   }

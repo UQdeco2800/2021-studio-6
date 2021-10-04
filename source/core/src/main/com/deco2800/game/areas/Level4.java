@@ -296,12 +296,12 @@ public class Level4 extends GameArea {
     private void spawnFinalBoss() {
         Entity boss = FinalBossFactory.createDarkness(player, this);
         GridPoint2 bounds = terrain.getMapBounds(0);
-        GridPoint2 pos = new GridPoint2(bounds.x/2, bounds.y - 10);
+        GridPoint2 pos = new GridPoint2(bounds.x/2, bounds.y);
         spawnEntityAt(boss, pos, true, true);
 
-        Entity bossHead = FinalBossFactory.createBossHead();
-        pos = new GridPoint2(bounds.x/2, bounds.y - 3);
-        spawnEntityAt(bossHead, pos, true, true);
+        //Entity bossHead = FinalBossFactory.createBossHead();
+        //pos = new GridPoint2(bounds.x/2, (int) Math.round(bounds.y*0.9));
+        //spawnEntityAt(bossHead, pos, true, true); //remove this stuff once stage 1 is done
     }
 
     private void spawnCobweb() {

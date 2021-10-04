@@ -1,9 +1,12 @@
 package com.deco2800.game.components.tasks;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.areas.*;
+import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.areas.GameArea;
@@ -13,6 +16,7 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.raycast.RaycastHit;
 import com.deco2800.game.rendering.DebugRenderer;
+import com.deco2800.game.utils.math.RandomUtils;
 
 /** Spawns small enemies while the player is in range */
 public class Stage1Task extends DefaultTask implements PriorityTask {
@@ -26,6 +30,7 @@ public class Stage1Task extends DefaultTask implements PriorityTask {
     private final Entity beam;
     private final Entity bossHead;
     private long endTime;
+    private long beamEndTime;
     private static final float INTERVAL = 5;
 
     public Stage1Task(int priority, Level4 gameArea, Entity darkness, Entity beam, Entity bossHead) {
@@ -40,20 +45,24 @@ public class Stage1Task extends DefaultTask implements PriorityTask {
     }
 
     public void attack() {
-        this.beam.setPosition(this.bossHead.getPosition());
+        Vector2 bossHeadPos = new Vector2((RandomUtils.randomInt(
+                (int) (this.darkness.getCenterPosition().x * 2 - this.beam.getScale().x))),
+                (this.darkness.getPosition().y));
+        Vector2 beamPos = new Vector2(bossHeadPos.x + (this.bossHead.getScale().x - this.beam.getScale().x)/2, bossHeadPos.y - this.beam.getScale().y);
+        this.beam.setPosition(beamPos);
+        this.bossHead.setPosition(bossHeadPos);
         this.beam.getEvents().trigger("attackStart");
+        this.bossHead.getEvents().trigger("attackStart");
     }
 
     @Override
     public void start() {
         super.start();
 
+        this.attack();
         //this.beam.setPosition(30f, 10f);
-        //this.beam.setPosition(new Vector2(10, 10));
         this.gameArea.spawnEntity(beam);
-        //this.beam.setPosition(30f, 10f);
-        //this.beam.setPosition(new Vector2(10, 10));
-        //this.beam.setPosition(this.bossHead.getPosition());
+        this.gameArea.spawnEntity(bossHead);
 
         //this.owner.getEntity().getEvents().trigger("chaseStart");
     }
@@ -66,7 +75,6 @@ public class Stage1Task extends DefaultTask implements PriorityTask {
     public void update() {
         if (timeSource.getTime() >= endTime) {
             this.attack();
-            //this.gameArea.spawnFromSpawner(this.beam.getPosition(), MAX_SPAWN_DISTANCE);
             endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
         }
     }

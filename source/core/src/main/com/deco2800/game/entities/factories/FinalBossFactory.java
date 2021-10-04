@@ -60,12 +60,11 @@ public class FinalBossFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+
 
         AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+                new AITaskComponent();
 
         Entity bossHead = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -79,7 +78,7 @@ public class FinalBossFactory {
                 .addComponent(new DisposingComponent());
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
-        bossHead.setScale(new Vector2(2f, 2f));
+        bossHead.setScale(new Vector2(4f, 4f));
 
         return bossHead;
     }

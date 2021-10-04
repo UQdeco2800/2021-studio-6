@@ -61,8 +61,24 @@ public class PlayerPickupComponent extends Component {
 
             if (item.getItemType() == Items.AMMO) {
                 inventory.setAmmo(ammoLeft + itemQuantity);
+                // Bypass if ServiceLocator isn't loaded.
+                //TODO: Have to refactor this somehow...
+                Sound sound = ServiceLocator.getResourceService() != null
+                    ? ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class)
+                    : null;
+                if(sound != null) {
+                    sound.play();
+                }
             } else if (item.getItemType() == Items.COINS) {
                 inventory.setGold(coinLeft + itemQuantity);
+                // Bypass if ServiceLocator isn't loaded.
+                //TODO: Have to refactor this somehow...
+                Sound sound = ServiceLocator.getResourceService() != null
+                    ? ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class)
+                    : null;
+                if(sound != null) {
+                    sound.play();
+                }
             } else if (item.getItemType() == Items.ARMOUR) {
                 stats.setDefenceLevel(2);
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);

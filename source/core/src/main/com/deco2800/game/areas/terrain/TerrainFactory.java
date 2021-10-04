@@ -22,6 +22,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
+  private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(55, 46);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
   private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
   private static final int TUFT_TILE_COUNT = 30;
@@ -113,6 +114,17 @@ public class TerrainFactory {
 
         return createForestTerrain(1f, grass1, grass2, grass3, grass4, grass5, grass6, grass7, grass8, backgroundTile);
 
+      // Level 3 tiles
+      // TODO: Add actual level 3 tiles here
+      case FOREST2:
+        TextureRegion ground =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_1.png", Texture.class));
+
+        TextureRegion backgroundTile2 =
+                new TextureRegion(resourceService.getAsset("images/level_2/level2_background_tile.png", Texture.class));
+
+        return createForest2Terrain(1f, ground, backgroundTile2);
+
       // Safehouse tiles
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
@@ -198,6 +210,16 @@ public class TerrainFactory {
     GridPoint2 tilePixelSize = new GridPoint2(grass1.getRegionWidth(), grass1.getRegionHeight());
     TiledMap tiledMap = createForestTiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, grass6,
             grass7, grass8, backgroundTile);
+    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
+  // TODO: Add javadoc and replace placeholder tiles
+  private TerrainComponent createForest2Terrain(
+          float tileWorldSize, TextureRegion grass1, TextureRegion backgroundTile
+  ) {
+    GridPoint2 tilePixelSize = new GridPoint2(grass1.getRegionWidth(), grass1.getRegionHeight());
+    TiledMap tiledMap = createForest2Tiles(tilePixelSize, grass1, backgroundTile);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -344,20 +366,6 @@ public class TerrainFactory {
     return tiledMap;
   }
 
-  /**
-   * Renders the Level 2 tilesets at their appropriate position of the grid layout map.
-   * @param tileSize Scale of the tileset.
-   * @param grass1 Grass tileset 1.
-   * @param grass2 Grass tileset 2.
-   * @param grass3 Grass tileset 3.
-   * @param grass4 Grass tileset 4.
-   * @param grass5 Grass tileset 5.
-   * @param grass6 Grass tileset 6.
-   * @param grass7 Grass tileset 7.
-   * @param grass8 Grass tileset 8.
-   * @param backgroundTile Background tile that matches the MainGameScreen background colour.
-   * @return Tileset map positions for Level 2.
-   */
   private TiledMap createForestTiles(
           GridPoint2 tileSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
           TextureRegion grass4, TextureRegion grass5, TextureRegion grass6, TextureRegion grass7,
@@ -397,6 +405,37 @@ public class TerrainFactory {
 
     GridPoint2 start2 = new GridPoint2(47,0);
     GridPoint2 end2 = new GridPoint2(64,9);
+    setTilesInRegion(layer, backgroundTile1, start2, end2);
+
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+  }
+
+  // TODO: Replace placeholder tiles with actual tiles
+  private TiledMap createForest2Tiles(
+          GridPoint2 tileSize, TextureRegion grass1, TextureRegion backgroundTile
+  ) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile grassTile1 = new TerrainTile(grass1);
+    TerrainTile backgroundTile1 = new TerrainTile(backgroundTile);
+
+    //Multiplier to size of map on x and y coordinates
+    int xScale = 1;
+    int yScale = 1;
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_FOREST2.x * xScale,
+            MAP_SIZE_FOREST2.y * yScale, tileSize.x, tileSize.y);
+    fillTiles(layer, MAP_SIZE_FOREST2, xScale, yScale, grassTile1);
+
+
+    //Fill background tiles
+    // Top part
+    GridPoint2 start = new GridPoint2(19,37);
+    GridPoint2 end = new GridPoint2(35,45);
+    setTilesInRegion(layer, backgroundTile1, start, end);
+
+    // Bottom part
+    GridPoint2 start2 = new GridPoint2(19,0);
+    GridPoint2 end2 = new GridPoint2(35,8);
     setTilesInRegion(layer, backgroundTile1, start2, end2);
 
     tiledMap.getLayers().add(layer);
@@ -565,6 +604,7 @@ public class TerrainFactory {
     SAFEHOUSE,
     CITY,
     FOREST,
-    BOSS
+    BOSS,
+    FOREST2
   }
 }

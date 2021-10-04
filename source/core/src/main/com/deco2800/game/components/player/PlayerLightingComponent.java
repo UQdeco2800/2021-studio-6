@@ -43,6 +43,10 @@ public class PlayerLightingComponent extends PointLightComponent {
         this.getPointLight().setActive(torchState);
     }
 
+    /**
+     * Used to get the torch animator for use in the animation controller
+     * @return the torchAnimator IndependentAnimator
+     */
     public IndependentAnimator getTorchAnimator() {
         return torchAnimator;
     }

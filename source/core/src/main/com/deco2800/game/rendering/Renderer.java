@@ -101,6 +101,10 @@ public class Renderer implements Disposable {
     resizeCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
   }
 
+  /**
+   * Gets the camera specified for this renderer
+   * @return The camera attached to this renderer
+   */
   public CameraComponent getCamera() {
     return camera;
   }

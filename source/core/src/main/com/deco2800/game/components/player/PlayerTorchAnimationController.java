@@ -1,7 +1,6 @@
 package com.deco2800.game.components.player;
 
 import com.deco2800.game.components.Component;
-import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.IndependentAnimator;
 
@@ -31,7 +30,9 @@ public class PlayerTorchAnimationController extends Component {
   }
 
   /**
-   * Checks to stop animation once it is finished
+   * Updates and moves the torch animation based on the player's direction.
+   * Follows a similar setup to the update function in PlayerAnimationController.
+   * Will also only display if the torch is activated.
    */
   @Override
   public void update() {
@@ -61,13 +62,19 @@ public class PlayerTorchAnimationController extends Component {
     }
   }
 
+  /**
+   * Toggles the torch animation status
+   */
   void stop() {
+    previous = null;
     on = !on;
     torchAnimator.stopAnimation();
   }
 
+  /**
+   * Removes and disposes the torch animation
+   */
   void disposeAnimation() {
-    System.out.println("dispose");
     torchAnimator.dispose();
   }
 }

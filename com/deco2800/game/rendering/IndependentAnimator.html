@@ -141,7 +141,8 @@ extends <a href="AnimationRenderComponent.html" title="class in com.deco2800.gam
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas)">IndependentAnimator</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas,boolean)">IndependentAnimator</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas,
+boolean&nbsp;lit)</code></th>
 <td class="colLast">
 <div class="block">Create the Independent Animator for the given TextureAtlas.</div>
 </td>
@@ -250,7 +251,7 @@ float&nbsp;y)</code></th>
 <h3>Methods inherited from class&nbsp;com.deco2800.game.rendering.<a href="RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.rendering.RenderComponent">
 <!--   -->
-</a><code><a href="RenderComponent.html#compareTo(com.deco2800.game.rendering.Renderable)">compareTo</a>, <a href="RenderComponent.html#create()">create</a>, <a href="RenderComponent.html#getLayer()">getLayer</a>, <a href="RenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render</a></code></div>
+</a><code><a href="RenderComponent.html#compareTo(com.deco2800.game.rendering.Renderable)">compareTo</a>, <a href="RenderComponent.html#create()">create</a>, <a href="RenderComponent.html#getLayer()">getLayer</a>, <a href="RenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render</a>, <a href="RenderComponent.html#setLit()">setLit</a>, <a href="RenderComponent.html#setUnlit()">setUnlit</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;com.deco2800.game.components.<a href="../components/Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.components.Component">
@@ -276,8 +277,9 @@ float&nbsp;y)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas)">IndependentAnimator</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">IndependentAnimator</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas)</span></div>
+<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas,boolean)">IndependentAnimator</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">IndependentAnimator</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas,
+boolean&nbsp;lit)</span></div>
 <div class="block">Create the Independent Animator for the given TextureAtlas. Extends the
  AnimationRenderComponent but doesn't need to be attached to an entity.
  Instead, makes use of given x and y offsets to position the animation in
@@ -289,6 +291,8 @@ float&nbsp;y)</code></th>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>atlas</code> - libGDX-supported texture atlas containing desired animations</dd>
+<dd><code>lit</code> - Boolean variable of whether this asset should be lit by the
+            lighting engine (true) or not (false).</dd>
 </dl>
 </section>
 </li>

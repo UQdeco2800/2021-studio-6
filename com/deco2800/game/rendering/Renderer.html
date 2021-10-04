@@ -125,9 +125,11 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.components.CameraComponent)">Renderer</a></span>&#8203;(<a href="../components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a>&nbsp;camera)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.components.CameraComponent,boolean,com.badlogic.gdx.scenes.scene2d.Stage)">Renderer</a></span>&#8203;(<a href="../components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a>&nbsp;camera,
+boolean&nbsp;lighting,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/Stage.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d" class="externalLink">Stage</a>&nbsp;existingStage)</code></th>
 <td class="colLast">
-<div class="block">Create a new renderer with default settings</div>
+<div class="block">Create a new renderer with default settings.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -172,7 +174,9 @@ float&nbsp;gameWidth,
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code><a href="../components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCamera()">getCamera</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the camera specified for this renderer</div>
+</td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="DebugRenderer.html" title="class in com.deco2800.game.rendering">DebugRenderer</a></code></td>
@@ -233,12 +237,17 @@ int&nbsp;height)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(com.deco2800.game.components.CameraComponent)">Renderer</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Renderer</span>&#8203;(<span class="arguments"><a href="../components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a>&nbsp;camera)</span></div>
-<div class="block">Create a new renderer with default settings</div>
+<h3><a id="&lt;init&gt;(com.deco2800.game.components.CameraComponent,boolean,com.badlogic.gdx.scenes.scene2d.Stage)">Renderer</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Renderer</span>&#8203;(<span class="arguments"><a href="../components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a>&nbsp;camera,
+boolean&nbsp;lighting,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/Stage.html?is-external=true" title="class or interface in com.badlogic.gdx.scenes.scene2d" class="externalLink">Stage</a>&nbsp;existingStage)</span></div>
+<div class="block">Create a new renderer with default settings. Can create two separate renderers,
+ one for lit assets and one for unlit assets, depending on the boolean lighting.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>camera</code> - camera to render to</dd>
+<dd><code>lighting</code> - Boolean for whether this renderer deals with lighting (true) or not</dd>
+<dd><code>existingStage</code> - A given stage if a stage already exists in the environment</dd>
 </dl>
 </section>
 </li>
@@ -278,13 +287,19 @@ float&nbsp;gameWidth,
 <section class="detail">
 <h3><a id="getCamera()">getCamera</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a></span>&nbsp;<span class="memberName">getCamera</span>()</div>
+<div class="block">Gets the camera specified for this renderer</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The camera attached to this renderer</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="render()">render</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">render</span>()</div>
-<div class="block">Render everything to the render service.</div>
+<div class="block">Render everything to the render service. Has a different render procedure
+ depending on whether it is for lit or unlit assets.</div>
 </section>
 </li>
 <li class="blockList">

@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -184,13 +184,20 @@ double&nbsp;currentGameLevel)</code></th>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
-<td class="colFirst"><code>static <a href="PlayerStateManager.html" title="class in com.deco2800.game.memento">PlayerStateManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInstance()">getInstance</a></span>()</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#destroy()">destroy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns single instance of singletone</div>
+<div class="block">Destroys singleton instance</div>
 </td>
 </tr>
 <tr class="altColor" id="i4">
+<td class="colFirst"><code>static <a href="PlayerStateManager.html" title="class in com.deco2800.game.memento">PlayerStateManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInstance()">getInstance</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns single instance of singleton</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restorePlayerState()">restorePlayerState</a></span>()</code></th>
 <td class="colLast">
@@ -198,15 +205,15 @@ double&nbsp;currentGameLevel)</code></th>
  state stored previously</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restorePlayerStateToClosestSafehouse()">restorePlayerStateToClosestSafehouse</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Reverts player state to the most recent safehouse visited before current level where player died.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
-<td class="colFirst"><code>void</code></td>
+<tr class="rowColor" id="i7">
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trackPlayerState(com.deco2800.game.memento.Player)">trackPlayerState</a></span>&#8203;(<a href="Player.html" title="class in com.deco2800.game.memento">Player</a>&nbsp;playerState)</code></th>
 <td class="colLast">
 <div class="block">Used specifically for logging purposes and debugging.</div>
@@ -254,11 +261,18 @@ double&nbsp;currentGameLevel)</code></th>
 <section class="detail">
 <h3><a id="getInstance()">getInstance</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="PlayerStateManager.html" title="class in com.deco2800.game.memento">PlayerStateManager</a></span>&nbsp;<span class="memberName">getInstance</span>()</div>
-<div class="block">Returns single instance of singletone</div>
+<div class="block">Returns single instance of singleton</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>player state manager instance</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="destroy()">destroy</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">destroy</span>()</div>
+<div class="block">Destroys singleton instance</div>
 </section>
 </li>
 <li class="blockList">
@@ -327,7 +341,7 @@ double&nbsp;gameLevel)</span></div>
 <li class="blockList">
 <section class="detail">
 <h3><a id="trackPlayerState(com.deco2800.game.memento.Player)">trackPlayerState</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">trackPlayerState</span>&#8203;(<span class="arguments"><a href="Player.html" title="class in com.deco2800.game.memento">Player</a>&nbsp;playerState)</span></div>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">trackPlayerState</span>&#8203;(<span class="arguments"><a href="Player.html" title="class in com.deco2800.game.memento">Player</a>&nbsp;playerState)</span></div>
 <div class="block">Used specifically for logging purposes and debugging. Will be useful to track player's current state</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

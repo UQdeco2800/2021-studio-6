@@ -1,7 +1,7 @@
 {
  "largeEnemy": {
 	"health": 30,
-	"baseAttack": 10,
+	"baseAttack": 5,
 	"speed_x": 1,
 	"speed_y": 1
   },
@@ -15,8 +15,8 @@
     "spookyFactor": 7
   },
   "smallEnemy": {
-    "health": 10,
-    "baseAttack": 5,
+    "health": 5,
+    "baseAttack": 1,
     "speed": 2
   },
   "spawnerEnemy": {

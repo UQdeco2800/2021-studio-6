@@ -1,43 +1,62 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.GameArea;
+import com.deco2800.game.areas.Level4;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.Stage1Task;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 public class FinalBossFactory {
-    public static Entity createDarkness(Entity target) {
+
+    public static Entity createDarkness(Entity target, Level4 gameArea) {
         Entity darkness = new Entity()
                 .addComponent(new PhysicsComponent())
                 //.addComponent(new PhysicsMovementComponent())
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(new TextureRenderComponent("images/placeholder.png"))
                 //.addComponent(new CombatStatsComponent(3, 0))
                 .addComponent(new DisposingComponent());
 
+        Entity beam = createBeam();
+        Entity bossHead = createBossHead();
+
+
+
+        AITaskComponent aiComponent =
+                new AITaskComponent()
+                        .addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
+
+        darkness.addComponent(aiComponent);
         darkness.setScale(new Vector2(40f, 5f));
+        //PhysicsUtils.setScaledCollider(darkness, 0.6f, 0.3f);
 
         return darkness;
     }
 
-    public static Entity createBossHead(Entity target) {
+    public static Entity createBossHead() {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
@@ -46,14 +65,13 @@ public class FinalBossFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                        .addTask(new ChaseTask(target, 10, 3f, 4f));
+                        .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
         Entity bossHead = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                //.addComponent(new ColliderComponent())
+                //.addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
@@ -64,5 +82,31 @@ public class FinalBossFactory {
         bossHead.setScale(new Vector2(2f, 2f));
 
         return bossHead;
+    }
+
+    public static Entity createBeam() {
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/Final_Boss/beam.atlas", TextureAtlas.class));
+                animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+
+        AITaskComponent aiComponent =
+                new AITaskComponent();
+
+        Entity beam = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new PhysicsMovementComponent())
+                //.addComponent(new ColliderComponent())
+                //.addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                .addComponent(aiComponent)
+                .addComponent(new GhostAnimationController())
+                .addComponent(animator)
+                .addComponent(new CombatStatsComponent(1000, 5))
+                .addComponent(new DisposingComponent());
+
+        beam.getComponent(AnimationRenderComponent.class).scaleEntity();
+        beam.setScale(new Vector2(3f, 12f));
+
+        return beam;
     }
 }

@@ -11,6 +11,7 @@ public class PhysicsLayer {
   public static final short ALL = ~0;
   public static final short WEAPON = (1 << 5);
   public static final short ITEM = (1 << 6);
+  public static final short DARKNESS = (2 << 2);
   // Safehouse object
   public static final short SAFEHOUSE = (1 << 4);
   // Paraphernalia

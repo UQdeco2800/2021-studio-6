@@ -122,7 +122,8 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new Level1(terrainFactory);
+      gameArea = new Level4(terrainFactory); //change back to level 1
+      renderer.setZoom(50); //remove when finished
       gameArea.create();
       ServiceLocator.registerGameArea(gameArea);
       this.gameArea.player.getEvents().addListener("dead", this::checkGameOver);

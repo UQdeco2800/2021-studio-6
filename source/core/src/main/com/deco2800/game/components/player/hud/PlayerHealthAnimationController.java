@@ -1,6 +1,7 @@
 package com.deco2800.game.components.player.hud;
 
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.PlayerInterfaceDisplay;
 import com.deco2800.game.rendering.IndependentAnimator;
 
@@ -26,7 +27,12 @@ public class PlayerHealthAnimationController  extends Component{
       healthAnimator = statsDisplayHealth.getHealthAnimator();
       entity.getEvents().addListener("health", this::changeHealthAnimation);
       entity.getEvents().addListener("dispose", this::disposeAnimation);
-      healthAnimator.startAnimation("health1");
+      PlayerCombatStatsComponent stats = this.getEntity().getComponent(PlayerCombatStatsComponent.class);
+      if (stats != null) {
+        changeHealthAnimation(stats.getindex());
+      } else {
+        healthAnimator.startAnimation("health1");
+      }
     }
 
   /**

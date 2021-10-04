@@ -26,24 +26,38 @@ public class Renderer implements Disposable {
   private Stage stage;
   private RenderService renderService;
   private DebugRenderer debugRenderer;
+  private boolean lighting;
 
   /**
-   * Create a new renderer with default settings
+   * Create a new renderer with default settings. Can create two separate renderers,
+   * one for lit assets and one for unlit assets, depending on the boolean lighting.
+   *
    * @param camera camera to render to
+   * @param lighting Boolean for whether this renderer deals with lighting (true) or not
+   * @param existingStage A given stage if a stage already exists in the environment
    */
-  public Renderer(CameraComponent camera) {
+  public Renderer(CameraComponent camera, boolean lighting, Stage existingStage) {
     SpriteBatch spriteBatch = new SpriteBatch();
     DebugRenderer debugRenderer = new DebugRenderer();
     debugRenderer.setActive(true);
-
-
-    init(
-        camera,
-        GAME_SCREEN_WIDTH,
-        spriteBatch,
-        new Stage(new ScreenViewport(), spriteBatch),
-        ServiceLocator.getRenderService(),
-        debugRenderer);
+    this.lighting = lighting;
+    if (lighting) {
+      init(
+          camera,
+          GAME_SCREEN_WIDTH,
+          spriteBatch,
+          new Stage(new ScreenViewport(), spriteBatch),
+          ServiceLocator.getRenderService(),
+          debugRenderer);
+    } else {
+      init(
+          camera,
+          GAME_SCREEN_WIDTH,
+          spriteBatch,
+          existingStage,
+          ServiceLocator.getRenderUnlitService(),
+          debugRenderer);
+    }
   }
 
   /**
@@ -87,22 +101,27 @@ public class Renderer implements Disposable {
     resizeCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
   }
 
+  /**
+   * Gets the camera specified for this renderer
+   * @return The camera attached to this renderer
+   */
   public CameraComponent getCamera() {
     return camera;
   }
 
-  /** Render everything to the render service. */
+  /** Render everything to the render service. Has a different render procedure
+   * depending on whether it is for lit or unlit assets.
+   */
   public void render() {
     Matrix4 projMatrix = camera.getProjectionMatrix();
     batch.setProjectionMatrix(projMatrix);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+    if (this.lighting) {
+      Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
     batch.begin();
     renderService.render(batch);
     batch.end();
     debugRenderer.render(projMatrix);
-
-
   }
 
   public void setZoom(int zoom) {

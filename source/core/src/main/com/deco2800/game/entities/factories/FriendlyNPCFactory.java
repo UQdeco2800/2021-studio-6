@@ -5,17 +5,21 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
+import com.deco2800.game.components.ItemComponent;
 import com.deco2800.game.components.npc.FriendlyNPCTriggerComponent;
 import com.deco2800.game.components.npc.FriendlyNPCAnimationController;
 import com.deco2800.game.components.npc.SpeechIconComponent;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.items.Items;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 public class FriendlyNPCFactory {
@@ -69,5 +73,24 @@ public class FriendlyNPCFactory {
         npc.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
 
         return npc;
+    }
+
+
+    /**
+     * Used to create shop keeper NPC in safehouse
+     *
+     * @return entity shopkeeper with all necessary components to trigger
+     * popup box shop
+     */
+    public static Entity createShopkeeperNPC() {
+        Entity shopkeeperNPC = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.SHOP, 1))
+            .addComponent(new TextureRenderComponent("images/safehouse/shopkeeper/shopkeeperSprite.png"));
+        shopkeeperNPC.getComponent(ColliderComponent.class).setAsBox(new Vector2(3, 3));
+
+        shopkeeperNPC.setScale(new Vector2(1.5f, 1.5f));
+        return shopkeeperNPC;
     }
 }

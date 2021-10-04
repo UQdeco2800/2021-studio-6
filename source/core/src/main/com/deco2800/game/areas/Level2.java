@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_BULLETS = 5;
+  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final float WALL_WIDTH = 0.1f;
   private static final String npcDeadAtlasFilename = "images/npc_movement/dead_npc.atlas";
@@ -37,6 +38,10 @@ public class Level2 extends GameArea {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+      "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
+      "images/playeritems/axe/axe.png",
+      "images/playeritems/firecracker/firecracker.png",
     "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
     "images/playeritems/axe/axe_right2.png",
     "images/playeritems/firecracker/firecracker.png",
@@ -87,12 +92,24 @@ public class Level2 extends GameArea {
     "images/hud/health.atlas",
     "images/weapon/sword.atlas",
     "images/weapon/axe.atlas",
+    "images/weapon/sledge.atlas",
+    "images/weapon/machete.atlas",
+    "images/weapon/baseball.atlas",
+    "images/playeritems/tourch/torch.atlas",
     "images/weapon/dagger.atlas",
+    "images/Player_Sprite/player_movement.atlas",
+    "images/hud/dashbar.atlas",
+    "images/hud/health.atlas",
     npcDeadAtlasFilename
   };
 
   // Music and sound variables
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+  private static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -643,6 +660,7 @@ public class Level2 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
+    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -660,6 +678,7 @@ public class Level2 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
+    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(forestMusic);
   }
 

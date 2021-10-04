@@ -116,8 +116,8 @@ public class TerrainFactory {
       // Safehouse tiles
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
-                        .getAsset("images/safehouse/interior-day1-tile-ground1-latest.png", Texture.class));
-        return createSafehouseTerrain(1f, orthoGround);
+                        .getAsset("images/safehouse/safehouse-interior-layout.png", Texture.class));
+        return createSafehouseTerrain(0.75f, orthoGround);
 
       case BOSS:
         TextureRegion grassB =
@@ -211,7 +211,8 @@ public class TerrainFactory {
   private TerrainComponent createSafehouseTerrain(
           float tileWorldSize, TextureRegion ground
   ) {
-    GridPoint2 tilePixelSize = new GridPoint2(ground.getRegionWidth(), ground.getRegionHeight());
+    GridPoint2 tilePixelSize = new GridPoint2(ground.getRegionWidth() / 16, ground.getRegionHeight() / 9);
+    System.out.println(tilePixelSize);
     TiledMap tiledMap = createSafehouseTiles(tilePixelSize, ground);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
@@ -418,7 +419,10 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_SAFEHOUSE.x, MAP_SIZE_SAFEHOUSE.y, tileSize.x, tileSize.y);
 
     // Create base ground
-    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
+//    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
+    Cell cell = new Cell();
+    cell.setTile(groundTile);
+    layer.setCell(0, 0, cell);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

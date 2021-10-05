@@ -77,7 +77,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float MAX_BOX_HEIGHT = 450;
     private static final float SMALL_PAD_TOP = 5;
     private static final float PAD_TOP = 10;
-    private static final float PAD_LEFT = 10;
+    private static final float PAD_LEFT = 40;
     private static final float EXTRA_PAD_TOP = 30;
     private static final float EXTRA_LARGE_PAD_TOP = 120;
     private static final float EXTRA_PAD_BOTTOM = 30;

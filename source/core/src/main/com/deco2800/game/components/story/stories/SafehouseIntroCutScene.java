@@ -6,16 +6,21 @@ public class SafehouseIntroCutScene extends CutSceneConfig {
 
     public static final String[] DIALOGUE_RAW =
             {
-                    //Screen 0
-                    "Oh a safehouse"
+                //Screen 0
+                "I've made it to the first firefly safehouse... Looks like there is someone inside.",
+                "Maybe they'll have some stuff to sell.",
+                "I'm desperate for some new gear, it's the only way I'm gonna survive...",
+                "I'll stay here and rest for a bit before I head out again."
             };
     public static final String[] IMAGES_RAW =
             {
-                    //Screen 0
-                    "images/cutscenes/safehouse-scene.png"
+                //Screen 0
+                "images/cutscenes/safehouse-scene.png",
+                "images/cutscenes/safehouse-scene.png",
+                "images/cutscenes/safehouse-scene.png",
+                "images/cutscenes/safehouse-scene.png",
             };
     public static final String MUSIC_RAW = "sounds/title-screen-music.mp3";
-    private static final int LENGTH = 1;
 
     public SafehouseIntroCutScene() {
         dialogueText = DIALOGUE_RAW;
@@ -30,6 +35,6 @@ public class SafehouseIntroCutScene extends CutSceneConfig {
      */
     @Override
     public int getLength() {
-        return LENGTH;
+        return DIALOGUE_RAW.length;
     }
 }

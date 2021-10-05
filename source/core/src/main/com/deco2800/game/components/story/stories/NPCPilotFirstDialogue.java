@@ -4,17 +4,16 @@ import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCPilotFirstDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
-        "Hey kid",
-        "You are going to be a firefly too?",
-        "If you get yourself hurt, you can use '1' to heal.",
-        "Small scratches will heal itself after a few seconds.",
-        "But it's best to not get hurt in the first place, so don't let those crawlers get you.",
-        "Most importantly-",
-        "always watch your back. *wink*",
-        "I hope to see you out there rookie."
+        "Hey kid!",
+        "Looks like we are the only two Fireflies today...",
+        "I guess people are too scared... you know, with the whole \"no people ever coming back\" thing.",
+        "I say screw it! Better to have a quick death out here than die slowly in that prison of a city, am I right?",
+        "* He looks down the road into the darkness ahead. The faint sounds of growling are heard in the distance. *",
+        "Look, don't get close to them. Throw rocks at a distance by pressing ENTER.",
+        "Also if one of them takes a bite out of you, then don't forget to heal up by pressing the number 1 key.",
+        "Good luck, hopefully I will see you at the next safehouse!"
     };
     protected static final String[] PORTRAIT = {"npc-pilot-portrait"};
-    private static final int LENGTH = 8;
 
     public NPCPilotFirstDialogue(){
         dialogueText = QUOTE;
@@ -28,6 +27,6 @@ public class NPCPilotFirstDialogue extends BasicDialogueConfig {
      */
     @Override
     public int getLength() {
-        return LENGTH;
+        return QUOTE.length;
     }
 }

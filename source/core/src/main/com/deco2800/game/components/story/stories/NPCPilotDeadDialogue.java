@@ -4,10 +4,11 @@ import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCPilotDeadDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
-        "Dead person"
+        "Guess I'm on my own again...",
+        "Didn't even ask what his name was...",
+        "Rest in peace Firefly."
     };
     protected static final String[] PORTRAIT = null;
-    private static final int LENGTH = 1;
 
     public NPCPilotDeadDialogue(){
         dialogueText = QUOTE;
@@ -21,6 +22,6 @@ public class NPCPilotDeadDialogue extends BasicDialogueConfig {
      */
     @Override
     public int getLength() {
-        return LENGTH;
+        return QUOTE.length;
     }
 }

@@ -1,0 +1,34 @@
+
+old_npc_preview.png
+size: 4096, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+back1
+  rotate: false
+  xy: 1736, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front1
+  rotate: false
+  xy: 1158, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left1
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right1
+  rotate: false
+  xy: 580, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1

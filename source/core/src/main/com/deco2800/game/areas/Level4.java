@@ -30,7 +30,7 @@ public class Level4 extends GameArea {
     private static final int NUM_LARGE_ENEMY = 0;
     private static final int NUM_GHOSTS = 0;
     private static final int NUM_LONGRANGE = 0;
-    private static final int NUM_BULLETS = 5;
+    private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
     private static final int NUM_SPAWNER_ENEMY = 0;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(30, 10);
     private static final float WALL_WIDTH = 0.1f;
@@ -81,10 +81,14 @@ public class Level4 extends GameArea {
             "images/Player_Animations/player_movement.atlas",
             "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
             "images/Player_Sprite/player_movement.atlas",
+            "images/playeritems/tourch/torch.atlas",
             "images/hud/dashbar.atlas",
             "images/hud/health.atlas",
             "images/weapon/sword.atlas",
             "images/weapon/axe.atlas",
+            "images/weapon/sledge.atlas",
+            "images/weapon/machete.atlas",
+            "images/weapon/baseball.atlas",
             "images/weapon/dagger.atlas"  };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";

@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
   private MovementTask movementTask;
   private WaitTask waitTask;
   private Task currentTask;
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
 
   /**
    * @param wanderRange Distance in X and Y the entity can move from its position when start() is
@@ -55,7 +58,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
-    if (currentTask.getStatus() != Status.ACTIVE) {
+    if (currentTask.getStatus() != Status.ACTIVE && !timeSource.isPaused()) {
       if (currentTask == movementTask) {
         startWaiting();
       } else {

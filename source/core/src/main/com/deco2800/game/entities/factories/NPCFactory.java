@@ -8,6 +8,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.*;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.ItemComponent;
 import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
@@ -20,6 +21,7 @@ import com.deco2800.game.entities.configs.LargeEnemyConfig;
 import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.items.Items;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -209,8 +211,6 @@ public class NPCFactory {
     return toughLongRangeEnemy;
   }
 
-
-
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    * @param target the target entity to attack
@@ -233,9 +233,6 @@ public class NPCFactory {
     //PhysicsUtils.setScaledCollider(npc, 0.8f, 0.3f);
     return npc;
   }
-
-
-
 
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");

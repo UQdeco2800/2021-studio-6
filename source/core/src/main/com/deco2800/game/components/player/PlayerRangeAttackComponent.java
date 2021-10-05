@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
@@ -44,6 +45,15 @@ public class PlayerRangeAttackComponent extends Component {
         if (activeBullets != null) {
             activeBullets.add(bulletShot);
         }
+    }
+
+    /**
+     * Sets bullet magazine count of player
+     *
+     * @param bullet number that will be used to set bullet count in magazine of player
+     */
+    public void setBulletMagazine(int bullet) {
+        magazineCapacity = bullet;
     }
 
     /**
@@ -87,11 +97,35 @@ public class PlayerRangeAttackComponent extends Component {
     public Vector2 scaleVector(Vector2 playerCoord) {
         float xPosPlayer = playerCoord.x;
         float yPosPlayer = playerCoord.y;
+        setDirection(playerCoord);
         Vector2 scaledVector = new Vector2();
+        KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
+        if (key != null) {
+            Directions direct = key.getDirection();
+            switch (direct) {
+                case MOVE_UP:
+                    scaledVector = new Vector2(xPosPlayer, MAX_COORDINATE);
+                    longAttackDir = Vector2Utils.UP;
+                    break;
+                case MOVE_DOWN:
+                    scaledVector = new Vector2(xPosPlayer, -MAX_COORDINATE);
+                    longAttackDir = Vector2Utils.DOWN;
+                    break;
+                case MOVE_LEFT:
+                    scaledVector = new Vector2(-MAX_COORDINATE,yPosPlayer);
+                    longAttackDir = Vector2Utils.LEFT;
+                    break;
+                case MOVE_RIGHT:
+                    scaledVector = new Vector2(MAX_COORDINATE,yPosPlayer);
+                    longAttackDir = Vector2Utils.RIGHT;
+                    break;
+            }
+        }
+        return scaledVector.cpy();
 
-        // player has not moved before
-        if (longAttackDir.isZero()) {
-            scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
+        /* player has not moved before
+       // if (longAttackDir.isZero()) {
+       /     scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
 
         // player has moved before
         } else if (longAttackDir.epsilonEquals(Vector2Utils.RIGHT)) {
@@ -110,7 +144,7 @@ public class PlayerRangeAttackComponent extends Component {
             scaledVector = new Vector2(xPosPlayer, -MAX_COORDINATE);
             longAttackDir = Vector2Utils.DOWN;
         }
-        return scaledVector.cpy();
+        */
     }
 
     /**
@@ -125,7 +159,7 @@ public class PlayerRangeAttackComponent extends Component {
     /**
      * Get direction player is currently facing
      *
-     * @return direction playerr is currently facing
+     * @return direction player is currently facing
      */
     public Vector2 getDirection() {
         return longAttackDir.cpy();
@@ -134,31 +168,29 @@ public class PlayerRangeAttackComponent extends Component {
     /**
      * Fires bullet projectile in a straight line based on the moving direction of player
      *
-     * @param movingAttackDir would be vectors used to deploy projectiles in a direction (would only
-     *                        be either north, south, east or west for now)
      */
-    public void fire(Vector2 movingAttackDir) {
+    public void fire() {
         Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
-
+      //  Vector2 directon =
         // when player attacks, (0,0) vector is sent over, only directional information is important now
-        if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
-            setDirection(movingAttackDir);
-        }
+      //  if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
+        //    setDirection(movingAttackDir);
+      //  }
 
         // check if there are bullets left to shoot in magazine currently and if player is currently reloading
         if (this.magazineCapacity != 0 && !getReloadingStatus()) {
             // player has not moved before, use default direction attack (to the right)
-            if (getDirection().isZero()) {
-                bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
-                bulletTargetPos.y = playerPos.y;
-            } else {
+           // if (getDirection().isZero()) {
+          // //     bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
+           //     bulletTargetPos.y = playerPos.y;
+          //  } else {
                 // player has moved before, last button clicked to move as direction
                 bulletTargetPos = scaleVector(playerPos);
-            }
+          //  }
 
             // bullet shot
-            if (movingAttackDir.isZero() && activeBullets != null) {
+            if (activeBullets != null) {
                 Entity firedBullet = activeBullets.get(0);
                 activeBullets.removeIndex(0);
                 firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);

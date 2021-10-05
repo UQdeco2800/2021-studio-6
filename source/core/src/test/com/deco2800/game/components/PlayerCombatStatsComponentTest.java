@@ -4,15 +4,24 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.events.listeners.EventListener0;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class PlayerCombatStatsComponentTest {
+    @Mock
+    ResourceService resourceService;
+    @BeforeEach
+    void beforeEach() {
+        ServiceLocator.registerResourceService(resourceService);
+    }
 
     @Test
     void shouldSetGetWoundState() {

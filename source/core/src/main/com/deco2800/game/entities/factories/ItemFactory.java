@@ -92,7 +92,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.SWORD, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/sword/sword1.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/sword/sword.png"))
                 .addComponent(new DisposingComponent());
         return sword;
     }
@@ -108,7 +108,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.DAGGER, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/dagger.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/dagger/dagger.png"))
                 .addComponent(new DisposingComponent());
         return dagger;
     }
@@ -124,8 +124,58 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AXE, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/axe/ax_right2.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/axe/axe.png"))
                 .addComponent(new DisposingComponent());
         return axe;
+    }
+
+
+
+    /**
+     * Sword is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of sword quantity
+     * @return sword pickup for player to use in game
+     */
+    public static Entity createMachete(int itemQuantity) {
+        Entity machete = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.MACHETE, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/machete/machete.png"))
+            .addComponent(new DisposingComponent());
+        return machete;
+    }
+
+    /**
+     * Dagger is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of dagger quantity
+     * @return dagger pickup for player to use in game
+     */
+    public static Entity createSledge(int itemQuantity) {
+        Entity sledge = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.SLEDGE, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/sledge/sledge.png"))
+            .addComponent(new DisposingComponent());
+        return sledge;
+    }
+
+    /**
+     * Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing
+     *
+     * @param itemQuantity the number of helmet quantity
+     * @return helmet pickup for player to use in game
+     */
+    public static Entity createBat(int itemQuantity) {
+        Entity baseball = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemComponent(Items.BAT, itemQuantity))
+            .addComponent(new TextureRenderComponent("images/playeritems/bat/baseball.png"))
+            .addComponent(new DisposingComponent());
+        return baseball;
     }
 }

@@ -9,6 +9,8 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.player.PlayerRangeAOEComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -23,22 +25,23 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level3 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level3.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_COBWEBS = 7;
-  private static final int NUM_BUSH = 7;
-  private static final int NUM_LARGE_ENEMY = 2;
-  private static final int NUM_GHOSTS = 2;
-  private static final int NUM_LONGRANGE = 2;
-  private static final int NUM_BULLETS = 5;
-  private static final int NUM_SPAWNER_ENEMY = 2;
+  private static final int NUM_TREES = 0;
+  private static final int NUM_COBWEBS = 0;//change these back
+  private static final int NUM_BUSH = 0;
+  private static final int NUM_LARGE_ENEMY = 0;
+  private static final int NUM_GHOSTS = 0;
+  private static final int NUM_LONGRANGE = 0;
+  private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
+  private static final int NUM_SPAWNER_ENEMY = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
     "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-      "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
-      "images/playeritems/ax/ax_right2.png",
+      "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
+      "images/playeritems/axe/axe.png",
       "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
@@ -73,15 +76,25 @@ public class Level3 extends GameArea {
     "images/ghost.atlas",
     "images/ghostKing.atlas",
     "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-      "images/Player_Animations/player_movement.atlas",
+    "images/Player_Animations/player_movement.atlas",
     "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-      "images/Player_Sprite/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/sword.atlas",
-      "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas"  };
+    "images/Player_Sprite/player_movement.atlas",
+    "images/hud/dashbar.atlas",
+    "images/hud/health.atlas",
+    "images/weapon/sword.atlas",
+    "images/weapon/axe.atlas",
+    "images/weapon/sledge.atlas",
+    "images/playeritems/tourch/torch.atlas",
+    "images/weapon/machete.atlas",
+    "images/weapon/baseball.atlas",
+    "images/weapon/dagger.atlas"
+  };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+  private static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
   private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
   private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
 
@@ -107,15 +120,19 @@ public class Level3 extends GameArea {
     spawnBomb();
     spawnCobweb();
     spawnBush();
-    playMusic();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnBullet();
     spawnSpawnerEnemy();
 
+    spawnLevelThreeIntro();
+
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
-    playMusic();
+
+    // Listener for level 3 intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -307,6 +324,11 @@ public class Level3 extends GameArea {
     }
   }
 
+  private void spawnLevelThreeIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.LEVEL3_INTRO);
+    StoryManager.getInstance().displayStory();
+  }
+
   private void playMusic() {
     Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     gameOverSong.setLooping(true);
@@ -320,6 +342,7 @@ public class Level3 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
+    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(LEVEL3_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
@@ -334,6 +357,7 @@ public class Level3 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
+    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(LEVEL3_MUSIC);
   }
 

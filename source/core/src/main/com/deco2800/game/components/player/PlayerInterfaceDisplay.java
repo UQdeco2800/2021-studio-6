@@ -13,6 +13,8 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +24,13 @@ import java.util.List;
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerInterfaceDisplay extends UIComponent {
+  private static final Logger logger = LoggerFactory.getLogger(PlayerInterfaceDisplay.class);
   Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload, tableTemp;
   private Image healthBar;
   private IndependentAnimator dashAnimator;
   private IndependentAnimator healthAnimator;
   private ArrayList<Image> bulletImages = new ArrayList<>();
+  private final int MAGAZINE_FULL_COUNT = 5;
 
   private Image bandageImage, ammoImage, coinImage, bulletImage1, bulletImage2, bulletImage3, bulletImage4,
           bulletImage5;
@@ -40,7 +44,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     healthAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/health.atlas", TextureAtlas.class));
+                .getAsset("images/hud/health.atlas", TextureAtlas.class), false);
     healthAnimator.setCamera(true);
     healthAnimator.setPositions(9, (float) 4);
     healthAnimator.setScale( 3, 1);
@@ -61,7 +65,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     dashAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class));
+                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), false);
     dashAnimator.addAnimation("dashbar", 1.2f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
@@ -79,6 +83,9 @@ public class PlayerInterfaceDisplay extends UIComponent {
     entity.getEvents().addListener("hideReloadingStatus", this::hideReloadingStatus);
     addActors();
     setAnimations();
+
+    int bulletCount = entity.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
+    updateBulletImageHUD(bulletCount);
   }
 
   public void setAnimations() {
@@ -137,12 +144,12 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
     CharSequence bandageText = String.format("x %d", bandages);
     CharSequence ammoText = String.format(" x %d", ammo);
-    CharSequence cointText = String.format(" x %d", coins);
+    CharSequence coinText = String.format(" x %d", coins);
     CharSequence reloadText = "No ammo! Press R to reload!";
 
     bandageLabel = new Label(bandageText, skin, "large");
     ammoLabel = new Label(ammoText, skin, "large");
-    coinLabel = new Label(cointText, skin, "large");
+    coinLabel = new Label(coinText, skin, "large");
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
@@ -207,6 +214,17 @@ public class PlayerInterfaceDisplay extends UIComponent {
   }
 
   /**
+   * Updates images of bullet left in magazine on player's HUD
+   * @param bulletCount used to display number of bullets left on player's magazine's HUD
+   */
+  public void updateBulletImageHUD(int bulletCount) {
+    // for when bullets are shot
+    for (int i = MAGAZINE_FULL_COUNT - 1; i >= bulletCount; i--) {
+      bulletImages.get(i).setVisible(false);
+    }
+  }
+
+  /**
    * Displays text that tells user that it is time to reload weapon
    */
   private void displayGunMagEmpty() {
@@ -243,7 +261,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param bandages number left in player's inventory
    */
   public void updatePlayerBandageUI(int bandages) {
-    CharSequence text = String.format(": %d", bandages);
+    CharSequence text = String.format(" x %d", bandages);
     bandageLabel.setText(text);
   }
 
@@ -252,7 +270,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param ammo number left in player's inventory
    */
   public void updatePlayerAmmoUI(int ammo) {
-    CharSequence text = String.format(" : %d", ammo);
+    CharSequence text = String.format(" x %d", ammo);
     ammoLabel.setText(text);
   }
 
@@ -261,7 +279,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param coin number left in player's inventory
    */
   public void updatePlayerCoinUI(int coin) {
-    CharSequence text = String.format(" : %d", coin);
+    CharSequence text = String.format(" x %d", coin);
     coinLabel.setText(text);
   }
 

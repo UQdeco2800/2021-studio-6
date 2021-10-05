@@ -1,0 +1,17 @@
+{
+  "woundState": 3,
+  "baseAttack": 10,
+  "baseRangedAttack": 5,
+  "defenceLevel": 0,
+  "gold": 100,
+  "ammo": 10,
+  "bulletMagazine": 5,
+  "favouriteColour": "peach",
+  "health" : 3,
+  "bandages": 3,
+  "ability": "LONG_DASH",
+  "meleeWeaponType": "SWORD",
+  "armorType": "NONE",
+  "meleeFilePath": "configs/Sword.json",
+  "currentGameLevel": 1
+}

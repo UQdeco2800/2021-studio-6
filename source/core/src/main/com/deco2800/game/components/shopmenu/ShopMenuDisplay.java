@@ -34,35 +34,35 @@ import java.util.List;
  * an item, weapon, armor and etc.
  */
 public class ShopMenuDisplay extends UIComponent {
-    private static final String BACKGROUND_FILE_PATH = "images/safehouse/shopScreenTemp.png";
+    private static final String BACKGROUND_FILE_PATH = "images/safehouse/shopScreenTempSelections.png";
     private static final String SHOP_KEEPER_IMAGE_FILE_PATH = "images/safehouse/shopkeeper/portrait.png";
     private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/front01.png";
-    private static final String SWORD_UP_IMAGE_FILE_PATH = "images/playeritems/sword/sword.png";
-    private static final String SWORD_DOWN_IMAGE_FILE_PATH = "images/playeritems/sword/sword3.png";
-    private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/playeritems/dagger/dagger.png";
-    private static final String DAGGER_DOWN_IMAGE_FILE_PATH = "images/playeritems/dagger/dagger.png";
-    private static final String AXE_UP_IMAGE_FILE_PATH = "images/playeritems/axe/axe.png";
-    private static final String AXE_DOWN_IMAGE_FILE_PATH = "images/playeritems/axe/axe_right4.png";
-    private static final String ARMOR_UP_IMAGE_FILE_PATH = "images/playeritems/armour.png";
-    private static final String ARMOR_DOWN_IMAGE_FILE_PATH = "images/playeritems/armour.png";
-    private static final String HELMET_UP_IMAGE_FILE_PATH = "images/playeritems/halmet.png";
-    private static final String HELMET_DOWN_IMAGE_FILE_PATH = "images/playeritems/halmet.png";
-    private static final String TORCH_UP_IMAGE_FILE_PATH = "images/playeritems/tourch/tourch.png";
-    private static final String TORCH_DOWN_IMAGE_FILE_PATH = "images/playeritems/tourch/tourch.png";
-    private static final String DASH_UP_IMAGE_FILE_PATH = "images/Ability_Sprites/dash.png";
-    private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/Ability_Sprites/dash.png";
-    private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/Ability_Sprites/invincibility.png";
-    private static final String INVINCIBLE_DOWN_IMAGE_FILE_PATH = "images/Ability_Sprites/invincibility.png";
+    private static final String CROWBAR_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbarSelected.png";
+    private static final String CROWBAR_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbar.png";
+    private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDaggerSelected.png";
+    private static final String DAGGER_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDagger.png";
+    private static final String AXE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopAxeSelected.png";
+    private static final String AXE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopAxe.png";
+    private static final String ARMOR_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopArmourSelected.png";
+    private static final String ARMOR_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopArmour.png";
+    private static final String HELMET_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopHelmetSelected.png";
+    private static final String HELMET_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopHelmet.png";
+    private static final String TORCH_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopTorchSelected.png";
+    private static final String TORCH_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopTorch.png";
+    private static final String DASH_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDashSelected.png";
+    private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDash.png";
+    private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopInvincibilitySelected.png";
+    private static final String INVINCIBLE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopInvincibility.png";
     private static final String GRENADE_UP_IMAGE_FILE_PATH = "images/playeritems/firecracker/firecracker8.png";
     private static final String GRENADE_DOWN_IMAGE_FILE_PATH = "images/playeritems/firecracker/firecracker7.png";
-    private static final String BANDAGE_UP_IMAGE_FILE_PATH = "images/playeritems/bandage/bandage01.png";
-    private static final String BANDAGE_DOWN_IMAGE_FILE_PATH = "images/playeritems/bandage/bandage02.png";
-    private static final String MACHETE_UP_IMAGE_FILE_PATH = "images/playeritems/machete/machete.png";
-    private static final String MACHETE_DOWN_IMAGE_FILE_PATH = "images/playeritems/machete/machete.png";
-    private static final String BASEBALL_UP_IMAGE_FILE_PATH = "images/playeritems/bat/baseball.png";
-    private static final String BASEBALL_DOWN_IMAGE_FILE_PATH = "images/playeritems/bat/baseball.png";
-    private static final String SLEDGE_UP_IMAGE_FILE_PATH = "images/playeritems/sledge/sledge.png";
-    private static final String SLEDGE_DOWN_IMAGE_FILE_PATH = "images/playeritems/sledge/sledge.png";
+    private static final String BANDAGE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBandageSelected.png";
+    private static final String BANDAGE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBandage.png";
+    private static final String MACHETE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopMacheteSelected.png";
+    private static final String MACHETE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopMachete.png";
+    private static final String BASEBALL_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBatSelected.png";
+    private static final String BASEBALL_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBat.png";
+    private static final String SLEDGE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopHammerSelected.png";
+    private static final String SLEDGE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopHammer.png";
     private static final String MENU_BUTTON_STYLE = "menu-button-large";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
     private final GdxGame game;
@@ -98,7 +98,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int EQUIPPED_INDEX = 1;
     public static final int ADD_BANDAGE = 1;
     private static final int PURCHASED_INDEX = 2;
-    private ImageButton swordImageButton, daggerImageButton, axeImageButton, armorImageButton,
+    private ImageButton crowbarImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton,
             macheteImageButton, baseballImageButton, sledgeImageButton;
     private final ArrayList<ImageButton> imageButtons = new ArrayList<>();
@@ -224,36 +224,37 @@ public class ShopMenuDisplay extends UIComponent {
     private void addItemButtonImagesToTable() {
         Table itemsLabelImages = new Table();
 
-        // by default - sword will be pre-selected first
-        CharSequence titleText = "SWORD";
-        itemName = "SWORD";
+        // by default - crowbar will be pre-selected first
+        CharSequence titleText = "BASEBALL";
+        itemName = "BAT";
         typeOfItem = Items.MELEE_WEAPONS;
         itemSelectedTitleLabel = new Label(titleText, skin, "white");
-        // for weapon label selected - default is sword. For now
+        // for weapon label selected - default is baseball
         itemsLabelImages.row();
         itemSelectedTitleLabel.setAlignment(Align.center);
         itemsLabelImages.add(itemSelectedTitleLabel).colspan(SEC_COL_NUM_TAKEN).height(COMMON_LABEL_HEIGHT).width(250);
 
-        // first row for weapon image buttons
-        itemsLabelImages.row();
-        Drawable swordUp = createImagesForButtons(SWORD_UP_IMAGE_FILE_PATH);
-        Drawable swordDown = createImagesForButtons(SWORD_DOWN_IMAGE_FILE_PATH);
-        swordImageButton = new ImageButton(swordUp, swordDown, swordDown);
-        MenuUtility.addButtonSelectListener(entity, swordImageButton, "updateItemDescription",
-                "configs/ShopSwordInfo.json", Items.MELEE_WEAPONS);
-        itemsLabelImages.add(swordImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        // indicate that this button is by default - clicked
-        swordImageButton.setChecked(true);
-        swordImageButton.setDisabled(true);
-        storeButtonClicked = swordImageButton;
-
+        // first row
+        // machete, crowbar and sledge
+        itemsLabelImages.row().padTop(PAD_TOP);
         Drawable daggerUp = createImagesForButtons(DAGGER_UP_IMAGE_FILE_PATH);
         Drawable daggerDown = createImagesForButtons(DAGGER_DOWN_IMAGE_FILE_PATH);
         daggerImageButton = new ImageButton(daggerUp, daggerDown, daggerDown);
         MenuUtility.addButtonSelectListener(entity, daggerImageButton, "updateItemDescription",
                 "configs/ShopDaggerInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(daggerImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        Drawable baseballUp = createImagesForButtons(BASEBALL_UP_IMAGE_FILE_PATH);
+        Drawable baseballDown = createImagesForButtons(BASEBALL_DOWN_IMAGE_FILE_PATH);
+        baseballImageButton = new ImageButton(baseballUp, baseballDown, baseballDown);
+        MenuUtility.addButtonSelectListener(entity, baseballImageButton, "updateItemDescription",
+                "configs/ShopBaseballInfo.json", Items.MELEE_WEAPONS);
+        itemsLabelImages.add(baseballImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        // indicate that this button is by default - clicked
+        baseballImageButton.setChecked(true);
+        baseballImageButton.setDisabled(true);
+        storeButtonClicked = baseballImageButton;
 
         Drawable axeUp = createImagesForButtons(AXE_UP_IMAGE_FILE_PATH);
         Drawable axeDown = createImagesForButtons(AXE_DOWN_IMAGE_FILE_PATH);
@@ -262,16 +263,33 @@ public class ShopMenuDisplay extends UIComponent {
                 "configs/ShopAxeInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(axeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
-        // second row for weapon image buttons
-        // armors, helmets and torches have same images for now - #TODO: change images to have borders or orientation
-        itemsLabelImages.row();
-        Drawable armorUp = createImagesForButtons(ARMOR_UP_IMAGE_FILE_PATH);
-        Drawable armorDown = createImagesForButtons(ARMOR_DOWN_IMAGE_FILE_PATH);
-        armorImageButton = new ImageButton(armorUp, armorDown, armorDown);
-        MenuUtility.addButtonSelectListener(entity, armorImageButton, "updateItemDescription",
-                "configs/ShopArmourInfo.json", Items.SHIELDS);
-        itemsLabelImages.add(armorImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+        // second row
+        // machete, crowbar and sledge
+        itemsLabelImages.row().padTop(PAD_TOP);
+        Drawable macheteUp = createImagesForButtons(MACHETE_UP_IMAGE_FILE_PATH);
+        Drawable macheteDown = createImagesForButtons(MACHETE_DOWN_IMAGE_FILE_PATH);
+        macheteImageButton = new ImageButton(macheteUp, macheteDown, macheteDown);
+        MenuUtility.addButtonSelectListener(entity, macheteImageButton, "updateItemDescription",
+                "configs/ShopMacheteInfo.json", Items.MELEE_WEAPONS);
+        itemsLabelImages.add(macheteImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
+        Drawable crowbarUp = createImagesForButtons(CROWBAR_UP_IMAGE_FILE_PATH);
+        Drawable crowbarDown = createImagesForButtons(CROWBAR_DOWN_IMAGE_FILE_PATH);
+        crowbarImageButton = new ImageButton(crowbarUp, crowbarDown, crowbarDown);
+        MenuUtility.addButtonSelectListener(entity, crowbarImageButton, "updateItemDescription",
+                "configs/ShopCrowbarInfo.json", Items.MELEE_WEAPONS);
+        itemsLabelImages.add(crowbarImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        Drawable sledgeUp = createImagesForButtons(SLEDGE_UP_IMAGE_FILE_PATH);
+        Drawable sledgeDown = createImagesForButtons(SLEDGE_DOWN_IMAGE_FILE_PATH);
+        sledgeImageButton = new ImageButton(sledgeUp, sledgeDown, sledgeDown);
+        MenuUtility.addButtonSelectListener(entity, sledgeImageButton, "updateItemDescription",
+                "configs/ShopSledgeInfo.json", Items.MELEE_WEAPONS);
+        itemsLabelImages.add(sledgeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        // third row
+        // helmet, torch and dash ability
+        itemsLabelImages.row().padTop(PAD_TOP);;
         Drawable helmetUp = createImagesForButtons(HELMET_UP_IMAGE_FILE_PATH);
         Drawable helmetDown = createImagesForButtons(HELMET_DOWN_IMAGE_FILE_PATH);
         helmetImageButton = new ImageButton(helmetUp, helmetDown, helmetDown);
@@ -286,15 +304,22 @@ public class ShopMenuDisplay extends UIComponent {
                 "configs/ShopTorchInfo.json", Items.OTHERS);
         itemsLabelImages.add(torchImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
-        // third row for weapon image buttons
-        // ammo, grenade and bandage have same images for now - #TODO: change images to have borders or orientation
-        itemsLabelImages.row();
         Drawable dashUp = createImagesForButtons(DASH_UP_IMAGE_FILE_PATH);
         Drawable dashDown = createImagesForButtons(DASH_DOWN_IMAGE_FILE_PATH);
         dashImageButton = new ImageButton(dashUp, dashDown, dashDown);
         MenuUtility.addButtonSelectListener(entity, dashImageButton, "updateItemDescription",
                 "configs/ShopLongDashAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(dashImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        // fourth row
+        // armor, bandage and invincibility
+        itemsLabelImages.row().padTop(PAD_TOP);;
+        Drawable armorUp = createImagesForButtons(ARMOR_UP_IMAGE_FILE_PATH);
+        Drawable armorDown = createImagesForButtons(ARMOR_DOWN_IMAGE_FILE_PATH);
+        armorImageButton = new ImageButton(armorUp, armorDown, armorDown);
+        MenuUtility.addButtonSelectListener(entity, armorImageButton, "updateItemDescription",
+                "configs/ShopArmourInfo.json", Items.SHIELDS);
+        itemsLabelImages.add(armorImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable bandageUp = createImagesForButtons(BANDAGE_UP_IMAGE_FILE_PATH);
         Drawable bandageDown = createImagesForButtons(BANDAGE_DOWN_IMAGE_FILE_PATH);
@@ -309,30 +334,6 @@ public class ShopMenuDisplay extends UIComponent {
         MenuUtility.addButtonSelectListener(entity, invincibleImageButton, "updateItemDescription",
                 "configs/ShopInvincibilityAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(invincibleImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        // forth row for weapon image buttons
-        // new weapons have same images for now - #TODO: change images to have borders or orientation
-        itemsLabelImages.row();
-        Drawable macheteUp = createImagesForButtons(MACHETE_UP_IMAGE_FILE_PATH);
-        Drawable macheteDown = createImagesForButtons(MACHETE_DOWN_IMAGE_FILE_PATH);
-        macheteImageButton = new ImageButton(macheteUp, macheteDown, macheteDown);
-        MenuUtility.addButtonSelectListener(entity, macheteImageButton, "updateItemDescription",
-                "configs/ShopMacheteInfo.json", Items.MELEE_WEAPONS);
-        itemsLabelImages.add(macheteImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        Drawable baseballUp = createImagesForButtons(BASEBALL_UP_IMAGE_FILE_PATH);
-        Drawable baseballDown = createImagesForButtons(BASEBALL_DOWN_IMAGE_FILE_PATH);
-        baseballImageButton = new ImageButton(baseballUp, baseballDown, baseballDown);
-        MenuUtility.addButtonSelectListener(entity, baseballImageButton, "updateItemDescription",
-                "configs/ShopBaseballInfo.json", Items.MELEE_WEAPONS);
-        itemsLabelImages.add(baseballImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        Drawable sledgeUp = createImagesForButtons(SLEDGE_UP_IMAGE_FILE_PATH);
-        Drawable sledgeDown = createImagesForButtons(SLEDGE_DOWN_IMAGE_FILE_PATH);
-        sledgeImageButton = new ImageButton(sledgeUp, sledgeDown, sledgeDown);
-        MenuUtility.addButtonSelectListener(entity, sledgeImageButton, "updateItemDescription",
-                "configs/ShopSledgeInfo.json", Items.MELEE_WEAPONS);
-        itemsLabelImages.add(sledgeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         container.add(itemsLabelImages).colspan(SEC_COL_NUM_TAKEN).top();
     }
@@ -435,8 +436,7 @@ public class ShopMenuDisplay extends UIComponent {
     private void addPlayerInfoAndBuyingButtonToTable() {
         Table playerInfoLabelsImages = new Table();
 
-        // image of player character - might want to have a png for player's face only with no black background
-        // #TODO: may want to have design of player character's face only similar to art reference
+        // image of player character
         playerInfoLabelsImages.row().colspan(FOURTH_COL_NUM_TAKEN).height(TABLE_BODY_HEIGHT);
         Image playerImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_IMAGE_FILE_PATH,
                 Texture.class));
@@ -626,7 +626,7 @@ public class ShopMenuDisplay extends UIComponent {
      * already clicked - and is clicked again - nothing will happen for performance sake.
      */
     private void uncheckImageButton() {
-        List<ImageButton> imageButtonList = Arrays.asList(swordImageButton, daggerImageButton, axeImageButton,
+        List<ImageButton> imageButtonList = Arrays.asList(crowbarImageButton, daggerImageButton, axeImageButton,
                 armorImageButton, helmetImageButton, torchImageButton, bandageImageButton, dashImageButton,
                 invincibleImageButton, macheteImageButton, baseballImageButton, sledgeImageButton);
         imageButtons.addAll(imageButtonList);

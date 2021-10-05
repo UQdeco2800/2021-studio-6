@@ -25,10 +25,16 @@ public class IndependentAnimator  extends AnimationRenderComponent {
    * scale. Lastly, set whether it should follow the camera or not.
    *
    * @param atlas libGDX-supported texture atlas containing desired animations
+   * @param lit Boolean variable of whether this asset should be lit by the
+   *            lighting engine (true) or not (false).
    */
-  public IndependentAnimator(TextureAtlas atlas) {
+  public IndependentAnimator(TextureAtlas atlas, boolean lit) {
     super(atlas);
-    ServiceLocator.getRenderService().register(this);
+    if (lit) {
+      setLit();
+    } else {
+      setUnlit();
+    }
   }
 
   /**

@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -91,6 +92,7 @@ public class PlayerRangeAttackComponentTest {
     void shouldScaleVectors() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
+        player.addComponent(new KeyboardPlayerInputComponent());
         Vector2 PLAYER_POS = new Vector2(0,0);
         Vector2 FACING_LEFT_DIR = new Vector2(-1,0);
         Vector2 FACING_RIGHT_DIR = new Vector2(1,0);
@@ -102,18 +104,22 @@ public class PlayerRangeAttackComponentTest {
         Vector2 SCALED_DOWN = new Vector2(0,-1000);
 
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_LEFT_DIR);
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.A);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
                 .epsilonEquals(SCALED_LEFT));
 
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_RIGHT_DIR);
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.D);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
                 .epsilonEquals(SCALED_RIGHT));
 
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_DOWN_DIR);
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.S);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
                 .epsilonEquals(SCALED_DOWN));
 
         player.getComponent(PlayerRangeAttackComponent.class).setDirection(FACING_UP_DIR);
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).scaleVector(PLAYER_POS)
                 .epsilonEquals(SCALED_UP));
     }
@@ -122,14 +128,15 @@ public class PlayerRangeAttackComponentTest {
     void shouldFireCorrectly() {
         Entity player = new Entity();
         player.addComponent(new PlayerRangeAttackComponent());
+        player.addComponent(new KeyboardPlayerInputComponent());
         Vector2 BULLET_HIDDING_COORD = new Vector2(-10,-10);
         Vector2 BULLET_SPEED = new Vector2(5f,5f);
         Vector2 PLAYER_POS = new Vector2(0,0);
         Vector2 SHOOT = new Vector2(0,0);
-        Vector2 FACING_RIGHT_DIR = new Vector2(1,0);
+        Vector2 FACING_DOWN_DIR = new Vector2(0,-1);
         int NO_BULLETS_SHOT = 0;
         int BULLET_COUNT = 4;
-        Vector2 SCALED_RIGHT = new Vector2(1000,0);
+        Vector2 SCALED_DOWN = new Vector2(0,-1000);
 
         Array<Entity> bullets = new Array<>();
         int NUM_BULLETS = 5;
@@ -144,11 +151,12 @@ public class PlayerRangeAttackComponentTest {
         player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
         player.setPosition(PLAYER_POS);
 
-        player.getComponent(PlayerRangeAttackComponent.class).fire(FACING_RIGHT_DIR);
-        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_RIGHT_DIR));
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.S);
 
         Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(NO_BULLETS_SHOT);
-        player.getComponent(PlayerRangeAttackComponent.class).fire(SHOOT);
+        player.getComponent(PlayerRangeAttackComponent.class).fire();
+        System.out.println(player.getComponent(PlayerRangeAttackComponent.class).getDirection());
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_DOWN_DIR));
 
         assertEquals(BULLET_COUNT, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
         assertEquals(BULLET_COUNT, PlayerRangeAttackComponent.getActiveBullets().size);
@@ -156,6 +164,6 @@ public class PlayerRangeAttackComponentTest {
         assertTrue(bulletAlmostFired.getPosition().epsilonEquals(0,0));
         assertTrue(bulletAlmostFired.getComponent(BulletCollisionComponent.class).getBulletLaunchStatus());
 
-        assertEquals(SCALED_RIGHT.cpy(), bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget()); //
+        assertEquals(SCALED_DOWN.cpy(), bulletAlmostFired.getComponent(PhysicsMovementComponent.class).getTarget()); //
     }
 }

@@ -46,9 +46,9 @@ public class Level1 extends GameArea {
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger/dagger.png",
-      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe_right2.png",
-      "images/playeritems/dualdagger/dualdagger.png", "images/playeritems/katana/katana.png", "images/playeritems/greataxe/greataxe.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe.png",
+      "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -102,12 +102,21 @@ public class Level1 extends GameArea {
       "images/weapon/sword.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
+      "images/weapon/sledge.atlas",
+      "images/weapon/machete.atlas",
+      "images/playeritems/tourch/torch.atlas",
+      "images/weapon/baseball.atlas",
       npcSampleAtlasFilename,
       npcTut1AtlasFilename,
       npcInjuredAtlasFilename,
       npcPilotAtlasFilename
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
+  private static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
@@ -265,6 +274,41 @@ public class Level1 extends GameArea {
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
     }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int sledgeQuantity = 1;
+      Entity axe = ItemFactory.createSledge(sledgeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword = ItemFactory.createMachete(macheteQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword1 = ItemFactory.createBat(macheteQuantity);
+      spawnEntityAt(sword1, randomPos, true, false);
+    }
+  }
+
+  private void spawnTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
+
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createBigTree();
+      spawnEntityAt(tree, randomPos, true, false);
+    }
     */
   }
 
@@ -312,12 +356,6 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-
-    // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
-
-    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
-    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 
@@ -511,6 +549,7 @@ public class Level1 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
+    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -525,6 +564,7 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
+    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(forestMusic);
   }
 

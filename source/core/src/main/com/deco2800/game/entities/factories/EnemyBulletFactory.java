@@ -35,7 +35,7 @@ public class EnemyBulletFactory {
 
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
-        Entity bullet = makeBullet(rotateVector(newTarget, source, x1, y1), newTarget, target, gameArea,
+        Entity bullet = makeBullet(rotateTexture(newTarget, source, x1, y1), newTarget, target, gameArea,
                 source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
         gameArea.spawnEntity(bullet);
@@ -43,7 +43,7 @@ public class EnemyBulletFactory {
 
     /**
      * Creates three bullets for the tough long range enemy. One follows a straight line towards the player, another
-     * is shifted up 45 degrees from the straight one and the other is shifted down 45 degrees from the straight one.
+     * is shifted up 45 degrees from the straight vector and the other is shifted down 45 degrees from the straight vectpr.
      * @param source the source of the bullet
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in
@@ -57,22 +57,18 @@ public class EnemyBulletFactory {
         Vector2 straightTarget = new Vector2(x2 - x1, y2 - y1); //vector straight through player
 
         //Shifted up 45 degrees from the straight vector
-        double upX = (Math.cos((Math.PI)/4) * straightTarget.x) - (Math.sin((Math.PI)/4) * straightTarget.y);
-        double upY = (Math.sin((Math.PI)/4) * straightTarget.x) + (Math.cos((Math.PI)/4) * straightTarget.y);
-        Vector2 upRotate = new Vector2( (float) upX, (float) upY);
+        Vector2 upRotate = rotateVector(straightTarget, Math.PI/4);
 
         //Shifted down 45 degrees from the straight vector
-        double downX = (Math.cos(-(Math.PI)/4) * straightTarget.x) - (Math.sin(-(Math.PI)/4) * straightTarget.y);
-        double downY = (Math.sin(-(Math.PI)/4) * straightTarget.x) + (Math.cos(-(Math.PI)/4) * straightTarget.y);
-        Vector2 downRotate = new Vector2( (float) downX, (float) downY);
+        Vector2 downRotate = rotateVector(straightTarget, -(Math.PI)/4);
 
-        Entity bulletStraight = makeBullet(rotateVector(straightTarget, source, x1, y1), straightTarget, target, gameArea,
+        Entity bulletStraight = makeBullet(rotateTexture(straightTarget, source, x1, y1), straightTarget, target, gameArea,
                 source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
-        Entity bulletUp = makeBullet(rotateVector(upRotate, source, x1, y1), upRotate, target, gameArea,
+        Entity bulletUp = makeBullet(rotateTexture(upRotate, source, x1, y1), upRotate, target, gameArea,
                 source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
-        Entity bulletDown = makeBullet(rotateVector(downRotate, source, x1, y1), downRotate, target, gameArea,
+        Entity bulletDown = makeBullet(rotateTexture(downRotate, source, x1, y1), downRotate, target, gameArea,
                 source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
 
         gameArea.spawnEntity(bulletStraight);
@@ -82,18 +78,33 @@ public class EnemyBulletFactory {
 
 
     /**
-     * Calculates the rotation of the vector for the bullet and returns it in radians
+     * Calculates the rotation of the bullet texture to point at its target
      * @param rotate the vector to the target
      * @param source the source of the bullet
      * @param x_1 the x coordinate of the source
      * @param y_1 the y coordinate of the source
-     * @return the rotation of the vector in radians
+     * @return the rotation of the texture
      */
-    private static float rotateVector(Vector2 rotate, Entity source, float x_1, float y_1) {
+    private static float rotateTexture(Vector2 rotate, Entity source, float x_1, float y_1) {
         rotate = rotate.scl(100);
         rotate = rotate.add(source.getPosition());
 
         return (MathUtils.radiansToDegrees * MathUtils.atan2(rotate.y - y_1, rotate.x - x_1));
+    }
+
+    /**
+     * Rotates a vector using this formula
+     *  x2=cosβx1−sinβy1
+     *  y2=sinβx1+cosβy1
+     *
+     * @param target the target vector to rotate
+     * @param rotation the amount of rotation in radians
+     * @return a new vector rotated by rotation
+     */
+    private static Vector2 rotateVector(Vector2 target, double rotation) {
+        double upX = (Math.cos(rotation) * target.x) - (Math.sin(rotation) * target.y);
+        double upY = (Math.sin(rotation) * target.x) + (Math.cos(rotation) * target.y);
+        return new Vector2( (float) upX, (float) upY);
     }
 
     /**

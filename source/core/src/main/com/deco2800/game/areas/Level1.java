@@ -67,6 +67,7 @@ public class Level1 extends GameArea {
     "images/level_1/placeholder_road.png",
     "images/level_1/road_tile_white.png",
     "images/level_1/building2-day1-latest.png",
+    "images/level_1/building3-day1-latest.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -282,12 +283,10 @@ public class Level1 extends GameArea {
 
   private void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-
     for (int x = 3; x < tileBounds.x * 0.75; x += 7) {
       GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.65));
-
-      Entity house = ObstacleFactory.createBuilding();
-      spawnEntityAt(house, position, true, false);
+      Entity building = ObstacleFactory.createBuilding();
+      spawnEntityAt(building, position, true, false);
     }
   }
 

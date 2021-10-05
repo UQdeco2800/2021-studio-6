@@ -118,7 +118,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.ENTER:
           entity.getEvents().trigger("rangeAttack");
           return true;
-        case Keys.E:
+        case Keys.Q:
           entity.getEvents().trigger("tryAbility", walkDirection);
           return true;
         case Keys.NUM_1:

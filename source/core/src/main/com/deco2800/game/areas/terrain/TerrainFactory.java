@@ -207,8 +207,11 @@ public class TerrainFactory {
     GridPoint2 end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.1);
     setTilesInRegion(layer, sidewalkTile, start, end);
 
+    // This value identifies the offset to facilitate the region that coincides with the safehouse where there is no "sidewalk"
+    double safehouseStrip = 0.9;
+
     start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.6);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 1);
+    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, safehouseStrip, 1);
     setTilesInRegion(layer, sidewalkTile, start, end);
 
     //Set road tiles

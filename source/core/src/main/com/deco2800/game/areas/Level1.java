@@ -130,7 +130,7 @@ public class Level1 extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
+    spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnBuildings();
@@ -274,12 +274,13 @@ public class Level1 extends GameArea {
   }
 
   private void spawnTrees() {
+    int deadTreeLimit = 2;
     GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(5, 5);
 
-    for (int i = 0; i < NUM_TREES; i++) {
+    for (int i = 0; i < deadTreeLimit; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createBigTree();
+      Entity tree = ObstacleFactory.createObject("images/level_1/dead_tree1-day1-latest.png", 3f);
       spawnEntityAt(tree, randomPos, true, false);
     }
   }

@@ -58,6 +58,7 @@ public class Level1 extends GameArea {
     "images/grass_3.png",
     "images/level_1/road_tile_black.png",
     "images/level_1/sidewalk.png",
+    "images/level_1/cracked_sidewalk.png",
     "images/level_1/curbUpper.png",
     "images/level_1/curbLower.png",
     "images/level_1/road_tile_cracked.png",

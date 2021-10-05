@@ -34,7 +34,7 @@ import java.util.List;
  * an item, weapon, armor and etc.
  */
 public class ShopMenuDisplay extends UIComponent {
-    private static final String BACKGROUND_FILE_PATH = "images/placeholder.png";
+    private static final String BACKGROUND_FILE_PATH = "images/safehouse/shopScreenTemp.png";
     private static final String SHOP_KEEPER_IMAGE_FILE_PATH = "images/safehouse/shopkeeper/portrait.png";
     private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/front01.png";
     private static final String SWORD_UP_IMAGE_FILE_PATH = "images/playeritems/sword/sword.png";

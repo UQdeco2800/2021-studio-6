@@ -83,7 +83,7 @@ public class Level4 extends GameArea {
             "images/playeritems/tourch/torch.atlas",
             "images/hud/dashbar.atlas",
             "images/hud/health.atlas",
-            "images/weapon/sword.atlas",
+        "images/weapon/crowbar.atlas",
             "images/weapon/axe.atlas",
             "images/weapon/sledge.atlas",
             "images/weapon/machete.atlas",

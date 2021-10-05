@@ -7,12 +7,12 @@ public class SafehouseIntroCutScene extends CutSceneConfig {
     public static final String[] DIALOGUE_RAW =
             {
                     //Screen 0
-                    "Is that a safehouse?"
+                    "Oh a safehouse"
             };
     public static final String[] IMAGES_RAW =
             {
                     //Screen 0
-                    "images/cutscenes/level2Intro-scene-1.png"
+                    "images/cutscenes/safehouse-scene.png"
             };
     public static final String MUSIC_RAW = "sounds/title-screen-music.mp3";
     private static final int LENGTH = 1;

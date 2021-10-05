@@ -196,6 +196,20 @@ public class ObstacleFactory {
     return tree;
   }
 
+  public static Entity createDeadTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/level3_dead_single_pine_tree_ver1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
+  }
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

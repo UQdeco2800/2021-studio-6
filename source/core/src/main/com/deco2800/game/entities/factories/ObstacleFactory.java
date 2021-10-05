@@ -173,18 +173,6 @@ public class ObstacleFactory {
     return building;
   }
 
-  public static Entity createDeadTree1() {
-    Entity tree =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/level_1/dead_tree1-day1-latest.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(1f);
-    return tree;
-  }
-
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

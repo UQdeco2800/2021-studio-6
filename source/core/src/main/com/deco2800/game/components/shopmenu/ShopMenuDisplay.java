@@ -87,7 +87,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float ITEM_LABEL_DESCRIPTION_HEIGHT = 150;
     private static final float ITEM_LABEL_MORE_INFO_HEIGHT = 60;
     private static final float TABLE_BODY_HEIGHT = 350;
-    private static final float SHOPKEEPER_IMAGE_WIDTH = 280;
+    private static final float SHOPKEEPER_IMAGE_WIDTH = 250;
     private static final float LARGER_IMAGE_SIZE = 160;
     private static final int COL_NUM = 120;
     private static final int FIRST_COL_NUM_TAKEN = 30;

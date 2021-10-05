@@ -66,6 +66,8 @@ public class Level1 extends GameArea {
     "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
     "images/level_1/building2-day1-latest.png",
+    "images/level_1/building3-day1-latest.png",
+    "images/level_1/dead_tree1-day1-latest.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -367,8 +369,8 @@ public class Level1 extends GameArea {
     // this will be removed - purely for testing
     GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
 
-    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
-    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
+    //Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    //spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 

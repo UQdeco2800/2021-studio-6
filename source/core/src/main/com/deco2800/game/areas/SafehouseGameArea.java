@@ -86,7 +86,10 @@ public class SafehouseGameArea extends GameArea {
     player.getEvents().trigger("disableAttack");
     spawnShopKeeper();
     spawnBullet();
-    spawnPilotNpc();
+
+    if (ServiceLocator.getGameArea().toString().contains("Level1")){
+      spawnPilotNpc();
+    }
 
     playMusic();
   }

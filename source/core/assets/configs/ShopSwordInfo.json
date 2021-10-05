@@ -1,8 +1,0 @@
-{
-  "itemName": "SWORD",
-  "description": "The sword is the most common weapon there is but it has decent range damage and it is versatile enough to fend off any enemies in the game - especially night crawlers!",
-  "price": 50,
-  "knockback": "Moderate",
-  "attackDamage": 5,
-  "attackLength": "Decent"
-}

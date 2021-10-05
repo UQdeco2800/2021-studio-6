@@ -9,6 +9,7 @@ import com.deco2800.game.input.InputComponent;
  */
 public class StoryInputComponent extends InputComponent {
     private static final int ADVANCE_KEY = Input.Keys.SPACE;
+    private static final int ADVANCE_KEY_ALT = Input.Keys.E;
     private static final int SKIP_KEY = Input.Keys.ESCAPE;
 
     public StoryInputComponent() {
@@ -28,7 +29,7 @@ public class StoryInputComponent extends InputComponent {
                 return true;
             }
 
-            if (keycode == ADVANCE_KEY) {
+            if (keycode == ADVANCE_KEY || keycode == ADVANCE_KEY_ALT) {
                 entity.getEvents().trigger(StoryManager.ADVANCE_LISTENER);
                 return true;
             }

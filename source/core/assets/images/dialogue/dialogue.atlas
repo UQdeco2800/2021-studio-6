@@ -1,5 +1,4 @@
-
-dialogue.png
+player-dialogue.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
@@ -20,48 +19,21 @@ player-portrait
   orig: 1200, 1200
   offset: 0, 0
   index: -1
-  
-npc-dialogue-sample.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-npc-injured-portrait
-  rotate: false
-  xy: 2, 94
-  size: 1200, 1200
-  orig: 1200, 1200
-  offset: 0, 0
-  index: -1
 
-npc-dialogue-sample.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-npc-dead-portrait
-  rotate: false
-  xy: 2, 94
-  size: 1200, 1200
-  orig: 1200, 1200
-  offset: 0, 0
-  index: -1
-
-oldman_npc.png
-size: 2048, 2048
+oldman.png
+size: 100, 100
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 npc-tutorial-portrait
   rotate: false
-  xy: 2, 94
-  size: 1200, 1200
-  orig: 1200, 1200
+  xy: 0, 0
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 
-
-pixelsize1.png
+pilot_portrait_small.png
 size: 100, 100
 format: RGBA8888
 filter: Nearest, Nearest

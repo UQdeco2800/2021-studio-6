@@ -3,7 +3,7 @@ package com.deco2800.game.components.story.stories;
 import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCInjuredDialogue extends BasicDialogueConfig {
-    protected static final String[] QUOTE = {"*urggh...*", "Those little buggers took my leg...", "How selfish!"};
+    protected static final String[] QUOTE = {"*urggh... help*", "My legs, I can't feel them anymore.", "I'm gonna di-"};
     protected static final String[] PORTRAIT = {"injured-portrait"};
     private static final int LENGTH = 3;
 

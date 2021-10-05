@@ -1,0 +1,8 @@
+{
+  "itemName": "BAT",
+  "description": "The baseball is a must have to survive in this apocalyptic world. Do not underestimate such a powerful weapon. It's slick and sturdy material is ideal for surviving!",
+  "price": 70,
+  "knockback": "Slightly weak",
+  "attackDamage": 6,
+  "attackLength": "Short"
+}

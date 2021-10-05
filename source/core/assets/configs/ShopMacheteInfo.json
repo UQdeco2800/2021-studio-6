@@ -1,0 +1,8 @@
+{
+  "itemName": "MACHETE",
+  "description": "A large and heavy knife - perfect for hacking and slashing. It is a broad weapon that is similar to an axe but it is more versatile",
+  "price": 40,
+  "knockback": "Weak",
+  "attackDamage": 4,
+  "attackLength": "Short"
+}

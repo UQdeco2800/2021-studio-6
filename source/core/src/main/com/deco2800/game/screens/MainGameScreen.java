@@ -48,12 +48,14 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png",
-          "images/Player_Sprite/front01.png", "images/playeritems/sword/sword2.png", "images/playeritems/sword/sword3.png",
-  "images/playeritems/dagger/dagger.png", "images/playeritems/dagger/dagger.png", "images/playeritems/axe/axe_left2.png", "images/playeritems/axe/axe_right4.png",
+          "images/Player_Sprite/front01.png", "images/playeritems/sword/sword.png", "images/playeritems/sword/sword3.png",
+  "images/playeritems/dagger/dagger.png", "images/playeritems/dagger/dagger.png", "images/playeritems/axe/axe.png", "images/playeritems/axe/axe_right4.png",
   "images/playeritems/tourch/tourch.png", "images/playeritems/armour.png", "images/playeritems/halmet.png",
   "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
   "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
-  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png"};
+  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
+  "images/playeritems/machete/machete.png", "images/playeritems/bat/baseball.png", "images/playeritems/sledge/sledge.png",
+  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png", "images/safehouse/shopkeeper/portrait.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -63,10 +65,11 @@ public class MainGameScreen extends ScreenAdapter {
   private GameTime timeSource;
   private final GdxGame game;
   private final Renderer renderer;
+  private final Renderer rendererUnlit;
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private final boolean LIGHTINGON = false;
+  private boolean LIGHTINGON = true;
   private GameArea gameArea = null;
 
   private Entity ui;
@@ -89,12 +92,20 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerUnlitRenderService(new RenderService());
 
     ServiceLocator.registerLightingService(new Lighting(ServiceLocator.getPhysicsService().getPhysics().getWorld()));
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+    //rendererUnlit = RenderFactory.createRenderer();
+    rendererUnlit = RenderFactory.createUnlitRenderer(renderer.getCamera(), renderer.getStage());
+    //rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    //rendererUnlit.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+
+    //rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
+    //rendererUnlit.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     lighting = ServiceLocator.getLightingService();
 
@@ -185,13 +196,14 @@ public class MainGameScreen extends ScreenAdapter {
       lighting.setCamera(renderer.getCamera().getCamera());
       lighting.render();
     }
-
+    rendererUnlit.render();
     renderer.renderUI();
 
     if (gameArea != null) {
       if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
+        rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
       }
     }
@@ -200,6 +212,7 @@ public class MainGameScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
+    rendererUnlit.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
   }
 
@@ -224,10 +237,12 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Disposing main game screen");
 
     renderer.dispose();
+    rendererUnlit.dispose();
     unloadAssets();
 
     ServiceLocator.getEntityService().dispose();
     ServiceLocator.getRenderService().dispose();
+    ServiceLocator.getRenderUnlitService().dispose();
     ServiceLocator.getResourceService().dispose();
 
     ServiceLocator.clear();
@@ -299,8 +314,8 @@ public class MainGameScreen extends ScreenAdapter {
     logger.info("Generating game level " + gameLevel);
 
     // TODO: This should not be here as this should be for boss fight
-    int LEVEL_4 = 4;
-    if (gameLevel == LEVEL_4) {
+    int LEVEL_5 = 5;
+    if (gameLevel == LEVEL_5) {
       logger.info("Victory epilogue");
       victory();
       return;
@@ -314,6 +329,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.info("Generating level");
     // user may want to revert to closest checkpoint on level 1
+    LIGHTINGON = true;
+    int LEVEL_4 = 4;
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
     int LEVEL_1 = 1;
@@ -331,10 +348,16 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new Level3(terrainFactory);
       gameArea.create();
 
+    } else if (gameLevel == LEVEL_4) {
+      gameArea = new Level4(terrainFactory);
+      gameArea.create();
+      renderer.setZoom(50); //zooms out the camera, value subject to change
+
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
     } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
+      LIGHTINGON = false;
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
     }

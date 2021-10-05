@@ -1,0 +1,8 @@
+{
+  "itemName": "SLEDGE",
+  "description": "A blunt melee weapon with high damage and large area of effect when damage is dealt! Perfect for dealing with multiple foes at once!",
+  "price": 90,
+  "knockback": "Very Strong",
+  "attackDamage": 10,
+  "attackLength": "Long"
+}

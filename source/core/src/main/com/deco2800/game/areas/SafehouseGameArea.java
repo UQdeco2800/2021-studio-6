@@ -10,14 +10,14 @@ import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -30,6 +30,7 @@ public class SafehouseGameArea extends GameArea {
   private static final int NUM_BULLETS = 5;
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
+  private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
   private static final String[] safehouseTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
@@ -37,7 +38,9 @@ public class SafehouseGameArea extends GameArea {
     "images/safehouse/interior-day1-tile-ground1-latest.png",
     "images/safehouse/interior-day1-tile-door1-latest.png",
       "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png"
+      "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png",
+      "images/safehouse/shopkeeper/shopkeeperSprite.png",
+      "images/dialogue/raw/npc_indicator.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
@@ -46,10 +49,20 @@ public class SafehouseGameArea extends GameArea {
       "images/hud/health.atlas",
       "images/weapon/sword.atlas",
       "images/weapon/dagger.atlas",
-      "images/weapon/axe.atlas"
+      "images/weapon/sledge.atlas",
+      "images/weapon/machete.atlas",
+      "images/playeritems/tourch/torch.atlas",
+      "images/weapon/baseball.atlas",
+      "images/weapon/axe.atlas",
+      NPC_PILOT_ATLAS_FILENAME
   };
 
   private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
+  private static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
   private static final String backgroundMusic = "sounds/safehouse-music.mp3";
   private static final String[] safehouseMusic = {backgroundMusic};
 
@@ -75,7 +88,16 @@ public class SafehouseGameArea extends GameArea {
     spawnShopKeeper();
     spawnBullet();
 
-    playMusic();
+    if (ServiceLocator.getGameArea().toString().contains("Level1")){
+      spawnSafehouseIntro();
+      spawnPilotNpc();
+    } else {
+      playMusic();
+    }
+
+    // Listener for safehouse intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.SAFEHOUSE_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -95,13 +117,15 @@ public class SafehouseGameArea extends GameArea {
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
+    logger.info(String.valueOf(tileSize));
     tileBounds = terrain.getMapBounds(0);
+    logger.info(String.valueOf(tileBounds));
     worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            GridPoint2Utils.ZERO, false,false);
+            new GridPoint2(1, 0), false,false);
     // Right
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
@@ -109,44 +133,68 @@ public class SafehouseGameArea extends GameArea {
     // Top
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),false,false);
+            new GridPoint2(0, tileBounds.y - 8),false,false);
     // Bottom
     spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            GridPoint2Utils.ZERO, false,false);
+            new GridPoint2(0, 1), false,false);
+
+    // Counter walls
+    // horizontal wall
+    spawnEntityAt(
+            ObstacleFactory.createWall(worldBounds.x - 8, WALL_WIDTH),
+            new GridPoint2(0, 5), false,false);
+
+    // vertical wall
+    spawnEntityAt(
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y - 5),
+            new GridPoint2(5, 5), false,false);
+
+    // Cupboard horizontal
+    spawnEntityAt(
+        ObstacleFactory.createWall(worldBounds.x - 8, WALL_WIDTH),
+        new GridPoint2(10, 5), false,false);
+
+    // Cupboard vertical
+    spawnEntityAt(
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y - 5),
+        new GridPoint2(10, 5), false,false);
   }
 
   public void spawnDoor() {
     // Create entity
     door = new Entity()
-            .addComponent(new TextureRenderComponent("images/safehouse/interior-day1-tile-door1-latest.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new DisposingComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-    door.getComponent(TextureRenderComponent.class).scaleEntity();
-    door.scaleHeight(2.5f);
-    door.setPosition(worldBounds.x - 3, (worldBounds.y / 2) - 1);
+    door.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
+    door.setPosition(5.5f, 5.5f);
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
   }
 
   private Entity spawnShopKeeper() {
-    // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(1, 1);
+    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(2, 7);
 
-    Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
+    Entity shopKeeperNPC = FriendlyNPCFactory.createShopkeeperNPC();
     spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return shopKeeperNPC;
   }
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, new GridPoint2(tileBounds.x / 4, tileBounds.y / 2), true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(7, 2), true, true);
     return newPlayer;
+  }
+
+  private void spawnPilotNpc() {
+    GridPoint2 pos = new GridPoint2(10,4);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_SECOND, NPC_PILOT_ATLAS_FILENAME, false);
+    spawnEntityAt(npcTut, pos, true, true);
   }
 
   private void spawnBullet() {
@@ -159,6 +207,11 @@ public class SafehouseGameArea extends GameArea {
     }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  private void spawnSafehouseIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.SAFEHOUSE_INTRO);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {
@@ -174,6 +227,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
     resourceService.loadSounds(safehouseSounds);
+    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(safehouseMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -188,6 +242,7 @@ public class SafehouseGameArea extends GameArea {
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);
     resourceService.unloadAssets(safehouseSounds);
+    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(safehouseMusic);
   }
 

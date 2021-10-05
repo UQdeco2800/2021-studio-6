@@ -10,6 +10,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -88,10 +89,13 @@ public class SafehouseGameArea extends GameArea {
     spawnBullet();
 
     if (ServiceLocator.getGameArea().toString().contains("Level1")){
+      spawnSafehouseIntro();
       spawnPilotNpc();
     }
 
-    playMusic();
+    // Listener for safehouse intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.SAFEHOUSE_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -201,6 +205,11 @@ public class SafehouseGameArea extends GameArea {
     }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  private void spawnSafehouseIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.SAFEHOUSE_INTRO);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {

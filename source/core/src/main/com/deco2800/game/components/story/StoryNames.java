@@ -15,6 +15,7 @@ public enum StoryNames {
     NPC_PILOT_FIRST,
     NPC_PILOT_SECOND,
     NPC_PILOT_DEAD,
+    SAFEHOUSE_INTRO,
     LEVEL2_INTRO,
     LEVEL3_INTRO
 }

@@ -119,7 +119,7 @@ public class PlayerMeleeAttackComponent extends Component {
             weaponAnimator =
                 new IndependentAnimator(
                     ServiceLocator.getResourceService()
-                        .getAsset(atlasFile, TextureAtlas.class));
+                        .getAsset(atlasFile, TextureAtlas.class), false);
             weaponAnimator.addAnimation("attackUp", stats.animationLength, Animation.PlayMode.NORMAL);
             weaponAnimator.addAnimation("attackDown", stats.animationLength, Animation.PlayMode.NORMAL);
             weaponAnimator.addAnimation("attackLeft", stats.animationLength, Animation.PlayMode.NORMAL);

@@ -44,7 +44,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     healthAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/health.atlas", TextureAtlas.class));
+                .getAsset("images/hud/health.atlas", TextureAtlas.class), false);
     healthAnimator.setCamera(true);
     healthAnimator.setPositions(9, (float) 4);
     healthAnimator.setScale( 3, 1);
@@ -65,7 +65,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     dashAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
-                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class));
+                .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), false);
     dashAnimator.addAnimation("dashbar", 1.2f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
@@ -218,7 +218,6 @@ public class PlayerInterfaceDisplay extends UIComponent {
    * @param bulletCount used to display number of bullets left on player's magazine's HUD
    */
   public void updateBulletImageHUD(int bulletCount) {
-    logger.info("Bullet count is " + bulletCount);
     // for when bullets are shot
     for (int i = MAGAZINE_FULL_COUNT - 1; i >= bulletCount; i--) {
       bulletImages.get(i).setVisible(false);

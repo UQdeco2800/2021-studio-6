@@ -3,7 +3,6 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
@@ -38,9 +37,9 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
-  private static String meleeWeaponFilePath = stats.meleeFilePath;
+  private static String meleeFilePath = stats.meleeFilePath;
   private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel, bulletMagazine;
-  private static String ability, meleeFilePath, meleeWeaponType, armorType;
+  private static String ability, meleeWeaponType, armorType;
 
   /**
    * Create a player entity.
@@ -53,72 +52,72 @@ public class PlayerFactory {
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/Player_Animations/player_movement.atlas", TextureAtlas.class));
-    animator.addAnimation("dead-left", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("dead-right", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead-left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead-right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-hurt", 1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-hurt", 1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-hurt", 1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-hurt", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run-hurt", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run-helmet", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("back-run-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("front-run-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-run-armour", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("right-run-armour", 0.1f, Animation.PlayMode.LOOP);
-
+    animator.addAnimation("back-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hurt", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.setUnlit();
     // when changing melee weapon file path, remember to also change weapon type player currently holds
     loadPlayerData();
     Entity player = new Entity()
-      .addComponent(new PhysicsComponent())
-      .addComponent(new ColliderComponent())
-      .addComponent(new PlayerMeleeAttackComponent(meleeWeaponFilePath))
-      .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-      .addComponent(new PlayerActions(woundState))
-      .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
-              baseRangedAttack, defenceLevel))
-      .addComponent(new InventoryComponent(gold, ammo, bandages))
-      .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
-      .addComponent(inputComponent)
-      .addComponent(new PlayerRangeAttackComponent())
-      .addComponent(new PlayerRangeAOEComponent())
-      .addComponent(new PlayerReusableComponent())
-      .addComponent(new DisposingComponent())
-      .addComponent(new PlayerInterfaceDisplay())
-      .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
-      .addComponent(animator)
-      .addComponent(new PlayerAnimationController())
-      .addComponent(new PlayerHudAnimationController())
-      .addComponent(new PlayerWeaponAnimationController())
-      .addComponent(new PlayerHealthAnimationController())
-      .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0, 0));
+          .addComponent(new PhysicsComponent())
+          .addComponent(new ColliderComponent())
+          .addComponent(new PlayerMeleeAttackComponent(meleeFilePath))
+          .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+          .addComponent(new PlayerActions(woundState))
+          .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
+                  baseRangedAttack, defenceLevel))
+          .addComponent(new InventoryComponent(gold, ammo, bandages))
+          .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
+          .addComponent(inputComponent)
+          .addComponent(new PlayerRangeAttackComponent())
+          .addComponent(new PlayerRangeAOEComponent())
+          .addComponent(new PlayerReusableComponent())
+          .addComponent(new DisposingComponent())
+          .addComponent(new PlayerInterfaceDisplay())
+          .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM))
+          .addComponent(animator)
+          .addComponent(new PlayerAnimationController())
+          .addComponent(new PlayerHudAnimationController())
+          .addComponent(new PlayerTorchAnimationController())
+          .addComponent(new PlayerWeaponAnimationController())
+          .addComponent(new PlayerHealthAnimationController())
+          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(meleeWeaponType));
-    player.getComponent(PlayerMeleeAttackComponent.class).setWeapon(meleeFilePath);
     player.getComponent(PlayerRangeAttackComponent.class).setBulletMagazine(bulletMagazine);
     return player;
   }
@@ -128,6 +127,7 @@ public class PlayerFactory {
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
 
     if (playerManager.currentPlayerState() == null) {
+      System.out.println("null");
       // set initial state of player when game starts for the very first time, load from config file
       playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
               stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.bulletMagazine, stats.ability,
@@ -162,6 +162,7 @@ public class PlayerFactory {
       meleeWeaponType = currentPlayerState.getMeleeWeaponType();
       armorType = currentPlayerState.getArmorType();
       bulletMagazine = currentPlayerState.getBulletMagazine();
+      System.out.println(meleeFilePath);
     }
   }
 

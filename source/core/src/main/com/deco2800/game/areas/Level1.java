@@ -520,7 +520,7 @@ public class Level1 extends GameArea {
 
   private void spawnPilotNpc() {
     GridPoint2 pos = new GridPoint2(15,7);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT, NPC_PILOT_ATLAS_FILENAME, true);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_FIRST, NPC_PILOT_ATLAS_FILENAME, true);
     spawnEntityAt(npcTut, pos, true, true);
   }
 

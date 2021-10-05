@@ -2,7 +2,7 @@ package com.deco2800.game.components.story.stories;
 
 import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
-public class NPCPilotDialogue extends BasicDialogueConfig {
+public class NPCPilotFirstDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
         "Hey kid",
         "You are going to be a firefly too?",
@@ -16,7 +16,7 @@ public class NPCPilotDialogue extends BasicDialogueConfig {
     protected static final String[] PORTRAIT = {"npc-pilot-portrait"};
     private static final int LENGTH = 8;
 
-    public NPCPilotDialogue(){
+    public NPCPilotFirstDialogue(){
         dialogueText = QUOTE;
         dialogueImages = PORTRAIT;
     }

@@ -12,7 +12,9 @@ public enum StoryNames {
     TUTORIAL_GUIDE,
     NPC_INJURED,
     NPC_DEAD,
-    NPC_PILOT,
+    NPC_PILOT_FIRST,
+    NPC_PILOT_SECOND,
+    NPC_PILOT_DEAD,
     LEVEL2_INTRO,
     LEVEL3_INTRO
 }

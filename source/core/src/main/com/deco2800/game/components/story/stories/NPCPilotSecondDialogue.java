@@ -6,7 +6,7 @@ public class NPCPilotSecondDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
         "Hey again"
     };
-    protected static final String[] PORTRAIT = {"npc-pilot-portrait"};
+    protected static final String[] PORTRAIT = {"npc-pilot-injured-portrait"};
     private static final int LENGTH = 1;
 
     public NPCPilotSecondDialogue(){

@@ -30,7 +30,7 @@ public class SafehouseGameArea extends GameArea {
   private static final int NUM_BULLETS = 5;
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
-  private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
+  private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",

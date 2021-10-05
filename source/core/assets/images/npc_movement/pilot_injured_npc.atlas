@@ -4,28 +4,28 @@ size: 4096, 1024
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-pilot_back1_injured
+back
   rotate: false
   xy: 1158, 2
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
-pilot_front1_injured
+front
   rotate: false
   xy: 2, 2
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
-pilot_left1_injured
+left
   rotate: false
   xy: 580, 2
   size: 576, 576
   orig: 576, 576
   offset: 0, 0
   index: -1
-pilot_right1_injured
+right
   rotate: false
   xy: 1736, 2
   size: 576, 576

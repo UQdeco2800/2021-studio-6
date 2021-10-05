@@ -6,7 +6,7 @@ public class NPCPilotDeadDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
         "Dead person"
     };
-    protected static final String[] PORTRAIT = {"npc-pilot-portrait"};
+    protected static final String[] PORTRAIT = null;
     private static final int LENGTH = 1;
 
     public NPCPilotDeadDialogue(){

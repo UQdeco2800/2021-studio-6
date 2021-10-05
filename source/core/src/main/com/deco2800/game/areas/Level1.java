@@ -111,6 +111,7 @@ public class Level1 extends GameArea {
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
+  private Random random = new Random();
 
   public Level1(TerrainFactory terrainFactory) {
     super();
@@ -266,8 +267,9 @@ public class Level1 extends GameArea {
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
     }
-  }
      */
+  }
+
 
   private void spawnTrees() {
     int deadTreeLimit = 2;

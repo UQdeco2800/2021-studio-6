@@ -61,6 +61,25 @@ public enum Items {
         }
     }
 
+    public static String getShopWeaponConfig(String meleeWeapon) {
+        switch (meleeWeapon) {
+            case "AXE":
+                return "configs/ShopAxeInfo.json";
+            case "DAGGER":
+                return "configs/ShopDaggerInfo.json";
+            case "SLEDGE":
+                return "configs/ShopHelmetInfo.json";
+            case "BAT":
+                return "configs/ShopBaseballInfo.json";
+            case "MACHETE":
+                return "configs/ShopMacheteInfo.json";
+            case "CROWBAR":
+                return "configs/Crowbar.json";
+            default:
+                return "";
+        }
+    }
+
     public static Items getMeleeWeapon(String meleeWeapon) {
         switch (meleeWeapon) {
             case "CROWBAR":

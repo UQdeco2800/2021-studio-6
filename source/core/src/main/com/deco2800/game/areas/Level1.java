@@ -63,6 +63,7 @@ public class Level1 extends GameArea {
     "images/level_1/placeholder_road.png",
     "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
+    "images/level_1/road_barrier.png",
     "images/level_1/building2-day1-latest.png",
     "images/level_1/building3-day1-latest.png",
     "images/hex_grass_1.png",
@@ -295,14 +296,15 @@ public class Level1 extends GameArea {
   }
 
   private void spawnBarriers() {
-    for (int i = 0; i < 11; i++) {
-      if (i == 4 || i == 5 || i == 6) {
+    for (int i = 0; i < 11; i += 2) {
+      if (i == 4) {
         //leave a gap in the middle
         continue;
       }
+
       GridPoint2 position = new GridPoint2(18, i);
-      Entity barrier = ObstacleFactory.createObject("images/level_1/placeholder_curb.png", 1f);
-      spawnEntityAt(barrier, position, true, true);
+      Entity barrier = ObstacleFactory.createObject("images/level_1/road_barrier.png", 2f);
+      spawnEntityAt(barrier, position, true, false);
     }
   }
 

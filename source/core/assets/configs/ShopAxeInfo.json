@@ -3,6 +3,6 @@
   "description": "Behold, the strongest and most feared melee weapon we have! Not only does it do an absurd amount of damage to enemies but it has the ability to knock them far back!",
   "price": 60,
   "knockback": "Strong",
-  "attackDamage": 10,
+  "attackDamage": 6,
   "attackLength": "Long"
 }

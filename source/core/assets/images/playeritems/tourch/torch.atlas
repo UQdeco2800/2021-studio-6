@@ -1,0 +1,118 @@
+
+torch.png
+size: 4096, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+back
+  rotate: false
+  xy: 1158, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 2, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 1736, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 2, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front
+  rotate: false
+  xy: 580, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front
+  rotate: false
+  xy: 2314, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front
+  rotate: false
+  xy: 1736, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front
+  rotate: false
+  xy: 580, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 1736, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 2, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 2314, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 1158, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 2314, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 580, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 2892, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 1158, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1

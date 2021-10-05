@@ -47,7 +47,8 @@ public class PointLightComponent extends Component implements Disposable {
             return;
         }
         pointLight = new PointLight(rayHandler, rays, this.color, distance, 0, 0);
-        pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(), entity.getScale().x / 2, entity.getScale().y / 2);
+        pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(),
+                (entity.getScale().x / 2) + this.offsetx, (entity.getScale().y / 2)+ this.offsety) ;
         pointLight.setIgnoreAttachedBody(true);
         pointLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
         pointLight.setSoftnessLength(8f);
@@ -56,6 +57,10 @@ public class PointLightComponent extends Component implements Disposable {
     @Override
     public void dispose() {
         pointLight.remove();
+    }
+
+    public PointLight getPointLight() {
+        return this.pointLight;
     }
 
 

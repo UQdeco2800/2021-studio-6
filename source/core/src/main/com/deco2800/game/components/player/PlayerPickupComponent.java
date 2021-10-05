@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.ItemComponent;
@@ -60,25 +61,58 @@ public class PlayerPickupComponent extends Component {
 
             if (item.getItemType() == Items.AMMO) {
                 inventory.setAmmo(ammoLeft + itemQuantity);
+                // Bypass if ServiceLocator isn't loaded.
+                //TODO: Have to refactor this somehow...
+                Sound sound = ServiceLocator.getResourceService() != null
+                    ? ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class)
+                    : null;
+                if(sound != null) {
+                    sound.play();
+                }
             } else if (item.getItemType() == Items.COINS) {
                 inventory.setGold(coinLeft + itemQuantity);
+                // Bypass if ServiceLocator isn't loaded.
+                //TODO: Have to refactor this somehow...
+                Sound sound = ServiceLocator.getResourceService() != null
+                    ? ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class)
+                    : null;
+                if(sound != null) {
+                    sound.play();
+                }
             } else if (item.getItemType() == Items.ARMOUR) {
                 stats.setDefenceLevel(2);
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();
             } else if (item.getItemType() == Items.HELMET) {
                 stats.setDefenceLevel(1);
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();
             } else if (item.getItemType() == Items.SWORD) {
                  weapon.setWeapon("configs/Sword.json");
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();
             } else if (item.getItemType() == Items.AXE) {
                 weapon.setWeapon("configs/Axe.json");
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();
             } else if (item.getItemType() == Items.DAGGER) {
                 weapon.setWeapon("configs/Dagger.json");
-            } else if (item.getItemType() == Items.KATANA) {
-                weapon.setWeapon("configs/Katana.json");
-            } else if (item.getItemType() == Items.GREATAXE) {
-                weapon.setWeapon("configs/GreatAxe.json");
-            } else if (item.getItemType() == Items.DUALDAGGER) {
-                weapon.setWeapon("configs/DualDagger.json");
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();				
+            } else if (item.getItemType() == Items.SLEDGE) {
+                weapon.setWeapon("configs/Sledge.json");
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();
+            } else if (item.getItemType() == Items.MACHETE) {
+                weapon.setWeapon("configs/Machete.json");
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();
+            } else if (item.getItemType() == Items.BAT) {
+                weapon.setWeapon("configs/Baseball.json");
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
+                sound.play();				
             }
+
 
             if (ServiceLocator.getGameArea() != null && item.getItemType() != Items.SHOP) {
                 ServiceLocator.getGameArea().despawnEntity(target);

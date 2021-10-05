@@ -3,7 +3,6 @@ package com.deco2800.game.entities.factories;
 import com.deco2800.game.components.dialoguebox.Dialogue;
 import com.deco2800.game.components.dialoguebox.DialogueInputComponent;
 import com.deco2800.game.components.dialoguebox.TextDialogueBox;
-import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.entities.Entity;
 
 import java.util.Arrays;

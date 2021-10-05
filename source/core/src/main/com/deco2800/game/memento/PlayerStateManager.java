@@ -32,7 +32,7 @@ public class PlayerStateManager {
     private static final int playerID = 0;
 
     /**
-     * Returns single instance of singletone
+     * Returns single instance of singleton
      * @return player state manager instance
      */
     public static PlayerStateManager getInstance() {
@@ -40,6 +40,15 @@ public class PlayerStateManager {
             manager = new PlayerStateManager();
         }
         return manager;
+    }
+
+    /**
+     * Destroys singleton instance
+     */
+    public void destroy() {
+        manager = null;
+        playerState = null;
+        playerMemento = null;
     }
 
     /**
@@ -128,8 +137,9 @@ public class PlayerStateManager {
      * Used specifically for logging purposes and debugging. Will be useful to track player's current state
      * @param playerState print most recent player state to logging
      */
-    public void trackPlayerState(Player playerState) {
+    public String trackPlayerState(Player playerState) {
         logger.info(playerState.toString());
+        return playerState.toString();
     }
 
     /**

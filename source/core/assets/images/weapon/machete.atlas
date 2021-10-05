@@ -1,0 +1,118 @@
+
+machete.png
+size: 4096, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+attackRight
+  rotate: false
+  xy: 3494, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 1748, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 584, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackRight
+  rotate: false
+  xy: 2912, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 2, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 2330, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 584, 2
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackLeft
+  rotate: false
+  xy: 2912, 2
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 2, 2
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 2912, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 1166, 2
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackDown
+  rotate: false
+  xy: 2, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 1166, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 3494, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 1748, 2
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+attackUp
+  rotate: false
+  xy: 584, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1

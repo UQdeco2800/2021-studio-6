@@ -29,7 +29,7 @@ public class Lighting implements Disposable {
      */
     public Lighting(World world) {
         rayHandler = new RayHandler(world);
-        setAmbientLight(0.2f, 0.3f, 0.4f, 0.1f);
+        setAmbientLight(0f, 0f, 0f, 0.15f);
     }
 
     /**

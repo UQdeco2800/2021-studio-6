@@ -91,6 +91,8 @@ public class SafehouseGameArea extends GameArea {
     if (ServiceLocator.getGameArea().toString().contains("Level1")){
       spawnSafehouseIntro();
       spawnPilotNpc();
+    } else {
+      playMusic();
     }
 
     // Listener for safehouse intro to finish and then play music

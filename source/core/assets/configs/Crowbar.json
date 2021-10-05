@@ -1,0 +1,11 @@
+{
+  "attackLength": 400,
+  "attackDamage": 6,
+  "knockback": 2,
+  "length": 1.7,
+  "height" : 1,
+  "animationLength" : 0.0875,
+  "atlasPath": "images/weapon/crowbar.atlas",
+  "animationCord": [ ["1.4f", "-0.1f"], ["1.4f", "0.5f"], ["1.3f", "0.4f"], ["0.8f", "0.3f"]],
+  "scale" : ["1.8f", "1.8f"]
+}

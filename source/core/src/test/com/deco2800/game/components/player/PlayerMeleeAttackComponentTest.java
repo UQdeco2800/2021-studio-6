@@ -152,7 +152,7 @@ public class PlayerMeleeAttackComponentTest {
     Entity createPlayer() {
         // these are arbitrary values used purely for testing and it is based real values extracted from the config
         // file, currently not in used because may change depending on game balancing - this may change - beware of test
-        String sword = "configs/Sword.json";
+        String sword = "configs/Baseball.json";
         Entity player = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PlayerMeleeAttackComponent(sword));

@@ -54,7 +54,7 @@ public class MainGameScreen extends ScreenAdapter {
   "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
   "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
   "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
-  "images/playeritems/machete/machete.png", "images/playeritems/bat/baseball.png", "images/playeritems/sledge/sledge.png",
+  "images/playeritems/machete/machete.png", "images/safehouse/shopScreenTemp.png", "images/playeritems/bat/baseball.png", "images/playeritems/sledge/sledge.png",
   "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png", "images/safehouse/shopkeeper/portrait.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 

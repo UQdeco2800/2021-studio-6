@@ -87,12 +87,12 @@ public class ItemFactory {
      * @param itemQuantity the number of sword quantity
      * @return sword pickup for player to use in game
      */
-    public static Entity createSword(int itemQuantity) {
+    public static Entity createCrowbar(int itemQuantity) {
         Entity sword = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
-                .addComponent(new ItemComponent(Items.SWORD, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/sword/sword.png"))
+                .addComponent(new ItemComponent(Items.CROWBAR, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/crowbar/crowbar.png"))
                 .addComponent(new DisposingComponent());
         return sword;
     }

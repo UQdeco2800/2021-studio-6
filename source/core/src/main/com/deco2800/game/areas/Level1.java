@@ -21,7 +21,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.util.Random;
 import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -68,6 +68,7 @@ public class Level1 extends GameArea {
     "images/level_1/road_tile_white.png",
     "images/level_1/building2-day1-latest.png",
     "images/level_1/building3-day1-latest.png",
+    "images/level_1/dead_tree1-day1-latest.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -113,6 +114,8 @@ public class Level1 extends GameArea {
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
+
+  private Random random = new Random();
 
   public Level1(TerrainFactory terrainFactory) {
     super();
@@ -281,12 +284,35 @@ public class Level1 extends GameArea {
     }
   }
 
-  private void spawnBuildings() {
+  public void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    for (int x = 3; x < tileBounds.x * 0.75; x += 7) {
-      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.65));
-      Entity building = ObstacleFactory.createBuilding();
-      spawnEntityAt(building, position, true, false);
+    int minDisp = 5, maxDisp = 7, endOffset = 14, disp = minDisp;
+    int building2Disp = 3, building3Disp = 0;
+    int lastBuilding = 0;
+    for (
+            int x = 3;
+            x < tileBounds.x - endOffset;
+            x += disp
+    ) {
+      switch(lastBuilding) {
+        case 0:
+          disp = random.nextInt((maxDisp - minDisp) + 1) + minDisp;
+        case 2:
+          disp = random.nextInt((maxDisp - minDisp) + 1) + minDisp + building2Disp;
+        case 3:
+          disp = random.nextInt((maxDisp - minDisp) + 1) + minDisp + building3Disp;
+      }
+      int buildingType = random.nextInt(2);
+      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
+      if (buildingType == 0) {
+        Entity building = ObstacleFactory.createBuilding(2);
+        spawnEntityAt(building, position, true, false);
+        lastBuilding = 2;
+      } else if (buildingType == 1) {
+        Entity building = ObstacleFactory.createBuilding(3);
+        spawnEntityAt(building, position, true, false);
+        lastBuilding = 3;
+      }
     }
   }
 

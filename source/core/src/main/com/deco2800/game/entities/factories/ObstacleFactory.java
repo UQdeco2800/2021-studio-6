@@ -145,18 +145,44 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(object, 1f, 1f);
     return object;
   }
-
-  public static Entity createBuilding() {
-    Entity building =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
+  public static Entity createBuilding(int buildingType) {
+    Entity building;
+    switch (buildingType) {
+      case (2):
+        building =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        building.getComponent(TextureRenderComponent.class).scaleEntity();
+        building.scaleHeight(10f);
+        break;
+      case (3):
+        building =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/level_1/building3-day1-latest.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        building.getComponent(TextureRenderComponent.class).scaleEntity();
+        building.scaleHeight(7.5f);
+        break;
+      default:
+        throw new IllegalStateException("Unexpected value: " + buildingType);
+    }
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    building.getComponent(TextureRenderComponent.class).scaleEntity();
-    building.scaleHeight(10f);
     return building;
+  }
+
+  public static Entity createDeadTree1() {
+    Entity tree =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_1/dead_tree1-day1-latest.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(1f);
+    return tree;
   }
 
   private ObstacleFactory() {

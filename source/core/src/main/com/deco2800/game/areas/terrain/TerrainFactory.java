@@ -76,6 +76,8 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/level_1/road_tile_black.png", Texture.class));
         TextureRegion citySidewalk =
             new TextureRegion(resourceService.getAsset("images/level_1/sidewalk.png", Texture.class));
+        TextureRegion crackedSidewalk =
+            new TextureRegion(resourceService.getAsset("images/level_1/cracked_sidewalk.png", Texture.class));
         TextureRegion cityCurbUpper =
             new TextureRegion(resourceService.getAsset("images/level_1/curbUpper.png", Texture.class));
         TextureRegion cityCurbLower =
@@ -84,8 +86,8 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/level_1/road_tile_cracked.png", Texture.class));
         TextureRegion laneMarkings =
             new TextureRegion(resourceService.getAsset("images/level_1/road_tile_white.png", Texture.class));
-        return createCityTerrain(1f, cityRoad, citySidewalk, cityCurbUpper, cityCurbLower, crackedRoad,
-            cityBackground, laneMarkings);
+        return createCityTerrain(1f, cityRoad, citySidewalk, crackedSidewalk, cityCurbUpper, cityCurbLower,
+            crackedRoad, cityBackground, laneMarkings);
 
       case FOREST:
         TextureRegion grass1 =
@@ -122,12 +124,13 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createCityTerrain(
-      float tileWorldSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurbUpper,
-      TextureRegion cityCurbLower, TextureRegion crackedRoad, TextureRegion cityBackground, TextureRegion laneMarkings
+      float tileWorldSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion crackedSidewalk,
+      TextureRegion cityCurbUpper, TextureRegion cityCurbLower, TextureRegion crackedRoad,
+      TextureRegion cityBackground, TextureRegion laneMarkings
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(cityRoad.getRegionWidth(), cityRoad.getRegionHeight());
-    TiledMap tiledMap = createCityTiles(tilePixelSize, cityRoad, citySidewalk, cityCurbUpper, cityCurbLower,
-        crackedRoad, cityBackground, laneMarkings);
+    TiledMap tiledMap = createCityTiles(tilePixelSize, cityRoad, citySidewalk, crackedSidewalk, cityCurbUpper,
+        cityCurbLower, crackedRoad, cityBackground, laneMarkings);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -184,12 +187,13 @@ public class TerrainFactory {
   }
 
   private TiledMap createCityTiles(
-      GridPoint2 tileSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion cityCurbUpper,
-      TextureRegion cityCurbLower, TextureRegion crackedRoad, TextureRegion cityBackground,
-      TextureRegion laneMarkings) {
+      GridPoint2 tileSize, TextureRegion cityRoad, TextureRegion citySidewalk, TextureRegion crackedSidewalk,
+      TextureRegion cityCurbUpper, TextureRegion cityCurbLower, TextureRegion crackedRoad,
+      TextureRegion cityBackground, TextureRegion laneMarkings) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile roadTile = new TerrainTile(cityRoad);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
+    TerrainTile crackedSidewalkTile = new TerrainTile(crackedSidewalk);
     TerrainTile curbUpperTile = new TerrainTile(cityCurbUpper);
     TerrainTile curbLowerTile = new TerrainTile(cityCurbLower);
     TerrainTile crackedRoadTile = new TerrainTile(crackedRoad);
@@ -206,10 +210,12 @@ public class TerrainFactory {
     GridPoint2 start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0);
     GridPoint2 end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.1);
     setTilesInRegion(layer, sidewalkTile, start, end);
+    //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
 
     start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.6);
     end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.7);
     setTilesInRegion(layer, sidewalkTile, start, end);
+    //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
 
     //Set road tiles
     start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.15);

@@ -152,6 +152,14 @@ public class PlayerStateManager {
     }
 
     /**
+     * Gets the current state of the player
+     * @return the current state of the player
+     */
+    public Player getPlayerState() {
+        return playerState;
+    }
+
+    /**
      * Reverts player state to the most recent safehouse visited before current level where player died. This
      * method will only be called when player dies in levels that are not in safehouse. This is assuming player
      * cannot die in safehouse and should not be able to anyway. This function is not meant to be used when or if

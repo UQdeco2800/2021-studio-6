@@ -19,9 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerReusableComponentTest {
     @Mock
     ResourceService resourceService;
+    @Mock GameTime time;
+
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerTimeSource(time);
     }
 
     @Test

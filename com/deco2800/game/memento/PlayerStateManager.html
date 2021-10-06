@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,6 +198,13 @@ double&nbsp;currentGameLevel)</code></th>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
+<td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPlayerState()">getPlayerState</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gets the current state of the player</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restorePlayerState()">restorePlayerState</a></span>()</code></th>
 <td class="colLast">
@@ -205,14 +212,14 @@ double&nbsp;currentGameLevel)</code></th>
  state stored previously</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restorePlayerStateToClosestSafehouse()">restorePlayerStateToClosestSafehouse</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Reverts player state to the most recent safehouse visited before current level where player died.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trackPlayerState(com.deco2800.game.memento.Player)">trackPlayerState</a></span>&#8203;(<a href="Player.html" title="class in com.deco2800.game.memento">Player</a>&nbsp;playerState)</code></th>
 <td class="colLast">
@@ -355,6 +362,17 @@ double&nbsp;gameLevel)</span></div>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">restorePlayerState</span>()</div>
 <div class="block">Reverts player state to the first player state used when game was started and removes all other player
  state stored previously</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getPlayerState()">getPlayerState</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></span>&nbsp;<span class="memberName">getPlayerState</span>()</div>
+<div class="block">Gets the current state of the player</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the current state of the player</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">

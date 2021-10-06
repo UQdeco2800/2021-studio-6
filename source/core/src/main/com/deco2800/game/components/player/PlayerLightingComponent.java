@@ -15,7 +15,6 @@ public class PlayerLightingComponent extends PointLightComponent {
 
     private boolean torchState;
     private IndependentAnimator torchAnimator;
-    private int torchTime;
 
     public PlayerLightingComponent (Color color, float distance, float offsetx, float offsety) {
         super(color, distance,offsetx,offsety);
@@ -39,7 +38,6 @@ public class PlayerLightingComponent extends PointLightComponent {
         torchAnimator.setCamera(true);
         torchAnimator.setScale(1, 1);
         torch.setter();
-        torchTime = 100;
     }
 
     /**

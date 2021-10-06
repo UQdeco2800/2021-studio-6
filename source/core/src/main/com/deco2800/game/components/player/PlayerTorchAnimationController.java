@@ -2,7 +2,9 @@ package com.deco2800.game.components.player;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.items.Directions;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
+import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class PlayerTorchAnimationController extends Component {
 
@@ -44,15 +46,19 @@ public class PlayerTorchAnimationController extends Component {
       if (previous != direct) {
         switch (direct) {
           case MOVE_DOWN:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y + 100);
             torchAnimator.startAnimation("front");
             break;
           case MOVE_LEFT:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y + 100);
             torchAnimator.startAnimation("left");
             break;
           case MOVE_UP:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y - 100);
             torchAnimator.startAnimation("back");
             break;
           case MOVE_RIGHT:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y + 100);
             torchAnimator.startAnimation("right");
             break;
         }

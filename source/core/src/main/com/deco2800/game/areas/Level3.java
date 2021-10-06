@@ -99,7 +99,7 @@ public class Level3 extends GameArea {
 
     displayUI();
 
-    tileLevel();
+    tileLevel(5, 5);
     spawnTerrain();
     //spawnTrees();
     player = spawnPlayer();
@@ -236,13 +236,43 @@ public class Level3 extends GameArea {
    * (In theory) randomly populates the level with rooms
    * Top left = 0,0
    */
-  private void tileLevel() {
+  private void tileLevel(int width, int height) {
     Array<Room> rooms = new Array<>();
-    rooms.add(new Room(0, 0));
-    rooms.add(new Room(0, 1));
+    Room newRoom = new Room(0, 0);
+    rooms.add(newRoom);
+    newRoom = generateRoom(newRoom, 1, width, height);
+    rooms.add(newRoom);
     joinRooms(rooms.get(1), rooms.get(0));
     for (Room room: rooms) {
       System.out.println(room.toString());
+    }
+  }
+
+  /**
+   * Given a previous room, creates an adjacent room for it
+   * If previous room is on the bottom of map, only allow generating new rooms right or up
+   * If previous room is on the right edge of map, only allow generating up or left
+   * @param previousRoom previous room to join new room to
+   * @param mode 1 = regular, 2 = only allow right or up, 3 = only allow up or left
+   * @return new room to be added
+   */
+  private Room generateRoom(Room previousRoom, int mode, int width, int height) {
+    while (true) {
+      int randInt = RandomUtils.randomInt(4);
+      System.out.println(randInt);
+      if (randInt == 1 && previousRoom.getY() != 0) {
+        //up
+        return new Room(previousRoom.getX(), previousRoom.getY() - 1);
+      } else if (randInt == 2 && mode == 1 && previousRoom.getY() != height) {
+        //down
+        return new Room(previousRoom.getX(), previousRoom.getY() + 1);
+      } else if (randInt == 3 && mode != 2 && previousRoom.getX() != 0) {
+        //left
+        return new Room(previousRoom.getX() - 1, previousRoom.getY());
+      } else if (randInt == 4 && mode != 3 && previousRoom.getX() != height) {
+        //right
+        return new Room(previousRoom.getX() + 1, previousRoom.getY());
+      }
     }
   }
 

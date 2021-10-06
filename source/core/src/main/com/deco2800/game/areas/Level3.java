@@ -253,20 +253,23 @@ public class Level3 extends GameArea {
     Array<Room> rooms = new Array<>();
     Room newRoom = new Room(0, 0);
     rooms.add(newRoom);
-    rooms.add(new Room(0,1));
-    rooms.add(new Room(0,2));
-    rooms.add(new Room(1,2));
-    rooms.add(new Room(2,2));
-    rooms.add(new Room(2,1));
-    Room endRoom = new Room(width, height);
-    //while (!newRoom.equals(endRoom)) {
-    for (int i = 0; i < 11; i++) {
+    Room endRoom = new Room(width, 0);
+    Room previousRoom;
+    for (int i = 0; !newRoom.equals(endRoom); i++) {
       if (checkSurrounded(rooms, newRoom, width, height)) {
-
+        previousRoom = rooms.get(
+            getPreviousNonSurroundedRoom(rooms, i, width, height));
+      } else {
+        previousRoom = newRoom;
       }
-      Room previousRoom = newRoom;
-      while (checkDuplicateRoom(rooms, newRoom)) {
+      for (int j = 0; checkDuplicateRoom(rooms, newRoom); j++) {
         newRoom = generateRoom(previousRoom, width, height);
+        if (j >= 100) {
+          for (Room room: rooms) {
+            System.out.println(room.toString());
+          }
+          throw new IllegalStateException("Infinite loop detected");
+        }
       }
       rooms.add(newRoom);
       joinRooms(newRoom, previousRoom);
@@ -274,6 +277,17 @@ public class Level3 extends GameArea {
     for (Room room: rooms) {
       System.out.println(room.toString());
     }
+  }
+
+  private int getPreviousNonSurroundedRoom(Array<Room> rooms, int index, int width, int height) {
+    int i;
+    for (i = index; i >= 0; i--) {
+      Room room = rooms.get(i);
+      if (!checkSurrounded(rooms, room, width, height)) {
+        break;
+      }
+    }
+    return i;
   }
 
   private boolean checkSurrounded(Array<Room> rooms, Room room, int width, int height) {
@@ -319,7 +333,6 @@ public class Level3 extends GameArea {
     int mode;
     while (true) {
       int randInt = RandomUtils.randomInt(4);
-      System.out.println(randInt);
       if (randInt == 1 && previousRoom.getY() != 0) {
         //up
         return new Room(previousRoom.getX(), previousRoom.getY() - 1);

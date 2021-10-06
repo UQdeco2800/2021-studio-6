@@ -82,12 +82,11 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-top.png",
     "images/level_3/new_darker_water_tiles/water-top-left.png",
     "images/level_3/new_darker_water_tiles/water-top-right.png",
-
-
-          // TODO: test grass for level 3
-          "images/level_3/level3_grass_test2.png",
-          "images/level_3/level3_grass_test3.png",
-          "images/level_3/level3_grass_test4.png",
+    "images/level_3/level3_grass_tiles/grass-1.png",
+    "images/level_3/level3_grass_tiles/grass-2.png",
+    "images/level_3/level3_grass_tiles/grass-3.png",
+    "images/level_3/level3_grass_tiles/grass-4.png",
+    "images/level_3/level3_grass_tiles/grass-base.png",
   };
 
   /**

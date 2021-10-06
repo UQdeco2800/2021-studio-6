@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,10 +14,9 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ToughFireBulletListener;
-import com.deco2800.game.components.tasks.ChaseTask;
-import com.deco2800.game.components.tasks.Stage1Task;
-import com.deco2800.game.components.tasks.WanderTask;
+import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -42,12 +42,14 @@ public class FinalBossFactory {
 
         Entity beam = createBeam();
         Entity bossHead = createBossHead();
+        Entity spawner = createLightSpawner(target, gameArea);
 
 
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
+                          .addTask(new Stage2Task(1, gameArea, darkness, target));
+                        //.addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
 
         darkness.addComponent(aiComponent);
         darkness.setScale(new Vector2(40f, 5f));
@@ -107,5 +109,28 @@ public class FinalBossFactory {
         beam.setScale(new Vector2(3f, 12f));
 
         return beam;
+    }
+
+    public static Entity createLightSpawner(Entity target, GameArea gameArea) {
+
+
+        Entity spawner = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new DisposingComponent())
+                .addComponent(new PointLightComponent(Colors.get("RED"), 3f, 0, 0))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                .addComponent(new GhostAnimationController())
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png"))
+                .addComponent(new PhysicsMovementComponent())
+                .addComponent(new CombatStatsComponent(5, 0));;
+
+//        AITaskComponent aiComponent =
+//                new AITaskComponent()
+//                .addTask(new SpawnerEnemyTask(target, 10, 5f, 6f, gameArea, spawner));
+//
+//        spawner.addComponent(aiComponent);
+
+        spawner.setScale(1f, 1f);
+        return spawner;
     }
 }

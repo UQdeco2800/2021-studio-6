@@ -297,7 +297,9 @@ public class Level4 extends GameArea {
         Entity boss = FinalBossFactory.createDarkness(player, this);
         GridPoint2 bounds = terrain.getMapBounds(0);
         GridPoint2 pos = new GridPoint2(bounds.x/2, bounds.y);
+        GridPoint2 pos1 = new GridPoint2(bounds.x/2, bounds.y/2);
         spawnEntityAt(boss, pos, true, true);
+        //spawnEntityAt(FinalBossFactory.createLightSpawner(), pos1 , true, true);
 
         //Entity bossHead = FinalBossFactory.createBossHead();
         //pos = new GridPoint2(bounds.x/2, (int) Math.round(bounds.y*0.9));

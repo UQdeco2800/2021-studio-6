@@ -128,10 +128,12 @@ public class TerrainFactory {
                 new TextureRegion(resourceService.getAsset("images/level_3/level3_grass_tiles/grass-3.png", Texture.class));
         TextureRegion lvl3grass4 =
                 new TextureRegion(resourceService.getAsset("images/level_3/level3_grass_tiles/grass-4.png", Texture.class));
+        TextureRegion waterFull =
+                new TextureRegion(resourceService.getAsset("images/level_3/new_darker_water_tiles/water-full.png", Texture.class));
         TextureRegion backgroundTile2 =
                 new TextureRegion(resourceService.getAsset("images/level_2/level2_background_tile.png", Texture.class));
 
-        return createForest2Terrain(1f, baseGrass, lvl3grass1, lvl3grass2, lvl3grass3, lvl3grass4, backgroundTile2);
+        return createForest2Terrain(1f, baseGrass, lvl3grass1, lvl3grass2, lvl3grass3, lvl3grass4, waterFull,backgroundTile2);
 
       // Safehouse tiles
       case SAFEHOUSE:
@@ -226,10 +228,10 @@ public class TerrainFactory {
   // TODO: Add javadoc and replace placeholder tiles
   private TerrainComponent createForest2Terrain(
           float tileWorldSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
-          TextureRegion grass4, TextureRegion grass5, TextureRegion backgroundTile
+          TextureRegion grass4, TextureRegion grass5, TextureRegion waterFull, TextureRegion backgroundTile
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass1.getRegionWidth(), grass1.getRegionHeight());
-    TiledMap tiledMap = createForest2Tiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, backgroundTile);
+    TiledMap tiledMap = createForest2Tiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, waterFull, backgroundTile);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -441,7 +443,7 @@ public class TerrainFactory {
   // TODO: Replace placeholder tiles with actual tiles
   private TiledMap createForest2Tiles(
           GridPoint2 tileSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3,
-          TextureRegion grass4, TextureRegion grass5, TextureRegion backgroundTile
+          TextureRegion grass4, TextureRegion grass5, TextureRegion waterFull, TextureRegion backgroundTile
   ) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile grassTile1 = new TerrainTile(grass1);
@@ -449,6 +451,7 @@ public class TerrainFactory {
     TerrainTile grassTile3 = new TerrainTile(grass3);
     TerrainTile grassTile4 = new TerrainTile(grass4);
     TerrainTile grassTile5 = new TerrainTile(grass5);
+    TerrainTile waterTile1 = new TerrainTile(waterFull);
     TerrainTile backgroundTile1 = new TerrainTile(backgroundTile);
 
     //Multiplier to size of map on x and y coordinates
@@ -464,7 +467,7 @@ public class TerrainFactory {
     fillTilesAtRandom(layer, MAP_SIZE_FOREST2, grassTile4, GRASS_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE_FOREST2, grassTile5, GRASS_TILE_COUNT);
 
-    //Fill background tiles
+    // Fill background tiles
     // Top part
     GridPoint2 start = new GridPoint2(19,37);
     GridPoint2 end = new GridPoint2(36,46);
@@ -474,6 +477,11 @@ public class TerrainFactory {
     GridPoint2 start2 = new GridPoint2(20,0);
     GridPoint2 end2 = new GridPoint2(36,9);
     setTilesInRegion(layer, backgroundTile1, start2, end2);
+
+    // Fill water tile behind bridge asset
+    GridPoint2 start3 = new GridPoint2(49,29);
+    GridPoint2 end3 = new GridPoint2(51,35);
+    setTilesInRegion(layer, waterTile1, start3, end3);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

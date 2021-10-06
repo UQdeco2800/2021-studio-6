@@ -66,7 +66,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
         new IndependentAnimator(
             ServiceLocator.getResourceService()
                 .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), false);
-    dashAnimator.addAnimation("dashbar", 1.2f, Animation.PlayMode.NORMAL);
+    dashAnimator.addAnimation("dashbar", 0.4f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
 
     dashAnimator.setCamera(true);

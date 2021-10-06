@@ -2,28 +2,27 @@ package com.deco2800.game.components.story.stories;
 
 import com.deco2800.game.components.story.cutscene.CutSceneConfig;
 
-public class Level3IntroCutScene extends CutSceneConfig {
+public class SafehouseIntroCutScene extends CutSceneConfig {
 
     public static final String[] DIALOGUE_RAW =
             {
                 //Screen 0
-                "I'm so close...",
-                "I can see the shoreline through the trees.",
-                "The glow is so bright now.",
-                "I need to get through this last stretch and make it to the docks.",
+                "I've made it to the first firefly safehouse... Looks like there is someone inside.",
+                "Maybe they'll have some stuff to sell.",
+                "I'm desperate for some new gear, it's the only way I'm gonna survive...",
+                "I'll stay here and rest for a bit before I head out again."
             };
-    protected static final String BLACK_IMAGE = "utils/blackpixel.png";
     public static final String[] IMAGES_RAW =
             {
                 //Screen 0
-                BLACK_IMAGE,
-                "images/cutscenes/level3Intro-scene-1.png",
-                "images/cutscenes/level3Intro-scene-1.png",
-                "images/cutscenes/level3Intro-scene-1.png"
+                "images/cutscenes/safehouse-scene.png",
+                "images/cutscenes/safehouse-scene.png",
+                "images/cutscenes/safehouse-scene.png",
+                "images/cutscenes/safehouse-scene.png",
             };
     public static final String MUSIC_RAW = "sounds/title-screen-music.mp3";
 
-    public Level3IntroCutScene() {
+    public SafehouseIntroCutScene() {
         dialogueText = DIALOGUE_RAW;
         imagePaths = IMAGES_RAW;
         musicPath = MUSIC_RAW;

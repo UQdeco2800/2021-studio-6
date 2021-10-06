@@ -90,7 +90,7 @@ class FriendlyNPCTriggerComponentTest {
 
 
     @Test
-    public void shouldDisplayStory(){
+    void shouldDisplayStory(){
         npc.getEvents().trigger("collisionStart", npcFixture, playerFixture);
         npc.getComponent(FriendlyNPCTriggerComponent.class).keyDown(Input.Keys.E);
         assertTrue(manager.getComponent(StoryManager.class).isDisplaying());
@@ -100,7 +100,7 @@ class FriendlyNPCTriggerComponentTest {
     }
 
     @Test
-    public void shouldNotDisplayStoryWhenNotColliding1() {
+    void shouldNotDisplayStoryWhenNotColliding1() {
         npc.getEvents().trigger("collisionStart", npcFixture, playerFixture);
         npc.getEvents().trigger("collisionEnd", npcFixture, playerFixture);
         npc.getComponent(FriendlyNPCTriggerComponent.class).keyDown(Input.Keys.E);
@@ -108,7 +108,7 @@ class FriendlyNPCTriggerComponentTest {
     }
 
     @Test
-    public void shouldNotDisplayStoryWhenNotColliding2() {
+    void shouldNotDisplayStoryWhenNotColliding2() {
         npc.getComponent(FriendlyNPCTriggerComponent.class).keyDown(Input.Keys.E);
         assertFalse(manager.getComponent(StoryManager.class).isDisplaying());
     }

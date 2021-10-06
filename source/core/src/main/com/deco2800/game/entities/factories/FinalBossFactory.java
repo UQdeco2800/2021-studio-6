@@ -42,33 +42,33 @@ public class FinalBossFactory {
      * @param gameArea the level 4 game area
      * @return the darkness entity
      */
-    public static Entity createDarkness(Entity target, Level4 gameArea) {
-        Entity darkness = new Entity()
-                .addComponent(new PhysicsComponent())
-                //.addComponent(new PhysicsMovementComponent())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new TextureRenderComponent("images/placeholder.png"))
-                //.addComponent(new CombatStatsComponent(3, 0))
-                .addComponent(new DisposingComponent());
-
-        Entity beam = createBeam();
-        Entity bossHead = createBossHead();
-        Entity spawner = createLightSpawner(target, gameArea);
-
-
-
-        AITaskComponent aiComponent =
-                new AITaskComponent()
-                          //.addTask(new Stage2Task(1, gameArea, bossHead, target));
-                        .addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
-
-        darkness.addComponent(aiComponent);
-        darkness.setScale(new Vector2(40f, 5f));
-        //PhysicsUtils.setScaledCollider(darkness, 0.6f, 0.3f);
-
-        return darkness;
-    }
+//    public static Entity createDarkness(Entity target, Level4 gameArea) {
+//        Entity darkness = new Entity()
+//                .addComponent(new PhysicsComponent())
+//                //.addComponent(new PhysicsMovementComponent())
+//                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
+//                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+//                .addComponent(new TextureRenderComponent("images/placeholder.png"))
+//                //.addComponent(new CombatStatsComponent(3, 0))
+//                .addComponent(new DisposingComponent());
+//
+//        Entity beam = createBeam();
+//        Entity bossHead = createBossHead();
+//        Entity spawner = createLightSpawner(target, gameArea);
+//
+//
+//
+//        AITaskComponent aiComponent =
+//                new AITaskComponent()
+//                          //.addTask(new Stage2Task(1, gameArea, bossHead, target));
+//                        .addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
+//
+//        darkness.addComponent(aiComponent);
+//        darkness.setScale(new Vector2(40f, 5f));
+//        //PhysicsUtils.setScaledCollider(darkness, 0.6f, 0.3f);
+//
+//        return darkness;
+//    }
 
     /**
      * Creates the boss head

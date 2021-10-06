@@ -69,7 +69,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private final boolean LIGHTINGON = true;
+  private boolean LIGHTINGON = true;
   private GameArea gameArea = null;
 
   private Entity ui;
@@ -207,7 +207,7 @@ public class MainGameScreen extends ScreenAdapter {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
           CAMERA_POSITION.set(new Vector2(20, 15));
-          renderer.setZoom(40);
+          renderer.setZoom(100);
         }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);

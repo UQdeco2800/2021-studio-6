@@ -29,7 +29,7 @@ public class Level2 extends GameArea {
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final float WALL_WIDTH = 0.1f;
-  private static final String npcDeadAtlasFilename = "images/npc_movement/dead_npc.atlas";
+  private static final String NPC_DEAD_ATLAS_FILENAME = "images/npc_movement/dead_npc.atlas";
 
   /**
    * Images and assets file path for Level 2 map generation.
@@ -100,7 +100,7 @@ public class Level2 extends GameArea {
     "images/Player_Sprite/player_movement.atlas",
     "images/hud/dashbar.atlas",
     "images/hud/health.atlas",
-    npcDeadAtlasFilename
+    NPC_DEAD_ATLAS_FILENAME
   };
 
   // Music and sound variables
@@ -622,8 +622,8 @@ public class Level2 extends GameArea {
   }
 
   private void spawnDeadNPC() {
-    GridPoint2 pos = new GridPoint2(43,20);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, npcDeadAtlasFilename, false);
+    GridPoint2 pos = new GridPoint2(6,18);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, NPC_DEAD_ATLAS_FILENAME, false);
     spawnEntityAt(npcTut, pos, true, true);
   }
 

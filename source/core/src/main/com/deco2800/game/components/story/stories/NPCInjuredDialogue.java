@@ -3,9 +3,17 @@ package com.deco2800.game.components.story.stories;
 import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCInjuredDialogue extends BasicDialogueConfig {
-    protected static final String[] QUOTE = {"*urggh...*", "Those little buggers took my leg...", "How selfish!"};
+    protected static final String[] QUOTE = {
+        "* cough cough *",
+        "\"Join the Fireflies\", they said...",
+        "\"You can really make a difference\", they said...",
+        "Don't believe that crap.",
+        "There is no Safe Haven. It's all lies to give us some false hope.",
+        "* The injured person coughs, trying not to choke on their own blood *",
+        "The darkness will consume us all eventually...",
+        "Why even try?..."
+        };
     protected static final String[] PORTRAIT = {"injured-portrait"};
-    private static final int LENGTH = 3;
 
     public NPCInjuredDialogue(){
         dialogueText = QUOTE;
@@ -19,6 +27,6 @@ public class NPCInjuredDialogue extends BasicDialogueConfig {
      */
     @Override
     public int getLength() {
-        return LENGTH;
+        return QUOTE.length;
     }
 }

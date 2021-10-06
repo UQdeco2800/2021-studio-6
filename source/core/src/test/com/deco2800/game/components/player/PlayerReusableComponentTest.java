@@ -65,7 +65,7 @@ public class PlayerReusableComponentTest {
         // file, currently not in used because may change depending on game balancing
         Entity player = new Entity()
                 .addComponent(new PlayerCombatStatsComponent(3, 10, 3, 2, 1))
-                .addComponent(new InventoryComponent(5, 5, 3))
+                .addComponent(new InventoryComponent(5, 5, 3, 1))
                 .addComponent(new PlayerReusableComponent());
         player.create();
         return player;

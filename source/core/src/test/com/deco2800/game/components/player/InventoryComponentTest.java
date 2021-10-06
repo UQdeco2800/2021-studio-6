@@ -24,7 +24,7 @@ class InventoryComponentTest {
   @Test
   void shouldSetGetGold() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertEquals(150, inventory.getGold());
@@ -39,7 +39,7 @@ class InventoryComponentTest {
   @Test
   void shouldSetGetAmmo() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertEquals(5, inventory.getAmmo());
@@ -53,14 +53,14 @@ class InventoryComponentTest {
 
   @Test
   void shouldCheckHasGold() {
-    InventoryComponent inventory = new InventoryComponent(150, 5, 10);
+    InventoryComponent inventory = new InventoryComponent(150, 5, 10, 1);
     assertTrue(inventory.hasGold(100));
     assertFalse(inventory.hasGold(200));
   }
 
   @Test
   void shouldCheckHasAmmo() {
-    InventoryComponent inventory = new InventoryComponent(150, 5, 10);
+    InventoryComponent inventory = new InventoryComponent(150, 5, 10, 1);
     assertTrue(inventory.hasAmmo(5));
     assertFalse(inventory.hasAmmo(200));
   }
@@ -68,7 +68,7 @@ class InventoryComponentTest {
   @Test
   void shouldAddGold() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     inventory.addGold(-500);
@@ -82,7 +82,7 @@ class InventoryComponentTest {
   @Test
   void shouldAddAmmo() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     inventory.addAmmo(-500);
@@ -96,7 +96,7 @@ class InventoryComponentTest {
   @Test
   void shouldSetGetBandages() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertEquals(10, inventory.getBandages());
@@ -111,7 +111,7 @@ class InventoryComponentTest {
   @Test
   void shouldCheckHasBandages() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     assertTrue(inventory.hasBandages(10));
@@ -121,7 +121,7 @@ class InventoryComponentTest {
   @Test
   void shouldAddBandages() {
     Entity player = new Entity()
-            .addComponent(new InventoryComponent(150, 5, 10))
+            .addComponent(new InventoryComponent(150, 5, 10, 1))
             .addComponent(new PlayerInterfaceDisplay());
     InventoryComponent inventory = player.getComponent(InventoryComponent.class);
     inventory.addBandages(-500);

@@ -260,7 +260,7 @@ public class Level3 extends GameArea {
     rooms.add(new Room(2,1));
     Room endRoom = new Room(width, height);
     //while (!newRoom.equals(endRoom)) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 11; i++) {
       if (checkSurrounded(rooms, newRoom, width, height)) {
 
       }

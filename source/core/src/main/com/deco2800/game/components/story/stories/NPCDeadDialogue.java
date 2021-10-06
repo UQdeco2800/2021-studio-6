@@ -5,7 +5,7 @@ import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 public class NPCDeadDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE = {
         "Looks like this person has been half eaten...",
-        "* You notice a familiar bracelet on there left arm *",
+        "* You notice a familiar bracelet on their left arm *",
         "Charlie? No it can't be...",
         "They left only a few days ago...",
         "I...",

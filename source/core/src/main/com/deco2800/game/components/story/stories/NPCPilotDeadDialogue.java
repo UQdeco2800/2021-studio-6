@@ -6,7 +6,7 @@ public class NPCPilotDeadDialogue extends BasicDialogueConfig {
     protected static final String[] QUOTE= {
         "Guess I'm on my own again...",
         "Didn't even ask what his name was...",
-        "Rest in peace Firefly."
+        "Rest in peace, Firefly."
     };
     protected static final String[] PORTRAIT = null;
 

@@ -17,7 +17,7 @@ public class EpilogueCutScene extends CutSceneConfig {
                     "The ever expanding light was beautiful.",
                     "The anticipation...",
                     "The hope...",
-                    "The possibility of meeting other fireflies, perhaps even some of my friends who have made the journey before me.",
+                    "The possibility of meeting other Fireflies, perhaps even some of my friends who have made the journey before me.",
                     "An uneasy wind started to blow from the east, rocking the sail back and forth.",
                     "Probably just a storm blowing in...",
                     "The water seemed to be changing colour...",

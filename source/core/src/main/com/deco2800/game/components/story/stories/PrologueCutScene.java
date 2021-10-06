@@ -13,7 +13,7 @@ public class PrologueCutScene extends CutSceneConfig {
                     //Screen 1
                     "It all started with the lights...",
                     "First flickering...",
-                    "Then gone. Leaving us in darkness.",
+                    "Then gone, leaving us in darkness.",
 
                     //Screen 2
                     "You don't want to be left in the dark...",
@@ -29,21 +29,21 @@ public class PrologueCutScene extends CutSceneConfig {
 
                     //Screen 4
                     "But there is a light of hope, or so we believe...",
-                    "On the horizon... the Safe Haven",
+                    "On the horizon... the Safe Haven.",
                     "Some people venture forth into the endless night, trying to reach the Safe Haven.",
                     "Risking the shadows, hoping to find a permanent home in the light.",
-                    "They are the fireflies.",
+                    "They are the Fireflies.",
 
                     //Screen 5
                     "Leaving a path of light and setting up safehouses along the way for others to follow.",
                     "No one knows what's at the Safe Haven.",
-                    "No one knows if any firefly has ever made it.",
+                    "No one knows if any Firefly has ever made it.",
 
                     //Screen 6
                     "But what other choice do we have?",
                     "The shadow crawlers are getting closer to the city every day.",
                     "The darkness is coming.",
-                    "I have to leave and follow the fireflies."
+                    "I have to leave and follow the Fireflies."
             };
     protected static final String BLACK_IMAGE = "utils/blackpixel.png";
     protected static final String SEC_IMAGE = "prologue/2.png";

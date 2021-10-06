@@ -8,8 +8,8 @@ public class NPCInjuredDialogue extends BasicDialogueConfig {
         "\"Join the Fireflies\", they said...",
         "\"You can really make a difference\", they said...",
         "Don't believe that crap.",
-        "There is no safe haven. It's all lies to give us some false hope.",
-        "* The injured person coughs trying not to choke on their own blood *",
+        "There is no Safe Haven. It's all lies to give us some false hope.",
+        "* The injured person coughs, trying not to choke on their own blood *",
         "The darkness will consume us all eventually...",
         "Why even try?..."
         };

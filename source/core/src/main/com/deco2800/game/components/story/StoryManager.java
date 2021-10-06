@@ -29,7 +29,6 @@ public class StoryManager extends Component {
 
     private StoryManager(){
         scenesConfigs.put(StoryNames.TEST, new TestCutscene());
-        scenesConfigs.put(StoryNames.INTRO_DIALOGUE, new IntroDialogue());
         scenesConfigs.put(StoryNames.PROLOGUE, new PrologueCutScene());
         scenesConfigs.put(StoryNames.EPILOGUE, new EpilogueCutScene());
         scenesConfigs.put(StoryNames.TUTORIAL_GUIDE, new NPCTutorialDialogue());

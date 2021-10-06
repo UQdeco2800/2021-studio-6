@@ -7,7 +7,7 @@ public class PrologueCutScene extends CutSceneConfig {
     public static final String[] DIALOGUE_RAW =
             {
                     //Screen 0
-                    "Darkness",
+                    "Darkness.",
                     "Daunting, terrifying, and deadly.",
 
                     //Screen 1
@@ -17,7 +17,7 @@ public class PrologueCutScene extends CutSceneConfig {
 
                     //Screen 2
                     "You don't want to be left in the dark...",
-                    "That's where the shadow crawlers thrive.",
+                    "That's where the Shadow Crawlers thrive.",
                     "Creatures of the unknown.",
                     "Minions of some greater evil.",
                     "They destroy light, take it away, leaving darkness in their wake - killing anything in their way.",
@@ -41,7 +41,7 @@ public class PrologueCutScene extends CutSceneConfig {
 
                     //Screen 6
                     "But what other choice do we have?",
-                    "The shadow crawlers are getting closer to the city every day.",
+                    "The Shadow Crawlers are getting closer to the city every day.",
                     "The darkness is coming.",
                     "I have to leave and follow the Fireflies."
             };

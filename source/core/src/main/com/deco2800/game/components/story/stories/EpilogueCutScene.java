@@ -26,7 +26,7 @@ public class EpilogueCutScene extends CutSceneConfig {
                     "It was clear what it was...",
 
                     //Screen 3
-                    "A shadow crawler!",
+                    "A Shadow Crawler!",
             };
 
     protected static final String DOCK_IMAGE = "epilogue/1-the-docks.png";

@@ -120,7 +120,7 @@ public class TerrainFactory {
       // TODO: Add actual level 3 tiles here
       case FOREST2:
         TextureRegion ground =
-                new TextureRegion(resourceService.getAsset("images/level_2/level2_grass_1.png", Texture.class));
+                new TextureRegion(resourceService.getAsset("images/level_3/level3_grass_test2.png", Texture.class));
 
         TextureRegion backgroundTile2 =
                 new TextureRegion(resourceService.getAsset("images/level_2/level2_background_tile.png", Texture.class));

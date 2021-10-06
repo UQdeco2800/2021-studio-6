@@ -3,9 +3,16 @@ package com.deco2800.game.components.story.stories;
 import com.deco2800.game.components.story.basicdialogue.BasicDialogueConfig;
 
 public class NPCDeadDialogue extends BasicDialogueConfig {
-    protected static final String[] QUOTE = {"...", "*It looks like some poor Firefly didn't make it...*"};
+    protected static final String[] QUOTE = {
+        "Looks like this person has been half eaten...",
+        "* You notice a familiar bracelet on there left arm *",
+        "Charlie? No it can't be...",
+        "They left only a few days ago...",
+        "I...",
+        "I'm sorry old friend...",
+        "I should have gone with you..."
+        };
     protected static final String[] PORTRAIT = null;
-    private static final int LENGTH = 2;
 
     public NPCDeadDialogue(){
         dialogueText = QUOTE;
@@ -19,6 +26,6 @@ public class NPCDeadDialogue extends BasicDialogueConfig {
      */
     @Override
     public int getLength() {
-        return LENGTH;
+        return QUOTE.length;
     }
 }

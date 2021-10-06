@@ -37,10 +37,10 @@ public class Level1 extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 5);
 
   private static final float WALL_WIDTH = 0.1f;
-  private static final String npcSampleAtlasFilename = "images/npc_movement/npc_movement.atlas";
-  private static final String npcTut1AtlasFilename = "images/npc_movement/tut_npc1.atlas";
-  private static final String npcInjuredAtlasFilename = "images/npc_movement/injured_npc.atlas";
-  private static final String npcPilotAtlasFilename = "images/npc_movement/pilot_npc.atlas";
+  private static final String NPC_SAMPLE_ATLAS_FILENAME = "images/npc_movement/npc_movement.atlas";
+  private static final String NPC_TUT_1_ATLAS_FILENAME = "images/npc_movement/tut_npc1.atlas";
+  private static final String NPC_INJURED_ATLAS_FILENAME = "images/npc_movement/injured_npc.atlas";
+  private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
   private static final String[] forestTextures = {
     "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
@@ -113,10 +113,10 @@ public class Level1 extends GameArea {
       "images/weapon/machete.atlas",
       "images/playeritems/tourch/torch.atlas",
       "images/weapon/baseball.atlas",
-      npcSampleAtlasFilename,
-      npcTut1AtlasFilename,
-      npcInjuredAtlasFilename,
-      npcPilotAtlasFilename
+      NPC_SAMPLE_ATLAS_FILENAME,
+      NPC_TUT_1_ATLAS_FILENAME,
+      NPC_INJURED_ATLAS_FILENAME,
+      NPC_PILOT_ATLAS_FILENAME
   };
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
   private static final String[] playerSounds = {
@@ -556,19 +556,19 @@ public class Level1 extends GameArea {
 
   private void spawnTutorialNpc() {
     GridPoint2 pos = new GridPoint2(10,6);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, npcTut1AtlasFilename, true);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, NPC_TUT_1_ATLAS_FILENAME, true);
     spawnEntityAt(npcTut, pos, true, true);
   }
 
   private void spawnPilotNpc() {
     GridPoint2 pos = new GridPoint2(15,7);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT, npcPilotAtlasFilename, true);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_FIRST, NPC_PILOT_ATLAS_FILENAME, true);
     spawnEntityAt(npcTut, pos, true, true);
   }
 
   private void spawnInjuredNPC() {
     GridPoint2 pos = new GridPoint2(98,10);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_INJURED, npcInjuredAtlasFilename, false);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_INJURED, NPC_INJURED_ATLAS_FILENAME, false);
     spawnEntityAt(npcTut, pos, true, true);
   }
 

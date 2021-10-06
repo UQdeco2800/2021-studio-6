@@ -298,11 +298,14 @@ public class Level4 extends GameArea {
     }
 
     private void spawnFinalBoss() {
-        Entity boss = FinalBossFactory.createDarkness(player, this);
+//        Entity boss = FinalBossFactory.createDarkness(player, this);
         GridPoint2 bounds = terrain.getMapBounds(0);
-        GridPoint2 pos = new GridPoint2(bounds.x/2, bounds.y);
-        spawnEntityAt(boss, pos, true, true);
+        Entity boss = FinalBossFactory.createBossHead(player);
+        GridPoint2 pos = new GridPoint2(40, 46);
 
+
+        spawnEntityAt(boss, pos, true, true);
+//        this.spawnEntity(boss);
         //Entity bossHead = FinalBossFactory.createBossHead();
         //pos = new GridPoint2(bounds.x/2, (int) Math.round(bounds.y*0.9));
         //spawnEntityAt(bossHead, pos, true, true); //remove this stuff once stage 1 is done
@@ -316,6 +319,7 @@ public class Level4 extends GameArea {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity cobweb = ObstacleFactory.createCobweb();
             spawnEntityAt(cobweb, randomPos, true, false);
+
         }
     }
 

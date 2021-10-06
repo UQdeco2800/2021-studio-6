@@ -59,7 +59,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double gameLevel = 1;
+  private double gameLevel = 4;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -134,8 +134,10 @@ public class MainGameScreen extends ScreenAdapter {
         PlayerStateManager.getInstance().restorePlayerState();
       }
       gameArea = new Level4(terrainFactory); //change back to level 1
-      renderer.setZoom(50); //remove when finished
+//      rendererUnlit.setZoom(40); //remove when finished
+
       gameArea.create();
+
       ServiceLocator.registerGameArea(gameArea);
       this.gameArea.player.getEvents().addListener("dead", this::gameOver);
       this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
@@ -153,8 +155,6 @@ public class MainGameScreen extends ScreenAdapter {
         logger.info("Player state is carried forward");
       }
 
-      Player currentPlayerState = PlayerStateManager.getInstance().currentPlayerState();
-      gameLevel = currentPlayerState.getCurrentGameLevel();
       generateNewLevel(revert);
     }
   }
@@ -201,8 +201,14 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.renderUI();
 
     if (gameArea != null) {
+
       if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
+
         CAMERA_POSITION.set(gameArea.player.getPosition());
+        if(gameLevel == 4) {
+          CAMERA_POSITION.set(new Vector2(20, 15));
+          renderer.setZoom(40);
+        }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -350,9 +356,10 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.create();
 
     } else if (gameLevel == LEVEL_4) {
-      gameArea = new Level4(terrainFactory);
+//      System.out.println(gameLevel);
+      gameArea = new Level1(terrainFactory);
       gameArea.create();
-      renderer.setZoom(50); //zooms out the camera, value subject to change
+//      renderer.setZoom(50); //zooms out the camera, value subject to change
 
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call

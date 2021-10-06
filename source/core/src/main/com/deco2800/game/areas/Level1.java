@@ -84,7 +84,7 @@ public class Level1 extends GameArea {
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
-    "images/placeholder.png"
+    "images/placeholder.png",
     "images/dialogue/raw/npc_indicator.png"
   };
 

@@ -73,6 +73,16 @@ public class Level3 extends GameArea {
     "images/level_3/level3_dead_group_pine_tree.png",
     "images/level_3/level3_brown_group_pine_tree.png",
     "images/level_2/level2_tree_2_group_ver1.png",
+    "images/level_3/new_darker_water_tiles/water-bottom-left.png",
+    "images/level_3/new_darker_water_tiles/water-bottom.png",
+    "images/level_3/new_darker_water_tiles/water-bottom-right.png",
+    "images/level_3/new_darker_water_tiles/water-full.png",
+    "images/level_3/new_darker_water_tiles/water-left.png",
+    "images/level_3/new_darker_water_tiles/water-right.png",
+    "images/level_3/new_darker_water_tiles/water-top.png",
+    "images/level_3/new_darker_water_tiles/water-top-left.png",
+    "images/level_3/new_darker_water_tiles/water-top-right.png",
+
 
           // TODO: test grass for level 3
           "images/level_3/level3_grass_test2.png",
@@ -131,6 +141,7 @@ public class Level3 extends GameArea {
     spawnSafehouse();
     spawnCobweb();
     spawnBush();
+    spawnWaterTiles();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -655,6 +666,22 @@ public class Level3 extends GameArea {
     StoryManager.getInstance().loadCutScene(StoryNames.LEVEL3_INTRO);
     StoryManager.getInstance().displayStory();
   }
+
+  private void spawnWaterTiles() {
+    GridPoint2[] water1SpawnLocations = {
+        new GridPoint2(4, 42),
+        new GridPoint2(5, 42),
+        new GridPoint2(4, 41),
+        new GridPoint2(5, 41),
+    };
+
+    for (int i = 0; i < water1SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile1();
+      spawnEntityAt(bush, water1SpawnLocations[i], true, true);
+    }
+  }
+
+
 
   private void playMusic() {
     Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);

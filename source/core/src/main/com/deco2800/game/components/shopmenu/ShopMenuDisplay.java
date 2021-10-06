@@ -67,6 +67,25 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String MENU_BUTTON_STYLE = "menu-button-large";
     private static final String EQUIPPED_TEXT = "EQUIPPED";
     private static final String PURCHASE_TEXT = "PURCHASE";
+
+
+    private static final String DAGGER_TEXT = "A good little weapon to use in a tight spot, if you ask me.";
+    private static final String BAT_TEXT = "This was from an old game called 'Baseball', back before all this happened.";
+    private static final String AXE_TEXT = "Used to use this to chop wood back home before winter. Pretty good " +
+        "at splitting skulls as well I would imagine.";
+    private static final String MACHETE_TEXT = "There's something simplistically deadly about a sharp blade.";
+    private static final String CROWBAR_TEXT = "Nothing is quite as reliable as a sturdy piece of metal. Good for " +
+        "everything from prying open cars to starting a revolution.";
+    private static final String SLEDGE_TEXT = "You can lift this thing, right? Well, not returns either way.";
+    private static final String HELMET_TEXT = "Because who needs anything from the neck down?";
+    private static final String TORCH_TEXT = "You'll be wanting this out there. Trust me, you don't want to get stuck in the dark...";
+    private static final String LONG_DASH_TEXT = "Sometimes, you just need a burst of speed to get you places.";
+    private static final String ARMOUR_TEXT = "It'll set you back a bit, but this is the best protection money can buy! " +
+        "Or at least, that I can offer...";
+    private static final String BANDAGE_TEXT = "Normally, a bandage would just stop the bleeding but I've put a little " +
+        "something extra in these. Just don't ask what it is.";
+    private static final String INVINCIBILITY_TEXT = "This here is a handy piece of tech they cooked up just as everything" +
+        " started to go downhill. No one quite understands how it works anymore but it should still help you out in a tight spot.";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
     private final GdxGame game;
     private boolean isEnabled = false;
@@ -498,7 +517,8 @@ public class ShopMenuDisplay extends UIComponent {
     private void updateShopSpeech(String item){
         String[] items = {"DAGGER", "BAT", "AXE", "MACHETE", "CROWBAR", "SLEDGE",
         "HELMET", "TORCH", "LONG_DASH", "ARMOUR","BANDAGE", "INVINCIBILITY"};
-        String[] speech  = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+        String[] speech  = {DAGGER_TEXT,BAT_TEXT,AXE_TEXT,MACHETE_TEXT,CROWBAR_TEXT,SLEDGE_TEXT,HELMET_TEXT,TORCH_TEXT,
+            LONG_DASH_TEXT,ARMOUR_TEXT,BANDAGE_TEXT,INVINCIBILITY_TEXT};
         int index = Arrays.asList(items).indexOf(item);
 
         shopkeeperSpeech = DialogueBoxFactory.createTextDialogue(speech[index]);

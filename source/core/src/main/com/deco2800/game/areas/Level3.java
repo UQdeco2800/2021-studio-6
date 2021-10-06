@@ -20,6 +20,8 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level3 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level3.class);
@@ -230,6 +232,17 @@ public class Level3 extends GameArea {
       }
       return result.toString();
     }
+
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      Room room = (Room) o;
+      return this.x == room.x && this.y == room.y;
+    }
   }
 
   /**
@@ -240,12 +253,59 @@ public class Level3 extends GameArea {
     Array<Room> rooms = new Array<>();
     Room newRoom = new Room(0, 0);
     rooms.add(newRoom);
-    newRoom = generateRoom(newRoom, 1, width, height);
-    rooms.add(newRoom);
-    joinRooms(rooms.get(1), rooms.get(0));
+    rooms.add(new Room(0,1));
+    rooms.add(new Room(0,2));
+    rooms.add(new Room(1,2));
+    rooms.add(new Room(2,2));
+    rooms.add(new Room(2,1));
+    Room endRoom = new Room(width, height);
+    //while (!newRoom.equals(endRoom)) {
+    for (int i = 0; i < 10; i++) {
+      if (checkSurrounded(rooms, newRoom, width, height)) {
+
+      }
+      Room previousRoom = newRoom;
+      while (checkDuplicateRoom(rooms, newRoom)) {
+        newRoom = generateRoom(previousRoom, width, height);
+      }
+      rooms.add(newRoom);
+      joinRooms(newRoom, previousRoom);
+    }
     for (Room room: rooms) {
       System.out.println(room.toString());
     }
+  }
+
+  private boolean checkSurrounded(Array<Room> rooms, Room room, int width, int height) {
+    int matches = 0;
+    int x = room.getX();
+    int y = room.getY();
+    Room upRoom = new Room(x, y - 1);
+    if (y == 0 || checkDuplicateRoom(rooms, upRoom)) {
+      matches++;
+    }
+    Room downRoom = new Room(x, y + 1);
+    if (y == height || checkDuplicateRoom(rooms, downRoom)) {
+      matches++;
+    }
+    Room leftRoom = new Room(x - 1, y);
+    if (x == 0 || checkDuplicateRoom(rooms, leftRoom)) {
+      matches++;
+    }
+    Room rightRoom = new Room(x + 1, y);
+    if (x == width || checkDuplicateRoom(rooms, rightRoom)) {
+      matches++;
+    }
+    return matches == 4;
+  }
+
+  private boolean checkDuplicateRoom(Array<Room> rooms, Room newRoom) {
+    for (Room room: rooms) {
+      if (room.equals(newRoom)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -253,23 +313,23 @@ public class Level3 extends GameArea {
    * If previous room is on the bottom of map, only allow generating new rooms right or up
    * If previous room is on the right edge of map, only allow generating up or left
    * @param previousRoom previous room to join new room to
-   * @param mode 1 = regular, 2 = only allow right or up, 3 = only allow up or left
    * @return new room to be added
    */
-  private Room generateRoom(Room previousRoom, int mode, int width, int height) {
+  private Room generateRoom(Room previousRoom, int width, int height) {
+    int mode;
     while (true) {
       int randInt = RandomUtils.randomInt(4);
       System.out.println(randInt);
       if (randInt == 1 && previousRoom.getY() != 0) {
         //up
         return new Room(previousRoom.getX(), previousRoom.getY() - 1);
-      } else if (randInt == 2 && mode == 1 && previousRoom.getY() != height) {
+      } else if (randInt == 2 && previousRoom.getY() < height && previousRoom.getX() < width) {
         //down
         return new Room(previousRoom.getX(), previousRoom.getY() + 1);
-      } else if (randInt == 3 && mode != 2 && previousRoom.getX() != 0) {
+      } else if (randInt == 3 && previousRoom.getY() < height && previousRoom.getX() != 0) {
         //left
         return new Room(previousRoom.getX() - 1, previousRoom.getY());
-      } else if (randInt == 4 && mode != 3 && previousRoom.getX() != height) {
+      } else if (randInt == 4 && previousRoom.getX() < width) {
         //right
         return new Room(previousRoom.getX() + 1, previousRoom.getY());
       }

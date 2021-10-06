@@ -35,8 +35,11 @@ public class Level3 extends GameArea {
   private static final int NUM_LONGRANGE = 0;
   private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
   private static final int NUM_SPAWNER_ENEMY = 0;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 41);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 45);
   private static final float WALL_WIDTH = 0.1f;
+  private static final int ROOM_WIDTH = 10;
+  private static final int MAP_WIDTH = 5;
+  private static final int MAP_HEIGHT = 5;
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
@@ -127,9 +130,9 @@ public class Level3 extends GameArea {
     displayUI();
 
     // Spawn terrain/assets entities
-    tileLevel(5, 5);
+    Array<Room> rooms = tileLevel();
     spawnTerrain();
-    spawnTerrainTriGreenPineTrees();
+    spawnTerrainTriGreenPineTrees(rooms);
     //spawnTerrainTriBrownPineTrees();
     spawnSafehouse();
     spawnCobweb();
@@ -240,6 +243,10 @@ public class Level3 extends GameArea {
       return this.y;
     }
 
+    private int getInvY() {
+      return (MAP_HEIGHT - 1 )- this.y;
+    }
+
     private void setDirection(int direction, boolean state) {
       switch(direction) {
         case 1:
@@ -293,9 +300,9 @@ public class Level3 extends GameArea {
    * (In theory) randomly populates the level with rooms
    * Top left = 0,0
    */
-  private void tileLevel(int width, int height) {
-    width--;
-    height--;
+  private Array<Room> tileLevel() {
+    int width = MAP_WIDTH - 1;
+    int height = MAP_HEIGHT - 1;
     Array<Room> rooms = new Array<>();
     Room newRoom = new Room(0, 0);
     rooms.add(newRoom);
@@ -323,6 +330,7 @@ public class Level3 extends GameArea {
     for (Room room: rooms) {
       System.out.println(room.toString());
     }
+    return rooms;
   }
 
   private int getPreviousNonSurroundedRoom(Array<Room> rooms, int index, int width, int height) {
@@ -424,7 +432,40 @@ public class Level3 extends GameArea {
   /**
    * Spawns the group green pine trees that act as a visual terrain boundary.
    */
-  private void spawnTerrainTriGreenPineTrees() {
+  private void spawnTerrainTriGreenPineTrees(Array<Room> rooms) {
+    for (Room room: rooms) {
+      if (!room.down) {
+        for (int i = 0; i < ROOM_WIDTH; i++) {
+          GridPoint2 position = new GridPoint2(room.getX() * ROOM_WIDTH + i, room.getInvY() * ROOM_WIDTH);
+          Entity pineTriTree = ObstacleFactory.createTriGreenPineTree();
+          spawnEntityAt(pineTriTree, position, false, false);
+        }
+      }
+
+      if (!room.left) {
+        for (int i = 0; i < ROOM_WIDTH; i++) {
+          GridPoint2 position = new GridPoint2(room.getX() * ROOM_WIDTH, room.getInvY() * ROOM_WIDTH + i);
+          Entity pineTriTree = ObstacleFactory.createTriGreenPineTree();
+          spawnEntityAt(pineTriTree, position, false, false);
+        }
+      }
+
+      if (!room.up) {
+        for (int i = 0; i < ROOM_WIDTH; i++) {
+          GridPoint2 position = new GridPoint2(room.getX() * ROOM_WIDTH + i, (room.getInvY() + 1) * ROOM_WIDTH);
+          Entity pineTriTree = ObstacleFactory.createTriGreenPineTree();
+          spawnEntityAt(pineTriTree, position, false, false);
+        }
+      }
+
+      if (!room.right) {
+        for (int i = 0; i < ROOM_WIDTH; i++) {
+          GridPoint2 position = new GridPoint2((room.getX() + 1) * ROOM_WIDTH, room.getInvY() * ROOM_WIDTH + i);
+          Entity pineTriTree = ObstacleFactory.createTriGreenPineTree();
+          spawnEntityAt(pineTriTree, position, false, false);
+        }
+      }
+    }
     /*
     GridPoint2[] spawnLocations = {
       new GridPoint2(0, 45)

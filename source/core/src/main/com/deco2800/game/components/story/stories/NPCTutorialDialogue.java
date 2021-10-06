@@ -12,7 +12,7 @@ public class NPCTutorialDialogue extends BasicDialogueConfig {
         "Anyway you probably already know how things work, but here is a quick run down.",
         "To move around use the W, A, S, and D keys.",
         "To dash you press LEFT SHIFT.",
-        "If you want to use your special ability you can press the E key.",
+        "If you want to use your special ability you can press the Q key.",
         "Use it wisely as it has a long cooldown. When the blue bar in the bottom-left is full then you can use it again.",
         "If any Shadow Crawlers get close, press SPACE to use your melee weapon.",
         "Oh, and there is one other Firefly going out today, he's that guy in the jacket over there.",

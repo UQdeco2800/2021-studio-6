@@ -30,6 +30,7 @@ public class Level1 extends GameArea {
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
+  private static final int NUM_TREES = 3;
   // this can be removed - this is purely for testing purposes
   private static final int NUM_AMMO_PICKUPS = 10;
   private static final int NUM_COIN_PICKUPS = 5;
@@ -57,13 +58,16 @@ public class Level1 extends GameArea {
     "images/grass_3.png",
     "images/level_1/road_tile_black.png",
     "images/level_1/sidewalk.png",
+    "images/level_1/cracked_sidewalk.png",
     "images/level_1/curbUpper.png",
     "images/level_1/curbLower.png",
     "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
     "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
+    "images/level_1/road_barrier.png",
     "images/level_1/building2-day1-latest.png",
+    "images/level_1/building3-day1-latest.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -79,6 +83,9 @@ public class Level1 extends GameArea {
     "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
+    "images/level_1/dead_tree1-day1-latest.png",
+    "images/level_1/street_lamp.png",
+    "images/level_1/street_lamped_vined.png",
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
@@ -154,6 +161,8 @@ public class Level1 extends GameArea {
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
+    spawnDeadTrees();
+    spawnLamps();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -315,10 +324,17 @@ public class Level1 extends GameArea {
   private void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
 
-    for (int x = 3; x < tileBounds.x * 0.75; x += 7) {
+    for (int x = 3; x < tileBounds.x * 0.75; x += 14) {
       GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
 
-      Entity house = ObstacleFactory.createBuilding();
+      Entity house = ObstacleFactory.createBuilding(1);
+      spawnEntityAt(house, position, true, false);
+    }
+
+    for (int x = 10; x < tileBounds.x * 0.75; x += 14) {
+      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
+
+      Entity house = ObstacleFactory.createBuilding(2);
       spawnEntityAt(house, position, true, false);
     }
   }
@@ -334,14 +350,40 @@ public class Level1 extends GameArea {
   }
 
   private void spawnBarriers() {
-    for (int i = 0; i < 11; i++) {
-      if (i == 4 || i == 5 || i == 6) {
+    for (int i = 0; i < 11; i += 2) {
+      if (i == 4) {
         //leave a gap in the middle
         continue;
       }
+
       GridPoint2 position = new GridPoint2(18, i);
-      Entity barrier = ObstacleFactory.createObject("images/level_1/placeholder_curb.png", 1f);
-      spawnEntityAt(barrier, position, true, true);
+      Entity barrier = ObstacleFactory.createObject("images/level_1/road_barrier.png", 2f);
+      spawnEntityAt(barrier, position, true, false);
+    }
+  }
+
+  private void spawnDeadTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0).add(25, 1);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 position = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createObject("images/level_1/dead_tree1-day1-latest.png", 4f);
+      spawnEntityAt(tree, position, false, false);
+    }
+  }
+
+  private void spawnLamps() {
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    for (int x = 5; x < tileBounds.x * 0.75; x += 5) {
+      GridPoint2 position = new GridPoint2(x, 1);
+      String lampPath;
+      if (RandomUtils.randomInt(2) == 1) {
+        lampPath = "images/level_1/street_lamp.png";
+      } else {
+        lampPath = "images/level_1/street_lamped_vined.png";
+      }
+      Entity lamppost = ObstacleFactory.createObject(lampPath, 2f);
+      spawnEntityAt(lamppost, position, true, true);
     }
   }
 

@@ -1,4 +1,5 @@
 package com.deco2800.game.components;
+import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -221,6 +222,16 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             super.setHealth(0);
             if (getWoundState() != 0) {
                 setWoundState(getWoundState() - 1);
+
+                // Bypass if ServiceLocator isn't loaded.
+                //TODO: Have to refactor this somehow...
+                Sound sound = ServiceLocator.getResourceService() != null
+                        ? ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class)
+                        : null;
+                if(sound != null) {
+                    sound.play();
+                }
+
             }
         }
         if (getHealth() != getStateMax()) {

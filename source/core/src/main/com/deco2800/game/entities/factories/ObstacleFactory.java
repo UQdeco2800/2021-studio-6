@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
@@ -146,17 +147,94 @@ public class ObstacleFactory {
     return object;
   }
 
-  public static Entity createBuilding() {
+  public static Entity createBuilding(int buildingNumber) {
+    String buildingPath;
+    if (buildingNumber == 1) {
+      buildingPath = "images/level_1/building2-day1-latest.png";
+    } else {
+      buildingPath = "images/level_1/building3-day1-latest.png";
+    }
     Entity building =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
+            .addComponent(new TextureRenderComponent(buildingPath))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     building.getComponent(TextureRenderComponent.class).scaleEntity();
     building.scaleHeight(10f);
     return building;
+  }
+
+  /**
+   * Creates a torch entity, lightens the background of the map.
+   * @return entity
+   */
+  public static Entity createTorch() {
+    Entity torch =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent())
+        .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f));
+
+    torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    torch.getComponent(TextureRenderComponent.class).scaleEntity();
+    torch.scaleHeight(1.0f);
+    return torch;
+  }
+
+  /**
+   * Creates a triangle group of green pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriGreenPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/level2_tree_2_group_ver1.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
+  }
+
+  /**
+   * Creates a triangle group of dead pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriDeadPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/level3_dead_group_pine_tree.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
+  }
+
+  /**
+   * Creates a triangle group of brown pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriBrownPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/level3_brown_group_pine_tree.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
   }
 
   private ObstacleFactory() {

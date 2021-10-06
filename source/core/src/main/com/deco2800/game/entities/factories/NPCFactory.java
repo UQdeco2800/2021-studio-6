@@ -234,20 +234,6 @@ public class NPCFactory {
     return npc;
   }
 
-  /**
-   * Used to create shop keeper NPC in safehouse
-   *
-   * @return entity shopkeeper with all necessary components to trigger
-   * popup box shop
-   */
-  public static Entity createShopkeeperNPC() {
-    return new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
-            .addComponent(new ItemComponent(Items.SHOP, 1))
-            .addComponent(new TextureRenderComponent("images/Player_Sprite/front01.png"));
-  }
-
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

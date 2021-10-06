@@ -1,12 +1,12 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.ScreenAdapter;
 import com.deco2800.game.GdxGame;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 public class FadeTransitionScreen extends ScreenAdapter {
     private static final Logger logger =
@@ -33,39 +33,34 @@ public class FadeTransitionScreen extends ScreenAdapter {
         this.game = game;
 
         logger.debug("Transition screen initiated.");
-
-
     }
 
     @Override
     public void render(float delta) {
         // Sets background to black
         Gdx.gl.glClearColor(0f, 0f, 0f, 0);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-        if (fadeIn == true) {
+        if (fadeIn) {
             screenCurrent.render(Gdx.graphics.getDeltaTime());
         } else {
             screenNext.render(Gdx.graphics.getDeltaTime());
         }
 
-        Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
-        Gdx.gl.glBlendFunc(Gdx.gl.GL_SRC_ALPHA, Gdx.gl.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(1,1,1,fadeMagnitude);
         renderer.rect(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         renderer.end();
-        Gdx.gl.glDisable(Gdx.gl.GL_BLEND);
+        Gdx.gl.glDisable(GL20.GL_BLEND);
 
         if (fadeMagnitude >= 1) {
             fadeIn = false;
-        } else if (fadeMagnitude <= 0 && fadeIn == false) {
+        } else if (fadeMagnitude <= 0 && fadeIn) {
             game.setScreen(screenNext);
         }
-        fadeMagnitude += fadeIn == true ? 0.01 : -0.01;
-
-
+        fadeMagnitude += fadeIn ? 0.01 : -0.01;
     }
 
     @Override
@@ -86,4 +81,3 @@ public class FadeTransitionScreen extends ScreenAdapter {
     public void dispose() {}
 
 }
-

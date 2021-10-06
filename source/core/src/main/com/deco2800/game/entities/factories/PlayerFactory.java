@@ -38,7 +38,7 @@ public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
   private static String meleeFilePath = stats.meleeFilePath;
-  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel, bulletMagazine;
+  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel, bulletMagazine, torch;
   private static String ability, meleeWeaponType, armorType;
 
   /**
@@ -97,7 +97,7 @@ public class PlayerFactory {
           .addComponent(new PlayerActions(woundState))
           .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
                   baseRangedAttack, defenceLevel))
-          .addComponent(new InventoryComponent(gold, ammo, bandages))
+          .addComponent(new InventoryComponent(gold, ammo, bandages, torch))
           .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
           .addComponent(inputComponent)
           .addComponent(new PlayerRangeAttackComponent())
@@ -130,13 +130,14 @@ public class PlayerFactory {
       // set initial state of player when game starts for the very first time, load from config file
       playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
               stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.bulletMagazine, stats.ability,
-              stats.meleeFilePath, stats.meleeWeaponType, stats.armorType, stats.currentGameLevel);
+              stats.meleeFilePath, stats.meleeWeaponType, stats.armorType, stats.currentGameLevel, stats.torch);
 
       baseAttack = stats.baseAttack;
       baseRangedAttack = stats.baseAttack;
       health = stats.health;
       ammo = stats.ammo;
       bandages = stats.bandages;
+      torch = stats.torch;
       gold = stats.gold;
       woundState = stats.woundState;
       defenceLevel = stats.defenceLevel;
@@ -153,6 +154,7 @@ public class PlayerFactory {
       health = currentPlayerState.getHealth();
       ammo = currentPlayerState.getAmmo();
       bandages = currentPlayerState.getBandage();
+      torch = currentPlayerState.getTorch();
       gold = currentPlayerState.getGold();
       woundState = currentPlayerState.getWoundState();
       defenceLevel = currentPlayerState.getDefenceLevel();

@@ -4,6 +4,7 @@ public enum Items {
     COINS,
     AMMO,
     BANDAGE,
+    TORCH,
     ARMOUR,
     HELMET,
     CROWBAR,

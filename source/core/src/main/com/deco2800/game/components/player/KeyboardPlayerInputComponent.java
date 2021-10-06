@@ -101,9 +101,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("dash");
           return true;
-        case Keys.T:
-          entity.getEvents().trigger("toggleTorch");
-          return true;
       }
     }
 
@@ -139,7 +136,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
-
     if (timeSource == null || !timeSource.isPaused() && (up || down || left || right)) {
       switch (keycode) {
         case Keys.W:

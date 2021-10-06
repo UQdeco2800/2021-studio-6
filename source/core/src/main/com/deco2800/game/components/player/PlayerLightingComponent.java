@@ -15,6 +15,7 @@ public class PlayerLightingComponent extends PointLightComponent {
 
     private boolean torchState;
     private IndependentAnimator torchAnimator;
+    private int torchTime;
 
     public PlayerLightingComponent (Color color, float distance, float offsetx, float offsety) {
         super(color, distance,offsetx,offsety);
@@ -37,13 +38,16 @@ public class PlayerLightingComponent extends PointLightComponent {
         torchAnimator.setCamera(true);
         torchAnimator.setScale(1, 1);
         torch.setter();
-        //setAnimations(setWeapon);
+        torchTime = 100;
     }
 
     /**
      * Toggles the state of the torch to allow player to toggle lighting
      */
-    private void ToggleTorchState() {
+    /**
+     * Toggles the torch state
+     */
+    public void ToggleTorchState() {
         torchState = !torchState;
         this.getPointLight().setActive(torchState);
     }

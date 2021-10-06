@@ -76,10 +76,11 @@ public class PlayerStateManager {
      * @param meleeFilePath loads data relevant to melee weapon which will correspond to player's current state
      * @param meleeWeaponType weapon type of current player's state
      * @param armorType armor type of current player's state
+     * @param torch the timer for the torch duration
      */
     public void createStartingPlayerState(int baseRangedAttack, int baseAttack, int health, int ammo, int bandages, int gold,
                                   int woundState, int defenceLevel, int bullet, String ability, String meleeFilePath,
-                                  String meleeWeaponType, String armorType, double currentGameLevel) {
+                                  String meleeWeaponType, String armorType, double currentGameLevel, int torch) {
         playerState = new Player(playerID).setBaseRangedAttack(baseRangedAttack).setBaseAttack(baseAttack)
                 .setHealth(health).setAmmo(ammo).setBandage(bandages).setGold(gold).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
@@ -114,6 +115,7 @@ public class PlayerStateManager {
         if (health != player.getComponent(PlayerCombatStatsComponent.class).getStateMax()) {
             health = player.getComponent(PlayerCombatStatsComponent.class).getStateMax();
         }
+        int torch = player.getComponent(InventoryComponent.class).getTorch();
         int woundState = player.getComponent(PlayerCombatStatsComponent.class).getWoundState();
         int defenceLevel = player.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel();
         String ability = player.getComponent(PlayerAbilitiesComponent.class).getAbility().toString();
@@ -123,7 +125,7 @@ public class PlayerStateManager {
         playerState.setAmmo(ammo).setBandage(bandage).setGold(gold).setHealth(health).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
                 .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(gameLevel)
-                .setBulletMagazine(bulletMagazine);
+                .setBulletMagazine(bulletMagazine).setTorch(torch);
 
         trackPlayerState(playerState);
         playerMemento = playerState.createMemento();

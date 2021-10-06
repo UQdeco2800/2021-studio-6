@@ -93,7 +93,7 @@ public class Level4 extends GameArea {
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
-
+        
     private final TerrainFactory terrainFactory;
 
     public Level4(TerrainFactory terrainFactory) {
@@ -302,7 +302,6 @@ public class Level4 extends GameArea {
         GridPoint2 bounds = terrain.getMapBounds(0);
         Entity boss = FinalBossFactory.createBossHead(player);
         GridPoint2 pos = new GridPoint2(40, 46);
-
 
         spawnEntityAt(boss, pos, true, true);
 //        this.spawnEntity(boss);

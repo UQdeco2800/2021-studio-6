@@ -14,11 +14,14 @@ public class InventoryComponent extends Component {
   private int gold;
   private int ammo;
   private int bandages;
+  private int torch;
+  private boolean torchStatus;
 
-  public InventoryComponent(int gold, int ammo, int bandages) {
+  public InventoryComponent(int gold, int ammo, int bandages, int torch) {
     this.gold = gold;
     this.ammo = ammo;
     this.bandages = bandages;
+    this.torch = torch;
   }
 
   @Override
@@ -27,6 +30,28 @@ public class InventoryComponent extends Component {
     entity.getEvents().trigger("updateBandageHUD",this.bandages);
     entity.getEvents().trigger("updateAmmoHUD",this.ammo);
     entity.getEvents().trigger("updateCoinHUD",this.gold);
+    if (torch > 0) {
+      torchStatus = true;
+    } else {
+      torchStatus = false;
+      entity.getEvents().trigger("toggleTorch");
+    }
+  }
+
+  @Override
+  public void update() {
+    super.update();
+    if (torch > 0) {
+      torch--;
+      if (torch <= 0) {
+        torchStatus = false;
+        entity.getEvents().trigger("toggleTorch");
+      }
+    }
+    if (torch > 0 && !torchStatus) {
+      torchStatus = true;
+      entity.getEvents().trigger("toggleTorch");
+    }
   }
 
   /**
@@ -128,7 +153,7 @@ public class InventoryComponent extends Component {
    */
   public void setBandages(int bandages) {
     this.bandages = Math.max(bandages, 0);
-    logger.debug("Setting ammo to {}", this.bandages);
+    logger.debug("Setting bandages to {}", this.bandages);
     entity.getEvents().trigger("updateBandageHUD",this.bandages);
   }
 
@@ -138,5 +163,14 @@ public class InventoryComponent extends Component {
    */
   public void addBandages(int bandages) {
     setBandages(this.bandages + bandages);
+  }
+
+  public void addTorch(int addTorch) {
+    logger.debug("Setting torch to {}", this.torch);
+    this.torch += addTorch;
+  }
+
+  public int getTorch() {
+    return this.torch;
   }
 }

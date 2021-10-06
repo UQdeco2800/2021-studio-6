@@ -13,5 +13,6 @@
   "meleeWeaponType": "BAT",
   "armorType": "NONE",
   "meleeFilePath": "configs/Baseball.json",
-  "currentGameLevel": 1
+  "currentGameLevel": 1,
+  "torch": 100
 }

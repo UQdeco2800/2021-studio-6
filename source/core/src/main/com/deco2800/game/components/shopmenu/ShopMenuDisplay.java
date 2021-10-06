@@ -101,6 +101,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int NO_FUNDS_INDEX = 0;
     private static final int EQUIPPED_INDEX = 1;
     public static final int ADD_BANDAGE = 1;
+    public static final int ADD_TORCH = 100;
     private static final int PURCHASED_INDEX = 2;
     private ImageButton crowbarImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton,
@@ -645,6 +646,8 @@ public class ShopMenuDisplay extends UIComponent {
                 playerState.getComponent(PlayerAbilitiesComponent.class).setAbility(ability);
             } else if (itemName.equals(Items.BANDAGE.toString())) {
                 playerState.getComponent(InventoryComponent.class).addBandages(ADD_BANDAGE);
+            }else if (itemName.equals(Items.TORCH.toString())) {
+                playerState.getComponent(InventoryComponent.class).addTorch(ADD_TORCH);
             }
         }
         int updatePlayerGold = playerGold - itemPrice;

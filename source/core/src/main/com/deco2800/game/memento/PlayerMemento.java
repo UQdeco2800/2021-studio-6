@@ -6,7 +6,7 @@ package com.deco2800.game.memento;
  * itself
  */
 public class PlayerMemento {
-    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id, bulletMagazine;
+    protected int ammo, gold, bandage, defenceLevel, woundState, baseAttack, baseRangedAttack, health, id, bulletMagazine, torch;
     protected double currentGameLevel;
     protected String ability, meleeWeaponType, armorType, meleeFilePath;
 
@@ -27,17 +27,19 @@ public class PlayerMemento {
      * @param meleeFilePath loads data relevant to melee weapon which will correspond to player's current state
      * @param meleeWeaponType weapon type of current player's state
      * @param armorType armor type of current player's state
+     * @param torch the timer for the torch duration
      */
     public PlayerMemento(int id, int ammo, int gold, int bandage, int defenceLevel, int woundState,
                          int baseRangedAttack, int baseAttack, int health, int bulletMagazine,
                          String ability, String meleeFilePath, String meleeWeaponType, String armorType,
-                         double currentGameLevel) {
+                         double currentGameLevel, int torch) {
         super();
         this.id = id;
         this.ammo = ammo;
         this.bulletMagazine = bulletMagazine;
         this.gold = gold;
         this.bandage = bandage;
+        this.torch = torch;
         this.defenceLevel = defenceLevel;
         this.woundState = woundState;
         this.baseRangedAttack = baseRangedAttack;
@@ -131,6 +133,14 @@ public class PlayerMemento {
     }
 
     /**
+     * Get torch timer for the current player state
+     * @return torch timer of current player state
+     */
+    public int getTorch() {
+        return this.torch;
+    }
+
+    /**
      * Get current game level of current player state
      * @return game level that current player state is currently at
      */
@@ -173,7 +183,7 @@ public class PlayerMemento {
     @Override
     public String toString() {
         return "Player [ID = " + id + "], ammo = " + ammo + ", magazine = " + bulletMagazine + ", gold = " + gold +
-                ", bandage = " + bandage + ", defenceLevel = " + defenceLevel + ", woundState = " + woundState +
+                ", bandage = " + bandage + ", torch timer = " + torch + ", defenceLevel = " + defenceLevel + ", woundState = " + woundState +
                 ", baseAttack = " + baseAttack + ", baseRangedAttack = " + baseRangedAttack + ", health = " + health +
                 "\n abiliy: " + ability + ", meleeWeaponType: " + meleeWeaponType + ", armorType: " + armorType +
                 ", meleeFilePath: " + meleeFilePath + "\n Player is currently at level " + currentGameLevel;

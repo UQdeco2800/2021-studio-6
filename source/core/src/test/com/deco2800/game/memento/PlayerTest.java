@@ -68,13 +68,13 @@ public class PlayerTest {
                 .setHealth(HEALTH).setAmmo(AMMO).setBandage(BANDAGE).setGold(GOLD).setWoundState(WOUND_STATE)
                 .setDefenceLevel(DEFENCE_LEVEL).setAbility(ABILITY).setMeleeFilePath(MELEE_FILE_PATH)
                 .setMeleeWeaponType(MELEE_WEAPON).setArmorType(ARMOR_TYPE).setCurrentGameLevel(GAME_LEVEL)
-                .setBulletMagazine(MAGAZINE);
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+                .setBulletMagazine(MAGAZINE).setTorch(TORCH_TIMER);
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;
+
         assertEquals(EXPECTED_STRING, playerState.toString());
     }
 
@@ -84,15 +84,15 @@ public class PlayerTest {
                 .setHealth(HEALTH).setAmmo(AMMO).setBandage(BANDAGE).setGold(GOLD).setWoundState(WOUND_STATE)
                 .setDefenceLevel(DEFENCE_LEVEL).setAbility(ABILITY).setMeleeFilePath(MELEE_FILE_PATH)
                 .setMeleeWeaponType(MELEE_WEAPON).setArmorType(ARMOR_TYPE).setCurrentGameLevel(GAME_LEVEL)
-                .setBulletMagazine(MAGAZINE);
+                .setBulletMagazine(MAGAZINE).setTorch(TORCH_TIMER);
         playerMemento = playerState.createMemento();
 
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;
+
         assertEquals(EXPECTED_STRING, playerMemento.toString());
     }
 

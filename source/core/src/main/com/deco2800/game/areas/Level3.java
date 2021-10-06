@@ -29,6 +29,7 @@ public class Level3 extends GameArea {
   private static final int NUM_SPAWNER_ENEMY = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 41);
   private static final float WALL_WIDTH = 0.1f;
+  private static final String NPC_DEAD_PILOT_ATLAS_FILENAME = "images/npc_movement/dead_pilot_npc.atlas";
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
@@ -90,6 +91,7 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
+    "images/dialogue/raw/npc_indicator.png"
   };
 
   /**
@@ -112,7 +114,8 @@ public class Level3 extends GameArea {
     "images/playeritems/tourch/torch.atlas",
     "images/weapon/machete.atlas",
     "images/weapon/baseball.atlas",
-    "images/weapon/dagger.atlas"
+    "images/weapon/dagger.atlas",
+    NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String[] playerSounds = {
@@ -151,7 +154,10 @@ public class Level3 extends GameArea {
     player = spawnPlayer();
     spawnBullet();
     spawnBomb();
-     spawnPickupItems();
+    spawnPickupItems();
+    spawnBullet();
+    spawnPilotNpc();
+
     spawnLevelThreeIntro();
 
     // Spawn enemy entities
@@ -650,9 +656,12 @@ public class Level3 extends GameArea {
     }
   }
 
-  /**
-   * Displays the introduction cutscene for Level 3.
-   */
+  private void spawnPilotNpc() {
+    GridPoint2 pos = new GridPoint2(10,32);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_DEAD, NPC_DEAD_PILOT_ATLAS_FILENAME, false);
+    spawnEntityAt(npcTut, pos, true, true);
+  }
+
   private void spawnLevelThreeIntro() {
     StoryManager.getInstance().loadCutScene(StoryNames.LEVEL3_INTRO);
     StoryManager.getInstance().displayStory();

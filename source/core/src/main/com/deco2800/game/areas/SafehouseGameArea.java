@@ -10,14 +10,15 @@ import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
 import com.deco2800.game.components.player.PlayerRangeAttackComponent;
+import com.deco2800.game.components.story.StoryManager;
+import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -30,6 +31,8 @@ public class SafehouseGameArea extends GameArea {
   private static final int NUM_BULLETS = 5;
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
+  private final float LEVEL_ONE_SAFEHOUSE = 1.5f;
+  private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
@@ -38,7 +41,8 @@ public class SafehouseGameArea extends GameArea {
     "images/safehouse/interior-day1-tile-door1-latest.png",
       "images/hud/dashbarFull.png",
       "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png",
-      "images/safehouse/shopkeeper/shopkeeperSprite.png"
+      "images/safehouse/shopkeeper/shopkeeperSprite.png",
+      "images/dialogue/raw/npc_indicator.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
@@ -51,7 +55,8 @@ public class SafehouseGameArea extends GameArea {
       "images/weapon/machete.atlas",
       "images/playeritems/tourch/torch.atlas",
       "images/weapon/baseball.atlas",
-      "images/weapon/axe.atlas"
+      "images/weapon/axe.atlas",
+      NPC_PILOT_ATLAS_FILENAME
   };
 
   private static final String[] safehouseSounds = {"sounds/Impact4.ogg"};
@@ -85,7 +90,17 @@ public class SafehouseGameArea extends GameArea {
     spawnShopKeeper();
     spawnBullet();
 
-    playMusic();
+    PlayerStateManager playerManager = PlayerStateManager.getInstance();
+    if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
+      spawnSafehouseIntro();
+      spawnPilotNpc();
+    } else {
+      playMusic();
+    }
+
+    // Listener for safehouse intro to finish and then play music
+    StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.SAFEHOUSE_INTRO,
+        this::playMusic);
   }
 
   public Entity getPlayer() {
@@ -179,6 +194,12 @@ public class SafehouseGameArea extends GameArea {
     return newPlayer;
   }
 
+  private void spawnPilotNpc() {
+    GridPoint2 pos = new GridPoint2(10,4);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_SECOND, NPC_PILOT_ATLAS_FILENAME, false);
+    spawnEntityAt(npcTut, pos, true, true);
+  }
+
   private void spawnBullet() {
     Array<Entity> bullets = new Array<>();
 
@@ -189,6 +210,11 @@ public class SafehouseGameArea extends GameArea {
     }
 
     player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+  }
+
+  private void spawnSafehouseIntro() {
+    StoryManager.getInstance().loadCutScene(StoryNames.SAFEHOUSE_INTRO);
+    StoryManager.getInstance().displayStory();
   }
 
   private void playMusic() {

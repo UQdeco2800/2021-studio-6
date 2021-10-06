@@ -23,7 +23,7 @@ public class PlayerStateManagerTest {
     Entity player, nextPlayerState, finalPlayerState;
     Player playerState = null;
     int PLAYER_ID, AMMO, MAGAZINE, GOLD, BANDAGE, DEFENCE_LEVEL, WOUND_STATE,
-            RANGE_ATTACK, BASE_ATTACK, HEALTH, NEW_AMMO, NEW_GOLD, NEW_BANDAGE, LESSER_MAGAZINE;
+            RANGE_ATTACK, BASE_ATTACK, HEALTH, NEW_AMMO, NEW_GOLD, NEW_BANDAGE, LESSER_MAGAZINE, TORCH_TIMER;
     double GAME_LEVEL, NEW_GAME_LEVEL, FINAL_LEVEL;
     String ABILITY, MELEE_WEAPON, ARMOR_TYPE, MELEE_FILE_PATH;
 
@@ -46,6 +46,7 @@ public class PlayerStateManagerTest {
         BASE_ATTACK = 10;
         HEALTH = 3;
         GAME_LEVEL = 1;
+        TORCH_TIMER = 1;
         ABILITY = "LONG_DASH";
         MELEE_WEAPON = "AXE";
         ARMOR_TYPE = "NONE";
@@ -56,7 +57,7 @@ public class PlayerStateManagerTest {
                 .addComponent(new PlayerActions(WOUND_STATE))
                 .addComponent(new PlayerCombatStatsComponent(HEALTH, BASE_ATTACK, WOUND_STATE,
                         RANGE_ATTACK, DEFENCE_LEVEL))
-                .addComponent(new InventoryComponent(NEW_GOLD, NEW_AMMO, NEW_BANDAGE))
+                .addComponent(new InventoryComponent(NEW_GOLD, NEW_AMMO, NEW_BANDAGE, TORCH_TIMER))
                 .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ABILITY)))
                 .addComponent(new PlayerRangeAttackComponent());
         player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(MELEE_WEAPON));
@@ -67,7 +68,7 @@ public class PlayerStateManagerTest {
                 .addComponent(new PlayerActions(WOUND_STATE))
                 .addComponent(new PlayerCombatStatsComponent(HEALTH, BASE_ATTACK, WOUND_STATE,
                         RANGE_ATTACK, DEFENCE_LEVEL))
-                .addComponent(new InventoryComponent(NEW_GOLD, NEW_AMMO, NEW_BANDAGE))
+                .addComponent(new InventoryComponent(NEW_GOLD, NEW_AMMO, NEW_BANDAGE, TORCH_TIMER))
                 .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ABILITY)))
                 .addComponent(new PlayerRangeAttackComponent());
         nextPlayerState.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(MELEE_WEAPON));
@@ -78,7 +79,7 @@ public class PlayerStateManagerTest {
                 .addComponent(new PlayerActions(WOUND_STATE))
                 .addComponent(new PlayerCombatStatsComponent(HEALTH, BASE_ATTACK, WOUND_STATE,
                         RANGE_ATTACK, DEFENCE_LEVEL))
-                .addComponent(new InventoryComponent(NEW_GOLD + 1, NEW_AMMO + 1, NEW_BANDAGE + 1))
+                .addComponent(new InventoryComponent(NEW_GOLD + 1, NEW_AMMO + 1, NEW_BANDAGE + 1, TORCH_TIMER))
                 .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ABILITY)))
                 .addComponent(new PlayerRangeAttackComponent());
         finalPlayerState.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(MELEE_WEAPON));
@@ -109,7 +110,7 @@ public class PlayerStateManagerTest {
     @Test
     void shouldCreateStartingPlayerState() {
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
-                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
 
         String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
                 ", gold = " + GOLD +
@@ -125,7 +126,7 @@ public class PlayerStateManagerTest {
         assertNull(playerManager.currentPlayerState());
 
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
-                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
         String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
                 ", gold = " + GOLD +
                 ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
@@ -149,7 +150,7 @@ public class PlayerStateManagerTest {
         assertNull(playerManager.currentPlayerState());
 
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
-                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
         String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
                 ", gold = " + GOLD +
                 ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
@@ -174,34 +175,34 @@ public class PlayerStateManagerTest {
     @Test
     void shouldRestorePlayerState() {
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
-                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
         playerManager.addAndUpdatePlayerState(nextPlayerState, NEW_GAME_LEVEL);
         playerManager.addAndUpdatePlayerState(finalPlayerState, FINAL_LEVEL);
 
         playerManager.restorePlayerState();
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;
+
         assertEquals(EXPECTED_STRING, playerManager.currentPlayerState().toString());
     }
 
     @Test
     void shouldRestorePlayerStateToClosestSafehouse() {
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
-                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
         playerManager.addAndUpdatePlayerState(nextPlayerState, NEW_GAME_LEVEL);
         playerManager.addAndUpdatePlayerState(finalPlayerState, FINAL_LEVEL);
 
         playerManager.restorePlayerStateToClosestSafehouse();
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + NEW_AMMO + ", magazine = " + LESSER_MAGAZINE +
-                ", gold = " + NEW_GOLD +
-                ", bandage = " + NEW_BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + NEW_AMMO + ", magazine = " + LESSER_MAGAZINE + ", gold = " + NEW_GOLD +
+                ", bandage = " + NEW_BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + NEW_GAME_LEVEL;
+
         assertEquals(EXPECTED_STRING, playerManager.currentPlayerState().toString());
     }
 }

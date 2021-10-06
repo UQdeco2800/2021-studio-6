@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerMementoTest {
     PlayerMemento playerMemento;
     int PLAYER_ID, AMMO, MAGAZINE, GOLD, BANDAGE, DEFENCE_LEVEL, WOUND_STATE,
-            RANGE_ATTACK, BASE_ATTACK, HEALTH;
+            RANGE_ATTACK, BASE_ATTACK, HEALTH, TORCH_TIMER;
     double GAME_LEVEL;
     String ABILITY, MELEE_WEAPON, ARMOR_TYPE, MELEE_FILE_PATH;
 
@@ -28,6 +28,8 @@ public class PlayerMementoTest {
         BASE_ATTACK = 10;
         HEALTH = 3;
         GAME_LEVEL = 1;
+        TORCH_TIMER = 1;
+
         ABILITY = "LONG_DASH";
         MELEE_WEAPON = "AXE";
         ARMOR_TYPE = "NONE";
@@ -35,7 +37,7 @@ public class PlayerMementoTest {
 
         playerMemento = new PlayerMemento(PLAYER_ID, AMMO, GOLD, BANDAGE,
                 DEFENCE_LEVEL, WOUND_STATE, RANGE_ATTACK, BASE_ATTACK, HEALTH, MAGAZINE,
-                ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
     }
 
     @Test

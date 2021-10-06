@@ -12,7 +12,7 @@ public class PlayerTest {
     Player playerState;
     PlayerMemento playerMemento, anotherPlayerMemento = null;
     int ANOTHER_PLAYER_ID, PLAYER_ID, AMMO, MAGAZINE, GOLD, BANDAGE, DEFENCE_LEVEL, WOUND_STATE,
-            RANGE_ATTACK, BASE_ATTACK, HEALTH;
+            RANGE_ATTACK, BASE_ATTACK, HEALTH, TORCH_TIMER;
     double GAME_LEVEL;
     String ABILITY, MELEE_WEAPON, ARMOR_TYPE, MELEE_FILE_PATH;
 
@@ -30,6 +30,7 @@ public class PlayerTest {
         BASE_ATTACK = 10;
         HEALTH = 3;
         GAME_LEVEL = 1;
+        TORCH_TIMER = 1;
         ABILITY = "LONG_DASH";
         MELEE_WEAPON = "AXE";
         ARMOR_TYPE = "NONE";
@@ -110,7 +111,7 @@ public class PlayerTest {
     void shouldRestorePlayer() {
         anotherPlayerMemento = playerMemento = new PlayerMemento(ANOTHER_PLAYER_ID, AMMO, GOLD, BANDAGE,
                 DEFENCE_LEVEL, WOUND_STATE, RANGE_ATTACK, BASE_ATTACK, HEALTH, MAGAZINE,
-                ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL);
+                ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
 
         playerState = new Player(PLAYER_ID).setBaseRangedAttack(RANGE_ATTACK).setBaseAttack(BASE_ATTACK)
                 .setHealth(HEALTH).setAmmo(AMMO).setBandage(BANDAGE).setGold(GOLD).setWoundState(WOUND_STATE)

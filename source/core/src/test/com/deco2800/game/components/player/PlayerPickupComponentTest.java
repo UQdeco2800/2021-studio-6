@@ -135,7 +135,7 @@ public class PlayerPickupComponentTest {
         Entity player = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new InventoryComponent(5, 5, 3))
+                .addComponent(new InventoryComponent(5, 5, 3, 1))
                 .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM));
         player.create();
         return player;

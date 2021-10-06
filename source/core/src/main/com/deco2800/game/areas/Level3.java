@@ -250,6 +250,8 @@ public class Level3 extends GameArea {
    * Top left = 0,0
    */
   private void tileLevel(int width, int height) {
+    width--;
+    height--;
     Array<Room> rooms = new Array<>();
     Room newRoom = new Room(0, 0);
     rooms.add(newRoom);

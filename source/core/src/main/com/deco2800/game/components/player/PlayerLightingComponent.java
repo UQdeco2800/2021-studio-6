@@ -25,7 +25,8 @@ public class PlayerLightingComponent extends PointLightComponent {
     @Override
     public void create() {
         super.create();
-        entity.getEvents().addListener("toggleTorch", this::ToggleTorchState);
+        entity.getEvents().addListener("torchOn", this::torchOn);
+        entity.getEvents().addListener("torchOff", this::torchOff);
         PlayerTorchAnimationController torch = this.entity.getComponent(PlayerTorchAnimationController.class);
         torchAnimator =
             new IndependentAnimator(
@@ -42,15 +43,21 @@ public class PlayerLightingComponent extends PointLightComponent {
     }
 
     /**
-     * Toggles the state of the torch to allow player to toggle lighting
+     * Turns the lighting off
      */
-    /**
-     * Toggles the torch state
-     */
-    public void ToggleTorchState() {
-        torchState = !torchState;
-        this.getPointLight().setActive(torchState);
+    private void torchOff() {
+        torchState = false;
+        this.getPointLight().setActive(false);
     }
+
+    /**
+     * Turns the lighting on
+     */
+    private void torchOn() {
+        torchState = true;
+        this.getPointLight().setActive(true);
+    }
+
 
     /**
      * Used to get the torch animator for use in the animation controller

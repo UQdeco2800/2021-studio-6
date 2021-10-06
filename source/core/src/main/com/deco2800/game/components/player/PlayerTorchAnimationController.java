@@ -23,7 +23,8 @@ public class PlayerTorchAnimationController extends Component {
   public void setter() {
     lightingComponent = this.entity.getComponent(PlayerLightingComponent.class);
     torchAnimator = lightingComponent.getTorchAnimator();
-    entity.getEvents().addListener("toggleTorch",this::stop);
+    entity.getEvents().addListener("torchOn",this::start);
+    entity.getEvents().addListener("torchOff",this::stop);
     entity.getEvents().addListener("dispose", this::disposeAnimation);
     torchAnimator.startAnimation("front");
     previous = Directions.MOVE_UP;
@@ -63,18 +64,28 @@ public class PlayerTorchAnimationController extends Component {
   }
 
   /**
-   * Toggles the torch animation status
+   * Stops the torch animation status
    */
   void stop() {
     previous = null;
-    on = !on;
+    on = false;
     torchAnimator.stopAnimation();
   }
+
+  /**
+   * Starts the torch animation status
+   */
+  void start() {
+    previous = null;
+    on = true;
+  }
+
 
   /**
    * Removes and disposes the torch animation
    */
   void disposeAnimation() {
+    torchAnimator.stopAnimation();
     torchAnimator.dispose();
   }
 }

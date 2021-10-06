@@ -1,6 +1,8 @@
 package com.deco2800.game.components.player;
 
 import com.deco2800.game.components.Component;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,9 @@ public class InventoryComponent extends Component {
   private int bandages;
   private int torch;
   private boolean torchStatus;
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
+  private static final int TICK_LENGTH = 1000; // in milliseconds
+  private long tickStartTime = 0;
 
   public InventoryComponent(int gold, int ammo, int bandages, int torch) {
     this.gold = gold;
@@ -32,25 +37,30 @@ public class InventoryComponent extends Component {
     entity.getEvents().trigger("updateCoinHUD",this.gold);
     if (torch > 0) {
       torchStatus = true;
+      entity.getEvents().trigger("torchOn");
     } else {
       torchStatus = false;
-      entity.getEvents().trigger("toggleTorch");
+      entity.getEvents().trigger("torchOff");
     }
+    tickStartTime = ServiceLocator.getTimeSource().getTime();
   }
 
   @Override
   public void update() {
     super.update();
     if (torch > 0) {
-      torch--;
-      if (torch <= 0) {
-        torchStatus = false;
-        entity.getEvents().trigger("toggleTorch");
+      if (timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
+        tickStartTime = ServiceLocator.getTimeSource().getTime();
+        torch--;
       }
+    }
+    if (torch <= 0) {
+      torchStatus = false;
+      entity.getEvents().trigger("torchOff");
     }
     if (torch > 0 && !torchStatus) {
       torchStatus = true;
-      entity.getEvents().trigger("toggleTorch");
+      entity.getEvents().trigger("torchOn");
     }
   }
 

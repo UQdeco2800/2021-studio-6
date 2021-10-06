@@ -35,11 +35,11 @@ public class Level3 extends GameArea {
   private static final int NUM_LONGRANGE = 0;
   private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
   private static final int NUM_SPAWNER_ENEMY = 0;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 45);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(5, 65);
   private static final float WALL_WIDTH = 0.1f;
   private static final int ROOM_WIDTH = 10;
-  private static final int MAP_WIDTH = 5;
-  private static final int MAP_HEIGHT = 5;
+  private static final int MAP_WIDTH = 7;
+  private static final int MAP_HEIGHT = 7;
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
@@ -243,8 +243,13 @@ public class Level3 extends GameArea {
       return this.y;
     }
 
+    /**
+     * Subtracts the y coordinate of this room from the map height and returns it
+     * Implemented to match room coordinates to coordinates used by the actual level
+     * @return
+     */
     private int getInvY() {
-      return (MAP_HEIGHT - 1 )- this.y;
+      return (MAP_HEIGHT - 1 ) - this.y;
     }
 
     private void setDirection(int direction, boolean state) {
@@ -555,7 +560,7 @@ public class Level3 extends GameArea {
    * Spawns the safehouse.
    */
   public void spawnSafehouse() {
-    GridPoint2 center = new GridPoint2(40, 43);
+    GridPoint2 center = new GridPoint2(67, 67);
 
     Entity safehouse = SafehouseFactory.createSafehouse();
     // Position is currently procedurally (kidding, just randomly) generated.

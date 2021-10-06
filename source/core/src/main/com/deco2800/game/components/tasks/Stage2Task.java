@@ -48,7 +48,7 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
         spawner4 = FinalBossFactory.createLightSpawner(target, gameArea);
     }
 
-    public void createLight() {
+    public void createSpawners() {
 
         Vector2 pos1 = new Vector2(0, 0);
         Vector2 pos2 = new Vector2(0,19);
@@ -72,7 +72,7 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
     public void start() {
         super.start();
 
-        this.createLight();
+        this.createSpawners();
 
     }
 

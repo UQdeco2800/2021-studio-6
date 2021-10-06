@@ -421,11 +421,10 @@ public class Level3 extends GameArea {
    */
   private void spawnSpawnerEnemy() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(50, 37),
       new GridPoint2(33, 33),
       new GridPoint2(52, 21),
       new GridPoint2(13, 13),
-      new GridPoint2(41, 6),
+      new GridPoint2(44, 6),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -491,7 +490,10 @@ public class Level3 extends GameArea {
    */
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(47, 40),
+      new GridPoint2(42, 38),
+      new GridPoint2(44, 37),
+      new GridPoint2(46, 35),
+      new GridPoint2(52, 35),
       new GridPoint2(25, 34),
       new GridPoint2(28, 32),
       new GridPoint2(3, 31),
@@ -500,11 +502,11 @@ public class Level3 extends GameArea {
       new GridPoint2(44, 25),
       new GridPoint2(41, 21),
       new GridPoint2(29, 20),
+      new GridPoint2(47, 19),
       new GridPoint2(51, 17),
-      new GridPoint2(46, 16),
       new GridPoint2(5, 14),
       new GridPoint2(15, 6),
-      new GridPoint2(46, 4),
+      new GridPoint2(46, 5),
       new GridPoint2(12, 3),
     };
 
@@ -519,8 +521,7 @@ public class Level3 extends GameArea {
    */
   private void spawnToughLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(43, 39),
-      new GridPoint2(46, 37),
+      new GridPoint2(42, 41),
       new GridPoint2(21, 33),
       new GridPoint2(13, 22),
       new GridPoint2(35, 15),
@@ -588,21 +589,14 @@ public class Level3 extends GameArea {
     GridPoint2[] ammoSpawnLocations = {
       new GridPoint2(16, 41),
       new GridPoint2(36, 34),
-      new GridPoint2(38, 32),
       new GridPoint2(41, 30),
-      new GridPoint2(52, 28),
-      new GridPoint2(46, 27),
+      new GridPoint2(49, 26),
       new GridPoint2(2, 25),
-      new GridPoint2(20, 18),
-      new GridPoint2(42, 15),
-      new GridPoint2(13, 5),
-    };
-
-    GridPoint2[] bandageSpawnLocations = {
-      new GridPoint2(21, 30),
-      new GridPoint2(43, 28),
+      new GridPoint2(20, 22),
+      new GridPoint2(53, 18),
       new GridPoint2(46, 14),
-      new GridPoint2(9, 11),
+      new GridPoint2(13, 5),
+      new GridPoint2(43, 2),
     };
 
     GridPoint2[] coinSpawnLocations = {
@@ -649,12 +643,6 @@ public class Level3 extends GameArea {
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
     }
 
-//    for (int i = 0; i < bandageSpawnLocations.length; i++) {
-//      int randomAmmoQuantity = RandomUtils.randomInt(5);
-//      Entity pickupAmmo = ItemFactory.ba;
-//      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
-//    }
-
     for (int i = 0; i < coinSpawnLocations.length; i++) {
       int randomCoinQuantity = RandomUtils.randomInt(5);
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
@@ -662,27 +650,154 @@ public class Level3 extends GameArea {
     }
   }
 
+  /**
+   * Displays the introduction cutscene for Level 3.
+   */
   private void spawnLevelThreeIntro() {
     StoryManager.getInstance().loadCutScene(StoryNames.LEVEL3_INTRO);
     StoryManager.getInstance().displayStory();
   }
 
+  /**
+   * Spawns all the water tiles variation (1,2,...,9) onto the map.
+   */
   private void spawnWaterTiles() {
     GridPoint2[] water1SpawnLocations = {
-        new GridPoint2(4, 42),
-        new GridPoint2(5, 42),
-        new GridPoint2(4, 41),
-        new GridPoint2(5, 41),
+      new GridPoint2(38, 41), new GridPoint2(52, 20), new GridPoint2(41, 17),
+      new GridPoint2(48, 17), new GridPoint2(43, 13), new GridPoint2(42, 12),
+      new GridPoint2(38, 7), new GridPoint2(52, 6), new GridPoint2(50, 4),
+      new GridPoint2(47, 3),
+    };
+
+    GridPoint2[] water2SpawnLocations = {
+      new GridPoint2(43, 36), new GridPoint2(46, 34), new GridPoint2(47, 34),
+      new GridPoint2(48, 34), new GridPoint2(51, 34), new GridPoint2(52, 34),
+      new GridPoint2(53, 34), new GridPoint2(54, 34), new GridPoint2(55, 34),
+      new GridPoint2(53, 20), new GridPoint2(54, 20), new GridPoint2(55, 20),
+      new GridPoint2(42, 17), new GridPoint2(43, 17), new GridPoint2(44, 17),
+      new GridPoint2(46, 12), new GridPoint2(47, 12), new GridPoint2(51, 4),
+      new GridPoint2(48, 3), new GridPoint2(49, 3),
+    };
+
+    GridPoint2[] water3SpawnLocations = {
+      new GridPoint2(39, 41), new GridPoint2(40, 40), new GridPoint2(41, 38),
+      new GridPoint2(42, 37), new GridPoint2(44, 36), new GridPoint2(45, 35),
+      new GridPoint2(45, 17), new GridPoint2(49, 17), new GridPoint2(39, 7),
+      new GridPoint2(53, 6), new GridPoint2(40, 5),
+    };
+
+    GridPoint2[] water4SpawnLocations = {
+      new GridPoint2(38, 40), new GridPoint2(38, 39), new GridPoint2(38, 38),
+      new GridPoint2(38, 37), new GridPoint2(41, 33), new GridPoint2(48, 16),
+      new GridPoint2(44, 15), new GridPoint2(48, 15), new GridPoint2(44, 14),
+      new GridPoint2(48, 14), new GridPoint2(48, 13), new GridPoint2(38, 6),
+      new GridPoint2(38, 5), new GridPoint2(52, 5), new GridPoint2(38, 4),
+      new GridPoint2(38, 3),
+    };
+
+    GridPoint2[] water5SpawnLocations = {
+      new GridPoint2(39, 40), new GridPoint2(39, 39), new GridPoint2(39, 38),
+      new GridPoint2(40, 38), new GridPoint2(39, 37), new GridPoint2(40, 37),
+      new GridPoint2(41, 37), new GridPoint2(39, 36), new GridPoint2(40, 36),
+      new GridPoint2(41, 36), new GridPoint2(42, 36), new GridPoint2(40, 35),
+      new GridPoint2(41, 35), new GridPoint2(42, 35), new GridPoint2(43, 35),
+      new GridPoint2(44, 35), new GridPoint2(41, 34), new GridPoint2(42, 34),
+      new GridPoint2(43, 34), new GridPoint2(44, 34), new GridPoint2(45, 34),
+      new GridPoint2(42, 33), new GridPoint2(43, 33), new GridPoint2(44, 33),
+      new GridPoint2(45, 33), new GridPoint2(46, 33), new GridPoint2(47, 33),
+      new GridPoint2(48, 33), new GridPoint2(51, 33), new GridPoint2(52, 33),
+      new GridPoint2(53, 33), new GridPoint2(54, 33), new GridPoint2(55, 33),
+      new GridPoint2(43, 32), new GridPoint2(44, 32), new GridPoint2(45, 32),
+      new GridPoint2(46, 32), new GridPoint2(47, 32), new GridPoint2(48, 32),
+      new GridPoint2(51, 32), new GridPoint2(52, 32), new GridPoint2(53, 32),
+      new GridPoint2(54, 32), new GridPoint2(55, 32), new GridPoint2(44, 31),
+      new GridPoint2(45, 31), new GridPoint2(46, 31), new GridPoint2(47, 31),
+      new GridPoint2(48, 31), new GridPoint2(51, 31), new GridPoint2(52, 31),
+      new GridPoint2(53, 31), new GridPoint2(54, 31), new GridPoint2(55, 31),
+      new GridPoint2(46, 30), new GridPoint2(47, 30), new GridPoint2(48, 30),
+      new GridPoint2(51, 30), new GridPoint2(52, 30), new GridPoint2(53, 30),
+      new GridPoint2(54, 30), new GridPoint2(55, 30), new GridPoint2(44, 16),
+      new GridPoint2(44, 13), new GridPoint2(43, 12), new GridPoint2(44, 12),
+      new GridPoint2(45, 12), new GridPoint2(48, 12), new GridPoint2(45, 11),
+      new GridPoint2(46, 11), new GridPoint2(47, 11), new GridPoint2(48, 11),
+      new GridPoint2(39, 5), new GridPoint2(39, 4), new GridPoint2(52, 4),
+      new GridPoint2(39, 3), new GridPoint2(50, 3), new GridPoint2(51, 3),
+      new GridPoint2(52, 3),
+    };
+
+    GridPoint2[] water6SpawnLocations = {
+      new GridPoint2(40, 39), new GridPoint2(45, 16), new GridPoint2(49, 16),
+      new GridPoint2(45, 15), new GridPoint2(49, 15), new GridPoint2(45, 14),
+      new GridPoint2(49, 14), new GridPoint2(45, 13), new GridPoint2(49, 13),
+      new GridPoint2(49, 12), new GridPoint2(39, 6), new GridPoint2(53, 5),
+      new GridPoint2(40, 4), new GridPoint2(53, 4), new GridPoint2(40, 3),
+      new GridPoint2(53, 3),
+    };
+
+    GridPoint2[] water7SpawnLocations = {
+      new GridPoint2(38, 36), new GridPoint2(39, 35), new GridPoint2(40, 34),
+      new GridPoint2(41, 32), new GridPoint2(43, 31), new GridPoint2(44, 30),
+      new GridPoint2(46, 29), new GridPoint2(52, 19), new GridPoint2(41, 16),
+      new GridPoint2(45, 10), new GridPoint2(38, 2), new GridPoint2(47, 2),
+    };
+
+    GridPoint2[] water8SpawnLocations = {
+      new GridPoint2(42, 32), new GridPoint2(45, 30), new GridPoint2(47, 29),
+      new GridPoint2(48, 29), new GridPoint2(51, 29), new GridPoint2(52, 29),
+      new GridPoint2(53, 29), new GridPoint2(54, 29), new GridPoint2(55, 29),
+      new GridPoint2(53, 19), new GridPoint2(54, 19), new GridPoint2(55, 19),
+      new GridPoint2(42, 16), new GridPoint2(43, 16), new GridPoint2(43, 11),
+      new GridPoint2(44, 11), new GridPoint2(46, 10), new GridPoint2(47, 10),
+      new GridPoint2(39, 2), new GridPoint2(48, 2), new GridPoint2(49, 2),
+      new GridPoint2(50, 2), new GridPoint2(51, 2), new GridPoint2(52, 2),
+    };
+
+    GridPoint2[] water9SpawnLocations = {
+      new GridPoint2(49, 11), new GridPoint2(48, 10), new GridPoint2(40, 2),
+      new GridPoint2(53, 2),
     };
 
     for (int i = 0; i < water1SpawnLocations.length; i++) {
       Entity bush = ObstacleFactory.createWaterTile1();
       spawnEntityAt(bush, water1SpawnLocations[i], true, true);
     }
+    for (int i = 0; i < water2SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile2();
+      spawnEntityAt(bush, water2SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water3SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile3();
+      spawnEntityAt(bush, water3SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water4SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile4();
+      spawnEntityAt(bush, water4SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water5SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile5();
+      spawnEntityAt(bush, water5SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water6SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile6();
+      spawnEntityAt(bush, water6SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water7SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile7();
+      spawnEntityAt(bush, water7SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water8SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile8();
+      spawnEntityAt(bush, water8SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water9SpawnLocations.length; i++) {
+      Entity bush = ObstacleFactory.createWaterTile9();
+      spawnEntityAt(bush, water9SpawnLocations[i], true, true);
+    }
   }
 
-
-
+  /**
+   * Plays the music for Level 3.
+   */
   private void playMusic() {
     Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     gameOverSong.setLooping(true);
@@ -690,6 +805,9 @@ public class Level3 extends GameArea {
     gameOverSong.play();
   }
 
+  /**
+   * Load the assets needed to render Level 3.
+   */
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -705,6 +823,9 @@ public class Level3 extends GameArea {
     }
   }
 
+  /**
+   * Unload the assets when Level 3 GameArea is no longer active.
+   */
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -715,6 +836,9 @@ public class Level3 extends GameArea {
     resourceService.unloadAssets(LEVEL3_MUSIC);
   }
 
+  /**
+   * Disposes the assets and music.
+   */
   @Override
   public void dispose() {
 

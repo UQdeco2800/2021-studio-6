@@ -23,7 +23,6 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
     private final RaycastHit hit = new RaycastHit();
     private final GameArea gameArea;
     private final GameTime timeSource;
-    private final Entity head;
     private final Entity target;
     private long endTime;
     private long beamEndTime;
@@ -40,10 +39,10 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
      * @param head the darkness entity
      * @param target the target for the enemies to attack
      */
-    public Stage2Task(int priority, Level4 gameArea, Entity head, Entity target) {
+    public Stage2Task(int priority, Level4 gameArea, Entity target) {
         this.priority = priority;
         this.gameArea = gameArea;
-        this.head = head;
+
         this.target = target;
         physics = ServiceLocator.getPhysicsService().getPhysics();
         debugRenderer = ServiceLocator.getRenderService().getDebug();
@@ -59,7 +58,7 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
      */
     public void createSpawners() {
 
-        Vector2 pos1 = new Vector2(0, 0);
+        Vector2 pos1 = new Vector2(0, 4);
         Vector2 pos2 = new Vector2(0,19);
         Vector2 pos3 = new Vector2(39, 0);
         Vector2 pos4 = new Vector2(39,19);

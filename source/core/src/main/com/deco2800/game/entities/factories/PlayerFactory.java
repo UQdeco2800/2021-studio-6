@@ -127,7 +127,6 @@ public class PlayerFactory {
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
 
     if (playerManager.currentPlayerState() == null) {
-      System.out.println("null");
       // set initial state of player when game starts for the very first time, load from config file
       playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
               stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.bulletMagazine, stats.ability,
@@ -162,7 +161,6 @@ public class PlayerFactory {
       meleeWeaponType = currentPlayerState.getMeleeWeaponType();
       armorType = currentPlayerState.getArmorType();
       bulletMagazine = currentPlayerState.getBulletMagazine();
-      System.out.println(meleeFilePath);
     }
   }
 

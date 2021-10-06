@@ -112,9 +112,8 @@ public class PlayerStateManagerTest {
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
                 DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
 
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;
@@ -127,9 +126,8 @@ public class PlayerStateManagerTest {
 
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
                 DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;
@@ -138,7 +136,7 @@ public class PlayerStateManagerTest {
         playerManager.addAndUpdatePlayerState(player, NEW_GAME_LEVEL);
         String NEW_EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + NEW_AMMO + ", magazine = " + MAGAZINE +
                 ", gold = " + NEW_GOLD +
-                ", bandage = " + NEW_BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+                ", bandage = " + NEW_BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + NEW_GAME_LEVEL;
@@ -151,9 +149,8 @@ public class PlayerStateManagerTest {
 
         playerManager.createStartingPlayerState(RANGE_ATTACK, BASE_ATTACK, HEALTH, AMMO, BANDAGE, GOLD, WOUND_STATE,
                 DEFENCE_LEVEL, MAGAZINE, ABILITY, MELEE_FILE_PATH, MELEE_WEAPON, ARMOR_TYPE, GAME_LEVEL, TORCH_TIMER);
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;
@@ -163,12 +160,12 @@ public class PlayerStateManagerTest {
         nextPlayerState.getComponent(PlayerRangeAttackComponent.class).setReloadingStatus(true);
 
         playerManager.addAndUpdatePlayerState(nextPlayerState, NEW_GAME_LEVEL);
-        String NEW_EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + NEW_AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + NEW_GOLD +
-                ", bandage = " + NEW_BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
-                ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
-                "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
-                ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + NEW_GAME_LEVEL;
+        String NEW_EXPECTED_STRING =
+                "Player [ID = " + PLAYER_ID + "], ammo = " + NEW_AMMO + ", magazine = " + MAGAZINE + ", gold = " + NEW_GOLD +
+                        ", bandage = " + NEW_BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+                        ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
+                        "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
+                        ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + NEW_GAME_LEVEL;
         assertEquals(NEW_EXPECTED_STRING, playerManager.currentPlayerState().toString());
     }
 

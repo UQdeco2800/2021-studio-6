@@ -55,9 +55,8 @@ public class PlayerCaretakerTest {
     void shouldAddAndGetMemento() {
         playerCaretaker.addMemento(PLAYER_ID, MEMENTO_MESSAGE_INITIAL_STATE, playerMemento);
 
-        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE +
-                ", gold = " + GOLD +
-                ", bandage = " + BANDAGE + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
+        String EXPECTED_STRING = "Player [ID = " + PLAYER_ID + "], ammo = " + AMMO + ", magazine = " + MAGAZINE + ", gold = " + GOLD +
+                ", bandage = " + BANDAGE + ", torch timer = " + TORCH_TIMER + ", defenceLevel = " + DEFENCE_LEVEL + ", woundState = " + WOUND_STATE +
                 ", baseAttack = " + BASE_ATTACK + ", baseRangedAttack = " + RANGE_ATTACK + ", health = " + HEALTH +
                 "\n abiliy: " + ABILITY + ", meleeWeaponType: " + MELEE_WEAPON + ", armorType: " + ARMOR_TYPE +
                 ", meleeFilePath: " + MELEE_FILE_PATH + "\n Player is currently at level " + GAME_LEVEL;

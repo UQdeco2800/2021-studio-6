@@ -85,7 +85,7 @@ public class PlayerStateManager {
                 .setHealth(health).setAmmo(ammo).setBandage(bandages).setGold(gold).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
                 .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel)
-                .setBulletMagazine(bullet);
+                .setBulletMagazine(bullet).setTorch(torch);
         trackPlayerState(playerState);
         playerMemento = playerState.createMemento();
         caretaker.addMemento(playerState.getId(), MEMENTO_MESSAGE_INITIAL_STATE, playerMemento);

@@ -8,7 +8,9 @@ import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
 
-
+/**
+ * Component to toggle player lighting
+ */
 public class PlayerLightingComponent extends PointLightComponent {
 
     private boolean torchState;
@@ -38,6 +40,9 @@ public class PlayerLightingComponent extends PointLightComponent {
         //setAnimations(setWeapon);
     }
 
+    /**
+     * Toggles the state of the torch to allow player to toggle lighting
+     */
     private void ToggleTorchState() {
         torchState = !torchState;
         this.getPointLight().setActive(torchState);

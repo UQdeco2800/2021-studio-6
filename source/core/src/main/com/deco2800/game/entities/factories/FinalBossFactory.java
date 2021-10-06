@@ -28,8 +28,17 @@ import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
+/**
+ * The factory for all the entities related to the final boss
+ */
 public class FinalBossFactory {
 
+    /**
+     * Creates the darkness for level 4
+     * @param target the entity that the enemies attack
+     * @param gameArea the level 4 game area
+     * @return the darkness entity
+     */
     public static Entity createDarkness(Entity target, Level4 gameArea) {
         Entity darkness = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -48,8 +57,8 @@ public class FinalBossFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                          .addTask(new Stage2Task(1, gameArea, bossHead, target));
-                        //.addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
+                          //.addTask(new Stage2Task(1, gameArea, bossHead, target));
+                        .addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
 
         darkness.addComponent(aiComponent);
         darkness.setScale(new Vector2(40f, 5f));
@@ -58,6 +67,10 @@ public class FinalBossFactory {
         return darkness;
     }
 
+    /**
+     * Creates the boss head
+     * @return the boss head
+     */
     public static Entity createBossHead() {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -85,6 +98,10 @@ public class FinalBossFactory {
         return bossHead;
     }
 
+    /**
+     * Creates the beam that the boss head shoots
+     * @return the beam
+     */
     public static Entity createBeam() {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -111,6 +128,12 @@ public class FinalBossFactory {
         return beam;
     }
 
+    /**
+     * Creates the spawners for stage 2
+     * @param target the entity that the enemies attack
+     * @param gameArea the game area
+     * @return the spawner entity
+     */
     public static Entity createLightSpawner(Entity target, GameArea gameArea) {
 
 
@@ -123,12 +146,6 @@ public class FinalBossFactory {
                 .addComponent(new TextureRenderComponent("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png"))
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new CombatStatsComponent(5, 0));;
-
-//        AITaskComponent aiComponent =
-//                new AITaskComponent()
-//                .addTask(new SpawnerEnemyTask(target, 10, 5f, 6f, gameArea, spawner));
-//
-//        spawner.addComponent(aiComponent);
 
         spawner.setScale(1f, 1f);
         return spawner;

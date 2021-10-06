@@ -179,10 +179,10 @@ public class ObstacleFactory {
   }
 
   /**
-   * Creates a triangle group pine tree entity.
+   * Creates a triangle group of green pine tree entity.
    * @return entity
    */
-  public static Entity createTriPineTree() {
+  public static Entity createTriGreenPineTree() {
     Entity tree =
       new Entity()
         .addComponent(new TextureRenderComponent("images/level_2/level2_tree_2_group_ver1.png"))
@@ -196,10 +196,32 @@ public class ObstacleFactory {
     return tree;
   }
 
-  public static Entity createDeadTree() {
+  /**
+   * Creates a triangle group of dead pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriDeadPineTree() {
     Entity tree =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_3/level3_dead_single_pine_tree_ver1.png"))
+        .addComponent(new TextureRenderComponent("images/level_3/level3_dead_group_pine_tree.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
+  }
+
+  /**
+   * Creates a triangle group of brown pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriBrownPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/level3_brown_group_pine_tree.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 

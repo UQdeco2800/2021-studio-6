@@ -74,10 +74,6 @@ public class Level2 extends GameArea {
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/dialogue/raw/npc_indicator.png",
-
-
-          // TODO: remove this after testing
-          "images/level_3/level3_dead_single_pine_tree_ver1.png"
   };
 
   /**
@@ -114,7 +110,7 @@ public class Level2 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -138,9 +134,6 @@ public class Level2 extends GameArea {
     spawnBush();
 //    spawnTorch();
 
-    // TODO: Remove this after testing dead tree asset
-    spawnDeadTree();
-
     // Spawn player related entities
     player = spawnPlayer();
     spawnBullet();
@@ -160,20 +153,6 @@ public class Level2 extends GameArea {
     // Listener for level 2 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,
         this::playMusic);
-  }
-
-
-  // TODO: Remove this dead tree testing
-  private void spawnDeadTree() {
-    GridPoint2[] spawnLocations = {
-      new GridPoint2(8, 23),
-            new GridPoint2(9, 23),
-    };
-
-    for (int i = 0; i < spawnLocations.length; i++) {
-      Entity bigTree = ObstacleFactory.createDeadTree();
-      spawnEntityAt(bigTree, spawnLocations[i], false, false);
-    }
   }
 
   /**
@@ -331,7 +310,7 @@ public class Level2 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity pineTriTree = ObstacleFactory.createTriPineTree();
+      Entity pineTriTree = ObstacleFactory.createTriGreenPineTree();
       spawnEntityAt(pineTriTree, spawnLocations[i], false, false);
     }
   }
@@ -668,7 +647,7 @@ public class Level2 extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.3f);
     music.play();
   }
 

@@ -22,7 +22,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
-  private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
+  private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(51, 51);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
   private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
   private static final int TUFT_TILE_COUNT = 30;
@@ -449,14 +449,14 @@ public class TerrainFactory {
 
     //Fill background tiles
     // Top part
-    GridPoint2 start = new GridPoint2(19,37);
-    GridPoint2 end = new GridPoint2(36,46);
-    setTilesInRegion(layer, backgroundTile1, start, end);
+    GridPoint2 start = new GridPoint2(0,0);
+    GridPoint2 end = new GridPoint2(50,50);
+    //setTilesInRegion(layer, backgroundTile1, start, end);
 
     // Bottom part
-    GridPoint2 start2 = new GridPoint2(20,0);
-    GridPoint2 end2 = new GridPoint2(36,9);
-    setTilesInRegion(layer, backgroundTile1, start2, end2);
+    GridPoint2 start2 = new GridPoint2(0,0);
+    GridPoint2 end2 = new GridPoint2(50,50);
+    //setTilesInRegion(layer, backgroundTile1, start2, end2);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

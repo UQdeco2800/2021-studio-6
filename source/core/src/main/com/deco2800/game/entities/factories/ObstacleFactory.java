@@ -458,6 +458,69 @@ public class ObstacleFactory {
     return bridge;
   }
 
+  /**
+   * Creates a top sand edge water tile (2).
+   * |X|2|X|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile2() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top-sand.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a top-right sand edge water tile (3).
+   * |X|X|3|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile3() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top-right-sand.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a right sand edge water tile (6).
+   * |X|X|X|
+   * |X|X|6|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile6() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-right-sand.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

@@ -87,6 +87,9 @@ public class Level3 extends GameArea {
     "images/level_3/bridge_tile_left-vertical.png",
     "images/level_3/bridge_tile_right-vertical.png",
     "images/level_3/sand.png",
+    "images/level_3/new_darker_water_tiles/water-right-sand.png",
+    "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
+    "images/level_3/new_darker_water_tiles/water-top-sand.png",
   };
 
   /**
@@ -140,8 +143,9 @@ public class Level3 extends GameArea {
     spawnSafehouse();
     spawnCobweb();
     spawnBush();
-    spawnWaterTiles();
+    spawnWaterGreenTiles();
     spawnBridge();
+    spawnWaterSandTiles();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -489,9 +493,8 @@ public class Level3 extends GameArea {
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(42, 38),
-      new GridPoint2(44, 37),
-      new GridPoint2(46, 35),
-      new GridPoint2(52, 35),
+      new GridPoint2(46, 40),
+      new GridPoint2(48, 40),
       new GridPoint2(25, 34),
       new GridPoint2(28, 32),
       new GridPoint2(3, 31),
@@ -500,7 +503,6 @@ public class Level3 extends GameArea {
       new GridPoint2(44, 25),
       new GridPoint2(41, 21),
       new GridPoint2(29, 20),
-      new GridPoint2(47, 19),
       new GridPoint2(51, 17),
       new GridPoint2(5, 14),
       new GridPoint2(15, 6),
@@ -657,9 +659,9 @@ public class Level3 extends GameArea {
   }
 
   /**
-   * Spawns all the water tiles variation (1,2,...,9) onto the map.
+   * Spawns all the water green edge tiles variation (1,2,...,9) onto the map.
    */
-  private void spawnWaterTiles() {
+  private void spawnWaterGreenTiles() {
     GridPoint2[] water1SpawnLocations = {
       new GridPoint2(38, 41), new GridPoint2(52, 20), new GridPoint2(41, 17),
       new GridPoint2(48, 17), new GridPoint2(43, 13), new GridPoint2(42, 12),
@@ -761,40 +763,74 @@ public class Level3 extends GameArea {
     };
 
     for (int i = 0; i < water1SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile1();
-      spawnEntityAt(bush, water1SpawnLocations[i], true, true);
+      Entity water1 = ObstacleFactory.createWaterTile1();
+      spawnEntityAt(water1, water1SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water2SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile2();
-      spawnEntityAt(bush, water2SpawnLocations[i], true, true);
+      Entity water2 = ObstacleFactory.createWaterTile2();
+      spawnEntityAt(water2, water2SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water3SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile3();
-      spawnEntityAt(bush, water3SpawnLocations[i], true, true);
+      Entity water3 = ObstacleFactory.createWaterTile3();
+      spawnEntityAt(water3, water3SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water4SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile4();
-      spawnEntityAt(bush, water4SpawnLocations[i], true, true);
+      Entity water4 = ObstacleFactory.createWaterTile4();
+      spawnEntityAt(water4, water4SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water5SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile5();
-      spawnEntityAt(bush, water5SpawnLocations[i], true, true);
+      Entity water5 = ObstacleFactory.createWaterTile5();
+      spawnEntityAt(water5, water5SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water6SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile6();
-      spawnEntityAt(bush, water6SpawnLocations[i], true, true);
+      Entity water6 = ObstacleFactory.createWaterTile6();
+      spawnEntityAt(water6, water6SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water7SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile7();
-      spawnEntityAt(bush, water7SpawnLocations[i], true, true);
+      Entity water7 = ObstacleFactory.createWaterTile7();
+      spawnEntityAt(water7, water7SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water8SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile8();
-      spawnEntityAt(bush, water8SpawnLocations[i], true, true);
+      Entity water8 = ObstacleFactory.createWaterTile8();
+      spawnEntityAt(water8, water8SpawnLocations[i], true, true);
     }
     for (int i = 0; i < water9SpawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createWaterTile9();
-      spawnEntityAt(bush, water9SpawnLocations[i], true, true);
+      Entity water9 = ObstacleFactory.createWaterTile9();
+      spawnEntityAt(water9, water9SpawnLocations[i], true, true);
+    }
+  }
+
+  /**
+   * Spawns all the water sand tiles variation (2,3,6) onto the map.
+   */
+  private void spawnWaterSandTiles() {
+    GridPoint2[] water2SpawnLocations = {
+      new GridPoint2(36,41), new GridPoint2(37,41), new GridPoint2(38,41),
+      new GridPoint2(43,36), new GridPoint2(46,34), new GridPoint2(47,34),
+      new GridPoint2(48,34), new GridPoint2(51,34), new GridPoint2(52,34),
+      new GridPoint2(53,34), new GridPoint2(54,34), new GridPoint2(55,34),
+    };
+
+    GridPoint2[] water3SpawnLocations = {
+      new GridPoint2(39, 41), new GridPoint2(40, 40), new GridPoint2(41, 38),
+      new GridPoint2(42, 37), new GridPoint2(44, 36), new GridPoint2(45, 35),
+    };
+
+    GridPoint2[] water6SpawnLocations = {
+      new GridPoint2(40, 39)
+    };
+
+    for (int i = 0; i < water2SpawnLocations.length; i++) {
+      Entity water2 = ObstacleFactory.createWaterSandTile2();
+      spawnEntityAt(water2, water2SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water3SpawnLocations.length; i++) {
+      Entity water3 = ObstacleFactory.createWaterSandTile3();
+      spawnEntityAt(water3, water3SpawnLocations[i], true, true);
+    }
+    for (int i = 0; i < water6SpawnLocations.length; i++) {
+      Entity water6 = ObstacleFactory.createWaterSandTile6();
+      spawnEntityAt(water6, water6SpawnLocations[i], true, true);
     }
   }
 
@@ -825,13 +861,13 @@ public class Level3 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocationsLeft.length; i++) {
-      Entity bush = ObstacleFactory.createBridgeVerticalLeftTile();
-      spawnEntityAt(bush, spawnLocationsLeft[i], true, true);
+      Entity bridgeLeft = ObstacleFactory.createBridgeVerticalLeftTile();
+      spawnEntityAt(bridgeLeft, spawnLocationsLeft[i], true, true);
     }
 
     for (int i = 0; i < spawnLocationsRight.length; i++) {
-      Entity bush = ObstacleFactory.createBridgeVerticalRightTile();
-      spawnEntityAt(bush, spawnLocationsRight[i], true, true);
+      Entity bridgeRight = ObstacleFactory.createBridgeVerticalRightTile();
+      spawnEntityAt(bridgeRight, spawnLocationsRight[i], true, true);
     }
   }
 

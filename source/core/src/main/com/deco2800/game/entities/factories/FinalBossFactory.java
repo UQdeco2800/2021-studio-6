@@ -48,7 +48,7 @@ public class FinalBossFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                          .addTask(new Stage2Task(1, gameArea, darkness, target));
+                          .addTask(new Stage2Task(1, gameArea, bossHead, target));
                         //.addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
 
         darkness.addComponent(aiComponent);

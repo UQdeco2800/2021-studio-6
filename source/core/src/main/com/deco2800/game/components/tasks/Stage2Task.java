@@ -23,21 +23,27 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
     private final RaycastHit hit = new RaycastHit();
     private final GameArea gameArea;
     private final GameTime timeSource;
-    private final Entity darkness;
+    private final Entity head;
     private final Entity target;
     private long endTime;
     private long beamEndTime;
-    private static final float INTERVAL = 30;
+    private static final float INTERVAL = 15;
     private Entity spawner1;
     private Entity spawner2;
     private Entity spawner3;
     private Entity spawner4;
 
-
-    public Stage2Task(int priority, Level4 gameArea, Entity darkness, Entity target) {
+    /**
+     *
+     * @param priority the priority of the task
+     * @param gameArea the game area for this task to occur
+     * @param head the darkness entity
+     * @param target the target for the enemies to attack
+     */
+    public Stage2Task(int priority, Level4 gameArea, Entity head, Entity target) {
         this.priority = priority;
         this.gameArea = gameArea;
-        this.darkness = darkness;
+        this.head = head;
         this.target = target;
         physics = ServiceLocator.getPhysicsService().getPhysics();
         debugRenderer = ServiceLocator.getRenderService().getDebug();
@@ -48,6 +54,9 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
         spawner4 = FinalBossFactory.createLightSpawner(target, gameArea);
     }
 
+    /**
+     * Creates the spawners for stage 2
+     */
     public void createSpawners() {
 
         Vector2 pos1 = new Vector2(0, 0);
@@ -107,8 +116,10 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
             if (spawner4.getComponent(CombatStatsComponent.class).getHealth() > 0) {
                 this.gameArea.spawnEntity(toughLongRangeEnemy);
             }
+
             endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
         }
+
     }
 
     @Override

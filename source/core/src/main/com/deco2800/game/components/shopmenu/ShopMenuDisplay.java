@@ -24,6 +24,8 @@ import com.deco2800.game.utils.MenuUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.deco2800.game.entities.factories.DialogueBoxFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -113,6 +115,7 @@ public class ShopMenuDisplay extends UIComponent {
     private Items typeOfItem;
     private Entity playerState;
     private TextButton equipBtn;
+    Entity shopkeeperSpeech;
 
     public ShopMenuDisplay(GdxGame game) {
         this.game = game;
@@ -136,6 +139,10 @@ public class ShopMenuDisplay extends UIComponent {
     public void toggleShopBox() {
         GameTime timeSource = ServiceLocator.getTimeSource();
         ServiceLocator.getGameArea().player.getEvents().trigger("resetPlayerMovements");
+
+        if (shopkeeperSpeech!= null) {
+            shopkeeperSpeech.dispose();
+        }
 
         if (!isEnabled) {
             loadPlayerData();
@@ -484,6 +491,21 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
+     * Will be trigged when a diffrient piece of equipment is selected. Will update text box
+     * @param item the item selected by the player
+     */
+    private void updateShopSpeech(String item){
+        String[] items = {"DAGGER", "BAT", "AXE", "MACHETE", "CROWBAR", "SLEDGE",
+        "HELMET", "TORCH", "LONG_DASH", "ARMOUR","BANDAGE", "INVINCIBILITY"};
+        String[] speech  = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+        int index = Arrays.asList(items).indexOf(item);
+
+        shopkeeperSpeech = DialogueBoxFactory.createTextDialogue(speech[index]);
+        shopkeeperSpeech.create();
+
+    }
+
+    /**
      * Will be triggered whenever any of the image button (for each item displayed in second row) is clicked
      * this method is called to dynamically change the text and title of information positioned in the third
      * column of the table
@@ -494,6 +516,8 @@ public class ShopMenuDisplay extends UIComponent {
         logger.info("Button image clicked, buying system update");
         uncheckImageButton();
 
+
+
         // all item files must have the 2 following data variables
         ShopItemInfoConfig itemData =
                 FileLoader.readClass(ShopItemInfoConfig.class, configFilename);
@@ -501,6 +525,15 @@ public class ShopMenuDisplay extends UIComponent {
         String description = itemData.description;
         itemPrice = itemData.price;
         typeOfItem = itemType;
+
+        if (shopkeeperSpeech!= null) {
+            shopkeeperSpeech.dispose();
+        }
+
+        //update shopkeeper sppech based on item selected
+        updateShopSpeech(itemName);
+
+
 
         CharSequence priceText = String.format("PRICE: %d", itemPrice);
 

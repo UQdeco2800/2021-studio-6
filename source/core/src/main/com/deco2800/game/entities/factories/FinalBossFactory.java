@@ -45,11 +45,6 @@ public class FinalBossFactory {
     public static Entity createDarkness(Entity target, Level4 gameArea) {
         Entity darkness = new Entity()
                 .addComponent(new PhysicsComponent())
-                //.addComponent(new PhysicsMovementComponent())
-//                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
-//                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-//                .addComponent(new TextureRenderComponent("images/placeholder.png"))
-                //.addComponent(new CombatStatsComponent(3, 0))
                 .addComponent(new DisposingComponent());
 
 //        Entity beam = createBeam();

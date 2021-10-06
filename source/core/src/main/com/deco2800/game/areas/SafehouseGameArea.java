@@ -14,6 +14,7 @@ import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -30,6 +31,7 @@ public class SafehouseGameArea extends GameArea {
   private static final int NUM_BULLETS = 5;
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
+  private final float LEVEL_ONE_SAFEHOUSE = 1.5f;
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
@@ -88,7 +90,8 @@ public class SafehouseGameArea extends GameArea {
     spawnShopKeeper();
     spawnBullet();
 
-    if (ServiceLocator.getGameArea().toString().contains("Level1")){
+    PlayerStateManager playerManager = PlayerStateManager.getInstance();
+    if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
       spawnSafehouseIntro();
       spawnPilotNpc();
     } else {

@@ -7,7 +7,7 @@ public class SafehouseIntroCutScene extends CutSceneConfig {
     public static final String[] DIALOGUE_RAW =
             {
                 //Screen 0
-                "I've made it to the first firefly safehouse... Looks like there is someone inside.",
+                "I've made it to the first Firefly safehouse... Looks like there is someone inside.",
                 "Maybe they'll have some stuff to sell.",
                 "I'm desperate for some new gear, it's the only way I'm gonna survive...",
                 "I'll stay here and rest for a bit before I head out again."

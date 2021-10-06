@@ -8,7 +8,7 @@ public class NPCPilotFirstDialogue extends BasicDialogueConfig {
         "Looks like we are the only two Fireflies today...",
         "I guess people are too scared... you know, with the whole \"no people ever coming back\" thing.",
         "I say screw it! Better to have a quick death out here than die slowly in that prison of a city, am I right?",
-        "* He looks down the road into the darkness ahead. The faint sounds of growling are heard in the distance. *",
+        "* He looks down the road into the darkness ahead. Faint sounds of growling are heard in the distance. *",
         "Look, don't get close to them. Throw rocks at a distance by pressing ENTER.",
         "Also if one of them takes a bite out of you, then don't forget to heal up by pressing the number 1 key.",
         "Good luck, hopefully I will see you at the next safehouse!"

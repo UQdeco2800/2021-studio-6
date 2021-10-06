@@ -6,7 +6,6 @@ package com.deco2800.game.components.story;
 public enum StoryNames {
     NONE,
     TEST,
-    INTRO_DIALOGUE,
     PROLOGUE,
     EPILOGUE,
     TUTORIAL_GUIDE,

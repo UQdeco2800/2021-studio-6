@@ -8,7 +8,7 @@ public class Level2IntroCutScene extends CutSceneConfig {
             {
                 //Screen 0
                 "I've finally made it out of the city.",
-                "The safe haven is glowing brighter and bigger.",
+                "The Safe Haven is glowing brighter and bigger.",
                 "I'm getting closer...",
 
                 //Screen 1

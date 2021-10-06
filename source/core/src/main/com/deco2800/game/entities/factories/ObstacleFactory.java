@@ -426,6 +426,38 @@ public class ObstacleFactory {
     return waterTile;
   }
 
+  /**
+   * Creates a walkable bridge asset (vertical-left) for Level 3.
+   * @return entity
+   */
+  public static Entity createBridgeVerticalLeftTile() {
+    Entity bridge =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent());
+
+    bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bridge.getComponent(TextureRenderComponent.class).scaleEntity();
+    return bridge;
+  }
+
+  /**
+   * Creates a walkable bridge asset (vertical-left) for Level 3.
+   * @return entity
+   */
+  public static Entity createBridgeVerticalRightTile() {
+    Entity bridge =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent());
+
+    bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bridge.getComponent(TextureRenderComponent.class).scaleEntity();
+    return bridge;
+  }
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

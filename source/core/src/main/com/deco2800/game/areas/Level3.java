@@ -25,12 +25,6 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level3 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level3.class);
-  private static final int NUM_TREES = 0;
-  private static final int NUM_COBWEBS = 0;//change these back
-  private static final int NUM_BUSH = 0;
-  private static final int NUM_LARGE_ENEMY = 0;
-  private static final int NUM_GHOSTS = 0;
-  private static final int NUM_LONGRANGE = 0;
   private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
   private static final int NUM_SPAWNER_ENEMY = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(1, 41);
@@ -87,6 +81,11 @@ public class Level3 extends GameArea {
     "images/level_3/level3_grass_tiles/grass-3.png",
     "images/level_3/level3_grass_tiles/grass-4.png",
     "images/level_3/level3_grass_tiles/grass-base.png",
+    "images/level_3/bridge_horizontal.png",
+    "images/level_3/bridge_vertical.png",
+    "images/level_3/bridge_tile.png",
+    "images/level_3/bridge_tile_left-vertical.png",
+    "images/level_3/bridge_tile_right-vertical.png",
   };
 
   /**
@@ -141,6 +140,7 @@ public class Level3 extends GameArea {
     spawnCobweb();
     spawnBush();
     spawnWaterTiles();
+    spawnBridge();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -150,11 +150,11 @@ public class Level3 extends GameArea {
     spawnLevelThreeIntro();
 
     // Spawn enemy entities
-    spawnSmallEnemy();
-    spawnLongRangeEnemies();
-    spawnLargeEnemy();
-    spawnSpawnerEnemy();
-    spawnToughLongRangeEnemies();
+//    spawnSmallEnemy();
+//    spawnLongRangeEnemies();
+//    spawnLargeEnemy();
+//    spawnSpawnerEnemy();
+//    spawnToughLongRangeEnemies();
 
     // Listener for level 3 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,
@@ -791,6 +791,43 @@ public class Level3 extends GameArea {
     for (int i = 0; i < water9SpawnLocations.length; i++) {
       Entity bush = ObstacleFactory.createWaterTile9();
       spawnEntityAt(bush, water9SpawnLocations[i], true, true);
+    }
+  }
+
+  /**
+   * Spawns the vertical bridge asset on the map.
+   */
+  private void spawnBridge() {
+    GridPoint2[] spawnLocationsLeft = {
+      new GridPoint2(49,28),
+      new GridPoint2(49,29),
+      new GridPoint2(49,30),
+      new GridPoint2(49,31),
+      new GridPoint2(49,32),
+      new GridPoint2(49,33),
+      new GridPoint2(49,34),
+      new GridPoint2(49,35),
+    };
+
+    GridPoint2[] spawnLocationsRight= {
+      new GridPoint2(50,28),
+      new GridPoint2(50,29),
+      new GridPoint2(50,30),
+      new GridPoint2(50,31),
+      new GridPoint2(50,32),
+      new GridPoint2(50,33),
+      new GridPoint2(50,34),
+      new GridPoint2(50,35),
+    };
+
+    for (int i = 0; i < spawnLocationsLeft.length; i++) {
+      Entity bush = ObstacleFactory.createBridgeVerticalLeftTile();
+      spawnEntityAt(bush, spawnLocationsLeft[i], true, true);
+    }
+
+    for (int i = 0; i < spawnLocationsRight.length; i++) {
+      Entity bush = ObstacleFactory.createBridgeVerticalRightTile();
+      spawnEntityAt(bush, spawnLocationsRight[i], true, true);
     }
   }
 

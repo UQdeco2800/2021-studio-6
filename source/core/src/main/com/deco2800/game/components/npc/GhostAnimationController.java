@@ -28,6 +28,6 @@ public class GhostAnimationController extends Component {
   }
 
   void animateAttack() {
-    animator.startAnimation("attack");
+    animator.startAnimation("default"); //change to attack later, make a default or idle animator
   } //yet to be implemented, will be needed tho
 }

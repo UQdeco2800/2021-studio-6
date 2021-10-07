@@ -64,6 +64,7 @@ public class Level3 extends GameArea {
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
+    "images/placeholder.png",
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/level_3/level3_dead_group_pine_tree.png",
     "images/level_3/level3_brown_group_pine_tree.png",
@@ -92,6 +93,7 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
     "images/dialogue/raw/npc_indicator.png"
+
   };
 
   /**

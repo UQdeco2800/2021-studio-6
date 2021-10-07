@@ -41,6 +41,7 @@ public class PlayerTorchAnimationController extends Component {
   public void update() {
     if (on) {
       torchAnimator.setPositions(0, 0);
+
       KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
       Directions direct = key.getDirection();
       if (previous != direct) {

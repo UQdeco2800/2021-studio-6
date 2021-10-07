@@ -71,6 +71,7 @@ public class FriendlyNPCFactory {
 
         // set the npc hitbox to be larger than normal
         npc.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
+        npc.setScale(new Vector2(1.1f,1.1f));
 
         return npc;
     }

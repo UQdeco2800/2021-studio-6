@@ -29,7 +29,7 @@ public class Level2 extends GameArea {
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final float WALL_WIDTH = 0.1f;
-  private static final String npcDeadAtlasFilename = "images/npc_movement/dead_npc.atlas";
+  private static final String NPC_DEAD_ATLAS_FILENAME = "images/npc_movement/dead_npc.atlas";
 
   /**
    * Images and assets file path for Level 2 map generation.
@@ -74,7 +74,9 @@ public class Level2 extends GameArea {
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/placeholder.png",
-    "images/dialogue/raw/npc_indicator.png"
+    "images/dialogue/raw/npc_indicator.png".
+    "images/dialogue/raw/npc_indicator.png",
+
   };
 
   /**
@@ -101,7 +103,7 @@ public class Level2 extends GameArea {
     "images/Player_Sprite/player_movement.atlas",
     "images/hud/dashbar.atlas",
     "images/hud/health.atlas",
-    npcDeadAtlasFilename
+    NPC_DEAD_ATLAS_FILENAME
   };
 
   // Music and sound variables
@@ -111,7 +113,7 @@ public class Level2 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -311,7 +313,7 @@ public class Level2 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity pineTriTree = ObstacleFactory.createTriPineTree();
+      Entity pineTriTree = ObstacleFactory.createTriGreenPineTree();
       spawnEntityAt(pineTriTree, spawnLocations[i], false, false);
     }
   }
@@ -623,8 +625,8 @@ public class Level2 extends GameArea {
   }
 
   private void spawnDeadNPC() {
-    GridPoint2 pos = new GridPoint2(43,20);
-    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, npcDeadAtlasFilename, false);
+    GridPoint2 pos = new GridPoint2(6,18);
+    Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_DEAD, NPC_DEAD_ATLAS_FILENAME, false);
     spawnEntityAt(npcTut, pos, true, true);
   }
 
@@ -648,7 +650,7 @@ public class Level2 extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.3f);
     music.play();
   }
 

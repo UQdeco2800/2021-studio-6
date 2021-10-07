@@ -2,7 +2,9 @@ package com.deco2800.game.components.player;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.items.Directions;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
+import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class PlayerTorchAnimationController extends Component {
 
@@ -23,7 +25,8 @@ public class PlayerTorchAnimationController extends Component {
   public void setter() {
     lightingComponent = this.entity.getComponent(PlayerLightingComponent.class);
     torchAnimator = lightingComponent.getTorchAnimator();
-    entity.getEvents().addListener("toggleTorch",this::stop);
+    entity.getEvents().addListener("torchOn",this::start);
+    entity.getEvents().addListener("torchOff",this::stop);
     entity.getEvents().addListener("dispose", this::disposeAnimation);
     torchAnimator.startAnimation("front");
     previous = Directions.MOVE_UP;
@@ -44,15 +47,19 @@ public class PlayerTorchAnimationController extends Component {
       if (previous != direct) {
         switch (direct) {
           case MOVE_DOWN:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y + 100);
             torchAnimator.startAnimation("front");
             break;
           case MOVE_LEFT:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y + 100);
             torchAnimator.startAnimation("left");
             break;
           case MOVE_UP:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y - 100);
             torchAnimator.startAnimation("back");
             break;
           case MOVE_RIGHT:
+            torchAnimator.setZIndex(-this.getEntity().getCenterPosition().y + 100);
             torchAnimator.startAnimation("right");
             break;
         }
@@ -64,18 +71,28 @@ public class PlayerTorchAnimationController extends Component {
   }
 
   /**
-   * Toggles the torch animation status
+   * Stops the torch animation status
    */
   void stop() {
     previous = null;
-    on = !on;
+    on = false;
     torchAnimator.stopAnimation();
   }
+
+  /**
+   * Starts the torch animation status
+   */
+  void start() {
+    previous = null;
+    on = true;
+  }
+
 
   /**
    * Removes and disposes the torch animation
    */
   void disposeAnimation() {
+    torchAnimator.stopAnimation();
     torchAnimator.dispose();
   }
 }

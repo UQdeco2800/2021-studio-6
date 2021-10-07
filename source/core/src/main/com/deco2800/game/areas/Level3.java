@@ -110,7 +110,7 @@ public class Level3 extends GameArea {
     "images/Player_Sprite/player_movement.atlas",
     "images/hud/dashbar.atlas",
     "images/hud/health.atlas",
-    "images/weapon/sword.atlas",
+      "images/weapon/crowbar.atlas",
     "images/weapon/axe.atlas",
     "images/weapon/sledge.atlas",
     "images/playeritems/tourch/torch.atlas",

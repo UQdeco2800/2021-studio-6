@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.files.UserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,8 @@ public class ResourceService implements Disposable {
 
   private static final Logger logger = LoggerFactory.getLogger(ResourceService.class);
   private final AssetManager assetManager;
+  private float musicVolume = -1f;
+  private float sfxVolume = -1f;
 
   public ResourceService() {
     this(new AssetManager());
@@ -24,6 +27,79 @@ public class ResourceService implements Disposable {
 
   public ResourceService(AssetManager assetManager) {
     this.assetManager = assetManager;
+  }
+
+  /**
+   * Checks if val is a valid volume value.
+   * Built for Music.class and Sound.class.
+   * @param val volume [0,1]
+   * @return true if valid, false otherwise.
+   */
+  private static boolean isValidVolume(float val) {
+    return (val >= 0f && val <= 1f);
+  }
+
+  /**
+   * Get the Volume for any Music Stream.
+   * @return music volume [0,1]
+   */
+  public float getMusicVolume() {
+    if(!this.isValidVolume(this.musicVolume)) {
+      // Pull from User Settings.
+      UserSettings.Settings settings = UserSettings.get();
+
+      // Validate before saving.
+      this.musicVolume =
+              (settings.musicVolume < 0f) ? 0f :
+              (settings.musicVolume > 1f) ? 1f :
+              settings.musicVolume;
+    }
+
+    return this.musicVolume;
+  }
+
+  /**
+   * Get the Volume for any Sound Effects.
+   * @return sfx volume [0,1]
+   */
+  public float getSfxVolume() {
+    if(!this.isValidVolume(this.sfxVolume)) {
+      UserSettings.Settings settings = UserSettings.get();
+
+      // Validate before saving.
+      this.sfxVolume =
+              (settings.sfxVolume < 0f) ? 0f :
+              (settings.sfxVolume > 1f) ? 1f :
+              settings.sfxVolume;
+    }
+
+    return this.sfxVolume;
+  }
+
+  /**
+   * Set the Volume of any Music Stream.
+   * This is a temporary variable; see UserSettings.Settings.musicVolume
+   * for persistent storage.
+   * @param val music volume [0,1]
+   */
+  public void setMusicVolume(float val) {
+    this.musicVolume =
+            (val < 0f) ? 0f :
+            (val > 1f) ? 1f :
+            val;
+  }
+
+  /**
+   * Set the Volume of any Sound Effect.
+   * This is a temporary variable; see UserSettings.Settings.sfxVolume
+   * for persistent storage.
+   * @param val sfx volume [0,1]
+   */
+  public void setSfxVolume(float val) {
+    this.sfxVolume =
+            (val < 0f) ? 0f :
+            (val > 1f) ? 1f :
+            val;
   }
 
   /**

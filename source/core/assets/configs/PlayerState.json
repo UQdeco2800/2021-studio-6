@@ -10,8 +10,9 @@
   "health" : 3,
   "bandages": 3,
   "ability": "LONG_DASH",
-  "meleeWeaponType": "SWORD",
+  "meleeWeaponType": "BAT",
   "armorType": "NONE",
-  "meleeFilePath": "configs/Sword.json",
-  "currentGameLevel": 1
+  "meleeFilePath": "configs/Baseball.json",
+  "currentGameLevel": 1,
+  "torch": 100
 }

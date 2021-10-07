@@ -92,7 +92,7 @@ public class Level2 extends GameArea {
     "images/Player_Sprite/player_movement.atlas",
     "images/hud/dashbar.atlas",
     "images/hud/health.atlas",
-    "images/weapon/sword.atlas",
+      "images/weapon/crowbar.atlas",
     "images/weapon/axe.atlas",
     "images/weapon/sledge.atlas",
     "images/weapon/machete.atlas",
@@ -112,7 +112,7 @@ public class Level2 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
-  private static final String backgroundMusic = "sounds/fireflies-theme-sneak.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-woods.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -648,8 +648,8 @@ public class Level2 extends GameArea {
    */
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
-    music.setVolume(0.3f);
     music.play();
   }
 

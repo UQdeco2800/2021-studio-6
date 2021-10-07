@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -98,6 +98,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">FinalBossFactory</span>
 extends java.lang.Object</pre>
+<div class="block">The factory for all the entities related to the final boss</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -146,13 +147,34 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBossHead(com.deco2800.game.entities.Entity)">createBossHead</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBeam()">createBeam</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Creates the beam that the boss head shoots</div>
+</td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDarkness(com.deco2800.game.entities.Entity)">createDarkness</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBossHead(com.deco2800.game.entities.Entity,float)">createBossHead</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+float&nbsp;bounds)</code></th>
+<td class="colLast">
+<div class="block">createBossHead</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDarkness(com.deco2800.game.entities.Entity,com.deco2800.game.areas.Level4)">createDarkness</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+<a href="../../areas/Level4.html" title="class in com.deco2800.game.areas">Level4</a>&nbsp;gameArea)</code></th>
+<td class="colLast">
+<div class="block">Creates the darkness for level 4</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLightSpawner(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">createLightSpawner</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+<a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</code></th>
+<td class="colLast">
+<div class="block">Creates the spawners for stage 2</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -194,14 +216,57 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="createDarkness(com.deco2800.game.entities.Entity)">createDarkness</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createDarkness</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</span></div>
+<h3><a id="createDarkness(com.deco2800.game.entities.Entity,com.deco2800.game.areas.Level4)">createDarkness</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createDarkness</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+<a href="../../areas/Level4.html" title="class in com.deco2800.game.areas">Level4</a>&nbsp;gameArea)</span></div>
+<div class="block">Creates the darkness for level 4</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>target</code> - the entity that the enemies attack</dd>
+<dd><code>gameArea</code> - the level 4 game area</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the darkness entity</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="createBossHead(com.deco2800.game.entities.Entity)">createBossHead</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createBossHead</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</span></div>
+<h3><a id="createBossHead(com.deco2800.game.entities.Entity,float)">createBossHead</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createBossHead</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+float&nbsp;bounds)</span></div>
+<div class="block">createBossHead</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>target</code> - Should be the player entity as AI is dependent on the player</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the boss entity</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createBeam()">createBeam</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createBeam</span>()</div>
+<div class="block">Creates the beam that the boss head shoots</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the beam</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createLightSpawner(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">createLightSpawner</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createLightSpawner</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+<a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</span></div>
+<div class="block">Creates the spawners for stage 2</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>target</code> - the entity that the enemies attack</dd>
+<dd><code>gameArea</code> - the game area</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the spawner entity</dd>
+</dl>
 </section>
 </li>
 </ul>

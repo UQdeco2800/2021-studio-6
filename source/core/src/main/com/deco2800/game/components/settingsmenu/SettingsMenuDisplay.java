@@ -33,7 +33,6 @@ public class SettingsMenuDisplay extends UIComponent {
   private TextField fpsText;
   private CheckBox fullScreenCheck;
   private CheckBox vsyncCheck;
-  private Slider uiScaleSlider;
   private Slider sfxVolumeSlider;
   private Slider musicVolumeSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
@@ -105,11 +104,6 @@ public class SettingsMenuDisplay extends UIComponent {
     vsyncCheck = new CheckBox("", skin);
     vsyncCheck.setChecked(settings.vsync);
 
-    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, BUTTON_LABEL_SKIN);
-    uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
-    uiScaleSlider.setValue(settings.uiScale);
-    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, BUTTON_LABEL_SKIN);
-
     Label sfxVolumeLabel = new Label("SFX Volume:", skin, BUTTON_LABEL_SKIN);
     sfxVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
     sfxVolumeSlider.setValue(settings.sfxVolume);
@@ -141,13 +135,6 @@ public class SettingsMenuDisplay extends UIComponent {
     table.add(vsyncCheck).left();
 
     table.row().padTop(10f);
-    Table uiScaleTable = new Table();
-    uiScaleTable.add(uiScaleSlider).width(100).left();
-    uiScaleTable.add(uiScaleValue).left().padLeft(5f).expandX();
-    table.add(uiScaleLabel).right().padRight(15f);
-    table.add(uiScaleTable).left();
-
-    table.row().padTop(10f);
     Table sfxVolumeTable = new Table();
     sfxVolumeTable.add(sfxVolumeSlider).width(100).left();
     sfxVolumeTable.add(sfxVolumeValue).left().padLeft(5f).expandX();
@@ -166,13 +153,6 @@ public class SettingsMenuDisplay extends UIComponent {
     table.add(displayModeSelect).left();
 
     // Events on inputs
-    uiScaleSlider.addListener(
-        (Event event) -> {
-          float value = uiScaleSlider.getValue();
-          uiScaleValue.setText(String.format("%.2fx", value));
-          return true;
-        });
-
     sfxVolumeSlider.addListener(
             (Event event) -> {
               float value = sfxVolumeSlider.getValue();
@@ -258,7 +238,6 @@ public class SettingsMenuDisplay extends UIComponent {
       settings.fps = fpsVal;
     }
     settings.fullscreen = fullScreenCheck.isChecked();
-    settings.uiScale = uiScaleSlider.getValue();
     settings.sfxVolume = sfxVolumeSlider.getValue();
     settings.musicVolume = musicVolumeSlider.getValue();
     settings.displayMode = new DisplaySettings(displayModeSelect.getSelected().object);

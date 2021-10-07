@@ -66,8 +66,10 @@ public class BossMovementTask extends DefaultTask implements Task {
     @Override
     public void update() {
         if (isAtTarget()) {
-
+            logger.debug("Boss reached target {}", target);
             this.setTarget(randomXAxisTarget());
+            logger.debug("Boss new target {}", target);
+
         }
     }
 
@@ -120,13 +122,13 @@ public class BossMovementTask extends DefaultTask implements Task {
         System.out.println(this.bounds);
 
         int dice = MathUtils.random(10);
-        float newXpos = MathUtils.random(0, 40);
+        float newXpos = MathUtils.random(10, 30);
 
 
         if(dice > 5) {
-            return new Vector2(newXpos, 0);
+            return new Vector2(newXpos, owner.getEntity().getPosition().y);
         } else {
-            return new Vector2(newXpos, 0);
+            return new Vector2(newXpos, owner.getEntity().getPosition().y);
         }
 
     }

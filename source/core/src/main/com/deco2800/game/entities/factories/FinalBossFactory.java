@@ -83,7 +83,7 @@ public class FinalBossFactory {
 
         Entity bossHead = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent(new Vector2(2, 2)))
+                .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(aiComponent)

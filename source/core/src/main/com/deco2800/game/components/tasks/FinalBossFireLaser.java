@@ -5,12 +5,16 @@ import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FinalBossFireLaser
  * AI task which fires a laser, also triggers events for stopping an starting the boss movement
  */
 public class FinalBossFireLaser extends DefaultTask implements Task {
+    private static final Logger logger = LoggerFactory.getLogger(MovementTask.class);
+
     private final GameTime timeSource;
     private Entity target;
 
@@ -57,6 +61,7 @@ public class FinalBossFireLaser extends DefaultTask implements Task {
 
         //if the boss is firing stop other logic from triggering
         if(firing) {
+
             if(timeSource.getTime() >= movePause) {
                 this.owner.getEntity().getEvents().trigger("startMoving");
                 this.firing = false;
@@ -67,6 +72,7 @@ public class FinalBossFireLaser extends DefaultTask implements Task {
         }
 
         if (inRange && timeSource.getTime() >= endTime && timeSource.getTime() >= firingPause) {
+            logger.debug("Boss firing Laser");
             this.owner.getEntity().getEvents().trigger("fireLaser");
             this.owner.getEntity().getEvents().trigger("stopMoving");
             this.inRange = false;
@@ -77,11 +83,15 @@ public class FinalBossFireLaser extends DefaultTask implements Task {
 
         if (Math.abs(target.getCenterPosition().x - this.owner.getEntity().getCenterPosition().x) < 3) {
             if(this.inRange == false){
+                logger.debug("Player within range of firing starting timer");
                 endTime = timeSource.getTime() + (int)(1000);
             }
             this.inRange = true;
 
         } else {
+            if(this.inRange == true) {
+                logger.debug("Player outside of range");
+            }
             this.inRange = false;
         }
 

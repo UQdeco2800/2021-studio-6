@@ -11,12 +11,12 @@ public class PlayerWeaponAnimationController extends Component {
   private IndependentAnimator weaponAnimator;
   private PlayerMeleeAttackComponent meleeComponent;
   private Float[][] animationCords;
-  private Vector2 offsets;
+  private Vector2 offsets = new Vector2(0, 0);
+
 
   @Override
   public void create() {
     super.create();
-    offsets = new Vector2(0, 0);
   }
 
   /**

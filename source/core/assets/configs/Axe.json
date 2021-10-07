@@ -6,6 +6,6 @@
   "height" : 1.2,
   "animationLength" : 0.1,
   "atlasPath": "images/weapon/axe.atlas",
-  "animationCord": [ ["0", "-0.2f"], ["1.2f", "0.8f"], ["1.2f", 0], [0, 0]],
+  "animationCord": [ ["0.5f", "0.7f"], ["-0.6f", "-0.2f"], ["-0.8f", "0.5f"], ["0.3f", "0.5f"]],
   "scale" : ["1.2f", "1.2f"]
 }

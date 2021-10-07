@@ -3,6 +3,7 @@ package com.deco2800.game.files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.deco2800.game.files.FileLoader.Location;
+import com.deco2800.game.services.ServiceLocator;
 
 import java.io.File;
 
@@ -59,7 +60,10 @@ public class UserSettings {
       Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
-  //TODO: Set master volume control here!
+    if(ServiceLocator.getResourceService() != null) {
+      ServiceLocator.getResourceService().setMusicVolume(settings.musicVolume);
+      ServiceLocator.getResourceService().setSfxVolume(settings.sfxVolume);
+    }
   }
 
   private static DisplayMode findMatching(DisplaySettings desiredSettings) {

@@ -580,8 +580,8 @@ public class Level1 extends GameArea {
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
+    music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
-    music.setVolume(0.3f);
     music.play();
   }
 

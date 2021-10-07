@@ -71,8 +71,8 @@ public class CutScene extends Component implements StoryBase {
     public void display() throws NoStoryLoadedException {
         ServiceLocator.getEntityService().register(imageEntity);
         ServiceLocator.getEntityService().register(dialogueEntity);
+        config.music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
         config.music.setLooping(true);
-        config.music.setVolume(0.5f);
         config.music.play();
     }
 

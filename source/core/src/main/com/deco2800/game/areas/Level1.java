@@ -21,8 +21,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Random;
-import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
@@ -32,6 +30,7 @@ public class Level1 extends GameArea {
   private static final int NUM_SPAWNER_ENEMY = 2;
   private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
+  private static final int NUM_TREES = 3;
   // this can be removed - this is purely for testing purposes
   private static final int NUM_AMMO_PICKUPS = 10;
   private static final int NUM_COIN_PICKUPS = 5;
@@ -69,7 +68,6 @@ public class Level1 extends GameArea {
     "images/level_1/road_barrier.png",
     "images/level_1/building2-day1-latest.png",
     "images/level_1/building3-day1-latest.png",
-    "images/level_1/dead_tree1-day1-latest.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -108,7 +106,7 @@ public class Level1 extends GameArea {
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
-      "images/weapon/sword.atlas",
+      "images/weapon/crowbar.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
       "images/weapon/sledge.atlas",
@@ -130,7 +128,6 @@ public class Level1 extends GameArea {
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
-  private Random random = new Random();
 
   public Level1(TerrainFactory terrainFactory) {
     super();
@@ -146,7 +143,6 @@ public class Level1 extends GameArea {
 
     spawnTerrain();
     spawnBarriers();
-    spawnTrees();
     player = spawnPlayer();
     spawnSafehouse();
     spawnBuildings();
@@ -165,10 +161,8 @@ public class Level1 extends GameArea {
 
     spawnLongRangeEnemies();
     spawnToughLongRangeEnemies();
+    spawnDeadTrees();
     spawnLamps();
-
-    //spawnNPC();
-    //spawnNPC1();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
@@ -289,52 +283,59 @@ public class Level1 extends GameArea {
       Entity sword = ItemFactory.createSword(swordQuantity);
       spawnEntityAt(sword, randomPos, true, false);
     }
-     */
-  }
 
-
-  private void spawnTrees() {
-    int deadTreeLimit = 2;
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(5, 5);
-
-    for (int i = 0; i < deadTreeLimit; i++) {
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createObject("images/level_1/dead_tree1-day1-latest.png", 3f);
-      spawnEntityAt(tree, randomPos, true, false);
+      int sledgeQuantity = 1;
+      Entity axe = ItemFactory.createSledge(sledgeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
     }
 
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword = ItemFactory.createMachete(macheteQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword1 = ItemFactory.createBat(macheteQuantity);
+      spawnEntityAt(sword1, randomPos, true, false);
+    }
   }
 
-  public void spawnBuildings() {
+  private void spawnTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
+
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createBigTree();
+      spawnEntityAt(tree, randomPos, true, false);
+    }
+    */
+  }
+
+  private void spawnBuildings() {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    int minDisp = 5, maxDisp = 7, endOffset = 14, disp = minDisp;
-    int building2Disp = 3, building3Disp = 0;
-    int lastBuilding = 0;
-    for (
-            int x = 3;
-            x < tileBounds.x - endOffset;
-            x += disp
-    ) {
-      switch(lastBuilding) {
-        case 0:
-          disp = random.nextInt((maxDisp - minDisp) + 1) + minDisp;
-        case 2:
-          disp = random.nextInt((maxDisp - minDisp) + 1) + minDisp + building2Disp;
-        case 3:
-          disp = random.nextInt((maxDisp - minDisp) + 1) + minDisp + building3Disp;
-      }
-      int buildingType = random.nextInt(2);
+
+    for (int x = 3; x < tileBounds.x * 0.75; x += 14) {
       GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
-      if (buildingType == 0) {
-        Entity building = ObstacleFactory.createBuilding(2);
-        spawnEntityAt(building, position, true, false);
-        lastBuilding = 2;
-      } else if (buildingType == 1) {
-        Entity building = ObstacleFactory.createBuilding(3);
-        spawnEntityAt(building, position, true, false);
-        lastBuilding = 3;
-      }
+
+      Entity house = ObstacleFactory.createBuilding(1);
+      spawnEntityAt(house, position, true, false);
+    }
+
+    for (int x = 10; x < tileBounds.x * 0.75; x += 14) {
+      GridPoint2 position = new GridPoint2(x, (int) (tileBounds.y * 0.7));
+
+      Entity house = ObstacleFactory.createBuilding(2);
+      spawnEntityAt(house, position, true, false);
     }
   }
 
@@ -349,14 +350,25 @@ public class Level1 extends GameArea {
   }
 
   private void spawnBarriers() {
-    for (int i = 0; i < 11; i++) {
-      if (i == 4 || i == 5 || i == 6) {
+    for (int i = 0; i < 11; i += 2) {
+      if (i == 4) {
         //leave a gap in the middle
         continue;
       }
+
       GridPoint2 position = new GridPoint2(18, i);
       Entity barrier = ObstacleFactory.createObject("images/level_1/road_barrier.png", 2f);
       spawnEntityAt(barrier, position, true, false);
+    }
+  }
+
+  private void spawnDeadTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0).add(25, 1);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 position = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createObject("images/level_1/dead_tree1-day1-latest.png", 4f);
+      spawnEntityAt(tree, position, false, false);
     }
   }
 
@@ -386,12 +398,6 @@ public class Level1 extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-
-    // this will be removed - purely for testing
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(5, 5);
-
-    //Entity shopKeeperNPC = NPCFactory.createShopkeeperNPC();
-    //spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
     return newPlayer;
   }
 
@@ -441,7 +447,7 @@ public class Level1 extends GameArea {
       spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, randomPos, true, true);
     }
-     */
+    */
   }
   /**
    * Spawns a small enemy from the appropriate spawner's position
@@ -574,8 +580,8 @@ public class Level1 extends GameArea {
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
+    music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
-    music.setVolume(0.3f);
     music.play();
   }
 

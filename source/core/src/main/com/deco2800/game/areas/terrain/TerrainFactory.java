@@ -357,11 +357,8 @@ public class TerrainFactory {
     setTilesInRegion(layer, sidewalkTile, start, end);
     //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
 
-    // This value identifies the offset to facilitate the region that coincides with the safehouse where there is no "sidewalk"
-    double safehouseStrip = 0.9;
-
     start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.6);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, safehouseStrip, 1);
+    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.7);
     setTilesInRegion(layer, sidewalkTile, start, end);
     //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
 

@@ -146,31 +146,22 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(object, 1f, 1f);
     return object;
   }
-  public static Entity createBuilding(int buildingType) {
-    Entity building;
-    switch (buildingType) {
-      case (2):
-        building =
-                new Entity()
-                        .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        building.getComponent(TextureRenderComponent.class).scaleEntity();
-        building.scaleHeight(10f);
-        break;
-      case (3):
-        building =
-                new Entity()
-                        .addComponent(new TextureRenderComponent("images/level_1/building3-day1-latest.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        building.getComponent(TextureRenderComponent.class).scaleEntity();
-        building.scaleHeight(7.5f);
-        break;
-      default:
-        throw new IllegalStateException("Unexpected value: " + buildingType);
+
+  public static Entity createBuilding(int buildingNumber) {
+    String buildingPath;
+    if (buildingNumber == 1) {
+      buildingPath = "images/level_1/building2-day1-latest.png";
+    } else {
+      buildingPath = "images/level_1/building3-day1-latest.png";
     }
+    Entity building =
+        new Entity()
+            .addComponent(new TextureRenderComponent(buildingPath))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    building.getComponent(TextureRenderComponent.class).scaleEntity();
+    building.scaleHeight(10f);
     return building;
   }
 

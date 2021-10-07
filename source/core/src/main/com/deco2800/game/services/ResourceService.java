@@ -17,6 +17,7 @@ public class ResourceService implements Disposable {
 
   private static final Logger logger = LoggerFactory.getLogger(ResourceService.class);
   private final AssetManager assetManager;
+  private float musicVolume;
 
   public ResourceService() {
     this(new AssetManager());

@@ -58,6 +58,8 @@ public class UserSettings {
     } else {
       Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
+
+  //TODO: Set master volume control here!
   }
 
   private static DisplayMode findMatching(DisplaySettings desiredSettings) {
@@ -89,6 +91,8 @@ public class UserSettings {
      * ui Scale. Currently unused, but can be implemented.
      */
     public float uiScale = 1f;
+    public float sfxVolume = 0.5f;
+    public float musicVolume = 0.5f;
     public DisplaySettings displayMode = null;
   }
 

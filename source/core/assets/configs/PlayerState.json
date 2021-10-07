@@ -10,8 +10,8 @@
   "health" : 3,
   "bandages": 3,
   "ability": "LONG_DASH",
-  "meleeWeaponType": "AXE",
+  "meleeWeaponType": "SWORD",
   "armorType": "NONE",
-  "meleeFilePath": "configs/Axe.json",
+  "meleeFilePath": "configs/Sword.json",
   "currentGameLevel": 1
 }

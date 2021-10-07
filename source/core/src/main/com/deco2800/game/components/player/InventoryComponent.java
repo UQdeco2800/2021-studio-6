@@ -21,6 +21,7 @@ public class InventoryComponent extends Component {
   private final GameTime timeSource = ServiceLocator.getTimeSource();
   private static final int TICK_LENGTH = 1000; // in milliseconds
   private long tickStartTime = 0;
+  private boolean torchToggled;
 
   public InventoryComponent(int gold, int ammo, int bandages, int torch) {
     this.gold = gold;
@@ -35,6 +36,7 @@ public class InventoryComponent extends Component {
     entity.getEvents().trigger("updateBandageHUD",this.bandages);
     entity.getEvents().trigger("updateAmmoHUD",this.ammo);
     entity.getEvents().trigger("updateCoinHUD",this.gold);
+    entity.getEvents().addListener("toggleTorch",this::torchToggle);
     if (torch > 0) {
       torchStatus = true;
       entity.getEvents().trigger("torchOn");
@@ -43,22 +45,40 @@ public class InventoryComponent extends Component {
       entity.getEvents().trigger("torchOff");
     }
     tickStartTime = ServiceLocator.getTimeSource().getTime();
+    torchToggled = false;
   }
 
   @Override
   public void update() {
     super.update();
-    if (torch > 0) {
-      if (timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
-        tickStartTime = ServiceLocator.getTimeSource().getTime();
-        torch--;
+    if (!torchToggled) {
+      if (torch > 0) {
+        if (timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
+          tickStartTime = ServiceLocator.getTimeSource().getTime();
+          torch--;
+        }
+      }
+      if (torch <= 0) {
+        torchStatus = false;
+        entity.getEvents().trigger("torchOff");
+      }
+      if (torch > 0 && !torchStatus) {
+        torchStatus = true;
+        entity.getEvents().trigger("torchOn");
       }
     }
-    if (torch <= 0) {
+  }
+
+  /**
+   * Toggles the torch on and off. Used for the torch keybinding.
+   */
+  public void torchToggle() {
+    torchToggled = !torchToggled;
+    if (torchToggled) {
       torchStatus = false;
       entity.getEvents().trigger("torchOff");
-    }
-    if (torch > 0 && !torchStatus) {
+    } else {
+      tickStartTime = ServiceLocator.getTimeSource().getTime();
       torchStatus = true;
       entity.getEvents().trigger("torchOn");
     }
@@ -175,11 +195,19 @@ public class InventoryComponent extends Component {
     setBandages(this.bandages + bandages);
   }
 
+  /**
+   * Adds additional time (in seconds) to the torch
+   * @param addTorch the time to add to the torch timer
+   */
   public void addTorch(int addTorch) {
-    logger.debug("Setting torch to {}", this.torch);
     this.torch += addTorch;
+    logger.debug("Setting torch to {}", this.torch);
   }
 
+  /**
+   * Gets the time left on the torch in secs
+   * @return seconds left on the torch
+   */
   public int getTorch() {
     return this.torch;
   }

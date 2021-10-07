@@ -101,6 +101,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("dash");
           return true;
+        case Keys.T:
+          entity.getEvents().trigger("toggleTorch");
+          return true;
       }
     }
 

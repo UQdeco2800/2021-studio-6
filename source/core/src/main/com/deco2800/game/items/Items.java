@@ -4,9 +4,10 @@ public enum Items {
     COINS,
     AMMO,
     BANDAGE,
+    TORCH,
     ARMOUR,
     HELMET,
-    SWORD,
+    CROWBAR,
     AXE,
     DAGGER,
     SHOP,
@@ -54,8 +55,27 @@ public enum Items {
                 return "configs/Baseball.json";
             case "MACHETE":
                 return "configs/Machete.json";
-            case "SWORD":
-                return "configs/Sword.json";
+            case "CROWBAR":
+                return "configs/Crowbar.json";
+            default:
+                return "";
+        }
+    }
+
+    public static String getShopWeaponConfig(String meleeWeapon) {
+        switch (meleeWeapon) {
+            case "AXE":
+                return "configs/ShopAxeInfo.json";
+            case "DAGGER":
+                return "configs/ShopDaggerInfo.json";
+            case "SLEDGE":
+                return "configs/ShopHelmetInfo.json";
+            case "BAT":
+                return "configs/ShopBaseballInfo.json";
+            case "MACHETE":
+                return "configs/ShopMacheteInfo.json";
+            case "CROWBAR":
+                return "configs/Crowbar.json";
             default:
                 return "";
         }
@@ -63,8 +83,8 @@ public enum Items {
 
     public static Items getMeleeWeapon(String meleeWeapon) {
         switch (meleeWeapon) {
-            case "SWORD":
-                return SWORD;
+            case "CROWBAR":
+                return CROWBAR;
             case "AXE":
                 return AXE;
             case "DAGGER":
@@ -82,7 +102,7 @@ public enum Items {
 
     public static boolean checkMeleeWeapon(String meleeWeapon) {
         switch (meleeWeapon) {
-            case "SWORD":
+            case "CROWBAR":
             case "AXE":
             case "DAGGER":
             case "SLEDGE":

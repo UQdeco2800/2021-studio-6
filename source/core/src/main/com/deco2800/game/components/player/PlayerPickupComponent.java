@@ -87,8 +87,8 @@ public class PlayerPickupComponent extends Component {
                 stats.setDefenceLevel(1);
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
                 sound.play();
-            } else if (item.getItemType() == Items.SWORD) {
-                 weapon.setWeapon("configs/Sword.json");
+            } else if (item.getItemType() == Items.CROWBAR) {
+                 weapon.setWeapon("configs/Crowbar.json");
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
                 sound.play();
             } else if (item.getItemType() == Items.AXE) {

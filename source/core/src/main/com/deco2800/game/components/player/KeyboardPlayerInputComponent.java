@@ -118,7 +118,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.ENTER:
           entity.getEvents().trigger("rangeAttack");
           return true;
-        case Keys.E:
+        case Keys.Q:
           entity.getEvents().trigger("tryAbility", walkDirection);
           return true;
         case Keys.NUM_1:
@@ -139,7 +139,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
-
     if (timeSource == null || !timeSource.isPaused() && (up || down || left || right)) {
       switch (keycode) {
         case Keys.W:

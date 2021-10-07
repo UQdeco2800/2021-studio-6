@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -193,6 +193,11 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#torch">torch</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#woundState">woundState</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -353,117 +358,131 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor" id="i15">
 <td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTorch()">getTorch</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Torch timer of current player state</div>
+</td>
+</tr>
+<tr class="altColor" id="i16">
+<td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWoundState()">getWoundState</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Wound state of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i16">
+<tr class="rowColor" id="i17">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.deco2800.game.memento.PlayerMemento)">restore</a></span>&#8203;(<a href="PlayerMemento.html" title="class in com.deco2800.game.memento">PlayerMemento</a>&nbsp;memento)</code></th>
 <td class="colLast">
 <div class="block">Restores originator to past originator created previously</div>
 </td>
 </tr>
-<tr class="rowColor" id="i17">
+<tr class="altColor" id="i18">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAbility(java.lang.String)">setAbility</a></span>&#8203;(java.lang.String&nbsp;ability)</code></th>
 <td class="colLast">
 <div class="block">Modify abilities of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i18">
+<tr class="rowColor" id="i19">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmmo(int)">setAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
 <td class="colLast">
 <div class="block">Modify ammo count of current player state</div>
 </td>
 </tr>
-<tr class="rowColor" id="i19">
+<tr class="altColor" id="i20">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setArmorType(java.lang.String)">setArmorType</a></span>&#8203;(java.lang.String&nbsp;armorType)</code></th>
 <td class="colLast">
 <div class="block">Modify armor type of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i20">
+<tr class="rowColor" id="i21">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBandage(int)">setBandage</a></span>&#8203;(int&nbsp;bandage)</code></th>
 <td class="colLast">
 <div class="block">Modify bandage count of current player state</div>
 </td>
 </tr>
-<tr class="rowColor" id="i21">
+<tr class="altColor" id="i22">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBaseAttack(int)">setBaseAttack</a></span>&#8203;(int&nbsp;baseAttack)</code></th>
 <td class="colLast">
 <div class="block">Modify melee base attack of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i22">
+<tr class="rowColor" id="i23">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBaseRangedAttack(int)">setBaseRangedAttack</a></span>&#8203;(int&nbsp;baseRangedAttack)</code></th>
 <td class="colLast">
 <div class="block">Modify ranged base attack of current player state</div>
 </td>
 </tr>
-<tr class="rowColor" id="i23">
+<tr class="altColor" id="i24">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBulletMagazine(int)">setBulletMagazine</a></span>&#8203;(int&nbsp;bullet)</code></th>
 <td class="colLast">
 <div class="block">Modify bullet count of player magazine</div>
 </td>
 </tr>
-<tr class="altColor" id="i24">
+<tr class="rowColor" id="i25">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCurrentGameLevel(double)">setCurrentGameLevel</a></span>&#8203;(double&nbsp;level)</code></th>
 <td class="colLast">
 <div class="block">Modify current game level of current player state</div>
 </td>
 </tr>
-<tr class="rowColor" id="i25">
+<tr class="altColor" id="i26">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefenceLevel(int)">setDefenceLevel</a></span>&#8203;(int&nbsp;defenceLevel)</code></th>
 <td class="colLast">
 <div class="block">Modify defence level of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i26">
+<tr class="rowColor" id="i27">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGold(int)">setGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
 <div class="block">Modify gold count of current player state</div>
 </td>
 </tr>
-<tr class="rowColor" id="i27">
+<tr class="altColor" id="i28">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHealth(int)">setHealth</a></span>&#8203;(int&nbsp;health)</code></th>
 <td class="colLast">
 <div class="block">Modify health of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i28">
+<tr class="rowColor" id="i29">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeleeFilePath(java.lang.String)">setMeleeFilePath</a></span>&#8203;(java.lang.String&nbsp;meleeFilePath)</code></th>
 <td class="colLast">
 <div class="block">Modify melee config file path used for melee weapons</div>
 </td>
 </tr>
-<tr class="rowColor" id="i29">
+<tr class="altColor" id="i30">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeleeWeaponType(java.lang.String)">setMeleeWeaponType</a></span>&#8203;(java.lang.String&nbsp;meleeWeaponType)</code></th>
 <td class="colLast">
 <div class="block">Modify melee weapon type of current player state</div>
 </td>
 </tr>
-<tr class="altColor" id="i30">
+<tr class="rowColor" id="i31">
+<td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTorch(int)">setTorch</a></span>&#8203;(int&nbsp;torch)</code></th>
+<td class="colLast">
+<div class="block">Modify Torch timer of current player state</div>
+</td>
+</tr>
+<tr class="altColor" id="i32">
 <td class="colFirst"><code><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWoundState(int)">setWoundState</a></span>&#8203;(int&nbsp;woundState)</code></th>
 <td class="colLast">
 <div class="block">Modify wound state of current player state</div>
 </td>
 </tr>
-<tr class="rowColor" id="i31">
+<tr class="rowColor" id="i33">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -548,6 +567,12 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="bulletMagazine">bulletMagazine</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">bulletMagazine</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="torch">torch</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">torch</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -707,6 +732,28 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>bandage</code> - number to set</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getTorch()">getTorch</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getTorch</span>()</div>
+<div class="block">Torch timer of current player state</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Torch timer in player's inventory</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setTorch(int)">setTorch</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Player.html" title="class in com.deco2800.game.memento">Player</a></span>&nbsp;<span class="memberName">setTorch</span>&#8203;(<span class="arguments">int&nbsp;torch)</span></div>
+<div class="block">Modify Torch timer of current player state</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>torch</code> - timer to set</dd>
 </dl>
 </section>
 </li>

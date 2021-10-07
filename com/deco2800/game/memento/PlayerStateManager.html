@@ -158,7 +158,7 @@ double&nbsp;gameLevel)</code></th>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStartingPlayerState(int,int,int,int,int,int,int,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,double)">createStartingPlayerState</a></span>&#8203;(int&nbsp;baseRangedAttack,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createStartingPlayerState(int,int,int,int,int,int,int,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,double,int)">createStartingPlayerState</a></span>&#8203;(int&nbsp;baseRangedAttack,
 int&nbsp;baseAttack,
 int&nbsp;health,
 int&nbsp;ammo,
@@ -171,7 +171,8 @@ java.lang.String&nbsp;ability,
 java.lang.String&nbsp;meleeFilePath,
 java.lang.String&nbsp;meleeWeaponType,
 java.lang.String&nbsp;armorType,
-double&nbsp;currentGameLevel)</code></th>
+double&nbsp;currentGameLevel,
+int&nbsp;torch)</code></th>
 <td class="colLast">
 <div class="block">This is used to create the first player state in game.</div>
 </td>
@@ -295,7 +296,7 @@ double&nbsp;currentGameLevel)</code></th>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="createStartingPlayerState(int,int,int,int,int,int,int,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,double)">createStartingPlayerState</a></h3>
+<h3><a id="createStartingPlayerState(int,int,int,int,int,int,int,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,double,int)">createStartingPlayerState</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">createStartingPlayerState</span>&#8203;(<span class="arguments">int&nbsp;baseRangedAttack,
 int&nbsp;baseAttack,
 int&nbsp;health,
@@ -309,7 +310,8 @@ java.lang.String&nbsp;ability,
 java.lang.String&nbsp;meleeFilePath,
 java.lang.String&nbsp;meleeWeaponType,
 java.lang.String&nbsp;armorType,
-double&nbsp;currentGameLevel)</span></div>
+double&nbsp;currentGameLevel,
+int&nbsp;torch)</span></div>
 <div class="block">This is used to create the first player state in game. Player state will be restored to this when game is
  restarted by user in game</div>
 <dl>
@@ -328,6 +330,7 @@ double&nbsp;currentGameLevel)</span></div>
 <dd><code>meleeFilePath</code> - loads data relevant to melee weapon which will correspond to player's current state</dd>
 <dd><code>meleeWeaponType</code> - weapon type of current player's state</dd>
 <dd><code>armorType</code> - armor type of current player's state</dd>
+<dd><code>torch</code> - the timer for the torch duration</dd>
 </dl>
 </section>
 </li>

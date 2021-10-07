@@ -63,16 +63,16 @@ public class FinalBossFireLaser extends DefaultTask implements Task {
         if(firing) {
 
             if(timeSource.getTime() >= movePause) {
+                logger.debug("Boss start moving");
                 this.owner.getEntity().getEvents().trigger("startMoving");
                 this.firing = false;
                 this.inRange = false;
             }  else {
                 return;
             }
-        }
-
-        if (inRange && timeSource.getTime() >= endTime && timeSource.getTime() >= firingPause) {
+        } else if (inRange && timeSource.getTime() >= endTime && timeSource.getTime() >= firingPause) {
             logger.debug("Boss firing Laser");
+            logger.debug("Boss stop moving");
             this.owner.getEntity().getEvents().trigger("fireLaser");
             this.owner.getEntity().getEvents().trigger("stopMoving");
             this.inRange = false;
@@ -84,15 +84,17 @@ public class FinalBossFireLaser extends DefaultTask implements Task {
         if (Math.abs(target.getCenterPosition().x - this.owner.getEntity().getCenterPosition().x) < 3) {
             if(this.inRange == false){
                 logger.debug("Player within range of firing starting timer");
+                this.inRange = true;
                 endTime = timeSource.getTime() + (int)(1000);
             }
-            this.inRange = true;
+
 
         } else {
             if(this.inRange == true) {
+                this.inRange = false;
                 logger.debug("Player outside of range");
             }
-            this.inRange = false;
+
         }
 
     }

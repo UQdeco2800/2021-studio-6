@@ -254,6 +254,7 @@ public class Level4 extends GameArea {
         super.spawnFromSpawner(position, maxSpawnDistance);
     }
 
+
     private void spawnSmallEnemy() {//this da noo 1
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -302,7 +303,7 @@ public class Level4 extends GameArea {
         GridPoint2 bounds = terrain.getMapBounds(0);
 
         Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
-        GridPoint2 pos = new GridPoint2(40, 46);
+        GridPoint2 pos = new GridPoint2(40, 35);
 
         spawnEntityAt(boss, pos, true, true);
         this.spawnEntity(darkness);

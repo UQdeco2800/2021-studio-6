@@ -99,7 +99,6 @@ public class BossMovementTask extends DefaultTask implements Task {
      * starts the boss's movement
      */
     public void startMoving() {
-        movementComponent.setTarget(randomXAxisTarget());
         movementComponent.setMoving(true);
     }
 

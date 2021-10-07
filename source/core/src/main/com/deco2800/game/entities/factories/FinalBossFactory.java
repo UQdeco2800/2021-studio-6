@@ -31,6 +31,7 @@ import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
+
 /**
  * The factory for all the entities related to the final boss
  */
@@ -47,20 +48,11 @@ public class FinalBossFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new DisposingComponent());
 
-//        Entity beam = createBeam();
-//        Entity bossHead = createBossHead();
-//        Entity spawner = createLightSpawner(target, gameArea);
-
-
-
         AITaskComponent aiComponent =
                 new AITaskComponent()
                           .addTask(new Stage2Task(1, gameArea, target));
-//                        .addTask(new Stage1Task(1, gameArea, darkness, beam, bossHead));
 
         darkness.addComponent(aiComponent);
-//        darkness.setScale(new Vector2(40f, 5f));
-        //PhysicsUtils.setScaledCollider(darkness, 0.6f, 0.3f);
 
         return darkness;
     }
@@ -89,7 +81,7 @@ public class FinalBossFactory {
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(1000, 0))
+                .addComponent(new CombatStatsComponent(1, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
 

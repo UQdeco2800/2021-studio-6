@@ -13,12 +13,10 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class PlayerLightingComponent extends PointLightComponent {
 
-    private boolean torchState;
     private IndependentAnimator torchAnimator;
 
     public PlayerLightingComponent (Color color, float distance, float offsetx, float offsety) {
         super(color, distance,offsetx,offsety);
-        torchState = true;
     }
 
     @Override
@@ -44,7 +42,6 @@ public class PlayerLightingComponent extends PointLightComponent {
      * Turns the lighting off
      */
     private void torchOff() {
-        torchState = false;
         this.getPointLight().setActive(false);
     }
 
@@ -52,7 +49,6 @@ public class PlayerLightingComponent extends PointLightComponent {
      * Turns the lighting on
      */
     private void torchOn() {
-        torchState = true;
         this.getPointLight().setActive(true);
     }
 

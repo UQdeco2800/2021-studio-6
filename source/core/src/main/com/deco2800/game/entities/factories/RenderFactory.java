@@ -20,6 +20,12 @@ public class RenderFactory {
     return new Renderer(camComponent, true, null);
   }
 
+  /**
+   * Creates the renderer specifically for render after the lighting system
+   * @param camComponent The camera component created in createRenderer
+   * @param stage the stage from the pre-existing renderer
+   * @return the new unlitRenderer service
+   */
   public static Renderer createUnlitRenderer(CameraComponent camComponent, Stage stage) {
     return new Renderer(camComponent, false, stage);
   }

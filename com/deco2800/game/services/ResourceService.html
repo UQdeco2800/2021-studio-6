@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -184,55 +184,83 @@ java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
 </td>
 </tr>
 <tr class="altColor" id="i4">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMusicVolume()">getMusicVolume</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the Volume for any Music Stream.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProgress()">getProgress</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the loading completion progress as a percentage.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSfxVolume()">getSfxVolume</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the Volume for any Sound Effects.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadAll()">loadAll</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Blocking call to load all assets.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadForMillis(int)">loadForMillis</a></span>&#8203;(int&nbsp;duration)</code></th>
 <td class="colLast">
 <div class="block">Loads assets for the specified duration in milliseconds.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadMusic(java.lang.String%5B%5D)">loadMusic</a></span>&#8203;(java.lang.String[]&nbsp;musicNames)</code></th>
 <td class="colLast">
 <div class="block">Loads a list of music assets into the asset manager.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadSounds(java.lang.String%5B%5D)">loadSounds</a></span>&#8203;(java.lang.String[]&nbsp;soundNames)</code></th>
 <td class="colLast">
 <div class="block">Loads a list of sounds into the asset manager.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadTextureAtlases(java.lang.String%5B%5D)">loadTextureAtlases</a></span>&#8203;(java.lang.String[]&nbsp;textureAtlasNames)</code></th>
 <td class="colLast">
 <div class="block">Loads a list of texture atlas assets into the asset manager.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadTextures(java.lang.String%5B%5D)">loadTextures</a></span>&#8203;(java.lang.String[]&nbsp;textureNames)</code></th>
 <td class="colLast">
 <div class="block">Loads a list of texture assets into the asset manager.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i11">
+<tr class="rowColor" id="i13">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMusicVolume(float)">setMusicVolume</a></span>&#8203;(float&nbsp;val)</code></th>
+<td class="colLast">
+<div class="block">Set the Volume of any Music Stream.</div>
+</td>
+</tr>
+<tr class="altColor" id="i14">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSfxVolume(float)">setSfxVolume</a></span>&#8203;(float&nbsp;val)</code></th>
+<td class="colLast">
+<div class="block">Set the Volume of any Sound Effect.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i15">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unloadAssets(java.lang.String%5B%5D)">unloadAssets</a></span>&#8203;(java.lang.String[]&nbsp;assetNames)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -281,6 +309,54 @@ java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
 </a>
 <h2>Method Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="getMusicVolume()">getMusicVolume</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getMusicVolume</span>()</div>
+<div class="block">Get the Volume for any Music Stream.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>music volume [0,1]</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getSfxVolume()">getSfxVolume</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getSfxVolume</span>()</div>
+<div class="block">Get the Volume for any Sound Effects.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>sfx volume [0,1]</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setMusicVolume(float)">setMusicVolume</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setMusicVolume</span>&#8203;(<span class="arguments">float&nbsp;val)</span></div>
+<div class="block">Set the Volume of any Music Stream.
+ This is a temporary variable; see UserSettings.Settings.musicVolume
+ for persistent storage.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>val</code> - music volume [0,1]</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setSfxVolume(float)">setSfxVolume</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setSfxVolume</span>&#8203;(<span class="arguments">float&nbsp;val)</span></div>
+<div class="block">Set the Volume of any Sound Effect.
+ This is a temporary variable; see UserSettings.Settings.sfxVolume
+ for persistent storage.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>val</code> - sfx volume [0,1]</dd>
+</dl>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getAsset(java.lang.String,java.lang.Class)">getAsset</a></h3>

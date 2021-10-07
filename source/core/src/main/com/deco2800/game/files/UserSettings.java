@@ -3,6 +3,7 @@ package com.deco2800.game.files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.deco2800.game.files.FileLoader.Location;
+import com.deco2800.game.services.ServiceLocator;
 
 import java.io.File;
 
@@ -58,6 +59,11 @@ public class UserSettings {
     } else {
       Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
+
+    if(ServiceLocator.getResourceService() != null) {
+      ServiceLocator.getResourceService().setMusicVolume(settings.musicVolume);
+      ServiceLocator.getResourceService().setSfxVolume(settings.sfxVolume);
+    }
   }
 
   private static DisplayMode findMatching(DisplaySettings desiredSettings) {
@@ -89,6 +95,8 @@ public class UserSettings {
      * ui Scale. Currently unused, but can be implemented.
      */
     public float uiScale = 1f;
+    public float sfxVolume = 0.5f;
+    public float musicVolume = 0.5f;
     public DisplaySettings displayMode = null;
   }
 

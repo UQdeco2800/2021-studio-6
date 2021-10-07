@@ -24,6 +24,7 @@ public class PlayerTorchAnimationControllerTest {
     @Mock GameTime time;
     PlayerTorchAnimationController torch;
     Entity player;
+    float zIndexValueDown = 99.5f;
 
     @BeforeEach
     void beforeEach() {
@@ -80,6 +81,7 @@ public class PlayerTorchAnimationControllerTest {
         when(keys.getDirection()).thenReturn(Directions.MOVE_DOWN); // Call same direction twice
         torch.update();
         verify(anim, times(2)).setPositions(0,0); // Calls every update
+        verify(anim, times(1)).setZIndex(zIndexValueDown); // Sets the z index on direction.
         verifyNoMoreInteractions(anim); // Shouldn't call a start animation
     }
 

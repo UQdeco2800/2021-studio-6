@@ -1,41 +1,40 @@
 package com.deco2800.game.components.tasks;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.ai.tasks.DefaultTask;
-import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * FireBulletTask creates a task which triggers a fire event at fixed interval
+ * FinalBossFireLaser
+ * AI task which fires a laser, also triggers events for stopping an starting the boss movement
  */
-public class FinalBossFireLaser extends DefaultTask implements PriorityTask {
+public class FinalBossFireLaser extends DefaultTask implements Task {
     private final GameTime timeSource;
     private Entity target;
-    private long endTime;
-    private boolean inRange;
-    private int priority;
 
+    private boolean inRange;
     private boolean firing;
+
     private long firingPause;
     private long movePause;
-
-    @Override
-    public int getPriority() {
-        return 100;
-    }
+    private long endTime;
 
 
-    public FinalBossFireLaser( Entity target) {
+    /**
+     * FinalBossFireLaser
+     * initialises the FireLaser task
+     * @param target functionality depends on position of the player
+     */
+    public FinalBossFireLaser(Entity target) {
         timeSource = ServiceLocator.getTimeSource();
         this.target = target;
-
-
     }
 
     /**
-     * Start waiting from now until duration has passed.
+     * start
+     * starts the task
      */
     @Override
     public void start() {
@@ -45,20 +44,21 @@ public class FinalBossFireLaser extends DefaultTask implements PriorityTask {
     }
 
     /**
-     * if the interval timer has been reached trigger fire event and reset timer
+     * update
+     * handles the logic for firing the laser
+     * fire listeners for the boss to stop moving
      */
     @Override
     public void update() {
         //null guard
-        if(target == null){
+        if(target == null) {
             return;
         }
 
+        //if the boss is firing stop other logic from triggering
         if(firing) {
             if(timeSource.getTime() >= movePause) {
-                System.out.println("start moving");
                 this.owner.getEntity().getEvents().trigger("startMoving");
-
                 this.firing = false;
                 this.inRange = false;
             }  else {
@@ -67,8 +67,6 @@ public class FinalBossFireLaser extends DefaultTask implements PriorityTask {
         }
 
         if (inRange && timeSource.getTime() >= endTime && timeSource.getTime() >= firingPause) {
-            System.out.println("stop moving");
-
             this.owner.getEntity().getEvents().trigger("fireLaser");
             this.owner.getEntity().getEvents().trigger("stopMoving");
             this.inRange = false;
@@ -87,9 +85,5 @@ public class FinalBossFireLaser extends DefaultTask implements PriorityTask {
             this.inRange = false;
         }
 
-//        if (timeSource.getTime() >= endTime) {
-//            this.owner.getEntity().getEvents().trigger("fire");
-//            endTime = timeSource.getTime() + (int)(duration * 1000);
-//        }
     }
 }

@@ -39,7 +39,7 @@ public class PlayerWeaponAnimationController extends Component {
    */
   @Override
   public void update() {
-    System.out.println(this.entity.getPosition());
+    
     weaponAnimator.setCamera(false);
     weaponAnimator.setPositions(
             offsets.x + this.entity.getPosition().x - (this.entity.getScale().x / 2),

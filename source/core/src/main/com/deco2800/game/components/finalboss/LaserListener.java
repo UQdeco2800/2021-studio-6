@@ -8,15 +8,13 @@ import com.deco2800.game.entities.factories.FinalBossFactory;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * This class listens for the fire event then spawns and fires a bullet from
- * the entity to the target entity
+ * LaserListener
+ * Listens for "fireLaser" events then spawns a laser beam
  */
 public class LaserListener extends Component {
 
-
-
     /**
-     * Adds the fire listener to the entity
+     * Adds the fireLaser listener to the entity
      */
     @Override
     public void create() {
@@ -25,10 +23,9 @@ public class LaserListener extends Component {
     }
 
     /**
-     * 'fires' a bullet from the entity to the target
+     * 'fires' a beam from the boss
      */
     void fire() {
-
         Entity beam = FinalBossFactory.createBeam();
         beam.setPosition(
                 this.entity.getCenterPosition().x - (beam.getScale().x / 2),

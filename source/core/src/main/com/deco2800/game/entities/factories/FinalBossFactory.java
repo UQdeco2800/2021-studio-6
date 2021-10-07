@@ -66,21 +66,20 @@ public class FinalBossFactory {
     }
 
     /**
-     * Creates the boss head
-     * @return the boss head
+     * createBossHead
+     * @param target Should be the player entity as AI is dependent on the player
+     * @return the boss entity
      */
-    public static Entity createBossHead(Entity target) {
+    public static Entity createBossHead(Entity target, float bounds) {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
             animator.addAnimation("default", 1f, Animation.PlayMode.LOOP);
 
-
         MultiAITaskComponent aiComponent =
                 new MultiAITaskComponent()
-                        .addTask(new BossMovementTask())
+                        .addTask(new BossMovementTask(bounds))
                         .addTask(new FinalBossFireLaser(target));
-
 
         Entity bossHead = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -93,7 +92,6 @@ public class FinalBossFactory {
                 .addComponent(new CombatStatsComponent(1000, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
-
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
         bossHead.setScale(new Vector2(4f, 4f));
@@ -118,13 +116,10 @@ public class FinalBossFactory {
         Entity beam = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
-                //.addComponent(new ColliderComponent())
-                //.addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
                 .addComponent(new CombatStatsComponent(1000, 5))
-//                .addComponent(new DisposingComponent())
                 .addComponent(new LaserTimer());
 
         beam.getComponent(AnimationRenderComponent.class).scaleEntity();

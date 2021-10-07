@@ -88,7 +88,7 @@ public class Level2 extends GameArea {
 
   // Music and sound variables
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-woods.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -609,7 +609,7 @@ public class Level2 extends GameArea {
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0f);
+    music.setVolume(0.3f);
     music.play();
   }
 

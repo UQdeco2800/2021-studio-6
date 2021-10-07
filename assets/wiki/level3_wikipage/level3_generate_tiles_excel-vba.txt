@@ -1,0 +1,501 @@
+
+Private Sub CommandButton1_Click()
+    'Declaring variables
+    Dim i As Integer, CellValue As String, col As Integer, row As Integer
+    Dim map_size_x As Integer, map_size_y As Integer, CellTemp As String
+    
+    'Column number for excel
+    Dim P_COL As Integer, P_index As Integer
+    Dim S_COL As Integer, S_index As Integer
+    Dim X_COL As Integer, X_index As Integer
+    Dim Y_COL As Integer, Y_index As Integer
+    Dim A_COL As Integer, A_index As Integer
+    Dim C_COL As Integer, C_index As Integer
+    Dim H_COL As Integer, H_index As Integer
+    Dim B_COL As Integer, B_index As Integer
+    Dim W_COL As Integer, W_index As Integer
+    Dim e1_COL As Integer, e1_index As Integer
+    Dim e2_COL As Integer, e2_index As Integer
+    Dim e3_COL As Integer, e3_index As Integer
+    Dim e4_COL As Integer, e4_index As Integer
+    Dim SP_COL As Integer, SP_index As Integer
+    Dim Z_COL As Integer, Z_index As Integer
+    Dim B2_COL As Integer, B2_index As Integer
+    
+    Dim Z1_COL As Integer, Z1_index As Integer
+    Dim Z2_COL As Integer, Z2_index As Integer
+    Dim Z3_COL As Integer, Z3_index As Integer
+    Dim Z4_COL As Integer, Z4_index As Integer
+    Dim Z6_COL As Integer, Z6_index As Integer
+    Dim Z7_COL As Integer, Z7_index As Integer
+    Dim Z8_COL As Integer, Z8_index As Integer
+    Dim Z9_COL As Integer, Z9_index As Integer
+    
+    ' Bunch the newgrid points into 3 per cell to save some space for java?
+    Dim X_3_Col As Integer, Y_3_Col As Integer, X_3_COL_INDEX As Integer, Y_3_COL_INDEX As Integer
+    Dim Z_3_Col As Integer, Z_3_COL_INDEX As Integer, X2_3_Col As Integer, X3_3_Col As Integer, X3_3_COL_INDEX As Integer, X2_3_COL_INDEX As Integer
+    
+    Dim Z1_3_COL_INDEX As Integer, Z1_3_Col As Integer
+    Dim Z2_3_COL_INDEX As Integer, Z2_3_Col As Integer
+    Dim Z3_3_COL_INDEX As Integer, Z3_3_Col As Integer
+    Dim Z4_3_COL_INDEX As Integer, Z4_3_Col As Integer
+    Dim Z6_3_COL_INDEX As Integer, Z6_3_Col As Integer
+    Dim Z7_3_COL_INDEX As Integer, Z7_3_Col As Integer
+    Dim Z8_3_COL_INDEX As Integer, Z8_3_Col As Integer
+    Dim Z9_3_COL_INDEX As Integer, Z9_3_Col As Integer
+    
+    ' 3 gridpoint2 per cell
+    X_3_Col = 3
+    Y_3_Col = 3
+    
+    X_3_COL_INDEX = 0
+    Y_3_COL_INDEX = 0
+    
+    X2_3_Col = 3        'brown tree
+    X3_3_Col = 3        'dead tree
+    X2_3_COL_INDEX = 0  'brown tree index
+    X3_3_COL_INDEX = 0  'dead tree index
+    
+    ' Water bunch tiles
+    Z_3_Col = 3
+    Z1_3_Col = 3
+    Z2_3_Col = 3
+    Z3_3_Col = 3
+    Z4_3_Col = 3
+    Z6_3_Col = 3
+    Z7_3_Col = 3
+    Z8_3_Col = 3
+    Z9_3_Col = 3
+    
+    Z_3_COL_INDEX = 0
+    Z1_3_COL_INDEX = 0
+    Z2_3_COL_INDEX = 0
+    Z3_3_COL_INDEX = 0
+    Z4_3_COL_INDEX = 0
+    Z6_3_COL_INDEX = 0
+    Z7_3_COL_INDEX = 0
+    Z8_3_COL_INDEX = 0
+    Z9_3_COL_INDEX = 0
+    
+    '==============================================
+    P_COL = 86
+    S_COL = 87
+    X_COL = 88
+    Y_COL = 89
+    A_COL = 90
+    C_COL = 91
+    H_COL = 92
+    B_COL = 93
+    W_COL = 94
+    e1_COL = 95
+    e2_COL = 96
+    e3_COL = 97
+    e4_COL = 98
+    SP_COL = 99
+    B2_COL = 101    'bridge tile
+    X2_COL = 102    'Brown tree
+    X3_COL = 103    'Dead tree
+    
+    'Water Tiles 3x3 grid (top left is 1, bottom right is 9)
+    Z_COL = 100     'water full
+    Z1_COL = 104
+    Z2_COL = 105
+    Z3_COL = 106
+    Z4_COL = 107
+    Z6_COL = 108
+    Z7_COL = 109
+    Z8_COL = 110
+    Z9_COL = 111
+    
+    P_index = 2
+    S_index = 2
+    X_index = 2
+    Y_index = 2
+    A_index = 2
+    C_index = 2
+    H_index = 2
+    B_index = 2
+    W_index = 2
+    e1_index = 2
+    e2_index = 2
+    e3_index = 2
+    e4_index = 2
+    SP_index = 2
+    B2_index = 2
+    X2_index = 2
+    X3_index = 2
+    
+    Z_index = 2
+    Z1_index = 2
+    Z2_index = 2
+    Z3_index = 2
+    Z4_index = 2
+    Z6_index = 2
+    Z7_index = 2
+    Z8_index = 2
+    Z9_index = 2
+    
+    
+    
+    'Level 3 Map Size
+    map_size_x = 57
+    map_size_y = 46
+    
+    'Loop through map tiles
+    For row = 1 To map_size_y
+        For col = 1 To map_size_x
+            CellValue = Cells(row, col).Value
+            
+            'Player Tile
+            If CellValue = "P" Then
+                Cells(P_index, P_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                P_index = P_index + 1
+                
+            'Safehouse Tile
+            ElseIf CellValue = "S" Then
+                Cells(S_index, S_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                S_index = S_index + 1
+                
+            'Pine Tri Tree Tile
+            ElseIf CellValue = "X" Then
+                
+                ' If 0/1/2 % 3:
+                If X_3_COL_INDEX Mod X_3_Col = 0 Then
+                
+                    Cells(X_index, X_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf X_3_COL_INDEX Mod X_3_Col = 1 Then
+                
+                    CellTemp = Cells(X_index, X_COL).Value
+                    Cells(X_index, X_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf X_3_COL_INDEX Mod X_3_Col = 2 Then
+                
+                    CellTemp = Cells(X_index, X_COL).Value
+                    Cells(X_index, X_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    X_index = X_index + 1
+                    
+                End If
+                X_3_COL_INDEX = X_3_COL_INDEX + 1
+                
+            'Big Tree Tile
+            ElseIf CellValue = "Y" Then
+                ' If 0/1/2 % 3:
+                If Y_3_COL_INDEX Mod Y_3_Col = 0 Then
+                
+                    Cells(Y_index, Y_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Y_3_COL_INDEX Mod Y_3_Col = 1 Then
+                
+                    CellTemp = Cells(Y_index, Y_COL).Value
+                    Cells(Y_index, Y_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Y_3_COL_INDEX Mod Y_3_Col = 2 Then
+                
+                    CellTemp = Cells(Y_index, Y_COL).Value
+                    Cells(Y_index, Y_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Y_index = Y_index + 1
+                    
+                End If
+                Y_3_COL_INDEX = Y_3_COL_INDEX + 1
+            
+            'Ammo Tile
+            ElseIf CellValue = "A" Then
+                Cells(A_index, A_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                A_index = A_index + 1
+                
+            'Coin Tile
+            ElseIf CellValue = "C" Then
+                Cells(C_index, C_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                C_index = C_index + 1
+                
+            'Healthpack Tile
+            ElseIf CellValue = "H" Then
+                Cells(H_index, H_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                H_index = H_index + 1
+            
+            'Bush Tile
+            ElseIf CellValue = "B" Then
+                Cells(B_index, B_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                B_index = B_index + 1
+                
+            'Web Tile
+            ElseIf CellValue = "W" Then
+                Cells(W_index, W_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                W_index = W_index + 1
+                
+            'Small ground enemy
+            ElseIf CellValue = "e1" Then
+                Cells(e1_index, e1_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e1_index = e1_index + 1
+            
+            'Small eye enemy
+            ElseIf CellValue = "e2" Then
+                Cells(e2_index, e2_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e2_index = e2_index + 1
+            
+            'Large ground enemy
+            ElseIf CellValue = "e3" Then
+                Cells(e3_index, e3_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e3_index = e3_index + 1
+                
+            'Large eye enemy
+            ElseIf CellValue = "e4" Then
+                Cells(e4_index, e4_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e4_index = e4_index + 1
+                
+            'Spawner enemy
+            ElseIf CellValue = "SP" Then
+                Cells(SP_index, SP_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                SP_index = SP_index + 1
+                
+            ' LEVEL 3 new tiles (Water, bridge and tri brown and dead pine tree tiles) ====================================================================
+                
+            'Water Tile Full (5)
+            ElseIf CellValue = "Z" Then
+                ' If 0/1/2 % 3:
+                If Z_3_COL_INDEX Mod Z_3_Col = 0 Then
+                
+                    Cells(Z_index, Z_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z_3_COL_INDEX Mod Z_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z_index, Z_COL).Value
+                    Cells(Z_index, Z_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z_3_COL_INDEX Mod Z_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z_index, Z_COL).Value
+                    Cells(Z_index, Z_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z_index = Z_index + 1
+                    
+                End If
+                Z_3_COL_INDEX = Z_3_COL_INDEX + 1
+                
+            'Water Tile 1
+            ElseIf CellValue = "Z1" Then
+                ' If 0/1/2 % 3:
+                If Z1_3_COL_INDEX Mod Z1_3_Col = 0 Then
+                
+                    Cells(Z1_index, Z1_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z1_3_COL_INDEX Mod Z1_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z1_index, Z1_COL).Value
+                    Cells(Z1_index, Z1_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z1_3_COL_INDEX Mod Z1_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z1_index, Z1_COL).Value
+                    Cells(Z1_index, Z1_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z1_index = Z1_index + 1
+                    
+                End If
+                Z1_3_COL_INDEX = Z1_3_COL_INDEX + 1
+            
+            'Water Tile 2
+            ElseIf CellValue = "Z2" Then
+                ' If 0/1/2 % 3:
+                If Z2_3_COL_INDEX Mod Z2_3_Col = 0 Then
+                
+                    Cells(Z2_index, Z2_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z2_3_COL_INDEX Mod Z2_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z2_index, Z2_COL).Value
+                    Cells(Z2_index, Z2_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z2_3_COL_INDEX Mod Z2_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z2_index, Z2_COL).Value
+                    Cells(Z2_index, Z2_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z2_index = Z2_index + 1
+                    
+                End If
+                Z2_3_COL_INDEX = Z2_3_COL_INDEX + 1
+            
+            'Water Tile 3
+            ElseIf CellValue = "Z3" Then
+                ' If 0/1/2 % 3:
+                If Z3_3_COL_INDEX Mod Z3_3_Col = 0 Then
+                
+                    Cells(Z3_index, Z3_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z3_3_COL_INDEX Mod Z3_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z3_index, Z3_COL).Value
+                    Cells(Z3_index, Z3_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z3_3_COL_INDEX Mod Z3_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z3_index, Z3_COL).Value
+                    Cells(Z3_index, Z3_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z3_index = Z3_index + 1
+                    
+                End If
+                Z3_3_COL_INDEX = Z3_3_COL_INDEX + 1
+                
+                
+            'Water Tile 4
+            ElseIf CellValue = "Z4" Then
+                ' If 0/1/2 % 3:
+                If Z4_3_COL_INDEX Mod Z4_3_Col = 0 Then
+                
+                    Cells(Z4_index, Z4_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z4_3_COL_INDEX Mod Z4_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z4_index, Z4_COL).Value
+                    Cells(Z4_index, Z4_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z4_3_COL_INDEX Mod Z4_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z4_index, Z4_COL).Value
+                    Cells(Z4_index, Z4_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z4_index = Z4_index + 1
+                    
+                End If
+                Z4_3_COL_INDEX = Z4_3_COL_INDEX + 1
+                
+            'Water Tile 6
+            ElseIf CellValue = "Z6" Then
+                ' If 0/1/2 % 3:
+                If Z6_3_COL_INDEX Mod Z6_3_Col = 0 Then
+                
+                    Cells(Z6_index, Z6_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z6_3_COL_INDEX Mod Z6_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z6_index, Z6_COL).Value
+                    Cells(Z6_index, Z6_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z6_3_COL_INDEX Mod Z6_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z6_index, Z6_COL).Value
+                    Cells(Z6_index, Z6_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z6_index = Z6_index + 1
+                    
+                End If
+                Z6_3_COL_INDEX = Z6_3_COL_INDEX + 1
+            
+            'Water Tile 7
+            ElseIf CellValue = "Z7" Then
+                ' If 0/1/2 % 3:
+                If Z7_3_COL_INDEX Mod Z7_3_Col = 0 Then
+                
+                    Cells(Z7_index, Z7_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z7_3_COL_INDEX Mod Z7_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z7_index, Z7_COL).Value
+                    Cells(Z7_index, Z7_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z7_3_COL_INDEX Mod Z7_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z7_index, Z7_COL).Value
+                    Cells(Z7_index, Z7_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z7_index = Z7_index + 1
+                    
+                End If
+                Z7_3_COL_INDEX = Z7_3_COL_INDEX + 1
+                
+            'Water Tile 8
+            ElseIf CellValue = "Z8" Then
+                ' If 0/1/2 % 3:
+                If Z8_3_COL_INDEX Mod Z8_3_Col = 0 Then
+                
+                    Cells(Z8_index, Z8_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z8_3_COL_INDEX Mod Z8_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z8_index, Z8_COL).Value
+                    Cells(Z8_index, Z8_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z8_3_COL_INDEX Mod Z8_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z8_index, Z8_COL).Value
+                    Cells(Z8_index, Z8_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z8_index = Z8_index + 1
+                    
+                End If
+                Z8_3_COL_INDEX = Z8_3_COL_INDEX + 1
+                
+               
+            'Water Tile 9
+            ElseIf CellValue = "Z9" Then
+                ' If 0/1/2 % 3:
+                If Z9_3_COL_INDEX Mod Z9_3_Col = 0 Then
+                
+                    Cells(Z9_index, Z9_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Z9_3_COL_INDEX Mod Z9_3_Col = 1 Then
+                
+                    CellTemp = Cells(Z9_index, Z9_COL).Value
+                    Cells(Z9_index, Z9_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Z9_3_COL_INDEX Mod Z9_3_Col = 2 Then
+                
+                    CellTemp = Cells(Z9_index, Z9_COL).Value
+                    Cells(Z9_index, Z9_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Z9_index = Z9_index + 1
+                    
+                End If
+                Z9_3_COL_INDEX = Z9_3_COL_INDEX + 1
+                
+                
+            '===================================== Brown Pine Tri Tree Tile ================================================================================
+            ElseIf CellValue = "X2" Then
+                
+                ' If 0/1/2 % 3:
+                If X2_3_COL_INDEX Mod X2_3_Col = 0 Then
+                
+                    Cells(X2_index, X2_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf X2_3_COL_INDEX Mod X2_3_Col = 1 Then
+                
+                    CellTemp = Cells(X2_index, X2_COL).Value
+                    Cells(X2_index, X2_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf X2_3_COL_INDEX Mod X2_3_Col = 2 Then
+                
+                    CellTemp = Cells(X2_index, X2_COL).Value
+                    Cells(X2_index, X2_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    X2_index = X2_index + 1
+                    
+                End If
+                X2_3_COL_INDEX = X2_3_COL_INDEX + 1
+                
+            'Dead Pine Tri Tree Tile
+            ElseIf CellValue = "X3" Then
+                ' If 0/1/2 % 3:
+                If X3_3_COL_INDEX Mod X3_3_Col = 0 Then
+                
+                    Cells(X3_index, X3_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf X3_3_COL_INDEX Mod X3_3_Col = 1 Then
+                
+                    CellTemp = Cells(X3_index, X3_COL).Value
+                    Cells(X3_index, X3_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf X3_3_COL_INDEX Mod X3_3_Col = 2 Then
+                
+                    CellTemp = Cells(X3_index, X3_COL).Value
+                    Cells(X3_index, X3_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    X3_index = X3_index + 1
+                    
+                End If
+                X3_3_COL_INDEX = X3_3_COL_INDEX + 1
+                  
+            'Bridge Tile
+            ElseIf CellValue = "B2" Then
+                Cells(B2_index, B2_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                B2_index = B2_index + 1
+                
+                
+            End If
+    
+        Next col
+        
+    Next row
+
+End Sub

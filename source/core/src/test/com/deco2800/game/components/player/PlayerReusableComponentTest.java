@@ -3,8 +3,13 @@ package com.deco2800.game.components.player;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ResourceService;
+import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +17,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class PlayerReusableComponentTest {
+    @Mock
+    ResourceService resourceService;
+    @Mock GameTime time;
+
+    @BeforeEach
+    void beforeEach() {
+        ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerTimeSource(time);
+    }
 
     @Test
     void shouldApplyAndUseBandage() {
@@ -54,7 +68,7 @@ public class PlayerReusableComponentTest {
         // file, currently not in used because may change depending on game balancing
         Entity player = new Entity()
                 .addComponent(new PlayerCombatStatsComponent(3, 10, 3, 2, 1))
-                .addComponent(new InventoryComponent(5, 5, 3))
+                .addComponent(new InventoryComponent(5, 5, 3, 1))
                 .addComponent(new PlayerReusableComponent());
         player.create();
         return player;

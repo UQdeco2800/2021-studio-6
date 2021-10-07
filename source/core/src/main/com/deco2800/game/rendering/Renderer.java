@@ -39,7 +39,7 @@ public class Renderer implements Disposable {
   public Renderer(CameraComponent camera, boolean lighting, Stage existingStage) {
     SpriteBatch spriteBatch = new SpriteBatch();
     DebugRenderer debugRenderer = new DebugRenderer();
-    debugRenderer.setActive(true);
+    debugRenderer.setActive(false);
     this.lighting = lighting;
     if (lighting) {
       init(
@@ -101,6 +101,10 @@ public class Renderer implements Disposable {
     resizeCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
   }
 
+  /**
+   * Gets the camera specified for this renderer
+   * @return The camera attached to this renderer
+   */
   public CameraComponent getCamera() {
     return camera;
   }

@@ -37,9 +37,9 @@ import com.deco2800.game.services.ServiceLocator;
 public class PlayerFactory {
   private static final PlayerConfig stats =
           FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
-  private static String meleeWeaponFilePath = stats.meleeFilePath;
-  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel, bulletMagazine;
-  private static String ability, meleeFilePath, meleeWeaponType, armorType;
+  private static String meleeFilePath = stats.meleeFilePath;
+  private static int baseRangedAttack, baseAttack, health, ammo, bandages, gold, woundState, defenceLevel, bulletMagazine, torch;
+  private static String ability, meleeWeaponType, armorType;
 
   /**
    * Create a player entity.
@@ -92,12 +92,12 @@ public class PlayerFactory {
     Entity player = new Entity()
           .addComponent(new PhysicsComponent())
           .addComponent(new ColliderComponent())
-          .addComponent(new PlayerMeleeAttackComponent(meleeWeaponFilePath))
+          .addComponent(new PlayerMeleeAttackComponent(meleeFilePath))
           .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
           .addComponent(new PlayerActions(woundState))
           .addComponent(new PlayerCombatStatsComponent(health, baseAttack, woundState,
                   baseRangedAttack, defenceLevel))
-          .addComponent(new InventoryComponent(gold, ammo, bandages))
+          .addComponent(new InventoryComponent(gold, ammo, bandages, torch))
           .addComponent(new PlayerAbilitiesComponent(Abilities.getAbility(ability)))
           .addComponent(inputComponent)
           .addComponent(new PlayerRangeAttackComponent())
@@ -113,7 +113,6 @@ public class PlayerFactory {
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
           .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));
-          //.addComponent(new ConeLightComponent(Colors.get("ORANGE"), 10f, 5, 5, 90f, 180f));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
@@ -131,13 +130,14 @@ public class PlayerFactory {
       // set initial state of player when game starts for the very first time, load from config file
       playerManager.createStartingPlayerState(stats.baseRangedAttack, stats.baseAttack, stats.health, stats.ammo,
               stats.bandages, stats.gold, stats.woundState, stats.defenceLevel, stats.bulletMagazine, stats.ability,
-              stats.meleeFilePath, stats.meleeWeaponType, stats.armorType, stats.currentGameLevel);
+              stats.meleeFilePath, stats.meleeWeaponType, stats.armorType, stats.currentGameLevel, stats.torch);
 
       baseAttack = stats.baseAttack;
       baseRangedAttack = stats.baseAttack;
       health = stats.health;
       ammo = stats.ammo;
       bandages = stats.bandages;
+      torch = stats.torch;
       gold = stats.gold;
       woundState = stats.woundState;
       defenceLevel = stats.defenceLevel;
@@ -154,6 +154,7 @@ public class PlayerFactory {
       health = currentPlayerState.getHealth();
       ammo = currentPlayerState.getAmmo();
       bandages = currentPlayerState.getBandage();
+      torch = currentPlayerState.getTorch();
       gold = currentPlayerState.getGold();
       woundState = currentPlayerState.getWoundState();
       defenceLevel = currentPlayerState.getDefenceLevel();

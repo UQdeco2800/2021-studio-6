@@ -1,0 +1,178 @@
+Private Sub GetTilePositions_Click()
+    'Declaring variables
+    Dim i As Integer, CellValue As String, col As Integer, row As Integer
+    Dim map_size_x As Integer, map_size_y As Integer, CellTemp As String
+    
+    'Column number for excel
+    Dim P_COL As Integer, P_index As Integer
+    Dim S_COL As Integer, S_index As Integer
+    Dim X_COL As Integer, X_index As Integer
+    Dim Y_COL As Integer, Y_index As Integer
+    Dim A_COL As Integer, A_index As Integer
+    Dim C_COL As Integer, C_index As Integer
+    Dim H_COL As Integer, H_index As Integer
+    Dim B_COL As Integer, B_index As Integer
+    Dim W_COL As Integer, W_index As Integer
+    Dim e1_COL As Integer, e1_index As Integer
+    Dim e2_COL As Integer, e2_index As Integer
+    Dim e3_COL As Integer, e3_index As Integer
+    Dim e4_COL As Integer, e4_index As Integer
+    Dim SP_COL As Integer, SP_index As Integer
+    
+    ' Bunch the newgrid points into 3 per cell to save some space for java?
+    Dim X_3_Col As Integer, Y_3_Col As Integer, X_3_COL_INDEX As Integer, Y_3_COL_INDEX As Integer
+    X_3_Col = 3
+    Y_3_Col = 3
+    X_3_COL_INDEX = 0
+    Y_3_COL_INDEX = 0
+    
+    
+    P_COL = 86
+    S_COL = 87
+    X_COL = 88
+    Y_COL = 89
+    A_COL = 90
+    C_COL = 91
+    H_COL = 92
+    B_COL = 93
+    W_COL = 94
+    e1_COL = 95
+    e2_COL = 96
+    e3_COL = 97
+    e4_COL = 98
+    SP_COL = 99
+    
+    P_index = 2
+    S_index = 2
+    X_index = 2
+    Y_index = 2
+    A_index = 2
+    C_index = 2
+    H_index = 2
+    B_index = 2
+    W_index = 2
+    e1_index = 2
+    e2_index = 2
+    e3_index = 2
+    e4_index = 2
+    SP_index = 2
+    
+    'Level 2 Map Size
+    map_size_x = 64
+    map_size_y = 37
+    
+    'Loop through map tiles
+    For row = 1 To map_size_y
+        For col = 1 To map_size_x
+            CellValue = Cells(row, col).Value
+            
+            'Player Tile
+            If CellValue = "P" Then
+                Cells(P_index, P_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                P_index = P_index + 1
+                
+            'Safehouse Tile
+            ElseIf CellValue = "S" Then
+                Cells(S_index, S_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                S_index = S_index + 1
+                
+            'Pine Tri Tree Tile
+            ElseIf CellValue = "X" Then
+                
+                ' If 0/1/2 % 3:
+                If X_3_COL_INDEX Mod X_3_Col = 0 Then
+                
+                    Cells(X_index, X_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf X_3_COL_INDEX Mod X_3_Col = 1 Then
+                
+                    CellTemp = Cells(X_index, X_COL).Value
+                    Cells(X_index, X_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf X_3_COL_INDEX Mod X_3_Col = 2 Then
+                
+                    CellTemp = Cells(X_index, X_COL).Value
+                    Cells(X_index, X_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    X_index = X_index + 1
+                    
+                End If
+                X_3_COL_INDEX = X_3_COL_INDEX + 1
+                
+            'Big Tree Tile
+            ElseIf CellValue = "Y" Then
+                ' If 0/1/2 % 3:
+                If Y_3_COL_INDEX Mod Y_3_Col = 0 Then
+                
+                    Cells(Y_index, Y_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    
+                ElseIf Y_3_COL_INDEX Mod Y_3_Col = 1 Then
+                
+                    CellTemp = Cells(Y_index, Y_COL).Value
+                    Cells(Y_index, Y_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                
+                ElseIf Y_3_COL_INDEX Mod Y_3_Col = 2 Then
+                
+                    CellTemp = Cells(Y_index, Y_COL).Value
+                    Cells(Y_index, Y_COL).Value = CellTemp + " new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                    Y_index = Y_index + 1
+                    
+                End If
+                Y_3_COL_INDEX = Y_3_COL_INDEX + 1
+            
+            'Ammo Tile
+            ElseIf CellValue = "A" Then
+                Cells(A_index, A_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                A_index = A_index + 1
+                
+            'Coin Tile
+            ElseIf CellValue = "C" Then
+                Cells(C_index, C_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                C_index = C_index + 1
+                
+            'Healthpack Tile
+            ElseIf CellValue = "H" Then
+                Cells(H_index, H_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                H_index = H_index + 1
+            
+            'Bush Tile
+            ElseIf CellValue = "B" Then
+                Cells(B_index, B_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                B_index = B_index + 1
+                
+            'Web Tile
+            ElseIf CellValue = "W" Then
+                Cells(W_index, W_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                W_index = W_index + 1
+                
+            'Small ground enemy
+            ElseIf CellValue = "e1" Then
+                Cells(e1_index, e1_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e1_index = e1_index + 1
+            
+            'Small eye enemy
+            ElseIf CellValue = "e2" Then
+                Cells(e2_index, e2_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e2_index = e2_index + 1
+            
+            'Large ground enemy
+            ElseIf CellValue = "e3" Then
+                Cells(e3_index, e3_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e3_index = e3_index + 1
+                
+            'Large eye enemy
+            ElseIf CellValue = "e4" Then
+                Cells(e4_index, e4_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                e4_index = e4_index + 1
+                
+            'Spawner enemy
+            ElseIf CellValue = "SP" Then
+                Cells(SP_index, SP_COL).Value = "new GridPoint2(" + CStr(col - 2) + ", " + CStr(Abs(row - map_size_y)) + "),"
+                SP_index = SP_index + 1
+                
+            End If
+    
+        Next col
+        
+    Next row
+
+End Sub

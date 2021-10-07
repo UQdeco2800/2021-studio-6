@@ -64,7 +64,6 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
     Entity spawnerEnemy =
             new Entity()
@@ -213,7 +212,7 @@ public class NPCFactory {
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
-   *
+   * @param target the target entity to attack
    * @return entity
    */
   private static Entity createBaseNPC(Entity target) {
@@ -232,22 +231,6 @@ public class NPCFactory {
 
     //PhysicsUtils.setScaledCollider(npc, 0.8f, 0.3f);
     return npc;
-  }
-
-  /**
-   * Used to create shop keeper NPC in safehouse
-   *
-   * @return entity shopkeeper with all necessary components to trigger
-   * popup box shop
-   */
-  public static Entity createShopkeeperNPC() {
-    Entity shopkeeperNPC = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
-            .addComponent(new ItemComponent(Items.SHOP, 1))
-            .addComponent(new TextureRenderComponent("images/Player_Sprite/front01.png"));
-    shopkeeperNPC.getComponent(ColliderComponent.class).setAsBox(new Vector2(2, 2));
-    return shopkeeperNPC;
   }
 
   private NPCFactory() {

@@ -15,6 +15,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(GameExtension.class)
 public class PlayerPickupComponentTest {
     @Mock GameTime gameTime;
+    @Mock ResourceService resourceService;
 
     @BeforeEach
     void beforeEach() {
@@ -35,6 +37,7 @@ public class PlayerPickupComponentTest {
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(entityService);
+        ServiceLocator.registerResourceService(resourceService);
     }
 
     @Test
@@ -68,15 +71,16 @@ public class PlayerPickupComponentTest {
 
     @Test
     void shouldPickUpCoins() {
-        PhysicsService physicsService = new PhysicsService();
-        EntityService entityService = new EntityService();
+        //PhysicsService physicsService = new PhysicsService();
+        //EntityService entityService = new EntityService();
         int GOLD_BEFORE_PICKUP = 5;
         int BANDAGE_BEFORE_PICKUP = 3;
         int AMMO_BEFORE_PICKUP = 5;
         int GOLD_AFTER_PICKUP = 6;
 
-        ServiceLocator.registerPhysicsService(physicsService);
-        ServiceLocator.registerEntityService(entityService);
+        //ServiceLocator.registerPhysicsService(physicsService);
+        //ServiceLocator.registerEntityService(entityService);
+        ServiceLocator.registerResourceService(resourceService);
 
         Entity player = createPlayer();
         Entity coin = createCoinItem();
@@ -131,7 +135,7 @@ public class PlayerPickupComponentTest {
         Entity player = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new InventoryComponent(5, 5, 3))
+                .addComponent(new InventoryComponent(5, 5, 3, 1))
                 .addComponent(new PlayerPickupComponent(PhysicsLayer.ITEM));
         player.create();
         return player;

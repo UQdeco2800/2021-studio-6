@@ -43,6 +43,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     if (movementEnabled && targetPosition != null) {
       Body body = physicsComponent.getBody();
       updateDirection(body);
+
     }
   }
 
@@ -55,8 +56,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   public void setMoving(boolean movementEnabled) {
     this.movementEnabled = movementEnabled;
     if (!movementEnabled) {
-      Body body = physicsComponent.getBody();
-      setToVelocity(body, Vector2.Zero);
+        Body body = physicsComponent.getBody();
+        setToVelocity(body, Vector2.Zero);
+
+
     }
   }
 

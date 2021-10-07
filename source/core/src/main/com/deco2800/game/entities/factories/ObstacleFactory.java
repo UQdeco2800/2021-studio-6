@@ -147,13 +147,18 @@ public class ObstacleFactory {
     return object;
   }
 
-  public static Entity createBuilding() {
+  public static Entity createBuilding(int buildingNumber) {
+    String buildingPath;
+    if (buildingNumber == 1) {
+      buildingPath = "images/level_1/building2-day1-latest.png";
+    } else {
+      buildingPath = "images/level_1/building3-day1-latest.png";
+    }
     Entity building =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/level_1/building2-day1-latest.png"))
+            .addComponent(new TextureRenderComponent(buildingPath))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     building.getComponent(TextureRenderComponent.class).scaleEntity();
     building.scaleHeight(10f);
@@ -179,10 +184,10 @@ public class ObstacleFactory {
   }
 
   /**
-   * Creates a triangle group pine tree entity.
+   * Creates a triangle group of green pine tree entity.
    * @return entity
    */
-  public static Entity createTriPineTree() {
+  public static Entity createTriGreenPineTree() {
     Entity tree =
       new Entity()
         .addComponent(new TextureRenderComponent("images/level_2/level2_tree_2_group_ver1.png"))
@@ -194,6 +199,326 @@ public class ObstacleFactory {
     tree.scaleHeight(2.25f);
     PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
     return tree;
+  }
+
+  /**
+   * Creates a triangle group of dead pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriDeadPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/level3_dead_group_pine_tree.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
+  }
+
+  /**
+   * Creates a triangle group of brown pine tree entity.
+   * @return entity
+   */
+  public static Entity createTriBrownPineTree() {
+    Entity tree =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/level3_brown_group_pine_tree.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.25f);
+    PhysicsUtils.setScaledCollider(tree, 1f, 0.65f);
+    return tree;
+  }
+
+  /**
+   * Creates a top-left grass edge water tile (1).
+   * |1|X|X|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile1() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top-left.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a top grass edge water tile (2).
+   * |X|2|X|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile2() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a top-right grass edge water tile (3).
+   * |X|X|3|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile3() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top-right.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a left grass edge water tile (4).
+   * |X|X|X|
+   * |4|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile4() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-left.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a full water tile (5).
+   * |X|X|X|
+   * |X|5|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile5() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-full.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a right grass edge water tile (5).
+   * |X|X|X|
+   * |X|X|6|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile6() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-right.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a bottom-left grass edge water tile (7).
+   * |X|X|X|
+   * |X|X|X|
+   * |7|X|X|
+   * @return entity
+   */
+  public static Entity createWaterTile7() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-bottom-left.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a bottom-left grass edge water tile (8).
+   * |X|X|X|
+   * |X|X|X|
+   * |X|8|X|
+   * @return entity
+   */
+  public static Entity createWaterTile8() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-bottom.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a bottom-left grass edge water tile (8).
+   * |X|X|X|
+   * |X|X|X|
+   * |X|X|9|
+   * @return entity
+   */
+  public static Entity createWaterTile9() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-bottom-right.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a walkable bridge asset (vertical-left) for Level 3.
+   * @return entity
+   */
+  public static Entity createBridgeVerticalLeftTile() {
+    Entity bridge =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent());
+
+    bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bridge.getComponent(TextureRenderComponent.class).scaleEntity();
+    return bridge;
+  }
+
+  /**
+   * Creates a walkable bridge asset (vertical-left) for Level 3.
+   * @return entity
+   */
+  public static Entity createBridgeVerticalRightTile() {
+    Entity bridge =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent());
+
+    bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    bridge.getComponent(TextureRenderComponent.class).scaleEntity();
+    return bridge;
+  }
+
+  /**
+   * Creates a top sand edge water tile (2).
+   * |X|2|X|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile2() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top-sand.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a top-right sand edge water tile (3).
+   * |X|X|3|
+   * |X|X|X|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile3() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-top-right-sand.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
+
+  /**
+   * Creates a right sand edge water tile (6).
+   * |X|X|X|
+   * |X|X|6|
+   * |X|X|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile6() {
+    Entity waterTile =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-right-sand.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
   }
 
   private ObstacleFactory() {

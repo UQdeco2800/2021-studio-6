@@ -69,6 +69,14 @@ public class Lighting implements Disposable {
         rayHandler.setCombinedMatrix(camera.combined, camera.position.x , camera.position.y, camera.viewportWidth * 1, camera.viewportHeight * 1 );
     }
 
+    public boolean pointAtLight(float x, float y) {
+        return rayHandler.pointAtLight(x, y);
+    }
+    public boolean pointAtShadow(float x, float y) {
+        return rayHandler.pointAtShadow(x, y);
+    }
+
+
     /**
      * render
      * calls rayhandler.render()

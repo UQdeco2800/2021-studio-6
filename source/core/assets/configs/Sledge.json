@@ -6,6 +6,6 @@
   "height" : 1.4,
   "animationLength" : 0.14,
   "atlasPath": "images/weapon/sledge.atlas",
-  "animationCord": [ ["1", "0.8f"], ["1.8f", "1f"], ["1.6f", "0.6f"], ["0.9f", "0.6f"]],
+  "animationCord": [ ["-0.7f", "0f"], ["-1.2f", "-0.5f"], ["-1f", "0f"], ["-0.1f", "0f"]],
   "scale" : ["1.7f", "1.7f"]
 }

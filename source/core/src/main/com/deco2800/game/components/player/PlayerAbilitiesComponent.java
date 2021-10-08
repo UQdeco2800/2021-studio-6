@@ -12,7 +12,7 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class PlayerAbilitiesComponent extends Component {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static final int DELAY_LENGTH = 60000; // in milliseconds
+    private static final int DELAY_LENGTH = 20000; // in milliseconds
     private long delayEndTime = 0;
     private Abilities ability;
     // Ability Specific Variables

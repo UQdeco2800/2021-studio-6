@@ -1,6 +1,8 @@
 package com.deco2800.game.components.player;
 
 import com.deco2800.game.components.Component;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +16,18 @@ public class InventoryComponent extends Component {
   private int gold;
   private int ammo;
   private int bandages;
+  private int torch;
+  private boolean torchStatus;
+  private final GameTime timeSource = ServiceLocator.getTimeSource();
+  private static final int TICK_LENGTH = 1000; // in milliseconds
+  private long tickStartTime = 0;
+  private boolean torchToggled;
 
-  public InventoryComponent(int gold, int ammo, int bandages) {
+  public InventoryComponent(int gold, int ammo, int bandages, int torch) {
     this.gold = gold;
     this.ammo = ammo;
     this.bandages = bandages;
+    this.torch = torch;
   }
 
   @Override
@@ -27,6 +36,52 @@ public class InventoryComponent extends Component {
     entity.getEvents().trigger("updateBandageHUD",this.bandages);
     entity.getEvents().trigger("updateAmmoHUD",this.ammo);
     entity.getEvents().trigger("updateCoinHUD",this.gold);
+    entity.getEvents().addListener("toggleTorch",this::torchToggle);
+    if (torch > 0) {
+      torchStatus = true;
+      entity.getEvents().trigger("torchOn");
+    } else {
+      torchStatus = false;
+      entity.getEvents().trigger("torchOff");
+    }
+    tickStartTime = ServiceLocator.getTimeSource().getTime();
+    torchToggled = false;
+  }
+
+  @Override
+  public void update() {
+    super.update();
+    if (!torchToggled) {
+      if (torch > 0) {
+        if (timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
+          tickStartTime = ServiceLocator.getTimeSource().getTime();
+          torch--;
+        }
+      }
+      if (torch <= 0) {
+        torchStatus = false;
+        entity.getEvents().trigger("torchOff");
+      }
+      if (torch > 0 && !torchStatus) {
+        torchStatus = true;
+        entity.getEvents().trigger("torchOn");
+      }
+    }
+  }
+
+  /**
+   * Toggles the torch on and off. Used for the torch keybinding.
+   */
+  public void torchToggle() {
+    torchToggled = !torchToggled;
+    if (torchToggled) {
+      torchStatus = false;
+      entity.getEvents().trigger("torchOff");
+    } else {
+      tickStartTime = ServiceLocator.getTimeSource().getTime();
+      torchStatus = true;
+      entity.getEvents().trigger("torchOn");
+    }
   }
 
   /**
@@ -128,7 +183,7 @@ public class InventoryComponent extends Component {
    */
   public void setBandages(int bandages) {
     this.bandages = Math.max(bandages, 0);
-    logger.debug("Setting ammo to {}", this.bandages);
+    logger.debug("Setting bandages to {}", this.bandages);
     entity.getEvents().trigger("updateBandageHUD",this.bandages);
   }
 
@@ -138,5 +193,22 @@ public class InventoryComponent extends Component {
    */
   public void addBandages(int bandages) {
     setBandages(this.bandages + bandages);
+  }
+
+  /**
+   * Adds additional time (in seconds) to the torch
+   * @param addTorch the time to add to the torch timer
+   */
+  public void addTorch(int addTorch) {
+    this.torch += addTorch;
+    logger.debug("Setting torch to {}", this.torch);
+  }
+
+  /**
+   * Gets the time left on the torch in secs
+   * @return seconds left on the torch
+   */
+  public int getTorch() {
+    return this.torch;
   }
 }

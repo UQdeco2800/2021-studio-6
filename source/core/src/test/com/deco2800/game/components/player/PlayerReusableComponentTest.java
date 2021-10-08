@@ -19,9 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerReusableComponentTest {
     @Mock
     ResourceService resourceService;
+    @Mock GameTime time;
+
     @BeforeEach
     void beforeEach() {
         ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerTimeSource(time);
     }
 
     @Test
@@ -65,7 +68,7 @@ public class PlayerReusableComponentTest {
         // file, currently not in used because may change depending on game balancing
         Entity player = new Entity()
                 .addComponent(new PlayerCombatStatsComponent(3, 10, 3, 2, 1))
-                .addComponent(new InventoryComponent(5, 5, 3))
+                .addComponent(new InventoryComponent(5, 5, 3, 1))
                 .addComponent(new PlayerReusableComponent());
         player.create();
         return player;

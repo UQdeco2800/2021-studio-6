@@ -49,7 +49,7 @@ public class SafehouseGameArea extends GameArea {
       "images/Player_Animations/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
-      "images/weapon/sword.atlas",
+      "images/weapon/crowbar.atlas",
       "images/weapon/dagger.atlas",
       "images/weapon/sledge.atlas",
       "images/weapon/machete.atlas",
@@ -219,8 +219,8 @@ public class SafehouseGameArea extends GameArea {
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
-    music.setVolume(0.6f);
     music.play();
   }
 

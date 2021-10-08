@@ -47,15 +47,24 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
-  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png",
-          "images/Player_Sprite/front01.png", "images/playeritems/sword/sword.png", "images/playeritems/sword/sword3.png",
-  "images/playeritems/dagger/dagger.png", "images/playeritems/dagger/dagger.png", "images/playeritems/axe/axe.png", "images/playeritems/axe/axe_right4.png",
-  "images/playeritems/tourch/tourch.png", "images/playeritems/armour.png", "images/playeritems/halmet.png",
+  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png", "images/Player_Sprite/front01.png",
   "images/playeritems/shootingammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
   "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
   "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
-  "images/playeritems/machete/machete.png", "images/playeritems/bat/baseball.png", "images/playeritems/sledge/sledge.png",
-  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png", "images/safehouse/shopkeeper/portrait.png"};
+  "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png", "images/safehouse/shopkeeper/portrait.png",
+  "images/safehouse/itemIcons/shopCrowbarSelected.png", "images/safehouse/itemIcons/shopCrowbar.png",
+  "images/safehouse/itemIcons/shopDaggerSelected.png", "images/safehouse/itemIcons/shopDagger.png",
+  "images/safehouse/itemIcons/shopAxeSelected.png", "images/safehouse/itemIcons/shopAxe.png",
+  "images/safehouse/itemIcons/shopArmourSelected.png", "images/safehouse/itemIcons/shopArmour.png",
+  "images/safehouse/itemIcons/shopHelmetSelected.png", "images/safehouse/itemIcons/shopHelmet.png",
+  "images/safehouse/itemIcons/shopTorchSelected.png", "images/safehouse/itemIcons/shopTorch.png",
+  "images/safehouse/itemIcons/shopDashSelected.png", "images/safehouse/itemIcons/shopDash.png",
+  "images/safehouse/itemIcons/shopInvincibilitySelected.png", "images/safehouse/itemIcons/shopInvincibility.png",
+  "images/safehouse/itemIcons/shopBandageSelected.png", "images/safehouse/itemIcons/shopBandage.png",
+  "images/safehouse/itemIcons/shopMacheteSelected.png", "images/safehouse/itemIcons/shopMachete.png",
+  "images/safehouse/itemIcons/shopBatSelected.png", "images/safehouse/itemIcons/shopBat.png",
+  "images/safehouse/itemIcons/shopHammerSelected.png", "images/safehouse/itemIcons/shopHammer.png",
+  "images/safehouse/shopScreenTempSelections.png"};
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -133,8 +142,10 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new Level1(terrainFactory);
+      gameArea = new Level1(terrainFactory); //change back to level 1
+
       gameArea.create();
+
       ServiceLocator.registerGameArea(gameArea);
       this.gameArea.player.getEvents().addListener("dead", this::gameOver);
       this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
@@ -152,8 +163,6 @@ public class MainGameScreen extends ScreenAdapter {
         logger.info("Player state is carried forward");
       }
 
-      Player currentPlayerState = PlayerStateManager.getInstance().currentPlayerState();
-      gameLevel = currentPlayerState.getCurrentGameLevel();
       generateNewLevel(revert);
     }
   }
@@ -200,8 +209,14 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.renderUI();
 
     if (gameArea != null) {
+
       if (!gameArea.player.getComponent(PlayerCombatStatsComponent.class).isDead()) {
+
         CAMERA_POSITION.set(gameArea.player.getPosition());
+        if(gameLevel == 4) {
+          CAMERA_POSITION.set(new Vector2(20, 12));
+          renderer.setZoom(40);
+        }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -349,9 +364,10 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.create();
 
     } else if (gameLevel == LEVEL_4) {
+//      System.out.println(gameLevel);
       gameArea = new Level4(terrainFactory);
       gameArea.create();
-      renderer.setZoom(50); //zooms out the camera, value subject to change
+//      renderer.setZoom(50); //zooms out the camera, value subject to change
 
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call

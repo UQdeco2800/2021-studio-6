@@ -91,6 +91,7 @@ public class Level1 extends GameArea {
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+    "images/placeholder.png",
     "images/dialogue/raw/npc_indicator.png"
   };
 
@@ -106,7 +107,7 @@ public class Level1 extends GameArea {
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
       "images/hud/health.atlas",
-      "images/weapon/sword.atlas",
+      "images/weapon/crowbar.atlas",
       "images/weapon/axe.atlas",
       "images/weapon/dagger.atlas",
       "images/weapon/sledge.atlas",
@@ -580,8 +581,8 @@ public class Level1 extends GameArea {
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
+    music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
-    music.setVolume(0.3f);
     music.play();
   }
 

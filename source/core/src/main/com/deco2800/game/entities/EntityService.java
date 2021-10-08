@@ -17,6 +17,9 @@ public class EntityService {
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
 
+  private Array<Entity> toBeRemoved = new Array<>();
+
+
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
    * @param entity new entity.
@@ -44,6 +47,14 @@ public class EntityService {
       entity.earlyUpdate();
       entity.update();
     }
+    for(Entity entity: toBeRemoved) {
+      entity.dispose();
+    }
+    toBeRemoved.clear();
+  }
+
+  public void removeEntityAfterUpdate(Entity entity) {
+    toBeRemoved.add(entity);
   }
 
   /**

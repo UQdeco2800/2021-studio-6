@@ -91,6 +91,11 @@ public class Level4 extends GameArea {
             "images/weapon/baseball.atlas",
             "images/weapon/dagger.atlas"  };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+    private static final String[] playerSounds = {
+            "sounds/bandage-use.ogg",
+            "sounds/hurt.ogg",
+            "sounds/item-pickup.ogg"
+    };
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
         
@@ -348,6 +353,8 @@ public class Level4 extends GameArea {
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(forestSounds);
+        resourceService.loadSounds(playerSounds);
+
         resourceService.loadMusic(LEVEL3_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {

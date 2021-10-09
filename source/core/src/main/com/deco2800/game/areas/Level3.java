@@ -157,7 +157,6 @@ public class Level3 extends GameArea {
     spawnBullet();
     spawnBomb();
     spawnPickupItems();
-    spawnBullet();
     spawnPilotNpc();
 
     spawnLevelThreeIntro();

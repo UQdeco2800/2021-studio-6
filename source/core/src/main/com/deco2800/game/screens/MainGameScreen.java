@@ -325,6 +325,9 @@ public class MainGameScreen extends ScreenAdapter {
       double LEVEL_INCREMENT = 0.5;
       gameLevel += LEVEL_INCREMENT;
       PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
+    } else {
+      // use restored game level of player state
+      gameLevel = PlayerStateManager.getInstance().getPlayerState().getCurrentGameLevel();
     }
     logger.info("Generating game level " + gameLevel);
 

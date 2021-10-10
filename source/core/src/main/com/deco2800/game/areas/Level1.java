@@ -41,21 +41,10 @@ public class Level1 extends GameArea {
   private static final String NPC_TUT_1_ATLAS_FILENAME = "images/npc_movement/tut_npc1.atlas";
   private static final String NPC_INJURED_ATLAS_FILENAME = "images/npc_movement/injured_npc.atlas";
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
+
   private static final String[] forestTextures = {
-    "images/Player_Sprite/front01.png",
     "images/obstacle_sprite/cobweb.png",
-    "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
-    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
-      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe.png",
-      "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
-    "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
+    "images/obstacle_sprite/bush.png",
     "images/level_1/road_tile_black.png",
     "images/level_1/sidewalk.png",
     "images/level_1/cracked_sidewalk.png",
@@ -68,52 +57,17 @@ public class Level1 extends GameArea {
     "images/level_1/road_barrier.png",
     "images/level_1/building2-day1-latest.png",
     "images/level_1/building3-day1-latest.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/iso_grass_3.png",
-    "images/gunman.png",
-    "images/Enemy_Assets/LongRangeEnemy/eye.png",
-    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
-    "images/player.png",
-    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
-    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/level_1/dead_tree1-day1-latest.png",
     "images/level_1/street_lamp.png",
     "images/level_1/street_lamped_vined.png",
-    "images/hud/dashbarFull.png",
-    "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
-    "images/placeholder.png",
-    "images/dialogue/raw/npc_indicator.png"
+    "images/dialogue/raw/npc_indicator.png",
+    "images/grass_1.png"
   };
 
   private static final String[] cityTextureAtlases = {
-      "images/terrain_iso_grass.atlas",
-      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-      "images/ghost.atlas",
-      "images/ghostKing.atlas",
-      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-      "images/Player_Animations/player_movement.atlas",
-      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-      "images/player.atlas",
-      "images/Player_Sprite/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/crowbar.atlas",
-      "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas",
-      "images/weapon/sledge.atlas",
-      "images/weapon/machete.atlas",
-      "images/playeritems/tourch/torch.atlas",
-      "images/weapon/baseball.atlas",
       NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
@@ -167,7 +121,7 @@ public class Level1 extends GameArea {
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
-            this::startTutorialAndMusic);
+        this::startTutorialAndMusic);
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
@@ -197,34 +151,34 @@ public class Level1 extends GameArea {
     // Left
     spawnEntityAt(
         ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            GridPoint2Utils.ZERO, false, false);
+        GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
         ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            new GridPoint2(tileBounds.x, 0),false,false);
+        new GridPoint2(tileBounds.x, 0),false,false);
     // Top
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),false,false);
+        new GridPoint2(0, tileBounds.y),false,false);
     // Bottom
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            new GridPoint2(tileBounds.x, 0),
-            false,
-            false);
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+        new GridPoint2(tileBounds.x, 0),
+        false,
+        false);
     // Top
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),
-            false,
-            false);
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        new GridPoint2(0, tileBounds.y),
+        false,
+        false);
     // Bottom
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
   private void spawnPickupItems() {
@@ -350,8 +304,8 @@ public class Level1 extends GameArea {
     getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
   }
   /**
-  * Spawns the spawner enemy
-  */
+   * Spawns the spawner enemy
+   */
   private void spawnSpawnerEnemy() {
     Array<GridPoint2> enemyPositions = new Array<>();
     enemyPositions.add(new GridPoint2(70, 6));
@@ -365,7 +319,6 @@ public class Level1 extends GameArea {
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-
     for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
@@ -396,7 +349,6 @@ public class Level1 extends GameArea {
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-
     for (int i = 0; i < NUM_SMALL_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity smallEnemy = NPCFactory.createSmallEnemy(player);
@@ -417,7 +369,6 @@ public class Level1 extends GameArea {
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-
     for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity largeEnemy = NPCFactory.createLargeEnemy(player);
@@ -439,7 +390,6 @@ public class Level1 extends GameArea {
     /*
     GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity archer = NPCFactory.createLongRangeEnemy(player, this);
@@ -460,7 +410,6 @@ public class Level1 extends GameArea {
     /*
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-
     for (int i = 0; i < NUM_LONGRANGE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
@@ -512,6 +461,7 @@ public class Level1 extends GameArea {
 
   private void loadAssets() {
     logger.debug("Loading assets");
+    loadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(cityTextureAtlases);
@@ -527,6 +477,7 @@ public class Level1 extends GameArea {
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
+    unloadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(cityTextureAtlases);

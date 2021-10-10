@@ -36,16 +36,8 @@ public class Level4 extends GameArea {
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
             "images/Final_Boss/boss_head.png", "images/Final_Boss/beam.png",
-            "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
-            "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-            "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-            "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
-            "images/playeritems/ax/ax_right2.png",
-            "images/playeritems/firecracker/firecracker.png",
             "images/obstacle_sprite/cobweb.png",
             "images/obstacle_sprite/bush.png",
-            "images/tree.png",
-            "images/ghost_king.png",
             "images/level_2/level2_grass_1.png",
             "images/level_2/level2_grass_2.png",
             "images/level_2/level2_grass_3.png",
@@ -54,42 +46,15 @@ public class Level4 extends GameArea {
             "images/level_2/level2_grass_6.png",
             "images/level_2/level2_tree_1-1.png",
             "images/level_2/level2_tree_2-1.png",
-            "images/gunman.png",
-            "images/Enemy_Assets/LongRangeEnemy/eye.png",
-            "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
-            "images/player.png",
-            "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-            "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
-            "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
-            "images/iso_grass_3.png",
             "images/safehouse/exterior-day1-latest.png",
-            "images/hud/dashbarFull.png",
-            "images/hud/healthFull.png",
             "images/grass_1.png",
             "images/grass_2.png",
-            "images/grass_3.png",
-            "images/placeholder.png"
+            "images/grass_3.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
-            "images/Final_Boss/boss_head.atlas",
-            "images/terrain_iso_grass.atlas",
-            "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-            "images/ghost.atlas",
-            "images/ghostKing.atlas",
-            "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-            "images/Player_Animations/player_movement.atlas",
-            "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-            "images/Player_Sprite/player_movement.atlas",
-            "images/playeritems/tourch/torch.atlas",
-            "images/hud/dashbar.atlas",
-            "images/hud/health.atlas",
-        "images/weapon/crowbar.atlas",
-            "images/weapon/axe.atlas",
-            "images/weapon/sledge.atlas",
-            "images/weapon/machete.atlas",
-            "images/weapon/baseball.atlas",
-            "images/weapon/dagger.atlas"  };
+            "images/Final_Boss/boss_head.atlas"
+    };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String[] playerSounds = {
             "sounds/bandage-use.ogg",
@@ -349,6 +314,7 @@ public class Level4 extends GameArea {
 
     private void loadAssets() {
         logger.debug("Loading assets");
+        loadSharedAssets();
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
@@ -365,6 +331,7 @@ public class Level4 extends GameArea {
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
+        unloadSharedAssets();
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);

@@ -26,7 +26,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AMMO, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/pickupammo.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/rock/pickupammo.png"))
                 .addComponent(new DisposingComponent());
         ammo.setScale(0.7f, 0.7f);
         return ammo;

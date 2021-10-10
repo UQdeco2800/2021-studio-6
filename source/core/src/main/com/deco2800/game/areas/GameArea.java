@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.RandomUtils;
 
@@ -22,6 +23,48 @@ public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
   public Entity player;
+
+  protected static final String[] playerAssets = {
+      "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+      "images/playeritems/rock/ammo.png", "images/playeritems/rock/pickupammo.png", "images/playeritems/rock/thrown.png",
+      "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
+      "images/playeritems/halmet.png", "images/playeritems/dagger/dagger.png",
+      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe.png",
+      "images/playeritems/machete/machete.png",
+      "images/hud/dashbarFull.png",
+      "images/hud/healthFull.png", "images/playeritems/sledge/sledge.png", "images/playeritems/bat/baseball.png"
+  };
+
+  protected static final String[] playerAtlas = {
+      "images/Player_Animations/player_movement.atlas",
+      "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
+      "images/hud/dashbar.atlas",
+      "images/hud/health.atlas",
+      "images/weapon/crowbar.atlas",
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas",
+      "images/weapon/sledge.atlas",
+      "images/weapon/machete.atlas",
+      "images/playeritems/tourch/torch.atlas",
+      "images/weapon/baseball.atlas"
+  };
+
+
+  protected static final String[] enemyAssets = {
+      "images/Enemy_Assets/LongRangeEnemy/eye.png",
+      "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+      "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png"
+  };
+
+  protected static final String[] enemyAtlas = {
+      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
+      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+  };
+
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -98,5 +141,23 @@ public abstract class GameArea implements Disposable {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity smallEnemy = NPCFactory.createSmallEnemy(player);
     spawnEntityAt(smallEnemy, randomPos, true, true);
+  }
+
+
+  public void loadSharedAssets() {
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    resourceService.loadTextures(playerAssets);
+    resourceService.loadTextures(enemyAssets);
+    resourceService.loadTextureAtlases(playerAtlas);
+    resourceService.loadTextureAtlases(enemyAtlas);
+  }
+
+
+  public void unloadSharedAssets() {
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    resourceService.unloadAssets(playerAssets);
+    resourceService.unloadAssets(enemyAssets);
+    resourceService.unloadAssets(playerAtlas);
+    resourceService.unloadAssets(enemyAtlas);
   }
 }

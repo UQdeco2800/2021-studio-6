@@ -122,29 +122,6 @@ public class PlayerRangeAttackComponent extends Component {
             }
         }
         return scaledVector.cpy();
-
-        /* player has not moved before
-       // if (longAttackDir.isZero()) {
-       /     scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
-
-        // player has moved before
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.RIGHT)) {
-            scaledVector = new Vector2(MAX_COORDINATE,yPosPlayer);
-            longAttackDir = Vector2Utils.RIGHT;
-
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.LEFT)) {
-            scaledVector = new Vector2(-MAX_COORDINATE,yPosPlayer);
-            longAttackDir = Vector2Utils.LEFT;;
-
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.UP)) {
-            scaledVector = new Vector2(xPosPlayer, MAX_COORDINATE);
-            longAttackDir = Vector2Utils.UP;
-
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.DOWN)) {
-            scaledVector = new Vector2(xPosPlayer, -MAX_COORDINATE);
-            longAttackDir = Vector2Utils.DOWN;
-        }
-        */
     }
 
     /**

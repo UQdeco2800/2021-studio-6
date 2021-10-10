@@ -1,0 +1,48 @@
+
+rock.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+rock
+  rotate: false
+  xy: 878, 2
+  size: 290, 290
+  orig: 290, 290
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 294, 2
+  size: 290, 290
+  orig: 290, 290
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 1462, 2
+  size: 290, 290
+  orig: 290, 290
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 586, 2
+  size: 290, 290
+  orig: 290, 290
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 2, 2
+  size: 290, 290
+  orig: 290, 290
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 1170, 2
+  size: 290, 290
+  orig: 290, 290
+  offset: 0, 0
+  index: -1

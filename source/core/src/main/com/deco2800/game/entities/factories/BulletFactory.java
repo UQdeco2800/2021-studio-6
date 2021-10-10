@@ -28,7 +28,7 @@ public class BulletFactory {
      */
     public static Entity createBullet() {
         Entity bullet = new Entity()
-                .addComponent(new TextureRenderComponent("images/playeritems/shootingammo.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/rock/thrown.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new ColliderComponent().setSensor(true))
@@ -39,7 +39,7 @@ public class BulletFactory {
 
         // hide bullet out of game screen
         bullet.setPosition(HIDDEN_COORD);
-        bullet.setScale(0.7f, 0.7f);
+        bullet.setScale(0.5f, 0.5f);
         return bullet;
     }
 }

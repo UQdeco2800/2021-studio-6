@@ -489,7 +489,7 @@ public class ShopMenuDisplay extends UIComponent {
         Image bandageImage = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
         Image ammoImage = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/playeritems/shootingammo.png", Texture.class));
+                .getAsset("images/playeritems/rock/pickupammo.png", Texture.class));
         Image coinImage = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/playeritems/coin/coin1.png", Texture.class));
 

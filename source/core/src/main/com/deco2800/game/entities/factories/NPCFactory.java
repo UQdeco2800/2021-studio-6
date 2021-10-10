@@ -179,7 +179,7 @@ public class NPCFactory {
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/eye.png"))
-                    .addComponent(new CombatStatsComponent(1, 1))
+                    .addComponent(new CombatStatsComponent(2, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
                     .addComponent(new DisposingComponent());
@@ -200,7 +200,7 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(new TextureRenderComponent("images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"))
-            .addComponent(new CombatStatsComponent(3, 1))
+            .addComponent(new CombatStatsComponent(15, 1))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
             .addComponent(new DisposingComponent());

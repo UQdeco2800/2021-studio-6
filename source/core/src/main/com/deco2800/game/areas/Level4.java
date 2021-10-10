@@ -38,7 +38,7 @@ public class Level4 extends GameArea {
             "images/Final_Boss/boss_head.png", "images/Final_Boss/beam.png",
             "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
             "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-            "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+            "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
             "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
             "images/playeritems/ax/ax_right2.png",
             "images/playeritems/firecracker/firecracker.png",

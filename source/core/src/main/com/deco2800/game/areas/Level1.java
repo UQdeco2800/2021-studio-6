@@ -42,7 +42,7 @@ public class Level1 extends GameArea {
   private static final String NPC_INJURED_ATLAS_FILENAME = "images/npc_movement/injured_npc.atlas";
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
   private static final String[] forestTextures = {
-    "images/Player_Sprite/front01.png",
+    "images/Player_Sprite/25.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",

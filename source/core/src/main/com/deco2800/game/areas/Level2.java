@@ -37,7 +37,7 @@ public class Level2 extends GameArea {
   private static final String[] forestTextures = {
     "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
     "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+    "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
       "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
       "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
       "images/playeritems/axe/axe.png",

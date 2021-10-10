@@ -31,6 +31,7 @@ public class SpeechIconComponent extends RenderComponent {
         this.maxOffsetY = offsetY;
         this.minOffsetY = offsetY - ANIMATION_RANGE;
         this.animationDescending = true;
+        setUnlit();
     }
 
     /**

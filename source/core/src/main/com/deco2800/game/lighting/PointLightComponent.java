@@ -22,7 +22,7 @@ public class PointLightComponent extends Component implements Disposable {
     private float distance;
     float offsetx;
     float offsety;
-    private int rays = 500;
+    private int rays = 50;
 
     /**
      * ConeLightComponent
@@ -51,7 +51,7 @@ public class PointLightComponent extends Component implements Disposable {
                 (entity.getScale().x / 2) + this.offsetx, (entity.getScale().y / 2)+ this.offsety) ;
         pointLight.setIgnoreAttachedBody(true);
         pointLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
-        pointLight.setSoftnessLength(8f);
+        pointLight.setSoftnessLength(2f);
         logger.info("Chain light added to scene");
     }
     @Override

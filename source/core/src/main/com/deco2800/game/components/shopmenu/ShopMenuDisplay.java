@@ -37,7 +37,7 @@ import java.util.List;
 public class ShopMenuDisplay extends UIComponent {
     private static final String BACKGROUND_FILE_PATH = "images/safehouse/shopScreenTempSelections.png";
     private static final String SHOP_KEEPER_IMAGE_FILE_PATH = "images/safehouse/shopkeeper/portrait.png";
-    private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/front01.png";
+    private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/25.png";
     private static final String CROWBAR_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbar.png";
     private static final String CROWBAR_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbarSelected.png";
     private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDagger.png";

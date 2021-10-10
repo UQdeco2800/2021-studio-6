@@ -7,6 +7,7 @@ public enum Items {
     TORCH,
     ARMOUR,
     HELMET,
+    CHEST,
     CROWBAR,
     AXE,
     DAGGER,
@@ -23,9 +24,11 @@ public enum Items {
 
   public static String getArmorType(int defenceLevel) {
         switch (defenceLevel) {
-            case 2:
+            case 4:
                 return "ARMOUR";
-            case 1:
+            case 3:
+                return "CHEST";
+            case 2:
                 return "HELMET";
             default:
                 return "NONE";
@@ -35,9 +38,11 @@ public enum Items {
     public static int getDefenceLevel(String shield) {
         switch (shield) {
             case "ARMOUR":
-                return 2;
+                return 5;
+            case "CHEST":
+                return 3;
             case "HELMET":
-                return 1;
+                return 2;
             default:
                 return 0;
         }
@@ -117,6 +122,7 @@ public enum Items {
     public static boolean checkShieldType(String shield) {
         switch (shield) {
             case "ARMOUR":
+            case "CHEST":
             case "HELMET":
                 return true;
             default:

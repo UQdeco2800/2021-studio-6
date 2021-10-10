@@ -81,16 +81,13 @@ public class PlayerAnimationController extends Component {
       hurtIndex = 1;
     }
     switch (entity.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel()) {
-      case 1:
-        if ((entity.getComponent(PlayerCombatStatsComponent.class).getHelmet())) {
-          armourIndex = 1;
-        } else if ((entity.getComponent(PlayerCombatStatsComponent.class).getChest())) {
-          armourIndex = 3;
-        } else {
-          System.out.println("Something is wrong with the armour");
-        }
-        break;
       case 2:
+        armourIndex = 1;
+        break;
+      case 3:
+        armourIndex = 3;
+        break;
+      case 5:
         armourIndex = 2;
         break;
       default:

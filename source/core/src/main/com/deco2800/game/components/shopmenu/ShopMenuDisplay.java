@@ -516,7 +516,7 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void updateShopSpeech(String item){
         String[] items = {"DAGGER", "BAT", "AXE", "MACHETE", "CROWBAR", "SLEDGE",
-        "HELMET", "TORCH", "LONG_DASH", "ARMOUR","BANDAGE", "INVINCIBILITY"};
+        "HELMET", "TORCH", "LONG_DASH", "CHEST","BANDAGE", "INVINCIBILITY"};
         String[] speech  = {DAGGER_TEXT,BAT_TEXT,AXE_TEXT,MACHETE_TEXT,CROWBAR_TEXT,SLEDGE_TEXT,HELMET_TEXT,TORCH_TEXT,
             LONG_DASH_TEXT,ARMOUR_TEXT,BANDAGE_TEXT,INVINCIBILITY_TEXT};
         int index = Arrays.asList(items).indexOf(item);
@@ -657,7 +657,6 @@ public class ShopMenuDisplay extends UIComponent {
             if (Items.checkShieldType(itemName)) {
                 int defenceLevel = Items.getDefenceLevel(itemName);
                 playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
-
             }
         } else {
             // other item type includes abilities and bandages

@@ -32,8 +32,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private long invincibilityEndTime;
     private final int[] woundex = new int[] {7, 3, 0};
     private final int[] statex = new int[] {1, 2, 3, 4, 5};
-    private boolean helmet = false;
-    private boolean chest = false;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -149,15 +147,15 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     }
 
     /**
-     * Sets the entity's defence level. Must be between 0 and 2 inclusive
+     * Sets the entity's defence level. Must be between 0 and 4 inclusive
      *
      * @param level the level to set it to
      */
     public void setDefenceLevel(int level) {
-        if (level >= 0 && level <=2) {
+        if (level >= 0 && level <=4) {
             this.defenceLevel= level;
         } else {
-            logger.error("Can not set defence level outside 0-2");
+            logger.error("Can not set defence level outside 0-4");
         }
     }
 
@@ -267,7 +265,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (regenActive) {
                 regenActive = false;
             }
-            int damage = attacker.getBaseAttack() - this.defenceLevel;
+            int reduction = (int) Math.floor((this.defenceLevel/2f));
+            int damage =  (attacker.getBaseAttack() - reduction);
             if (damage <= 0) {
                 damage = 1;
             }
@@ -315,38 +314,6 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             }
             nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
         }
-    }
-
-    /**
-     * Function to get a boolean value for whether the player has chest armour or not
-     * @return boolean relating to if player has chest armour (true)
-     */
-    public boolean getChest() {
-        return this.chest;
-    }
-
-    /**
-     * Function to get a boolean value for whether the player has a helmet or not
-     * @return boolean relating to if player has a helmet (true)
-     */
-    public boolean getHelmet() {
-        return this.helmet;
-    }
-
-    /**
-     * Sets for whether or not the player has chest armour
-     * @param status boolean for chest armour, true is they have it, false they don't
-     */
-    public void setChest(boolean status) {
-        this.chest = status;
-    }
-
-    /**
-     * Sets for whether or not the player has a helmet
-     * @param status boolean for player helmet, true is they have it, false they don't
-     */
-    public void setHelmet(boolean status) {
-        this.helmet = status;
     }
 }
 

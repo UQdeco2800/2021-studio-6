@@ -47,7 +47,8 @@ public abstract class GameArea implements Disposable {
       "images/weapon/sledge.atlas",
       "images/weapon/machete.atlas",
       "images/playeritems/tourch/torch.atlas",
-      "images/weapon/baseball.atlas"
+      "images/weapon/baseball.atlas",
+      "images/playeritems/rock/rock.atlas"
   };
 
 

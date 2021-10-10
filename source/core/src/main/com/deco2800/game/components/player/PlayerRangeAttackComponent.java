@@ -2,8 +2,10 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.BulletAnimationController;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -36,11 +38,20 @@ public class PlayerRangeAttackComponent extends Component {
     public PlayerRangeAttackComponent() {
     }
 
+
     /**
-     * To reuse bullet shot for performance sake
-     *
-     * @param bulletShot is the bullet that has been shot and removed from activeBullets array
+     * Creation of listener on specified player when game is created
      */
+    @Override
+    public void create() {
+        entity.getEvents().addListener("rangeAttack", this::fire);
+    }
+
+        /**
+         * To reuse bullet shot for performance sake
+         *
+         * @param bulletShot is the bullet that has been shot and removed from activeBullets array
+         */
     public static void restockBulletShot(Entity bulletShot) {
         if (activeBullets != null) {
             activeBullets.add(bulletShot);
@@ -73,14 +84,6 @@ public class PlayerRangeAttackComponent extends Component {
      */
     public void addBullets(Array<Entity> bullets) {
         activeBullets = new Array<>(bullets);
-    }
-
-    /**
-     * Creation of listener on specified player when game is created
-     */
-    @Override
-    public void create() {
-        entity.getEvents().addListener("rangeAttack", this::fire);
     }
 
     @Override
@@ -174,6 +177,9 @@ public class PlayerRangeAttackComponent extends Component {
 
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+                if (firedBullet.getComponent(BulletAnimationController.class) != null) {
+                    firedBullet.getComponent(BulletAnimationController.class).setDirection(getDirection());
+                }
 
                 // update current gun magazine
                 decreaseGunMagazine();

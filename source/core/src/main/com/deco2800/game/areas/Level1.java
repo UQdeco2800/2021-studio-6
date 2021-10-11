@@ -234,9 +234,8 @@ public class Level1 extends GameArea {
         //leave a gap in the middle
         continue;
       }
-
       GridPoint2 position = new GridPoint2(18, i);
-      Entity barrier = ObstacleFactory.createObject("images/level_1/road_barrier.png", 2f);
+      Entity barrier = ObstacleFactory.createBarrier();
       spawnEntityAt(barrier, position, true, false);
     }
   }
@@ -246,8 +245,8 @@ public class Level1 extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 position = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createObject("images/level_1/dead_tree1-day1-latest.png", 4f);
-      spawnEntityAt(tree, position, false, false);
+      Entity tree = ObstacleFactory.createDeadTree();
+      spawnEntityAt(tree, position, true, true);
     }
   }
 
@@ -255,13 +254,7 @@ public class Level1 extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     for (int x = 5; x < tileBounds.x * 0.75; x += 5) {
       GridPoint2 position = new GridPoint2(x, 1);
-      String lampPath;
-      if (RandomUtils.randomInt(2) == 1) {
-        lampPath = "images/level_1/street_lamp.png";
-      } else {
-        lampPath = "images/level_1/street_lamped_vined.png";
-      }
-      Entity lamppost = ObstacleFactory.createObject(lampPath, 2f);
+      Entity lamppost = ObstacleFactory.createLamp();
       spawnEntityAt(lamppost, position, true, true);
     }
   }

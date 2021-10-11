@@ -12,6 +12,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.utils.math.RandomUtils;
 
 import java.awt.*;
 
@@ -59,6 +60,43 @@ public class ObstacleFactory {
   }
 
   /**
+   * Creates a dead tree entity for level 1.
+   * @return entity
+   */
+  public static Entity createBarrier() {
+    Entity tree =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_1/road_barrier.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2f);
+    PhysicsUtils.setScaledCollider(tree, 0.4f, 1f);
+    return tree;
+  }
+
+  /**
+   * Creates a dead tree entity for level 1.
+   * @return entity
+   */
+  public static Entity createDeadTree() {
+    Entity tree =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_1/dead_tree1-day1-latest.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+
+    tree.scaleHeight(4f);
+    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.5f);
+    return tree;
+  }
+
+  /**
    * Create a cobweb entity, slows the player's movement.
    * @return entity
    */
@@ -98,19 +136,26 @@ public class ObstacleFactory {
   }
 
   public static Entity createLamp() {
-    Entity bush =
+    String lampPath;
+    if (RandomUtils.randomInt(2) == 1) {
+      lampPath = "images/level_1/street_lamp.png";
+    } else {
+      lampPath = "images/level_1/street_lamped_vined.png";
+    }
+    Entity lamp =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/lamppost.png"))
-                    .addComponent(new PointLightComponent(Color.ORANGE, 10f, 0, 0))
+                    .addComponent(new TextureRenderComponent(lampPath))
+                    .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
                     .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                     .addComponent(new HitboxComponent());
 
-
-//    bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    bush.getComponent(TextureRenderComponent.class).scaleEntity();
-//    bush.scaleHeight(2.0f);
-    bush.scaleWidth(0.7f);
-    return bush;
+    lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    lamp.getComponent(TextureRenderComponent.class).scaleEntity();
+    lamp.scaleHeight(2.0f);
+    lamp.scaleWidth(1f);
+    PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
+    return lamp;
   }
   /**
    * Creates an invisible physics wall.
@@ -162,6 +207,7 @@ public class ObstacleFactory {
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     building.getComponent(TextureRenderComponent.class).scaleEntity();
     building.scaleHeight(10f);
+    PhysicsUtils.setScaledCollider(building, 0.7f, 0.6f);
     return building;
   }
 

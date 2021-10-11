@@ -110,12 +110,12 @@ public class NPCFactory {
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 2f))
                     .addComponent(aiComponent)
                     .addComponent(new DisposingComponent())
+                    .addComponent(glowingEyesComponent)
                     .addComponent(new GhostAnimationController())
                     .addComponent(new DarknessDetectionComponent())
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(animator)
-                    .addComponent(glowingEyesComponent)
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -143,13 +143,16 @@ public class NPCFactory {
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
+    GlowingEyesComponent glowingEyesComponent = new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png");
+    glowingEyesComponent.setUnlit();
+
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
             .addComponent(new PhysicsMovementComponent(speed))
+            .addComponent(glowingEyesComponent)
             .addComponent(new DarknessDetectionComponent())
-            .addComponent(new EnemyDarknessController())
             .addComponent(new GhostAnimationController());
 
     //Increase the size of the enemy
@@ -171,6 +174,10 @@ public class NPCFactory {
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
                     .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
+
+    GlowingEyesComponent glowingEyesComponent = new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png");
+    glowingEyesComponent.setUnlit();
+
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
@@ -182,6 +189,7 @@ public class NPCFactory {
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
                     .addComponent(new DarknessDetectionComponent())
+                    .addComponent(glowingEyesComponent)
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new DisposingComponent());
     longRange.setScale(new Vector2(1f, 1f));
@@ -194,6 +202,9 @@ public class NPCFactory {
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
                     .addTask(new DistanceFireBulletTask(target, 4, 10, 8f));
 
+    GlowingEyesComponent glowingEyesComponent = new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png");
+    glowingEyesComponent.setUnlit();
+
     Entity toughLongRangeEnemy = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
@@ -205,6 +216,7 @@ public class NPCFactory {
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
             .addComponent(new DarknessDetectionComponent())
+            .addComponent(glowingEyesComponent)
             .addComponent(new EnemyDarknessController())
             .addComponent(new DisposingComponent());
 

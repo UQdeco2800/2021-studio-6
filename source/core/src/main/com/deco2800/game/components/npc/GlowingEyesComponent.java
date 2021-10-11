@@ -3,6 +3,7 @@ package com.deco2800.game.components.npc;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -12,6 +13,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class GlowingEyesComponent extends RenderComponent {
     private Texture glowingEyesTexture;
     private Boolean visible;
+    private CombatStatsComponent combatStatsComponent;
 
     /**
      * Creates a glowing red eye image for the entity
@@ -19,6 +21,13 @@ public class GlowingEyesComponent extends RenderComponent {
     public GlowingEyesComponent(String imageFileName) {
         glowingEyesTexture = ServiceLocator.getResourceService().getAsset(imageFileName, Texture.class);
         this.visible = true;
+    }
+
+    /**
+     * Links the combat stats component to detect whether the enemy is dead
+     */
+    public void initialise() {
+        combatStatsComponent = entity.getComponent(CombatStatsComponent.class);
     }
 
     /**
@@ -41,7 +50,7 @@ public class GlowingEyesComponent extends RenderComponent {
      */
     @Override
     public void draw(SpriteBatch batch) {
-        if (visible) {
+        if (visible && combatStatsComponent != null && !combatStatsComponent.isDead()) {
             Vector2 npcPos = entity.getPosition();
             Vector2 npcScale = entity.getScale();
 

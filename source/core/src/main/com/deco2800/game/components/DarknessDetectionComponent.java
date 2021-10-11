@@ -34,9 +34,18 @@ public class DarknessDetectionComponent extends Component{
     @Override
     public void update() {
         super.update();
-        Vector3 coords = new Vector3(entity.getCenterPosition(), 0);
+        float entityPosX = entity.getCenterPosition().x;
+        float entityPosY = entity.getCenterPosition().y;
         prevIsInLight = isInLight;
-        isInLight = lightingService.getRayHandler().pointAtLight(coords.x, coords.y);
+
+        // detects whether the entity and points offset from the entity are in light. This is a compromise due to
+        // libgdx returning a boolean rather than a float point number for whether a point is in light.
+        isInLight =
+            lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX - 3, entityPosY) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX + 3, entityPosY) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY - 3) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY + 3);
         if (prevIsInLight != isInLight) {
             if (isInLight) {
                 entity.getEvents().trigger(EVENT_IN_LIGHT);

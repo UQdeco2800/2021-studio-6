@@ -50,7 +50,7 @@ public class PointLightComponent extends Component implements Disposable {
         pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(),
                 (entity.getScale().x / 2) + this.offsetx, (entity.getScale().y / 2)+ this.offsety) ;
         pointLight.setIgnoreAttachedBody(true);
-        pointLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
+        pointLight.setContactFilter(PhysicsLayer.NONE, PhysicsLayer.NONE, PhysicsLayer.NONE);
         pointLight.setSoftnessLength(8f);
         logger.info("Chain light added to scene");
     }

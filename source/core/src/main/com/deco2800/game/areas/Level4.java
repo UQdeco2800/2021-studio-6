@@ -35,7 +35,8 @@ public class Level4 extends GameArea {
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(30, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
-            "images/Final_Boss/boss_head.png", "images/Final_Boss/beam.png",
+            "images/Final_Boss/boss_head.png",
+            "images/Final_Boss/beam.png",
             "images/obstacle_sprite/cobweb.png",
             "images/obstacle_sprite/bush.png",
             "images/level_2/level2_grass_1.png",

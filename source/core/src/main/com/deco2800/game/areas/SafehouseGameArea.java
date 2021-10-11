@@ -34,28 +34,12 @@ public class SafehouseGameArea extends GameArea {
   private final float LEVEL_ONE_SAFEHOUSE = 1.5f;
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
-    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/Player_Sprite/front01.png", "images/playeritems/pickupammo.png",
-    "images/safehouse/interior-day1-tile-ground1-latest.png",
-    "images/safehouse/interior-day1-tile-door1-latest.png",
-      "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png",
+      "images/safehouse/safehouse-interior-layout.png",
       "images/safehouse/shopkeeper/shopkeeperSprite.png",
       "images/dialogue/raw/npc_indicator.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
-      "images/Player_Animations/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/crowbar.atlas",
-      "images/weapon/dagger.atlas",
-      "images/weapon/sledge.atlas",
-      "images/weapon/machete.atlas",
-      "images/playeritems/tourch/torch.atlas",
-      "images/weapon/baseball.atlas",
-      "images/weapon/axe.atlas",
       NPC_PILOT_ATLAS_FILENAME
   };
 
@@ -226,6 +210,7 @@ public class SafehouseGameArea extends GameArea {
 
   private void loadAssets() {
     logger.debug("Loading assets");
+    loadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
@@ -241,6 +226,7 @@ public class SafehouseGameArea extends GameArea {
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
+    unloadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);

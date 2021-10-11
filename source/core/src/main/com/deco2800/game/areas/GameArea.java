@@ -25,14 +25,23 @@ public abstract class GameArea implements Disposable {
   public Entity player;
 
   protected static final String[] playerAssets = {
-      "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-      "images/playeritems/rock/ammo.png", "images/playeritems/rock/pickupammo.png", "images/playeritems/rock/thrown.png",
-      "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-      "images/playeritems/halmet.png", "images/playeritems/dagger/dagger.png",
-      "images/playeritems/firecracker/firecracker.png", "images/playeritems/axe/axe.png",
+      "images/Player_Sprite/25.png",
+      "images/playeritems/bandage/bandage01.png",
+      "images/playeritems/armour.png",
+      "images/playeritems/rock/ammo.png",
+      "images/playeritems/rock/pickupammo.png",
+      "images/playeritems/rock/thrown.png",
+      "images/playeritems/coin/coin1.png",
+      "images/playeritems/coin/coin2.png",
+      "images/playeritems/halmet.png",
+      "images/playeritems/dagger/dagger.png",
+      "images/playeritems/firecracker/firecracker.png",
+      "images/playeritems/axe/axe.png",
       "images/playeritems/machete/machete.png",
       "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png", "images/playeritems/sledge/sledge.png", "images/playeritems/bat/baseball.png"
+      "images/hud/healthFull.png",
+      "images/playeritems/sledge/sledge.png",
+      "images/playeritems/bat/baseball.png"
   };
 
   protected static final String[] playerAtlas = {

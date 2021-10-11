@@ -75,7 +75,7 @@ public class Level2 extends GameArea {
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/placeholder.png",
     "images/dialogue/raw/npc_indicator.png",
-
+    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
   };
 
   /**

@@ -68,7 +68,8 @@ public class Level4 extends GameArea {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
-            "images/placeholder.png"
+            "images/placeholder.png",
+            "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",

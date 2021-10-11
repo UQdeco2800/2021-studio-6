@@ -16,15 +16,13 @@ import com.deco2800.game.services.ServiceLocator;
  * the target is within a certain radius of the entity
  */
 public class DistanceFireBulletTask extends DefaultTask implements PriorityTask {
+    private static final int ONE_SECOND = 1000;
     private final GameTime timeSource;
-    private final float duration;
+    private float duration;
     private long endTime;
     private int priority;
     private final Entity target;
     private final float viewDistance;
-    private static final int DEFAULT_FIRE_INTERVAL = 2000;
-    private int fireInterval;
-
     private final PhysicsEngine physics;
     private final DebugRenderer debugRenderer;
     private final RaycastHit hit = new RaycastHit();
@@ -41,7 +39,6 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
         this.priority = priority;
         this.target = target;
         this.viewDistance = viewDistance;
-        this.fireInterval = DEFAULT_FIRE_INTERVAL;
 
         physics = ServiceLocator.getPhysicsService().getPhysics();
         debugRenderer = ServiceLocator.getRenderService().getDebug();
@@ -53,7 +50,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     @Override
     public void start() {
         super.start();
-        endTime = timeSource.getTime() + (int)(duration * fireInterval);
+        endTime = timeSource.getTime() + (int)(duration * ONE_SECOND);
     }
 
     /**
@@ -63,7 +60,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     public void update() {
         if (timeSource.getTime() >= endTime) {
             this.owner.getEntity().getEvents().trigger("fire");
-            endTime = timeSource.getTime() + (int)(duration * fireInterval);
+            endTime = timeSource.getTime() + (int)(duration * ONE_SECOND);
         }
     }
 
@@ -81,12 +78,12 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
         return getInactivePriority();
     }
 
-    public void setFireInterval(int fireInterval) {
-        this.fireInterval = fireInterval;
+    public void setFireDuration(float duration) {
+        this.duration = duration;
     }
 
-    public int getFireInterval() {
-        return fireInterval;
+    public float getFireDuration() {
+        return duration;
     }
 
     private float getDistanceToTarget() {

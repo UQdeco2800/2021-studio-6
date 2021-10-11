@@ -26,8 +26,8 @@ public class EnemyDarknessController extends Component {
   private boolean chasingEntity = false;
   private Vector2 defaultSpeed;
   private Vector2 inDarkSpeed;
-  private int defaultFiringInterval;
-  private int inDarkFiringInterval;
+  private float defaultFiringDuration;
+  private float inDarkFiringDuration;
   private float defaultViewDistance;
   private float defaultChaseMaxDistance;
   private float playerInDarkViewDistance;
@@ -48,9 +48,9 @@ public class EnemyDarknessController extends Component {
       if (task instanceof DistanceFireBulletTask) {
         firingEntity = true;
         fireBulletTask = (DistanceFireBulletTask) task;
-        defaultFiringInterval = fireBulletTask.getFireInterval();
-        inDarkFiringInterval = (int) (defaultFiringInterval / FIRING_INTERVAL_DIVIDER);
-        fireBulletTask.setFireInterval(inDarkFiringInterval);
+        defaultFiringDuration = fireBulletTask.getFireDuration();
+        inDarkFiringDuration = defaultFiringDuration / FIRING_INTERVAL_DIVIDER;
+        fireBulletTask.setFireDuration(inDarkFiringDuration);
       } else if (task instanceof ChaseTask) {
         chasingEntity = true;
         chaseTask = (ChaseTask) task;
@@ -80,7 +80,7 @@ public class EnemyDarknessController extends Component {
       entityInDarkness = true;
       movementComponent.setSpeed(inDarkSpeed);
       if (firingEntity) {;
-        fireBulletTask.setFireInterval(inDarkFiringInterval);
+        fireBulletTask.setFireDuration(inDarkFiringDuration);
       }
     }
   }
@@ -90,7 +90,7 @@ public class EnemyDarknessController extends Component {
       entityInDarkness = false;
       movementComponent.setSpeed(defaultSpeed);
       if (firingEntity) {
-        fireBulletTask.setFireInterval(defaultFiringInterval);
+        fireBulletTask.setFireDuration(defaultFiringDuration);
       }
     }
   }

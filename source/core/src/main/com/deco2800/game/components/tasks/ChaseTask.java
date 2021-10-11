@@ -14,8 +14,8 @@ import com.deco2800.game.services.ServiceLocator;
 public class ChaseTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;
-  private final float viewDistance;
-  private final float maxChaseDistance;
+  private float viewDistance;
+  private float maxChaseDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
@@ -68,6 +68,22 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
 
     return getInactivePriority();
+  }
+
+  public float getMaxChaseDistance() {
+    return maxChaseDistance;
+  }
+
+  public void setMaxChaseDistance(float maxChaseDistance) {
+    this.maxChaseDistance = maxChaseDistance;
+  }
+
+  public float getViewDistance() {
+    return viewDistance;
+  }
+
+  public void setViewDistance(float viewDistance) {
+    this.viewDistance = viewDistance;
   }
 
   private float getDistanceToTarget() {

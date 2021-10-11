@@ -135,10 +135,6 @@ public class Level4 extends GameArea {
 
     }
 
-    public Entity getPlayer() {
-        return player;
-    }
-
     private void displayUI() {
         Entity ui = new Entity();
         // Can change level name here

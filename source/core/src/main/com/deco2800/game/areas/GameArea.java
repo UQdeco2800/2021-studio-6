@@ -99,4 +99,8 @@ public abstract class GameArea implements Disposable {
     Entity smallEnemy = NPCFactory.createSmallEnemy(player);
     spawnEntityAt(smallEnemy, randomPos, true, true);
   }
+
+  public Entity getPlayer() {
+    return player;
+  }
 }

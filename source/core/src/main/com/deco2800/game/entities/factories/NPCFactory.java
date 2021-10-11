@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
-import com.deco2800.game.components.npc.EnemyInDarknessController;
+import com.deco2800.game.components.npc.EnemyDarknessController;
 import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ToughFireBulletListener;
@@ -112,7 +112,7 @@ public class NPCFactory {
                     .addComponent(new DisposingComponent())
                     .addComponent(new GhostAnimationController())
                     .addComponent(new DarknessDetectionComponent())
-                    .addComponent(new EnemyInDarknessController())
+                    .addComponent(new EnemyDarknessController())
                     .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(animator)
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
@@ -148,7 +148,7 @@ public class NPCFactory {
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
             .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(new DarknessDetectionComponent())
-            .addComponent(new EnemyInDarknessController())
+            .addComponent(new EnemyDarknessController())
             .addComponent(new GhostAnimationController());
 
     //Increase the size of the enemy
@@ -181,7 +181,7 @@ public class NPCFactory {
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
                     .addComponent(new DarknessDetectionComponent())
-                    .addComponent(new EnemyInDarknessController())
+                    .addComponent(new EnemyDarknessController())
                     .addComponent(new DisposingComponent());
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
@@ -204,7 +204,7 @@ public class NPCFactory {
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
             .addComponent(new DarknessDetectionComponent())
-            .addComponent(new EnemyInDarknessController())
+            .addComponent(new EnemyDarknessController())
             .addComponent(new DisposingComponent());
 
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));

@@ -174,14 +174,6 @@ public class Level3 extends GameArea {
   }
 
   /**
-   * Gets the player entity for Level 3.
-   * @return Player entity.
-   */
-  public Entity getPlayer() {
-    return player;
-  }
-
-  /**
    * Displays the name of the level on the top left screen.
    */
   private void displayUI() {

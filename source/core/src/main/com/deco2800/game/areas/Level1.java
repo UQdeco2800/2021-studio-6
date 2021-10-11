@@ -173,10 +173,6 @@ public class Level1 extends GameArea {
     spawnPickupItems();
   }
 
-  public Entity getPlayer() {
-    return player;
-  }
-
   private void displayUI() {
     Entity ui = new Entity();
     // Can change level name here

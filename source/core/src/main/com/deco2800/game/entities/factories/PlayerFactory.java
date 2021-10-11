@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
@@ -112,6 +113,7 @@ public class PlayerFactory {
           .addComponent(new PlayerTorchAnimationController())
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
+          .addComponent(new DarknessDetectionComponent())
           .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 6f, 0, 0));
 
 

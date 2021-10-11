@@ -82,7 +82,7 @@ public class BulletCollisionComponent extends Component {
             } else if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
                 this.entity.getComponent(PhysicsMovementComponent.class).setMoving(false);
                 entity.getEvents().trigger("breakRock");
-                entity.getEvents().trigger("stopRock", this);
+                //entity.getEvents().trigger("stopRock", this);
                 // bullet collides with NPC
                 logger.debug("Bullet collided with NPC's layer");
 

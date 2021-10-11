@@ -35,11 +35,11 @@ public class BulletFactory {
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/playeritems/rock/rock.atlas", TextureAtlas.class));
-        animator.addAnimation("rock", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("rock", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("left", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("right", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("down", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("up", 0.1f, Animation.PlayMode.NORMAL);
 
         Entity bullet = new Entity()
                 //.addComponent(new TextureRenderComponent("images/playeritems/rock/thrown.png"))

@@ -174,6 +174,7 @@ public class PlayerRangeAttackComponent extends Component {
                 Entity firedBullet = activeBullets.get(0);
                 activeBullets.removeIndex(0);
                 firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
+                firedBullet.getComponent(PhysicsMovementComponent.class).setMoving(true);
 
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);

@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
-import com.deco2800.game.components.npc.EnemyDarknessController;
-import com.deco2800.game.components.npc.FireBulletListener;
-import com.deco2800.game.components.npc.GhostAnimationController;
-import com.deco2800.game.components.npc.ToughFireBulletListener;
+import com.deco2800.game.components.npc.*;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -102,6 +99,9 @@ public class NPCFactory {
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
                     .addTask(new ChaseTask(target, 10, 3f, 4f));
 
+    GlowingEyesComponent glowingEyesComponent = new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png");
+    glowingEyesComponent.setUnlit();
+
     Entity smallEnemy =
             new Entity()
                     .addComponent(new PhysicsComponent())
@@ -115,6 +115,7 @@ public class NPCFactory {
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(animator)
+                    .addComponent(glowingEyesComponent)
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();

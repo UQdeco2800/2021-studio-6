@@ -20,10 +20,12 @@ public class EnemyDarknessController extends Component {
   private static final float FIRING_INTERVAL_DIVIDER = 3;
   private static final float MAX_DISTANCE_MULTIPLIER = 2.5f;
   private PhysicsMovementComponent movementComponent;
+  private GlowingEyesComponent glowingEyesComponent;
   private boolean entityInDarkness = true;
   private boolean playerInDarkness = false;
   private boolean firingEntity = false;
   private boolean chasingEntity = false;
+  private boolean glowingEyeEntity = false;
   private Vector2 defaultSpeed;
   private Vector2 inDarkSpeed;
   private float defaultFiringDuration;
@@ -60,6 +62,13 @@ public class EnemyDarknessController extends Component {
         playerInDarkViewDistance = defaultViewDistance * MAX_DISTANCE_MULTIPLIER;
       }
     }
+
+    glowingEyesComponent = this.entity.getComponent(GlowingEyesComponent.class);
+    if (glowingEyesComponent != null) {
+      glowingEyeEntity = true;
+      glowingEyesComponent.displayOn();
+    }
+
     entity.getEvents().addListener("inShadow", this::entityInDarkness);
     entity.getEvents().addListener("inLight", this::entityInLight);
 
@@ -82,6 +91,9 @@ public class EnemyDarknessController extends Component {
       if (firingEntity) {;
         fireBulletTask.setFireDuration(inDarkFiringDuration);
       }
+      if (glowingEyeEntity) {
+        glowingEyesComponent.displayOn();
+      }
     }
   }
 
@@ -91,6 +103,9 @@ public class EnemyDarknessController extends Component {
       movementComponent.setSpeed(defaultSpeed);
       if (firingEntity) {
         fireBulletTask.setFireDuration(defaultFiringDuration);
+      }
+      if (glowingEyeEntity) {
+        glowingEyesComponent.displayOff();
       }
     }
   }

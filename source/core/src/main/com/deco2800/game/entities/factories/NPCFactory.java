@@ -147,6 +147,8 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
             .addComponent(new PhysicsMovementComponent(speed))
+            .addComponent(new DarknessDetectionComponent())
+            .addComponent(new EnemyInDarknessController())
             .addComponent(new GhostAnimationController());
 
     //Increase the size of the enemy
@@ -178,6 +180,8 @@ public class NPCFactory {
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
+                    .addComponent(new DarknessDetectionComponent())
+                    .addComponent(new EnemyInDarknessController())
                     .addComponent(new DisposingComponent());
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
@@ -199,6 +203,8 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(3, 1))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
+            .addComponent(new DarknessDetectionComponent())
+            .addComponent(new EnemyInDarknessController())
             .addComponent(new DisposingComponent());
 
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));

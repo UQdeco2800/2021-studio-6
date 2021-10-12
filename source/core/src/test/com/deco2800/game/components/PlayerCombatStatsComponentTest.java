@@ -143,8 +143,10 @@ class PlayerCombatStatsComponentTest {
         assertEquals(0, combat.getDefenceLevel());
         combat.setDefenceLevel(-50); // defence level cannot be negative
         assertEquals(0, combat.getDefenceLevel());
-        combat.setDefenceLevel(5); // defence level cannot be over 2
-        assertEquals(0, combat.getDefenceLevel());
+        combat.setDefenceLevel(5);
+        assertEquals(5, combat.getDefenceLevel());
+        combat.setDefenceLevel(7); // defence level cannot be over 5
+        assertEquals(5, combat.getDefenceLevel());
     }
 
     @Test

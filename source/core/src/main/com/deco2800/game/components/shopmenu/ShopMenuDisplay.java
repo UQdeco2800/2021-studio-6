@@ -3,6 +3,7 @@ package com.deco2800.game.components.shopmenu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -38,6 +39,9 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String BACKGROUND_FILE_PATH = "images/safehouse/shopScreenTempSelections.png";
     private static final String SHOP_KEEPER_IMAGE_FILE_PATH = "images/safehouse/shopkeeper/portrait.png";
     private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/25.png";
+    private static final String PLAYER_FULL_ARMOR_IMAGE_FILE_PATH = "images/Player_Sprite/34.png";
+    private static final String PLAYER_ARMOR_IMAGE_FILE_PATH = "images/Player_Sprite/31.png";
+    private static final String PLAYER_HELMET_IMAGE_FILE_PATH = "images/Player_Sprite/28.png";
     private static final String CROWBAR_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbar.png";
     private static final String CROWBAR_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbarSelected.png";
     private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDagger.png";
@@ -67,7 +71,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String MENU_BUTTON_STYLE = "menu-button-large";
     private static final String EQUIPPED_TEXT = "EQUIPPED";
     private static final String PURCHASE_TEXT = "PURCHASE";
-
+    private static final String NO_FUNDS_TEXT = "NO FUNDS";
 
     private static final String DAGGER_TEXT = "A good little weapon to use in a tight spot, if you ask me.";
     private static final String BAT_TEXT = "This was from an old game called 'Baseball', back before all this happened.";
@@ -87,6 +91,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String INVINCIBILITY_TEXT = "This here is a handy piece of tech they cooked up just as everything" +
         " started to go downhill. No one quite understands how it works anymore but it should still help you out in a tight spot.";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
+    private static Image playerImage, playerFullArmorImage, playerHelmetImage, playerArmorImage;
     private final GdxGame game;
     private boolean isEnabled = false;
     private Table container;
@@ -119,14 +124,18 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float BANDAGE_SIDE_LENGTH = 50f;
     private static final int NO_FUNDS_INDEX = 0;
     private static final int EQUIPPED_INDEX = 1;
-    public static final int ADD_BANDAGE = 1;
-    public static final int ADD_TORCH = 100;
+    private static final int ADD_BANDAGE = 1;
+    private static final int ADD_TORCH = 100;
+    private static final int OFFSET_X_IMG_GROUP = 20;
+    private static final int OFFSET_Y_IMG_GROUP = 20;
     private static final int PURCHASED_INDEX = 2;
     private ImageButton crowbarImageButton, daggerImageButton, axeImageButton, armorImageButton,
             helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton,
             macheteImageButton, baseballImageButton, sledgeImageButton;
     private final ArrayList<ImageButton> imageButtons = new ArrayList<>();
+    private final ArrayList<Image> images = new ArrayList<>();
     private int itemPrice, itemDefenceLevel = 0;
+    private int FULL_ARMOR_LEVEL = 5;
     private String itemName;
     private ImageButton storeButtonClicked = null;
     // values below will be checked and will load values from config file that saves player's states
@@ -472,9 +481,30 @@ public class ShopMenuDisplay extends UIComponent {
 
         // image of player character
         playerInfoLabelsImages.row().colspan(FOURTH_COL_NUM_TAKEN).height(TABLE_BODY_HEIGHT);
-        Image playerImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_IMAGE_FILE_PATH,
+        Group imageGroup = new Group();
+        playerImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_IMAGE_FILE_PATH,
                 Texture.class));
-        playerInfoLabelsImages.add(playerImage).colspan(10).height(LARGER_IMAGE_SIZE)
+        playerFullArmorImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_FULL_ARMOR_IMAGE_FILE_PATH,
+                Texture.class));
+        playerHelmetImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_HELMET_IMAGE_FILE_PATH,
+                Texture.class));
+        playerArmorImage =
+                new Image(ServiceLocator.getResourceService().getAsset(PLAYER_ARMOR_IMAGE_FILE_PATH,
+                Texture.class));
+
+        // configure sizes of images
+        List<Image> imageList = Arrays.asList(playerImage, playerFullArmorImage, playerHelmetImage,
+                playerArmorImage);
+        images.addAll(imageList);
+        resizeImages();
+
+        // add all image to same group and overlap them
+        imageGroup.addActor(playerImage);
+        imageGroup.addActor(playerFullArmorImage);
+        imageGroup.addActor(playerHelmetImage);
+        imageGroup.addActor(playerArmorImage);
+        imageGroup.setPosition(OFFSET_X_IMG_GROUP,OFFSET_Y_IMG_GROUP);
+        playerInfoLabelsImages.add(imageGroup).colspan(10).height(LARGER_IMAGE_SIZE)
                 .width(LARGER_IMAGE_SIZE).top();
 
         // uses most current player state now
@@ -537,8 +567,6 @@ public class ShopMenuDisplay extends UIComponent {
         logger.info("Button image clicked, buying system update");
         uncheckImageButton();
 
-
-
         // all item files must have the 2 following data variables
         ShopItemInfoConfig itemData =
                 FileLoader.readClass(ShopItemInfoConfig.class, configFilename);
@@ -551,13 +579,10 @@ public class ShopMenuDisplay extends UIComponent {
             shopkeeperSpeech.dispose();
         }
 
-        //update shopkeeper sppech based on item selected
+        // update shopkeeper speec based on item selected
         updateShopSpeech(itemName);
 
-
-
         CharSequence priceText = String.format("PRICE: %d", itemPrice);
-
         itemSelectedTitleLabel.setText(itemName);
         pricingValueLabel.setText(priceText);
         itemSelectedDescriptionLabel.setText(description);
@@ -595,8 +620,10 @@ public class ShopMenuDisplay extends UIComponent {
         if (playerGold >= itemPrice) {
             setEquippedButton();
             processPurchasedItem();
+        } else {
+            setNoFundsButton();
         }
-        updatePurchaseButton();
+//        updatePurchaseButton();
     }
 
     /**
@@ -616,6 +643,14 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
+     * This will dynamically set button to be clickable and set its' text to be "MORE COINS"
+     */
+    private void setNoFundsButton() {
+        equipBtn.setText(NO_FUNDS_TEXT);
+        equipBtn.setDisabled(false);
+    }
+
+    /**
      * Used to check what player current has and updates the purchase button dynamically. Will disable button if
      * player has item equipped already
      */
@@ -624,10 +659,15 @@ public class ShopMenuDisplay extends UIComponent {
             // player may have different types of armor, and player's armor may be worse than
             // armor item clicked in shop which player can then purchase - there needs to be a separate logic for this
             if (typeOfItem == Items.SHIELDS) {
-                if (itemDefenceLevel <= playerDefenceLevel) {
+                if (playerArmorType.equals(itemName)) {
                     setEquippedButton();
                 } else {
-                    setPurchaseButton();
+                    // player has both chest and helmet
+                    if (playerDefenceLevel == Items.getDefenceLevel("ARMOUR")) {
+                        setEquippedButton();
+                    } else {
+                        setPurchaseButton();
+                    }
                 }
 
             // player already has ability or melee weapon item clicked in shop UI
@@ -655,8 +695,17 @@ public class ShopMenuDisplay extends UIComponent {
         } else if (typeOfItem == Items.SHIELDS) {
             // armor type need to registered just like melee weapon
             if (Items.checkShieldType(itemName)) {
-                int defenceLevel = Items.getDefenceLevel(itemName);
-                playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
+
+                // player currently has helmet or chest equipped only
+                if (playerDefenceLevel == Items.getDefenceLevel("HELMET") ||
+                        playerDefenceLevel == Items.getDefenceLevel("CHEST")) {
+                    playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(FULL_ARMOR_LEVEL);
+
+                // player not equipped with anything
+                } else {
+                    int defenceLevel = Items.getDefenceLevel(itemName);
+                    playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
+                }
             }
         } else {
             // other item type includes abilities and bandages
@@ -672,6 +721,16 @@ public class ShopMenuDisplay extends UIComponent {
         int updatePlayerGold = playerGold - itemPrice;
         playerState.getComponent(InventoryComponent.class).setGold(updatePlayerGold);
         loadPlayerData();
+    }
+
+    /**
+     * Resizes images for visual on shop UI
+     */
+    private void resizeImages() {
+        for (Image image : images) {
+            image.setHeight(LARGER_IMAGE_SIZE);
+            image.setWidth(LARGER_IMAGE_SIZE);
+        }
     }
 
     /**

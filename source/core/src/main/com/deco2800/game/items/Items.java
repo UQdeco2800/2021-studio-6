@@ -24,7 +24,7 @@ public enum Items {
 
   public static String getArmorType(int defenceLevel) {
         switch (defenceLevel) {
-            case 4:
+            case 5:
                 return "ARMOUR";
             case 3:
                 return "CHEST";

@@ -152,7 +152,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * @param level the level to set it to
      */
     public void setDefenceLevel(int level) {
-        if (level >= 0 && level <=4) {
+        if ((level >= 0) && (level <= 5)) {
             this.defenceLevel= level;
         } else {
             logger.error("Can not set defence level outside 0-4");

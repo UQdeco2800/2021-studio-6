@@ -22,7 +22,6 @@ import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.lighting.Lighting;
-import com.deco2800.game.memento.Player;
 import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
@@ -64,7 +63,8 @@ public class MainGameScreen extends ScreenAdapter {
   "images/safehouse/itemIcons/shopMacheteSelected.png", "images/safehouse/itemIcons/shopMachete.png",
   "images/safehouse/itemIcons/shopBatSelected.png", "images/safehouse/itemIcons/shopBat.png",
   "images/safehouse/itemIcons/shopHammerSelected.png", "images/safehouse/itemIcons/shopHammer.png",
-  "images/safehouse/shopScreenTempSelections.png"};
+  "images/safehouse/shopScreenTempSelections.png", "images/Player_Sprite/34.png", "images/Player_Sprite/28.png",
+  "images/Player_Sprite/31.png", "images/Player_Sprite/34.png", };
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -142,7 +142,7 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new Level1(terrainFactory); //change back to level 1
+      gameArea = new SafehouseGameArea(terrainFactory); //change back to level 1
 
       gameArea.create();
 

@@ -66,6 +66,12 @@ front-run
   orig: 24, 24
   offset: 0, 0
   index: 1
+  
+small_enemy_damagedpng.png
+size: 24, 24
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 left-damaged
   rotate: false
   xy: 0, 0

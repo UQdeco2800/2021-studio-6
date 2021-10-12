@@ -139,5 +139,9 @@ public class NPCAnimationController extends Component {
   private void npcHit() {
     hitActive = true;
     hitTime = gameTime.getTime();
+
+    if (!damagedActive && combatStatsComponent.getHealth() <= combatStatsComponent.getMaxHealth()/2) {
+      damagedActive = true;
+    }
   }
 }

@@ -10,7 +10,7 @@ import com.deco2800.game.entities.factories.ItemFactory;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * This component controls the sound effects for the NPC entity
+ * This component controls the loot that is dropped after an entity is dead
  */
 public class LootComponent extends Component {
   private int minItems;

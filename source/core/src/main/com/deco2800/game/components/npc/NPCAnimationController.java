@@ -1,6 +1,5 @@
 package com.deco2800.game.components.npc;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -9,6 +8,7 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.DeadTask;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.GameTime;
@@ -157,6 +157,10 @@ public class NPCAnimationController extends Component {
       aiTaskComponent.addTask(new DeadTask());
       ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
       TouchAttackComponent touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
+      HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);
+      if (hitboxComponent != null) {
+        hitboxComponent.setLayer(PhysicsLayer.NONE);
+      }
       if (colliderComponent != null) {
         colliderComponent.setLayer(PhysicsLayer.NONE);
       }

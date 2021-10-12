@@ -3,6 +3,7 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.components.npc.NPCSoundComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -72,6 +73,10 @@ public class TouchAttackComponent extends Component {
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     PlayerCombatStatsComponent targetStats = target.getComponent(PlayerCombatStatsComponent.class);
     if (targetStats != null) {
+      NPCSoundComponent npcSoundComponent = entity.getComponent(NPCSoundComponent.class);
+      if (npcSoundComponent != null) {
+        npcSoundComponent.playMeleeAttack();
+      }
       targetStats.hit(combatStats);
     }
 

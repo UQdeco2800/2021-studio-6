@@ -3,6 +3,7 @@ package com.deco2800.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.components.npc.NPCSoundComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -42,6 +43,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
+
+    NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);
+    if (npcSoundComponent != null) {
+      npcSoundComponent.playDetectPlayer();
+    }
     
     this.owner.getEntity().getEvents().trigger("chaseStart");
   }
@@ -50,6 +56,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   public void update() {
     movementTask.setTarget(target.getPosition());
     movementTask.update();
+
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
     }

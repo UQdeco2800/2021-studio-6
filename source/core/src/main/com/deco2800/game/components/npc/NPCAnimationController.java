@@ -1,5 +1,6 @@
 package com.deco2800.game.components.npc;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -25,17 +26,14 @@ public class NPCAnimationController extends Component {
   private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit"};
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
-  private static final int DAMAGED_STATIONARY = 2;
-  private static final int DAMAGED_WALKING = 3;
-  private static final int HIT = 4;
   private static final long hurtDuration = 200;
   private long hitTime;
   private int indexOffset = 0;
   private boolean hitActive = false;
   private boolean damagedActive = false;
-  private boolean isCombatNPC = false;
   private boolean isDead = false;
   private CombatStatsComponent combatStatsComponent;
+  private NPCSoundComponent npcSoundComponent;
   private String[] currentDirection;
   private Vector2 currentWalkingTarget;
   AnimationRenderComponent animator;
@@ -56,6 +54,8 @@ public class NPCAnimationController extends Component {
     if (combatStatsComponent != null) {
       this.entity.getEvents().addListener("hit", this::npcHit);
     }
+
+    npcSoundComponent = this.entity.getComponent(NPCSoundComponent.class);
   }
 
   /**
@@ -152,6 +152,7 @@ public class NPCAnimationController extends Component {
 
     if (!isDead && combatStatsComponent.isDead()) {
       isDead = true;
+      npcSoundComponent.playDead();
       AITaskComponent aiTaskComponent = entity.getComponent(AITaskComponent.class);
       aiTaskComponent.addTask(new DeadTask());
       ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
@@ -162,10 +163,12 @@ public class NPCAnimationController extends Component {
       if (touchAttackComponent != null) {
         touchAttackComponent.disable();
       }
+    } else if (!damagedActive && combatStatsComponent.getHealth() <= combatStatsComponent.getMaxHealth()/2) {
+      damagedActive = true;
     }
 
-    if (!damagedActive && combatStatsComponent.getHealth() <= combatStatsComponent.getMaxHealth()/2) {
-      damagedActive = true;
+    if (!isDead) {
+      npcSoundComponent.playHit();
     }
   }
 }

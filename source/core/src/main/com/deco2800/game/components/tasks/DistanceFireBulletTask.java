@@ -3,6 +3,7 @@ package com.deco2800.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.components.npc.NPCSoundComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -60,6 +61,10 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     public void update() {
         if (timeSource.getTime() >= endTime) {
             this.owner.getEntity().getEvents().trigger("fire");
+            NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);
+            if (npcSoundComponent != null) {
+                npcSoundComponent.playShoot();
+            }
             endTime = timeSource.getTime() + (int)(duration * ONE_SECOND);
         }
     }

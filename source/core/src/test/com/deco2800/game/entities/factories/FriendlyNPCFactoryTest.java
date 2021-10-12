@@ -2,7 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
-import com.deco2800.game.components.npc.FriendlyNPCAnimationController;
+import com.deco2800.game.components.npc.NPCAnimationController;
 import com.deco2800.game.components.npc.FriendlyNPCTriggerComponent;
 import com.deco2800.game.components.npc.SpeechIconComponent;
 import com.deco2800.game.components.story.StoryNames;
@@ -60,7 +60,7 @@ class FriendlyNPCFactoryTest {
     assertNotNull(npc.getComponent(FriendlyNPCTriggerComponent.class));
     assertNotNull(npc.getComponent(AnimationRenderComponent.class));
     assertNotNull(npc.getComponent(SpeechIconComponent.class));
-    assertNotNull(npc.getComponent(FriendlyNPCAnimationController.class));
+    assertNotNull(npc.getComponent(NPCAnimationController.class));
     assertNotNull(npc.getComponent(AITaskComponent.class));
   }
 

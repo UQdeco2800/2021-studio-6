@@ -54,14 +54,16 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("spawn", 0.1f, Animation.PlayMode.NORMAL);
 
     Entity spawnerEnemy =
             new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new DisposingComponent())
-                    .addComponent(new GhostAnimationController())
                     .addComponent(new PhysicsMovementComponent(speed)) //remove?
                     .addComponent(animator)
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
@@ -74,6 +76,8 @@ public class NPCFactory {
 
     spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     spawnerEnemy.setScale(1f, 1f);
+
+    animator.startAnimation("default");
     return spawnerEnemy;
   }
 
@@ -91,8 +95,26 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiComponent =
             new AITaskComponent()
@@ -107,11 +129,11 @@ public class NPCFactory {
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 2f))
                     .addComponent(aiComponent)
                     .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
-                    .addComponent(new GhostAnimationController())
                     .addComponent(new DarknessDetectionComponent())
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(animator)
+                    .addComponent(new NPCAnimationController())
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                     .addComponent(new DisposingComponent());
 
@@ -141,8 +163,26 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/LargeEnemy/largeEnemy.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
 
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -152,7 +192,7 @@ public class NPCFactory {
             .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
             .addComponent(new DarknessDetectionComponent())
             .addComponent(new EnemyDarknessController())
-            .addComponent(new GhostAnimationController());
+            .addComponent(new NPCAnimationController());
 
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
@@ -178,17 +218,42 @@ public class NPCFactory {
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
                     .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
 
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas", TextureAtlas.class));
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     //.addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-                    .addComponent(new TextureRenderComponent("images/Enemy_Assets/LongRangeEnemy/eye.png"))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
                     .addComponent(new DarknessDetectionComponent())
+                    .addComponent(animator)
+                    .addComponent(new NPCAnimationController())
                     .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new DisposingComponent());
@@ -207,17 +272,42 @@ public class NPCFactory {
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
                     .addTask(new DistanceFireBulletTask(target, 4, 10, 8f));
 
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas", TextureAtlas.class));
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+
     Entity toughLongRangeEnemy = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(new TextureRenderComponent("images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"))
             .addComponent(new CombatStatsComponent(3, 1))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea))
             .addComponent(new DarknessDetectionComponent())
+            .addComponent(animator)
+            .addComponent(new NPCAnimationController())
             .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
             .addComponent(new EnemyDarknessController())
             .addComponent(new DisposingComponent());

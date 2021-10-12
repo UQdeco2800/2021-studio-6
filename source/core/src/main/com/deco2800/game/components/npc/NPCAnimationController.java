@@ -11,7 +11,7 @@ import com.deco2800.game.services.ServiceLocator;
  * This class listens to events relevant to a NPCs state and plays the animation when one
  * of the events is triggered. 
  */
-public class FriendlyNPCAnimationController extends Component {
+public class NPCAnimationController extends Component {
   // arrays are used to easily index into the stationary and running states of the animation
   private static final String[] ANIMATIONS_LEFT = {"left", "left-run"};
   private static final String[] ANIMATIONS_RIGHT = {"right", "right-run"};

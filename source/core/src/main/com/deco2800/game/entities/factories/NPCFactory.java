@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
@@ -86,6 +87,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new DisposingComponent())
+                    .addComponent(new ColliderComponent())
                     .addComponent(new PhysicsMovementComponent(speed)) //remove?
                     .addComponent(animator)
                     .addComponent(new NPCAnimationController())
@@ -98,6 +100,8 @@ public class NPCFactory {
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f)) //remove once idle task is created
                     .addTask(new ChaseTask(target, 10, 3f, 4f));
     spawnerEnemy.addComponent(aiComponent);
+
+    spawnerEnemy.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
     NPCSoundComponent npcSoundComponent = spawnerEnemy.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class));
@@ -174,6 +178,9 @@ public class NPCFactory {
                     .addComponent(new LootComponent("coins", 1,2, 0.3f))
                     .addComponent(new DisposingComponent());
 
+    ColliderComponent colliderComponent = smallEnemy.getComponent(ColliderComponent.class);
+    colliderComponent.setDensity(2f);
+
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
@@ -244,6 +251,9 @@ public class NPCFactory {
             .addComponent(new LootComponent("coins",5, 10, 1))
             .addComponent(new NPCAnimationController());
 
+    ColliderComponent colliderComponent = largeEnemy.getComponent(ColliderComponent.class);
+    colliderComponent.setDensity(50f);
+
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
@@ -306,6 +316,7 @@ public class NPCFactory {
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
@@ -318,6 +329,9 @@ public class NPCFactory {
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new LootComponent("coins",1, 3, 0.5f))
                     .addComponent(new DisposingComponent());
+
+    ColliderComponent colliderComponent = longRange.getComponent(ColliderComponent.class);
+    colliderComponent.setDensity(6f);
 
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
@@ -385,6 +399,9 @@ public class NPCFactory {
             .addComponent(new EnemyDarknessController())
             .addComponent(new LootComponent("coins",3, 7, 1))
             .addComponent(new DisposingComponent());
+
+    ColliderComponent colliderComponent = toughLongRangeEnemy.getComponent(ColliderComponent.class);
+    colliderComponent.setDensity(20f);
 
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();

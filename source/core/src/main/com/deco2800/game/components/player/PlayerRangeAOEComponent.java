@@ -109,7 +109,7 @@ public class PlayerRangeAOEComponent extends Component {
         Vector2 playerPos = entity.getPosition();
         Vector2 fireCrackerTargetPos;
 
-
+        logger.info("Fire cracker ability activated");
     }
 }
 

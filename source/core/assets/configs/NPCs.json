@@ -7,28 +7,28 @@
    "rangedAttack": 0
   },
   "smallEnemy": {
-    "health": 2,
+    "health": 1,
     "baseAttack": 1,
     "speed_x": 2,
     "speed_y": 2,
     "rangedAttack": 0
   },
   "spawnerEnemy": {
-    "health": 20,
+    "health": 30,
     "baseAttack": 0,
     "speed_x": 0,
     "speed_y": 0,
     "rangedAttack": 0
   },
   "rangedEnemy": {
-    "health": 5,
+    "health": 1,
     "baseAttack": 0,
     "speed_x": 1.2,
     "speed_y": 1.2,
     "rangedAttack": 2
   },
   "rangedToughEnemy": {
-    "health": 40,
+    "health": 20,
     "baseAttack": 0,
     "speed_x": 0.7,
     "speed_y": 0.7,

@@ -102,20 +102,12 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerUnlitRenderService(new RenderService());
-
     ServiceLocator.registerLightingService(new Lighting(ServiceLocator.getPhysicsService().getPhysics().getWorld()));
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-    //rendererUnlit = RenderFactory.createRenderer();
     rendererUnlit = RenderFactory.createUnlitRenderer(renderer.getCamera(), renderer.getStage());
-    //rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
-    //rendererUnlit.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-
-    //rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
-    //rendererUnlit.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-
     lighting = ServiceLocator.getLightingService();
 
     loadAssets();
@@ -142,7 +134,7 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new SafehouseGameArea(terrainFactory); //change back to level 1
+      gameArea = new Level1(terrainFactory); //change back to level 1
 
       gameArea.create();
 

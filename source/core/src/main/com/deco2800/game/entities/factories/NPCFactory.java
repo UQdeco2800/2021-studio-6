@@ -78,6 +78,7 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     Entity spawnerEnemy =
             new Entity()
@@ -139,6 +140,7 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiComponent =
             new AITaskComponent()
@@ -211,6 +213,7 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -273,13 +276,12 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
-                    //.addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(new CombatStatsComponent(1, 1))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea))
@@ -331,6 +333,7 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     Entity toughLongRangeEnemy = new Entity()
             .addComponent(new PhysicsComponent())

@@ -66,8 +66,8 @@ front-run
   orig: 24, 24
   offset: 0, 0
   index: 1
-  
-small_enemy_damagedpng.png
+ 
+small_enemy_damaged.png
 size: 24, 24
 format: RGBA8888
 filter: Nearest,Nearest
@@ -129,19 +129,6 @@ front-run-damaged
   offset: 0, 0
   index: 1
 
-dead_enemy.png
-size: 32, 32
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-dead
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-  
 small_enemy_hit.png
 size: 24, 24
 format: RGBA8888
@@ -203,3 +190,16 @@ front-run-hit
   orig: 24, 24
   offset: 0, 0
   index: 1	
+  
+dead_enemy.png
+size: 32, 32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dead
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0

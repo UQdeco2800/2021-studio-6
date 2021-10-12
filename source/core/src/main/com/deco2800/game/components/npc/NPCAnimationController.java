@@ -1,8 +1,13 @@
 package com.deco2800.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.tasks.DeadTask;
+import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.GameTime;
@@ -29,6 +34,7 @@ public class NPCAnimationController extends Component {
   private boolean hitActive = false;
   private boolean damagedActive = false;
   private boolean isCombatNPC = false;
+  private boolean isDead = false;
   private CombatStatsComponent combatStatsComponent;
   private String[] currentDirection;
   private Vector2 currentWalkingTarget;
@@ -48,7 +54,6 @@ public class NPCAnimationController extends Component {
 
     combatStatsComponent = this.entity.getComponent(CombatStatsComponent.class);
     if (combatStatsComponent != null) {
-      isCombatNPC = true;
       this.entity.getEvents().addListener("hit", this::npcHit);
     }
   }
@@ -62,6 +67,11 @@ public class NPCAnimationController extends Component {
     if (gameTime.isPaused()) {
       return;
     }
+    if (isDead) {
+      animator.startAnimation("dead");
+      return;
+    }
+
     if (hitActive && gameTime.getTimeSince(hitTime) >= hurtDuration) {
       hitActive = false;
     }
@@ -139,6 +149,20 @@ public class NPCAnimationController extends Component {
   private void npcHit() {
     hitActive = true;
     hitTime = gameTime.getTime();
+
+    if (!isDead && combatStatsComponent.isDead()) {
+      isDead = true;
+      AITaskComponent aiTaskComponent = entity.getComponent(AITaskComponent.class);
+      aiTaskComponent.addTask(new DeadTask());
+      ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
+      TouchAttackComponent touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
+      if (colliderComponent != null) {
+        colliderComponent.setLayer(PhysicsLayer.NONE);
+      }
+      if (touchAttackComponent != null) {
+        touchAttackComponent.disable();
+      }
+    }
 
     if (!damagedActive && combatStatsComponent.getHealth() <= combatStatsComponent.getMaxHealth()/2) {
       damagedActive = true;

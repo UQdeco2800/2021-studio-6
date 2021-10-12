@@ -81,10 +81,6 @@ public class BombCollisionComponent extends Component {
 
                 if (targetStats != null) {
                     targetStats.hit(bulletCombatStats.getBaseAttack());
-
-                    if (targetStats.isDead()) {
-                        ServiceLocator.getGameArea().despawnEntity(target);
-                    }
                 }
                 entity.getComponent(DisposingComponent.class).toBeReused();
             }

@@ -22,6 +22,7 @@ public class TouchAttackComponent extends Component {
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
+  private boolean enabled = true;
 
   /**
    * Create a component which attacks entities on collision, without knockback.
@@ -48,7 +49,15 @@ public class TouchAttackComponent extends Component {
     hitboxComponent = entity.getComponent(HitboxComponent.class);
   }
 
+  public void disable() {
+    enabled = false;
+  }
+
   private void onCollisionStart(Fixture me, Fixture other) {
+    if (!enabled) {
+      return;
+    }
+
     if (hitboxComponent.getFixture() != me) {
       // Not triggered by hitbox, ignore
       return;

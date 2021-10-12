@@ -41,7 +41,6 @@ public class LootComponent extends Component {
     super.update();
     if (enemyDead && !lootSpawned) {
       lootSpawned = true;
-      System.out.println("DEAD");
 
       Vector2 deathPos = entity.getPosition();
       GridPoint2 deathGridPoint = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(deathPos);

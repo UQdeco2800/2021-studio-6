@@ -58,8 +58,9 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDashSelected.png";
     private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopInvincibility.png";
     private static final String INVINCIBLE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopInvincibilitySelected.png";
-    private static final String GRENADE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopFirecracker.png";
-    private static final String GRENADE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopFirecrackerSelected" +
+    private static final String FIRECRACKER_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopFirecracker.png";
+    private static final String FIRECRACKER_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons" +
+            "/shopFirecrackerSelected" +
             ".png";
     private static final String MACHETE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopMachete.png";
     private static final String MACHETE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopMacheteSelected.png";
@@ -85,8 +86,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String LONG_DASH_TEXT = "Sometimes, you just need a burst of speed to get you places.";
     private static final String ARMOUR_TEXT = "It'll set you back a bit, but this is the best protection money can buy! " +
         "Or at least, that I can offer...";
-    private static final String BANDAGE_TEXT = "Normally, a bandage would just stop the bleeding but I've put a little " +
-        "something extra in these. Just don't ask what it is.";
+    private static final String FIRE_CRACKER_TEXT = "Throw fire crackers and kill enemies by burning them!";
     private static final String INVINCIBILITY_TEXT = "This here is a handy piece of tech they cooked up just as everything" +
         " started to go downhill. No one quite understands how it works anymore but it should still help you out in a tight spot.";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
@@ -128,7 +128,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int OFFSET_Y_IMG_GROUP = 20;
     private static final int PURCHASED_INDEX = 2;
     private ImageButton crowbarImageButton, daggerImageButton, axeImageButton, armorImageButton,
-            helmetImageButton, fuelImageButton, grenadeImageButton, dashImageButton, invincibleImageButton,
+            helmetImageButton, fuelImageButton, fireCrackerImageButton, dashImageButton, invincibleImageButton,
             macheteImageButton, baseballImageButton, sledgeImageButton;
     private final ArrayList<ImageButton> imageButtons = new ArrayList<>();
     private final ArrayList<Image> images = new ArrayList<>();
@@ -340,12 +340,12 @@ public class ShopMenuDisplay extends UIComponent {
                 "configs/ShopLongDashAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(dashImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
-        Drawable grenadeUp = createImagesForButtons(GRENADE_UP_IMAGE_FILE_PATH);
-        Drawable grenadeDown = createImagesForButtons(GRENADE_DOWN_IMAGE_FILE_PATH);
-        grenadeImageButton = new ImageButton(grenadeUp, grenadeDown, grenadeDown);
-        MenuUtility.addButtonSelectListener(entity, grenadeImageButton, "updateItemDescription",
-                "configs/ShopBandageInfo.json", Items.OTHERS);
-        itemsLabelImages.add(grenadeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+        Drawable fireCrackerUp = createImagesForButtons(FIRECRACKER_UP_IMAGE_FILE_PATH);
+        Drawable fireCrackerDown = createImagesForButtons(FIRECRACKER_DOWN_IMAGE_FILE_PATH);
+        fireCrackerImageButton = new ImageButton(fireCrackerUp, fireCrackerDown, fireCrackerDown);
+        MenuUtility.addButtonSelectListener(entity, fireCrackerImageButton, "updateItemDescription",
+                "configs/ShopFireCrackerAbilityInfo.json", Items.OTHERS);
+        itemsLabelImages.add(fireCrackerImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable invincibleUp = createImagesForButtons(INVINCIBLE_UP_IMAGE_FILE_PATH);
         Drawable invincibleDown = createImagesForButtons(INVINCIBLE_DOWN_IMAGE_FILE_PATH);
@@ -546,9 +546,9 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void updateShopSpeech(String item){
         String[] items = {"DAGGER", "BAT", "AXE", "MACHETE", "CROWBAR", "SLEDGE",
-        "HELMET", "TORCH", "LONG_DASH", "CHEST","BANDAGE", "INVINCIBILITY"};
+        "HELMET", "TORCH", "LONG_DASH", "CHEST","FIRE_CRACKER", "INVINCIBILITY"};
         String[] speech  = {DAGGER_TEXT,BAT_TEXT,AXE_TEXT,MACHETE_TEXT,CROWBAR_TEXT,SLEDGE_TEXT,HELMET_TEXT,TORCH_TEXT,
-            LONG_DASH_TEXT,ARMOUR_TEXT,BANDAGE_TEXT,INVINCIBILITY_TEXT};
+            LONG_DASH_TEXT,ARMOUR_TEXT,FIRE_CRACKER_TEXT,INVINCIBILITY_TEXT};
         int index = Arrays.asList(items).indexOf(item);
 
         shopkeeperSpeech = DialogueBoxFactory.createTextDialogue(speech[index]);
@@ -759,7 +759,7 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void uncheckImageButton() {
         List<ImageButton> imageButtonList = Arrays.asList(crowbarImageButton, daggerImageButton, axeImageButton,
-                armorImageButton, helmetImageButton, fuelImageButton, grenadeImageButton, dashImageButton,
+                armorImageButton, helmetImageButton, fuelImageButton, fireCrackerImageButton, dashImageButton,
                 invincibleImageButton, macheteImageButton, baseballImageButton, sledgeImageButton);
         imageButtons.addAll(imageButtonList);
 

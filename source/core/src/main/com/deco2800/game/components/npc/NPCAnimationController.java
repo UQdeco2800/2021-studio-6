@@ -1,6 +1,7 @@
 package com.deco2800.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
@@ -13,12 +14,22 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class NPCAnimationController extends Component {
   // arrays are used to easily index into the stationary and running states of the animation
-  private static final String[] ANIMATIONS_LEFT = {"left", "left-run"};
-  private static final String[] ANIMATIONS_RIGHT = {"right", "right-run"};
-  private static final String[] ANIMATIONS_FRONT = {"front", "front-run"};
-  private static final String[] ANIMATIONS_BACK = {"back", "back-run"};
+  private static final String[] ANIMATIONS_LEFT = {"left", "left-run", "left-damaged", "left-run-damaged", "left-hit", "left-run-hit"};
+  private static final String[] ANIMATIONS_RIGHT = {"right", "right-run", "right-damaged", "right-run-damaged", "right-hit", "right-run-hit"};
+  private static final String[] ANIMATIONS_FRONT = {"front", "front-run", "front-damaged", "front-run-damaged", "front-hit", "front-run-hit"};
+  private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit"};
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
+  private static final int DAMAGED_STATIONARY = 2;
+  private static final int DAMAGED_WALKING = 3;
+  private static final int HIT = 4;
+  private static final long hurtDuration = 200;
+  private long hitTime;
+  private int indexOffset = 0;
+  private boolean hitActive = false;
+  private boolean damagedActive = false;
+  private boolean isCombatNPC = false;
+  private CombatStatsComponent combatStatsComponent;
   private String[] currentDirection;
   private Vector2 currentWalkingTarget;
   AnimationRenderComponent animator;
@@ -34,6 +45,12 @@ public class NPCAnimationController extends Component {
     animator.startAnimation(ANIMATIONS_FRONT[STATIONARY]);
     currentDirection = ANIMATIONS_FRONT;
     gameTime = ServiceLocator.getTimeSource();
+
+    combatStatsComponent = this.entity.getComponent(CombatStatsComponent.class);
+    if (combatStatsComponent != null) {
+      isCombatNPC = true;
+      this.entity.getEvents().addListener("hit", this::npcHit);
+    }
   }
 
   /**
@@ -45,12 +62,20 @@ public class NPCAnimationController extends Component {
     if (gameTime.isPaused()) {
       return;
     }
+    if (hitActive && gameTime.getTimeSince(hitTime) >= hurtDuration) {
+      hitActive = false;
+    }
 
+    if (hitActive) {
+      indexOffset = 4;
+    } else if (damagedActive) {
+      indexOffset = 2;
+    } else {
+      indexOffset = 0;
+    }
     PhysicsMovementComponent npcMovement = entity.getComponent(PhysicsMovementComponent.class);
     Vector2 walkTarget = npcMovement.getTarget();
     Vector2 myPosition = entity.getPosition();
-
-
 
     // Account for rounding errors, if the entity is close enough to the walk position then stop
     if (walkTarget != null && Math.abs(walkTarget.x - myPosition.x) < 0.1 && Math.abs(walkTarget.y - myPosition.y) < 0.1) {
@@ -59,11 +84,11 @@ public class NPCAnimationController extends Component {
 
     // if the npc is not moving then set the animation as the stationary animation facing the same direction
     if (!npcMovement.getMoving()) {
-      setDirection(currentDirection[STATIONARY]);
+      setDirection(currentDirection[STATIONARY + indexOffset]);
     // if there is target coordinates then update the animation direction to face it
     } else if (walkTarget != null && walkTarget != currentWalkingTarget) {
       currentWalkingTarget = walkTarget;
-      updateAnimationDirection(walkTarget, WALKING);
+      updateAnimationDirection(walkTarget, WALKING + indexOffset);
     }
   }
 
@@ -109,5 +134,10 @@ public class NPCAnimationController extends Component {
       animator.startAnimation(direction);
       lastAnimation = direction;
     }
+  }
+
+  private void npcHit() {
+    hitActive = true;
+    hitTime = gameTime.getTime();
   }
 }

@@ -54,10 +54,30 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class));
-    animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("damaged", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("spawn", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
 
     Entity spawnerEnemy =
             new Entity()
@@ -66,6 +86,7 @@ public class NPCFactory {
                     .addComponent(new DisposingComponent())
                     .addComponent(new PhysicsMovementComponent(speed)) //remove?
                     .addComponent(animator)
+                    .addComponent(new NPCAnimationController())
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
     AITaskComponent aiComponent =
@@ -77,7 +98,6 @@ public class NPCFactory {
     spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     spawnerEnemy.setScale(1f, 1f);
 
-    animator.startAnimation("default");
     return spawnerEnemy;
   }
 
@@ -103,10 +123,14 @@ public class NPCFactory {
     animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hit", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
@@ -171,10 +195,14 @@ public class NPCFactory {
     animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hit", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
@@ -229,10 +257,14 @@ public class NPCFactory {
     animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hit", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);
@@ -283,10 +315,14 @@ public class NPCFactory {
     animator.addAnimation("right-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("left-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hit", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hit", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-damaged", 0.1f, Animation.PlayMode.LOOP);

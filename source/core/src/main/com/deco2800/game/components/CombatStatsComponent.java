@@ -92,5 +92,6 @@ public class CombatStatsComponent extends Component {
   public void hit(int damage) {
     int newHealth = getHealth() - damage;
     setHealth(newHealth);
+    entity.getEvents().trigger("hit");
   }
 }

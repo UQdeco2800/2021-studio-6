@@ -4,12 +4,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
-import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
@@ -32,6 +30,7 @@ public class SafehouseGameArea extends GameArea {
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
   private final float LEVEL_ONE_SAFEHOUSE = 1.5f;
+  private final int BANDAGE_QUANTITY = 1;
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
       "images/safehouse/safehouse-interior-layout.png",
@@ -72,6 +71,7 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnShopKeeper();
+    spawnBandages();
 
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
     if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
@@ -161,6 +161,14 @@ public class SafehouseGameArea extends GameArea {
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
+  }
+
+  private Entity spawnBandages() {
+      GridPoint2 BANDAGE_SPAWN = new GridPoint2(3, 1);
+
+      Entity bandage = ItemFactory.createBandagePickup(BANDAGE_QUANTITY);
+      spawnEntityAt(bandage, BANDAGE_SPAWN, true, true);
+      return bandage;
   }
 
   private Entity spawnShopKeeper() {

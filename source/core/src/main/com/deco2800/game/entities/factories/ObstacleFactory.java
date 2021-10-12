@@ -91,8 +91,8 @@ public class ObstacleFactory {
     tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
 
-    tree.scaleHeight(4f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.5f);
+    tree.scaleHeight(3.5f);
+    PhysicsUtils.setScaledCollider(tree, 0.8f, 0.8f);
     return tree;
   }
 

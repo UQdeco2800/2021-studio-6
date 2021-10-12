@@ -91,7 +91,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String INVINCIBILITY_TEXT = "This here is a handy piece of tech they cooked up just as everything" +
         " started to go downhill. No one quite understands how it works anymore but it should still help you out in a tight spot.";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
-    private static Image playerImage, playerFullArmorImage, playerHelmetImage, playerArmorImage;
+    private static Image playerImage, playerFullArmorImage, playerHelmetImage, playerChestImage;
     private final GdxGame game;
     private boolean isEnabled = false;
     private Table container;
@@ -175,6 +175,7 @@ public class ShopMenuDisplay extends UIComponent {
 
         if (!isEnabled) {
             loadPlayerData();
+            updateImagesVisibility(playerDefenceLevel);
             timeSource.pause();
 
             // feedback tend to remain on shop menu display in different safe house areas, this ensures it doesn't
@@ -488,13 +489,13 @@ public class ShopMenuDisplay extends UIComponent {
                 Texture.class));
         playerHelmetImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_HELMET_IMAGE_FILE_PATH,
                 Texture.class));
-        playerArmorImage =
+        playerChestImage =
                 new Image(ServiceLocator.getResourceService().getAsset(PLAYER_ARMOR_IMAGE_FILE_PATH,
                 Texture.class));
 
         // configure sizes of images
         List<Image> imageList = Arrays.asList(playerImage, playerFullArmorImage, playerHelmetImage,
-                playerArmorImage);
+                playerChestImage);
         images.addAll(imageList);
         resizeImages();
 
@@ -502,7 +503,7 @@ public class ShopMenuDisplay extends UIComponent {
         imageGroup.addActor(playerImage);
         imageGroup.addActor(playerFullArmorImage);
         imageGroup.addActor(playerHelmetImage);
-        imageGroup.addActor(playerArmorImage);
+        imageGroup.addActor(playerChestImage);
         imageGroup.setPosition(OFFSET_X_IMG_GROUP,OFFSET_Y_IMG_GROUP);
         playerInfoLabelsImages.add(imageGroup).colspan(10).height(LARGER_IMAGE_SIZE)
                 .width(LARGER_IMAGE_SIZE).top();
@@ -623,7 +624,6 @@ public class ShopMenuDisplay extends UIComponent {
         } else {
             setNoFundsButton();
         }
-//        updatePurchaseButton();
     }
 
     /**
@@ -721,6 +721,27 @@ public class ShopMenuDisplay extends UIComponent {
         int updatePlayerGold = playerGold - itemPrice;
         playerState.getComponent(InventoryComponent.class).setGold(updatePlayerGold);
         loadPlayerData();
+        updateImagesVisibility(playerDefenceLevel);
+    }
+
+    /**
+     * This updates the image on the right of the shop UI to display what armor player is currently wearing
+     * @param defenceLevel of player which is used to display correct image to be visible
+     */
+    private void updateImagesVisibility(int defenceLevel) {
+        for (Image image : images) {
+            image.setVisible(false);
+        }
+
+        if (defenceLevel == Items.getDefenceLevel("HELMET")) {
+            playerHelmetImage.setVisible(true);
+        } else if (defenceLevel == Items.getDefenceLevel("ARMOUR")) {
+            playerFullArmorImage.setVisible(true);
+        } else if (defenceLevel == Items.getDefenceLevel("CHEST")) {
+            playerChestImage.setVisible(true);
+        } else {
+            playerImage.setVisible(true);
+        }
     }
 
     /**

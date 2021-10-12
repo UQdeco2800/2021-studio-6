@@ -90,6 +90,7 @@ public class NPCFactory {
                     .addComponent(animator)
                     .addComponent(new NPCAnimationController())
                     .addComponent(new NPCSoundComponent())
+                    .addComponent(new LootComponent(2))
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
     AITaskComponent aiComponent =
@@ -170,6 +171,7 @@ public class NPCFactory {
                     .addComponent(new NPCAnimationController())
                     .addComponent(new NPCSoundComponent())
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                    .addComponent(new LootComponent(1))
                     .addComponent(new DisposingComponent());
 
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
@@ -239,6 +241,7 @@ public class NPCFactory {
             .addComponent(new DarknessDetectionComponent())
             .addComponent(new NPCSoundComponent())
             .addComponent(new EnemyDarknessController())
+            .addComponent(new LootComponent(3))
             .addComponent(new NPCAnimationController());
 
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
@@ -313,6 +316,7 @@ public class NPCFactory {
                     .addComponent(new NPCSoundComponent())
                     .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
                     .addComponent(new EnemyDarknessController())
+                    .addComponent(new LootComponent(1))
                     .addComponent(new DisposingComponent());
 
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
@@ -379,6 +383,7 @@ public class NPCFactory {
             .addComponent(new NPCSoundComponent())
             .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
             .addComponent(new EnemyDarknessController())
+            .addComponent(new LootComponent(2))
             .addComponent(new DisposingComponent());
 
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);

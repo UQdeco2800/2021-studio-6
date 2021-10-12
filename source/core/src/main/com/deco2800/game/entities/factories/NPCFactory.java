@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -88,6 +89,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsMovementComponent(speed)) //remove?
                     .addComponent(animator)
                     .addComponent(new NPCAnimationController())
+                    .addComponent(new NPCSoundComponent())
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
     AITaskComponent aiComponent =
@@ -95,6 +97,12 @@ public class NPCFactory {
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f)) //remove once idle task is created
                     .addTask(new ChaseTask(target, 10, 3f, 4f));
     spawnerEnemy.addComponent(aiComponent);
+
+    NPCSoundComponent npcSoundComponent = spawnerEnemy.getComponent(NPCSoundComponent.class);
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class));
+    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/detectPlayer.mp3", Sound.class));
+    npcSoundComponent.setSpawn(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/spawn.mp3", Sound.class));
 
     spawnerEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     spawnerEnemy.setScale(1f, 1f);
@@ -160,12 +168,19 @@ public class NPCFactory {
                     .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(animator)
                     .addComponent(new NPCAnimationController())
+                    .addComponent(new NPCSoundComponent())
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                     .addComponent(new DisposingComponent());
 
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
+
+    NPCSoundComponent npcSoundComponent = smallEnemy.getComponent(NPCSoundComponent.class);
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class));
+    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/detectPlayer.mp3", Sound.class));
+    npcSoundComponent.setMeleeAttack(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class));
 
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     smallEnemy.setScale(0.75f, 0.75f);
@@ -222,12 +237,19 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
             .addComponent(new DarknessDetectionComponent())
+            .addComponent(new NPCSoundComponent())
             .addComponent(new EnemyDarknessController())
             .addComponent(new NPCAnimationController());
 
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
+
+    NPCSoundComponent npcSoundComponent = largeEnemy.getComponent(NPCSoundComponent.class);
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/dead.mp3", Sound.class));
+    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/detectPlayer.mp3", Sound.class));
+    npcSoundComponent.setMeleeAttack(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/meleeAttack.mp3", Sound.class));
 
     //Increase the size of the enemy
     largeEnemy.setScale(2f,2f);
@@ -288,6 +310,7 @@ public class NPCFactory {
                     .addComponent(new DarknessDetectionComponent())
                     .addComponent(animator)
                     .addComponent(new NPCAnimationController())
+                    .addComponent(new NPCSoundComponent())
                     .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
                     .addComponent(new EnemyDarknessController())
                     .addComponent(new DisposingComponent());
@@ -295,6 +318,12 @@ public class NPCFactory {
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
+
+    NPCSoundComponent npcSoundComponent = longRange.getComponent(NPCSoundComponent.class);
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/dead.mp3", Sound.class));
+    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/detectPlayer.mp3", Sound.class));
+    npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/shoot.mp3", Sound.class));
 
     longRange.setScale(new Vector2(1f, 1f));
     return longRange;
@@ -347,6 +376,7 @@ public class NPCFactory {
             .addComponent(new DarknessDetectionComponent())
             .addComponent(animator)
             .addComponent(new NPCAnimationController())
+            .addComponent(new NPCSoundComponent())
             .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
             .addComponent(new EnemyDarknessController())
             .addComponent(new DisposingComponent());
@@ -354,6 +384,12 @@ public class NPCFactory {
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
+
+    NPCSoundComponent npcSoundComponent = toughLongRangeEnemy.getComponent(NPCSoundComponent.class);
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/dead.mp3", Sound.class));
+    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3", Sound.class));
+    npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.mp3", Sound.class));
 
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
 

@@ -12,7 +12,6 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -84,7 +83,7 @@ public class Level4 extends GameArea {
         player = spawnPlayer();
         //spawnSafehouse();
         spawnBullet();
-        spawnBomb();
+        spawnFireCracker();
         spawnCobweb();
         spawnBush();
         //playMusic();
@@ -184,7 +183,7 @@ public class Level4 extends GameArea {
         Array<Entity> bullets = new Array<>();
 
         for (int i = 0; i < NUM_BULLETS; i++) {
-            Entity newBullet = BulletFactory.createBullet();
+            Entity newBullet = ProjectileFactory.createBullet();
             bullets.add(newBullet);
             spawnEntity(newBullet);
         }
@@ -192,16 +191,11 @@ public class Level4 extends GameArea {
         player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
     }
 
-    private void spawnBomb() {
-        Array<Entity> bombs = new Array<>();
+    private void spawnFireCracker() {
+        Entity fireCracker = ProjectileFactory.createFireCracker();
+        spawnEntity(fireCracker);
 
-        for (int i = 0; i < NUM_BULLETS; i++) {
-            Entity newBomb = BombFactory.createBomb();
-            bombs.add(newBomb);
-            spawnEntity(newBomb);
-        }
-
-        getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
+        getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
     }
 
     /**

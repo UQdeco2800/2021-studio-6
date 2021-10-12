@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.components.BulletAnimationController;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Used to listen and wait for player's range button to be clicked (L key). Once clicked,
+ * Used to listen and wait for player's range button to be clicked (Enter key). Once clicked,
  * a bullet will be created from player's entity position and launched towards coordinate where range button
  * is clicked in game area. If no movement keys clicked, range attack will be launched to the right by default
  */
@@ -24,7 +23,6 @@ public class PlayerRangeAttackComponent extends Component {
     // activeBullets array will be updated and reloaded with ammo entities whenever bullet collides with
     // any object in game world
     private static Array<Entity> activeBullets;
-    final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 1000;
     private int magazineCapacity = 5;
@@ -152,22 +150,10 @@ public class PlayerRangeAttackComponent extends Component {
     public void fire() {
         Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
-      //  Vector2 directon =
-        // when player attacks, (0,0) vector is sent over, only directional information is important now
-      //  if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
-        //    setDirection(movingAttackDir);
-      //  }
 
         // check if there are bullets left to shoot in magazine currently and if player is currently reloading
         if (this.magazineCapacity != 0 && !getReloadingStatus()) {
-            // player has not moved before, use default direction attack (to the right)
-           // if (getDirection().isZero()) {
-          // //     bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
-           //     bulletTargetPos.y = playerPos.y;
-          //  } else {
-                // player has moved before, last button clicked to move as direction
-                bulletTargetPos = scaleVector(playerPos);
-          //  }
+            bulletTargetPos = scaleVector(playerPos);
 
             // bullet shot
             if (activeBullets != null) {

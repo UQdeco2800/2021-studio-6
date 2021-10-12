@@ -117,7 +117,7 @@ public class Level3 extends GameArea {
     // Spawn player related entities
     player = spawnPlayer();
     spawnBullet();
-    spawnBomb();
+    spawnFireCracker();
     spawnPickupItems();
     spawnPilotNpc();
 
@@ -364,7 +364,7 @@ public class Level3 extends GameArea {
     Array<Entity> bullets = new Array<>();
 
     for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBullet = BulletFactory.createBullet();
+      Entity newBullet = ProjectileFactory.createBullet();
       bullets.add(newBullet);
       spawnEntity(newBullet);
     }
@@ -373,18 +373,13 @@ public class Level3 extends GameArea {
   }
 
   /**
-   * Spawns the bomb entity when player uses them.
+   * Spawns the fire cracker entity for player to use
    */
-  private void spawnBomb() {
-    Array<Entity> bombs = new Array<>();
+  private void spawnFireCracker() {
+      Entity fireCracker = ProjectileFactory.createFireCracker();
+      spawnEntity(fireCracker);
 
-    for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBomb = BombFactory.createBomb();
-      bombs.add(newBomb);
-      spawnEntity(newBomb);
-    }
-
-    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
+      getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
   /**

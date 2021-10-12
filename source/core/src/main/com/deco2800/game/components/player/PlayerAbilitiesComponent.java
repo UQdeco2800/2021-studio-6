@@ -60,7 +60,7 @@ public class PlayerAbilitiesComponent extends Component {
         if (ability != Abilities.NONE && (ability != Abilities.LONG_DASH || !direction.isZero()) && (timeSource.getTime() >= delayEndTime)) { // ensuring that abilities which require movement have it
             delayEndTime = timeSource.getTime() + DELAY_LENGTH;
             entity.getEvents().trigger("abilityCooldown");
-            switch (this.ability) {
+            switch (ability) {
                 case LONG_DASH:
                     entity.getEvents().trigger("longDash", DASH_LENGTH+timeSource.getTime());
                     break;
@@ -68,7 +68,7 @@ public class PlayerAbilitiesComponent extends Component {
                     entity.getEvents().trigger("invincibility", INVINCIBILITY_LENGTH);
                     break;
                 case FIRE_CRACKER:
-                    entity.getEvents().trigger("fireCracker", FIRE_CRACKER_LENGTH);
+                    entity.getEvents().trigger("fireCracker");
                 // default not required as all set enums should have function in switch
             }
         }

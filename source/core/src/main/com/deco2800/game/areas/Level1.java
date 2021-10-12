@@ -105,7 +105,7 @@ public class Level1 extends GameArea {
     spawnPrologue();
 
     spawnBullet();
-    spawnBomb();
+    spawnFireCracker();
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
@@ -277,7 +277,7 @@ public class Level1 extends GameArea {
     Array<Entity> bullets = new Array<>();
 
     for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBullet = BulletFactory.createBullet();
+      Entity newBullet = ProjectileFactory.createBullet();
       bullets.add(newBullet);
       spawnEntity(newBullet);
     }
@@ -285,17 +285,16 @@ public class Level1 extends GameArea {
     getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
-  private void spawnBomb() {
-    Array<Entity> bombs = new Array<>();
+  /**
+   * Spawns the fire cracker entity for player to use
+   */
+  private void spawnFireCracker() {
+      Entity fireCracker = ProjectileFactory.createFireCracker();
+      spawnEntity(fireCracker);
 
-    for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBomb = BombFactory.createBomb();
-      bombs.add(newBomb);
-      spawnEntity(newBomb);
-    }
-
-    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
+      getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
+
   /**
    * Spawns the spawner enemy
    */

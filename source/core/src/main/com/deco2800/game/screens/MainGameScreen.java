@@ -47,24 +47,35 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
   "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
   "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png", "images/Player_Sprite/25.png",
-  "images/playeritems/rock/pickupammo.png", "images/playeritems/firecracker/firecracker8.png", "images/playeritems/firecracker/firecracker7.png",
-  "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png", "images/playeritems/coin/money bag.png",
+  "images/playeritems/rock/pickupammo.png", "images/playeritems/coin/money bag.png",
   "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
-  "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png", "images/safehouse/shopkeeper/portrait.png",
-  "images/safehouse/itemIcons/shopCrowbarSelected.png", "images/safehouse/itemIcons/shopCrowbar.png",
-  "images/safehouse/itemIcons/shopDaggerSelected.png", "images/safehouse/itemIcons/shopDagger.png",
-  "images/safehouse/itemIcons/shopAxeSelected.png", "images/safehouse/itemIcons/shopAxe.png",
-  "images/safehouse/itemIcons/shopArmourSelected.png", "images/safehouse/itemIcons/shopArmour.png",
-  "images/safehouse/itemIcons/shopHelmetSelected.png", "images/safehouse/itemIcons/shopHelmet.png",
-  "images/safehouse/itemIcons/shopTorchSelected.png", "images/safehouse/itemIcons/shopTorch.png",
-  "images/safehouse/itemIcons/shopDashSelected.png", "images/safehouse/itemIcons/shopDash.png",
-  "images/safehouse/itemIcons/shopInvincibilitySelected.png", "images/safehouse/itemIcons/shopInvincibility.png",
-  "images/safehouse/itemIcons/shopBandageSelected.png", "images/safehouse/itemIcons/shopBandage.png",
-  "images/safehouse/itemIcons/shopMacheteSelected.png", "images/safehouse/itemIcons/shopMachete.png",
-  "images/safehouse/itemIcons/shopBatSelected.png", "images/safehouse/itemIcons/shopBat.png",
-  "images/safehouse/itemIcons/shopHammerSelected.png", "images/safehouse/itemIcons/shopHammer.png",
-  "images/safehouse/shopScreenTempSelections.png", "images/Player_Sprite/34.png", "images/Player_Sprite/28.png",
-  "images/Player_Sprite/31.png", "images/Player_Sprite/34.png", };
+  "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png" };
+
+  private static final String[] safehouseTextures = {
+      "images/safehouse/shopkeeper/portrait.png",
+      "images/safehouse/itemIcons/shopCrowbarSelected.png", "images/safehouse/itemIcons/shopCrowbar.png",
+      "images/safehouse/itemIcons/shopDaggerSelected.png", "images/safehouse/itemIcons/shopDagger.png",
+      "images/safehouse/itemIcons/shopAxeSelected.png", "images/safehouse/itemIcons/shopAxe.png",
+      "images/safehouse/itemIcons/shopArmourSelected.png", "images/safehouse/itemIcons/shopArmour.png",
+      "images/safehouse/itemIcons/shopHelmetSelected.png", "images/safehouse/itemIcons/shopHelmet.png",
+      "images/safehouse/itemIcons/shopTorchSelected.png", "images/safehouse/itemIcons/shopTorch.png",
+      "images/safehouse/itemIcons/shopDashSelected.png", "images/safehouse/itemIcons/shopDash.png",
+      "images/safehouse/itemIcons/shopInvincibilitySelected.png", "images/safehouse/itemIcons/shopInvincibility.png",
+      "images/safehouse/itemIcons/shopMacheteSelected.png", "images/safehouse/itemIcons/shopMachete.png",
+      "images/safehouse/itemIcons/shopBatSelected.png", "images/safehouse/itemIcons/shopBat.png",
+      "images/safehouse/itemIcons/shopHammerSelected.png", "images/safehouse/itemIcons/shopHammer.png",
+      "images/safehouse/itemIcons/shopFirecracker.png", "images/safehouse/itemIcons/shopFirecrackerSelected.png",
+      "images/safehouse/itemIcons/shopSelectedFuel.png", "images/safehouse/itemIcons/shopFuel.png",
+      "images/safehouse/shopScreenTempSelections.png",
+      // used to update what armor player is currently wearing on the most right column of shop UI
+      "images/Player_Sprite/34.png", "images/Player_Sprite/28.png",
+      "images/Player_Sprite/31.png", "images/Player_Sprite/34.png",
+
+      // spawn bandages in safehouse area
+      "images/playeritems/bandage/bandage01.png", "images/playeritems/bandage/bandage02.png"
+  };
+
+
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -259,6 +270,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainGameTextures);
+    resourceService.loadTextures(safehouseTextures);
     resourceService.loadSounds(menuSounds);
 
     ServiceLocator.getResourceService().loadAll();
@@ -268,6 +280,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainGameTextures);
+    resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(menuSounds);
 
   }

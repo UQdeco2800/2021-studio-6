@@ -123,7 +123,6 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float BANDAGE_SIDE_LENGTH = 50f;
     private static final int NO_FUNDS_INDEX = 0;
     private static final int EQUIPPED_INDEX = 1;
-    private static final int ADD_BANDAGE = 1;
     private static final int ADD_TORCH = 100;
     private static final int OFFSET_X_IMG_GROUP = 20;
     private static final int OFFSET_Y_IMG_GROUP = 20;
@@ -712,9 +711,7 @@ public class ShopMenuDisplay extends UIComponent {
             if (Abilities.checkAbility(itemName)) {
                 Abilities ability = Abilities.getAbility(itemName);
                 playerState.getComponent(PlayerAbilitiesComponent.class).setAbility(ability);
-            } else if (itemName.equals(Items.BANDAGE.toString())) {
-                playerState.getComponent(InventoryComponent.class).addBandages(ADD_BANDAGE);
-            }else if (itemName.equals(Items.TORCH.toString())) {
+            } else if (itemName.equals(Items.TORCH.toString())) {
                 playerState.getComponent(InventoryComponent.class).addTorch(ADD_TORCH);
             }
         }

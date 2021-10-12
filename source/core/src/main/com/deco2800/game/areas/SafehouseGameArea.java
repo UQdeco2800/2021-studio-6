@@ -72,7 +72,6 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnShopKeeper();
-    spawnBullet();
 
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
     if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
@@ -182,18 +181,6 @@ public class SafehouseGameArea extends GameArea {
     GridPoint2 pos = new GridPoint2(10,4);
     Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_SECOND, NPC_PILOT_ATLAS_FILENAME, false);
     spawnEntityAt(npcTut, pos, true, true);
-  }
-
-  private void spawnBullet() {
-    Array<Entity> bullets = new Array<>();
-
-    for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBullet = BulletFactory.createBullet();
-      bullets.add(newBullet);
-      spawnEntity(newBullet);
-    }
-
-    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
   private void spawnSafehouseIntro() {

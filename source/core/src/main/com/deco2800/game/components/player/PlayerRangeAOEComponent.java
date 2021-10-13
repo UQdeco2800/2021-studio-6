@@ -60,6 +60,7 @@ public class PlayerRangeAOEComponent extends Component {
             // to start damaging any enemies within area of effect
             if (timeToExplode < timeSource.getTime()) {
                 // NPCs within AOE will receive damage
+                fireCracker.getComponent(ColliderComponent.class).setSensor(true);
                 fireCracker.getComponent(FireCrackerCollisionComponent.class).setExplosion(true);
                 fireCrackerLaunched = false;
                 logger.debug("Fire cracker should explode");
@@ -126,8 +127,7 @@ public class PlayerRangeAOEComponent extends Component {
         fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(true);
         fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos.cpy());
 
-        logger.info("Fire cracker ability activated");
-        logger.info("explodes in " + explosionTime);
+        logger.info("Fire cracker ability activated and will explodie in " + explosionTime);
     }
 }
 

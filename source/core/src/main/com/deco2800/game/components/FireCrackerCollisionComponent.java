@@ -28,7 +28,7 @@ public class FireCrackerCollisionComponent extends Component {
     short wallLayer = PhysicsLayer.WALL;
     private boolean explosionStatus = false;
     private boolean inflictDamageOnce = true;
-    private PlayerCombatStatsComponent fireCrackerCombatStats;
+    private PlayerCombatStatsComponent playerCombatStatsComponent;
     private HitboxComponent hitboxComponent;
     private ColliderComponent colliderComponent;
     private PhysicsMovementComponent physicsComponent;
@@ -41,8 +41,9 @@ public class FireCrackerCollisionComponent extends Component {
     private static final long AOE_DURATION = 10000;
     private static final long DAMAGE_INTERVAL = 2000;
 
-    // enemies within area
+    // enemies within area will be inflicted damage and will be removed upon leaving
     private final Set<Fixture> effectedEnemies = new HashSet<>();
+    private final Set<Fixture> uneffectedEnemies = new HashSet<>();
 
     public FireCrackerCollisionComponent() {
     }
@@ -51,7 +52,7 @@ public class FireCrackerCollisionComponent extends Component {
     public void create() {
         entity.getEvents().addListener("collisionStart", this::fireCrackerOrExplosionCollide);
         entity.getEvents().addListener("collisionEnd", this::outsideOfAOE);
-        fireCrackerCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
+        playerCombatStatsComponent = entity.getComponent(PlayerCombatStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
         colliderComponent = entity.getComponent(ColliderComponent.class);
         physicsComponent = entity.getComponent(PhysicsMovementComponent.class);
@@ -59,6 +60,11 @@ public class FireCrackerCollisionComponent extends Component {
 
     @Override
     public void update() {
+        // get rid of registered NPCs which should no longer be tracked
+        if (!uneffectedEnemies.isEmpty()) {
+            unregisterEnemies();
+        }
+
         // fire cracker has exploded
         if (explosionStatus) {
             // enemies will receive damage the moment fire cracker explodes
@@ -72,7 +78,7 @@ public class FireCrackerCollisionComponent extends Component {
 
                 // AOE flame damages NPCs every 2 seconds
                 if (timeSource.getTime() > intervalFlameAOE) {
-                    logger.info("Damage inflict next 2 seconds in AOE!");
+//                    logger.info("Damage inflicted after 2 seconds in AOE!");
                     inflictDamage();
                     intervalFlameAOE = timeSource.getTime() + DAMAGE_INTERVAL;
                 }
@@ -132,7 +138,7 @@ public class FireCrackerCollisionComponent extends Component {
         // around levels and etc
         if (colliderComponent.getFixture() == me) {
             if (PhysicsLayer.contains(wallLayer, other.getFilterData().categoryBits)) {
-                logger.info("Fire cracker hit something really big");
+//                logger.info("Fire cracker hit something really big");
                 entity.getComponent(PhysicsMovementComponent.class).setMoving(false);
             }
             return;
@@ -140,13 +146,13 @@ public class FireCrackerCollisionComponent extends Component {
 
         // this will only be activated once fire cracker stops moving - no damage will be dealt to enemy NPCs but
         // will track anything that is within the vicinity of AOE
-        if (hitboxComponent.getFixture() == me && !physicsComponent.getMoving()) {
-            logger.info("Fire cracker is not mobile, look for NPCs nearby");
+        if (hitboxComponent.getFixture() == me) {
+//            logger.info("Fire cracker is not mobile, look for NPCs nearby");
 
             // if enemy NPC is not registered yet, register it for damage inflicting later
             if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits) && !
                     effectedEnemies.contains(other)) {
-                logger.info("Enemy NPC added");
+//                logger.info("Enemy NPC added");
                 effectedEnemies.add(other);
             }
         }
@@ -160,19 +166,46 @@ public class FireCrackerCollisionComponent extends Component {
      * @param other object which fire cracker fixture or AOE flaming fixture has ended collide with
      */
     private void outsideOfAOE(Fixture me, Fixture other) {
-
+        // this will remove any registered enemy NPC from register that tracks NPCs that will need to be inflicted
+        // with damage every 2 seconds when npc is no longer colliding with fixture
+        if (hitboxComponent.getFixture() == me) {
+            // if enemy NPC is not registered yet, register it for damage inflicting later
+            if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits) &&
+                    effectedEnemies.contains(other)) {
+//                logger.info("Register NPC to be removed later");
+                uneffectedEnemies.add(other);
+            }
+        }
     }
 
     /**
      * This inflicts damage to enemy fixture registered and despawns them when enemy health reaches zero
      */
     private void inflictDamage() {
-        logger.info("Damage inflict to " + effectedEnemies.size() + " enemies in AOE!");
-//        for (Fixture fixture : effectedEnemies) {
-//            Entity enemy = ((BodyUserData) fixture.getBody().getUserData()).entity;
-//            CombatStatsComponent targetStats = enemy.getComponent(CombatStatsComponent.class);
-//
-//
-//        }
+//        logger.info("Damage inflict to " + effectedEnemies.size() + " enemies in AOE!");
+        for (Fixture fixture : effectedEnemies) {
+//            logger.info("Damage in ======================================");
+            Entity enemy = ((BodyUserData) fixture.getBody().getUserData()).entity;
+            CombatStatsComponent targetStats = enemy.getComponent(CombatStatsComponent.class);
+
+            targetStats.hit(playerCombatStatsComponent.getBaseRangedAttack());
+
+            if (targetStats.isDead()) {
+                uneffectedEnemies.add(fixture);
+                ServiceLocator.getGameArea().despawnEntity(enemy);
+            }
+        }
+        unregisterEnemies();
+    }
+
+    /**
+     * Method used to remove fixtures that should no longer be continuously track for damage inflicting purposes and
+     * clears unaffected enemies set as well
+     */
+    private void unregisterEnemies() {
+        for (Fixture fixture : uneffectedEnemies) {
+            effectedEnemies.remove(fixture);
+        }
+        uneffectedEnemies.clear();
     }
 }

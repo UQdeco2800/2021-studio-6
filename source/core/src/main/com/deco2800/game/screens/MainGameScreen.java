@@ -64,7 +64,7 @@ public class MainGameScreen extends ScreenAdapter {
                   "images/Player_Sprite/25.png",
                   "images/playeritems/bandage/bandage01.png",
                   "images/playeritems/bandage/bandage02.png",
-                  "images/playeritems/coin/money bag.png",
+                  "images/playeritems/coin/money-bag.png",
                   "images/playeritems/coin/coin1.png",
                   "images/Ability_Sprites/invincibility.png",
                   "images/Ability_Sprites/dash.png",

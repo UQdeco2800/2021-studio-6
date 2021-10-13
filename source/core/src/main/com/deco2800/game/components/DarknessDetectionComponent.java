@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 public class DarknessDetectionComponent extends Component{
 
     private static final Logger logger = LoggerFactory.getLogger(DarknessDetectionComponent.class);
-
+    // this is the amount of light that needs to be around the entity to be in light. Higher needs more light.
+    private static final int LIGHT_DETECTION_RADIUS = 2;
     public static final String EVENT_IN_LIGHT = "inLight";
     public static final String EVENT_NOT_LIGHT = "inShadow";
 
@@ -34,9 +35,18 @@ public class DarknessDetectionComponent extends Component{
     @Override
     public void update() {
         super.update();
-        Vector3 coords = new Vector3(entity.getCenterPosition(), 0);
+        float entityPosX = entity.getCenterPosition().x;
+        float entityPosY = entity.getCenterPosition().y;
         prevIsInLight = isInLight;
-        isInLight = lightingService.getRayHandler().pointAtLight(coords.x, coords.y);
+
+        // detects whether the entity and points offset from the entity are in light. This is a compromise due to
+        // libgdx returning a boolean rather than a float point number for whether a point is in light.
+        isInLight =
+            lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX - LIGHT_DETECTION_RADIUS, entityPosY) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX + LIGHT_DETECTION_RADIUS, entityPosY) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY - LIGHT_DETECTION_RADIUS) &&
+            lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY + LIGHT_DETECTION_RADIUS);
         if (prevIsInLight != isInLight) {
             if (isInLight) {
                 entity.getEvents().trigger(EVENT_IN_LIGHT);

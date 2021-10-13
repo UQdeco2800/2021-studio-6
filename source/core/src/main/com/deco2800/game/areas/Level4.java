@@ -55,12 +55,10 @@ public class Level4 extends GameArea {
             "images/level_2/level2_tree_1-1.png",
             "images/level_2/level2_tree_2-1.png",
             "images/gunman.png",
-            "images/Enemy_Assets/LongRangeEnemy/eye.png",
             "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
             "images/player.png",
             "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
             "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
-            "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
             "images/iso_grass_3.png",
             "images/safehouse/exterior-day1-latest.png",
             "images/hud/dashbarFull.png",
@@ -68,7 +66,8 @@ public class Level4 extends GameArea {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
-            "images/placeholder.png"
+            "images/placeholder.png",
+            "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
@@ -80,6 +79,8 @@ public class Level4 extends GameArea {
             "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
             "images/Player_Animations/player_movement.atlas",
             "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+            "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+            "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
             "images/Player_Sprite/player_movement.atlas",
             "images/playeritems/tourch/torch.atlas",
             "images/hud/dashbar.atlas",
@@ -95,6 +96,29 @@ public class Level4 extends GameArea {
             "sounds/bandage-use.ogg",
             "sounds/hurt.ogg",
             "sounds/item-pickup.ogg"
+    };
+    private static final String[] enemySounds = {
+        "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
+        "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
+        "sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3",
+        "sounds/enemies/ToughLongRangeEnemy/meleeAttack.mp3",
+        "sounds/enemies/ToughLongRangeEnemy/shoot.mp3",
+        "sounds/enemies/LongRangeEnemy/hit.mp3",
+        "sounds/enemies/LongRangeEnemy/dead.mp3",
+        "sounds/enemies/LongRangeEnemy/detectPlayer.mp3",
+        "sounds/enemies/LongRangeEnemy/shoot.mp3",
+        "sounds/enemies/LargeEnemy/hit.mp3",
+        "sounds/enemies/LargeEnemy/dead.mp3",
+        "sounds/enemies/LargeEnemy/detectPlayer.mp3",
+        "sounds/enemies/LargeEnemy/meleeAttack.mp3",
+        "sounds/enemies/SmallEnemy/hit.mp3",
+        "sounds/enemies/SmallEnemy/dead.mp3",
+        "sounds/enemies/SmallEnemy/detectPlayer.mp3",
+        "sounds/enemies/SmallEnemy/meleeAttack.mp3",
+        "sounds/enemies/SpawnerEnemy/hit.mp3",
+        "sounds/enemies/SpawnerEnemy/dead.mp3",
+        "sounds/enemies/SpawnerEnemy/detectPlayer.mp3",
+        "sounds/enemies/SpawnerEnemy/spawn.mp3"
     };
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
@@ -133,10 +157,6 @@ public class Level4 extends GameArea {
         //playMusic();
 
 
-    }
-
-    public Entity getPlayer() {
-        return player;
     }
 
     private void displayUI() {
@@ -353,6 +373,7 @@ public class Level4 extends GameArea {
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(forestSounds);
+        resourceService.loadSounds(enemySounds);
         resourceService.loadSounds(playerSounds);
 
         resourceService.loadMusic(LEVEL3_MUSIC);
@@ -369,6 +390,7 @@ public class Level4 extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(forestSounds);
+        resourceService.unloadAssets(enemySounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }
 

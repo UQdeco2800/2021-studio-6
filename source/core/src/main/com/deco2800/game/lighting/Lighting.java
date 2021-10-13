@@ -1,9 +1,9 @@
 package com.deco2800.game.lighting;
 
-import box2dLight.PointLight;
-import box2dLight.ConeLight;
-import box2dLight.RayHandler;
-import box2dLight.Light;
+import com.badlogic.box2dlights.box2dLight.PointLight;
+import com.badlogic.box2dlights.box2dLight.ConeLight;
+import com.badlogic.box2dlights.box2dLight.RayHandler;
+import com.badlogic.box2dlights.box2dLight.Light;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.Filter;

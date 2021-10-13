@@ -53,6 +53,7 @@ public class Level3 extends GameArea {
     "images/level_2/level2_background_tile.png",
     "images/gunman.png",
     "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
     "images/player.png",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
     "images/EnemyAssets/SpawnerEnemy/spawnerEgg.png",
@@ -100,8 +101,6 @@ public class Level3 extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-    "images/ghost.atlas",
-    "images/ghostKing.atlas",
     "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
     "images/Player_Animations/player_movement.atlas",
     "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",

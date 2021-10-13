@@ -26,7 +26,7 @@ public class EnemyBulletFactory {
      * @param gameArea need to spawn the entity in
      * @param source the source of the bullet
      */
-    public static void createBullet(Entity source, Entity target, GameArea gameArea) {
+    public static void createBullet(Entity source, Entity target, GameArea gameArea, String textureFileName) {
 
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;
@@ -36,7 +36,7 @@ public class EnemyBulletFactory {
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
         Entity bullet = makeBullet(rotateTexture(newTarget, source, x1, y1), newTarget, target, gameArea,
-                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
+                source, x1, y1, textureFileName);
 
         gameArea.spawnEntity(bullet);
     }
@@ -48,7 +48,7 @@ public class EnemyBulletFactory {
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in
      */
-    public static void createToughBullet(Entity source, Entity target, GameArea gameArea) {
+    public static void createToughBullet(Entity source, Entity target, GameArea gameArea, String textureFileName) {
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;
         float x2 = target.getPosition().x;
@@ -63,13 +63,13 @@ public class EnemyBulletFactory {
         Vector2 downRotate = rotateVector(straightTarget, -(Math.PI)/4);
 
         Entity bulletStraight = makeBullet(rotateTexture(straightTarget, source, x1, y1), straightTarget, target, gameArea,
-                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
+                source, x1, y1, textureFileName);
 
         Entity bulletUp = makeBullet(rotateTexture(upRotate, source, x1, y1), upRotate, target, gameArea,
-                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
+                source, x1, y1, textureFileName);
 
         Entity bulletDown = makeBullet(rotateTexture(downRotate, source, x1, y1), downRotate, target, gameArea,
-                source, x1, y1, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png");
+                source, x1, y1, textureFileName);
 
         gameArea.spawnEntity(bulletStraight);
         gameArea.spawnEntity(bulletUp);

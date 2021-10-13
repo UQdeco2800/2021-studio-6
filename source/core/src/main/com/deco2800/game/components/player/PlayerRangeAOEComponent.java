@@ -127,7 +127,7 @@ public class PlayerRangeAOEComponent extends Component {
         fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(true);
         fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos.cpy());
 
-        logger.info("Fire cracker ability activated and will explodie in " + explosionTime);
+        logger.info("Fire cracker ability activated and will explode in " + explosionTime + "ms");
     }
 }
 

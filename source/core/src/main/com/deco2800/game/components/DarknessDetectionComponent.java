@@ -11,7 +11,7 @@ public class DarknessDetectionComponent extends Component{
 
     private static final Logger logger = LoggerFactory.getLogger(DarknessDetectionComponent.class);
     // this is the amount of light that needs to be around the entity to be in light. Higher needs more light.
-    private static final int LIGHT_DETECTION_RADIUS = 2;
+    private static final float LIGHT_DETECTION_RADIUS = 1f;
     public static final String EVENT_IN_LIGHT = "inLight";
     public static final String EVENT_NOT_LIGHT = "inShadow";
 

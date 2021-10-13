@@ -618,7 +618,9 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void isItemPurchasable() {
         if (playerGold >= itemPrice) {
-            setEquippedButton();
+            if (!itemName.equals(Items.TORCH.toString())) {
+                setEquippedButton();
+            }
             processPurchasedItem();
         } else {
             setNoFundsButton();

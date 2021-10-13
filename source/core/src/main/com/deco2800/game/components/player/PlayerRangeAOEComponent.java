@@ -1,9 +1,12 @@
 package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
+import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -17,8 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerRangeAOEComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAOEComponent.class);
-    private Vector2 longAttackDir = new Vector2(0,0);
-    private static final int EXPLOSION_COORDINATE = 2;
+    private Vector2 longAttackDir = new Vector2(1,0);
+    private static final int EXPLOSION_COORDINATE = 4;
     private boolean fireCrackerLaunched = false;
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
     private final GameTime timeSource = ServiceLocator.getTimeSource();
@@ -46,7 +49,8 @@ public class PlayerRangeAOEComponent extends Component {
         // fire cracker is launched and time to explode in game has been reached
         if ((timeToExplode < timeSource.getTime()) && fireCrackerLaunched) {
             fireCrackerLaunched = false;
-
+            fireCracker.getComponent(ColliderComponent.class).setSensor(false);
+            fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(false);
             logger.info("EXPLOSION");
         }
     }
@@ -95,7 +99,6 @@ public class PlayerRangeAOEComponent extends Component {
 
     /**
      * Fires bullet projectile in a straight line based on the moving direction of player
-     *
      */
     public void fire(long explosionTime) {
         Vector2 playerPos = entity.getPosition();
@@ -103,7 +106,11 @@ public class PlayerRangeAOEComponent extends Component {
         fireCrackerLaunched = true;
         timeToExplode = timeSource.getTime() + explosionTime;
 
-
+        // launch fire cracker and allow it to collide with any object in game (for now)
+        fireCracker.setPosition(playerPos);
+        fireCracker.getComponent(ColliderComponent.class).setSensor(true);
+        fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(true);
+        fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos);
 
         logger.info("Fire cracker ability activated");
         logger.info("explodes in " + explosionTime);

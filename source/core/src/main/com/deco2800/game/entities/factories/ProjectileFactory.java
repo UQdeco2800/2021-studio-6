@@ -3,15 +3,12 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.BulletAnimationController;
-import com.deco2800.game.components.BulletCollisionComponent;
-import com.deco2800.game.components.DisposingComponent;
-import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
-import com.deco2800.game.physics.components.BombColliderComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
@@ -27,6 +24,9 @@ public class ProjectileFactory {
     private static final PlayerConfig stats =
             FileLoader.readClass(PlayerConfig.class, "configs/PlayerState.json");
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
+    private static final Vector2 SCALE_LARGER_BOX = new Vector2(2, 2);
+    private static final Vector2 SCALE_SMALLER_BOX = new Vector2(0.5f, 0.5f);
+    private static final Vector2 SCALE_REL_COORD = new Vector2(0.5f,0.5f);
 
     /**
      * Bullets are created here before player fires it in game
@@ -61,23 +61,25 @@ public class ProjectileFactory {
     }
 
     /**
-     * Bombs are created here before player fires it in game
-     * @return Bomb that comes from a pool of Bombs objects
+     * Fire cracker is created here before player fires it in game as well as its
+     * @return fire cracker that is launched based on player's selected ability
      */
     public static Entity createFireCracker() {
-        Entity bomb = new Entity()
+        Entity fireCracker = new Entity()
                 .addComponent(new TextureRenderComponent("images/playeritems/firecracker/firecracker.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
-                .addComponent(new BombColliderComponent().setSensor(true))
-                .addComponent(new BulletCollisionComponent())
+                .addComponent(new ColliderComponent().setSensor(true))
+                .addComponent(new HitboxComponent())
+//                .addComponent(new FireCrackerCollisionComponent())
                 .addComponent(new DisposingComponent())
                 .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                         stats.baseRangedAttack, stats.defenceLevel));
 
-        // hide bomb out of game screen
-        bomb.setPosition(HIDDEN_COORD);
-        bomb.setScale(1.5f, 1.5f);
-        return bomb;
+        // hide fire cracker out of game screen
+        fireCracker.setPosition(HIDDEN_COORD);
+        fireCracker.getComponent(HitboxComponent.class).setAsBox(SCALE_LARGER_BOX, SCALE_REL_COORD);
+        fireCracker.getComponent(ColliderComponent.class).setAsBox(SCALE_SMALLER_BOX, SCALE_REL_COORD);
+        return fireCracker;
     }
 }

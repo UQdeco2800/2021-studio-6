@@ -3,6 +3,7 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -44,6 +45,7 @@ public class FireCrackerCollisionComponent extends Component {
     // enemies within area will be inflicted damage and will be removed upon leaving
     private final Set<Fixture> effectedEnemies = new HashSet<>();
     private final Set<Fixture> uneffectedEnemies = new HashSet<>();
+    private int light = 8;
 
     private final int EXPLOSION_MULTIPLIER = 2;
     private final int DAMAGE_MULTIPLIER = 1;
@@ -70,6 +72,7 @@ public class FireCrackerCollisionComponent extends Component {
 
         // fire cracker has exploded
         if (explosionStatus) {
+            this.getEntity().getComponent(PointLightComponent.class).changeDistance(light);
             // enemies will receive damage the moment fire cracker explodes
             if (inflictDamageOnce) {
                 inflictDamage(EXPLOSION_MULTIPLIER);
@@ -79,8 +82,15 @@ public class FireCrackerCollisionComponent extends Component {
             // AOE is still around after explosion
             if (timeSource.getTime() < endTimeFlameAOE) {
 
+
+                if (timeSource.getTime() ==(intervalFlameAOE/2)) {
+                    System.out.println("timer");
+                    this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
+                }
+
                 // AOE flame damages NPCs every 2 seconds
                 if (timeSource.getTime() > intervalFlameAOE) {
+                    this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
                     logger.debug("Has been 2 seconds in game, damage will be dealt");
                     inflictDamage(DAMAGE_MULTIPLIER);
                     intervalFlameAOE = timeSource.getTime() + DAMAGE_INTERVAL;

@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -7,6 +8,7 @@ import com.deco2800.game.components.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -82,6 +84,7 @@ public class ProjectileFactory {
                 .addComponent(new FirecrackerAnimationController())
                 .addComponent(new FireCrackerCollisionComponent())
                 .addComponent(new DisposingComponent())
+                .addComponent(new PointLightComponent(Color.SCARLET, 0, 0, 0))
                 .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                         stats.baseRangedAttack, stats.defenceLevel));
 
@@ -89,6 +92,7 @@ public class ProjectileFactory {
         fireCracker.setPosition(HIDDEN_COORD);
         fireCracker.getComponent(HitboxComponent.class).setAsBox(SCALE_LARGER_BOX, SCALE_REL_COORD);
         fireCracker.getComponent(ColliderComponent.class).setAsBox(SCALE_SMALLER_BOX, SCALE_REL_COORD);
+
         return fireCracker;
     }
 }

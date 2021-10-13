@@ -8,6 +8,7 @@ import com.deco2800.game.components.FireCrackerCollisionComponent;
 import com.deco2800.game.components.FirecrackerAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
@@ -68,6 +69,7 @@ public class PlayerRangeAOEComponent extends Component {
                 fireCracker.getComponent(ColliderComponent.class).setSensor(true);
                 fireCracker.getComponent(FireCrackerCollisionComponent.class).setExplosion(true);
                 fireCracker.getEvents().trigger("explosionStart");
+                fireCracker.getComponent(PointLightComponent.class).changeDistance(8);
                 fireCrackerLaunched = false;
                 logger.debug("Fire cracker should explode");
             }

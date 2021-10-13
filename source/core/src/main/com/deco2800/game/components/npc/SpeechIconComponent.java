@@ -102,4 +102,10 @@ public class SpeechIconComponent extends RenderComponent {
                 false);
         }
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        speechIconTexture.dispose();
+    }
 }

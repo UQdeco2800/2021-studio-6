@@ -73,4 +73,10 @@ public class GlowingEyesComponent extends RenderComponent {
                 false);
         }
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        glowingEyesTexture.dispose();
+    }
 }

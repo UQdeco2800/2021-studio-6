@@ -13,8 +13,7 @@ public abstract class RenderComponent extends Component implements Renderable, D
   private static final int DEFAULT_LAYER = 1;
   private boolean lit;
 
-  @Override
-  public void create() {
+  public RenderComponent() {
     setLit();
   }
 

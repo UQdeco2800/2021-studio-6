@@ -39,7 +39,7 @@ public class Renderer implements Disposable {
   public Renderer(CameraComponent camera, boolean lighting, Stage existingStage) {
     SpriteBatch spriteBatch = new SpriteBatch();
     DebugRenderer debugRenderer = new DebugRenderer();
-    debugRenderer.setActive(false);
+    debugRenderer.setActive(true);
     this.lighting = lighting;
     if (lighting) {
       init(

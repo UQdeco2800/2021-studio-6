@@ -20,6 +20,7 @@ public class BulletCollisionComponent extends Component {
     short targetLayer = PhysicsLayer.NPC;
     short playerLayer = PhysicsLayer.PLAYER;
     short obstacleLayer = PhysicsLayer.OBSTACLE;
+    short wallLayer = PhysicsLayer.WALL;
     private boolean launchStatus = false;
     private PlayerCombatStatsComponent bulletCombatStats;
 
@@ -72,10 +73,11 @@ public class BulletCollisionComponent extends Component {
             if (PhysicsLayer.contains(playerLayer, other.getFilterData().categoryBits)) {
                 logger.debug("Bullet may have collided with player's layer");
                 // bullet collide with obstacles
-            } else if (PhysicsLayer.contains(obstacleLayer, other.getFilterData().categoryBits)) {
+            } else if ((PhysicsLayer.contains(obstacleLayer, other.getFilterData().categoryBits)) ||
+                    (PhysicsLayer.contains(wallLayer, other.getFilterData().categoryBits))) {
                 this.entity.getComponent(PhysicsMovementComponent.class).setMoving(false);
                 entity.getEvents().trigger("breakRock");
-                logger.debug("Bullet collided with obstacle's layer");
+                logger.debug("Bullet collided with obstacle's or level wall's layer");
 
                 //entity.getComponent(DisposingComponent.class).toBeReused();
 

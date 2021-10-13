@@ -23,6 +23,7 @@ public class PlayerRangeAOEComponent extends Component {
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private static final long AOE_DURATION = 5000;
+    private static long timeToExplode = 0;
     private long AOE_END = 0;
     private Entity fireCracker;
 
@@ -42,7 +43,12 @@ public class PlayerRangeAOEComponent extends Component {
 
     @Override
     public void update() {
+        // fire cracker is launched and time to explode in game has been reached
+        if ((timeToExplode < timeSource.getTime()) && fireCrackerLaunched) {
+            fireCrackerLaunched = false;
 
+            logger.info("EXPLOSION");
+        }
     }
 
     /**
@@ -57,12 +63,12 @@ public class PlayerRangeAOEComponent extends Component {
 
     /**
      * Returns Vector2 coordinates that will be used for target coordinates for bombs. These vectors
-     * are then scaled to reach the end of the game screen relative to player's position.
+     * are then scaled to the specified coordinate relative to player's position.
      *
      * @param playerCoord is the current player's position. It is used to launch bullet from player's position
      * @return coordinates used for bullet's target coordinates
      */
-    public Vector2 scaleAndSetVector(Vector2 playerCoord) {
+    public Vector2 getFireCrackerTargetCoord(Vector2 playerCoord) {
         float xPosPlayer = playerCoord.x;
         float yPosPlayer = playerCoord.y;
         Vector2 scaledVector = new Vector2();
@@ -72,19 +78,15 @@ public class PlayerRangeAOEComponent extends Component {
             switch (direct) {
                 case MOVE_UP:
                     scaledVector = new Vector2(xPosPlayer, yPosPlayer + EXPLOSION_COORDINATE);
-                    longAttackDir = Vector2Utils.UP;
                     break;
                 case MOVE_DOWN:
                     scaledVector = new Vector2(xPosPlayer, yPosPlayer - EXPLOSION_COORDINATE);
-                    longAttackDir = Vector2Utils.DOWN;
                     break;
                 case MOVE_LEFT:
                     scaledVector = new Vector2(xPosPlayer  - EXPLOSION_COORDINATE,yPosPlayer);
-                    longAttackDir = Vector2Utils.LEFT;
                     break;
                 case MOVE_RIGHT:
                     scaledVector = new Vector2(xPosPlayer + EXPLOSION_COORDINATE,yPosPlayer);
-                    longAttackDir = Vector2Utils.RIGHT;
                     break;
             }
         }
@@ -92,24 +94,19 @@ public class PlayerRangeAOEComponent extends Component {
     }
 
     /**
-     * Get direction player is currently facing
-     *
-     * @return direction playerr is currently facing
-     */
-    public Vector2 getDirection() {
-        return longAttackDir.cpy();
-    }
-
-
-    /**
      * Fires bullet projectile in a straight line based on the moving direction of player
      *
      */
-    public void fire() {
+    public void fire(long explosionTime) {
         Vector2 playerPos = entity.getPosition();
-        Vector2 fireCrackerTargetPos;
+        Vector2 fireCrackerTargetPos = getFireCrackerTargetCoord(playerPos);
+        fireCrackerLaunched = true;
+        timeToExplode = timeSource.getTime() + explosionTime;
+
+
 
         logger.info("Fire cracker ability activated");
+        logger.info("explodes in " + explosionTime);
     }
 }
 

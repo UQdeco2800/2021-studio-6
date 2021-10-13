@@ -17,7 +17,7 @@ public class PlayerAbilitiesComponent extends Component {
     private Abilities ability;
     // Ability Specific Variables
     private static final long DASH_LENGTH = 200; // in milliseconds
-    private static final long FIRE_CRACKER_LENGTH = 200; // in milliseconds
+    private static final long EXPLOSION_DELAY_LENGTH = 1000; // in milliseconds
     private static final long INVINCIBILITY_LENGTH = 3000;
     /**
      * Basic constructor for setting the players chosen ability
@@ -68,7 +68,7 @@ public class PlayerAbilitiesComponent extends Component {
                     entity.getEvents().trigger("invincibility", INVINCIBILITY_LENGTH);
                     break;
                 case FIRE_CRACKER:
-                    entity.getEvents().trigger("fireCracker");
+                    entity.getEvents().trigger("fireCracker", EXPLOSION_DELAY_LENGTH);
                 // default not required as all set enums should have function in switch
             }
         }

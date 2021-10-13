@@ -69,12 +69,13 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
    */
   @Override
   public void update() {
+
     movementTask.setTarget(target.getPosition());
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
     }
-    if (timeSource.getTime() >= endTime) {
+    if (!timeSource.isPaused() && timeSource.getTime() >= endTime) {
       this.gameArea.spawnFromSpawner(this.spawnerEnemy.getPosition(), MAX_SPAWN_DISTANCE);
       endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
       NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);

@@ -16,9 +16,6 @@ public class BulletAnimationController extends Component{
     }
   }
 
-  /**
-   * Sets up relevant event trigger for getting hurt and starts default animation.
-   */
   @Override
   public void create() {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
@@ -48,5 +45,4 @@ public class BulletAnimationController extends Component{
       animator.startAnimation("down");
     }
   }
-
 }

@@ -114,7 +114,7 @@ public class PlayerFactory {
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
           .addComponent(new DarknessDetectionComponent())
-          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 6f, 0, 0));
+          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 5f, 0, 0));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

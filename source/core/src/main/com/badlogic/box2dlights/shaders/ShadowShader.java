@@ -26,7 +26,9 @@ public final class ShadowShader {
 				+ "void main()\n"//
 				+ "{\n" //
 				+ "vec4 c = texture2D(u_texture, v_texCoords);\n"//
-				+ "gl_FragColor.rgb = c.rgb * c.a + ambient.rgb;\n"//
+				+ "vec3 am = c.rgb + ambient.rgb;\n"
+				+ "float grey = (am.r + am.g + am.b) / 3.0;\n"
+				+ "gl_FragColor.rgb = am;\n"//
 				+ "gl_FragColor.a = ambient.a - c.a;\n"//
 				+ "}\n";
 		ShaderProgram.pedantic = false;

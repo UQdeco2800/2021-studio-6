@@ -28,8 +28,10 @@ public class Lighting implements Disposable {
      * @param world the physics world which is passed to the rayhandler
      */
     public Lighting(World world) {
+        RayHandler.setGammaCorrection(false);
+        RayHandler.useDiffuseLight(true);
         rayHandler = new RayHandler(world);
-        setAmbientLight(0f, 0f, 0f, 0.1f);
+        setAmbientLight(0.1f, .1f, .1f, 1f);
     }
 
     /**

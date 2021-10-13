@@ -179,7 +179,7 @@ public abstract class PositionalLight extends Light {
 
 	@Override
 	public boolean contains(float x, float y) {
-		// fast fail
+		// fast failaaaaaaa
 		final float x_d = start.x - x;
 		final float y_d = start.y - y;
 		final float dst2 = x_d * x_d + y_d * y_d;

@@ -18,7 +18,7 @@ public final class LightShader {
 				+ "varying vec4 v_color;\n" //				
 				+ "void main()\n" //
 				+ "{\n" //
-				+ "   v_color = s * quad_colors;\n" //				
+				+ "   v_color = s * quad_colors;\n" //
 				+ "   gl_Position =  u_projTrans * vertex_positions;\n" //
 				+ "}\n";
 		final String fragmentShader = "#ifdef GL_ES\n" //
@@ -30,7 +30,8 @@ public final class LightShader {
 				+ "varying vec4 v_color;\n" //
 				+ "void main()\n"//
 				+ "{\n" //
-				+ "  gl_FragColor = "+gamma+"(v_color);\n" //
+				+ "  gl_FragColor.rgb = "+gamma+"(v_color.rgb) + 0.2;\n" //
+				+ "  gl_FragColor.a = "+gamma+" (v_color.a) + 0.7 ;\n" //
 				+ "}";
 
 		ShaderProgram.pedantic = false;

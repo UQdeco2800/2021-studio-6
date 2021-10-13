@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.DistanceFireBulletTask;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -87,6 +88,11 @@ public class EnemyDarknessController extends Component {
     entity.getEvents().addListener("inShadow", this::entityInDarkness);
     entity.getEvents().addListener("inLight", this::entityInLight);
 
+    if (ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null) {
+      if (!ServiceLocator.getGameArea().getPlayer().getComponent(DarknessDetectionComponent.class).isInLight()) {
+        playerInDarkness();
+      }
+    }
   }
 
   @Override
@@ -136,6 +142,8 @@ public class EnemyDarknessController extends Component {
    * Modifies behaviour of the entity when the player is in darkness
    */
   void playerInDarkness() {
+    System.out.println("Chasing" + chasingEntity);
+    System.out.println("Playerdark" + playerInDarkness);
     if (chasingEntity && !playerInDarkness) {
       playerInDarkness = true;
       chaseTask.setMaxChaseDistance(playerInDarkChaseMaxDistance);

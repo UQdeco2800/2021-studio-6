@@ -87,19 +87,14 @@ public class NPCFactory {
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new DisposingComponent())
                     .addComponent(new ColliderComponent())
-                    .addComponent(new PhysicsMovementComponent(speed)) //remove?
+                    .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(animator)
                     .addComponent(new NPCAnimationController())
                     .addComponent(new NPCSoundComponent())
+                    .addComponent(new AITaskComponent())
                     .addComponent(new LootComponent("ammo",3, 5, 1))
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f)) //remove once idle task is created
-                    .addTask(new ChaseTask(target, 10, 3f, 4f));
-    spawnerEnemy.addComponent(aiComponent);
-
+    
     spawnerEnemy.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
     NPCSoundComponent npcSoundComponent = spawnerEnemy.getComponent(NPCSoundComponent.class);

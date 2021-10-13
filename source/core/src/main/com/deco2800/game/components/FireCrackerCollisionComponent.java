@@ -37,13 +37,16 @@ public class FireCrackerCollisionComponent extends Component {
     private static long intervalFlameAOE = 0;
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
 
-    // duration lasts for 10s but only damages enemies every 2s
-    private static final long AOE_DURATION = 10000;
+    // duration lasts for 6s but only damages enemies every 2s
+    private static final long AOE_DURATION = 6000;
     private static final long DAMAGE_INTERVAL = 2000;
 
     // enemies within area will be inflicted damage and will be removed upon leaving
     private final Set<Fixture> effectedEnemies = new HashSet<>();
     private final Set<Fixture> uneffectedEnemies = new HashSet<>();
+
+    private final int EXPLOSION_MULTIPLIER = 2;
+    private final int DAMAGE_MULTIPLIER = 1;
 
     public FireCrackerCollisionComponent() {
     }
@@ -69,7 +72,7 @@ public class FireCrackerCollisionComponent extends Component {
         if (explosionStatus) {
             // enemies will receive damage the moment fire cracker explodes
             if (inflictDamageOnce) {
-                inflictDamage();
+                inflictDamage(EXPLOSION_MULTIPLIER);
                 inflictDamageOnce = false;
             }
 
@@ -79,7 +82,7 @@ public class FireCrackerCollisionComponent extends Component {
                 // AOE flame damages NPCs every 2 seconds
                 if (timeSource.getTime() > intervalFlameAOE) {
                     logger.debug("Has been 2 seconds in game, damage will be dealt");
-                    inflictDamage();
+                    inflictDamage(DAMAGE_MULTIPLIER);
                     intervalFlameAOE = timeSource.getTime() + DAMAGE_INTERVAL;
                 }
 
@@ -181,14 +184,16 @@ public class FireCrackerCollisionComponent extends Component {
 
     /**
      * This inflicts damage to enemy fixture registered and despawns them when enemy health reaches zero
+     *
+     * @param multiplier used to increase damage output when fire cracker explodes initially
      */
-    private void inflictDamage() {
+    private void inflictDamage(int multiplier) {
         for (Fixture fixture : effectedEnemies) {
             logger.debug("Damage will now be dealt to enemies in flaming AOE fixture");
             Entity enemy = ((BodyUserData) fixture.getBody().getUserData()).entity;
             CombatStatsComponent targetStats = enemy.getComponent(CombatStatsComponent.class);
 
-            targetStats.hit(playerCombatStatsComponent.getBaseRangedAttack());
+            targetStats.hit(playerCombatStatsComponent.getBaseRangedAttack() * multiplier);
 
             if (targetStats.isDead()) {
                 uneffectedEnemies.add(fixture);

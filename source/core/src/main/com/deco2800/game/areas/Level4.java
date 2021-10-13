@@ -101,7 +101,6 @@ public class Level4 extends GameArea {
         "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
         "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
         "sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3",
-        "sounds/enemies/ToughLongRangeEnemy/meleeAttack.mp3",
         "sounds/enemies/ToughLongRangeEnemy/shoot.mp3",
         "sounds/enemies/LongRangeEnemy/hit.mp3",
         "sounds/enemies/LongRangeEnemy/dead.mp3",

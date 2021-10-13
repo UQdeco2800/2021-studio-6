@@ -4,6 +4,7 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
@@ -11,12 +12,12 @@ import com.deco2800.game.services.ServiceLocator;
 /**
  * Component to toggle player lighting
  */
-public class PlayerLightingComponent extends PointLightComponent {
+public class PlayerLightingComponent extends FlickerLightComponent {
 
     private IndependentAnimator torchAnimator;
 
-    public PlayerLightingComponent (Color color, float distance, float offsetx, float offsety) {
-        super(color, distance,offsetx,offsety);
+    public PlayerLightingComponent (Color color, Color color2, float distance, float offsetx, float offsety) {
+        super(color, color2, distance,offsetx,offsety);
     }
 
     @Override
@@ -42,14 +43,15 @@ public class PlayerLightingComponent extends PointLightComponent {
      * Turns the lighting off
      */
     private void torchOff() {
-        this.getPointLight().setActive(false);
+        this.disableLights();
     }
 
     /**
      * Turns the lighting on
      */
     private void torchOn() {
-        this.getPointLight().setActive(true);
+
+        this.turnOnLights();
     }
 
 

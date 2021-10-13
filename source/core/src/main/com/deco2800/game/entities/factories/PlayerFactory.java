@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -144,7 +145,7 @@ public class PlayerFactory {
           .addComponent(new PlayerTorchAnimationController())
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
-          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 10f, 0, 0));
+          .addComponent(new PlayerLightingComponent(Color.ORANGE, Color.FIREBRICK, 8f, 0, 0));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

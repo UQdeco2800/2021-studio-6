@@ -11,7 +11,7 @@ import com.deco2800.game.services.ServiceLocator;
  * Creates a glowing red eye image for the entity
  */
 public class GlowingEyesComponent extends RenderComponent {
-    private Texture glowingEyesTexture;
+    private final Texture glowingEyesTexture;
     private Boolean visible;
     private CombatStatsComponent combatStatsComponent;
 

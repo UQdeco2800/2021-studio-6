@@ -13,10 +13,10 @@ import com.deco2800.game.services.ServiceLocator;
  * This component controls the loot that is dropped after an entity is dead
  */
 public class LootComponent extends Component {
-  private int minItems;
-  private int maxItems;
-  private float chanceOfLoot;
-  private String item;
+  private final int minItems;
+  private final int maxItems;
+  private final float chanceOfLoot;
+  private final String item;
   private boolean enemyDead = false;
   private boolean lootSpawned = false;
   private CombatStatsComponent combatStatsComponent;

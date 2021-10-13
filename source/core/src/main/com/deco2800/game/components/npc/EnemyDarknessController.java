@@ -58,7 +58,7 @@ public class EnemyDarknessController extends Component {
 
     List<PriorityTask> aiTasks = this.entity.getComponent(AITaskComponent.class).getTasks();
     for (PriorityTask task : aiTasks) {
-      // If entity contains a firebullet task then get the default fire duration and set the fire duration for in dark
+      // If entity contains a fire bullet task then get the default fire duration and set the fire duration for in dark
       if (task instanceof DistanceFireBulletTask) {
         firingEntity = true;
         fireBulletTask = (DistanceFireBulletTask) task;
@@ -107,7 +107,7 @@ public class EnemyDarknessController extends Component {
     if (!entityInDarkness) {
       entityInDarkness = true;
       movementComponent.setSpeed(inDarkSpeed);
-      if (firingEntity) {;
+      if (firingEntity) {
         fireBulletTask.setFireDuration(inDarkFiringDuration);
       }
       if (glowingEyeEntity) {

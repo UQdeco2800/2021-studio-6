@@ -55,7 +55,7 @@ public class Level3 extends GameArea {
     "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
     "images/player.png",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/EnemyAssets/SpawnerEnemy/spawnerEnemy.png",
+    "images/EnemyAssets/SpawnerEnemy/spawnerEgg.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",

@@ -203,7 +203,7 @@ public class ObstacleFactory {
         new Entity()
             .addComponent(new TextureRenderComponent(buildingPath))
             .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     building.getComponent(TextureRenderComponent.class).scaleEntity();
     building.scaleHeight(10f);

@@ -3,6 +3,7 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.FireCrackerCollisionComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -25,10 +26,11 @@ public class PlayerRangeAOEComponent extends Component {
     private boolean fireCrackerLaunched = false;
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static final long AOE_DURATION = 5000;
     private static long timeToExplode = 0;
     private long AOE_END = 0;
     private Entity fireCracker;
+    private Vector2 fireCrackerTargetPos = new Vector2(0,0);
+    private Vector2 playerPos = new Vector2(0,0);
 
     /**
      * Create listener on player specifically when game is loaded and ready fire cracker for firing
@@ -46,11 +48,31 @@ public class PlayerRangeAOEComponent extends Component {
 
     @Override
     public void update() {
-        // fire cracker is launched and time to explode in game has been reached
+        // fire cracker is launched and time to explode in game has been reached - this allows collision component
+        // to start damaging any enemies within area of effect
+        if (fireCrackerLaunched) {
+            if (fireCrackerTargetPos.epsilonEquals(playerPos)) {
+                fireCracker.getComponent(ColliderComponent.class).setSensor(false);
+                fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(false);
+                logger.info("FIRE CRACKER STOP MOVING");
+            }
+
+            if (timeToExplode < timeSource.getTime()) {
+                logger.info("EXPLOSION");
+
+                // NPCs within AOE will receive damage
+                fireCracker.getComponent(FireCrackerCollisionComponent.class).setExplosion(true);
+            }
+        }
+
         if ((timeToExplode < timeSource.getTime()) && fireCrackerLaunched) {
             fireCrackerLaunched = false;
             fireCracker.getComponent(ColliderComponent.class).setSensor(false);
             fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(false);
+
+            // NPCs within AOE will receive damage
+            fireCracker.getComponent(FireCrackerCollisionComponent.class).setExplosion(true);
+
             logger.info("EXPLOSION");
         }
     }
@@ -101,8 +123,8 @@ public class PlayerRangeAOEComponent extends Component {
      * Fires bullet projectile in a straight line based on the moving direction of player
      */
     public void fire(long explosionTime) {
-        Vector2 playerPos = entity.getPosition();
-        Vector2 fireCrackerTargetPos = getFireCrackerTargetCoord(playerPos);
+        playerPos = entity.getPosition();
+        fireCrackerTargetPos = getFireCrackerTargetCoord(playerPos);
         fireCrackerLaunched = true;
         timeToExplode = timeSource.getTime() + explosionTime;
 
@@ -110,7 +132,7 @@ public class PlayerRangeAOEComponent extends Component {
         fireCracker.setPosition(playerPos);
         fireCracker.getComponent(ColliderComponent.class).setSensor(true);
         fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(true);
-        fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos);
+        fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos.cpy());
 
         logger.info("Fire cracker ability activated");
         logger.info("explodes in " + explosionTime);

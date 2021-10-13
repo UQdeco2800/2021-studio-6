@@ -71,7 +71,7 @@ public class ProjectileFactory {
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent())
-//                .addComponent(new FireCrackerCollisionComponent())
+                .addComponent(new FireCrackerCollisionComponent())
                 .addComponent(new DisposingComponent())
                 .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                         stats.baseRangedAttack, stats.defenceLevel));

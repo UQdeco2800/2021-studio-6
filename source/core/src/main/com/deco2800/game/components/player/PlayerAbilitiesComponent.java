@@ -17,7 +17,7 @@ public class PlayerAbilitiesComponent extends Component {
     private Abilities ability;
     // Ability Specific Variables
     private static final long DASH_LENGTH = 200; // in milliseconds
-    private static final long EXPLOSION_DELAY_LENGTH = 1000; // in milliseconds
+    private static final long EXPLOSION_DELAY_LENGTH = 2000; // in milliseconds
     private static final long INVINCIBILITY_LENGTH = 3000;
     /**
      * Basic constructor for setting the players chosen ability

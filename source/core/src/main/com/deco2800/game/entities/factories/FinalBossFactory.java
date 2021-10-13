@@ -136,7 +136,7 @@ public class FinalBossFactory {
                 .addComponent(new PointLightComponent(Colors.get("RED"), 3f, 0, 0))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(new GhostAnimationController())
-                .addComponent(new TextureRenderComponent("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png"))
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png"))
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new CombatStatsComponent(5, 0));;
 

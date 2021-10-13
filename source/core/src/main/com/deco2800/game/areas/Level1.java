@@ -77,9 +77,10 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/gunman.png",
     "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
     "images/player.png",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/level_1/dead_tree1-day1-latest.png",
@@ -97,8 +98,6 @@ public class Level1 extends GameArea {
   private static final String[] cityTextureAtlases = {
       "images/terrain_iso_grass.atlas",
       "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-      "images/ghost.atlas",
-      "images/ghostKing.atlas",
       "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
       "images/Player_Animations/player_movement.atlas",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
@@ -126,28 +125,7 @@ public class Level1 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
-  private static final String[] enemySounds = {
-      "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
-      "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
-      "sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3",
-      "sounds/enemies/ToughLongRangeEnemy/shoot.mp3",
-      "sounds/enemies/LongRangeEnemy/hit.mp3",
-      "sounds/enemies/LongRangeEnemy/dead.mp3",
-      "sounds/enemies/LongRangeEnemy/detectPlayer.mp3",
-      "sounds/enemies/LongRangeEnemy/shoot.mp3",
-      "sounds/enemies/LargeEnemy/hit.mp3",
-      "sounds/enemies/LargeEnemy/dead.mp3",
-      "sounds/enemies/LargeEnemy/detectPlayer.mp3",
-      "sounds/enemies/LargeEnemy/meleeAttack.mp3",
-      "sounds/enemies/SmallEnemy/hit.mp3",
-      "sounds/enemies/SmallEnemy/dead.mp3",
-      "sounds/enemies/SmallEnemy/detectPlayer.mp3",
-      "sounds/enemies/SmallEnemy/meleeAttack.mp3",
-      "sounds/enemies/SpawnerEnemy/hit.mp3",
-      "sounds/enemies/SpawnerEnemy/dead.mp3",
-      "sounds/enemies/SpawnerEnemy/detectPlayer.mp3",
-      "sounds/enemies/SpawnerEnemy/spawn.mp3"
-  };
+
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 

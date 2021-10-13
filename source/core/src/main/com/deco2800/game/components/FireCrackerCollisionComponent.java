@@ -59,10 +59,10 @@ public class FireCrackerCollisionComponent extends Component {
 
     @Override
     public void update() {
+        // fire cracker has exploded
         if (explosionStatus) {
             // enemies will receive damage the moment fire cracker explodes
             if (inflictDamageOnce) {
-                logger.info("Damage inflict first time in AOE!");
                 inflictDamage();
                 inflictDamageOnce = false;
             }
@@ -84,8 +84,8 @@ public class FireCrackerCollisionComponent extends Component {
     }
 
     /**
-     * Sets current launch status of bomb. True will set explosion to occur which continuously attacks NPCs
-     * within the area of fixture
+     * Sets current launch status of fire cracker. True will set explosion to occur which continuously attacks NPCs
+     * within the area of fixture AOE
      *
      * @param explode is set to start explosion fixture to continuously attack NPCs within the vicinity
      */
@@ -96,7 +96,7 @@ public class FireCrackerCollisionComponent extends Component {
     }
 
     /**
-     * This resets fire cracker to its original state but turning off explosion (which prevents system from checking
+     * This resets fire cracker to its original state by turning off explosion (which prevents system from checking
      * and damaging entities within vicinity of AOE) and hides fire cracker entity once again
      */
     private void offExplosion() {
@@ -106,6 +106,7 @@ public class FireCrackerCollisionComponent extends Component {
         entity.setPosition(HIDDEN_COORD);
         entity.getComponent(ColliderComponent.class).setSensor(true);
         entity.getComponent(PhysicsMovementComponent.class).setMoving(false);
+        effectedEnemies.clear();
     }
 
     /**
@@ -117,9 +118,13 @@ public class FireCrackerCollisionComponent extends Component {
     }
 
     /**
-     * Dictates what happens to fire cracker upon colliding with invisible wall in game only. An additional
-     * @param me the bullet that has been launched and moving in game world
-     * @param other object which bullet collide with
+     * Dictates what happens to fire cracker upon colliding with invisible wall in game and when nay entity collides
+     * with the AOE flaming fixture. Fire cracker should not be able to easily bypass tall objects (like buildings or
+     * lamps perhaps - these are designated with wall physic layer which prevents fire cracker from flying over).
+     * When fire cracker stops moving, system starts to track and find target layer (enemies) and upon explosion, if
+     * enemy NPCs are still within flaming AOE fixture, they will recceive damage every 2s for 10s.
+     * @param me - fire cracker fixture that has been launched and moving in game world along with AOE flaming fixture
+     * @param other object which fire cracker fixture or AOE flaming fixture has collide with
      */
     private void fireCrackerOrExplosionCollide(Fixture me, Fixture other) {
 
@@ -136,49 +141,38 @@ public class FireCrackerCollisionComponent extends Component {
         // this will only be activated once fire cracker stops moving - no damage will be dealt to enemy NPCs but
         // will track anything that is within the vicinity of AOE
         if (hitboxComponent.getFixture() == me && !physicsComponent.getMoving()) {
-            // Not triggered by hitbox, ignore
-            logger.info("FIRE CRACKER STOP MOVING, TRACKING ANY NPCS NEARBY");
-            if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-                logger.info("ADD NPC NEARBY");
+            logger.info("Fire cracker is not mobile, look for NPCs nearby");
+
+            // if enemy NPC is not registered yet, register it for damage inflicting later
+            if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits) && !
+                    effectedEnemies.contains(other)) {
+                logger.info("Enemy NPC added");
+                effectedEnemies.add(other);
             }
         }
-
-
-        // Get data of current bullet for checking
-//        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-//        CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-//
-//        // collision can occur twice for 1 bullet and ensure that bullet has not been launched yet
-//        if (this.explosionStatus) {
-//            if (PhysicsLayer.contains(playerLayer, other.getFilterData().categoryBits)) {
-//                logger.debug("Bullet may have collided with player's layer");
-//                // bullet collide with obstacles
-//            } else if (PhysicsLayer.contains(wallLayer, other.getFilterData().categoryBits)) {
-//                logger.debug("Fire cracker collided with wall layer");
-//
-//                entity.getComponent(DisposingComponent.class).toBeReused();
-//
-//            } else if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-//                // bullet collides with NPC
-//                logger.debug("Bullet collided with NPC's layer");
-//
-//                if (targetStats != null) {
-//                    targetStats.hit(fireCrackerCombatStats.getBaseAttack());
-//
-//                    if (targetStats.isDead()) {
-//                        ServiceLocator.getGameArea().despawnEntity(target);
-//                    }
-//                }
-//                entity.getComponent(DisposingComponent.class).toBeReused();
-//            }
-//        }
     }
 
+    /**
+     * This is important when an NPC (which has been registered when it entered AOE flaming fixture upon explosion or
+     * before) as it will unregister NPC from list as it should not be receiving damage when it leaves flaming AOE
+     * fixture
+     * @param me - fire cracker fixture that has been launched and moving in game world along with AOE flaming fixture
+     * @param other object which fire cracker fixture or AOE flaming fixture has ended collide with
+     */
     private void outsideOfAOE(Fixture me, Fixture other) {
 
     }
 
+    /**
+     * This inflicts damage to enemy fixture registered and despawns them when enemy health reaches zero
+     */
     private void inflictDamage() {
-        logger.info("Damage inflict in AOE!");
+        logger.info("Damage inflict to " + effectedEnemies.size() + " enemies in AOE!");
+//        for (Fixture fixture : effectedEnemies) {
+//            Entity enemy = ((BodyUserData) fixture.getBody().getUserData()).entity;
+//            CombatStatsComponent targetStats = enemy.getComponent(CombatStatsComponent.class);
+//
+//
+//        }
     }
 }

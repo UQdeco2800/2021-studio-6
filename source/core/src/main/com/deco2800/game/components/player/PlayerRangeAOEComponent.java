@@ -1,12 +1,16 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.FireCrackerCollisionComponent;
+import com.deco2800.game.components.FirecrackerAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -28,6 +32,7 @@ public class PlayerRangeAOEComponent extends Component {
     private Entity fireCracker;
     private Vector2 fireCrackerTargetPos = new Vector2(0,0);
     private Vector2 playerPos = new Vector2(0,0);
+    private Directions direct;
 
     /**
      * Create listener on player specifically when game is loaded and ready fire cracker for firing
@@ -62,6 +67,7 @@ public class PlayerRangeAOEComponent extends Component {
                 // NPCs within AOE will receive damage
                 fireCracker.getComponent(ColliderComponent.class).setSensor(true);
                 fireCracker.getComponent(FireCrackerCollisionComponent.class).setExplosion(true);
+                fireCracker.getEvents().trigger("explosionStart");
                 fireCrackerLaunched = false;
                 logger.debug("Fire cracker should explode");
             }
@@ -91,7 +97,7 @@ public class PlayerRangeAOEComponent extends Component {
         Vector2 scaledVector = new Vector2();
         KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
         if (key != null) {
-            Directions direct = key.getDirection();
+            direct = key.getDirection();
             switch (direct) {
                 case MOVE_UP:
                     scaledVector = new Vector2(xPosPlayer, yPosPlayer + EXPLOSION_COORDINATE);
@@ -126,8 +132,20 @@ public class PlayerRangeAOEComponent extends Component {
         fireCracker.getComponent(ColliderComponent.class).setSensor(true);
         fireCracker.getComponent(PhysicsMovementComponent.class).setMoving(true);
         fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos.cpy());
+        fireCracker.getEvents().trigger("firecrackerStart", direct);
 
         logger.info("Fire cracker ability activated and will explode in " + explosionTime + "ms");
+        IndependentAnimator explosionAnimator =
+            new IndependentAnimator(
+                ServiceLocator.getResourceService()
+                    .getAsset("images/playeritems/firecracker/firecracker.atlas", TextureAtlas.class), true);
+        explosionAnimator.addAnimation("explosion", 0.1f, Animation.PlayMode.NORMAL);
+        explosionAnimator.addAnimation("explosionLoop", 0.1f, Animation.PlayMode.LOOP);
+        explosionAnimator.setCamera(false);
+        explosionAnimator.setScale(2, 2);
+
+        fireCracker.getComponent(FirecrackerAnimationController.class).setAnimator(explosionAnimator);
+        logger.info("Fire cracker ability activated and will explodie in " + explosionTime);
     }
 }
 

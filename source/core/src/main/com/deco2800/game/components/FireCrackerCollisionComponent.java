@@ -84,6 +84,7 @@ public class FireCrackerCollisionComponent extends Component {
                 }
 
             } else {
+                this.getEntity().getEvents().trigger("endFirecracker");
                 offExplosion();
             }
         }
@@ -138,6 +139,7 @@ public class FireCrackerCollisionComponent extends Component {
         // around levels and etc
         if (colliderComponent.getFixture() == me) {
             if (PhysicsLayer.contains(wallLayer, other.getFilterData().categoryBits)) {
+                this.getEntity().getEvents().trigger("pauseFirecracker");
                 logger.debug("Fire cracker collided with a very large game object");
                 entity.getComponent(PhysicsMovementComponent.class).setMoving(false);
             }
@@ -205,5 +207,11 @@ public class FireCrackerCollisionComponent extends Component {
             effectedEnemies.remove(fixture);
         }
         uneffectedEnemies.clear();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.getEntity().getEvents().trigger("dispose");
     }
 }

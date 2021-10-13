@@ -43,7 +43,6 @@ public class ProjectileFactory {
         animator.addAnimation("up", 0.1f, Animation.PlayMode.NORMAL);
 
         Entity bullet = new Entity()
-                //.addComponent(new TextureRenderComponent("images/playeritems/rock/thrown.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new ColliderComponent().setSensor(true))
@@ -65,12 +64,22 @@ public class ProjectileFactory {
      * @return fire cracker that is launched based on player's selected ability
      */
     public static Entity createFireCracker() {
+
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/playeritems/firecracker/firecracker.atlas", TextureAtlas.class));
+        animator.addAnimation("firecracker", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("firecrackerRev", 0.1f, Animation.PlayMode.REVERSED);
+        animator.addAnimation("explosion", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("explosionLoop", 0.1f, Animation.PlayMode.LOOP);
+
+
         Entity fireCracker = new Entity()
-                .addComponent(new TextureRenderComponent("images/playeritems/firecracker/firecracker.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent())
+                .addComponent(animator)
+                .addComponent(new FirecrackerAnimationController())
                 .addComponent(new FireCrackerCollisionComponent())
                 .addComponent(new DisposingComponent())
                 .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,

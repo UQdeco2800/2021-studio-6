@@ -3,6 +3,7 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.components.npc.NPCSoundComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -22,6 +23,7 @@ public class TouchAttackComponent extends Component {
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
+  private boolean enabled = true;
 
   /**
    * Create a component which attacks entities on collision, without knockback.
@@ -48,7 +50,15 @@ public class TouchAttackComponent extends Component {
     hitboxComponent = entity.getComponent(HitboxComponent.class);
   }
 
+  public void disable() {
+    enabled = false;
+  }
+
   private void onCollisionStart(Fixture me, Fixture other) {
+    if (!enabled) {
+      return;
+    }
+
     if (hitboxComponent.getFixture() != me) {
       // Not triggered by hitbox, ignore
       return;
@@ -63,6 +73,10 @@ public class TouchAttackComponent extends Component {
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     PlayerCombatStatsComponent targetStats = target.getComponent(PlayerCombatStatsComponent.class);
     if (targetStats != null) {
+      NPCSoundComponent npcSoundComponent = entity.getComponent(NPCSoundComponent.class);
+      if (npcSoundComponent != null) {
+        npcSoundComponent.playMeleeAttack();
+      }
       targetStats.hit(combatStats);
     }
 

@@ -69,7 +69,7 @@ public abstract class GameArea implements Disposable {
    * @param centerX true to center entity X on the tile, false to align the bottom left corner
    * @param centerY true to center entity Y on the tile, false to align the bottom left corner
    */
-  protected void spawnEntityAt(
+  public void spawnEntityAt(
           Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
@@ -98,5 +98,13 @@ public abstract class GameArea implements Disposable {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity smallEnemy = NPCFactory.createSmallEnemy(player);
     spawnEntityAt(smallEnemy, randomPos, true, true);
+  }
+
+  public Entity getPlayer() {
+    return player;
+  }
+
+  public TerrainComponent getTerrain() {
+    return terrain;
   }
 }

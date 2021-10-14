@@ -2,12 +2,13 @@ package com.deco2800.game.entities.factories;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
-import com.deco2800.game.components.npc.FriendlyNPCAnimationController;
+import com.deco2800.game.components.npc.NPCAnimationController;
 import com.deco2800.game.components.npc.FriendlyNPCTriggerComponent;
 import com.deco2800.game.components.npc.SpeechIconComponent;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.services.ResourceService;
 import org.junit.jupiter.api.Test;
 import com.deco2800.game.physics.PhysicsService;
@@ -42,6 +43,10 @@ class FriendlyNPCFactoryTest {
     // Register the physics service
     ServiceLocator.registerPhysicsService(new PhysicsService());
 
+    //Setup lighting service
+    ServiceLocator.registerUnlitRenderService(new RenderService());
+    ServiceLocator.registerRenderService(new RenderService());
+
     // Create a wandering npc
     npc = FriendlyNPCFactory.createNewFriendlyNPC(
         StoryNames.PROLOGUE, "images/npc_movement/atlas_for_testing.atlas", true);
@@ -60,7 +65,7 @@ class FriendlyNPCFactoryTest {
     assertNotNull(npc.getComponent(FriendlyNPCTriggerComponent.class));
     assertNotNull(npc.getComponent(AnimationRenderComponent.class));
     assertNotNull(npc.getComponent(SpeechIconComponent.class));
-    assertNotNull(npc.getComponent(FriendlyNPCAnimationController.class));
+    assertNotNull(npc.getComponent(NPCAnimationController.class));
     assertNotNull(npc.getComponent(AITaskComponent.class));
   }
 

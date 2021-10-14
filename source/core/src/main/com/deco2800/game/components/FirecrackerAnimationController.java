@@ -97,6 +97,10 @@ public class FirecrackerAnimationController extends Component {
   public void dispose() {
     //super.dispose();
     animator.dispose();
-    explosionAnimator.dispose();
+
+    // upon entering second safehouse after level 2 - it crashes cause explosionAnimator is null
+    if (explosionAnimator != null) {
+        explosionAnimator.dispose();
+    }
   }
 }

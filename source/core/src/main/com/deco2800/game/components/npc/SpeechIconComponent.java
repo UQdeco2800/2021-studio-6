@@ -14,10 +14,10 @@ public class SpeechIconComponent extends RenderComponent {
     private static final float ANIMATION_PER_TICK = 0.003f;
     private static final float ANIMATION_MIN_RATIO = 0.2f;
     private float offsetY;
-    private float minOffsetY;
-    private float maxOffsetY;
+    private final float minOffsetY;
+    private final float maxOffsetY;
     private boolean animationDescending;
-    private Texture speechIconTexture;
+    private final Texture speechIconTexture;
     private Boolean visible;
 
     /**
@@ -31,6 +31,7 @@ public class SpeechIconComponent extends RenderComponent {
         this.maxOffsetY = offsetY;
         this.minOffsetY = offsetY - ANIMATION_RANGE;
         this.animationDescending = true;
+        setUnlit();
     }
 
     /**
@@ -100,5 +101,11 @@ public class SpeechIconComponent extends RenderComponent {
                 false,
                 false);
         }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        speechIconTexture.dispose();
     }
 }

@@ -208,7 +208,6 @@ public class FireCrackerCollisionComponent extends Component {
 
             if (targetStats.isDead()) {
                 uneffectedEnemies.add(fixture);
-                ServiceLocator.getGameArea().despawnEntity(enemy);
             }
         }
         unregisterEnemies();

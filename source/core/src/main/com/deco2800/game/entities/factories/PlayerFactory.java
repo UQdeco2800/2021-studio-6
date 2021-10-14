@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.*;
@@ -145,7 +146,11 @@ public class PlayerFactory {
           .addComponent(new PlayerTorchAnimationController())
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
-          .addComponent(new PlayerLightingComponent(Color.ORANGE, Color.FIREBRICK, 8f, 0, 0));
+            // from our branch
+          .addComponent(new PlayerLightingComponent(Color.ORANGE, Color.FIREBRICK, 8f, 0, 0))
+            // came from main even the lighting component below
+          .addComponent(new DarknessDetectionComponent());
+//          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 5f, 0, 0));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

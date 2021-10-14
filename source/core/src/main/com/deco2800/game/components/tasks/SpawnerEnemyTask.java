@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.areas.*;
+import com.deco2800.game.components.npc.NPCSoundComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.areas.GameArea;
@@ -68,14 +69,19 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
    */
   @Override
   public void update() {
+
     movementTask.setTarget(target.getPosition());
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
     }
-    if (timeSource.getTime() >= endTime) {
+    if (!timeSource.isPaused() && timeSource.getTime() >= endTime) {
       this.gameArea.spawnFromSpawner(this.spawnerEnemy.getPosition(), MAX_SPAWN_DISTANCE);
       endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
+      NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);
+      if (npcSoundComponent != null) {
+        npcSoundComponent.playSpawn();
+      }
     }
   }
 

@@ -58,6 +58,21 @@ public class Level1 extends GameArea {
     "images/level_1/road_barrier.png",
     "images/level_1/building2-day1-latest.png",
     "images/level_1/building3-day1-latest.png",
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+    "images/iso_grass_3.png",
+    "images/gunman.png",
+    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
+    "images/player.png",
+    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
+    "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
+    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/level_1/dead_tree1-day1-latest.png",
     "images/level_1/street_lamp.png",
@@ -68,7 +83,34 @@ public class Level1 extends GameArea {
     "images/grass_1.png"
   };
 
+//  private static final String[] cityTextureAtlases = {
+//    "images/placeholder.png",
+//    "images/dialogue/raw/npc_indicator.png",
+//    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
+//  };
+
   private static final String[] cityTextureAtlases = {
+      "images/placeholder.png",
+      "images/dialogue/raw/npc_indicator.png",
+      "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png",
+      "images/terrain_iso_grass.atlas",
+      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
+      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
+      "images/Player_Animations/player_movement.atlas",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+      "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+      "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
+      "images/player.atlas",
+      "images/Player_Sprite/player_movement.atlas",
+      "images/hud/dashbar.atlas",
+      "images/hud/health.atlas",
+      "images/weapon/crowbar.atlas",
+      "images/weapon/axe.atlas",
+      "images/weapon/dagger.atlas",
+      "images/weapon/sledge.atlas",
+      "images/weapon/machete.atlas",
+      "images/playeritems/tourch/torch.atlas",
+      "images/weapon/baseball.atlas",
       NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
@@ -80,6 +122,7 @@ public class Level1 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
@@ -126,10 +169,6 @@ public class Level1 extends GameArea {
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
-  }
-
-  public Entity getPlayer() {
-    return player;
   }
 
   private void displayUI() {
@@ -283,7 +322,7 @@ public class Level1 extends GameArea {
       spawnEntity(newBullet);
     }
 
-    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
   /**
@@ -293,7 +332,7 @@ public class Level1 extends GameArea {
       Entity fireCracker = ProjectileFactory.createFireCracker();
       spawnEntity(fireCracker);
 
-      getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+      player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
   /**
@@ -306,19 +345,10 @@ public class Level1 extends GameArea {
 
     for (GridPoint2 enemyPos : enemyPositions) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, enemyPos, true, true);
     }
-    /*
-    GridPoint2 minPos = new GridPoint2(0, 0).add(1, 1);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-    for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
-      spawnEntityAt(spawnerEnemy, randomPos, true, true);
-    }
-    */
+
   }
   /**
    * Spawns a small enemy from the appropriate spawner's position
@@ -460,6 +490,7 @@ public class Level1 extends GameArea {
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -476,6 +507,7 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

@@ -3,7 +3,6 @@ package com.deco2800.game.components.npc;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
@@ -18,13 +17,10 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,7 +32,8 @@ class FriendlyNPCTriggerComponentTest {
 
     @Mock InputService inputService;
     @Mock SpeechIconComponent speechIconComponent;
-    @Mock FriendlyNPCAnimationController animationController;
+    @Mock
+    NPCAnimationController animationController;
     @Mock EntityService entityService;
     GameArea gameArea;
 

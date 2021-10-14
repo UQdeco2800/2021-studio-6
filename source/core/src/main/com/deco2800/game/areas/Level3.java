@@ -49,10 +49,18 @@ public class Level3 extends GameArea {
     "images/level_2/level2_tree_1-1.png",
     "images/level_2/level2_tree_2-1.png",
     "images/level_2/level2_background_tile.png",
+    "images/gunman.png",
+    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
+    "images/player.png",
+    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
+    "images/EnemyAssets/SpawnerEnemy/spawnerEgg.png",
+    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
+    "images/placeholder.png",
     "images/level_3/level3_dead_group_pine_tree.png",
     "images/level_3/level3_brown_group_pine_tree.png",
     "images/level_2/level2_tree_2_group_ver1.png",
@@ -79,13 +87,31 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
-    "images/dialogue/raw/npc_indicator.png"
+    "images/dialogue/raw/npc_indicator.png",
+    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
   };
 
   /**
    * Texture atlases file path for Level 3.
    */
   private static final String[] forestTextureAtlases = {
+    "images/terrain_iso_grass.atlas",
+    "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
+    "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
+    "images/Player_Animations/player_movement.atlas",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+    "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+    "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
+    "images/Player_Sprite/player_movement.atlas",
+    "images/hud/dashbar.atlas",
+    "images/hud/health.atlas",
+      "images/weapon/crowbar.atlas",
+    "images/weapon/axe.atlas",
+    "images/weapon/sledge.atlas",
+    "images/playeritems/tourch/torch.atlas",
+    "images/weapon/machete.atlas",
+    "images/weapon/baseball.atlas",
+    "images/weapon/dagger.atlas",
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -94,6 +120,7 @@ public class Level3 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
 
@@ -140,14 +167,6 @@ public class Level3 extends GameArea {
     // Listener for level 3 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,
         this::playMusic);
-  }
-
-  /**
-   * Gets the player entity for Level 3.
-   * @return Player entity.
-   */
-  public Entity getPlayer() {
-    return player;
   }
 
   /**
@@ -386,7 +405,7 @@ public class Level3 extends GameArea {
       Entity fireCracker = ProjectileFactory.createFireCracker();
       spawnEntity(fireCracker);
 
-      getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+      player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
   /**
@@ -402,7 +421,8 @@ public class Level3 extends GameArea {
 
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+              spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
     }
   }
@@ -866,6 +886,7 @@ public class Level3 extends GameArea {
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(LEVEL3_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
@@ -885,6 +906,7 @@ public class Level3 extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(LEVEL3_MUSIC);
   }
 

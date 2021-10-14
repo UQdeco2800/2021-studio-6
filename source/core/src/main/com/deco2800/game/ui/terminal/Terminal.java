@@ -32,6 +32,7 @@ public class Terminal extends Component {
     addCommand("pd", new PrintStarterImageDialogue());
     addCommand("sTest", new StartTestCutSceneCommand());
     addCommand("sEpilogue", new StartEpilogueCutSceneCommand());
+    addCommand("god", new SetPlayerInvincibleCommand());
   }
 
   /** @return message entered by user */

@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -166,6 +166,28 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 </td>
 </tr>
 <tr class="altColor" id="i2">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pointAtLight(float,float)">pointAtLight</a></span>&#8203;(float&nbsp;x,
+float&nbsp;y)</code></th>
+<td class="colLast">
+<div class="block">pointAtLight
+  checks whether a given point is in light
+  this will be in the "physics engine" space and will not work with a grid position
+  should work with Entity.getPosition()</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pointAtShadow(float,float)">pointAtShadow</a></span>&#8203;(float&nbsp;x,
+float&nbsp;y)</code></th>
+<td class="colLast">
+<div class="block">pointatLight
+  checks whether a given point is in shadow
+  this will be in the "physics engine" space and will not work with a grid position
+  should work with Entity.getPosition()</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#render()">render</a></span>()</code></th>
 <td class="colLast">
@@ -173,7 +195,7 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
  calls rayhandler.render()</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmbientLight(float,float,float,float)">setAmbientLight</a></span>&#8203;(float&nbsp;r,
 float&nbsp;g,
@@ -184,7 +206,7 @@ float&nbsp;a)</code></th>
  sets the ambient light for a scene</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCamera(com.badlogic.gdx.graphics.Camera)">setCamera</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Camera.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Camera</a>&nbsp;camera)</code></th>
 <td class="colLast">
@@ -192,7 +214,7 @@ float&nbsp;a)</code></th>
  sets the camera for the scene</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -289,6 +311,42 @@ float&nbsp;a)</span></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>camera</code> - rendering camera need for the rayhandler to draw light</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="pointAtLight(float,float)">pointAtLight</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">pointAtLight</span>&#8203;(<span class="arguments">float&nbsp;x,
+float&nbsp;y)</span></div>
+<div class="block">pointAtLight
+  checks whether a given point is in light
+  this will be in the "physics engine" space and will not work with a grid position
+  should work with Entity.getPosition()</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>x</code> - x position of the point</dd>
+<dd><code>y</code> - y position of the point</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>whether the point is in the light or not</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="pointAtShadow(float,float)">pointAtShadow</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">pointAtShadow</span>&#8203;(<span class="arguments">float&nbsp;x,
+float&nbsp;y)</span></div>
+<div class="block">pointatLight
+  checks whether a given point is in shadow
+  this will be in the "physics engine" space and will not work with a grid position
+  should work with Entity.getPosition()</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>x</code> - x position of the point</dd>
+<dd><code>y</code> - y position of the point</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>whether the point is in the shadow or not</dd>
 </dl>
 </section>
 </li>

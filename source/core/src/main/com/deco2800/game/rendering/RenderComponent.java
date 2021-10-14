@@ -11,11 +11,22 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public abstract class RenderComponent extends Component implements Renderable, Disposable {
   private static final int DEFAULT_LAYER = 1;
-  private boolean lit;
+  private boolean lit = true;
+  private boolean registered = false;
 
   @Override
   public void create() {
-    setLit();
+    super.create();
+    if (registered) {
+      return;
+    }
+
+    if (lit) {
+      ServiceLocator.getRenderService().register(this);
+    } else {
+      ServiceLocator.getRenderUnlitService().register(this);
+    }
+    registered = true;
   }
 
   @Override
@@ -47,7 +58,11 @@ public abstract class RenderComponent extends Component implements Renderable, D
    * This happens automatically on creation as being lit is the standard.
    */
   public void setLit() {
+    if (registered && !lit) {
+      ServiceLocator.getRenderUnlitService().unregister(this);
+    }
     lit = true;
+    registered = true;
     ServiceLocator.getRenderService().register(this);
   }
 
@@ -56,9 +71,12 @@ public abstract class RenderComponent extends Component implements Renderable, D
    * from the lit render service as that happens automatically on creation.
    */
   public void setUnlit() {
+    if (registered && lit) {
+      ServiceLocator.getRenderService().unregister(this);
+    }
     lit = false;
+    registered = true;
     ServiceLocator.getRenderUnlitService().register(this);
-    ServiceLocator.getRenderService().unregister(this);
   }
 
   @Override

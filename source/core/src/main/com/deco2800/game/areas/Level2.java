@@ -61,21 +61,20 @@ public class Level2 extends GameArea {
     "images/level_2/level2_tree_1-1.png",
     "images/level_2/level2_tree_2-1.png",
     "images/gunman.png",
-    "images/Enemy_Assets/LongRangeEnemy/eye.png",
     "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
     "images/player.png",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/hud/dashbarFull.png",
     "images/hud/healthFull.png",
     "images/level_2/level2_torch_frame1_ver1.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/placeholder.png",
     "images/dialogue/raw/npc_indicator.png",
-
+    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
   };
 
   /**
@@ -84,11 +83,11 @@ public class Level2 extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-    "images/ghost.atlas",
-    "images/ghostKing.atlas",
     "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
     "images/Player_Animations/player_movement.atlas",
     "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+    "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+    "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
     "images/Player_Sprite/player_movement.atlas",
     "images/hud/dashbar.atlas",
     "images/hud/health.atlas",
@@ -112,6 +111,7 @@ public class Level2 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String backgroundMusic = "sounds/fireflies-theme-woods.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -155,14 +155,6 @@ public class Level2 extends GameArea {
     // Listener for level 2 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,
         this::playMusic);
-  }
-
-  /**
-   * Gets the player entity for Level 2.
-   * @return Player entity.
-   */
-  public Entity getPlayer() {
-    return player;
   }
 
   /**
@@ -663,6 +655,7 @@ public class Level2 extends GameArea {
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -681,6 +674,7 @@ public class Level2 extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

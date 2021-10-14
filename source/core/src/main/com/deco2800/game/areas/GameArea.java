@@ -23,6 +23,29 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   public Entity player;
 
+  protected static final String[] enemySounds = {
+          "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
+          "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
+          "sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3",
+          "sounds/enemies/ToughLongRangeEnemy/shoot.wav",
+          "sounds/enemies/LongRangeEnemy/hit.mp3",
+          "sounds/enemies/LongRangeEnemy/dead.mp3",
+          "sounds/enemies/LongRangeEnemy/detectPlayer.mp3",
+          "sounds/enemies/LongRangeEnemy/shoot.wav",
+          "sounds/enemies/LargeEnemy/hit.wav",
+          "sounds/enemies/LargeEnemy/dead.wav",
+          "sounds/enemies/LargeEnemy/detectPlayer.mp3",
+          "sounds/enemies/LargeEnemy/meleeAttack.mp3",
+          "sounds/enemies/SmallEnemy/hit.wav",
+          "sounds/enemies/SmallEnemy/dead.wav",
+          "sounds/enemies/SmallEnemy/detectPlayer.wav",
+          "sounds/enemies/SmallEnemy/meleeAttack.mp3",
+          "sounds/enemies/SpawnerEnemy/hit.wav",
+          "sounds/enemies/SpawnerEnemy/dead.wav",
+          "sounds/enemies/SpawnerEnemy/detectPlayer.mp3",
+          "sounds/enemies/SpawnerEnemy/spawn.wav"
+  };
+
   protected GameArea() {
     areaEntities = new ArrayList<>();
   }
@@ -69,7 +92,7 @@ public abstract class GameArea implements Disposable {
    * @param centerX true to center entity X on the tile, false to align the bottom left corner
    * @param centerY true to center entity Y on the tile, false to align the bottom left corner
    */
-  protected void spawnEntityAt(
+  public void spawnEntityAt(
           Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
@@ -98,5 +121,13 @@ public abstract class GameArea implements Disposable {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity smallEnemy = NPCFactory.createSmallEnemy(player);
     spawnEntityAt(smallEnemy, randomPos, true, true);
+  }
+
+  public Entity getPlayer() {
+    return player;
+  }
+
+  public TerrainComponent getTerrain() {
+    return terrain;
   }
 }

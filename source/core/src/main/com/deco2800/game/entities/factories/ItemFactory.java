@@ -39,11 +39,20 @@ public class ItemFactory {
      * @return ammo pickup for player to use to purchase items
      */
     public static Entity createCoinPickup(int itemQuantity) {
+        String textureFilePath;
+        if (itemQuantity < 2) {
+            textureFilePath = "images/playeritems/coin/coin1.png";
+        } else if (itemQuantity < 5) {
+            textureFilePath = "images/playeritems/coin/coin2.png";
+        } else {
+            textureFilePath = "images/playeritems/coin/money-bag.png";
+        }
+
         Entity coin = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.COINS, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/coin/coin2.png"))
+                .addComponent(new TextureRenderComponent(textureFilePath))
                 .addComponent(new DisposingComponent());
         coin.setScale(0.7f, 0.7f);
         return coin;

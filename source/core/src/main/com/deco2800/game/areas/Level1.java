@@ -76,11 +76,12 @@ public class Level1 extends GameArea {
     "images/iso_grass_3.png",
     "images/iso_grass_3.png",
     "images/gunman.png",
-    "images/Enemy_Assets/LongRangeEnemy/eye.png",
     "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
     "images/player.png",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
+    "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
+    "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/level_1/dead_tree1-day1-latest.png",
@@ -90,19 +91,19 @@ public class Level1 extends GameArea {
     "images/hud/healthFull.png",
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/placeholder.png",
-    "images/dialogue/raw/npc_indicator.png"
+    "images/dialogue/raw/npc_indicator.png",
+    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
   };
 
   private static final String[] cityTextureAtlases = {
       "images/terrain_iso_grass.atlas",
       "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-      "images/ghost.atlas",
-      "images/ghostKing.atlas",
       "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
       "images/Player_Animations/player_movement.atlas",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+      "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+      "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
       "images/player.atlas",
       "images/Player_Sprite/player_movement.atlas",
       "images/hud/dashbar.atlas",
@@ -125,6 +126,7 @@ public class Level1 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
@@ -171,10 +173,6 @@ public class Level1 extends GameArea {
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
-  }
-
-  public Entity getPlayer() {
-    return player;
   }
 
   private void displayUI() {
@@ -517,6 +515,7 @@ public class Level1 extends GameArea {
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -532,6 +531,7 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

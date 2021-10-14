@@ -81,10 +81,6 @@ public class BulletCollisionComponent extends Component {
 
                 if (targetStats != null) {
                     targetStats.hit(bulletCombatStats.getBaseRangedAttack());
-
-                    if (targetStats.isDead()) {
-                        ServiceLocator.getGameArea().despawnEntity(target);
-                    }
                 }
                 entity.getComponent(DisposingComponent.class).toBeReused();
             }

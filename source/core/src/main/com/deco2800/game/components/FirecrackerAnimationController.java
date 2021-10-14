@@ -95,7 +95,7 @@ public class FirecrackerAnimationController extends Component {
 
   @Override
   public void dispose() {
-    super.dispose();
+    //super.dispose();
     animator.dispose();
     explosionAnimator.dispose();
   }

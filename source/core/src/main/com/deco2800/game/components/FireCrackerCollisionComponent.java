@@ -72,9 +72,10 @@ public class FireCrackerCollisionComponent extends Component {
 
         // fire cracker has exploded
         if (explosionStatus) {
-            this.getEntity().getComponent(PointLightComponent.class).changeDistance(light);
             // enemies will receive damage the moment fire cracker explodes
             if (inflictDamageOnce) {
+                light = 8;
+                this.getEntity().getComponent(PointLightComponent.class).changeDistance(light);
                 inflictDamage(EXPLOSION_MULTIPLIER);
                 inflictDamageOnce = false;
             }

@@ -1,7 +1,7 @@
 package com.deco2800.game.lighting;
 
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
+import com.badlogic.box2dlights.box2dLight.PointLight;
+import com.badlogic.box2dlights.box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.Component;
@@ -22,7 +22,7 @@ public class PointLightComponent extends Component implements Disposable {
     private float distance;
     float offsetx;
     float offsety;
-    private int rays = 500;
+    private int rays = 50;
 
     /**
      * ConeLightComponent
@@ -50,7 +50,7 @@ public class PointLightComponent extends Component implements Disposable {
         pointLight.attachToBody(entity.getComponent(PhysicsComponent.class).getBody(),
                 (entity.getScale().x / 2) + this.offsetx, (entity.getScale().y / 2)+ this.offsety) ;
         pointLight.setIgnoreAttachedBody(true);
-        pointLight.setContactFilter(PhysicsLayer.NPC, PhysicsLayer.NPC, PhysicsLayer.NPC);
+        pointLight.setContactFilter(PhysicsLayer.NONE, PhysicsLayer.NONE, PhysicsLayer.NONE);
         pointLight.setSoftnessLength(8f);
         logger.info("Chain light added to scene");
     }

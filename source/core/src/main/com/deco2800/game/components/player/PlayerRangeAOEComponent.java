@@ -8,6 +8,7 @@ import com.deco2800.game.components.FireCrackerCollisionComponent;
 import com.deco2800.game.components.FirecrackerAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -54,6 +55,7 @@ public class PlayerRangeAOEComponent extends Component {
         // fire cracker is launched
         if (fireCrackerLaunched) {
             Vector2 fireCrackerPos = fireCracker.getPosition();
+            fireCracker.getComponent(FlickerLightComponent.class).disableLights();
 
             // this stops entity from continuously vibrating in same position
             if (fireCrackerTargetPos.epsilonEquals(fireCrackerPos, 1)) {
@@ -69,7 +71,8 @@ public class PlayerRangeAOEComponent extends Component {
                 fireCracker.getComponent(ColliderComponent.class).setSensor(true);
                 fireCracker.getComponent(FireCrackerCollisionComponent.class).setExplosion(true);
                 fireCracker.getEvents().trigger("explosionStart");
-                fireCracker.getComponent(PointLightComponent.class).changeDistance(8);
+                fireCracker.getComponent(FlickerLightComponent.class).changeDistance(8);
+                fireCracker.getComponent(FlickerLightComponent.class).turnOnLights();
                 fireCrackerLaunched = false;
                 logger.debug("Fire cracker should explode");
             }

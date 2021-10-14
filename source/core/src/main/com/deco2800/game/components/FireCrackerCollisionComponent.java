@@ -3,6 +3,7 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -72,9 +73,10 @@ public class FireCrackerCollisionComponent extends Component {
 
         // fire cracker has exploded
         if (explosionStatus) {
-            this.getEntity().getComponent(PointLightComponent.class).changeDistance(light);
             // enemies will receive damage the moment fire cracker explodes
             if (inflictDamageOnce) {
+                light = 8;
+                this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light);
                 inflictDamage(EXPLOSION_MULTIPLIER);
                 inflictDamageOnce = false;
             }
@@ -84,19 +86,19 @@ public class FireCrackerCollisionComponent extends Component {
 
 
                 if (timeSource.getTime() ==(intervalFlameAOE/2)) {
-                    System.out.println("timer");
-                    this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
+                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light -= 2);
                 }
 
                 // AOE flame damages NPCs every 2 seconds
                 if (timeSource.getTime() > intervalFlameAOE) {
-                    this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
+                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light -= 2);
                     logger.debug("Has been 2 seconds in game, damage will be dealt");
                     inflictDamage(DAMAGE_MULTIPLIER);
                     intervalFlameAOE = timeSource.getTime() + DAMAGE_INTERVAL;
                 }
 
             } else {
+                this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(0);
                 this.getEntity().getEvents().trigger("endFirecracker");
                 offExplosion();
             }
@@ -207,7 +209,6 @@ public class FireCrackerCollisionComponent extends Component {
 
             if (targetStats.isDead()) {
                 uneffectedEnemies.add(fixture);
-                ServiceLocator.getGameArea().despawnEntity(enemy);
             }
         }
         unregisterEnemies();

@@ -86,10 +86,6 @@ public class SafehouseGameArea extends GameArea {
         this::playMusic);
   }
 
-  public Entity getPlayer() {
-    return player;
-  }
-
   private void displayUI() {
     Entity ui = new Entity();
     ui.addComponent(new GameAreaDisplay("Safehouse"));

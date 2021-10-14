@@ -70,19 +70,20 @@ public class Level1 extends GameArea {
     "images/grass_1.png"
   };
 
-  private static final String[] cityTextureAtlases = {
-      NPC_SAMPLE_ATLAS_FILENAME,
+  private static final String[] cityTextureAtlases = {NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
       NPC_PILOT_ATLAS_FILENAME
   };
 
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
+
   private static final String[] playerSounds = {
           "sounds/bandage-use.ogg",
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
@@ -128,10 +129,6 @@ public class Level1 extends GameArea {
 
     // this is used for testing purposes for player pick up
     spawnPickupItems();
-  }
-
-  public Entity getPlayer() {
-    return player;
   }
 
   private void displayUI() {
@@ -219,9 +216,7 @@ public class Level1 extends GameArea {
    * Used to add buildings to the game area
    */
   private void spawnBuildings() {
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-
-    GridPoint2[] house_one_positions = new GridPoint2[]{
+   GridPoint2[] house_one_positions = new GridPoint2[]{
             new GridPoint2(8, 61), new GridPoint2(18, 61), new GridPoint2(28, 61), new GridPoint2(38, 61),
             new GridPoint2(3, 54),
             new GridPoint2(8, 47), new GridPoint2(21, 47), new GridPoint2(33, 47), new GridPoint2(43, 47),
@@ -348,7 +343,6 @@ public class Level1 extends GameArea {
 
   private void spawnSafehouse() {
     GridPoint2 position  = new GridPoint2(56, 60);
-
     Entity safehouse = SafehouseFactory.createSafehouse();
     spawnEntityAt(safehouse, position, true, false);
   }
@@ -368,7 +362,7 @@ public class Level1 extends GameArea {
       spawnEntity(newBullet);
     }
 
-    getPlayer().getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
   }
 
   /**
@@ -378,7 +372,7 @@ public class Level1 extends GameArea {
       Entity fireCracker = ProjectileFactory.createFireCracker();
       spawnEntity(fireCracker);
 
-      getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+      player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
   /**
@@ -391,9 +385,10 @@ public class Level1 extends GameArea {
 
     for (GridPoint2 enemyPos : enemyPositions) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, enemyPos, true, true);
     }
+
   }
   /**
    * Spawns a small enemy from the appropriate spawner's position
@@ -499,6 +494,7 @@ public class Level1 extends GameArea {
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -515,6 +511,7 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

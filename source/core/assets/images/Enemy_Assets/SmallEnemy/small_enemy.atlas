@@ -1,26 +1,345 @@
-small_enemy.png
-size: 24, 24
+SmallEnemy.png
+size: 512, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 1, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 1, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 1, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 1, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 35, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 35, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 69, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 69, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front
+  rotate: false
+  xy: 103, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run
+  rotate: false
+  xy: 103, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run
+  rotate: false
+  xy: 103, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run
+  rotate: false
+  xy: 137, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run
+  rotate: false
+  xy: 137, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run
+  rotate: false
+  xy: 171, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run
+  rotate: false
+  xy: 171, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run
+  rotate: false
+  xy: 205, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run
+  rotate: false
+  xy: 205, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run
+  rotate: false
+  xy: 239, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run
+  rotate: false
+  xy: 273, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run
+  rotate: false
+  xy: 273, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run
+  rotate: false
+  xy: 307, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 307, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 341, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 341, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 375, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 375, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 409, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 443, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 443, 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ 
+small_enemy_damaged.png
+size: 32, 32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-angry_float
+left-damaged
   rotate: false
   xy: 0, 0
-  size: 24, 24
-  orig: 24, 24
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
-  index: 0
-default
+  index: 1
+left-run-damaged
   rotate: false
   xy: 0, 0
-  size: 24, 24
-  orig: 24, 24
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
-  index: 0
-float
+  index: 1
+right-damaged
   rotate: false
   xy: 0, 0
-  size: 24, 24
-  orig: 24, 24
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+right-run-damaged
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+back-damaged
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+back-run-damaged
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+front-damaged
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+front-run-damaged
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+
+small_enemy_hit.png
+size: 32, 32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+left-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+left-run-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+right-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+right-run-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+back-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+back-run-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+front-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+front-run-hit
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1	
+  
+dead_enemy.png
+size: 32, 32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dead
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: 0

@@ -423,7 +423,7 @@ public class ShopMenuDisplay extends UIComponent {
         itemsDescriptionLabels.add(pricingValueLabel).padLeft(PAD_TO_CENTER_PRICING);
 
         Image moneyBagImage = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/playeritems/coin/money bag.png", Texture.class));
+                .getAsset("images/playeritems/coin/money-bag.png", Texture.class));
         itemsDescriptionLabels.add(moneyBagImage).size(COMMON_LABEL_HEIGHT);
 
         container.add(itemsDescriptionLabels).colspan(THIRD_COL_NUM_TAKEN).top();
@@ -618,7 +618,9 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void isItemPurchasable() {
         if (playerGold >= itemPrice) {
-            setEquippedButton();
+            if (!itemName.equals(Items.TORCH.toString())) {
+                setEquippedButton();
+            }
             processPurchasedItem();
         } else {
             setNoFundsButton();

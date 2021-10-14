@@ -51,7 +51,7 @@ public class Level2 extends GameArea {
     "images/safehouse/exterior-day1-latest.png",
     "images/level_2/level2_torch_frame1_ver1.png",
     "images/level_2/level2_tree_2_group_ver1.png",
-    "images/dialogue/raw/npc_indicator.png",
+    "images/dialogue/raw/npc_indicator.png"
   };
 
   /**
@@ -63,11 +63,13 @@ public class Level2 extends GameArea {
 
   // Music and sound variables
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+
   private static final String[] playerSounds = {
           "sounds/bandage-use.ogg",
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String backgroundMusic = "sounds/fireflies-theme-woods.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -111,14 +113,6 @@ public class Level2 extends GameArea {
     // Listener for level 2 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,
         this::playMusic);
-  }
-
-  /**
-   * Gets the player entity for Level 2.
-   * @return Player entity.
-   */
-  public Entity getPlayer() {
-    return player;
   }
 
   /**
@@ -349,7 +343,7 @@ public class Level2 extends GameArea {
       Entity fireCracker = ProjectileFactory.createFireCracker();
       spawnEntity(fireCracker);
 
-      getPlayer().getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+      player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
   /**
@@ -363,7 +357,8 @@ public class Level2 extends GameArea {
 
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+              spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
     }
   }
@@ -615,6 +610,7 @@ public class Level2 extends GameArea {
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -634,6 +630,7 @@ public class Level2 extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 enum BossState {
     PHASE1,
     PHASE2,
+    PHASE3,
     PHASEFINAL,
 }
 
@@ -47,14 +48,16 @@ public class BossHealthListener extends Component {
             if(health < 80) {
                 bossState = BossState.PHASE2;
                 logger.debug("Boss State change from {} to {}", BossState.PHASE1, bossState);
-                boss.getComponent(MultiAITaskComponent.class).removeAllTasks();
+//                boss.getComponent(MultiAITaskComponent.class).removeAllTasks();
                 //change tasks
 
             }
         } else if(bossState == BossState.PHASE2) {
             if(health < 70) {
-                bossState = BossState.PHASEFINAL;
+                bossState = BossState.PHASE3;
                 logger.debug("Boss State change from {} to {}", BossState.PHASE2, bossState);
+                boss.getComponent(MultiAITaskComponent.class).removeAllTasks();
+                //add bullet hell task
             }
         }
 

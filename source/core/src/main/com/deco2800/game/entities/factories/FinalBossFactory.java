@@ -85,7 +85,7 @@ public class FinalBossFactory {
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
             animator.addAnimation("default", 1f, Animation.PlayMode.LOOP);
 
-        System.out.println(animator.getLayer());
+        //System.out.println(animator.getLayer());
 
         MultiAITaskComponent aiComponent =
                 new MultiAITaskComponent()

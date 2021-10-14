@@ -23,30 +23,6 @@ public class PhysicsLayer {
   public static final short FRIENDLY_NPC = (1 << 8);
 
   public static boolean contains(short filterBits, short layer) {
-    System.out.println("<-----Physics Layers ------>");
-    System.out.println("NONE:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(NONE))));
-    System.out.println("DEFAULT:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(DEFAULT))));
-    System.out.println("PLAYER:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(PLAYER))));
-    System.out.println("OBSTACLE:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(OBSTACLE))));
-    System.out.println("NPC:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(WEAPON))));
-    System.out.println("ALL:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(ITEM))));
-    System.out.println("WEAPON:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(DARKNESS))));
-    System.out.println("ITEM:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(SAFEHOUSE))));
-    System.out.println("DARKNESS:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(PARAPHERNALIA))));
-    System.out.println("ENEMYBULLET:");
-    System.out.println("\t" + String.format("%016d", Integer.parseInt(Integer.toBinaryString(ENEMYBULLET))));
-
-
-
     return (filterBits & layer) != 0;
   }
 

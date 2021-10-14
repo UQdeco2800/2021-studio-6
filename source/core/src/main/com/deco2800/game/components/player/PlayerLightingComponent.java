@@ -24,6 +24,7 @@ public class PlayerLightingComponent extends PointLightComponent {
         super.create();
         entity.getEvents().addListener("torchOn", this::torchOn);
         entity.getEvents().addListener("torchOff", this::torchOff);
+        entity.getEvents().addListener("torchTick", this::torchTick);
         PlayerTorchAnimationController torch = this.entity.getComponent(PlayerTorchAnimationController.class);
         torchAnimator =
             new IndependentAnimator(
@@ -51,6 +52,18 @@ public class PlayerLightingComponent extends PointLightComponent {
     private void torchOn() {
         this.getPointLight().setActive(true);
     }
+
+    /**
+     * Reduces lighting distance as the torch runs out
+     */
+    private void torchTick(int ticks) {
+        float distance = (float) ticks;
+        distance = distance/10;
+        this.getPointLight().setDistance(distance);
+
+    }
+
+
 
 
     /**

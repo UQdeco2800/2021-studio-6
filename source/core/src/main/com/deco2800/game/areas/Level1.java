@@ -304,9 +304,11 @@ public class Level1 extends GameArea {
       GridPoint2 position = new GridPoint2(x, 1);
       String lampPath;
       if (RandomUtils.randomInt(3) == 1) {
-        lampPath = "images/level_1/street_lamp1-day1-latest.png";
+        //lampPath = "images/level_1/street_lamp1-day1-latest.png";
+        lampPath = "images/level_1/street_lamp3-day1-latest.png";
       } else if (RandomUtils.randomInt(3) == 2) {
-        lampPath = "images/level_1/street_lamp2-day1-latest.png";
+        //lampPath = "images/level_1/street_lamp2-day1-latest.png";
+        lampPath = "images/level_1/street_lamp3-day1-latest.png";
       } else {
         lampPath = "images/level_1/street_lamp3-day1-latest.png";
       }

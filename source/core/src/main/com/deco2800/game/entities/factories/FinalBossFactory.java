@@ -2,7 +2,6 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
@@ -11,23 +10,18 @@ import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.Level4;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.DisposingComponent;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.finalboss.LaserTimer;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.finalboss.LaserListener;
-import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -36,6 +30,23 @@ import com.deco2800.game.services.ServiceLocator;
  * The factory for all the entities related to the final boss
  */
 public class FinalBossFactory {
+
+
+    public static Entity createFinalBossPhaseManager(Entity boss) {
+
+        //define boss entity
+
+        //define darkness entity
+        //
+
+        Entity phaseManager = new Entity()
+                .addComponent(new BossHealthListener(boss));
+
+//        boss.getComponent(AITaskComponent.class).getTasks().clear();
+//        boss.getComponent(AITaskComponent.class).addTask();
+        return phaseManager;
+    }
+
 
     /**
      * Creates the darkness for level 4
@@ -81,7 +92,7 @@ public class FinalBossFactory {
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(1, 0))
+                .addComponent(new CombatStatsComponent(100, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
 
@@ -128,8 +139,6 @@ public class FinalBossFactory {
      * @return the spawner entity
      */
     public static Entity createLightSpawner(Entity target, GameArea gameArea) {
-
-
         Entity spawner = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new DisposingComponent())

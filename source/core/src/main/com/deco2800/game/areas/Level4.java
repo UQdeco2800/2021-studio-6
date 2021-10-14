@@ -131,7 +131,7 @@ public class Level4 extends GameArea {
         spawnLongRangeEnemies();
         spawnToughLongRangeEnemies();
         spawnFinalBoss();
-        //playMusic();
+
 
 
     }
@@ -301,14 +301,15 @@ public class Level4 extends GameArea {
     }
 
     private void spawnFinalBoss() {
-        Entity darkness = FinalBossFactory.createDarkness(player, this);
+//        Entity darkness = FinalBossFactory.createDarkness(player, this);
         GridPoint2 bounds = terrain.getMapBounds(0);
 
         Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
         GridPoint2 pos = new GridPoint2(40, 35);
-
+        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss);
         spawnEntityAt(boss, pos, true, true);
-        this.spawnEntity(darkness);
+//        this.spawnEntity(boss);
+        this.spawnEntity(phase);
         //Entity bossHead = FinalBossFactory.createBossHead();
         //pos = new GridPoint2(bounds.x/2, (int) Math.round(bounds.y*0.9));
         //spawnEntityAt(bossHead, pos, true, true); //remove this stuff once stage 1 is done

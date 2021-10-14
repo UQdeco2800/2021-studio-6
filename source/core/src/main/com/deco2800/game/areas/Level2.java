@@ -74,7 +74,8 @@ public class Level2 extends GameArea {
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/placeholder.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
+    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png",
+    "images/level_2/fire-fly-bug-NPC.png"
   };
 
   /**
@@ -135,6 +136,7 @@ public class Level2 extends GameArea {
     spawnCobweb();
     spawnBush();
 //    spawnTorch();
+    spawnFireFlyBugNPC();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -632,6 +634,22 @@ public class Level2 extends GameArea {
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity bush = ObstacleFactory.createTorch();
       spawnEntityAt(bush, spawnLocations[i], true, false);
+    }
+  }
+
+  /**
+   * Spawns the fire fly bug NPC.
+   */
+  private void spawnFireFlyBugNPC() {
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(24,21),
+            new GridPoint2(41,9),
+            new GridPoint2(49,31),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC();
+      spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }
 

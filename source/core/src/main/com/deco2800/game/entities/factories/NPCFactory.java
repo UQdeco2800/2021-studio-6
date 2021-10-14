@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -16,12 +17,14 @@ import com.deco2800.game.entities.configs.LargeEnemyConfig;
 import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.physics.PhysicsUtils;
 
@@ -433,6 +436,30 @@ public class NPCFactory {
 
     //PhysicsUtils.setScaledCollider(npc, 0.8f, 0.3f);
     return npc;
+  }
+
+  /**
+   * Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.
+   * @return entity
+   */
+  public static Entity createFireFlyBugNPC() {
+    Vector2 speed = new Vector2(1, 1);
+
+    Entity fireflyBugNPC =
+      new Entity()
+        .addComponent(new TextureRenderComponent("images/level_2/fire-fly-bug-NPC.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent())
+        .addComponent(new PhysicsMovementComponent(speed))
+        .addComponent(new DisposingComponent())
+        .addComponent(new PointLightComponent(Colors.get("ORANGE"),1.75f,0,0));
+
+    fireflyBugNPC.getComponent(TextureRenderComponent.class).scaleEntity();
+    fireflyBugNPC.scaleHeight(0.15f);
+
+    // TODO: Add AI component to wander around the area in its proximity radius range
+
+    return fireflyBugNPC;
   }
 
   private NPCFactory() {

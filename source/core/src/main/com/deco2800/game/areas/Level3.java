@@ -92,7 +92,8 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
+    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png",
+    "images/level_2/fire-fly-bug-NPC.png"
   };
 
   /**
@@ -151,6 +152,7 @@ public class Level3 extends GameArea {
     spawnWaterGreenTiles();
     spawnBridge();
     spawnWaterSandTiles();
+    spawnFireFlyBugNPC();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -870,6 +872,21 @@ public class Level3 extends GameArea {
     for (int i = 0; i < spawnLocationsRight.length; i++) {
       Entity bridgeRight = ObstacleFactory.createBridgeVerticalRightTile();
       spawnEntityAt(bridgeRight, spawnLocationsRight[i], true, true);
+    }
+  }
+
+  /**
+   * Spawns the fire fly bug NPC.
+   */
+  private void spawnFireFlyBugNPC() {
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(21,30),
+        new GridPoint2(41,24),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC();
+      spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }
 

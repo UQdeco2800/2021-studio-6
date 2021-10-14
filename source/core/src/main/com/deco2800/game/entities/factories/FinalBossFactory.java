@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -143,8 +144,12 @@ public class FinalBossFactory {
     }
 
     public static Entity createHealthBarBackground() {
+
+        TextureRenderComponent image = new TextureRenderComponent("images/Final_Boss/healthbar_background.png");
+        image.setUnlit();
+
         Entity healthBar = new Entity()
-                .addComponent(new TextureRenderComponent("images/Final_Boss/healthbar_background.png"));
+                .addComponent(image);
 
         healthBar.setScale(10f,0.5f);
 
@@ -153,8 +158,12 @@ public class FinalBossFactory {
     }
 
     public static Entity createHealthBarForeground() {
+
+       TextureRenderComponent image = new TextureRenderComponent("images/Final_Boss/healthbar_foreground.png");
+       image.setUnlit();
+
         Entity healthForeground = new Entity()
-                .addComponent(new TextureRenderComponent("images/Final_Boss/healthbar_foreground.png"));
+                .addComponent(image);
 
         healthForeground.setScale(10f, 0.5f);
 

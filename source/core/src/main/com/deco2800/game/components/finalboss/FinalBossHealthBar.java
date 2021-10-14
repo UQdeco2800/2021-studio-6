@@ -45,8 +45,8 @@ public class FinalBossHealthBar extends DefaultTask {
     }
 
     public void createHealthBar() {
-        healthBackground.setPosition(20,20);
-        healthForeground.setPosition(20,20);
+        healthBackground.setPosition(15,22);
+        healthForeground.setPosition(15,22);
 
         this.gameArea.spawnEntity(healthBackground);
         this.gameArea.spawnEntity(healthForeground);

@@ -175,7 +175,7 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new Level1(terrainFactory); //change back to level 1
+      gameArea = new Level1(terrainFactory);
 
       gameArea.create();
 
@@ -354,8 +354,8 @@ public class MainGameScreen extends ScreenAdapter {
   public void generateNewLevel(boolean reverting) {
     // before disposing everything, update and store player's state - this only occurs when game
     // is not reverting to player's most recent checkpoint (going back in game time in a way)
+    double LEVEL_INCREMENT = 0.5;
     if (!reverting) {
-      double LEVEL_INCREMENT = 0.5;
       gameLevel += LEVEL_INCREMENT;
       PlayerStateManager.getInstance().addAndUpdatePlayerState(gameArea.player, gameLevel);
     } else {
@@ -365,10 +365,11 @@ public class MainGameScreen extends ScreenAdapter {
     logger.info("Generating game level " + gameLevel);
 
     // TODO: This should not be here as this should be for boss fight
-    int LEVEL_5 = 5;
-    if (gameLevel == LEVEL_5) {
+    double WIN = 4.5;
+    if (gameLevel == WIN) {
       logger.info("Victory epilogue");
       victory();
+      gameLevel += LEVEL_INCREMENT;
       return;
     }
 

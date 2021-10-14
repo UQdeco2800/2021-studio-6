@@ -92,7 +92,7 @@ public class PlayerFactory {
     loadPlayerData();
     Entity player = new Entity()
           .addComponent(new PhysicsComponent())
-          .addComponent(new ColliderComponent())
+          .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER, (short) (PhysicsLayer.OBSTACLE | PhysicsLayer.NPC)))
           .addComponent(new PlayerMeleeAttackComponent(meleeFilePath))
           .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
           .addComponent(new PlayerActions(woundState))

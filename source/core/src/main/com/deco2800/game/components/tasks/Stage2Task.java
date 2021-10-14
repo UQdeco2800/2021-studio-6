@@ -38,7 +38,7 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
      * @param gameArea the game area for this task to occur
      * @param target the target for the enemies to attack
      */
-    public Stage2Task(int priority, Level4 gameArea, Entity target) {
+    public Stage2Task(int priority, GameArea gameArea, Entity target) {
         this.priority = priority;
         this.gameArea = gameArea;
 

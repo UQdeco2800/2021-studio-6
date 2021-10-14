@@ -25,6 +25,7 @@ public class PlayerLightingComponent extends FlickerLightComponent {
         super.create();
         entity.getEvents().addListener("torchOn", this::torchOn);
         entity.getEvents().addListener("torchOff", this::torchOff);
+        entity.getEvents().addListener("torchTick", this::torchTick);
         PlayerTorchAnimationController torch = this.entity.getComponent(PlayerTorchAnimationController.class);
         torchAnimator =
             new IndependentAnimator(
@@ -52,6 +53,16 @@ public class PlayerLightingComponent extends FlickerLightComponent {
     private void torchOn() {
 
         this.turnOnLights();
+    }
+
+    /**
+     * Reduces lighting distance as the torch runs out
+     */
+    private void torchTick(int ticks) {
+        float distance = (float) ticks;
+        distance = (distance*0.5f)/10;
+        this.changeDistance(distance);
+
     }
 
 

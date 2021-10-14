@@ -186,7 +186,7 @@ public class NPCFactory {
     npcSoundComponent.setMeleeAttack(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class));
 
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
-    smallEnemy.setScale(0.75f, 0.75f);
+    smallEnemy.setScale(1.2f, 1.2f);
     PhysicsUtils.setScaledCollider(smallEnemy, 0.6f, 0.3f);
     return smallEnemy;
   }

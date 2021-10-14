@@ -58,8 +58,7 @@ public class InventoryComponent extends Component {
           torch--;
         }
       }
-
-      if (torch > 0) {
+      if (torch > 0 && torch < 100) {
         entity.getEvents().trigger("torchTick", torch);
       }
       if (torch <= 0) {

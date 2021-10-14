@@ -51,20 +51,21 @@ public class PlayerLightingComponent extends FlickerLightComponent {
      * Turns the lighting on
      */
     private void torchOn() {
-
         this.turnOnLights();
     }
 
     /**
      * Reduces lighting distance as the torch runs out
+     * @param ticks The current fuel for the torch
      */
     private void torchTick(int ticks) {
         float distance = (float) ticks;
-        distance = (distance*0.5f)/10;
+        distance = (distance*0.8f)/10;
+        if (distance < 0.5) {
+            distance = 0.5f;
+        }
         this.changeDistance(distance);
-
     }
-
 
     /**
      * Used to get the torch animator for use in the animation controller

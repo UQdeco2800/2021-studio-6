@@ -186,6 +186,9 @@ public class FlickerLightComponent extends Component implements Disposable {
     }
   }
 
+  /**
+   * Function to disable the flickerlight
+   */
   public void disableLights() {
     pointLightMiddle.setDistance(0);
     pointLightOuter.setDistance(0);
@@ -194,17 +197,27 @@ public class FlickerLightComponent extends Component implements Disposable {
     on = false;
   }
 
+  /**
+   * Turns on the light component
+   */
   public void turnOnLights() {
     on = true;
   }
 
+  /**
+   * Returns the base light
+   * @return the base pointlight
+   */
   public PointLight getPointLightBase() {
     return this.pointLightBase;
   }
 
+  /**
+   * Sets the base lighting distance
+   * @param distance the new distance to set the lighting to
+   */
   public void changeDistance(float distance) {
     this.distance = distance;
     this.distanceInner = distance/2;
   }
-
 }

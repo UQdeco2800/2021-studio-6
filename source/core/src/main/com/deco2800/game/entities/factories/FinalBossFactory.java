@@ -42,8 +42,6 @@ public class FinalBossFactory {
         Entity phaseManager = new Entity()
                 .addComponent(new BossHealthListener(boss));
 
-//        boss.getComponent(AITaskComponent.class).getTasks().clear();
-//        boss.getComponent(AITaskComponent.class).addTask();
         return phaseManager;
     }
 
@@ -54,16 +52,24 @@ public class FinalBossFactory {
      * @param gameArea the level 4 game area
      * @return the darkness entity
      */
-    public static Entity createDarkness(Entity target, Level4 gameArea) {
+    public static Entity createDarkness(Entity target, GameArea gameArea) {
+
+        TextureRenderComponent texture = new TextureRenderComponent("images/placeholder.png");
+        texture.setLayer(1);
+
+
         Entity darkness = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new DisposingComponent());
+                .addComponent(new DisposingComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE, PhysicsLayer.PLAYER).setDensity(100))
+                .addComponent(texture);
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
                           .addTask(new Stage2Task(1, gameArea, target));
-
+        darkness.setScale(50, 7);
         darkness.addComponent(aiComponent);
+
 
         return darkness;
     }
@@ -78,6 +84,8 @@ public class FinalBossFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
             animator.addAnimation("default", 1f, Animation.PlayMode.LOOP);
+
+        System.out.println(animator.getLayer());
 
         MultiAITaskComponent aiComponent =
                 new MultiAITaskComponent()

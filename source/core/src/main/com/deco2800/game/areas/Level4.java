@@ -12,7 +12,6 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -35,17 +34,17 @@ public class Level4 extends GameArea {
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(30, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
+            "images/Final_Boss/boss_head.png",
+            "images/Final_Boss/beam.png",
             "images/Final_Boss/boss_head.png", "images/Final_Boss/beam.png",
             "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
             "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-            "images/Player_Sprite/front01.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+            "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
             "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png", "images/playeritems/dagger.png",
             "images/playeritems/ax/ax_right2.png",
             "images/playeritems/firecracker/firecracker.png",
             "images/obstacle_sprite/cobweb.png",
             "images/obstacle_sprite/bush.png",
-            "images/tree.png",
-            "images/ghost_king.png",
             "images/level_2/level2_grass_1.png",
             "images/level_2/level2_grass_2.png",
             "images/level_2/level2_grass_3.png",
@@ -55,47 +54,46 @@ public class Level4 extends GameArea {
             "images/level_2/level2_tree_1-1.png",
             "images/level_2/level2_tree_2-1.png",
             "images/gunman.png",
-            "images/Enemy_Assets/LongRangeEnemy/eye.png",
             "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+            "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
             "images/player.png",
             "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-            "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
-            "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
+            "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
             "images/iso_grass_3.png",
             "images/safehouse/exterior-day1-latest.png",
-            "images/hud/dashbarFull.png",
-            "images/hud/healthFull.png",
             "images/grass_1.png",
             "images/grass_2.png",
-            "images/grass_3.png",
-            "images/placeholder.png"
+            "images/grass_3.png"
     };
     private static final String[] forestTextureAtlases = {
+            "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png",
             "images/Final_Boss/beam.atlas",
             "images/Final_Boss/boss_head.atlas",
             "images/terrain_iso_grass.atlas",
             "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-            "images/ghost.atlas",
-            "images/ghostKing.atlas",
             "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
             "images/Player_Animations/player_movement.atlas",
             "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+            "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+            "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
             "images/Player_Sprite/player_movement.atlas",
             "images/playeritems/tourch/torch.atlas",
             "images/hud/dashbar.atlas",
             "images/hud/health.atlas",
-        "images/weapon/crowbar.atlas",
+            "images/weapon/crowbar.atlas",
             "images/weapon/axe.atlas",
             "images/weapon/sledge.atlas",
             "images/weapon/machete.atlas",
             "images/weapon/baseball.atlas",
             "images/weapon/dagger.atlas"  };
+
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String[] playerSounds = {
             "sounds/bandage-use.ogg",
             "sounds/hurt.ogg",
             "sounds/item-pickup.ogg"
     };
+
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
         
@@ -118,7 +116,7 @@ public class Level4 extends GameArea {
         player = spawnPlayer();
         //spawnSafehouse();
         spawnBullet();
-        spawnBomb();
+        spawnFireCracker();
         spawnCobweb();
         spawnBush();
         //playMusic();
@@ -130,13 +128,9 @@ public class Level4 extends GameArea {
         spawnLongRangeEnemies();
         spawnToughLongRangeEnemies();
         spawnFinalBoss();
-        //playMusic();
 
 
-    }
 
-    public Entity getPlayer() {
-        return player;
     }
 
     private void displayUI() {
@@ -218,7 +212,7 @@ public class Level4 extends GameArea {
         Array<Entity> bullets = new Array<>();
 
         for (int i = 0; i < NUM_BULLETS; i++) {
-            Entity newBullet = BulletFactory.createBullet();
+            Entity newBullet = ProjectileFactory.createBullet();
             bullets.add(newBullet);
             spawnEntity(newBullet);
         }
@@ -226,16 +220,11 @@ public class Level4 extends GameArea {
         player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
     }
 
-    private void spawnBomb() {
-        Array<Entity> bombs = new Array<>();
+    private void spawnFireCracker() {
+        Entity fireCracker = ProjectileFactory.createFireCracker();
+        spawnEntity(fireCracker);
 
-        for (int i = 0; i < NUM_BULLETS; i++) {
-            Entity newBomb = BombFactory.createBomb();
-            bombs.add(newBomb);
-            spawnEntity(newBomb);
-        }
-
-        getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
+        player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
     }
 
     /**
@@ -248,7 +237,8 @@ public class Level4 extends GameArea {
         for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+                    spawnerEnemy));
             spawnEntityAt(spawnerEnemy, randomPos, true, true);
         }
     }
@@ -304,17 +294,19 @@ public class Level4 extends GameArea {
     }
 
     private void spawnFinalBoss() {
-        Entity darkness = FinalBossFactory.createDarkness(player, this);
+
         GridPoint2 bounds = terrain.getMapBounds(0);
 
         Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
-        GridPoint2 pos = new GridPoint2(40, 35);
+        Entity darkness = FinalBossFactory.createDarkness(player, this);
+        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss);
 
-        spawnEntityAt(boss, pos, true, true);
-        this.spawnEntity(darkness);
-        //Entity bossHead = FinalBossFactory.createBossHead();
-        //pos = new GridPoint2(bounds.x/2, (int) Math.round(bounds.y*0.9));
-        //spawnEntityAt(bossHead, pos, true, true); //remove this stuff once stage 1 is done
+        GridPoint2 bossPos = new GridPoint2(40, 35);
+        GridPoint2 darknessPos = new GridPoint2(40, 35);
+        spawnEntityAt(boss, bossPos, true, true);
+        this.spawnEntityAt(darkness, darknessPos, true, true);
+        this.spawnEntity(phase);
+
     }
 
     private void spawnCobweb() {
@@ -349,10 +341,12 @@ public class Level4 extends GameArea {
 
     private void loadAssets() {
         logger.debug("Loading assets");
+        loadSharedAssets();
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(forestSounds);
+        resourceService.loadSounds(enemySounds);
         resourceService.loadSounds(playerSounds);
 
         resourceService.loadMusic(LEVEL3_MUSIC);
@@ -365,10 +359,12 @@ public class Level4 extends GameArea {
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
+        unloadSharedAssets();
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(forestSounds);
+        resourceService.unloadAssets(enemySounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }
 

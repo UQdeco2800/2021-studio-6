@@ -1,7 +1,7 @@
 package com.deco2800.game.lighting;
 
-import box2dLight.ConeLight;
-import box2dLight.RayHandler;
+import com.badlogic.box2dlights.box2dLight.ConeLight;
+import com.badlogic.box2dlights.box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.Component;

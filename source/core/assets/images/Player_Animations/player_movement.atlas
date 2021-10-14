@@ -1,4 +1,3 @@
-
 player_movement.png
 size: 8192, 2048
 format: RGBA8888
@@ -385,6 +384,348 @@ right-run-armour
 right-run-armour
   rotate: false
   xy: 1158, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+
+newArmour.png
+size: 4096, 4096
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+back-chest
+  rotate: false
+  xy: 1736, 1736
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-chest
+  rotate: false
+  xy: 1158, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-chest
+  rotate: false
+  xy: 1158, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-hurt-helmet
+  rotate: false
+  xy: 2, 1736
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-hurt-helmet
+  rotate: false
+  xy: 1736, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-hurt-helmet
+  rotate: false
+  xy: 1736, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-hurt-chest
+  rotate: false
+  xy: 2, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-hurt-chest
+  rotate: false
+  xy: 1158, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-hurt-chest
+  rotate: false
+  xy: 1736, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-hurt-armour
+  rotate: false
+  xy: 3470, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-hurt-armour
+  rotate: false
+  xy: 1158, 1736
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+back-run-hurt-armour
+  rotate: false
+  xy: 2, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-chest
+  rotate: false
+  xy: 2314, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-chest
+  rotate: false
+  xy: 2, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-chest
+  rotate: false
+  xy: 2314, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-hurt-helmet
+  rotate: false
+  xy: 2892, 1736
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-hurt-helmet
+  rotate: false
+  xy: 2892, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-hurt-helmet
+  rotate: false
+  xy: 580, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-hurt-chest
+  rotate: false
+  xy: 2314, 1736
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-hurt-chest
+  rotate: false
+  xy: 2, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-hurt-chest
+  rotate: false
+  xy: 580, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-hurt-armour
+  rotate: false
+  xy: 2892, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-hurt-armour
+  rotate: false
+  xy: 2, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+front-run-hurt-armour
+  rotate: false
+  xy: 1736, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-chest
+  rotate: false
+  xy: 3470, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-chest
+  rotate: false
+  xy: 3470, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-chest
+  rotate: false
+  xy: 580, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-hurt-helmet
+  rotate: false
+  xy: 3470, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-hurt-helmet
+  rotate: false
+  xy: 3470, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-hurt-helmet
+  rotate: false
+  xy: 580, 1736
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-hurt-chest
+  rotate: false
+  xy: 2314, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-hurt-chest
+  rotate: false
+  xy: 2314, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-hurt-chest
+  rotate: false
+  xy: 1736, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-hurt-armour
+  rotate: false
+  xy: 580, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-hurt-armour
+  rotate: false
+  xy: 580, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+left-run-hurt-armour
+  rotate: false
+  xy: 580, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-chest
+  rotate: false
+  xy: 2892, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-chest
+  rotate: false
+  xy: 2892, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-chest
+  rotate: false
+  xy: 580, 1158
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-hurt-helmet
+  rotate: false
+  xy: 2314, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-hurt-helmet
+  rotate: false
+  xy: 2314, 2892
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-hurt-helmet
+  rotate: false
+  xy: 1158, 3470
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-hurt-chest
+  rotate: false
+  xy: 1158, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-hurt-chest
+  rotate: false
+  xy: 1158, 580
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-hurt-chest
+  rotate: false
+  xy: 1158, 2314
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-hurt-armour
+  rotate: false
+  xy: 1736, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-hurt-armour
+  rotate: false
+  xy: 1736, 2
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+right-run-hurt-armour
+  rotate: false
+  xy: 2, 2
   size: 576, 576
   orig: 576, 576
   offset: 0, 0

@@ -13,8 +13,8 @@ import com.deco2800.game.utils.SortedIntMap;
  * this service has render() called once per frame.
  */
 public class RenderService implements Disposable {
-  private static final int INITIAL_LAYER_CAPACITY = 4;
-  private static final int INITIAL_CAPACITY = 4;
+  private static final int INITIAL_LAYER_CAPACITY = 10;
+  private static final int INITIAL_CAPACITY = 10;
   private Stage stage;
   private DebugRenderer debugRenderer;
   private Vector2 currentView;
@@ -57,19 +57,13 @@ public class RenderService implements Disposable {
    * @param batch batch to render to.
    */
   public void render(SpriteBatch batch) {
-
     for (Array<Renderable> layer : renderables) {
       // Sort into rendering order
       layer.sort();
-
       for (Renderable renderable : layer) {
-
         renderable.render(batch);
       }
-
-
     }
-
   }
 
   public void setStage(Stage stage) {

@@ -17,6 +17,7 @@ public class PlayerAbilitiesComponent extends Component {
     private Abilities ability;
     // Ability Specific Variables
     private static final long DASH_LENGTH = 200; // in milliseconds
+    private static final long EXPLOSION_DELAY_LENGTH = 2000; // in milliseconds
     private static final long INVINCIBILITY_LENGTH = 3000;
     /**
      * Basic constructor for setting the players chosen ability
@@ -59,13 +60,15 @@ public class PlayerAbilitiesComponent extends Component {
         if (ability != Abilities.NONE && (ability != Abilities.LONG_DASH || !direction.isZero()) && (timeSource.getTime() >= delayEndTime)) { // ensuring that abilities which require movement have it
             delayEndTime = timeSource.getTime() + DELAY_LENGTH;
             entity.getEvents().trigger("abilityCooldown");
-            switch (this.ability) {
+            switch (ability) {
                 case LONG_DASH:
                     entity.getEvents().trigger("longDash", DASH_LENGTH+timeSource.getTime());
                     break;
                 case INVINCIBILITY:
                     entity.getEvents().trigger("invincibility", INVINCIBILITY_LENGTH);
                     break;
+                case FIRE_CRACKER:
+                    entity.getEvents().trigger("fireCracker", EXPLOSION_DELAY_LENGTH);
                 // default not required as all set enums should have function in switch
             }
         }

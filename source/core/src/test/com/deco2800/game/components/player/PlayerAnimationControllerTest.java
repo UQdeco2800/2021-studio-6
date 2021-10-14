@@ -73,7 +73,7 @@ class PlayerAnimationControllerTest {
     @Test
     void shouldhaveDefenceOneUp() {
         when(actions.isMoving()).thenReturn(true);
-        when(combat.getDefenceLevel()).thenReturn(1);
+        when(combat.getDefenceLevel()).thenReturn(2);
         when(keys.getDirection()).thenReturn(Directions.MOVE_UP);
         player.update();
         verify(anim).startAnimation("back-run-helmet");
@@ -82,7 +82,7 @@ class PlayerAnimationControllerTest {
     @Test
     void shouldhaveDefenceTwoLeftIdle() {
         when(actions.isMoving()).thenReturn(false);
-        when(combat.getDefenceLevel()).thenReturn(2);
+        when(combat.getDefenceLevel()).thenReturn(5);
         when(keys.getDirection()).thenReturn(Directions.MOVE_LEFT);
         player.update();
         verify(anim).startAnimation("left-armour");

@@ -7,7 +7,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.ItemComponent;
 import com.deco2800.game.components.npc.FriendlyNPCTriggerComponent;
-import com.deco2800.game.components.npc.FriendlyNPCAnimationController;
+import com.deco2800.game.components.npc.NPCAnimationController;
 import com.deco2800.game.components.npc.SpeechIconComponent;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.WanderTask;
@@ -66,7 +66,7 @@ public class FriendlyNPCFactory {
                 .addComponent(new FriendlyNPCTriggerComponent(story))
                 .addComponent(animator)
                 .addComponent(new SpeechIconComponent(0.6f))
-                .addComponent(new FriendlyNPCAnimationController())
+                .addComponent(new NPCAnimationController())
                 .addComponent(aiComponent);
 
         // set the npc hitbox to be larger than normal

@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -154,6 +155,7 @@ public class PlayerRangeAttackComponentTest {
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.S);
 
         Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(NO_BULLETS_SHOT);
+       // when(PlayerRangeAttackComponen).thenReturn(anim);
         player.getComponent(PlayerRangeAttackComponent.class).fire();
         System.out.println(player.getComponent(PlayerRangeAttackComponent.class).getDirection());
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_DOWN_DIR));

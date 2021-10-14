@@ -84,7 +84,6 @@ public class FireCrackerCollisionComponent extends Component {
 
 
                 if (timeSource.getTime() ==(intervalFlameAOE/2)) {
-                    System.out.println("timer");
                     this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
                 }
 
@@ -97,6 +96,7 @@ public class FireCrackerCollisionComponent extends Component {
                 }
 
             } else {
+                this.getEntity().getComponent(PointLightComponent.class).changeDistance(0);
                 this.getEntity().getEvents().trigger("endFirecracker");
                 offExplosion();
             }

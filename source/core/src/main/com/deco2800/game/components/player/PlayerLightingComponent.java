@@ -16,8 +16,8 @@ public class PlayerLightingComponent extends FlickerLightComponent {
 
     private IndependentAnimator torchAnimator;
 
-    public PlayerLightingComponent (Color color, Color color2, float distance, float offsetx, float offsety) {
-        super(color, color2, distance,offsetx,offsety);
+    public PlayerLightingComponent (Color color, Color color2, Color color3, Color color4, float distance, float offsetx, float offsety) {
+        super(color, color2, color3, color4, distance,offsetx,offsety);
     }
 
     @Override

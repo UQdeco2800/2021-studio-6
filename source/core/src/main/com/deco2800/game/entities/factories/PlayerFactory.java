@@ -147,7 +147,7 @@ public class PlayerFactory {
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
             // from our branch
-          .addComponent(new PlayerLightingComponent(Color.ORANGE, Color.FIREBRICK, 8f, 0, 0))
+          .addComponent(new PlayerLightingComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK, Color.SCARLET, 6f, 0, 0))
             // came from main even the lighting component below
           .addComponent(new DarknessDetectionComponent());
 //          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 5f, 0, 0));

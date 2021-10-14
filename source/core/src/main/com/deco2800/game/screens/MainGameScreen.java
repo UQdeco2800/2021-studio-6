@@ -68,7 +68,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double gameLevel = 1;
+  private double gameLevel = 3;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;

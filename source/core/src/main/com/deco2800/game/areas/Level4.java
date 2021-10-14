@@ -12,7 +12,6 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -68,7 +67,9 @@ public class Level4 extends GameArea {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
-            "images/placeholder.png"
+            "images/placeholder.png",
+            "images/Final_Boss/healthbar_background.png",
+            "images/Final_Boss/healthbar_foreground.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
@@ -89,7 +90,8 @@ public class Level4 extends GameArea {
             "images/weapon/sledge.atlas",
             "images/weapon/machete.atlas",
             "images/weapon/baseball.atlas",
-            "images/weapon/dagger.atlas"  };
+            "images/weapon/dagger.atlas",
+             };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String[] playerSounds = {
             "sounds/bandage-use.ogg",
@@ -307,7 +309,7 @@ public class Level4 extends GameArea {
         Entity darkness = FinalBossFactory.createDarkness(player, this);
         GridPoint2 bounds = terrain.getMapBounds(0);
 
-        Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
+        Entity boss = FinalBossFactory.createBossHead(player, bounds.x, this);
         GridPoint2 pos = new GridPoint2(40, 35);
 
         spawnEntityAt(boss, pos, true, true);

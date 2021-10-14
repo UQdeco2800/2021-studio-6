@@ -26,7 +26,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent(Items.AMMO, itemQuantity))
-                .addComponent(new TextureRenderComponent("images/playeritems/pickupammo.png"))
+                .addComponent(new TextureRenderComponent("images/playeritems/rock/pickupammo.png"))
                 .addComponent(new DisposingComponent());
         ammo.setScale(0.7f, 0.7f);
         return ammo;
@@ -36,7 +36,7 @@ public class ItemFactory {
      * Coin pickup will spawn when enemies die - but for now, it has been spawned randomly in game world
      *
      * @param itemQuantity the number of coin quantity for coin pick up
-     * @return ammo pickup for player to use to purchase items
+     * @return coin pickup for player to use to purchase items
      */
     public static Entity createCoinPickup(int itemQuantity) {
         String textureFilePath;
@@ -56,6 +56,23 @@ public class ItemFactory {
                 .addComponent(new DisposingComponent());
         coin.setScale(0.7f, 0.7f);
         return coin;
+    }
+
+    /**
+     * Bandage pick up will only be spawned in safehouse game area
+     *
+     * @param itemQuantity the number of bandage quantity for bandage pick up
+     * @return bandage pickup for player to use to restore a wound state
+     */
+    public static Entity createBandagePickup(int itemQuantity) {
+        Entity bandage = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setSensor(true).setLayer(PhysicsLayer.ITEM))
+                .addComponent(new ItemComponent(Items.BANDAGE, itemQuantity))
+                .addComponent(new TextureRenderComponent("images/playeritems/bandage/bandage01.png"))
+                .addComponent(new DisposingComponent());
+//        bandage.setScale(0.7f, 0.7f);
+        return bandage;
     }
 
     /**

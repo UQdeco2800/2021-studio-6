@@ -63,5 +63,9 @@ public class PointLightComponent extends Component implements Disposable {
         return this.pointLight;
     }
 
+    public void changeDistance(int distance) {
+        this.distance = distance;
+        pointLight.setDistance(distance);
+    }
 
 }

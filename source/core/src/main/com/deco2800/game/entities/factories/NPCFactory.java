@@ -11,10 +11,7 @@ import com.deco2800.game.components.*;
 import com.deco2800.game.components.npc.*;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.BaseEntityConfig;
-import com.deco2800.game.entities.configs.LargeEnemyConfig;
-import com.deco2800.game.entities.configs.SpawnerEnemyConfig;
-import com.deco2800.game.entities.configs.NPCConfigs;
+import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -22,6 +19,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.physics.PhysicsUtils;
 
@@ -49,7 +47,7 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createSpawnerEnemy(Entity target, GameArea gameArea) {
-    SpawnerEnemyConfig config = configs.spawnerEnemy;
+    BaseEnemyConfig config = configs.spawnerEnemy;
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
     AnimationRenderComponent animator =
@@ -116,9 +114,10 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
+
   public static Entity createSmallEnemy(Entity target) {
-    BaseEntityConfig config = configs.smallEnemy;
-    Vector2 speed = new Vector2(config.speed, config.speed);
+    BaseEnemyConfig config = configs.smallEnemy;
+    Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
@@ -199,7 +198,8 @@ public class NPCFactory {
    */
   public static Entity createLargeEnemy(Entity target) {
     Entity largeEnemy = createBaseNPC(target);
-    LargeEnemyConfig config = configs.largeEnemy;
+    System.out.println(configs);
+    BaseEnemyConfig config = configs.largeEnemy;
 
     //Movement speed of large enemy
     Vector2 speed = new Vector2(config.speed_x, config.speed_y);
@@ -272,11 +272,15 @@ public class NPCFactory {
    * @return returns the long range enemy entity
    */
   public static Entity createLongRangeEnemy(Entity target, GameArea gameArea) {
+    BaseEnemyConfig config = configs.rangedEnemy;
+
+    Vector2 speed = new Vector2(config.speed_x, config.speed_y);
 
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
+                    .addTask(new DistanceFireBulletTask(target, 1, 10, 8f));
+
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
@@ -309,10 +313,10 @@ public class NPCFactory {
 
     Entity longRange = new Entity()
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new PhysicsMovementComponent(speed))
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new CombatStatsComponent(1, 1))
+                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                     .addComponent(aiComponent)
                     .addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"))
                     .addComponent(new DarknessDetectionComponent())
@@ -342,6 +346,11 @@ public class NPCFactory {
   }
 
   public static Entity createToughLongRangeEnemy(Entity target, GameArea gameArea) {
+    BaseEnemyConfig config = configs.rangedToughEnemy;
+
+    //Movement speed of large enemy
+    Vector2 speed = new Vector2(config.speed_x, config.speed_y);
+
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
@@ -378,11 +387,12 @@ public class NPCFactory {
 
     Entity toughLongRangeEnemy = new Entity()
             .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new PhysicsMovementComponent(speed))
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(new CombatStatsComponent(3, 1))
+            .addComponent(new TextureRenderComponent("images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(aiComponent)
             .addComponent(new ToughFireBulletListener(target, gameArea, "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png"))
             .addComponent(new DarknessDetectionComponent())

@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -87,6 +88,38 @@ public class PlayerFactory {
     animator.addAnimation("front-run-armour", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("left-run-armour", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("right-run-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hurt-chest", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hurt-chest", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hurt-chest", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hurt-chest", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hurt-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hurt-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hurt-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hurt-chest", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hurt-helmet", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hurt-helmet", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hurt-helmet", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hurt-helmet", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hurt-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hurt-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hurt-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hurt-helmet", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-hurt-armour", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-hurt-armour", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-hurt-armour", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-hurt-armour", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-hurt-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-hurt-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-hurt-armour", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-hurt-armour", 0.2f, Animation.PlayMode.LOOP);
     animator.setUnlit();
     // when changing melee weapon file path, remember to also change weapon type player currently holds
     loadPlayerData();
@@ -113,8 +146,9 @@ public class PlayerFactory {
           .addComponent(new PlayerTorchAnimationController())
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
-          .addComponent(new DarknessDetectionComponent())
-          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 5f, 0, 0));
+          .addComponent(new PlayerLightingComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
+              Color.SCARLET, 6f, 0, 0))
+          .addComponent(new DarknessDetectionComponent());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

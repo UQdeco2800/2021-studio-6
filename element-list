@@ -1,3 +1,5 @@
+com.badlogic.box2dlights.box2dLight
+com.badlogic.box2dlights.shaders
 com.deco2800.game
 com.deco2800.game.ai.movement
 com.deco2800.game.ai.tasks

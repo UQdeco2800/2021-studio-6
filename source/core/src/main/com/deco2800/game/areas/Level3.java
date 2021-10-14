@@ -93,9 +93,6 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
     "images/dialogue/raw/npc_indicator.png",
-          "images/Final_Boss/healthbar_background.png",
-          "images/Final_Boss/healthbar_foreground.png"
-
   };
 
   /**

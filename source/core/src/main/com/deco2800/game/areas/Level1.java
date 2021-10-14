@@ -93,8 +93,6 @@ public class Level1 extends GameArea {
     "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/placeholder.png",
     "images/dialogue/raw/npc_indicator.png",
-          "images/Final_Boss/healthbar_background.png",
-          "images/Final_Boss/healthbar_foreground.png"
   };
 
   private static final String[] cityTextureAtlases = {

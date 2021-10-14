@@ -20,7 +20,7 @@ import com.deco2800.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
-  private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(16, 16);
+  private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(74, 68);
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
   private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
@@ -336,6 +336,8 @@ public class TerrainFactory {
       TextureRegion cityCurbUpper, TextureRegion cityCurbLower, TextureRegion crackedRoad,
       TextureRegion cityBackground, TextureRegion laneMarkings) {
     TiledMap tiledMap = new TiledMap();
+
+    // Grabbing all tiles
     TerrainTile roadTile = new TerrainTile(cityRoad);
     TerrainTile sidewalkTile = new TerrainTile(citySidewalk);
     TerrainTile crackedSidewalkTile = new TerrainTile(crackedSidewalk);
@@ -344,44 +346,65 @@ public class TerrainFactory {
     TerrainTile crackedRoadTile = new TerrainTile(crackedRoad);
     TerrainTile cityBackgroundTile = new TerrainTile(cityBackground);
     TerrainTile laneMarkingTile = new TerrainTile(laneMarkings);
+    // Create terrain layer and doing under-fill with base tile
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_CITY.x, MAP_SIZE_CITY.y, tileSize.x, tileSize.y);
+    fillTiles(layer, MAP_SIZE_CITY, 1, 1, cityBackgroundTile); // Set scale as 1:1
 
-    //Multiplier to size of map on x and y coordinates
-    int xScale = 8;
-    int yScale = 1;
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, tileSize.x, tileSize.y);
-    fillTiles(layer, MAP_SIZE_CITY, xScale, yScale, cityBackgroundTile);
+    // Filling ground with roads/paths
+    GridPoint2 start;
+    GridPoint2 end;
 
-    //Fill sidewalk tiles
-    GridPoint2 start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0);
-    GridPoint2 end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.1);
-    setTilesInRegion(layer, sidewalkTile, start, end);
-    //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
+    // Roads
+    start = new GridPoint2(13,55);
+    end = new GridPoint2(43,60);
+    setTilesInRegion(layer, roadTile, start, end); // top of map road
+    start = new GridPoint2(0,22);
+    end = new GridPoint2(59,27);
+    setTilesInRegion(layer, roadTile, start, end); // horizontal strip of bottom road
+    start = new GridPoint2(54,27);
+    end = new GridPoint2(59,38);
+    setTilesInRegion(layer, roadTile, start, end); // turned section of bottom road
 
-    start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.6);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.7);
-    setTilesInRegion(layer, sidewalkTile, start, end);
-    //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
+    // White lines on road
+    start = new GridPoint2(12,57);
+    end = new GridPoint2(42,57);
+    setTilesInLineAtIntervals(layer, laneMarkingTile, start, end, 2, 2, false); // top road
+    start = new GridPoint2(0,24);
+    end = new GridPoint2(51,24);
+    setTilesInLineAtIntervals(layer, laneMarkingTile, start, end, 2, 2, false); // horizontal bottom road
+    start = new GridPoint2(56,28);
+    end = new GridPoint2(56,35);
+    setTilesInLineAtIntervals(layer, laneMarkingTile, start, end, 2, 2, true); // vertical bottom road
 
-    //Set road tiles
-    start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.15);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.58);
-    setTilesInRegion(layer, roadTile, start, end);
-    fillTilesAtRandomInRegion(layer, crackedRoadTile,
-        new GridPoint2(start.x + 1, start.y + 1), new GridPoint2(end.x - 1, end.y - 1), 30);
+    // Top gutter
+    start = new GridPoint2(13,60);
+    end = new GridPoint2(40,60);
+    setTilesInLine(layer, curbUpperTile, start, end); // top road
+    start = new GridPoint2(0,27);
+    end = new GridPoint2(53,27);
+    setTilesInLine(layer, curbUpperTile, start, end); // bottom road
+    layer.setCell(59, 22, new Cell().setTile(curbUpperTile)); // Filling in spot
 
-    //Fill curb tiles
-    start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.1);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.15);
-    setTilesInRegion(layer, curbLowerTile, start, end);
+    // Bottom Gutter
+    start = new GridPoint2(13,54);
+    end = new GridPoint2(43,54);
+    setTilesInLine(layer, curbLowerTile, start, end); // top road
+    start = new GridPoint2(0,21);
+    end = new GridPoint2(56,21);
+    setTilesInLine(layer, curbLowerTile, start, end); // bottom road
 
-    start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.58);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.65);
-    setTilesInRegion(layer, curbUpperTile, start, end);
+    // Vertical Gutter
+    start = new GridPoint2(12,54);
+    end = new GridPoint2(12,60);
+    setTilesInLine(layer, sidewalkTile, start, end); // left of top road
+    start = new GridPoint2(53,28);
+    end = new GridPoint2(53,35);
+    setTilesInLine(layer, sidewalkTile, start, end); // left of bottom road
+    start = new GridPoint2(59,23);
+    end = new GridPoint2(59,35);
+    setTilesInLine(layer, sidewalkTile, start, end); // right of bottom road
 
-    //Add lane markings
-    start = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 0, 0.35);
-    end = calculatePosition(MAP_SIZE_CITY.x * xScale, MAP_SIZE_CITY.y * yScale, 1, 0.4);
-    setTilesInLineAtIntervals(layer, laneMarkingTile, start, end, 5, 3);
+//    //fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 10);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -663,20 +686,38 @@ public class TerrainFactory {
   }
 
   /**
-   * Given a start position and an end position of a line of tiles, fill tiles in that line at a specified interval
+   * Given a start position and an end position of a line of tiles, fill tiles in that line (inclusive)
    * Currently, only the x coordinate is handled
+   * @param start Start of region to fill
+   * @param end End of region to fill
+   */
+  private static void setTilesInLine(TiledMapTileLayer layer, TerrainTile tile, GridPoint2 start, GridPoint2 end) {
+    for (int x = start.x; x <= end.x; x++) {
+      for (int y = start.y; y <= end.y; y++) {
+        Cell cell = layer.getCell(x, y);
+        cell.setTile(tile);
+      }
+    }
+  }
+
+  /**
+   * Given a start position and an end position of a line of tiles, fill tiles in that line at a specified interval
    * @param start Start of region to fill
    * @param end End of region to fill
    * @param onInterval Number of tiles to fill before stopping
    * @param offInterval Number of tiles to skip before the function resumes filling tiles
+   * @param yAxis set to true to do an interval line vertically, false for horizontal
    */
   private static void setTilesInLineAtIntervals(
-      TiledMapTileLayer layer, TerrainTile tile, GridPoint2 start, GridPoint2 end, int onInterval, int offInterval) {
-    for (int x = start.x; x < end.x; x++) {
-      if (x % (onInterval + offInterval) >= onInterval) {
+      TiledMapTileLayer layer, TerrainTile tile, GridPoint2 start, GridPoint2 end, int onInterval, int offInterval, boolean yAxis) {
+    for (int x = start.x; x <= end.x; x++) {
+      if (!yAxis && (x % (onInterval + offInterval) >= onInterval)) {
         continue;
       }
-      for (int y = start.y; y < end.y; y++) {
+      for (int y = start.y; y <= end.y; y++) {
+        if (yAxis && (y % (onInterval + offInterval) >= onInterval)) {
+          continue;
+        }
         Cell cell = layer.getCell(x, y);
         cell.setTile(tile);
       }

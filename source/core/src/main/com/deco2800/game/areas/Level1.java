@@ -80,6 +80,7 @@ public class Level1 extends GameArea {
     "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
     "images/player.png",
     "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
+    "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
     "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
     "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",

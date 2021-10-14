@@ -8,6 +8,7 @@ import com.deco2800.game.components.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -84,7 +85,9 @@ public class ProjectileFactory {
                 .addComponent(new FirecrackerAnimationController())
                 .addComponent(new FireCrackerCollisionComponent())
                 .addComponent(new DisposingComponent())
-                .addComponent(new PointLightComponent(Color.SCARLET, 0, 0, 0))
+                //.addComponent(new PointLightComponent(Color.SCARLET, 0, 0, 0))
+                .addComponent(new FlickerLightComponent(Color.RED, Color.SCARLET, Color.MAROON, Color.SALMON,
+                    0, 0, 0))
                 .addComponent(new PlayerCombatStatsComponent(stats.health, stats.baseAttack, stats.woundState,
                         stats.baseRangedAttack, stats.defenceLevel));
 

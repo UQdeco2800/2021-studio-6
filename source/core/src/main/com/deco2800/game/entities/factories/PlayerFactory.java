@@ -146,11 +146,9 @@ public class PlayerFactory {
           .addComponent(new PlayerTorchAnimationController())
           .addComponent(new PlayerWeaponAnimationController())
           .addComponent(new PlayerHealthAnimationController())
-            // from our branch
-          .addComponent(new PlayerLightingComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK, Color.SCARLET, 6f, 0, 0))
-            // came from main even the lighting component below
+          .addComponent(new PlayerLightingComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
+              Color.SCARLET, 6f, 0, 0))
           .addComponent(new DarknessDetectionComponent());
-//          .addComponent(new PlayerLightingComponent(Colors.get("ORANGE"), 5f, 0, 0));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

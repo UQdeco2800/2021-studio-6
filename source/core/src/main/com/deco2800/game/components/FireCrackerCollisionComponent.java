@@ -3,6 +3,7 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -75,7 +76,7 @@ public class FireCrackerCollisionComponent extends Component {
             // enemies will receive damage the moment fire cracker explodes
             if (inflictDamageOnce) {
                 light = 8;
-                this.getEntity().getComponent(PointLightComponent.class).changeDistance(light);
+                this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light);
                 inflictDamage(EXPLOSION_MULTIPLIER);
                 inflictDamageOnce = false;
             }
@@ -85,19 +86,19 @@ public class FireCrackerCollisionComponent extends Component {
 
 
                 if (timeSource.getTime() ==(intervalFlameAOE/2)) {
-                    this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
+                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light -= 2);
                 }
 
                 // AOE flame damages NPCs every 2 seconds
                 if (timeSource.getTime() > intervalFlameAOE) {
-                    this.getEntity().getComponent(PointLightComponent.class).changeDistance(light -= 1);
+                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light -= 2);
                     logger.debug("Has been 2 seconds in game, damage will be dealt");
                     inflictDamage(DAMAGE_MULTIPLIER);
                     intervalFlameAOE = timeSource.getTime() + DAMAGE_INTERVAL;
                 }
 
             } else {
-                this.getEntity().getComponent(PointLightComponent.class).changeDistance(0);
+                this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(0);
                 this.getEntity().getEvents().trigger("endFirecracker");
                 offExplosion();
             }

@@ -60,7 +60,7 @@ public class PlayerLightingComponent extends FlickerLightComponent {
      */
     private void torchTick(int ticks) {
         float distance = (float) ticks;
-        distance = (distance*0.8f)/10;
+        distance = (distance*0.6f)/10;
         if (distance < 0.5) {
             distance = 0.5f;
         }

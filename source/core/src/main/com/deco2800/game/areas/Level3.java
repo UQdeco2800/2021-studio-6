@@ -31,6 +31,13 @@ public class Level3 extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String NPC_DEAD_PILOT_ATLAS_FILENAME = "images/npc_movement/dead_pilot_npc.atlas";
   private static final String[] forestTextures = {
+    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
+    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
+    "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
+    "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
+    "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
+    "images/playeritems/axe/axe.png",
+    "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/level_2/level2_grass_1.png",

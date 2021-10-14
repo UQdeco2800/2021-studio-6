@@ -70,6 +70,33 @@ public class Lighting implements Disposable {
     }
 
     /**
+     * pointAtLight
+     *  checks whether a given point is in light
+     *  this will be in the "physics engine" space and will not work with a grid position
+     *  should work with Entity.getPosition()
+     * @param x x position of the point
+     * @param y y position of the point
+     * @return whether the point is in the light or not
+     */
+    public boolean pointAtLight(float x, float y) {
+        return rayHandler.pointAtLight(x, y);
+    }
+
+    /**
+     * pointatLight
+     *  checks whether a given point is in shadow
+     *  this will be in the "physics engine" space and will not work with a grid position
+     *  should work with Entity.getPosition()
+     * @param x x position of the point
+     * @param y y position of the point
+     * @return whether the point is in the shadow or not
+     */
+    public boolean pointAtShadow(float x, float y) {
+        return rayHandler.pointAtShadow(x, y);
+    }
+
+
+    /**
      * render
      * calls rayhandler.render()
      */

@@ -43,7 +43,6 @@ public class Level1 extends GameArea {
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
 
   private static final String[] forestTextures = {
-    "images/Player_Sprite/25.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/level_1/road_tile_black.png",
@@ -58,21 +57,6 @@ public class Level1 extends GameArea {
     "images/level_1/road_barrier.png",
     "images/level_1/building2-day1-latest.png",
     "images/level_1/building3-day1-latest.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/iso_grass_3.png",
-    "images/gunman.png",
-    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
-    "images/player.png",
-    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
-    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/level_1/dead_tree1-day1-latest.png",
     "images/level_1/street_lamp.png",
@@ -83,40 +67,14 @@ public class Level1 extends GameArea {
     "images/grass_1.png"
   };
 
-//  private static final String[] cityTextureAtlases = {
-//    "images/placeholder.png",
-//    "images/dialogue/raw/npc_indicator.png",
-//    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
-//  };
-
-  private static final String[] cityTextureAtlases = {
-      "images/placeholder.png",
-      "images/dialogue/raw/npc_indicator.png",
-      "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png",
-      "images/terrain_iso_grass.atlas",
-      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-      "images/Player_Animations/player_movement.atlas",
-      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-      "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
-      "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
-      "images/player.atlas",
-      "images/Player_Sprite/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/crowbar.atlas",
-      "images/weapon/axe.atlas",
-      "images/weapon/dagger.atlas",
-      "images/weapon/sledge.atlas",
-      "images/weapon/machete.atlas",
-      "images/playeritems/tourch/torch.atlas",
-      "images/weapon/baseball.atlas",
-      NPC_SAMPLE_ATLAS_FILENAME,
+  private static final String[] cityTextureAtlases = {NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
       NPC_PILOT_ATLAS_FILENAME
   };
+
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
+
   private static final String[] playerSounds = {
           "sounds/bandage-use.ogg",
           "sounds/hurt.ogg",

@@ -68,6 +68,9 @@ public abstract class GameArea implements Disposable {
       "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
       "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
+      "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
       "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
   };
 
@@ -75,6 +78,8 @@ public abstract class GameArea implements Disposable {
       "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
       "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+      "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+      "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
   };
 
 

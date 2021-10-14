@@ -31,13 +31,6 @@ public class Level3 extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String NPC_DEAD_PILOT_ATLAS_FILENAME = "images/npc_movement/dead_pilot_npc.atlas";
   private static final String[] forestTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
-    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-    "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
-    "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
-    "images/playeritems/axe/axe.png",
-    "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/level_2/level2_grass_1.png",
@@ -49,18 +42,10 @@ public class Level3 extends GameArea {
     "images/level_2/level2_tree_1-1.png",
     "images/level_2/level2_tree_2-1.png",
     "images/level_2/level2_background_tile.png",
-    "images/gunman.png",
-    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
-    "images/player.png",
-    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/EnemyAssets/SpawnerEnemy/spawnerEgg.png",
-    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
-    "images/placeholder.png",
     "images/level_3/level3_dead_group_pine_tree.png",
     "images/level_3/level3_brown_group_pine_tree.png",
     "images/level_2/level2_tree_2_group_ver1.png",
@@ -87,31 +72,13 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
-    "images/dialogue/raw/npc_indicator.png",
-    "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
+    "images/dialogue/raw/npc_indicator.png"
   };
 
   /**
    * Texture atlases file path for Level 3.
    */
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas",
-    "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-    "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-    "images/Player_Animations/player_movement.atlas",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-    "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
-    "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
-    "images/Player_Sprite/player_movement.atlas",
-    "images/hud/dashbar.atlas",
-    "images/hud/health.atlas",
-      "images/weapon/crowbar.atlas",
-    "images/weapon/axe.atlas",
-    "images/weapon/sledge.atlas",
-    "images/playeritems/tourch/torch.atlas",
-    "images/weapon/machete.atlas",
-    "images/weapon/baseball.atlas",
-    "images/weapon/dagger.atlas",
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

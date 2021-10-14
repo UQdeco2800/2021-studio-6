@@ -18,10 +18,11 @@ import com.deco2800.game.services.ServiceLocator;
 
 import java.util.Calendar;
 
+/**
+ * A class representing the final boss health bar
+ */
 public class FinalBossHealthBar extends DefaultTask {
-    private final PhysicsEngine physics;
-    private final DebugRenderer debugRenderer;
-    private final RaycastHit hit = new RaycastHit();
+
     private final GameArea gameArea;
     private final GameTime timeSource;
     private final Entity boss;
@@ -30,10 +31,13 @@ public class FinalBossHealthBar extends DefaultTask {
     private Entity healthBackground;
     private Entity healthForeground;
 
-
+    /**
+     * Constructs the final boss health bar
+     * @param gameArea the game area to create the health bar in
+     * @param boss the final boss entity
+     */
     public FinalBossHealthBar(GameArea gameArea, Entity boss) {
-        physics = ServiceLocator.getPhysicsService().getPhysics();
-        debugRenderer = ServiceLocator.getRenderService().getDebug();
+
         timeSource = ServiceLocator.getTimeSource();
 
         this.gameArea = gameArea;
@@ -44,19 +48,15 @@ public class FinalBossHealthBar extends DefaultTask {
 
     }
 
+    /**
+     * Spawns the health bar into the game area
+     */
     public void createHealthBar() {
         healthBackground.setPosition(15,22);
         healthForeground.setPosition(15,22);
 
         this.gameArea.spawnEntity(healthBackground);
         this.gameArea.spawnEntity(healthForeground);
-    }
-
-    public void updateHealthBar() {
-        float healthPercentage = (float) boss.getComponent(CombatStatsComponent.class).getHealth() / 50;
-
-        healthForeground.setScale(10f * healthPercentage, 0.5f);
-
     }
 
 
@@ -70,13 +70,15 @@ public class FinalBossHealthBar extends DefaultTask {
 
 
     /**
-     * Each update, the timer is checked to see if enough time has passed for an enemy to be spawned
+     * Each update, the timer is checked to see if enough time has passed for the health bar to be updated
      */
     @Override
     public void update() {
 
         if (timeSource.getTime() >= endTime) {
-            updateHealthBar();
+            float healthPercentage = (float) boss.getComponent(CombatStatsComponent.class).getHealth() / 50;
+
+            healthForeground.setScale(10f * healthPercentage, 0.5f);
 
             endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
         }

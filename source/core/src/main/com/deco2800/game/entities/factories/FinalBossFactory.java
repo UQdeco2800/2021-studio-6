@@ -143,6 +143,10 @@ public class FinalBossFactory {
         return spawner;
     }
 
+    /**
+     * Creates the image for the health bar background
+     * @return the health bar background
+     */
     public static Entity createHealthBarBackground() {
 
         TextureRenderComponent image = new TextureRenderComponent("images/Final_Boss/healthbar_background.png");
@@ -157,6 +161,10 @@ public class FinalBossFactory {
 
     }
 
+    /**
+     * Creates the image for the health bar foreground
+     * @return the health bar foreground
+     */
     public static Entity createHealthBarForeground() {
 
        TextureRenderComponent image = new TextureRenderComponent("images/Final_Boss/healthbar_foreground.png");

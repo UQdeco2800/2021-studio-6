@@ -444,6 +444,9 @@ public class NPCFactory {
    */
   public static Entity createFireFlyBugNPC() {
     Vector2 speed = new Vector2(1, 1);
+    AITaskComponent aiComponent =
+      new AITaskComponent()
+        .addTask(new WanderTask(new Vector2(10f, 10), 0.5f));
 
     Entity fireflyBugNPC =
       new Entity()
@@ -452,12 +455,11 @@ public class NPCFactory {
         .addComponent(new HitboxComponent())
         .addComponent(new PhysicsMovementComponent(speed))
         .addComponent(new DisposingComponent())
-        .addComponent(new PointLightComponent(Colors.get("ORANGE"),1.75f,0,0));
+        .addComponent(aiComponent)
+        .addComponent(new PointLightComponent(Colors.get("ORANGE"),2f,0,0));
 
     fireflyBugNPC.getComponent(TextureRenderComponent.class).scaleEntity();
     fireflyBugNPC.scaleHeight(0.15f);
-
-    // TODO: Add AI component to wander around the area in its proximity radius range
 
     return fireflyBugNPC;
   }

@@ -642,8 +642,8 @@ public class Level2 extends GameArea {
    */
   private void spawnFireFlyBugNPC() {
     GridPoint2[] spawnLocations = {
-            new GridPoint2(24,21),
-            new GridPoint2(41,9),
+            new GridPoint2(26,21),
+            new GridPoint2(27,7),
             new GridPoint2(49,31),
     };
 

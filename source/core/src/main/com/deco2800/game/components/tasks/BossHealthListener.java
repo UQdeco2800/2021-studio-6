@@ -4,6 +4,7 @@ import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +59,12 @@ public class BossHealthListener extends Component {
                 logger.debug("Boss State change from {} to {}", BossState.PHASE2, bossState);
                 boss.getComponent(MultiAITaskComponent.class).removeAllTasks();
                 //add bullet hell task
+            }
+        } else if(bossState == BossState.PHASE3) {
+            if(health <= 0) {
+                bossState = BossState.PHASEFINAL;
+                logger.debug("Boss State change from {} to {}", BossState.PHASE3, bossState);
+                MainGameScreen.changeLevel();
             }
         }
 

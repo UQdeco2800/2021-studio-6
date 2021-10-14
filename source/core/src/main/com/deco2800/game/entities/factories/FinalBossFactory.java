@@ -100,7 +100,7 @@ public class FinalBossFactory {
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(100, 0))
+                .addComponent(new CombatStatsComponent(10, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
 

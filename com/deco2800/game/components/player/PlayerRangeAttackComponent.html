@@ -100,7 +100,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">PlayerRangeAttackComponent</span>
 extends <a href="../Component.html" title="class in com.deco2800.game.components">Component</a></pre>
-<div class="block">Used to listen and wait for player's range button to be clicked (L key). Once clicked,
+<div class="block">Used to listen and wait for player's range button to be clicked (Enter key). Once clicked,
  a bullet will be created from player's entity position and launched towards coordinate where range button
  is clicked in game area. If no movement keys clicked, range attack will be launched to the right by default</div>
 </section>
@@ -310,6 +310,17 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
+<h3><a id="create()">create</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
+<div class="block">Creation of listener on specified player when game is created</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="restockBulletShot(com.deco2800.game.entities.Entity)">restockBulletShot</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">restockBulletShot</span>&#8203;(<span class="arguments"><a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;bulletShot)</span></div>
 <div class="block">To reuse bullet shot for performance sake</div>
@@ -350,17 +361,6 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>bullets</code> - is the number of bullets player will be able to spawn into the game world</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="create()">create</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
-<div class="block">Creation of listener on specified player when game is created</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
 </dl>
 </section>
 </li>

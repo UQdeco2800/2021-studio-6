@@ -93,7 +93,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="contentContainer">
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
 <div class="inheritance"><a href="../Component.html" title="class in com.deco2800.game.components">com.deco2800.game.components.Component</a>
-<div class="inheritance"><a href="../../lighting/PointLightComponent.html" title="class in com.deco2800.game.lighting">com.deco2800.game.lighting.PointLightComponent</a>
+<div class="inheritance"><a href="../../lighting/FlickerLightComponent.html" title="class in com.deco2800.game.lighting">com.deco2800.game.lighting.FlickerLightComponent</a>
 <div class="inheritance">com.deco2800.game.components.player.PlayerLightingComponent</div>
 </div>
 </div>
@@ -105,7 +105,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">PlayerLightingComponent</span>
-extends <a href="../../lighting/PointLightComponent.html" title="class in com.deco2800.game.lighting">PointLightComponent</a></pre>
+extends <a href="../../lighting/FlickerLightComponent.html" title="class in com.deco2800.game.lighting">FlickerLightComponent</a></pre>
 <div class="block">Component to toggle player lighting</div>
 </section>
 <section class="summary">
@@ -140,7 +140,10 @@ extends <a href="../../lighting/PointLightComponent.html" title="class in com.de
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.Color,float,float,float)">PlayerLightingComponent</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.Color,com.badlogic.gdx.graphics.Color,com.badlogic.gdx.graphics.Color,com.badlogic.gdx.graphics.Color,float,float,float)">PlayerLightingComponent</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color2,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color3,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color4,
 float&nbsp;distance,
 float&nbsp;offsetx,
 float&nbsp;offsety)</code></th>
@@ -188,15 +191,15 @@ float&nbsp;offsety)</code></th>
 </div>
 </div>
 <div class="inheritedList">
-<h3>Methods inherited from class&nbsp;com.deco2800.game.lighting.<a href="../../lighting/PointLightComponent.html" title="class in com.deco2800.game.lighting">PointLightComponent</a></h3>
-<a id="methods.inherited.from.class.com.deco2800.game.lighting.PointLightComponent">
+<h3>Methods inherited from class&nbsp;com.deco2800.game.lighting.<a href="../../lighting/FlickerLightComponent.html" title="class in com.deco2800.game.lighting">FlickerLightComponent</a></h3>
+<a id="methods.inherited.from.class.com.deco2800.game.lighting.FlickerLightComponent">
 <!--   -->
-</a><code><a href="../../lighting/PointLightComponent.html#dispose()">dispose</a>, <a href="../../lighting/PointLightComponent.html#getPointLight()">getPointLight</a></code></div>
+</a><code><a href="../../lighting/FlickerLightComponent.html#changeDistance(float)">changeDistance</a>, <a href="../../lighting/FlickerLightComponent.html#disableLights()">disableLights</a>, <a href="../../lighting/FlickerLightComponent.html#dispose()">dispose</a>, <a href="../../lighting/FlickerLightComponent.html#getPointLightBase()">getPointLightBase</a>, <a href="../../lighting/FlickerLightComponent.html#turnOnLights()">turnOnLights</a>, <a href="../../lighting/FlickerLightComponent.html#update()">update</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;com.deco2800.game.components.<a href="../Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.components.Component">
 <!--   -->
-</a><code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
+</a><code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <a id="methods.inherited.from.class.java.lang.Object">
@@ -217,8 +220,11 @@ float&nbsp;offsety)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.Color,float,float,float)">PlayerLightingComponent</a></h3>
+<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.Color,com.badlogic.gdx.graphics.Color,com.badlogic.gdx.graphics.Color,com.badlogic.gdx.graphics.Color,float,float,float)">PlayerLightingComponent</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">PlayerLightingComponent</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color2,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color3,
+<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/Color.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics" class="externalLink">Color</a>&nbsp;color4,
 float&nbsp;distance,
 float&nbsp;offsetx,
 float&nbsp;offsety)</span></div>
@@ -243,7 +249,7 @@ float&nbsp;offsety)</span></div>
  should be made here, not in the constructor which is called before an entity is finished.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../lighting/PointLightComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../lighting/PointLightComponent.html" title="class in com.deco2800.game.lighting">PointLightComponent</a></code></dd>
+<dd><code><a href="../../lighting/FlickerLightComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../lighting/FlickerLightComponent.html" title="class in com.deco2800.game.lighting">FlickerLightComponent</a></code></dd>
 </dl>
 </section>
 </li>

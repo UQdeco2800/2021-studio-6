@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -169,47 +169,54 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBandagePickup(int)">createBandagePickup</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
+<td class="colLast">
+<div class="block">Bandage pick up will only be spawned in safehouse game area</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBat(int)">createBat</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
 <div class="block">Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCoinPickup(int)">createCoinPickup</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
 <div class="block">Coin pickup will spawn when enemies die - but for now, it has been spawned randomly in game world</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCrowbar(int)">createCrowbar</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
 <div class="block">Sword is supposed to only be in safehouses but for now, it will spawn in forest game area for testing</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDagger(int)">createDagger</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
 <div class="block">Dagger is supposed to only be in safehouses but for now, it will spawn in forest game area for testing</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createHelmet(int)">createHelmet</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
 <div class="block">Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMachete(int)">createMachete</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
 <div class="block">Sword is supposed to only be in safehouses but for now, it will spawn in forest game area for testing</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSledge(int)">createSledge</a></span>&#8203;(int&nbsp;itemQuantity)</code></th>
 <td class="colLast">
@@ -276,7 +283,20 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>itemQuantity</code> - the number of coin quantity for coin pick up</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>ammo pickup for player to use to purchase items</dd>
+<dd>coin pickup for player to use to purchase items</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createBandagePickup(int)">createBandagePickup</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createBandagePickup</span>&#8203;(<span class="arguments">int&nbsp;itemQuantity)</span></div>
+<div class="block">Bandage pick up will only be spawned in safehouse game area</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>itemQuantity</code> - the number of bandage quantity for bandage pick up</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>bandage pickup for player to use to restore a wound state</dd>
 </dl>
 </section>
 </li>

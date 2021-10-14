@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":6,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+<script type="text/javascript">var data = {"i0":6,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -138,12 +138,32 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected static java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enemyAssets">enemyAssets</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enemyAtlas">enemyAtlas</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static java.lang.String[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enemySounds">enemySounds</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#player">player</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#playerAssets">playerAssets</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#playerAtlas">playerAtlas</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -234,12 +254,17 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadSharedAssets()">loadSharedAssets</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnEntity(com.deco2800.game.entities.Entity)">spawnEntity</a></span>&#8203;(<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></th>
 <td class="colLast">
 <div class="block">Spawn entity at its current position</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnEntityAt(com.deco2800.game.entities.Entity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)">spawnEntityAt</a></span>&#8203;(<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/GridPoint2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">GridPoint2</a>&nbsp;tilePos,
@@ -249,13 +274,18 @@ boolean&nbsp;centerY)</code></th>
 <div class="block">Spawn entity on a given tile.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnFromSpawner(com.badlogic.gdx.math.Vector2,int)">spawnFromSpawner</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;position,
 int&nbsp;maxSpawnDistance)</code></th>
 <td class="colLast">
 <div class="block">Spawns a small enemy from the appropriate spawner's position</div>
 </td>
+</tr>
+<tr class="rowColor" id="i9">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unloadSharedAssets()">unloadSharedAssets</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -295,6 +325,30 @@ int&nbsp;maxSpawnDistance)</code></th>
 <section class="detail">
 <h3><a id="player">player</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">player</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="playerAssets">playerAssets</a></h3>
+<div class="memberSignature"><span class="modifiers">protected static final</span>&nbsp;<span class="returnType">java.lang.String[]</span>&nbsp;<span class="memberName">playerAssets</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="playerAtlas">playerAtlas</a></h3>
+<div class="memberSignature"><span class="modifiers">protected static final</span>&nbsp;<span class="returnType">java.lang.String[]</span>&nbsp;<span class="memberName">playerAtlas</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="enemyAssets">enemyAssets</a></h3>
+<div class="memberSignature"><span class="modifiers">protected static final</span>&nbsp;<span class="returnType">java.lang.String[]</span>&nbsp;<span class="memberName">enemyAssets</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="enemyAtlas">enemyAtlas</a></h3>
+<div class="memberSignature"><span class="modifiers">protected static final</span>&nbsp;<span class="returnType">java.lang.String[]</span>&nbsp;<span class="memberName">enemyAtlas</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -397,6 +451,18 @@ int&nbsp;maxSpawnDistance)</span></div>
 <dd><code>position</code> - position to spawn</dd>
 <dd><code>maxSpawnDistance</code> - maximum spawn distance</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="loadSharedAssets()">loadSharedAssets</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">loadSharedAssets</span>()</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="unloadSharedAssets()">unloadSharedAssets</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">unloadSharedAssets</span>()</div>
 </section>
 </li>
 <li class="blockList">

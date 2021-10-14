@@ -19,7 +19,7 @@ public class EnemyDarknessController extends Component {
   // Multiplies the speed of the entity when in darkness
   private static final float SPEED_MULTIPLIER = 2;
   // Divides the time between firing when entity in darkness
-  private static final float FIRING_INTERVAL_DIVIDER = 3;
+  private static final float FIRING_INTERVAL_DIVIDER = 2;
   // Multiplies the maximum distance that the entity can chase the player when player in darkness
   private static final float MAX_DISTANCE_MULTIPLIER = 2.5f;
   private boolean entityInDarkness = true;

@@ -67,7 +67,7 @@ public class FinalBossFactory {
         AITaskComponent aiComponent =
                 new AITaskComponent()
                           .addTask(new Stage2Task(1, gameArea, target));
-        darkness.setScale(50, 7);
+        darkness.setScale(10, 7); //x=50
         darkness.addComponent(aiComponent);
 
 

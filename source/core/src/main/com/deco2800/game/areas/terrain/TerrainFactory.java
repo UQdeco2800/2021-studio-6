@@ -28,6 +28,8 @@ public class TerrainFactory {
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
   private static final int GRASS_TILE_COUNT = 123;
+  private static final int BOSS_GRASS_COUNT = 10;
+  //private static final int GRASS_SAND_COUNT = 100;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -162,7 +164,9 @@ public class TerrainFactory {
                 new TextureRegion(resourceService.getAsset("images/level_3/new_darker_water_tiles/water-full.png", Texture.class));
         TextureRegion sandToWater =
                 new TextureRegion(resourceService.getAsset("images/level_3/new_darker_water_tiles/water-bottom-sand.png", Texture.class));
-        return createBossTerrain(1f, grassB1, grassB2, grassB3, grassB4, grassB5, sand, water, sandToWater);
+        TextureRegion grassToSand =
+                new TextureRegion(resourceService.getAsset("images/level_3/grass_to_sand.png", Texture.class));
+        return createBossTerrain(1f, grassB1, grassB2, grassB3, grassB4, grassB5, sand, water, sandToWater, grassToSand);
 
       default:
         System.out.println("default");
@@ -173,10 +177,11 @@ public class TerrainFactory {
   private TerrainComponent createBossTerrain(
           float tileWorldSize, TextureRegion grassB1, TextureRegion grassB2,
           TextureRegion grassB3, TextureRegion grassB4, TextureRegion grassB5, TextureRegion sand,
-          TextureRegion water, TextureRegion sandToWater
+          TextureRegion water, TextureRegion sandToWater, TextureRegion grassToSand
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grassB1.getRegionWidth(), grassB1.getRegionHeight());
-    TiledMap tiledMap = createBossTiles(tilePixelSize, grassB1, grassB2, grassB3, grassB4, grassB5, sand, water, sandToWater);
+    TiledMap tiledMap = createBossTiles(tilePixelSize, grassB1, grassB2, grassB3, grassB4, grassB5, sand, water,
+            sandToWater, grassToSand);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -312,7 +317,7 @@ public class TerrainFactory {
   private TiledMap createBossTiles(
           GridPoint2 tileSize, TextureRegion grassB1, TextureRegion grassB2,
           TextureRegion grassB3, TextureRegion grassB4, TextureRegion grassB5, TextureRegion sand,
-          TextureRegion water, TextureRegion sandToWater) {
+          TextureRegion water, TextureRegion sandToWater, TextureRegion grassToSand) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile grass1 = new TerrainTile(grassB1);
     TerrainTile grass2 = new TerrainTile(grassB2);
@@ -322,6 +327,7 @@ public class TerrainFactory {
     TerrainTile sandTile = new TerrainTile(sand);
     TerrainTile waterTile = new TerrainTile(water);
     TerrainTile sandToWaterTile = new TerrainTile(sandToWater);
+    TerrainTile grassToSandTile = new TerrainTile(grassToSand);
 
     int xScale = 1;
     int yScale = 1;
@@ -331,10 +337,31 @@ public class TerrainFactory {
     fillTiles(layer, MAP_SIZE_BOSS, xScale, yScale, grass1);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE_BOSS, grass2, ROCK_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE_BOSS, grass3, ROCK_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE_BOSS, grass4, ROCK_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE_BOSS, grass5, ROCK_TILE_COUNT);
+    GridPoint2 start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0);
+    GridPoint2 end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.3);
+    fillTilesAtRandomInRegion(layer, grass2, start, end, BOSS_GRASS_COUNT);
+    fillTilesAtRandomInRegion(layer, grass3, start, end, BOSS_GRASS_COUNT);
+    fillTilesAtRandomInRegion(layer, grass4, start, end, BOSS_GRASS_COUNT);
+    fillTilesAtRandomInRegion(layer, grass5, start, end, BOSS_GRASS_COUNT);
+
+    start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.5);
+    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 1);
+    setTilesInRegion(layer, waterTile, start, end);
+
+    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.525);
+    setTilesInRegion(layer, sandToWaterTile, start, end);
+
+    start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.3);
+    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.5);
+    setTilesInRegion(layer, sandTile, start, end);
+
+    start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.3);
+    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.325);
+    setTilesInRegion(layer, grassToSandTile, start, end);
+
+    //start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.25);
+    //end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.35);
+    //fillTilesAtRandomInRegion(layer, grassToSandTile, start, end, GRASS_SAND_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;

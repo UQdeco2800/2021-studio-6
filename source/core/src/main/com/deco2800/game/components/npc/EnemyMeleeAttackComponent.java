@@ -36,7 +36,7 @@ public class EnemyMeleeAttackComponent extends Component {
             playerInitialised = true;
         }
 
-        if (playerInAttackRange && timeSource.getTime() >= endTime) {
+        if (!timeSource.isPaused() && playerInAttackRange && timeSource.getTime() >= endTime) {
             playerStats.hit(myStats);
             endTime = timeSource.getTime() + (int)(attackInterval * ONE_SECOND);
         }

@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,7 @@ import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Items;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -68,6 +70,7 @@ public class FriendlyNPCFactory {
                 .addComponent(new FriendlyNPCTriggerComponent(story))
                 .addComponent(animator)
                 .addComponent(new SpeechIconComponent(0.6f))
+                .addComponent(new PointLightComponent(new Color(0xffa500aa), 3f, 0, 0))
                 .addComponent(new NPCAnimationController())
                 .addComponent(aiComponent);
 

@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,8 @@ import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.lighting.LightingComponent;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -90,6 +93,7 @@ public class NPCFactory {
                     .addComponent(new NPCSoundComponent())
                     .addComponent(new AITaskComponent())
                     .addComponent(new LootComponent("ammo",3, 5, 1))
+                    .addComponent(new PointLightComponent(new Color(0x93ff9eaa), 0.5f, 0, 0))
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
     
     spawnerEnemy.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);

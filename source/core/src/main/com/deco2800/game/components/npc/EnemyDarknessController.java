@@ -88,6 +88,7 @@ public class EnemyDarknessController extends Component {
     entity.getEvents().addListener("inShadow", this::entityInDarkness);
     entity.getEvents().addListener("inLight", this::entityInLight);
 
+    // Checks whether the player is in darkness
     if (ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null) {
       if (!ServiceLocator.getGameArea().getPlayer().getComponent(DarknessDetectionComponent.class).isInLight()) {
         playerInDarkness();
@@ -95,6 +96,9 @@ public class EnemyDarknessController extends Component {
     }
   }
 
+  /**
+   * On update, once the player is initialised then listen to the players darkness events
+   */
   @Override
   public void update() {
     super.update();

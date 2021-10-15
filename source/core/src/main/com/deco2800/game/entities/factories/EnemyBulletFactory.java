@@ -3,13 +3,10 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.npc.BulletCollider;
-import com.deco2800.game.components.tasks.ChaseTask;
-import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -27,6 +24,7 @@ public class EnemyBulletFactory {
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in
      * @param source the source of the bullet
+     * @param textureFileName the filename for the texture
      */
     public static void createBullet(Entity source, Entity target, GameArea gameArea, String textureFileName) {
 
@@ -49,6 +47,7 @@ public class EnemyBulletFactory {
      * @param source the source of the bullet
      * @param target the target entity to be fired at
      * @param gameArea need to spawn the entity in
+     * @param textureFileName the filename for the texture
      */
     public static void createToughBullet(Entity source, Entity target, GameArea gameArea, String textureFileName) {
         float x1 = source.getPosition().x;
@@ -119,10 +118,13 @@ public class EnemyBulletFactory {
      * @param x_1 the x coordinate of the source
      * @param y_1 the y coordinate of the source
      * @param imagePath the image path for the bullet texture
+     * @param bloodBall whether it is a bloodball or not
      * @return the bullet entity
      */
     private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea,
-                                     Entity source, float x_1, float y_1, boolean bloodball, String imagePath) {
+                                     Entity source, float x_1, float y_1, boolean bloodBall, String imagePath) {
+
+        // Create the bullet entity
         Entity bullet = new Entity()
                 .addComponent(new TextureRenderComponent(imagePath, rotation))
                 .addComponent(new PhysicsComponent())
@@ -133,15 +135,14 @@ public class EnemyBulletFactory {
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
                 .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
-        if (bloodball) {
+        // If it is a bloodball then add the light component
+        if (bloodBall) {
             bullet.addComponent(new PointLightComponent(new Color(0xff0000aa), 0.5f, 0, 0));
-            bullet.setScale(0.5f, 0.5f);
-            PhysicsUtils.setEntityPhysics(bullet, 0f, 0.2f, 0.2f, 0f, 0f);
-        } else {
-            bullet.setScale(0.5f, 0.5f);
-            PhysicsUtils.setEntityPhysics(bullet, 0f, 0.2f, 0.2f, 0f, 0f);
         }
 
+        // Make the bull smaller with a small hitbox
+        bullet.setScale(0.5f, 0.5f);
+        PhysicsUtils.setEntityPhysics(bullet, 0f, 0.2f, 0.2f, 0f, 0f);
 
         bullet.getComponent(PhysicsMovementComponent.class).setTarget(destination);
         bullet.getComponent(PhysicsMovementComponent.class).setMoving(true);

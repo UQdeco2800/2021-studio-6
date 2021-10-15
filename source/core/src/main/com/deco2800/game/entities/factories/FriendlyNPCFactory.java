@@ -74,6 +74,7 @@ public class FriendlyNPCFactory {
                 .addComponent(new NPCAnimationController())
                 .addComponent(aiComponent);
 
+        // Setup who the npc should colide with and set their density
         ColliderComponent colliderComponent = npc.getComponent(ColliderComponent.class);
         colliderComponent.setLayer(PhysicsLayer.FRIENDLY_NPC,
             (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
@@ -87,11 +88,11 @@ public class FriendlyNPCFactory {
         npc.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
         npc.setScale(new Vector2(1.1f,1.1f));
 
+        // Set the collider box size
         PhysicsUtils.setScaledCollider(npc, 0.5f, 0.5f);
 
         return npc;
     }
-
 
     /**
      * Used to create shop keeper NPC in safehouse

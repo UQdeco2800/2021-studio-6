@@ -16,13 +16,13 @@ import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.physics.PhysicsUtils;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -55,11 +55,6 @@ public class NPCFactory {
 
     spawnerNPC.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
-    ColliderComponent colliderComponent = spawnerNPC.getComponent(ColliderComponent.class);
-    colliderComponent.setLayer(PhysicsLayer.NPC,
-        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
-    colliderComponent.setDensity(2000f);
-
     NPCSoundComponent npcSoundComponent = spawnerNPC.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.wav", Sound.class));
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/dead.wav", Sound.class));
@@ -68,6 +63,8 @@ public class NPCFactory {
 
     spawnerNPC.getComponent(AnimationRenderComponent.class).scaleEntity();
     spawnerNPC.setScale(1f, 1f);
+
+    PhysicsUtils.setEntityPhysics(spawnerNPC, 2000f, 0.8f, 0.8f, 0f, 0f);
 
     return spawnerNPC;
   }
@@ -110,7 +107,7 @@ public class NPCFactory {
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     smallEnemy.setScale(1.2f, 1.2f);
 
-    setPhysics(smallEnemy, 0.01f, 0.7f, 0.7f, 0f, 0f);
+    PhysicsUtils.setEntityPhysics(smallEnemy, 0.01f, 0.7f, 0.7f, 0f, 0f);
 
     return smallEnemy;
   }
@@ -139,11 +136,6 @@ public class NPCFactory {
     largeEnemy.addComponent(new LootComponent("coins",5, 10, 1));
     largeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
 
-    ColliderComponent colliderComponent = largeEnemy.getComponent(ColliderComponent.class);
-    colliderComponent.setLayer(PhysicsLayer.NPC,
-        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
-    colliderComponent.setDensity(50f);
-
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
@@ -156,7 +148,8 @@ public class NPCFactory {
 
     //Increase the size of the enemy
     largeEnemy.setScale(2f,2f);
-    PhysicsUtils.setScaledCollider(largeEnemy, 0.8f, 0.3f);
+
+    PhysicsUtils.setEntityPhysics(largeEnemy, 50f, 0.8f, 1f, 0f, -0.4f);
 
     return largeEnemy;
   }
@@ -184,11 +177,6 @@ public class NPCFactory {
     longRange.addComponent(new LootComponent("coins",1, 3, 0.5f));
     longRange.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
 
-    ColliderComponent colliderComponent = longRange.getComponent(ColliderComponent.class);
-    colliderComponent.setLayer(PhysicsLayer.NPC,
-        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
-    colliderComponent.setDensity(6f);
-
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
@@ -199,7 +187,9 @@ public class NPCFactory {
     npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/detectPlayer.mp3", Sound.class));
     npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/shoot.wav", Sound.class));
 
-    longRange.setScale(new Vector2(1f, 1f));
+    longRange.setScale(new Vector2(1.5f, 1.5f));
+
+    PhysicsUtils.setEntityPhysics(longRange, 6f, 0.8f, 0.8f, 0f, 0f);
     return longRange;
   }
 
@@ -220,12 +210,6 @@ public class NPCFactory {
     toughLongRangeEnemy.addComponent(new LootComponent("coins",3, 7, 1));
     toughLongRangeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
 
-    ColliderComponent colliderComponent = toughLongRangeEnemy.getComponent(ColliderComponent.class);
-    colliderComponent.setLayer(PhysicsLayer.NPC,
-        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
-
-    colliderComponent.setDensity(20f);
-
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
@@ -237,6 +221,8 @@ public class NPCFactory {
     npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.wav", Sound.class));
 
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
+
+    PhysicsUtils.setEntityPhysics(toughLongRangeEnemy, 20f, 1.7f, 1.7f, 0f, 0f);
 
     return toughLongRangeEnemy;
   }
@@ -290,21 +276,16 @@ public class NPCFactory {
             .addComponent(new NPCAnimationController())
             .addComponent(new NPCSoundComponent())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+    ColliderComponent colliderComponent = npc.getComponent(ColliderComponent.class);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
+
     return npc;
   }
 
 
-  private static void setPhysics(Entity entity, float density, float scaleX, float scaleY, float offsetX, float offsetY) {
-    ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
-    HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);
-    colliderComponent.setLayer(PhysicsLayer.NPC,
-        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
-    colliderComponent.setDensity(density);
-    Vector2 hitboxScale = new Vector2(scaleX,scaleY);
-    Vector2 hitboxPosition = new Vector2(entity.getCenterPosition().x + offsetX, entity.getCenterPosition().y + offsetY);
-    colliderComponent.setAsBox(hitboxScale, hitboxPosition);
-    hitboxComponent.setAsBox(hitboxScale, hitboxPosition);
-  }
+
 
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");

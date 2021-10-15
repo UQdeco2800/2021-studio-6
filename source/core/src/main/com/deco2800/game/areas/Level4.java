@@ -31,7 +31,7 @@ public class Level4 extends GameArea {
     private static final int NUM_LONGRANGE = 0;
     private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
     private static final int NUM_SPAWNER_ENEMY = 0;
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(30, 10);
+    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(20, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
             "images/Final_Boss/boss_head.png",
@@ -301,8 +301,8 @@ public class Level4 extends GameArea {
         Entity darkness = FinalBossFactory.createDarkness(player, this);
         Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss);
 
-        GridPoint2 bossPos = new GridPoint2(40, 35);
-        GridPoint2 darknessPos = new GridPoint2(40, 35);
+        GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2);
+        GridPoint2 darknessPos = new GridPoint2(bounds.x/2, bounds.y/2);
         spawnEntityAt(boss, bossPos, true, true);
         this.spawnEntityAt(darkness, darknessPos, true, true);
         this.spawnEntity(phase);

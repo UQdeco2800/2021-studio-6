@@ -149,7 +149,7 @@ public class NPCFactory {
     //Increase the size of the enemy
     largeEnemy.setScale(2f,2f);
 
-    PhysicsUtils.setEntityPhysics(largeEnemy, 50f, 0.8f, 1f, 0f, -0.4f);
+    PhysicsUtils.setEntityPhysics(largeEnemy, 30f, 0.8f, 1f, 0f, -0.4f);
 
     return largeEnemy;
   }

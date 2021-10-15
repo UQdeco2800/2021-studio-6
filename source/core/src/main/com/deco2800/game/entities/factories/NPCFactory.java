@@ -179,10 +179,7 @@ public class NPCFactory {
                     .addComponent(new LootComponent("coins", 1,2, 0.3f))
                     .addComponent(new DisposingComponent());
 
-    ColliderComponent colliderComponent = smallEnemy.getComponent(ColliderComponent.class);
-    colliderComponent.setLayer(PhysicsLayer.NPC,
-        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
-    colliderComponent.setDensity(0.01f);
+
 
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
@@ -196,9 +193,12 @@ public class NPCFactory {
 
     smallEnemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     smallEnemy.setScale(1.2f, 1.2f);
-    PhysicsUtils.setScaledCollider(smallEnemy, 0.6f, 0.3f);
+
+    setPhysics(smallEnemy, 0.01f, 0.7f, 0.7f, 0f, 0f);
+
     return smallEnemy;
   }
+
 
   /**
    * Creates an enemy with slower speed but deals more damage to the target
@@ -459,6 +459,19 @@ public class NPCFactory {
 
     //PhysicsUtils.setScaledCollider(npc, 0.8f, 0.3f);
     return npc;
+  }
+
+
+  private static void setPhysics(Entity entity, float density, float scaleX, float scaleY, float offsetX, float offsetY) {
+    ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
+    HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
+    colliderComponent.setDensity(density);
+    Vector2 hitboxScale = new Vector2(scaleX,scaleY);
+    Vector2 hitboxPosition = new Vector2(entity.getCenterPosition().x + offsetX, entity.getCenterPosition().y + offsetY);
+    colliderComponent.setAsBox(hitboxScale, hitboxPosition);
+    hitboxComponent.setAsBox(hitboxScale, hitboxPosition);
   }
 
   private NPCFactory() {

@@ -14,6 +14,7 @@ import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Items;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -61,6 +62,7 @@ public class FriendlyNPCFactory {
         Entity npc = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
+                .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.FRIENDLY_NPC))
                 .addComponent(new DisposingComponent())
                 .addComponent(new FriendlyNPCTriggerComponent(story))
@@ -69,9 +71,20 @@ public class FriendlyNPCFactory {
                 .addComponent(new NPCAnimationController())
                 .addComponent(aiComponent);
 
+        ColliderComponent colliderComponent = npc.getComponent(ColliderComponent.class);
+        colliderComponent.setLayer(PhysicsLayer.FRIENDLY_NPC,
+            (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
+        if (wandering) {
+            colliderComponent.setDensity(10f);
+        } else {
+            colliderComponent.setDensity(50f);
+        }
+
         // set the npc hitbox to be larger than normal
         npc.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
         npc.setScale(new Vector2(1.1f,1.1f));
+
+        PhysicsUtils.setScaledCollider(npc, 0.5f, 0.5f);
 
         return npc;
     }

@@ -59,7 +59,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
      */
     @Override
     public void update() {
-        if (timeSource.getTime() >= endTime) {
+        if (!timeSource.isPaused() && timeSource.getTime() >= endTime) {
             this.owner.getEntity().getEvents().trigger("fire");
             NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);
             if (npcSoundComponent != null) {

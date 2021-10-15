@@ -95,7 +95,7 @@ public class Level1 extends GameArea {
   @Override
   public void create() {
     loadAssets();
-    ServiceLocator.getRenderService().getDebug().setActive(true);
+    
     displayUI();
 
     spawnTerrain();

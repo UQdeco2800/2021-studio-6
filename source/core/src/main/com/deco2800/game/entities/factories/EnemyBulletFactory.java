@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
@@ -10,6 +11,7 @@ import com.deco2800.game.components.npc.BulletCollider;
 import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.*;
@@ -36,7 +38,7 @@ public class EnemyBulletFactory {
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
         Entity bullet = makeBullet(rotateTexture(newTarget, source, x1, y1), newTarget, target, gameArea,
-                source, x1, y1, textureFileName);
+                source, x1, y1, true, textureFileName);
 
         gameArea.spawnEntity(bullet);
     }
@@ -63,13 +65,13 @@ public class EnemyBulletFactory {
         Vector2 downRotate = rotateVector(straightTarget, -(Math.PI)/4);
 
         Entity bulletStraight = makeBullet(rotateTexture(straightTarget, source, x1, y1), straightTarget, target, gameArea,
-                source, x1, y1, textureFileName);
+                source, x1, y1, false, textureFileName);
 
         Entity bulletUp = makeBullet(rotateTexture(upRotate, source, x1, y1), upRotate, target, gameArea,
-                source, x1, y1, textureFileName);
+                source, x1, y1, false, textureFileName);
 
         Entity bulletDown = makeBullet(rotateTexture(downRotate, source, x1, y1), downRotate, target, gameArea,
-                source, x1, y1, textureFileName);
+                source, x1, y1, false, textureFileName);
 
         gameArea.spawnEntity(bulletStraight);
         gameArea.spawnEntity(bulletUp);
@@ -120,7 +122,7 @@ public class EnemyBulletFactory {
      * @return the bullet entity
      */
     private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea,
-                                     Entity source, float x_1, float y_1, String imagePath) {
+                                     Entity source, float x_1, float y_1, boolean bloodball, String imagePath) {
         Entity bullet = new Entity()
                 .addComponent(new TextureRenderComponent(imagePath, rotation))
                 .addComponent(new PhysicsComponent())
@@ -131,6 +133,9 @@ public class EnemyBulletFactory {
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
                 .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
 
+        if (bloodball) {
+            bullet.addComponent(new PointLightComponent(new Color(0xff0000aa), 0.5f, 0, 0));
+        }
         bullet.setScale(0.8f, 0.8f);
 
         bullet.getComponent(PhysicsMovementComponent.class).setTarget(destination);

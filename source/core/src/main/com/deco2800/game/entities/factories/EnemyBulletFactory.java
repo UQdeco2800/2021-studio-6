@@ -135,8 +135,11 @@ public class EnemyBulletFactory {
 
         if (bloodball) {
             bullet.addComponent(new PointLightComponent(new Color(0xff0000aa), 0.5f, 0, 0));
+            bullet.setScale(0.5f, 0.5f);
+        } else {
+            bullet.setScale(0.5f, 0.5f);
         }
-        bullet.setScale(0.8f, 0.8f);
+
 
         bullet.getComponent(PhysicsMovementComponent.class).setTarget(destination);
         bullet.getComponent(PhysicsMovementComponent.class).setMoving(true);

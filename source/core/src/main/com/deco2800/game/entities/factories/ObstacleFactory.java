@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
@@ -153,9 +154,14 @@ public class ObstacleFactory {
     return bush;
   }
 
-  public static Entity createLamp() {
+  /**
+   * Create a lamp object
+   * @param type select the lamp texture (0=regular, 1=vined)
+   * @return Entity lamp
+   */
+  public static Entity createLamp(int type) {
     String lampPath;
-    if (RandomUtils.randomInt(2) == 1) {
+    if (type == 0) {
       lampPath = "images/level_1/street_lamp.png";
     } else {
       lampPath = "images/level_1/street_lamped_vined.png";
@@ -170,8 +176,7 @@ public class ObstacleFactory {
 
     lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     lamp.getComponent(TextureRenderComponent.class).scaleEntity();
-    lamp.scaleHeight(2.0f);
-    lamp.scaleWidth(1f);
+    lamp.setScale(new Vector2(1, 2f));
     PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
     return lamp;
   }

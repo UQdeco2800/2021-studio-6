@@ -336,7 +336,7 @@ public class Level1 extends GameArea {
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     for (int x = 5; x < tileBounds.x * 0.75; x += 5) {
       GridPoint2 position = new GridPoint2(x, 1);
-      Entity lamppost = ObstacleFactory.createLamp();
+      Entity lamppost = ObstacleFactory.createLamp(1);
       spawnEntityAt(lamppost, position, true, true);
     }
   }

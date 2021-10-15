@@ -15,6 +15,10 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  */
 public class ItemFactory {
 
+    private ItemFactory() {
+        throw new IllegalStateException("Class should not be instantiated");
+    }
+
     /**
      * Ammo pickup will spawn when enemies die - but for now, it has been spawned randomly in game world
      *

@@ -24,7 +24,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
   private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
   private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
-  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
+  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(40, 40);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
   private static final int GRASS_TILE_COUNT = 123;
@@ -152,7 +152,11 @@ public class TerrainFactory {
                 new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
         TextureRegion rocksB =
                 new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
-        return createBossTerrain(0.5f, grassB, tuftB, rocksB);
+        TextureRegion sand =
+                new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
+        TextureRegion water =
+                new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
+        return createBossTerrain(1f, grassB, tuftB, rocksB, sand, water);
 
       default:
         System.out.println("default");
@@ -161,10 +165,11 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createBossTerrain(
-          float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks
+          float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks,
+          TextureRegion sand, TextureRegion water
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-    TiledMap tiledMap = createBossTiles(tilePixelSize, grass, grassTuft, rocks);
+    TiledMap tiledMap = createBossTiles(tilePixelSize, grass, grassTuft, rocks, sand, water);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -298,7 +303,8 @@ public class TerrainFactory {
   }
 
   private TiledMap createBossTiles(
-          GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+          GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks,
+          TextureRegion sand, TextureRegion water) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile grassTile = new TerrainTile(grass);
     TerrainTile grassTuftTile = new TerrainTile(grassTuft);

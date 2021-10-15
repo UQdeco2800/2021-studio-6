@@ -131,7 +131,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double gameLevel = 1;
+  private double gameLevel = 4; //change back
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -197,7 +197,7 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
-      gameArea = new Level1(terrainFactory);
+      gameArea = new Level4(terrainFactory); //change back
 
       gameArea.create();
 
@@ -270,7 +270,7 @@ public class MainGameScreen extends ScreenAdapter {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
           CAMERA_POSITION.set(new Vector2(20, 12));
-          renderer.setZoom(40);
+          renderer.setZoom(100); //40
         }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);

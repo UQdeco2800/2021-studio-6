@@ -146,8 +146,6 @@ public class EnemyDarknessController extends Component {
    * Modifies behaviour of the entity when the player is in darkness
    */
   void playerInDarkness() {
-    System.out.println("Chasing" + chasingEntity);
-    System.out.println("Playerdark" + playerInDarkness);
     if (chasingEntity && !playerInDarkness) {
       playerInDarkness = true;
       chaseTask.setMaxChaseDistance(playerInDarkChaseMaxDistance);

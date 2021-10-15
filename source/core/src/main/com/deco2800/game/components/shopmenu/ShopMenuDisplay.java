@@ -3,6 +3,7 @@ package com.deco2800.game.components.shopmenu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -37,7 +38,10 @@ import java.util.List;
 public class ShopMenuDisplay extends UIComponent {
     private static final String BACKGROUND_FILE_PATH = "images/safehouse/shopScreenTempSelections.png";
     private static final String SHOP_KEEPER_IMAGE_FILE_PATH = "images/safehouse/shopkeeper/portrait.png";
-    private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/front01.png";
+    private static final String PLAYER_IMAGE_FILE_PATH = "images/Player_Sprite/25.png";
+    private static final String PLAYER_FULL_ARMOR_IMAGE_FILE_PATH = "images/Player_Sprite/34.png";
+    private static final String PLAYER_ARMOR_IMAGE_FILE_PATH = "images/Player_Sprite/31.png";
+    private static final String PLAYER_HELMET_IMAGE_FILE_PATH = "images/Player_Sprite/28.png";
     private static final String CROWBAR_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbar.png";
     private static final String CROWBAR_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopCrowbarSelected.png";
     private static final String DAGGER_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDagger.png";
@@ -48,16 +52,16 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String ARMOR_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopArmourSelected.png";
     private static final String HELMET_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopHelmet.png";
     private static final String HELMET_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopHelmetSelected.png";
-    private static final String TORCH_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopTorch.png";
-    private static final String TORCH_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopTorchSelected.png";
+    private static final String FUEL_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopFuel.png";
+    private static final String FUEL_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopSelectedFuel.png";
     private static final String DASH_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDash.png";
     private static final String DASH_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopDashSelected.png";
     private static final String INVINCIBLE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopInvincibility.png";
     private static final String INVINCIBLE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopInvincibilitySelected.png";
-    private static final String GRENADE_UP_IMAGE_FILE_PATH = "images/playeritems/firecracker/firecracker8.png";
-    private static final String GRENADE_DOWN_IMAGE_FILE_PATH = "images/playeritems/firecracker/firecracker7.png";
-    private static final String BANDAGE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBandage.png";
-    private static final String BANDAGE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBandageSelected.png";
+    private static final String FIRECRACKER_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopFirecracker.png";
+    private static final String FIRECRACKER_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons" +
+            "/shopFirecrackerSelected" +
+            ".png";
     private static final String MACHETE_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopMachete.png";
     private static final String MACHETE_DOWN_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopMacheteSelected.png";
     private static final String BASEBALL_UP_IMAGE_FILE_PATH = "images/safehouse/itemIcons/shopBat.png";
@@ -67,7 +71,7 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String MENU_BUTTON_STYLE = "menu-button-large";
     private static final String EQUIPPED_TEXT = "EQUIPPED";
     private static final String PURCHASE_TEXT = "PURCHASE";
-
+    private static final String NO_FUNDS_TEXT = "NO FUNDS";
 
     private static final String DAGGER_TEXT = "A good little weapon to use in a tight spot, if you ask me.";
     private static final String BAT_TEXT = "This was from an old game called 'Baseball', back before all this happened.";
@@ -82,11 +86,11 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String LONG_DASH_TEXT = "Sometimes, you just need a burst of speed to get you places.";
     private static final String ARMOUR_TEXT = "It'll set you back a bit, but this is the best protection money can buy! " +
         "Or at least, that I can offer...";
-    private static final String BANDAGE_TEXT = "Normally, a bandage would just stop the bleeding but I've put a little " +
-        "something extra in these. Just don't ask what it is.";
+    private static final String FIRE_CRACKER_TEXT = "Throw fire crackers and kill enemies by burning them!";
     private static final String INVINCIBILITY_TEXT = "This here is a handy piece of tech they cooked up just as everything" +
         " started to go downhill. No one quite understands how it works anymore but it should still help you out in a tight spot.";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
+    private static Image playerImage, playerFullArmorImage, playerHelmetImage, playerChestImage;
     private final GdxGame game;
     private boolean isEnabled = false;
     private Table container;
@@ -119,14 +123,17 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float BANDAGE_SIDE_LENGTH = 50f;
     private static final int NO_FUNDS_INDEX = 0;
     private static final int EQUIPPED_INDEX = 1;
-    public static final int ADD_BANDAGE = 1;
-    public static final int ADD_TORCH = 100;
+    private static final int ADD_TORCH = 100;
+    private static final int OFFSET_X_IMG_GROUP = 20;
+    private static final int OFFSET_Y_IMG_GROUP = 20;
     private static final int PURCHASED_INDEX = 2;
     private ImageButton crowbarImageButton, daggerImageButton, axeImageButton, armorImageButton,
-            helmetImageButton, torchImageButton, bandageImageButton, dashImageButton, invincibleImageButton,
+            helmetImageButton, fuelImageButton, fireCrackerImageButton, dashImageButton, invincibleImageButton,
             macheteImageButton, baseballImageButton, sledgeImageButton;
     private final ArrayList<ImageButton> imageButtons = new ArrayList<>();
+    private final ArrayList<Image> images = new ArrayList<>();
     private int itemPrice, itemDefenceLevel = 0;
+    private int FULL_ARMOR_LEVEL = 5;
     private String itemName;
     private ImageButton storeButtonClicked = null;
     // values below will be checked and will load values from config file that saves player's states
@@ -166,6 +173,7 @@ public class ShopMenuDisplay extends UIComponent {
 
         if (!isEnabled) {
             loadPlayerData();
+            updateImagesVisibility(playerDefenceLevel);
             timeSource.pause();
 
             // feedback tend to remain on shop menu display in different safe house areas, this ensures it doesn't
@@ -322,7 +330,32 @@ public class ShopMenuDisplay extends UIComponent {
         itemsLabelImages.add(sledgeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         // third row
-        // helmet, torch and dash ability
+        // long dash, fire cracker and invincibility
+        // armor, bandage and invincibility
+        itemsLabelImages.row().padTop(PAD_TOP);;
+        Drawable dashUp = createImagesForButtons(DASH_UP_IMAGE_FILE_PATH);
+        Drawable dashDown = createImagesForButtons(DASH_DOWN_IMAGE_FILE_PATH);
+        dashImageButton = new ImageButton(dashUp, dashDown, dashDown);
+        MenuUtility.addButtonSelectListener(entity, dashImageButton, "updateItemDescription",
+                "configs/ShopLongDashAbilityInfo.json", Items.OTHERS);
+        itemsLabelImages.add(dashImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        Drawable fireCrackerUp = createImagesForButtons(FIRECRACKER_UP_IMAGE_FILE_PATH);
+        Drawable fireCrackerDown = createImagesForButtons(FIRECRACKER_DOWN_IMAGE_FILE_PATH);
+        fireCrackerImageButton = new ImageButton(fireCrackerUp, fireCrackerDown, fireCrackerDown);
+        MenuUtility.addButtonSelectListener(entity, fireCrackerImageButton, "updateItemDescription",
+                "configs/ShopFireCrackerAbilityInfo.json", Items.OTHERS);
+        itemsLabelImages.add(fireCrackerImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        Drawable invincibleUp = createImagesForButtons(INVINCIBLE_UP_IMAGE_FILE_PATH);
+        Drawable invincibleDown = createImagesForButtons(INVINCIBLE_DOWN_IMAGE_FILE_PATH);
+        invincibleImageButton = new ImageButton(invincibleUp, invincibleDown, invincibleDown);
+        MenuUtility.addButtonSelectListener(entity, invincibleImageButton, "updateItemDescription",
+                "configs/ShopInvincibilityAbilityInfo.json", Items.OTHERS);
+        itemsLabelImages.add(invincibleImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+
+        // fourth row
+        // helmet, chest and fuel
         itemsLabelImages.row().padTop(PAD_TOP);;
         Drawable helmetUp = createImagesForButtons(HELMET_UP_IMAGE_FILE_PATH);
         Drawable helmetDown = createImagesForButtons(HELMET_DOWN_IMAGE_FILE_PATH);
@@ -331,23 +364,6 @@ public class ShopMenuDisplay extends UIComponent {
                 "configs/ShopHelmetInfo.json", Items.SHIELDS);
         itemsLabelImages.add(helmetImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
-        Drawable torchUp = createImagesForButtons(TORCH_UP_IMAGE_FILE_PATH);
-        Drawable torchDown = createImagesForButtons(TORCH_DOWN_IMAGE_FILE_PATH);
-        torchImageButton = new ImageButton(torchUp, torchDown, torchDown);
-        MenuUtility.addButtonSelectListener(entity, torchImageButton, "updateItemDescription",
-                "configs/ShopTorchInfo.json", Items.OTHERS);
-        itemsLabelImages.add(torchImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        Drawable dashUp = createImagesForButtons(DASH_UP_IMAGE_FILE_PATH);
-        Drawable dashDown = createImagesForButtons(DASH_DOWN_IMAGE_FILE_PATH);
-        dashImageButton = new ImageButton(dashUp, dashDown, dashDown);
-        MenuUtility.addButtonSelectListener(entity, dashImageButton, "updateItemDescription",
-                "configs/ShopLongDashAbilityInfo.json", Items.OTHERS);
-        itemsLabelImages.add(dashImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        // fourth row
-        // armor, bandage and invincibility
-        itemsLabelImages.row().padTop(PAD_TOP);;
         Drawable armorUp = createImagesForButtons(ARMOR_UP_IMAGE_FILE_PATH);
         Drawable armorDown = createImagesForButtons(ARMOR_DOWN_IMAGE_FILE_PATH);
         armorImageButton = new ImageButton(armorUp, armorDown, armorDown);
@@ -355,19 +371,12 @@ public class ShopMenuDisplay extends UIComponent {
                 "configs/ShopArmourInfo.json", Items.SHIELDS);
         itemsLabelImages.add(armorImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
-        Drawable bandageUp = createImagesForButtons(BANDAGE_UP_IMAGE_FILE_PATH);
-        Drawable bandageDown = createImagesForButtons(BANDAGE_DOWN_IMAGE_FILE_PATH);
-        bandageImageButton = new ImageButton(bandageUp, bandageDown, bandageDown);
-        MenuUtility.addButtonSelectListener(entity, bandageImageButton, "updateItemDescription",
-                "configs/ShopBandageInfo.json", Items.OTHERS);
-        itemsLabelImages.add(bandageImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
-
-        Drawable invincibleUp = createImagesForButtons(INVINCIBLE_UP_IMAGE_FILE_PATH);
-        Drawable invincibleDown = createImagesForButtons(INVINCIBLE_DOWN_IMAGE_FILE_PATH);
-        invincibleImageButton = new ImageButton(invincibleUp, invincibleDown, invincibleDown);
-        MenuUtility.addButtonSelectListener(entity, invincibleImageButton, "updateItemDescription",
-                "configs/ShopInvincibilityAbilityInfo.json", Items.OTHERS);
-        itemsLabelImages.add(invincibleImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
+        Drawable fuelUp = createImagesForButtons(FUEL_UP_IMAGE_FILE_PATH);
+        Drawable fuelDown = createImagesForButtons(FUEL_DOWN_IMAGE_FILE_PATH);
+        fuelImageButton = new ImageButton(fuelUp, fuelDown, fuelDown);
+        MenuUtility.addButtonSelectListener(entity, fuelImageButton, "updateItemDescription",
+                "configs/ShopTorchInfo.json", Items.OTHERS);
+        itemsLabelImages.add(fuelImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         container.add(itemsLabelImages).colspan(SEC_COL_NUM_TAKEN).top();
     }
@@ -414,7 +423,7 @@ public class ShopMenuDisplay extends UIComponent {
         itemsDescriptionLabels.add(pricingValueLabel).padLeft(PAD_TO_CENTER_PRICING);
 
         Image moneyBagImage = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/playeritems/coin/money bag.png", Texture.class));
+                .getAsset("images/playeritems/coin/money-bag.png", Texture.class));
         itemsDescriptionLabels.add(moneyBagImage).size(COMMON_LABEL_HEIGHT);
 
         container.add(itemsDescriptionLabels).colspan(THIRD_COL_NUM_TAKEN).top();
@@ -472,9 +481,30 @@ public class ShopMenuDisplay extends UIComponent {
 
         // image of player character
         playerInfoLabelsImages.row().colspan(FOURTH_COL_NUM_TAKEN).height(TABLE_BODY_HEIGHT);
-        Image playerImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_IMAGE_FILE_PATH,
+        Group imageGroup = new Group();
+        playerImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_IMAGE_FILE_PATH,
                 Texture.class));
-        playerInfoLabelsImages.add(playerImage).colspan(10).height(LARGER_IMAGE_SIZE)
+        playerFullArmorImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_FULL_ARMOR_IMAGE_FILE_PATH,
+                Texture.class));
+        playerHelmetImage = new Image(ServiceLocator.getResourceService().getAsset(PLAYER_HELMET_IMAGE_FILE_PATH,
+                Texture.class));
+        playerChestImage =
+                new Image(ServiceLocator.getResourceService().getAsset(PLAYER_ARMOR_IMAGE_FILE_PATH,
+                Texture.class));
+
+        // configure sizes of images
+        List<Image> imageList = Arrays.asList(playerImage, playerFullArmorImage, playerHelmetImage,
+                playerChestImage);
+        images.addAll(imageList);
+        resizeImages();
+
+        // add all image to same group and overlap them
+        imageGroup.addActor(playerImage);
+        imageGroup.addActor(playerFullArmorImage);
+        imageGroup.addActor(playerHelmetImage);
+        imageGroup.addActor(playerChestImage);
+        imageGroup.setPosition(OFFSET_X_IMG_GROUP,OFFSET_Y_IMG_GROUP);
+        playerInfoLabelsImages.add(imageGroup).colspan(10).height(LARGER_IMAGE_SIZE)
                 .width(LARGER_IMAGE_SIZE).top();
 
         // uses most current player state now
@@ -489,7 +519,7 @@ public class ShopMenuDisplay extends UIComponent {
         Image bandageImage = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
         Image ammoImage = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/playeritems/shootingammo.png", Texture.class));
+                .getAsset("images/playeritems/rock/pickupammo.png", Texture.class));
         Image coinImage = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/playeritems/coin/coin1.png", Texture.class));
 
@@ -516,9 +546,9 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void updateShopSpeech(String item){
         String[] items = {"DAGGER", "BAT", "AXE", "MACHETE", "CROWBAR", "SLEDGE",
-        "HELMET", "TORCH", "LONG_DASH", "ARMOUR","BANDAGE", "INVINCIBILITY"};
+        "HELMET", "TORCH", "LONG_DASH", "CHEST","FIRE_CRACKER", "INVINCIBILITY"};
         String[] speech  = {DAGGER_TEXT,BAT_TEXT,AXE_TEXT,MACHETE_TEXT,CROWBAR_TEXT,SLEDGE_TEXT,HELMET_TEXT,TORCH_TEXT,
-            LONG_DASH_TEXT,ARMOUR_TEXT,BANDAGE_TEXT,INVINCIBILITY_TEXT};
+            LONG_DASH_TEXT,ARMOUR_TEXT,FIRE_CRACKER_TEXT,INVINCIBILITY_TEXT};
         int index = Arrays.asList(items).indexOf(item);
 
         shopkeeperSpeech = DialogueBoxFactory.createTextDialogue(speech[index]);
@@ -537,8 +567,6 @@ public class ShopMenuDisplay extends UIComponent {
         logger.info("Button image clicked, buying system update");
         uncheckImageButton();
 
-
-
         // all item files must have the 2 following data variables
         ShopItemInfoConfig itemData =
                 FileLoader.readClass(ShopItemInfoConfig.class, configFilename);
@@ -551,13 +579,10 @@ public class ShopMenuDisplay extends UIComponent {
             shopkeeperSpeech.dispose();
         }
 
-        //update shopkeeper sppech based on item selected
+        // update shopkeeper speec based on item selected
         updateShopSpeech(itemName);
 
-
-
         CharSequence priceText = String.format("PRICE: %d", itemPrice);
-
         itemSelectedTitleLabel.setText(itemName);
         pricingValueLabel.setText(priceText);
         itemSelectedDescriptionLabel.setText(description);
@@ -593,10 +618,13 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void isItemPurchasable() {
         if (playerGold >= itemPrice) {
-            setEquippedButton();
+            if (!itemName.equals(Items.TORCH.toString())) {
+                setEquippedButton();
+            }
             processPurchasedItem();
+        } else {
+            setNoFundsButton();
         }
-        updatePurchaseButton();
     }
 
     /**
@@ -616,6 +644,14 @@ public class ShopMenuDisplay extends UIComponent {
     }
 
     /**
+     * This will dynamically set button to be clickable and set its' text to be "MORE COINS"
+     */
+    private void setNoFundsButton() {
+        equipBtn.setText(NO_FUNDS_TEXT);
+        equipBtn.setDisabled(false);
+    }
+
+    /**
      * Used to check what player current has and updates the purchase button dynamically. Will disable button if
      * player has item equipped already
      */
@@ -624,10 +660,15 @@ public class ShopMenuDisplay extends UIComponent {
             // player may have different types of armor, and player's armor may be worse than
             // armor item clicked in shop which player can then purchase - there needs to be a separate logic for this
             if (typeOfItem == Items.SHIELDS) {
-                if (itemDefenceLevel <= playerDefenceLevel) {
+                if (playerArmorType.equals(itemName)) {
                     setEquippedButton();
                 } else {
-                    setPurchaseButton();
+                    // player has both chest and helmet
+                    if (playerDefenceLevel == Items.getDefenceLevel("ARMOUR")) {
+                        setEquippedButton();
+                    } else {
+                        setPurchaseButton();
+                    }
                 }
 
             // player already has ability or melee weapon item clicked in shop UI
@@ -655,24 +696,61 @@ public class ShopMenuDisplay extends UIComponent {
         } else if (typeOfItem == Items.SHIELDS) {
             // armor type need to registered just like melee weapon
             if (Items.checkShieldType(itemName)) {
-                int defenceLevel = Items.getDefenceLevel(itemName);
-                playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
 
+                // player currently has helmet or chest equipped only
+                if (playerDefenceLevel == Items.getDefenceLevel("HELMET") ||
+                        playerDefenceLevel == Items.getDefenceLevel("CHEST")) {
+                    playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(FULL_ARMOR_LEVEL);
+
+                // player not equipped with anything
+                } else {
+                    int defenceLevel = Items.getDefenceLevel(itemName);
+                    playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(defenceLevel);
+                }
             }
         } else {
             // other item type includes abilities and bandages
             if (Abilities.checkAbility(itemName)) {
                 Abilities ability = Abilities.getAbility(itemName);
                 playerState.getComponent(PlayerAbilitiesComponent.class).setAbility(ability);
-            } else if (itemName.equals(Items.BANDAGE.toString())) {
-                playerState.getComponent(InventoryComponent.class).addBandages(ADD_BANDAGE);
-            }else if (itemName.equals(Items.TORCH.toString())) {
+            } else if (itemName.equals(Items.TORCH.toString())) {
                 playerState.getComponent(InventoryComponent.class).addTorch(ADD_TORCH);
             }
         }
         int updatePlayerGold = playerGold - itemPrice;
         playerState.getComponent(InventoryComponent.class).setGold(updatePlayerGold);
         loadPlayerData();
+        updateImagesVisibility(playerDefenceLevel);
+    }
+
+    /**
+     * This updates the image on the right of the shop UI to display what armor player is currently wearing
+     * @param defenceLevel of player which is used to display correct image to be visible
+     */
+    private void updateImagesVisibility(int defenceLevel) {
+        for (Image image : images) {
+            image.setVisible(false);
+        }
+
+        if (defenceLevel == Items.getDefenceLevel("HELMET")) {
+            playerHelmetImage.setVisible(true);
+        } else if (defenceLevel == Items.getDefenceLevel("ARMOUR")) {
+            playerFullArmorImage.setVisible(true);
+        } else if (defenceLevel == Items.getDefenceLevel("CHEST")) {
+            playerChestImage.setVisible(true);
+        } else {
+            playerImage.setVisible(true);
+        }
+    }
+
+    /**
+     * Resizes images for visual on shop UI
+     */
+    private void resizeImages() {
+        for (Image image : images) {
+            image.setHeight(LARGER_IMAGE_SIZE);
+            image.setWidth(LARGER_IMAGE_SIZE);
+        }
     }
 
     /**
@@ -683,7 +761,7 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void uncheckImageButton() {
         List<ImageButton> imageButtonList = Arrays.asList(crowbarImageButton, daggerImageButton, axeImageButton,
-                armorImageButton, helmetImageButton, torchImageButton, bandageImageButton, dashImageButton,
+                armorImageButton, helmetImageButton, fuelImageButton, fireCrackerImageButton, dashImageButton,
                 invincibleImageButton, macheteImageButton, baseballImageButton, sledgeImageButton);
         imageButtons.addAll(imageButtonList);
 

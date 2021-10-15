@@ -75,8 +75,10 @@ public class PhysicsEngine implements Disposable {
         entity.setPosition(ORIGIN);
         entity.getComponent(PhysicsMovementComponent.class).setTarget(ORIGIN);
 
-        entity.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(false);
-        PlayerRangeAttackComponent.restockBulletShot(entity);
+        if (entity.getComponent(BulletCollisionComponent.class) != null) {
+            entity.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(false);
+            PlayerRangeAttackComponent.restockBulletShot(entity);
+        }
       }
       toReuse.clear();
     }

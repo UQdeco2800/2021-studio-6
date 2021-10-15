@@ -76,7 +76,7 @@ public class FinalBossHealthBar extends DefaultTask {
     public void update() {
 
         if (timeSource.getTime() >= endTime) {
-            float healthPercentage = (float) boss.getComponent(CombatStatsComponent.class).getHealth() / 50;
+            float healthPercentage = (float) boss.getComponent(CombatStatsComponent.class).getHealth() / 100;
 
             healthForeground.setScale(10f * healthPercentage, 0.5f);
 

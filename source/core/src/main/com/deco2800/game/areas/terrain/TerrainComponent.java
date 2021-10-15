@@ -54,6 +54,15 @@ public class TerrainComponent extends RenderComponent {
     }
   }
 
+  public GridPoint2 worldPositionToTile(Vector2 vectorPos) {
+    switch (orientation) {
+      case ORTHOGONAL:
+        return new GridPoint2(Math.round(vectorPos.x / tileSize), Math.round(vectorPos.y / tileSize));
+      default:
+        return null;
+    }
+  }
+
   public float getTileSize() {
     return tileSize;
   }

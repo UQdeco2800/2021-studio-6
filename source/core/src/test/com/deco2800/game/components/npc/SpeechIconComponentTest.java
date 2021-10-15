@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +43,10 @@ class SpeechIconComponentTest {
     ServiceLocator.getResourceService().loadTextures(speechTextures);
     ServiceLocator.getResourceService().loadAll();
     speechIconTexture = ServiceLocator.getResourceService().getAsset("images/dialogue/raw/npc_indicator.png", Texture.class);
+
+    //Setup lighting service
+    ServiceLocator.registerUnlitRenderService(new RenderService());
+    ServiceLocator.registerRenderService(new RenderService());
 
     // Create new entity with speech icon component and sample values
     speechIconComponent = new SpeechIconComponent(SPEECH_Y_OFFSET);

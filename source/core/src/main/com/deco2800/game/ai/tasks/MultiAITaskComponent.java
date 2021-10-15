@@ -12,7 +12,8 @@ import java.util.*;
 public class MultiAITaskComponent extends Component implements TaskRunner {
     private static final Logger logger = LoggerFactory.getLogger(AITaskComponent.class);
 
-    private final List<Task> parallelTasks = new ArrayList<>(2);
+    private List<Task> parallelTasks = new ArrayList<>();
+    private List<Task> tobeRemoved = new ArrayList<>();
 
     /**
      * addTask
@@ -47,6 +48,14 @@ public class MultiAITaskComponent extends Component implements TaskRunner {
         for(Task p : parallelTasks) {
             p.update();
         }
+        for(Task p : tobeRemoved) {
+            if(parallelTasks.contains(p)){
+                p.stop();
+
+                parallelTasks.remove(p);
+            }
+        }
+        tobeRemoved.clear();
     }
 
     /**
@@ -61,6 +70,12 @@ public class MultiAITaskComponent extends Component implements TaskRunner {
             }
         }
 
+    }
+
+    public void removeAllTasks(){
+        for(Task p : parallelTasks) {
+            tobeRemoved.add(p);
+        }
     }
 
 

@@ -195,6 +195,19 @@ public class ColliderComponent extends Component {
     return this;
   }
 
+  public ColliderComponent setLayer(short categoryBits, short layerMask) {
+    if (fixture == null) {
+      fixtureDef.filter.categoryBits = categoryBits;
+      fixtureDef.filter.maskBits = layerMask;
+    } else {
+      Filter filter = fixture.getFilterData();
+      filter.categoryBits = categoryBits;
+      filter.maskBits = layerMask;
+      fixture.setFilterData(filter);
+    }
+    return this;
+  }
+
   /**
    * @return The {@link PhysicsLayer} this collider belongs to
    */

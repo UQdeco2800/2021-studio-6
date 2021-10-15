@@ -124,13 +124,13 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
     // Relevant images used alongside labels
     bandageImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/bandage/bandage01.png", Texture.class));
-    ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    ammoImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/rock/ammo.png", Texture.class));
     coinImage = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/coin/coin1.png", Texture.class));
-    bulletImage1 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    bulletImage2 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    bulletImage3 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    bulletImage4 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
-    bulletImage5 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/shootingammo.png", Texture.class));
+    bulletImage1 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/rock/ammo.png", Texture.class));
+    bulletImage2 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/rock/ammo.png", Texture.class));
+    bulletImage3 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/rock/ammo.png", Texture.class));
+    bulletImage4 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/rock/ammo.png", Texture.class));
+    bulletImage5 = new Image(ServiceLocator.getResourceService().getAsset("images/playeritems/rock/ammo.png", Texture.class));
     List<Image> imageList = Arrays.asList( bulletImage1, bulletImage2, bulletImage3, bulletImage4, bulletImage5);
     bulletImages.addAll(imageList);
 

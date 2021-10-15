@@ -33,22 +33,45 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class FinalBossFactory {
 
+
+    public static Entity createFinalBossPhaseManager(Entity boss) {
+
+        //define boss entity
+
+        //define darkness entity
+        //
+
+        Entity phaseManager = new Entity()
+                .addComponent(new BossHealthListener(boss));
+
+        return phaseManager;
+    }
+
+
     /**
      * Creates the darkness for level 4
      * @param target the entity that the enemies attack
      * @param gameArea the level 4 game area
      * @return the darkness entity
      */
-    public static Entity createDarkness(Entity target, Level4 gameArea) {
+    public static Entity createDarkness(Entity target, GameArea gameArea) {
+
+        TextureRenderComponent texture = new TextureRenderComponent("images/placeholder.png");
+        texture.setLayer(1);
+
+
         Entity darkness = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new DisposingComponent());
+                .addComponent(new DisposingComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE, PhysicsLayer.PLAYER).setDensity(100))
+                .addComponent(texture);
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
                           .addTask(new Stage2Task(1, gameArea, target));
-
+        darkness.setScale(50, 7);
         darkness.addComponent(aiComponent);
+
 
         return darkness;
     }
@@ -64,6 +87,7 @@ public class FinalBossFactory {
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
             animator.addAnimation("default", 1f, Animation.PlayMode.LOOP);
 
+        //System.out.println(animator.getLayer());
 
         Entity bossHead = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -72,7 +96,7 @@ public class FinalBossFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(50, 0))
+                .addComponent(new CombatStatsComponent(100, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
 
@@ -127,15 +151,13 @@ public class FinalBossFactory {
      * @return the spawner entity
      */
     public static Entity createLightSpawner(Entity target, GameArea gameArea) {
-
-
         Entity spawner = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new DisposingComponent())
                 .addComponent(new PointLightComponent(Colors.get("RED"), 3f, 0, 0))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                 .addComponent(new GhostAnimationController())
-                .addComponent(new TextureRenderComponent("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png"))
+                .addComponent(new TextureRenderComponent("images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png"))
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new CombatStatsComponent(5, 0));;
 

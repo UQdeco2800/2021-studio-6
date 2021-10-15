@@ -290,13 +290,9 @@ public class PlayerMeleeAttackComponent extends Component {
                 // enemy within range and player clicked melee attack button
                 if (closeToAttack && meleeAttackClicked && targetStats != null) {
                     targetStats.hit(damage);
-                    // enemy will now despawn
+
                     if (targetStats.isDead()) {
                         removingEnemies.add(enemy);
-
-                        if (ServiceLocator.getGameArea() != null) {
-                            ServiceLocator.getGameArea().despawnEntity(target);
-                        }
                     }
                 }
             }

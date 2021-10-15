@@ -147,15 +147,15 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     }
 
     /**
-     * Sets the entity's defence level. Must be between 0 and 2 inclusive
+     * Sets the entity's defence level. Must be between 0 and 4 inclusive
      *
      * @param level the level to set it to
      */
     public void setDefenceLevel(int level) {
-        if (level >= 0 && level <=2) {
+        if ((level >= 0) && (level <= 5)) {
             this.defenceLevel= level;
         } else {
-            logger.error("Can not set defence level outside 0-2");
+            logger.error("Can not set defence level outside 0-4");
         }
     }
 
@@ -265,7 +265,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             if (regenActive) {
                 regenActive = false;
             }
-            int damage = attacker.getBaseAttack() - this.defenceLevel;
+            int reduction = (int) Math.floor((this.defenceLevel/2f));
+            int damage =  (attacker.getBaseAttack() - reduction);
             if (damage <= 0) {
                 damage = 1;
             }
@@ -314,6 +315,5 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
             nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
         }
     }
-
 }
 

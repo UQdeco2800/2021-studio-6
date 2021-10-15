@@ -92,6 +92,7 @@ public class PlayerTorchAnimationController extends Component {
    * Removes and disposes the torch animation
    */
   void disposeAnimation() {
+    super.dispose();
     torchAnimator.stopAnimation();
     torchAnimator.dispose();
   }

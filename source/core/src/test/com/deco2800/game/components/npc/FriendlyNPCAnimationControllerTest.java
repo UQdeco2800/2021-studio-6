@@ -34,7 +34,8 @@ class FriendlyNPCAnimationControllerTest {
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
   Entity npc;
-  @Spy FriendlyNPCAnimationController friendlyNPCAnimationController;
+  @Spy
+  NPCAnimationController friendlyNPCAnimationController;
   @Spy PhysicsMovementComponent npcMovement;
 
   @BeforeEach
@@ -44,7 +45,7 @@ class FriendlyNPCAnimationControllerTest {
     ServiceLocator.registerTimeSource(new GameTime());
 
     // Create a new entity with minimal components
-    friendlyNPCAnimationController = Mockito.spy(new FriendlyNPCAnimationController());
+    friendlyNPCAnimationController = Mockito.spy(new NPCAnimationController());
     npcMovement = Mockito.spy(new PhysicsMovementComponent());
     npc = new Entity()
         .addComponent(animator)

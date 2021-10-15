@@ -1,0 +1,6 @@
+{
+  "itemName": "FIRE_CRACKER",
+  "description": "Have the ability to launch fire crackers at your enemies! It explodes after a certain period of time!",
+  "price": 50,
+  "effects": "Gain fire cracker ability which causes damaging AOE"
+}

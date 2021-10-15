@@ -98,6 +98,11 @@ public class NPCFactory {
     
     spawnerEnemy.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
+    ColliderComponent colliderComponent = spawnerEnemy.getComponent(ColliderComponent.class);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
+    colliderComponent.setDensity(2000f);
+
     NPCSoundComponent npcSoundComponent = spawnerEnemy.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.wav", Sound.class));
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/dead.wav", Sound.class));
@@ -161,7 +166,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 2f))
+                    .addComponent(new EnemyMeleeAttackComponent())
                     .addComponent(aiComponent)
                     .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
                     .addComponent(new DarknessDetectionComponent())
@@ -175,7 +180,9 @@ public class NPCFactory {
                     .addComponent(new DisposingComponent());
 
     ColliderComponent colliderComponent = smallEnemy.getComponent(ColliderComponent.class);
-    colliderComponent.setDensity(2f);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
+    colliderComponent.setDensity(0.01f);
 
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
     glowingEyesComponent.initialise();
@@ -239,8 +246,8 @@ public class NPCFactory {
     largeEnemy
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
             .addComponent(new PhysicsMovementComponent(speed))
+            .addComponent(new EnemyMeleeAttackComponent())
             .addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"))
             .addComponent(new DarknessDetectionComponent())
             .addComponent(new NPCSoundComponent())
@@ -249,6 +256,8 @@ public class NPCFactory {
             .addComponent(new NPCAnimationController());
 
     ColliderComponent colliderComponent = largeEnemy.getComponent(ColliderComponent.class);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
     colliderComponent.setDensity(50f);
 
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
@@ -332,6 +341,8 @@ public class NPCFactory {
                     .addComponent(new DisposingComponent());
 
     ColliderComponent colliderComponent = longRange.getComponent(ColliderComponent.class);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
     colliderComponent.setDensity(6f);
 
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
@@ -407,6 +418,9 @@ public class NPCFactory {
             .addComponent(new DisposingComponent());
 
     ColliderComponent colliderComponent = toughLongRangeEnemy.getComponent(ColliderComponent.class);
+    colliderComponent.setLayer(PhysicsLayer.NPC,
+        (short) (PhysicsLayer.PLAYER | PhysicsLayer.OBSTACLE | PhysicsLayer.NPC | PhysicsLayer.WALL | PhysicsLayer.FRIENDLY_NPC));
+
     colliderComponent.setDensity(20f);
 
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);

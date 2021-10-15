@@ -139,7 +139,6 @@ public class PlayerRangeAOEComponent extends Component {
         fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos.cpy());
         fireCracker.getEvents().trigger("firecrackerStart", direct);
 
-        logger.info("Fire cracker ability activated and will explode in " + explosionTime + "ms");
         IndependentAnimator explosionAnimator =
             new IndependentAnimator(
                 ServiceLocator.getResourceService()
@@ -150,7 +149,7 @@ public class PlayerRangeAOEComponent extends Component {
         explosionAnimator.setScale(2, 2);
 
         fireCracker.getComponent(FirecrackerAnimationController.class).setAnimator(explosionAnimator);
-        logger.info("Fire cracker ability activated and will explodie in " + explosionTime);
+        logger.debug("Fire cracker ability activated and will explodie in " + explosionTime);
     }
 }
 

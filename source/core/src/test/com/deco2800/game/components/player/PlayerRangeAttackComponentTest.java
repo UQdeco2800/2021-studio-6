@@ -157,7 +157,6 @@ public class PlayerRangeAttackComponentTest {
         Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(NO_BULLETS_SHOT);
        // when(PlayerRangeAttackComponen).thenReturn(anim);
         player.getComponent(PlayerRangeAttackComponent.class).fire();
-        System.out.println(player.getComponent(PlayerRangeAttackComponent.class).getDirection());
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_DOWN_DIR));
 
         assertEquals(BULLET_COUNT, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());

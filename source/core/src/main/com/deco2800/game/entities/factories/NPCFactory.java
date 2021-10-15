@@ -197,7 +197,6 @@ public class NPCFactory {
    */
   public static Entity createLargeEnemy(Entity target) {
     Entity largeEnemy = createBaseNPC(target);
-    System.out.println(configs);
     BaseEnemyConfig config = configs.largeEnemy;
 
     //Movement speed of large enemy

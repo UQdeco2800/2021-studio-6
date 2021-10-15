@@ -1,7 +1,6 @@
 package com.deco2800.game.entities.factories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 import com.deco2800.game.components.ItemComponent;
 import com.deco2800.game.entities.Entity;

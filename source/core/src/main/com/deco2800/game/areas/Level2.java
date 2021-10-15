@@ -70,7 +70,7 @@ public class Level2 extends GameArea {
           "sounds/item-pickup.ogg"
   };
 
-  private static final String backgroundMusic = "sounds/fireflies-theme-woods.mp3";
+  private static final String backgroundMusic = "sounds/fireflies-theme-woods2.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;

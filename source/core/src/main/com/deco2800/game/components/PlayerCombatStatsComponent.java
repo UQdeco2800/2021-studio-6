@@ -56,7 +56,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     }
 
     /**
-     * Allowing invincibility to be called without knowing about this classF
+     * Allowing invincibility to be called without knowing about this class
      */
     @Override
     public void create() {
@@ -294,11 +294,11 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     /**
      * Sets the invincibility check to momentarily prevent player damage
      *
-     * @param length parameter for how long to set inivisibility for (in milliseconds)
+     * @param length parameter for how long to set invincibility for (in milliseconds)
      */
     public void invincibleStart(long length) {
         invincibilityEndTime = timeSource.getTime() + length;
-        entity.getEvents().trigger("disableAttack");
+        //entity.getEvents().trigger("disableAttack");
         invincibleActive = true;
     }
 

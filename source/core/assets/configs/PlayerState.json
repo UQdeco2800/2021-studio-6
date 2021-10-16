@@ -14,5 +14,5 @@
   "armorType": "NONE",
   "meleeFilePath": "configs/Baseball.json",
   "currentGameLevel": 1,
-  "torch": 100
+  "torch": 200
 }

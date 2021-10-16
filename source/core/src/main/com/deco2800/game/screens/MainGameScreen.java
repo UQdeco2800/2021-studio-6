@@ -419,7 +419,8 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea.create();
 
     } else if (gameLevel == LEVEL_2) {
-      gameArea = new Level2(terrainFactory);
+      //CHANGE THIS BEFORE MERGING WITH MAIN
+      gameArea = new Level1(terrainFactory);
       gameArea.create();
 
     } else if (gameLevel == LEVEL_3) {

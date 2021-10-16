@@ -536,7 +536,8 @@ public class Level1 extends GameArea {
 
   private void startTutorialAndMusic() {
     spawnTutorialNpc();
-    spawnTutorial();
+    //CHANGE THIS BEFORE MERGING WITH MAIN
+    //spawnTutorial();
     playMusic();
   }
 

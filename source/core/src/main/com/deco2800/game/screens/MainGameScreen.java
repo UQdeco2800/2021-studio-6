@@ -411,11 +411,9 @@ public class MainGameScreen extends ScreenAdapter {
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
     int LEVEL_1 = 1;
-    int playerCurrentTorchTimer;
-    int addedTorch = 100;
 
-    double LEVEL_SAFEHOUSE = 0.5;
-    int SAFEHOUSE_CHECK = 1;
+    double levelSafehouse = 0.5;
+    int safehouseCheck = 1;
     if (gameLevel == LEVEL_1) {
       gameArea = new Level1(terrainFactory);
       gameArea.create();
@@ -437,13 +435,9 @@ public class MainGameScreen extends ScreenAdapter {
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
-    } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
+    } else if (gameLevel % safehouseCheck == levelSafehouse && gameLevel < LEVEL_4) {
       LIGHTINGON = false;
       gameArea = new SafehouseGameArea(terrainFactory);
-
-      // adds torch timer to player's current torch timer when player enters safehouse game area
-      playerCurrentTorchTimer = gameArea.getPlayer().getComponent(InventoryComponent.class).getTorch();
-      gameArea.getPlayer().getComponent(InventoryComponent.class).addTorch(playerCurrentTorchTimer + addedTorch);
       gameArea.create();
     }
 

@@ -344,17 +344,21 @@ public class TerrainFactory {
     fillTilesAtRandomInRegion(layer, grass4, start, end, BOSS_GRASS_COUNT);
     fillTilesAtRandomInRegion(layer, grass5, start, end, BOSS_GRASS_COUNT);
 
-    start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.5);
+    //create water tiles
+    start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.7);
     end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 1);
     setTilesInRegion(layer, waterTile, start, end);
 
-    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.525);
+    //create sand to water tiles
+    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.725);
     setTilesInRegion(layer, sandToWaterTile, start, end);
 
+    //create sand tiles
     start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.3);
-    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.5);
+    end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.7);
     setTilesInRegion(layer, sandTile, start, end);
 
+    //create grass to sand tiles
     start = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 0, 0.3);
     end = calculatePosition(MAP_SIZE_BOSS.x * xScale, MAP_SIZE_BOSS.y * yScale, 1, 0.325);
     setTilesInRegion(layer, grassToSandTile, start, end);

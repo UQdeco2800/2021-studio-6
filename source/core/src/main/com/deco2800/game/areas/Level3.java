@@ -564,6 +564,7 @@ public class Level3 extends GameArea {
       new GridPoint2(17, 2),
       new GridPoint2(28, 28),
       new GridPoint2(47, 14),
+      new GridPoint2(50, 26),
     };
 
     GridPoint2[] coinSpawnLocations = {

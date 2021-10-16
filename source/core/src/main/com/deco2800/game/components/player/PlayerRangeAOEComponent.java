@@ -92,7 +92,7 @@ public class PlayerRangeAOEComponent extends Component {
      * @param playerCoord is the current player's position. It is used to launch bullet from player's position
      * @return coordinates used for bullet's target coordinates
      */
-    public Vector2 getFireCrackerTargetCoord(Vector2 playerCoord) {
+    private Vector2 getFireCrackerTargetCoord(Vector2 playerCoord) {
         float xPosPlayer = playerCoord.x;
         float yPosPlayer = playerCoord.y;
         Vector2 scaledVector = new Vector2();

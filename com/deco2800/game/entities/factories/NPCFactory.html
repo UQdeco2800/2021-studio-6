@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -126,12 +126,23 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFireFlyBugNPC(float,float,float,float,float)">createFireFlyBugNPC</a></span>&#8203;(float&nbsp;speedX,
+float&nbsp;speedY,
+float&nbsp;wanderX,
+float&nbsp;wanderY,
+float&nbsp;waitTime)</code></th>
+<td class="colLast">
+<div class="block">Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLargeEnemy(com.deco2800.game.entities.Entity)">createLargeEnemy</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</code></th>
 <td class="colLast">
 <div class="block">Creates an enemy with slower speed but deals more damage to the target</div>
 </td>
 </tr>
-<tr class="rowColor" id="i1">
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLongRangeEnemy(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">createLongRangeEnemy</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
 <a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</code></th>
@@ -139,21 +150,21 @@ extends java.lang.Object</pre>
 <div class="block">Creates a long range enemy, fires bullet towards a target</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSmallEnemy(com.deco2800.game.entities.Entity)">createSmallEnemy</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</code></th>
 <td class="colLast">
 <div class="block">Creates a small enemy entity.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpawnerEnemy()">createSpawnerEnemy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a spawner enemy entity.</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createToughLongRangeEnemy(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">createToughLongRangeEnemy</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
 <a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</code></th>
@@ -238,6 +249,27 @@ extends java.lang.Object</pre>
 <h3><a id="createToughLongRangeEnemy(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">createToughLongRangeEnemy</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createToughLongRangeEnemy</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
 <a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createFireFlyBugNPC(float,float,float,float,float)">createFireFlyBugNPC</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createFireFlyBugNPC</span>&#8203;(<span class="arguments">float&nbsp;speedX,
+float&nbsp;speedY,
+float&nbsp;wanderX,
+float&nbsp;wanderY,
+float&nbsp;waitTime)</span></div>
+<div class="block">Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>speedX</code> - Movement speed in X direction</dd>
+<dd><code>speedY</code> - Movement speed in Y direction</dd>
+<dd><code>wanderX</code> - Proximity X distance to move around in</dd>
+<dd><code>wanderY</code> - Proximity Y distance to move around in</dd>
+<dd><code>waitTime</code> - Time in seconds to hold the position after wandering to a spot</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Firefly entity</dd>
+</dl>
 </section>
 </li>
 </ul>

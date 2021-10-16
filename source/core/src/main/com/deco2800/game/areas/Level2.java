@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 public class Level2 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level2.class);
   private static final int NUM_BULLETS = 5;
-  private static final int NUM_SPAWNER_ENEMY = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(2, 23);
   private static final float WALL_WIDTH = 0.1f;
   private static final String NPC_DEAD_ATLAS_FILENAME = "images/npc_movement/dead_npc.atlas";
@@ -70,8 +69,8 @@ public class Level2 extends GameArea {
           "sounds/item-pickup.ogg"
   };
 
-  private static final String backgroundMusic = "sounds/fireflies-theme-woods2.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-woods2.mp3";
+  private static final String[] forestMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
   public Level2(TerrainFactory terrainFactory) {
@@ -92,7 +91,6 @@ public class Level2 extends GameArea {
     spawnSafehouse();
     spawnCobweb();
     spawnBush();
-//    spawnTorch();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -356,7 +354,7 @@ public class Level2 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
       spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
               spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
@@ -366,6 +364,7 @@ public class Level2 extends GameArea {
   /**
    * Spawns a small enemy from the appropriate spawner's position.
    */
+  @Override
   public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
     super.spawnFromSpawner(position, maxSpawnDistance);
   }
@@ -593,7 +592,7 @@ public class Level2 extends GameArea {
    * Plays the music for Level 2.
    */
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
     music.play();
@@ -640,7 +639,7 @@ public class Level2 extends GameArea {
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 }

@@ -22,8 +22,6 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
@@ -105,7 +103,6 @@ public class Level1 extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
-    //spawnBullet();
 
     spawnPilotNpc();
     spawnInjuredNPC();
@@ -422,7 +419,7 @@ public class Level1 extends GameArea {
     };
     // Spawning enemies
     for (GridPoint2 enemyPos : enemyPositions) {
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
       spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, enemyPos, true, true);
     }
@@ -430,6 +427,7 @@ public class Level1 extends GameArea {
   /**
    * Spawns a small enemy from the appropriate spawner's position
    */
+  @Override
   public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
     super.spawnFromSpawner(position, maxSpawnDistance);
   }

@@ -37,13 +37,6 @@ public class PlayerAbilitiesComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("tryAbility", this::triggerAbility);
-        invincibiltyAnimation =
-            new IndependentAnimator(
-                ServiceLocator.getResourceService()
-                    .getAsset("images/playeritems/Bubble/invincibility.atlas", TextureAtlas.class), false);
-        invincibiltyAnimation.addAnimation("active", 0.1f, Animation.PlayMode.LOOP);
-        invincibiltyAnimation.setCamera(true);
-        this.getEntity().getComponent(PlayerAnimationController.class).setAnimator(invincibiltyAnimation);
     }
 
     /**

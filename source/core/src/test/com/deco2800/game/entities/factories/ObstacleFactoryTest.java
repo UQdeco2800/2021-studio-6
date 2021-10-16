@@ -135,7 +135,7 @@ public class ObstacleFactoryTest {
         assertNotNull(lamp.getComponent(PointLightComponent.class));
         // Check component settings
         assertEquals(lamp.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE);
-        assertEquals(new Vector2(1f, 2f), lamp.getScale());
+        assertEquals(new Vector2(NaN, 2f), lamp.getScale());
         assertEquals(BodyDef.BodyType.StaticBody, lamp.getComponent(PhysicsComponent.class).getBody().getType());
         verify(resources).getAsset("images/level_1/street_lamp.png", Texture.class);
 

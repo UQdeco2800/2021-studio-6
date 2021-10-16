@@ -18,6 +18,8 @@ public class PlayerRangeAOEComponentTest {
     void beforeEach() {
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerPhysicsService(new PhysicsService());
+
+
     }
 
 //    Entity createFireCracter() {

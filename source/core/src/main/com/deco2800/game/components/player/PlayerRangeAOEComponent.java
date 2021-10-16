@@ -24,16 +24,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerRangeAOEComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAOEComponent.class);
-    private Vector2 longAttackDir = new Vector2(1,0);
     private static final int EXPLOSION_COORDINATE = 5;
     private boolean fireCrackerLaunched = false;
-    private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private static long timeToExplode = 0;
-    private long AOE_END = 0;
     private Entity fireCracker;
     private Vector2 fireCrackerTargetPos = new Vector2(0,0);
-    private Vector2 playerPos = new Vector2(0,0);
     private Directions direct;
 
     /**
@@ -127,7 +123,7 @@ public class PlayerRangeAOEComponent extends Component {
      * @param explosionTime it takes for explosion to occur
      */
     public void fire(long explosionTime) {
-        playerPos = entity.getPosition();
+        Vector2 playerPos = entity.getPosition();
         fireCrackerTargetPos = getFireCrackerTargetCoord(playerPos);
         fireCrackerLaunched = true;
         timeToExplode = timeSource.getTime() + explosionTime;

@@ -26,8 +26,6 @@ import org.slf4j.LoggerFactory;
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
   private static final int NUM_BULLETS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(12, 57);
-
   private static final float WALL_WIDTH = 0.1f;
   private static final String NPC_SAMPLE_ATLAS_FILENAME = "images/npc_movement/npc_movement.atlas";
   private static final String NPC_TUT_1_ATLAS_FILENAME = "images/npc_movement/tut_npc1.atlas";
@@ -57,10 +55,13 @@ public class Level1 extends GameArea {
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/grass_1.png"
+    "images/level_2/level2_grass_1.png", // adding grass
+    "images/level_2/level2_grass_2.png",
+    "images/level_2/level2_grass_4.png"
   };
 
-  private static final String[] cityTextureAtlases = {NPC_SAMPLE_ATLAS_FILENAME,
+  private static final String[] cityTextureAtlases = {
+      NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
       NPC_PILOT_ATLAS_FILENAME
@@ -87,14 +88,17 @@ public class Level1 extends GameArea {
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
   public void create() {
+    // Loading in and setting up UI
     loadAssets();
     displayUI();
-
+    // Spawning Barriers
     spawnTerrain();
     spawnBarriers();
-    player = spawnPlayer();
-    spawnSafehouse();
     spawnBuildings();
+    spawnSafehouse();
+
+    player = spawnPlayer();
+
     spawnSigns();
     spawnPrologue();
 
@@ -177,17 +181,14 @@ public class Level1 extends GameArea {
    * Add pickup-able items to the level
    */
   private void spawnPickupItems() {
-    GridPoint2 minPos = new GridPoint2(25, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 6);
-
     // Spawning in Bandage
-    spawnEntityAt(ItemFactory.createBandagePickup(1), new GridPoint2(12, 49), true, true);
+    spawnEntityAt(ItemFactory.createBandagePickup(1), new GridPoint2(12, 48), true, true);
     spawnEntityAt(ItemFactory.createBandagePickup(1), new GridPoint2(13, 8), true, true);
 
     // Setting ammo positions
     GridPoint2[] ammoPositions = new GridPoint2[]{
-            new GridPoint2(28, 57),
-            new GridPoint2(29, 42),  new GridPoint2(17, 40), new GridPoint2(54, 44),
+            new GridPoint2(28, 56),
+            new GridPoint2(29, 43),  new GridPoint2(17, 39), new GridPoint2(54, 44),
             new GridPoint2(54, 24),
             new GridPoint2(49, 15),
             new GridPoint2(31, 10), new GridPoint2(19, 12)
@@ -200,14 +201,13 @@ public class Level1 extends GameArea {
 
     // Setting coin positions
     GridPoint2[] coinPositions = new GridPoint2[]{
-            new GridPoint2(52, 59), new GridPoint2(34, 59), new GridPoint2(34, 55),
-            new GridPoint2(46, 47), new GridPoint2(39, 45), new GridPoint2(37, 45), new GridPoint2(29, 44), new GridPoint2(12, 40),
+            new GridPoint2(52, 59), new GridPoint2(34, 58), new GridPoint2(34, 54),
+            new GridPoint2(46, 46), new GridPoint2(39, 44), new GridPoint2(37, 44), new GridPoint2(29, 44), new GridPoint2(12, 39),
             new GridPoint2(56, 37), new GridPoint2(22, 36), new GridPoint2(35, 33),
             new GridPoint2(44, 24), new GridPoint2(30, 24), new GridPoint2(13, 22),
             new GridPoint2(34, 17), new GridPoint2(56, 15), new GridPoint2(11, 13),
             new GridPoint2(46, 8), new GridPoint2(57, 7), new GridPoint2(23, 7)
     };
-
     // Spawn in coins
     for (GridPoint2 point: coinPositions) {
       int randomCoinQuantity = RandomUtils.randomInt(5); // Random amount of coins
@@ -224,7 +224,7 @@ public class Level1 extends GameArea {
    GridPoint2[] houseOnePositions = new GridPoint2[]{
             new GridPoint2(8, 61), new GridPoint2(18, 61), new GridPoint2(28, 61), new GridPoint2(38, 61),
             new GridPoint2(3, 54),
-            new GridPoint2(8, 47), new GridPoint2(21, 47), new GridPoint2(33, 47), new GridPoint2(43, 47),
+            new GridPoint2(8, 47), new GridPoint2(21, 46), new GridPoint2(33, 46), new GridPoint2(43, 46),
             new GridPoint2(3, 40),
             new GridPoint2(3, 29), new GridPoint2(13, 29), new GridPoint2(23, 29),
             new GridPoint2(8, 14), new GridPoint2(18, 14), new GridPoint2(28, 14),
@@ -234,8 +234,8 @@ public class Level1 extends GameArea {
     GridPoint2[] houseTwoPositions = new GridPoint2[]{
             new GridPoint2(3, 61), new GridPoint2(13, 61), new GridPoint2(23, 61), new GridPoint2(33, 61),
             new GridPoint2(8, 54),
-            new GridPoint2(3, 47), new GridPoint2(16, 47), new GridPoint2(26, 47), new GridPoint2(38, 47),
-            new GridPoint2(33, 40), new GridPoint2(43, 40),
+            new GridPoint2(3, 47), new GridPoint2(16, 46), new GridPoint2(26, 46), new GridPoint2(38, 46),
+            new GridPoint2(33, 39), new GridPoint2(43, 39),
             new GridPoint2(8, 29), new GridPoint2(18, 29),
             new GridPoint2(3, 14), new GridPoint2(13, 14), new GridPoint2(23, 14),
             new GridPoint2(8, 7),
@@ -279,7 +279,7 @@ public class Level1 extends GameArea {
       Entity barrier = ObstacleFactory.createVerticalBarrier();
       spawnEntityAt(barrier, position, true, false);
     }
-    for (int y = 54; y <= 61; y += 2) { // top barrier on right
+    for (int y = 53; y <= 60; y += 2) { // top barrier on right
       GridPoint2 position = new GridPoint2(32, y);
       Entity barrier = ObstacleFactory.createVerticalBarrier();
       spawnEntityAt(barrier, position, true, false);
@@ -302,7 +302,7 @@ public class Level1 extends GameArea {
       spawnEntityAt(barrier, position, true, false);
     }
     for (int x = 11; x <= 13; x += 2) { // Small Barrier
-      GridPoint2 position = new GridPoint2(x, 51);
+      GridPoint2 position = new GridPoint2(x, 50);
       Entity barrier = ObstacleFactory.createHorizontalBarrier();
       spawnEntityAt(barrier, position, true, false);
     }
@@ -324,8 +324,8 @@ public class Level1 extends GameArea {
   private void spawnDeadTrees() {
     GridPoint2[] treePositions = new GridPoint2[]{
             new GridPoint2(42, 65), new GridPoint2(70, 65),
-            new GridPoint2(49, 57), new GridPoint2(64, 56),
-            new GridPoint2(47, 44), new GridPoint2(64, 42),
+            new GridPoint2(49, 56), new GridPoint2(64, 56),
+            new GridPoint2(47, 43), new GridPoint2(21, 43), new GridPoint2(64, 42),
             new GridPoint2(72, 41), new GridPoint2(12, 37),
             new GridPoint2(70, 24), new GridPoint2(67, 20),
             new GridPoint2(59, 19), new GridPoint2(43, 19),
@@ -346,14 +346,14 @@ public class Level1 extends GameArea {
    */
   private void spawnLamps() {
     GridPoint2[] lampPositions = new GridPoint2[]{
-            new GridPoint2(12, 60), new GridPoint2(24, 54),
-            new GridPoint2(28, 46), new GridPoint2(31, 38),
+            new GridPoint2(12, 59), new GridPoint2(24, 53),
+            new GridPoint2(28, 45), new GridPoint2(31, 38),
             new GridPoint2(30, 27), new GridPoint2(40, 21),
             new GridPoint2(50, 27), new GridPoint2(59, 31)
     };
     GridPoint2[] vinedLampPositions = new GridPoint2[]{
             new GridPoint2(58, 44),
-            new GridPoint2(49, 55), new GridPoint2(59, 60)
+            new GridPoint2(49, 54), new GridPoint2(59, 60)
     };
     // Spawning in regular lamps
     for (GridPoint2 point: lampPositions) {
@@ -382,7 +382,7 @@ public class Level1 extends GameArea {
    */
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer, new GridPoint2(12, 56), true, true);
     return newPlayer;
   }
 
@@ -405,7 +405,6 @@ public class Level1 extends GameArea {
   private void spawnFireCracker() {
       Entity fireCracker = ProjectileFactory.createFireCracker();
       spawnEntity(fireCracker);
-
       player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
@@ -438,7 +437,7 @@ public class Level1 extends GameArea {
   private void spawnSmallEnemy() {
     // Setting enemy positions
     GridPoint2[] enemyPositions = new GridPoint2[]{
-            new GridPoint2(26, 41), new GridPoint2(38, 42),
+            new GridPoint2(26, 40), new GridPoint2(38, 41),
             new GridPoint2(21, 11), new GridPoint2(36, 10),
             new GridPoint2(57, 19), new GridPoint2(49, 13)
     };
@@ -464,8 +463,8 @@ public class Level1 extends GameArea {
   private void spawnLongRangeEnemies() {
     // Setting enemy positions
     GridPoint2[] enemyPositions = new GridPoint2[]{
-            new GridPoint2(16, 45), new GridPoint2(27, 33),
-            new GridPoint2(38, 44), new GridPoint2(17, 27),
+            new GridPoint2(16, 44), new GridPoint2(27, 33),
+            new GridPoint2(38, 43), new GridPoint2(17, 27),
             new GridPoint2(17, 21), new GridPoint2(41, 14),
             new GridPoint2(58, 11), new GridPoint2(60, 50)
     };
@@ -512,7 +511,7 @@ public class Level1 extends GameArea {
    * Used to spawn in the tutorial NPC
    */
   private void spawnTutorialNpc() {
-    GridPoint2 pos = new GridPoint2(11,57);
+    GridPoint2 pos = new GridPoint2(11,56);
     Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.TUTORIAL_GUIDE, NPC_TUT_1_ATLAS_FILENAME, true);
     spawnEntityAt(npcTut, pos, true, true);
   }
@@ -521,7 +520,7 @@ public class Level1 extends GameArea {
    * Used to spawn in the firefly pilot NPC
    */
   private void spawnPilotNpc() {
-    GridPoint2 pos = new GridPoint2(12,52);
+    GridPoint2 pos = new GridPoint2(12,51);
     Entity npcTut = FriendlyNPCFactory.createNewFriendlyNPC(StoryNames.NPC_PILOT_FIRST, NPC_PILOT_ATLAS_FILENAME, true);
     spawnEntityAt(npcTut, pos, true, true);
   }

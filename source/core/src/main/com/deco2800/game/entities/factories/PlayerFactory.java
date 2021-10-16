@@ -171,6 +171,9 @@ public class PlayerFactory {
   private static void loadPlayerData() {
     // manages player states for carrying over and restoring in game
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
+    double levelSafehouse = 0.5;
+    int safehouseCheck = 1;
+    int addTorch = 50;
 
     if (playerManager.currentPlayerState() == null) {
       // set initial state of player when game starts for the very first time, load from config file
@@ -200,7 +203,6 @@ public class PlayerFactory {
       health = currentPlayerState.getHealth();
       ammo = currentPlayerState.getAmmo();
       bandages = currentPlayerState.getBandage();
-      torch = currentPlayerState.getTorch();
       gold = currentPlayerState.getGold();
       woundState = currentPlayerState.getWoundState();
       defenceLevel = currentPlayerState.getDefenceLevel();
@@ -209,6 +211,13 @@ public class PlayerFactory {
       meleeWeaponType = currentPlayerState.getMeleeWeaponType();
       armorType = currentPlayerState.getArmorType();
       bulletMagazine = currentPlayerState.getBulletMagazine();
+
+      // add more time to torch whenever player reaches safehouse game area level
+      if (currentPlayerState.getCurrentGameLevel() % safehouseCheck == levelSafehouse) {
+          torch = currentPlayerState.getTorch() + addTorch;
+      } else {
+          torch = currentPlayerState.getTorch();
+      }
     }
   }
 

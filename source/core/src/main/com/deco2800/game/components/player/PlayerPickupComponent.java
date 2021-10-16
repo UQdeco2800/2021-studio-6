@@ -57,6 +57,7 @@ public class PlayerPickupComponent extends Component {
         if (item != null && inventory != null) {
             int ammoLeft = inventory.getAmmo();
             int coinLeft = inventory.getGold();
+            int bandageLeft = inventory.getBandages();
             int itemQuantity = item.getItemQuantity();
 
             if (item.getItemType() == Items.AMMO) {
@@ -79,38 +80,10 @@ public class PlayerPickupComponent extends Component {
                 if(sound != null) {
                     sound.play();
                 }
-            } else if (item.getItemType() == Items.ARMOUR) {
-                stats.setDefenceLevel(2);
+            } else if (item.getItemType() == Items.BANDAGE) {
+                inventory.setBandages(bandageLeft + itemQuantity);
                 Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
                 sound.play();
-            } else if (item.getItemType() == Items.HELMET) {
-                stats.setDefenceLevel(1);
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
-            } else if (item.getItemType() == Items.CROWBAR) {
-                 weapon.setWeapon("configs/Crowbar.json");
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
-            } else if (item.getItemType() == Items.AXE) {
-                weapon.setWeapon("configs/Axe.json");
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
-            } else if (item.getItemType() == Items.DAGGER) {
-                weapon.setWeapon("configs/Dagger.json");
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();				
-            } else if (item.getItemType() == Items.SLEDGE) {
-                weapon.setWeapon("configs/Sledge.json");
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
-            } else if (item.getItemType() == Items.MACHETE) {
-                weapon.setWeapon("configs/Machete.json");
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
-            } else if (item.getItemType() == Items.BAT) {
-                weapon.setWeapon("configs/Baseball.json");
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();				
             }
 
 

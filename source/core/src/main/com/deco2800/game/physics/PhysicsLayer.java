@@ -6,6 +6,10 @@ public class PhysicsLayer {
   public static final short PLAYER = (1 << 1);
   // Terrain obstacle, e.g. trees
   public static final short OBSTACLE = (1 << 2);
+
+  // For invisible wall around map
+  public static final short WALL = (1 << 9);
+
   // NPC (Non-Playable Character) colliders
   public static final short NPC = (1 << 3);
   public static final short ALL = ~0;

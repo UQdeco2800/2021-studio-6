@@ -143,8 +143,10 @@ class PlayerCombatStatsComponentTest {
         assertEquals(0, combat.getDefenceLevel());
         combat.setDefenceLevel(-50); // defence level cannot be negative
         assertEquals(0, combat.getDefenceLevel());
-        combat.setDefenceLevel(5); // defence level cannot be over 2
-        assertEquals(0, combat.getDefenceLevel());
+        combat.setDefenceLevel(5);
+        assertEquals(5, combat.getDefenceLevel());
+        combat.setDefenceLevel(7); // defence level cannot be over 5
+        assertEquals(5, combat.getDefenceLevel());
     }
 
     @Test
@@ -192,19 +194,27 @@ class PlayerCombatStatsComponentTest {
         assertEquals(player.getComponent(PlayerCombatStatsComponent.class).getStateMax(), player.getComponent(PlayerCombatStatsComponent.class).getHealth());
         assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
 
-        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(1);
+        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(2);
         when(time.getTime()).thenReturn(400L); // invincibility frame is 400ms long (adjusting for it)
         player.getComponent(PlayerCombatStatsComponent.class).update();
         player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
         assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
         assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
 
+
+        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(3);
         when(time.getTime()).thenReturn(800L); // invincibility frame is 400ms long (adjusting for it)
         player.getComponent(PlayerCombatStatsComponent.class).update();
-        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(2);
         player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
-        assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
-        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+        assertEquals(5, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
+
+        when(time.getTime()).thenReturn(1200L); // invincibility frame is 400ms long (adjusting for it)
+        player.getComponent(PlayerCombatStatsComponent.class).update();
+        player.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(4);
+        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+        assertEquals(4, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+        assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getWoundState());
     }
 
     @Test

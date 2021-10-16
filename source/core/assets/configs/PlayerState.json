@@ -9,7 +9,7 @@
   "favouriteColour": "peach",
   "health" : 3,
   "bandages": 3,
-  "ability": "LONG_DASH",
+  "ability": "FIRE_CRACKER",
   "meleeWeaponType": "BAT",
   "armorType": "NONE",
   "meleeFilePath": "configs/Baseball.json",

@@ -10,7 +10,7 @@ import com.deco2800.game.services.ServiceLocator;
  * be rendered each frame. Child classes can implement different kinds of rendering behaviour.
  */
 public abstract class RenderComponent extends Component implements Renderable, Disposable {
-  private static final int DEFAULT_LAYER = 1;
+  private int DEFAULT_LAYER = 2;
   private boolean lit = true;
   private boolean registered = false;
 
@@ -51,6 +51,9 @@ public abstract class RenderComponent extends Component implements Renderable, D
   @Override
   public int getLayer() {
     return DEFAULT_LAYER;
+  }
+  public void setLayer(int newLayer){
+    this.DEFAULT_LAYER = newLayer;
   }
 
   /**

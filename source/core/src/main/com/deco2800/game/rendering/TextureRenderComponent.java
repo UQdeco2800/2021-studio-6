@@ -26,6 +26,8 @@ public class TextureRenderComponent extends RenderComponent {
     textureRegion = new TextureRegion(this.texture);
   }
 
+
+
   /** @param texture Static texture to render. Will be scaled to the entity's scale. */
   public TextureRenderComponent(Texture texture) {
     this.texture = texture;

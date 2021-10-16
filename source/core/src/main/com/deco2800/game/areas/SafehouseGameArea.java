@@ -4,12 +4,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchTeleportComponent;
-import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.story.StoryManager;
 import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.entities.Entity;
@@ -32,30 +30,15 @@ public class SafehouseGameArea extends GameArea {
   private static Entity door;
   private final float WALL_WIDTH = 0.1f;
   private final float LEVEL_ONE_SAFEHOUSE = 1.5f;
+  private final int BANDAGE_QUANTITY = 1;
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/bandage/bandage01.png",
-    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/Player_Sprite/front01.png", "images/playeritems/pickupammo.png",
-    "images/safehouse/interior-day1-tile-ground1-latest.png",
-    "images/safehouse/interior-day1-tile-door1-latest.png",
-      "images/hud/dashbarFull.png",
-      "images/hud/healthFull.png", "images/safehouse/safehouse-interior-layout.png",
+      "images/safehouse/safehouse-interior-layout.png",
       "images/safehouse/shopkeeper/shopkeeperSprite.png",
       "images/dialogue/raw/npc_indicator.png"
   };
 
   private static final String[] safeHouseTextureAtlases = {
-      "images/Player_Animations/player_movement.atlas",
-      "images/hud/dashbar.atlas",
-      "images/hud/health.atlas",
-      "images/weapon/crowbar.atlas",
-      "images/weapon/dagger.atlas",
-      "images/weapon/sledge.atlas",
-      "images/weapon/machete.atlas",
-      "images/playeritems/tourch/torch.atlas",
-      "images/weapon/baseball.atlas",
-      "images/weapon/axe.atlas",
       NPC_PILOT_ATLAS_FILENAME
   };
 
@@ -88,7 +71,7 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnShopKeeper();
-    spawnBullet();
+    spawnBandages();
 
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
     if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
@@ -176,6 +159,14 @@ public class SafehouseGameArea extends GameArea {
     ServiceLocator.getEntityService().register(door);
   }
 
+  private Entity spawnBandages() {
+      GridPoint2 BANDAGE_SPAWN = new GridPoint2(3, 1);
+
+      Entity bandage = ItemFactory.createBandagePickup(BANDAGE_QUANTITY);
+      spawnEntityAt(bandage, BANDAGE_SPAWN, true, true);
+      return bandage;
+  }
+
   private Entity spawnShopKeeper() {
     GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(2, 7);
 
@@ -196,18 +187,6 @@ public class SafehouseGameArea extends GameArea {
     spawnEntityAt(npcTut, pos, true, true);
   }
 
-  private void spawnBullet() {
-    Array<Entity> bullets = new Array<>();
-
-    for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBullet = BulletFactory.createBullet();
-      bullets.add(newBullet);
-      spawnEntity(newBullet);
-    }
-
-    player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
-  }
-
   private void spawnSafehouseIntro() {
     StoryManager.getInstance().loadCutScene(StoryNames.SAFEHOUSE_INTRO);
     StoryManager.getInstance().displayStory();
@@ -222,6 +201,7 @@ public class SafehouseGameArea extends GameArea {
 
   private void loadAssets() {
     logger.debug("Loading assets");
+    loadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadTextureAtlases(safeHouseTextureAtlases);
@@ -237,6 +217,7 @@ public class SafehouseGameArea extends GameArea {
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
+    unloadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(safehouseTextures);
     resourceService.unloadAssets(safeHouseTextureAtlases);

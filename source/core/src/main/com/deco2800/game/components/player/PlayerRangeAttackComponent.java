@@ -2,6 +2,7 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.BulletAnimationController;
 import com.deco2800.game.components.BulletCollisionComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Used to listen and wait for player's range button to be clicked (L key). Once clicked,
+ * Used to listen and wait for player's range button to be clicked (Enter key). Once clicked,
  * a bullet will be created from player's entity position and launched towards coordinate where range button
  * is clicked in game area. If no movement keys clicked, range attack will be launched to the right by default
  */
@@ -22,7 +23,6 @@ public class PlayerRangeAttackComponent extends Component {
     // activeBullets array will be updated and reloaded with ammo entities whenever bullet collides with
     // any object in game world
     private static Array<Entity> activeBullets;
-    final Vector2 DEFAULT_ATK_DIR = Vector2Utils.RIGHT;
     private Vector2 longAttackDir = new Vector2(0,0);
     private static final int MAX_COORDINATE = 1000;
     private int magazineCapacity = 5;
@@ -36,11 +36,20 @@ public class PlayerRangeAttackComponent extends Component {
     public PlayerRangeAttackComponent() {
     }
 
+
     /**
-     * To reuse bullet shot for performance sake
-     *
-     * @param bulletShot is the bullet that has been shot and removed from activeBullets array
+     * Creation of listener on specified player when game is created
      */
+    @Override
+    public void create() {
+        entity.getEvents().addListener("rangeAttack", this::fire);
+    }
+
+        /**
+         * To reuse bullet shot for performance sake
+         *
+         * @param bulletShot is the bullet that has been shot and removed from activeBullets array
+         */
     public static void restockBulletShot(Entity bulletShot) {
         if (activeBullets != null) {
             activeBullets.add(bulletShot);
@@ -73,14 +82,6 @@ public class PlayerRangeAttackComponent extends Component {
      */
     public void addBullets(Array<Entity> bullets) {
         activeBullets = new Array<>(bullets);
-    }
-
-    /**
-     * Creation of listener on specified player when game is created
-     */
-    @Override
-    public void create() {
-        entity.getEvents().addListener("rangeAttack", this::fire);
     }
 
     @Override
@@ -122,29 +123,6 @@ public class PlayerRangeAttackComponent extends Component {
             }
         }
         return scaledVector.cpy();
-
-        /* player has not moved before
-       // if (longAttackDir.isZero()) {
-       /     scaledVector = DEFAULT_ATK_DIR.scl(MAX_COORDINATE);
-
-        // player has moved before
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.RIGHT)) {
-            scaledVector = new Vector2(MAX_COORDINATE,yPosPlayer);
-            longAttackDir = Vector2Utils.RIGHT;
-
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.LEFT)) {
-            scaledVector = new Vector2(-MAX_COORDINATE,yPosPlayer);
-            longAttackDir = Vector2Utils.LEFT;;
-
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.UP)) {
-            scaledVector = new Vector2(xPosPlayer, MAX_COORDINATE);
-            longAttackDir = Vector2Utils.UP;
-
-        } else if (longAttackDir.epsilonEquals(Vector2Utils.DOWN)) {
-            scaledVector = new Vector2(xPosPlayer, -MAX_COORDINATE);
-            longAttackDir = Vector2Utils.DOWN;
-        }
-        */
     }
 
     /**
@@ -172,31 +150,23 @@ public class PlayerRangeAttackComponent extends Component {
     public void fire() {
         Vector2 playerPos = entity.getPosition();
         Vector2 bulletTargetPos;
-      //  Vector2 directon =
-        // when player attacks, (0,0) vector is sent over, only directional information is important now
-      //  if (!movingAttackDir.epsilonEquals(Vector2.Zero.cpy())) {
-        //    setDirection(movingAttackDir);
-      //  }
 
         // check if there are bullets left to shoot in magazine currently and if player is currently reloading
         if (this.magazineCapacity != 0 && !getReloadingStatus()) {
-            // player has not moved before, use default direction attack (to the right)
-           // if (getDirection().isZero()) {
-          // //     bulletTargetPos = DEFAULT_ATK_DIR.scl(MAX_COORDINATE).cpy();
-           //     bulletTargetPos.y = playerPos.y;
-          //  } else {
-                // player has moved before, last button clicked to move as direction
-                bulletTargetPos = scaleVector(playerPos);
-          //  }
+            bulletTargetPos = scaleVector(playerPos);
 
             // bullet shot
             if (activeBullets != null) {
                 Entity firedBullet = activeBullets.get(0);
                 activeBullets.removeIndex(0);
                 firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);
+                firedBullet.getComponent(PhysicsMovementComponent.class).setMoving(true);
 
                 firedBullet.setPosition(playerPos);
                 firedBullet.getComponent(PhysicsMovementComponent.class).setTarget(bulletTargetPos);
+                if (firedBullet.getComponent(BulletAnimationController.class) != null) {
+                    firedBullet.getComponent(BulletAnimationController.class).setDirection(getDirection());
+                }
 
                 // update current gun magazine
                 decreaseGunMagazine();

@@ -1,6 +1,6 @@
 {
   "attackLength": 160,
-  "attackDamage": 1,
+  "attackDamage": 8,
   "knockback": 1,
   "length": 1,
   "height" : 0.6,

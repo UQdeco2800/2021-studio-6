@@ -438,10 +438,14 @@ public class MainGameScreen extends ScreenAdapter {
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
     }
-    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
-    gameArea.player.getEvents().trigger("resetPlayerMovements");
-    ServiceLocator.registerGameArea(gameArea);
-    this.gameArea.player.getEvents().addListener("dead", this::gameOver);
+
+    // this must always be checked - there should be no game level larger than 4.5
+    if (gameArea != null) {
+        this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+        gameArea.player.getEvents().trigger("resetPlayerMovements");
+        ServiceLocator.registerGameArea(gameArea);
+        this.gameArea.player.getEvents().addListener("dead", this::gameOver);
+    }
     levelChange = false;
   }
 

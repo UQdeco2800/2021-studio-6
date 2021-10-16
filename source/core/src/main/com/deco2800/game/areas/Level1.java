@@ -22,15 +22,9 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
-  private static final int NUM_LARGE_ENEMY = 2;
-  private static final int NUM_SMALL_ENEMY = 2;
-  private static final int NUM_SPAWNER_ENEMY = 2;
-  private static final int NUM_LONGRANGE = 2;
   private static final int NUM_BULLETS = 5;
   private static final int NUM_TREES = 3;
   // this can be removed - this is purely for testing purposes
@@ -113,7 +107,6 @@ public class Level1 extends GameArea {
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
-    //spawnBullet();
 
     spawnPilotNpc();
     spawnInjuredNPC();
@@ -393,6 +386,7 @@ public class Level1 extends GameArea {
   /**
    * Spawns a small enemy from the appropriate spawner's position
    */
+  @Override
   public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
     super.spawnFromSpawner(position, maxSpawnDistance);
   }

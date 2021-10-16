@@ -328,7 +328,7 @@ public class NPCFactory {
 
     Entity fireflyBugNPC =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_2/fire-fly-bug-NPC.png"))
+        .addComponent(new TextureRenderComponent(75,"images/level_2/fire-fly-bug-NPC.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
         .addComponent(new PhysicsMovementComponent(speed))

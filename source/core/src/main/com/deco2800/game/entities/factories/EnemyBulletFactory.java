@@ -126,7 +126,7 @@ public class EnemyBulletFactory {
 
         // Create the bullet entity
         Entity bullet = new Entity()
-                .addComponent(new TextureRenderComponent(imagePath, rotation))
+                .addComponent(new TextureRenderComponent(imagePath, rotation, 75))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())

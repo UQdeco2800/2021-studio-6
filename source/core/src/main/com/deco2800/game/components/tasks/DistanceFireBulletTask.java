@@ -20,6 +20,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     private static final int ONE_SECOND = 1000;
     private final GameTime timeSource;
     private float duration;
+    // The end time for fire cooldown interval
     private long endTime;
     private int priority;
     private final Entity target;
@@ -29,6 +30,8 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     private final RaycastHit hit = new RaycastHit();
 
     /**
+     * DistanceFireBulletTask creates a task which triggers a fire event at fixed interval if
+     * the target is within a certain radius of the entity
      * @param duration How long to wait for, in seconds.
      * @param priority priority used to swtich to this task
      * @param viewDistance radius around entity to fire
@@ -59,13 +62,16 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
      */
     @Override
     public void update() {
-        if (timeSource.getTime() >= endTime) {
+        if (!timeSource.isPaused() && timeSource.getTime() >= endTime) {
             this.owner.getEntity().getEvents().trigger("fire");
+
+            endTime = timeSource.getTime() + (int)(duration * ONE_SECOND);
+
+            // Play the shooting sound effect if there is one
             NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);
             if (npcSoundComponent != null) {
                 npcSoundComponent.playShoot();
             }
-            endTime = timeSource.getTime() + (int)(duration * ONE_SECOND);
         }
     }
 
@@ -111,6 +117,10 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
         return -1;
     }
 
+    /**
+     * Check to see whether the target entity is visible
+     * @return
+     */
     private boolean isTargetVisible() {
         Vector2 from = owner.getEntity().getCenterPosition();
         Vector2 to = target.getCenterPosition();

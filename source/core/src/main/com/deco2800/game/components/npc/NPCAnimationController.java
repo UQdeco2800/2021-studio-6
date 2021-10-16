@@ -50,12 +50,13 @@ public class NPCAnimationController extends Component {
     currentDirection = ANIMATIONS_FRONT;
     gameTime = ServiceLocator.getTimeSource();
 
+    npcSoundComponent = this.entity.getComponent(NPCSoundComponent.class);
+
+    // If the entity has combat stats then add a listener for when it gets hit
     combatStatsComponent = this.entity.getComponent(CombatStatsComponent.class);
     if (combatStatsComponent != null) {
       this.entity.getEvents().addListener("hit", this::npcHit);
     }
-
-    npcSoundComponent = this.entity.getComponent(NPCSoundComponent.class);
   }
 
   /**
@@ -64,25 +65,36 @@ public class NPCAnimationController extends Component {
    */
   @Override
   public void update() {
+    // If game paused then don't update anything
     if (gameTime.isPaused()) {
       return;
     }
+    // If the entity is dead then start the dead animation
     if (isDead) {
-      animator.startAnimation("dead");
+      if (lastAnimation != "dead") {
+        animator.startAnimation("dead");
+        lastAnimation = "dead";
+      }
       return;
     }
 
+    // If the enemy hit time has expired then switch off hit variable
     if (hitActive && gameTime.getTimeSince(hitTime) >= hurtDuration) {
       hitActive = false;
     }
 
+    // If hit active then switch to hit related animation offset
     if (hitActive) {
       indexOffset = 4;
+    // If damaged active then switch to damage related animation offset
     } else if (damagedActive) {
       indexOffset = 2;
+    // Else use the default animation offset
     } else {
       indexOffset = 0;
     }
+
+    // Get the current walking target
     PhysicsMovementComponent npcMovement = entity.getComponent(PhysicsMovementComponent.class);
     Vector2 walkTarget = npcMovement.getTarget();
     Vector2 myPosition = entity.getPosition();
@@ -146,13 +158,19 @@ public class NPCAnimationController extends Component {
     }
   }
 
+  /**
+   * Check whether the NPC should be hit and then register the hit. Check if the entity is now dead.
+   */
   private void npcHit() {
     hitActive = true;
     hitTime = gameTime.getTime();
 
+    // If the entity wasn't dead but they are dead now then set entity as dead
     if (!isDead && combatStatsComponent.isDead()) {
       isDead = true;
       npcSoundComponent.playDead();
+
+      // Switch off all the components that would interfere with the player, as this entity is dead
       AITaskComponent aiTaskComponent = entity.getComponent(AITaskComponent.class);
       aiTaskComponent.addTask(new DeadTask());
       ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
@@ -167,10 +185,12 @@ public class NPCAnimationController extends Component {
       if (touchAttackComponent != null) {
         touchAttackComponent.disable();
       }
+    // If the entities life is now less than half health, then set them as damaged
     } else if (!damagedActive && combatStatsComponent.getHealth() <= combatStatsComponent.getMaxHealth()/2) {
       damagedActive = true;
     }
 
+    // If the enemy isn't dead then play the hit sound effect
     if (!isDead) {
       npcSoundComponent.playHit();
     }

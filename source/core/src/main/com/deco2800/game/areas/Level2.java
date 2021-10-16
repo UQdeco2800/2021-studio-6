@@ -50,7 +50,9 @@ public class Level2 extends GameArea {
     "images/safehouse/exterior-day1-latest.png",
     "images/level_2/level2_torch_frame1_ver1.png",
     "images/level_2/level2_tree_2_group_ver1.png",
-    "images/dialogue/raw/npc_indicator.png"
+    "images/dialogue/raw/npc_indicator.png",
+    "images/level_2/fire-fly-bug-NPC.png",
+    "images/playeritems/bandage/bandage01.png"
   };
 
   /**
@@ -91,6 +93,9 @@ public class Level2 extends GameArea {
     spawnSafehouse();
     spawnCobweb();
     spawnBush();
+
+//    spawnTorch();
+    spawnFireFlyBugNPC();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -516,8 +521,8 @@ public class Level2 extends GameArea {
 
     GridPoint2[] bandageSpawnLocations = {
       new GridPoint2(60, 33),
-      new GridPoint2(40, 13),
       new GridPoint2(21, 8),
+      new GridPoint2(26, 26),
     };
 
     GridPoint2[] coinSpawnLocations = {
@@ -550,11 +555,10 @@ public class Level2 extends GameArea {
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
     }
 
-//    for (int i = 0; i < bandageSpawnLocations.length; i++) {
-//      int randomAmmoQuantity = RandomUtils.randomInt(5);
-//      Entity pickupAmmo = ItemFactory.create;
-//      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
-//    }
+    for (int i = 0; i < bandageSpawnLocations.length; i++) {
+      Entity pickupBandage = ItemFactory.createBandagePickup(1);
+      spawnEntityAt(pickupBandage, bandageSpawnLocations[i], true, false);
+    }
 
     for (int i = 0; i < coinSpawnLocations.length; i++) {
       int randomCoinQuantity = RandomUtils.randomInt(5);
@@ -585,6 +589,22 @@ public class Level2 extends GameArea {
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity bush = ObstacleFactory.createTorch();
       spawnEntityAt(bush, spawnLocations[i], true, false);
+    }
+  }
+
+  /**
+   * Spawns the fire fly bug NPC.
+   */
+  private void spawnFireFlyBugNPC() {
+    GridPoint2[] spawnLocations = {
+            new GridPoint2(26,21),
+            new GridPoint2(27,7),
+            new GridPoint2(49,31),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
+      spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }
 

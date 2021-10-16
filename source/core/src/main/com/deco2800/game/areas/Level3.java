@@ -839,12 +839,13 @@ public class Level3 extends GameArea {
    */
   private void spawnFireFlyBugNPC() {
     GridPoint2[] spawnLocations = {
-        new GridPoint2(21,29),
+        new GridPoint2(22,29),
         new GridPoint2(41,23),
+        new GridPoint2(45,9),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC();
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
       spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }

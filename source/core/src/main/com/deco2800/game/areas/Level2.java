@@ -555,7 +555,7 @@ public class Level2 extends GameArea {
 
 //    for (int i = 0; i < bandageSpawnLocations.length; i++) {
 //      int randomAmmoQuantity = RandomUtils.randomInt(5);
-//      Entity pickupAmmo = ItemFactory.create;
+//      Entity pickupAmmo = ItemFactory.createBandagePickup();
 //      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
 //    }
 
@@ -602,7 +602,7 @@ public class Level2 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC();
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
       spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }

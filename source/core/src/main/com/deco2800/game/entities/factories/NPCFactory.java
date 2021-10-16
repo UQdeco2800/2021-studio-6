@@ -15,6 +15,7 @@ import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -311,35 +312,19 @@ public class NPCFactory {
   }
 
   /**
-   *
-   */
-  private static Entity createBaseNPC(Entity target) {
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 4f, 5f));
-    Entity npc =
-        new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 3f))
-            .addComponent(aiComponent)
-            .addComponent(new DisposingComponent());
-
-    //PhysicsUtils.setScaledCollider(npc, 0.8f, 0.3f);
-    return npc;
-  }
-
-  /**
    * Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.
-   * @return entity
+   * @param speedX Movement speed in X direction
+   * @param speedY Movement speed in Y direction
+   * @param wanderX Proximity X distance to move around in
+   * @param wanderY Proximity Y distance to move around in
+   * @param waitTime Time in seconds to hold the position after wandering to a spot
+   * @return Firefly entity
    */
-  public static Entity createFireFlyBugNPC() {
-    Vector2 speed = new Vector2(1, 1);
+  public static Entity createFireFlyBugNPC(float speedX, float speedY, float wanderX, float wanderY, float waitTime) {
+    Vector2 speed = new Vector2(speedX, speedY);
     AITaskComponent aiComponent =
       new AITaskComponent()
-        .addTask(new WanderTask(new Vector2(10f, 10), 0.5f));
+        .addTask(new WanderTask(new Vector2(wanderX, wanderY), waitTime));
 
     Entity fireflyBugNPC =
       new Entity()
@@ -349,7 +334,8 @@ public class NPCFactory {
         .addComponent(new PhysicsMovementComponent(speed))
         .addComponent(new DisposingComponent())
         .addComponent(aiComponent)
-        .addComponent(new PointLightComponent(Colors.get("ORANGE"),2f,0,0));
+        .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
+                Color.SCARLET, 2f, 0, 0));
 
     fireflyBugNPC.getComponent(TextureRenderComponent.class).scaleEntity();
     fireflyBugNPC.scaleHeight(0.15f);

@@ -1,6 +1,8 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.FireCrackerCollisionComponent;
 import com.deco2800.game.components.FirecrackerAnimationController;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
@@ -21,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,12 +59,53 @@ public class PlayerRangeAOEComponentTest {
     }
 
     @Test
-    void shouldAddAndFireFireCracker() {
+    void shouldAddAndFireFireCrackerSouth() {
+        Vector2 fireCrackerTargetCoord = new Vector2(0,-5);
         player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
         player.getComponent(PlayerRangeAOEComponent.class).fire(2000);
 
         // since fire cracker launched - need to check if it is moving
         assertTrue(fireCracker.getComponent(PhysicsMovementComponent.class).getMoving());
+        assertEquals(fireCrackerTargetCoord, fireCracker.getComponent(PhysicsMovementComponent.class).getTarget());
+    }
+
+    @Test
+    void shouldAddAndFireFireCrackerNorth() {
+        Vector2 fireCrackerTargetCoord = new Vector2(0,5);
+        player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.W);
+        player.getComponent(PlayerRangeAOEComponent.class).fire(2000);
+
+        // since fire cracker launched - need to check if it is moving
+        assertTrue(fireCracker.getComponent(PhysicsMovementComponent.class).getMoving());
+        assertEquals(fireCrackerTargetCoord, fireCracker.getComponent(PhysicsMovementComponent.class).getTarget());
+    }
+
+    @Test
+    void shouldAddAndFireFireCrackerWest() {
+        Vector2 fireCrackerTargetCoord = new Vector2(-5,0);
+        player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.A);
+        player.getComponent(PlayerRangeAOEComponent.class).fire(2000);
+
+        // since fire cracker launched - need to check if it is moving
+        assertTrue(fireCracker.getComponent(PhysicsMovementComponent.class).getMoving());
+        assertEquals(fireCrackerTargetCoord, fireCracker.getComponent(PhysicsMovementComponent.class).getTarget());
+    }
+
+    @Test
+    void shouldAddAndFireFireCrackerEast() {
+        Vector2 fireCrackerTargetCoord = new Vector2(5,0);
+        player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
+
+        player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.D);
+        player.getComponent(PlayerRangeAOEComponent.class).fire(2000);
+
+        // since fire cracker launched - need to check if it is moving
+        assertTrue(fireCracker.getComponent(PhysicsMovementComponent.class).getMoving());
+        assertEquals(fireCrackerTargetCoord, fireCracker.getComponent(PhysicsMovementComponent.class).getTarget());
     }
 
     Entity createFireCracter() {

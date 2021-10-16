@@ -73,7 +73,8 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/level_2/fire-fly-bug-NPC.png"
+    "images/level_2/fire-fly-bug-NPC.png",
+    "images/playeritems/bandage/bandage01.png"
   };
 
   /**
@@ -383,7 +384,7 @@ public class Level3 extends GameArea {
   private void spawnSpawnerEnemy() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(33, 33),
-      new GridPoint2(52, 21),
+      new GridPoint2(45, 22),
       new GridPoint2(13, 13),
       new GridPoint2(44, 6),
     };
@@ -559,6 +560,12 @@ public class Level3 extends GameArea {
       new GridPoint2(43, 2),
     };
 
+    GridPoint2[] bandageSpawnLocations = {
+      new GridPoint2(17, 2),
+      new GridPoint2(28, 28),
+      new GridPoint2(47, 14),
+    };
+
     GridPoint2[] coinSpawnLocations = {
       new GridPoint2(52, 43),
       new GridPoint2(16, 42),
@@ -601,6 +608,11 @@ public class Level3 extends GameArea {
       int randomAmmoQuantity = RandomUtils.randomInt(5);
       Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
+    }
+
+    for (int i = 0; i < bandageSpawnLocations.length; i++) {
+      Entity pickupBandage = ItemFactory.createBandagePickup(1);
+      spawnEntityAt(pickupBandage, bandageSpawnLocations[i], true, false);
     }
 
     for (int i = 0; i < coinSpawnLocations.length; i++) {

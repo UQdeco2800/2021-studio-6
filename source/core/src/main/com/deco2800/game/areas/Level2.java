@@ -52,7 +52,8 @@ public class Level2 extends GameArea {
     "images/level_2/level2_torch_frame1_ver1.png",
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/level_2/fire-fly-bug-NPC.png"
+    "images/level_2/fire-fly-bug-NPC.png",
+    "images/playeritems/bandage/bandage01.png"
   };
 
   /**
@@ -519,8 +520,8 @@ public class Level2 extends GameArea {
 
     GridPoint2[] bandageSpawnLocations = {
       new GridPoint2(60, 33),
-      new GridPoint2(40, 13),
       new GridPoint2(21, 8),
+      new GridPoint2(26, 26),
     };
 
     GridPoint2[] coinSpawnLocations = {
@@ -553,11 +554,10 @@ public class Level2 extends GameArea {
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
     }
 
-//    for (int i = 0; i < bandageSpawnLocations.length; i++) {
-//      int randomAmmoQuantity = RandomUtils.randomInt(5);
-//      Entity pickupAmmo = ItemFactory.createBandagePickup();
-//      spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
-//    }
+    for (int i = 0; i < bandageSpawnLocations.length; i++) {
+      Entity pickupBandage = ItemFactory.createBandagePickup(1);
+      spawnEntityAt(pickupBandage, bandageSpawnLocations[i], true, false);
+    }
 
     for (int i = 0; i < coinSpawnLocations.length; i++) {
       int randomCoinQuantity = RandomUtils.randomInt(5);

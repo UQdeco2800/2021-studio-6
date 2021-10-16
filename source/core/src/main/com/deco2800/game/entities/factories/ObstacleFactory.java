@@ -176,7 +176,7 @@ public class ObstacleFactory {
 
     lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     lamp.getComponent(TextureRenderComponent.class).scaleEntity();
-    lamp.setScale(new Vector2(1, 2f));
+    lamp.scaleHeight(2f);
     PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
     return lamp;
   }

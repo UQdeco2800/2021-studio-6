@@ -1,8 +1,11 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.items.Abilities;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -19,6 +22,7 @@ public class PlayerAbilitiesComponent extends Component {
     private static final long DASH_LENGTH = 200; // in milliseconds
     private static final long EXPLOSION_DELAY_LENGTH = 2000; // in milliseconds
     private static final long INVINCIBILITY_LENGTH = 3000;
+    private IndependentAnimator invincibiltyAnimation;
     /**
      * Basic constructor for setting the players chosen ability
      * @param ability is the ability state to set the player to

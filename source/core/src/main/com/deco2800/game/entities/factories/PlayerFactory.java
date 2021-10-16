@@ -28,6 +28,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -156,6 +157,14 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(meleeWeaponType));
     player.getComponent(PlayerRangeAttackComponent.class).setBulletMagazine(bulletMagazine);
+
+    IndependentAnimator invincibiltyAnimation =
+        new IndependentAnimator(
+            ServiceLocator.getResourceService()
+                .getAsset("images/playeritems/Bubble/invincibility.atlas", TextureAtlas.class), false);
+    invincibiltyAnimation.addAnimation("active", 0.1f, Animation.PlayMode.LOOP);
+    invincibiltyAnimation.setCamera(true);
+    player.getComponent(PlayerAnimationController.class).setAnimator(invincibiltyAnimation);
     return player;
   }
 

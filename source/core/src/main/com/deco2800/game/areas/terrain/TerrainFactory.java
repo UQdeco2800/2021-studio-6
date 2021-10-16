@@ -159,7 +159,6 @@ public class TerrainFactory {
         return createBossTerrain(0.5f, grassB, tuftB, rocksB);
 
       default:
-        System.out.println("default");
         return null;
     }
   }

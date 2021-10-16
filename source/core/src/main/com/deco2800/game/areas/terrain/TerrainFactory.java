@@ -424,7 +424,6 @@ public class TerrainFactory {
     fillTilesAtRandomInRegion(layer, crackedSidewalkTile, start, end, 4); // under bottom road
     layer.setCell(34, 17, new Cell().setTile(sidewalkTile)); // Filling in spot
 
-
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }

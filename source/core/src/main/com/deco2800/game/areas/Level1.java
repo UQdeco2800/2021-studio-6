@@ -22,7 +22,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Forest area for the demo game with trees, a player, and some enemies. */
+/** Game area for the first level: Edge of a cityscape */
 public class Level1 extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(Level1.class);
   private static final int NUM_BULLETS = 5;
@@ -32,7 +32,8 @@ public class Level1 extends GameArea {
   private static final String NPC_INJURED_ATLAS_FILENAME = "images/npc_movement/injured_npc.atlas";
   private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_npc.atlas";
 
-  private static final String[] forestTextures = {
+  // All textures that make up the city map
+  private static final String[] cityTextures = {
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
     "images/level_1/road_tile_black.png",
@@ -76,7 +77,7 @@ public class Level1 extends GameArea {
   };
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
-  private static final String[] forestMusic = {BACKGROUND_MUSIC};
+  private static final String[] cityMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
 
@@ -120,7 +121,6 @@ public class Level1 extends GameArea {
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
         this::startTutorialAndMusic);
 
-    // this is used for testing purposes for player pick up
     spawnPickupItems();
   }
 
@@ -554,12 +554,12 @@ public class Level1 extends GameArea {
     logger.debug("Loading assets");
     loadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(forestTextures);
+    resourceService.loadTextures(cityTextures);
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
     resourceService.loadSounds(playerSounds);
     resourceService.loadSounds(enemySounds);
-    resourceService.loadMusic(forestMusic);
+    resourceService.loadMusic(cityMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -574,12 +574,12 @@ public class Level1 extends GameArea {
     logger.debug("Unloading assets");
     unloadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(forestTextures);
+    resourceService.unloadAssets(cityTextures);
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(enemySounds);
-    resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(cityMusic);
   }
 
   /**

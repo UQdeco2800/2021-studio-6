@@ -2,7 +2,6 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
@@ -13,9 +12,6 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.utils.math.RandomUtils;
-
-import java.awt.*;
 
 /**
  * Factory to create obstacle entities.
@@ -65,17 +61,17 @@ public class ObstacleFactory {
    * @return entity
    */
   public static Entity createVerticalBarrier() {
-    Entity tree =
+    Entity barrier =
         new Entity()
             .addComponent(new TextureRenderComponent("images/level_1/road_barrier.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(2f);
-    PhysicsUtils.setScaledCollider(tree, 0.4f, 1f);
-    return tree;
+    barrier.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    barrier.getComponent(TextureRenderComponent.class).scaleEntity();
+    barrier.scaleHeight(2f);
+    PhysicsUtils.setScaledCollider(barrier, 0.4f, 1f);
+    return barrier;
   }
 
   /**

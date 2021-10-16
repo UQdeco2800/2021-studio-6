@@ -15,6 +15,15 @@ public class PhysicsUtils {
                 boundingBox, PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
   }
 
+  /**
+   * Sets the density of the entity and their bounding box for both hitbox and colliderbox
+   * @param entity The entity to set the physics for
+   * @param density The density that the entity should be
+   * @param scaleX The scale of the the hitbox in the x direction
+   * @param scaleY The scale of the the hitbox in the y direction
+   * @param offsetX How far the hitbox should be offset in the x direction
+   * @param offsetY How far the hitbox should be offset in the y direction
+   */
   public static void setEntityPhysics(Entity entity, float density, float scaleX, float scaleY, float offsetX, float offsetY) {
     ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
     HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);

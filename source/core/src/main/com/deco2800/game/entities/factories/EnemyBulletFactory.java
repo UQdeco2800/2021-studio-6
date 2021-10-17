@@ -137,7 +137,7 @@ public class EnemyBulletFactory {
 
         // If it is a bloodball then add the light component
         if (bloodBall) {
-            bullet.addComponent(new PointLightComponent(new Color(0xff0000aa), 0.5f, 0, 0));
+            bullet.addComponent(new PointLightComponent(new Color(0x691e47aa), 0.5f, 0, 0));
         }
 
         // Make the bull smaller with a small hitbox

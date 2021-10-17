@@ -64,17 +64,29 @@ public abstract class GameArea implements Disposable {
 
   protected static final String[] enemyAssets = {
       "images/Enemy_Assets/LongRangeEnemy/eye.png",
-      "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+      "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png",
       "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
       "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
       "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
       "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
-      "images/Enemy_Assets/SmallEnemy/glow.png",
-      "images/Enemy_Assets/LongRangeEnemy/glow.png",
-      "images/Enemy_Assets/LargeEnemy/glow.png",
-      "images/Enemy_Assets/ToughLongRangeEnemy/glow.png"
+      "images/Enemy_Assets/SmallEnemy/glow-left.png",
+      "images/Enemy_Assets/SmallEnemy/glow-right.png",
+      "images/Enemy_Assets/SmallEnemy/glow-front.png",
+      "images/Enemy_Assets/SmallEnemy/glow-back.png",
+      "images/Enemy_Assets/LongRangeEnemy/glow-left.png",
+      "images/Enemy_Assets/LongRangeEnemy/glow-right.png",
+      "images/Enemy_Assets/LongRangeEnemy/glow-front.png",
+      "images/Enemy_Assets/LongRangeEnemy/glow-back.png",
+      "images/Enemy_Assets/LargeEnemy/glow-left.png",
+      "images/Enemy_Assets/LargeEnemy/glow-right.png",
+      "images/Enemy_Assets/LargeEnemy/glow-front.png",
+      "images/Enemy_Assets/LargeEnemy/glow-back.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/glow-left.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/glow-right.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/glow-front.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/glow-back.png"
   };
 
   protected static final String[] enemyAtlas = {

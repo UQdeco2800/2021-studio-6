@@ -11,16 +11,33 @@ import com.deco2800.game.services.ServiceLocator;
  * Creates a glowing red eye image for the entity
  */
 public class GlowingEyesComponent extends RenderComponent {
-    private final Texture glowingEyesTexture;
+    private final Texture glowingEyesTextureLeft;
+    private final Texture glowingEyesTextureRight;
+    private final Texture glowingEyesTextureFront;
+    private final Texture glowingEyesTextureBack;
+    private Texture glowingEyesTextureCurrent;
     private Boolean visible;
     private CombatStatsComponent combatStatsComponent;
 
     /**
      * Creates a glowing red eye image for the entity
      */
-    public GlowingEyesComponent(String imageFileName) {
-        glowingEyesTexture = ServiceLocator.getResourceService().getAsset(imageFileName, Texture.class);
+    public GlowingEyesComponent(String imageFileNameLeft, String imageFileNameRight, String imageFileNameFront, String imageFileNameBack) {
+        glowingEyesTextureLeft = ServiceLocator.getResourceService().getAsset(imageFileNameLeft, Texture.class);
+        glowingEyesTextureRight = ServiceLocator.getResourceService().getAsset(imageFileNameRight, Texture.class);
+        glowingEyesTextureFront = ServiceLocator.getResourceService().getAsset(imageFileNameFront, Texture.class);
+        glowingEyesTextureBack = ServiceLocator.getResourceService().getAsset(imageFileNameBack, Texture.class);
+        glowingEyesTextureCurrent = glowingEyesTextureFront;
         this.visible = true;
+    }
+
+    @Override
+    public void create() {
+        super.create();
+        this.entity.getEvents().addListener("left", this::facingLeft);
+        this.entity.getEvents().addListener("right", this::facingRight);
+        this.entity.getEvents().addListener("front", this::facingFront);
+        this.entity.getEvents().addListener("back", this::facingBack);
     }
 
     /**
@@ -28,6 +45,22 @@ public class GlowingEyesComponent extends RenderComponent {
      */
     public void initialise() {
         combatStatsComponent = entity.getComponent(CombatStatsComponent.class);
+    }
+
+    private void facingRight() {
+        glowingEyesTextureCurrent = glowingEyesTextureRight;
+    }
+
+    private void facingLeft() {
+        glowingEyesTextureCurrent = glowingEyesTextureLeft;
+    }
+
+    private void facingFront() {
+        glowingEyesTextureCurrent = glowingEyesTextureFront;
+    }
+
+    private void facingBack() {
+        glowingEyesTextureCurrent = glowingEyesTextureBack;
     }
 
     /**
@@ -55,7 +88,7 @@ public class GlowingEyesComponent extends RenderComponent {
             Vector2 npcScale = entity.getScale();
 
             batch.draw(
-                glowingEyesTexture,
+                glowingEyesTextureCurrent,
                 npcPos.x,
                 npcPos.y,
                 npcScale.x/2,
@@ -67,8 +100,8 @@ public class GlowingEyesComponent extends RenderComponent {
                 0f,
                 0,
                 0,
-                glowingEyesTexture.getWidth(),
-                glowingEyesTexture.getHeight(),
+                glowingEyesTextureCurrent.getWidth(),
+                glowingEyesTextureCurrent.getHeight(),
                 false,
                 false);
         }
@@ -80,6 +113,9 @@ public class GlowingEyesComponent extends RenderComponent {
     @Override
     public void dispose() {
         super.dispose();
-        glowingEyesTexture.dispose();
+        glowingEyesTextureLeft.dispose();
+        glowingEyesTextureRight.dispose();
+        glowingEyesTextureFront.dispose();
+        glowingEyesTextureBack.dispose();
     }
 }

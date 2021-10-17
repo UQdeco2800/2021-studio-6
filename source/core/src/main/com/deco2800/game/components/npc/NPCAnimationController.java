@@ -20,10 +20,10 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class NPCAnimationController extends Component {
   // arrays are used to easily index into the stationary and running states of the animation
-  private static final String[] ANIMATIONS_LEFT = {"left", "left-run", "left-damaged", "left-run-damaged", "left-hit", "left-run-hit"};
-  private static final String[] ANIMATIONS_RIGHT = {"right", "right-run", "right-damaged", "right-run-damaged", "right-hit", "right-run-hit"};
-  private static final String[] ANIMATIONS_FRONT = {"front", "front-run", "front-damaged", "front-run-damaged", "front-hit", "front-run-hit"};
-  private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit"};
+  private static final String[] ANIMATIONS_LEFT = {"left", "left-run", "left-damaged", "left-run-damaged", "left-hit", "left-run-hit", "left-damaged-hit", "left-run-damaged-hit"};
+  private static final String[] ANIMATIONS_RIGHT = {"right", "right-run", "right-damaged", "right-run-damaged", "right-hit", "right-run-hit", "right-damaged-hit", "right-run-damaged-hit"};
+  private static final String[] ANIMATIONS_FRONT = {"front", "front-run", "front-damaged", "front-run-damaged", "front-hit", "front-run-hit", "front-damaged-hit", "front-run-damaged-hit"};
+  private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit", "back-damaged-hit", "back-run-damaged-hit"};
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
   private static final long hurtDuration = 200;
@@ -83,8 +83,11 @@ public class NPCAnimationController extends Component {
       hitActive = false;
     }
 
+    // If hit active and damage active then switch to hit and damaged related animation offset
+    if (hitActive && damagedActive) {
+      indexOffset = 6;
     // If hit active then switch to hit related animation offset
-    if (hitActive) {
+    } else if (hitActive) {
       indexOffset = 4;
     // If damaged active then switch to damage related animation offset
     } else if (damagedActive) {

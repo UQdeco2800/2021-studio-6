@@ -283,6 +283,14 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     // Create the base entity with standard components in each NPC

@@ -32,7 +32,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class FinalBossFactory {
 
 
-    public static Entity createFinalBossPhaseManager(Entity boss) {
+    public static Entity createFinalBossPhaseManager(Entity boss, Entity darkness) {
 
         //define boss entity
 
@@ -40,7 +40,7 @@ public class FinalBossFactory {
         //
 
         Entity phaseManager = new Entity()
-                .addComponent(new BossHealthListener(boss));
+                .addComponent(new BossHealthListener(boss, darkness));
 
         return phaseManager;
     }
@@ -100,7 +100,7 @@ public class FinalBossFactory {
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(10, 0))
+                .addComponent(new CombatStatsComponent(1, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
 

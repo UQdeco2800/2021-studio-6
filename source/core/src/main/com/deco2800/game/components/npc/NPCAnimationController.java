@@ -32,6 +32,9 @@ public class NPCAnimationController extends Component {
   private boolean hitActive = false;
   private boolean damagedActive = false;
   private boolean isDead = false;
+  private boolean spawning = false;
+  private long spawnTime;
+  private static final long spawnDuration = 500;
   private CombatStatsComponent combatStatsComponent;
   private NPCSoundComponent npcSoundComponent;
   private String[] currentDirection;
@@ -57,6 +60,8 @@ public class NPCAnimationController extends Component {
     if (combatStatsComponent != null) {
       this.entity.getEvents().addListener("hit", this::npcHit);
     }
+
+    this.entity.getEvents().addListener("spawn", this::spawning);
   }
 
   /**
@@ -74,6 +79,20 @@ public class NPCAnimationController extends Component {
       if (lastAnimation != "dead") {
         animator.startAnimation("dead");
         lastAnimation = "dead";
+      }
+      return;
+    }
+
+    // If the enemy spawn time has expired then switch off spawn variable
+    if (spawning && gameTime.getTimeSince(spawnTime) >= spawnDuration) {
+      spawning = false;
+    }
+
+    // If the entity is spawning then start the spawn animation
+    if (spawning) {
+      if (lastAnimation != "spawn") {
+        animator.startAnimation("spawn");
+        lastAnimation = "spawn";
       }
       return;
     }
@@ -159,6 +178,14 @@ public class NPCAnimationController extends Component {
       animator.startAnimation(direction);
       lastAnimation = direction;
     }
+  }
+
+  /**
+   * Flags that the spawner is currently spawning
+   */
+  public void spawning() {
+    spawnTime = gameTime.getTime();
+    spawning = true;
   }
 
   /**

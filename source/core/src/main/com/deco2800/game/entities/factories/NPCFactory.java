@@ -1,7 +1,6 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -59,6 +58,9 @@ public class NPCFactory {
     // Make this entity completely static
     spawnerNPC.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
+    // Add the spawn animation
+    spawnerNPC.getComponent(AnimationRenderComponent.class).addAnimation("spawn", 0.1f, Animation.PlayMode.LOOP);;
+
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = spawnerNPC.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class));
@@ -98,12 +100,15 @@ public class NPCFactory {
     smallEnemy.addComponent(new EnemyDarknessController());
     smallEnemy.addComponent(aiComponent);
     smallEnemy.addComponent(new LootComponent("coins", 1,2, 0.3f));
-    smallEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/glow.png"));
+//    smallEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/glow-left.png",
+//        "images/Enemy_Assets/SmallEnemy/glow-right.png",
+//        "images/Enemy_Assets/SmallEnemy/glow-front.png",
+//        "images/Enemy_Assets/SmallEnemy/glow-back.png"));
 
     // Add the render component to display glowing features when they are in the dark
-    GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
-    glowingEyesComponent.setUnlit();
+//    GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
+//    glowingEyesComponent.initialise();
+//    glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = smallEnemy.getComponent(NPCSoundComponent.class);
@@ -144,12 +149,15 @@ public class NPCFactory {
     largeEnemy.addComponent(new EnemyDarknessController());
     largeEnemy.addComponent(aiComponent);
     largeEnemy.addComponent(new LootComponent("coins",5, 10, 1));
-    largeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/LargeEnemy/glow.png"));
-
-    // Add the render component to display glowing features when they are in the dark
-    GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
-    glowingEyesComponent.setUnlit();
+//    largeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/LargeEnemy/glow-left.png",
+//        "images/Enemy_Assets/LargeEnemy/glow-right.png",
+//        "images/Enemy_Assets/LargeEnemy/glow-front.png",
+//        "images/Enemy_Assets/LargeEnemy/glow-back.png"));
+//
+//    // Add the render component to display glowing features when they are in the dark
+//    GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
+//    glowingEyesComponent.initialise();
+//    glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = largeEnemy.getComponent(NPCSoundComponent.class);
@@ -184,17 +192,20 @@ public class NPCFactory {
                     .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
 
     // Add additional specific components
-    longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"));
+    longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png"));
     longRange.addComponent(new DarknessDetectionComponent());
     longRange.addComponent(new EnemyDarknessController());
     longRange.addComponent(aiComponent);
     longRange.addComponent(new LootComponent("coins",1, 3, 0.5f));
-    longRange.addComponent(new GlowingEyesComponent("images/Enemy_Assets/LongRangeEnemy/glow.png"));
-
-    // Add the render component to display glowing features when they are in the dark
-    GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
-    glowingEyesComponent.setUnlit();
+//    longRange.addComponent(new GlowingEyesComponent("images/Enemy_Assets/LongRangeEnemy/glow-left.png",
+//        "images/Enemy_Assets/LongRangeEnemy/glow-right.png",
+//        "images/Enemy_Assets/LongRangeEnemy/glow-front.png",
+//        "images/Enemy_Assets/LongRangeEnemy/glow-back.png"));
+//
+//    // Add the render component to display glowing features when they are in the dark
+//    GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
+//    glowingEyesComponent.initialise();
+//    glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = longRange.getComponent(NPCSoundComponent.class);
@@ -202,7 +213,7 @@ public class NPCFactory {
     npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/shoot.mp3", Sound.class));
 
     // Change size of entity and size of hitbox
-    longRange.setScale(new Vector2(1.5f, 1.5f));
+    longRange.setScale(new Vector2(1f, 1f));
     PhysicsUtils.setEntityPhysics(longRange, 6f, 0.8f, 0.8f, 0f, 0f);
 
     return longRange;
@@ -226,12 +237,15 @@ public class NPCFactory {
     toughLongRangeEnemy.addComponent(new EnemyDarknessController());
     toughLongRangeEnemy.addComponent(aiComponent);
     toughLongRangeEnemy.addComponent(new LootComponent("coins",3, 7, 1));
-    toughLongRangeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/ToughLongRangeEnemy/glow.png"));
-
-    // Add the render component to display glowing features when they are in the dark
-    GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
-    glowingEyesComponent.setUnlit();
+//    toughLongRangeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/ToughLongRangeEnemy/glow-left.png",
+//        "images/Enemy_Assets/ToughLongRangeEnemy/glow-right.png",
+//        "images/Enemy_Assets/ToughLongRangeEnemy/glow-front.png",
+//        "images/Enemy_Assets/ToughLongRangeEnemy/glow-back.png"));
+//
+//    // Add the render component to display glowing features when they are in the dark
+//    GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);
+//    glowingEyesComponent.initialise();
+//    glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = toughLongRangeEnemy.getComponent(NPCSoundComponent.class);

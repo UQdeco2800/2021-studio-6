@@ -81,6 +81,7 @@ public class SpawnerEnemyTask extends DefaultTask implements PriorityTask {
       NPCSoundComponent npcSoundComponent = this.owner.getEntity().getComponent(NPCSoundComponent.class);
       if (npcSoundComponent != null) {
         npcSoundComponent.playSpawn();
+        this.owner.getEntity().getEvents().trigger("spawn");
       }
     }
   }

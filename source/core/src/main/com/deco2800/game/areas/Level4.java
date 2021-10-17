@@ -66,7 +66,7 @@ public class Level4 extends GameArea {
             "images/level_3/grass_to_sand.png",
             "images/level_3/grass_sand_mix.png",
             "images/gunman.png",
-            "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+            "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png",
             "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
             "images/player.png",
             "images/Enemy_Assets/LargeEnemy/largeEnemy.png",

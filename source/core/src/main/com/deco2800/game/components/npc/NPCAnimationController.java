@@ -24,6 +24,7 @@ public class NPCAnimationController extends Component {
   private static final String[] ANIMATIONS_RIGHT = {"right", "right-run", "right-damaged", "right-run-damaged", "right-hit", "right-run-hit", "right-damaged-hit", "right-run-damaged-hit"};
   private static final String[] ANIMATIONS_FRONT = {"front", "front-run", "front-damaged", "front-run-damaged", "front-hit", "front-run-hit", "front-damaged-hit", "front-run-damaged-hit"};
   private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit", "back-damaged-hit", "back-run-damaged-hit"};
+  private static String currentDirectionAsText;
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
   private static final long hurtDuration = 200;
@@ -32,6 +33,9 @@ public class NPCAnimationController extends Component {
   private boolean hitActive = false;
   private boolean damagedActive = false;
   private boolean isDead = false;
+  private boolean spawning = false;
+  private long spawnTime;
+  private static final long spawnDuration = 500;
   private CombatStatsComponent combatStatsComponent;
   private NPCSoundComponent npcSoundComponent;
   private String[] currentDirection;
@@ -48,6 +52,7 @@ public class NPCAnimationController extends Component {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     animator.startAnimation(ANIMATIONS_FRONT[STATIONARY]);
     currentDirection = ANIMATIONS_FRONT;
+    currentDirectionAsText = "front";
     gameTime = ServiceLocator.getTimeSource();
 
     npcSoundComponent = this.entity.getComponent(NPCSoundComponent.class);
@@ -57,6 +62,8 @@ public class NPCAnimationController extends Component {
     if (combatStatsComponent != null) {
       this.entity.getEvents().addListener("hit", this::npcHit);
     }
+
+    this.entity.getEvents().addListener("spawn", this::spawning);
   }
 
   /**
@@ -74,6 +81,20 @@ public class NPCAnimationController extends Component {
       if (lastAnimation != "dead") {
         animator.startAnimation("dead");
         lastAnimation = "dead";
+      }
+      return;
+    }
+
+    // If the enemy spawn time has expired then switch off spawn variable
+    if (spawning && gameTime.getTimeSince(spawnTime) >= spawnDuration) {
+      spawning = false;
+    }
+
+    // If the entity is spawning then start the spawn animation
+    if (spawning) {
+      if (lastAnimation != "spawn") {
+        animator.startAnimation("spawn");
+        lastAnimation = "spawn";
       }
       return;
     }
@@ -132,21 +153,25 @@ public class NPCAnimationController extends Component {
     if (yOffset > 0 && yOffset > -xOffset && yOffset > xOffset) {
       setDirection(ANIMATIONS_BACK[state]);
       currentDirection = ANIMATIONS_BACK;
+      currentDirectionAsText = "back";
     }
     // if the coordinates are in a 45 degree cone below the NPC then set the animation to be the front
     else if (yOffset <= 0 && yOffset <= -xOffset && yOffset <= xOffset) {
       setDirection(ANIMATIONS_FRONT[state]);
       currentDirection = ANIMATIONS_FRONT;
+      currentDirectionAsText = "front";
     }
     // if the coordinates are in a 45 degree cone to the right the NPC then set the animation to be the right
     else if (xOffset > 0 && yOffset > -xOffset && yOffset <= xOffset) {
       setDirection(ANIMATIONS_RIGHT[state]);
       currentDirection = ANIMATIONS_RIGHT;
+      currentDirectionAsText = "right";
     }
     // if the coordinates are in a 45 degree cone to the left of the NPC then set the animation to be the left
     else if (xOffset < 0 && yOffset <= -xOffset && yOffset > xOffset) {
       setDirection(ANIMATIONS_LEFT[state]);
       currentDirection = ANIMATIONS_LEFT;
+      currentDirectionAsText = "left";
     }
   }
 
@@ -156,9 +181,18 @@ public class NPCAnimationController extends Component {
    */
   public void setDirection(String direction) {
     if (!direction.equals(lastAnimation)) {
+      this.entity.getEvents().trigger(currentDirectionAsText);
       animator.startAnimation(direction);
       lastAnimation = direction;
     }
+  }
+
+  /**
+   * Flags that the spawner is currently spawning
+   */
+  public void spawning() {
+    spawnTime = gameTime.getTime();
+    spawning = true;
   }
 
   /**

@@ -180,56 +180,56 @@ back-run-damaged
   index: -1
 left-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 right-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 front-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 back-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 left-run-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 right-run-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 front-run-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 back-run-damaged-hit
   rotate: false
-  xy: 70, 2
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -237,6 +237,13 @@ back-run-damaged-hit
 dead
   rotate: false
   xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+spawn
+  rotate: false
+  xy: 172, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

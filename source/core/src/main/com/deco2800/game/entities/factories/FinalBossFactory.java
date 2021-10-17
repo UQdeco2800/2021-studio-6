@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,8 +12,10 @@ import com.deco2800.game.areas.Level4;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.finalboss.LaserTimer;
+import com.deco2800.game.components.npc.BossAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.finalboss.LaserListener;
+import com.deco2800.game.components.player.PlayerLightingComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
@@ -83,7 +86,15 @@ public class FinalBossFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
-            animator.addAnimation("default", 1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_right", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float_left", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float_right", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float_left", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float_right", 0.3f, Animation.PlayMode.LOOP);
 
         //System.out.println(animator.getLayer());
 
@@ -102,11 +113,12 @@ public class FinalBossFactory {
                 .addComponent(animator)
                 .addComponent(new CombatStatsComponent(10, 0))
                 .addComponent(new DisposingComponent())
+                .addComponent(new BossAnimationController())
                 .addComponent(new LaserListener());
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
-        bossHead.setScale(new Vector2(4f, 4f));
-        bossHead.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        bossHead.setScale(new Vector2(5.3f, 4f));
+        //bossHead.getComponent(AnimationRenderComponent.class).startAnimation("default");
 
         return bossHead;
     }

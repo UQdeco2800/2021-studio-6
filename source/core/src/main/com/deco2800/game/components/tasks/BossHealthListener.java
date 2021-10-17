@@ -64,7 +64,7 @@ public class BossHealthListener extends Component {
             if(health <= 0) {
                 bossState = BossState.PHASEFINAL;
                 logger.debug("Boss State change from {} to {}", BossState.PHASE3, bossState);
-                //MainGameScreen.changeLevel();
+
             }
         }
 

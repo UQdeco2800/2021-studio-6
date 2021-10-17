@@ -11,6 +11,7 @@ public class NPCPilotFirstDialogue extends BasicDialogueConfig {
         "* He looks down the road into the darkness ahead. Faint sounds of growling are heard in the distance. *",
         "Look, don't get close to them. Throw rocks at a distance by pressing ENTER.",
         "Also if one of them takes a bite out of you, then don't forget to heal up by pressing the number 1 key.",
+        "Make sure you keep your torch well lit, as they are weaker in the light. Press T to toggle it on/off.",
         "Good luck, hopefully I will see you at the next safehouse!"
     };
     protected static final String[] PORTRAIT = {"npc-pilot-portrait"};

@@ -4,196 +4,196 @@ size: 512, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-SmallEnemyBackHit2
+back-hit
   rotate: false
   xy: 2, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyBackHit1
+back-run-hit
   rotate: false
   xy: 2, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyBackHit7
+back-run-hit
   rotate: false
   xy: 2, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyBackHit4
+back-run-hit
   rotate: false
   xy: 36, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyBackHit5
+back-run-hit
   rotate: false
   xy: 36, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyBackHit6
+back-run-hit
   rotate: false
   xy: 70, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyBackHit3
+back-run-hit
   rotate: false
   xy: 70, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit1
+front-hit
   rotate: false
   xy: 104, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit2
+front-run-hit
   rotate: false
   xy: 104, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit7
+front-run-hit
   rotate: false
   xy: 104, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit4
+front-run-hit
   rotate: false
   xy: 138, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit5
+front-run-hit
   rotate: false
   xy: 138, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit6
+front-run-hit
   rotate: false
   xy: 172, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyFrontHit3
+front-run-hit
   rotate: false
   xy: 172, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit1
+left-hit
   rotate: false
   xy: 206, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit7
+left-run-hit
   rotate: false
   xy: 206, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit4
+left-run-hit
   rotate: false
   xy: 240, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit3
+left-run-hit
   rotate: false
   xy: 240, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit5
+left-run-hit
   rotate: false
   xy: 274, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit6
+left-run-hit
   rotate: false
   xy: 308, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyLeftHit2
+left-run-hit
   rotate: false
   xy: 308, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit2
+right-run-hit
   rotate: false
   xy: 342, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit6
+right-run-hit
   rotate: false
   xy: 342, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit4
+right-run-hit
   rotate: false
   xy: 376, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit3
+right-run-hit
   rotate: false
   xy: 376, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit5
+right-run-hit
   rotate: false
   xy: 410, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit7
+right-run-hit
   rotate: false
   xy: 444, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SmallEnemyRightHit1
+right-hit
   rotate: false
   xy: 444, 4
   size: 32, 32

@@ -98,7 +98,7 @@ public class NPCFactory {
     smallEnemy.addComponent(new EnemyDarknessController());
     smallEnemy.addComponent(aiComponent);
     smallEnemy.addComponent(new LootComponent("coins", 1,2, 0.3f));
-    smallEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    smallEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/glow.png"));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
@@ -144,7 +144,7 @@ public class NPCFactory {
     largeEnemy.addComponent(new EnemyDarknessController());
     largeEnemy.addComponent(aiComponent);
     largeEnemy.addComponent(new LootComponent("coins",5, 10, 1));
-    largeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    largeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/LargeEnemy/glow.png"));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
@@ -189,7 +189,7 @@ public class NPCFactory {
     longRange.addComponent(new EnemyDarknessController());
     longRange.addComponent(aiComponent);
     longRange.addComponent(new LootComponent("coins",1, 3, 0.5f));
-    longRange.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    longRange.addComponent(new GlowingEyesComponent("images/Enemy_Assets/LongRangeEnemy/glow.png"));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
@@ -226,7 +226,7 @@ public class NPCFactory {
     toughLongRangeEnemy.addComponent(new EnemyDarknessController());
     toughLongRangeEnemy.addComponent(aiComponent);
     toughLongRangeEnemy.addComponent(new LootComponent("coins",3, 7, 1));
-    toughLongRangeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    toughLongRangeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/ToughLongRangeEnemy/glow.png"));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);

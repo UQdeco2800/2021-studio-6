@@ -71,7 +71,10 @@ public abstract class GameArea implements Disposable {
       "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
       "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
-      "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
+      "images/Enemy_Assets/SmallEnemy/glow.png",
+      "images/Enemy_Assets/LongRangeEnemy/glow.png",
+      "images/Enemy_Assets/LargeEnemy/glow.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/glow.png"
   };
 
   protected static final String[] enemyAtlas = {

@@ -299,7 +299,7 @@ public class PlayerMeleeAttackComponent extends Component {
                         if (physicsComponent != null && knockback > 0f) {
                             Body targetBody = physicsComponent.getBody();
                             Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
-                            Vector2 impulse = direction.setLength(knockback * 100);
+                            Vector2 impulse = direction.setLength(knockback * 100f);
                             targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
                         }
                     }

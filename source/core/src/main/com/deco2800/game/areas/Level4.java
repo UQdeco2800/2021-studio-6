@@ -313,7 +313,7 @@ public class Level4 extends GameArea {
 
         Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
         Entity darkness = FinalBossFactory.createDarkness(player, this);
-        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss);
+        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss, darkness);
 
         GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2);
         GridPoint2 darknessPos = new GridPoint2(bounds.x/2, bounds.y/2);
@@ -360,7 +360,7 @@ public class Level4 extends GameArea {
     }
 
     private void spawnBoat() {
-        int BOAT_LOCATION = 30;
+        int BOAT_LOCATION = 31;
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset("images/Final_Boss/boat.atlas", TextureAtlas.class));
@@ -371,7 +371,7 @@ public class Level4 extends GameArea {
                 .addComponent(animator);
 
         boat.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        boat.setScale(new Vector2(1f, 1f));
+        boat.setScale(new Vector2(2f, 2f));
 
         GridPoint2 bounds = terrain.getMapBounds(0);
         GridPoint2 boatLocation = new GridPoint2(bounds.x/2, BOAT_LOCATION);

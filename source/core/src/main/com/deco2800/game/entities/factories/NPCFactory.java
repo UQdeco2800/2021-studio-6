@@ -213,7 +213,7 @@ public class NPCFactory {
     npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/shoot.mp3", Sound.class));
 
     // Change size of entity and size of hitbox
-    longRange.setScale(new Vector2(1.5f, 1.5f));
+    longRange.setScale(new Vector2(1f, 1f));
     PhysicsUtils.setEntityPhysics(longRange, 6f, 0.8f, 0.8f, 0f, 0f);
 
     return longRange;

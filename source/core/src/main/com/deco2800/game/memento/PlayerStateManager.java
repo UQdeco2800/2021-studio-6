@@ -21,15 +21,13 @@ public class PlayerStateManager {
     private static final String MEMENTO_MESSAGE_INITIAL_STATE = "Player state at level 1";
     private static final String MEMENTO_MESSAGE_CHECKPOINT = "Player state at level ";
     private static final int FULL_MAGAZINE = 5;
-    private static int LEVEL_ONE = 1;
-    private static double LEVEL_INCREMENT = 0.5;
     private static PlayerStateManager manager = null;
     private static final PlayerCaretaker caretaker = new PlayerCaretaker();
-    private static Player playerState = null;
-    private static PlayerMemento playerMemento = null;
+    private Player playerState = null;
+    private PlayerMemento playerMemento = null;
 
     // this id is used to track player - can be extended to track different objects in game
-    private static final int playerID = 0;
+    private static final int playerId = 0;
 
     /**
      * Returns single instance of singleton
@@ -81,7 +79,7 @@ public class PlayerStateManager {
     public void createStartingPlayerState(int baseRangedAttack, int baseAttack, int health, int ammo, int bandages, int gold,
                                   int woundState, int defenceLevel, int bullet, String ability, String meleeFilePath,
                                   String meleeWeaponType, String armorType, double currentGameLevel, int torch) {
-        playerState = new Player(playerID).setBaseRangedAttack(baseRangedAttack).setBaseAttack(baseAttack)
+        playerState = new Player(playerId).setBaseRangedAttack(baseRangedAttack).setBaseAttack(baseAttack)
                 .setHealth(health).setAmmo(ammo).setBandage(bandages).setGold(gold).setWoundState(woundState)
                 .setDefenceLevel(defenceLevel).setAbility(ability).setMeleeFilePath(meleeFilePath)
                 .setMeleeWeaponType(meleeWeaponType).setArmorType(armorType).setCurrentGameLevel(currentGameLevel)
@@ -131,7 +129,7 @@ public class PlayerStateManager {
         playerMemento = playerState.createMemento();
 
         // message will change when player progresses in game - must be unique
-        String mementoMessageOtherLevels = "Player state at level " + gameLevel;
+        String mementoMessageOtherLevels = MEMENTO_MESSAGE_CHECKPOINT + gameLevel;
         caretaker.addMemento(playerState.getId(), mementoMessageOtherLevels, playerMemento);
     }
 
@@ -140,7 +138,7 @@ public class PlayerStateManager {
      * @param playerState print most recent player state to logging
      */
     public String trackPlayerState(Player playerState) {
-        logger.info(playerState.toString());
+        logger.debug(playerState.toString());
         return playerState.toString();
     }
 
@@ -168,8 +166,10 @@ public class PlayerStateManager {
      * player dies in safehouse - and this should not happen either way which is not the intention of the game
      */
     public void restorePlayerStateToClosestSafehouse() {
-        if (playerState.getCurrentGameLevel() > LEVEL_ONE) {
-            double safehouseLevel = playerState.getCurrentGameLevel() - LEVEL_INCREMENT;
+        int levelOne = 1;
+        if (playerState.getCurrentGameLevel() > levelOne) {
+            double levelIncrement = 0.5;
+            double safehouseLevel = playerState.getCurrentGameLevel() - levelIncrement;
             String mementoMessageSafehouse = MEMENTO_MESSAGE_CHECKPOINT + safehouseLevel;
             PlayerMemento safehousePlayerMemento = caretaker.getMemento(playerState.getId(), mementoMessageSafehouse);
             playerState.restore(safehousePlayerMemento);

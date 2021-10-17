@@ -87,28 +87,28 @@ right-damaged
   orig: 64, 64
   offset: 0, 0
   index: -1
-back-damaged-run
+back-run-damaged
   rotate: false
   xy: 200, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-front-damaged-run
+front-run-damaged
   rotate: false
   xy: 134, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-left-damaged-run
+left-run-damaged
   rotate: false
   xy: 68, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-right-damaged-run
+right-run-damaged
   rotate: false
   xy: 2, 2
   size: 64, 64
@@ -150,6 +150,34 @@ right-hit
   orig: 64, 64
   offset: 0, 0
   index: -1
+back-run-hit
+  rotate: false
+  xy: 2, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+front-run-hit
+  rotate: false
+  xy: 68, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+left-run-hit
+  rotate: false
+  xy: 134, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+right-run-hit
+  rotate: false
+  xy: 200, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 back-damaged-hit
   rotate: false
   xy: 2, 4
@@ -178,7 +206,34 @@ right-damaged-hit
   orig: 64, 64
   offset: 0, 0
   index: -1
-
+back-run-damaged-hit
+  rotate: false
+  xy: 2, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+front-run-damaged-hit
+  rotate: false
+  xy: 68, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+left-run-damaged-hit
+  rotate: false
+  xy: 134, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+right-run-damaged-hit
+  rotate: false
+  xy: 200, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
   
 dead_enemy.png
 size: 32, 32

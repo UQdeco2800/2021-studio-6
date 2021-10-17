@@ -270,7 +270,7 @@ public class MainGameScreen extends ScreenAdapter {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
           CAMERA_POSITION.set(new Vector2(20, 12));
-          renderer.setZoom(80); //40
+          renderer.setZoom(40);
         }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);

@@ -577,7 +577,7 @@ public class ObstacleFactory {
   public static Entity createWaterSandTile8() {
     Entity waterTile =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/level_3/new_darker_water_tiles/water-bottom-sand.png"))
+                    .addComponent(new TextureRenderComponent("images/level_3/sand_to_water.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 

@@ -163,7 +163,7 @@ public class TerrainFactory {
         TextureRegion water =
                 new TextureRegion(resourceService.getAsset("images/level_3/new_darker_water_tiles/water-full.png", Texture.class));
         TextureRegion sandToWater =
-                new TextureRegion(resourceService.getAsset("images/level_3/new_darker_water_tiles/water-bottom-sand.png", Texture.class));
+                new TextureRegion(resourceService.getAsset("images/level_3/sand_to_water.png", Texture.class));
         TextureRegion grassToSand =
                 new TextureRegion(resourceService.getAsset("images/level_3/grass_to_sand.png", Texture.class));
         return createBossTerrain(1f, grassB1, grassB2, grassB3, grassB4, grassB5, sand, water, sandToWater, grassToSand);

@@ -1,6 +1,8 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,6 +21,8 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
@@ -58,7 +62,7 @@ public class Level4 extends GameArea {
             "images/level_3/level3_grass_tiles/grass-4.png",
             "images/level_3/sand.png",
             "images/level_3/new_darker_water_tiles/water-full.png",
-            "images/level_3/new_darker_water_tiles/water-bottom-sand.png",
+            "images/level_3/sand_to_water.png",
             "images/level_3/grass_to_sand.png",
             "images/level_3/grass_sand_mix.png",
             "images/gunman.png",
@@ -72,11 +76,13 @@ public class Level4 extends GameArea {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
-            "images/Final_Boss/dock.png"
+            "images/Final_Boss/dock.png",
+            "images/Final_Boss/boat.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
             "images/Final_Boss/boss_head.atlas",
+            "images/Final_Boss/boat.atlas",
             "images/terrain_iso_grass.atlas",
             "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
             "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
@@ -138,9 +144,7 @@ public class Level4 extends GameArea {
         spawnFinalBoss();
         spawnWaterTiles();
         spawnDock();
-
-
-
+        spawnBoat();
     }
 
     private void displayUI() {
@@ -356,7 +360,23 @@ public class Level4 extends GameArea {
     }
 
     private void spawnBoat() {
+        int BOAT_LOCATION = 30;
 
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/Final_Boss/boat.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.3f, Animation.PlayMode.LOOP);
+
+        Entity boat = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                .addComponent(animator);
+
+        boat.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        boat.setScale(new Vector2(1f, 1f));
+
+        GridPoint2 bounds = terrain.getMapBounds(0);
+        GridPoint2 boatLocation = new GridPoint2(bounds.x/2, BOAT_LOCATION);
+        spawnEntityAt(boat, boatLocation, true, true);
+        animator.startAnimation("float");
     }
 
     private void spawnCobweb() {

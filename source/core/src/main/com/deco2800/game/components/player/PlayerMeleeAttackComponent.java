@@ -290,12 +290,17 @@ public class PlayerMeleeAttackComponent extends Component {
                 // enemy within range and player clicked melee attack button
                 if (closeToAttack && meleeAttackClicked && targetStats != null) {
                     targetStats.hit(damage);
-                    // enemy will now despawn
+
                     if (targetStats.isDead()) {
                         removingEnemies.add(enemy);
-
-                        if (ServiceLocator.getGameArea() != null) {
-                            ServiceLocator.getGameArea().despawnEntity(target);
+                    } else {
+                        // Apply knockback
+                        PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
+                        if (physicsComponent != null && knockback > 0f) {
+                            Body targetBody = physicsComponent.getBody();
+                            Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
+                            Vector2 impulse = direction.setLength(knockback * 100);
+                            targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
                         }
                     }
                 }

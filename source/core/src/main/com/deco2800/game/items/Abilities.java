@@ -3,7 +3,8 @@ package com.deco2800.game.items;
 public enum Abilities {
     NONE,
     LONG_DASH,
-    INVINCIBILITY;
+    INVINCIBILITY,
+    FIRE_CRACKER;
 
     public static Abilities getAbility(String ability) {
         switch (ability) {
@@ -11,6 +12,8 @@ public enum Abilities {
                 return LONG_DASH;
             case "INVINCIBILITY":
                 return INVINCIBILITY;
+            case "FIRE_CRACKER":
+                return FIRE_CRACKER;
             default:
                 return NONE;
         }
@@ -20,6 +23,7 @@ public enum Abilities {
         switch (ability) {
             case "LONG_DASH":
             case "INVINCIBILITY":
+            case "FIRE_CRACKER":
                 return true;
             default:
                 return false;

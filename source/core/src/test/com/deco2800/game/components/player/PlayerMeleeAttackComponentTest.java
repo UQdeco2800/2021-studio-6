@@ -61,7 +61,7 @@ public class PlayerMeleeAttackComponentTest {
         // by default a fixture will be created in the north direction of player
         Entity player = createPlayer();
         Entity enemy = createEnemy();
-        int ENEMY_DAMAGED_HEALTH = 18;
+        int ENEMY_DAMAGED_HEALTH = 15;
 
         player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();
@@ -91,7 +91,7 @@ public class PlayerMeleeAttackComponentTest {
     void shouldAttackAfterMoving() {
         Entity player = createPlayer();
         Entity enemy = createEnemy();
-        int ENEMY_DAMAGED_HEALTH = 18;
+        int ENEMY_DAMAGED_HEALTH = 15;
         player.getEvents().trigger("walk", Vector2Utils.RIGHT);
 
         player.getEvents().trigger("attackStart");
@@ -133,7 +133,7 @@ public class PlayerMeleeAttackComponentTest {
         Entity player = createPlayer();
         Entity enemy1 = createEnemy();
         Entity enemy2 = createEnemy();
-        int ENEMY_DAMAGED_HEALTH = 18;
+        int ENEMY_DAMAGED_HEALTH = 15;
 
         player.getEvents().trigger("attackStart");
         Fixture playerFixture = player.getComponent(PlayerMeleeAttackComponent.class).getFixture();

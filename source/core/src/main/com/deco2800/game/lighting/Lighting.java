@@ -1,9 +1,9 @@
 package com.deco2800.game.lighting;
 
-import box2dLight.PointLight;
-import box2dLight.ConeLight;
-import box2dLight.RayHandler;
-import box2dLight.Light;
+import com.badlogic.box2dlights.box2dLight.PointLight;
+import com.badlogic.box2dlights.box2dLight.ConeLight;
+import com.badlogic.box2dlights.box2dLight.RayHandler;
+import com.badlogic.box2dlights.box2dLight.Light;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -28,8 +28,10 @@ public class Lighting implements Disposable {
      * @param world the physics world which is passed to the rayhandler
      */
     public Lighting(World world) {
+        RayHandler.setGammaCorrection(false);
+        RayHandler.useDiffuseLight(true);
         rayHandler = new RayHandler(world);
-        setAmbientLight(0f, 0f, 0f, 0.15f);
+        setAmbientLight(0.1f, .1f, .1f, 1f);
     }
 
     /**
@@ -68,6 +70,33 @@ public class Lighting implements Disposable {
     public void setCamera(Camera camera) {
         rayHandler.setCombinedMatrix(camera.combined, camera.position.x , camera.position.y, camera.viewportWidth * 1, camera.viewportHeight * 1 );
     }
+
+    /**
+     * pointAtLight
+     *  checks whether a given point is in light
+     *  this will be in the "physics engine" space and will not work with a grid position
+     *  should work with Entity.getPosition()
+     * @param x x position of the point
+     * @param y y position of the point
+     * @return whether the point is in the light or not
+     */
+    public boolean pointAtLight(float x, float y) {
+        return rayHandler.pointAtLight(x, y);
+    }
+
+    /**
+     * pointatLight
+     *  checks whether a given point is in shadow
+     *  this will be in the "physics engine" space and will not work with a grid position
+     *  should work with Entity.getPosition()
+     * @param x x position of the point
+     * @param y y position of the point
+     * @return whether the point is in the shadow or not
+     */
+    public boolean pointAtShadow(float x, float y) {
+        return rayHandler.pointAtShadow(x, y);
+    }
+
 
     /**
      * render

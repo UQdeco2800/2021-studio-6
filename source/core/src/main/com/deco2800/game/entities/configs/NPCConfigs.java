@@ -4,9 +4,12 @@ package com.deco2800.game.entities.configs;
  * Defines all NPC configs to be loaded by the NPC Factory.
  */
 public class NPCConfigs {
-  public BaseEntityConfig smallEnemy = new BaseEntityConfig();
-  public BaseEntityConfig ghost = new BaseEntityConfig();
-  public GhostKingConfig ghostKing = new GhostKingConfig();
-  public LargeEnemyConfig largeEnemy = new LargeEnemyConfig();
-  public SpawnerEnemyConfig spawnerEnemy = new SpawnerEnemyConfig();
+  public BaseEnemyConfig largeEnemy = new BaseEnemyConfig();
+  public BaseEnemyConfig smallEnemy = new BaseEnemyConfig();
+
+  public BaseEnemyConfig spawnerEnemy = new BaseEnemyConfig();
+  public BaseEnemyConfig rangedEnemy = new BaseEnemyConfig();
+  public BaseEnemyConfig rangedToughEnemy = new BaseEnemyConfig();
+
+
 }

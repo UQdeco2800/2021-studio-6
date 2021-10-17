@@ -31,17 +31,8 @@ public class Level3 extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String NPC_DEAD_PILOT_ATLAS_FILENAME = "images/npc_movement/dead_pilot_npc.atlas";
   private static final String[] forestTextures = {
-    "images/playeritems/shootingammo.png", "images/playeritems/pickupammo.png",
-    "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-    "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-    "images/playeritems/halmet.png", "images/playeritems/sword/sword.png", "images/playeritems/dagger/dagger.png",
-    "images/playeritems/machete/machete.png", "images/playeritems/sledge/sledge.png","images/playeritems/bat/baseball.png",
-    "images/playeritems/axe/axe.png",
-    "images/playeritems/firecracker/firecracker.png",
     "images/obstacle_sprite/cobweb.png",
     "images/obstacle_sprite/bush.png",
-    "images/tree.png",
-    "images/ghost_king.png",
     "images/level_2/level2_grass_1.png",
     "images/level_2/level2_grass_2.png",
     "images/level_2/level2_grass_3.png",
@@ -51,21 +42,10 @@ public class Level3 extends GameArea {
     "images/level_2/level2_tree_1-1.png",
     "images/level_2/level2_tree_2-1.png",
     "images/level_2/level2_background_tile.png",
-    "images/gunman.png",
-    "images/Enemy_Assets/LongRangeEnemy/eye.png",
-    "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
-    "images/player.png",
-    "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-    "images/EnemyAssets/SpawnerEnemy/spawnerEnemy.png",
-    "images/iso_grass_3.png",
     "images/safehouse/exterior-day1-latest.png",
-    "images/hud/dashbarFull.png",
-    "images/hud/healthFull.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
-    "images/placeholder.png",
-    "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
     "images/level_3/level3_dead_group_pine_tree.png",
     "images/level_3/level3_brown_group_pine_tree.png",
     "images/level_2/level2_tree_2_group_ver1.png",
@@ -92,31 +72,15 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
-    "images/dialogue/raw/npc_indicator.png"
-
+    "images/dialogue/raw/npc_indicator.png",
+    "images/level_2/fire-fly-bug-NPC.png",
+    "images/playeritems/bandage/bandage01.png"
   };
 
   /**
    * Texture atlases file path for Level 3.
    */
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas",
-    "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-    "images/ghost.atlas",
-    "images/ghostKing.atlas",
-    "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-    "images/Player_Animations/player_movement.atlas",
-    "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-    "images/Player_Sprite/player_movement.atlas",
-    "images/hud/dashbar.atlas",
-    "images/hud/health.atlas",
-      "images/weapon/crowbar.atlas",
-    "images/weapon/axe.atlas",
-    "images/weapon/sledge.atlas",
-    "images/playeritems/tourch/torch.atlas",
-    "images/weapon/machete.atlas",
-    "images/weapon/baseball.atlas",
-    "images/weapon/dagger.atlas",
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -125,6 +89,7 @@ public class Level3 extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
+
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
 
@@ -151,11 +116,12 @@ public class Level3 extends GameArea {
     spawnWaterGreenTiles();
     spawnBridge();
     spawnWaterSandTiles();
+    spawnFireFlyBugNPC();
 
     // Spawn player related entities
     player = spawnPlayer();
     spawnBullet();
-    spawnBomb();
+    spawnFireCracker();
     spawnPickupItems();
     spawnPilotNpc();
 
@@ -171,14 +137,6 @@ public class Level3 extends GameArea {
     // Listener for level 3 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,
         this::playMusic);
-  }
-
-  /**
-   * Gets the player entity for Level 3.
-   * @return Player entity.
-   */
-  public Entity getPlayer() {
-    return player;
   }
 
   /**
@@ -402,7 +360,7 @@ public class Level3 extends GameArea {
     Array<Entity> bullets = new Array<>();
 
     for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBullet = BulletFactory.createBullet();
+      Entity newBullet = ProjectileFactory.createBullet();
       bullets.add(newBullet);
       spawnEntity(newBullet);
     }
@@ -411,18 +369,13 @@ public class Level3 extends GameArea {
   }
 
   /**
-   * Spawns the bomb entity when player uses them.
+   * Spawns the fire cracker entity for player to use
    */
-  private void spawnBomb() {
-    Array<Entity> bombs = new Array<>();
+  private void spawnFireCracker() {
+      Entity fireCracker = ProjectileFactory.createFireCracker();
+      spawnEntity(fireCracker);
 
-    for (int i = 0; i < NUM_BULLETS; i++) {
-      Entity newBomb = BombFactory.createBomb();
-      bombs.add(newBomb);
-      spawnEntity(newBomb);
-    }
-
-    getPlayer().getComponent(PlayerRangeAOEComponent.class).addBombs(bombs);
+      player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
   }
 
   /**
@@ -431,14 +384,15 @@ public class Level3 extends GameArea {
   private void spawnSpawnerEnemy() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(33, 33),
-      new GridPoint2(52, 21),
+      new GridPoint2(45, 22),
       new GridPoint2(13, 13),
       new GridPoint2(44, 6),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(getPlayer(), 10, 5f, 6f, this, spawnerEnemy));
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+              spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
     }
   }
@@ -606,6 +560,13 @@ public class Level3 extends GameArea {
       new GridPoint2(43, 2),
     };
 
+    GridPoint2[] bandageSpawnLocations = {
+      new GridPoint2(17, 2),
+      new GridPoint2(28, 28),
+      new GridPoint2(47, 14),
+      new GridPoint2(50, 26),
+    };
+
     GridPoint2[] coinSpawnLocations = {
       new GridPoint2(52, 43),
       new GridPoint2(16, 42),
@@ -648,6 +609,11 @@ public class Level3 extends GameArea {
       int randomAmmoQuantity = RandomUtils.randomInt(5);
       Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
+    }
+
+    for (int i = 0; i < bandageSpawnLocations.length; i++) {
+      Entity pickupBandage = ItemFactory.createBandagePickup(1);
+      spawnEntityAt(pickupBandage, bandageSpawnLocations[i], true, false);
     }
 
     for (int i = 0; i < coinSpawnLocations.length; i++) {
@@ -882,6 +848,22 @@ public class Level3 extends GameArea {
   }
 
   /**
+   * Spawns the fire fly bug NPC.
+   */
+  private void spawnFireFlyBugNPC() {
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(22,29),
+        new GridPoint2(41,23),
+        new GridPoint2(45,9),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
+      spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
+    }
+  }
+
+  /**
    * Plays the music for Level 3.
    */
   private void playMusic() {
@@ -896,11 +878,13 @@ public class Level3 extends GameArea {
    */
   private void loadAssets() {
     logger.debug("Loading assets");
+    loadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
     resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(LEVEL3_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
@@ -914,11 +898,13 @@ public class Level3 extends GameArea {
    */
   private void unloadAssets() {
     logger.debug("Unloading assets");
+    unloadSharedAssets();
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(LEVEL3_MUSIC);
   }
 

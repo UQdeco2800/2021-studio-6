@@ -47,6 +47,14 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     }
   }
 
+  public Vector2 getSpeed() {
+    return maxSpeed;
+  }
+
+  public void setSpeed(Vector2 speed) {
+    maxSpeed = speed;
+  }
+
   /**
    * Enable/disable movement for the controller. Disabling will immediately set velocity to 0.
    *
@@ -58,8 +66,6 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     if (!movementEnabled) {
         Body body = physicsComponent.getBody();
         setToVelocity(body, Vector2.Zero);
-
-
     }
   }
 

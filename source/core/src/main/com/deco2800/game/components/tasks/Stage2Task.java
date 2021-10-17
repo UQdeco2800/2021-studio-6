@@ -38,7 +38,7 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
      * @param gameArea the game area for this task to occur
      * @param target the target for the enemies to attack
      */
-    public Stage2Task(int priority, Level4 gameArea, Entity target) {
+    public Stage2Task(int priority, GameArea gameArea, Entity target) {
         this.priority = priority;
         this.gameArea = gameArea;
 
@@ -57,10 +57,10 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
      */
     public void createSpawners() {
 
-        Vector2 pos1 = new Vector2(1, 4);
-        Vector2 pos2 = new Vector2(1,19);
-        Vector2 pos3 = new Vector2(38, 4);
-        Vector2 pos4 = new Vector2(38,19);
+        Vector2 pos1 = new Vector2(1, 2);
+        Vector2 pos2 = new Vector2(1,15);
+        Vector2 pos3 = new Vector2(38, 2);
+        Vector2 pos4 = new Vector2(38,15);
 
         spawner1.setPosition(pos1);
         spawner2.setPosition(pos2);

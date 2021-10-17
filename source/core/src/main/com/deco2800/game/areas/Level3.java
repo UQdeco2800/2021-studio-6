@@ -72,7 +72,9 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-right-sand.png",
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
-    "images/dialogue/raw/npc_indicator.png"
+    "images/dialogue/raw/npc_indicator.png",
+    "images/level_2/fire-fly-bug-NPC.png",
+    "images/playeritems/bandage/bandage01.png"
   };
 
   /**
@@ -114,6 +116,7 @@ public class Level3 extends GameArea {
     spawnWaterGreenTiles();
     spawnBridge();
     spawnWaterSandTiles();
+    spawnFireFlyBugNPC();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -381,13 +384,13 @@ public class Level3 extends GameArea {
   private void spawnSpawnerEnemy() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(33, 33),
-      new GridPoint2(52, 21),
+      new GridPoint2(45, 22),
       new GridPoint2(13, 13),
       new GridPoint2(44, 6),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy(player, this);
+      Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
       spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
               spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
@@ -557,6 +560,13 @@ public class Level3 extends GameArea {
       new GridPoint2(43, 2),
     };
 
+    GridPoint2[] bandageSpawnLocations = {
+      new GridPoint2(17, 2),
+      new GridPoint2(28, 28),
+      new GridPoint2(47, 14),
+      new GridPoint2(50, 26),
+    };
+
     GridPoint2[] coinSpawnLocations = {
       new GridPoint2(52, 43),
       new GridPoint2(16, 42),
@@ -599,6 +609,11 @@ public class Level3 extends GameArea {
       int randomAmmoQuantity = RandomUtils.randomInt(5);
       Entity pickupAmmo = ItemFactory.createAmmoPickup(randomAmmoQuantity);
       spawnEntityAt(pickupAmmo, ammoSpawnLocations[i], true, false);
+    }
+
+    for (int i = 0; i < bandageSpawnLocations.length; i++) {
+      Entity pickupBandage = ItemFactory.createBandagePickup(1);
+      spawnEntityAt(pickupBandage, bandageSpawnLocations[i], true, false);
     }
 
     for (int i = 0; i < coinSpawnLocations.length; i++) {
@@ -829,6 +844,22 @@ public class Level3 extends GameArea {
     for (int i = 0; i < spawnLocationsRight.length; i++) {
       Entity bridgeRight = ObstacleFactory.createBridgeVerticalRightTile();
       spawnEntityAt(bridgeRight, spawnLocationsRight[i], true, true);
+    }
+  }
+
+  /**
+   * Spawns the fire fly bug NPC.
+   */
+  private void spawnFireFlyBugNPC() {
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(22,29),
+        new GridPoint2(41,23),
+        new GridPoint2(45,9),
+    };
+
+    for (int i = 0; i < spawnLocations.length; i++) {
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
+      spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }
 

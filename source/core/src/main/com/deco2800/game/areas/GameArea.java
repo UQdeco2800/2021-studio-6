@@ -64,7 +64,7 @@ public abstract class GameArea implements Disposable {
 
   protected static final String[] enemyAssets = {
       "images/Enemy_Assets/LongRangeEnemy/eye.png",
-      "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
+      "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png",
       "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
       "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
       "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",

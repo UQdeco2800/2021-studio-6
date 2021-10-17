@@ -192,7 +192,7 @@ public class NPCFactory {
                     .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
 
     // Add additional specific components
-    longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"));
+    longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png"));
     longRange.addComponent(new DarknessDetectionComponent());
     longRange.addComponent(new EnemyDarknessController());
     longRange.addComponent(aiComponent);

@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,6 +15,7 @@ import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -22,6 +24,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -304,8 +307,37 @@ public class NPCFactory {
   }
 
   /**
-   *
+   * Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.
+   * @param speedX Movement speed in X direction
+   * @param speedY Movement speed in Y direction
+   * @param wanderX Proximity X distance to move around in
+   * @param wanderY Proximity Y distance to move around in
+   * @param waitTime Time in seconds to hold the position after wandering to a spot
+   * @return Firefly entity
    */
+  public static Entity createFireFlyBugNPC(float speedX, float speedY, float wanderX, float wanderY, float waitTime) {
+    Vector2 speed = new Vector2(speedX, speedY);
+    AITaskComponent aiComponent =
+      new AITaskComponent()
+        .addTask(new WanderTask(new Vector2(wanderX, wanderY), waitTime));
+
+    Entity fireflyBugNPC =
+      new Entity()
+        .addComponent(new TextureRenderComponent(75,"images/level_2/fire-fly-bug-NPC.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent())
+        .addComponent(new PhysicsMovementComponent(speed))
+        .addComponent(new DisposingComponent())
+        .addComponent(aiComponent)
+        .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
+                Color.SCARLET, 2f, 0, 0));
+
+    fireflyBugNPC.getComponent(TextureRenderComponent.class).scaleEntity();
+    fireflyBugNPC.scaleHeight(0.15f);
+
+    return fireflyBugNPC;
+  }
+
   private NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

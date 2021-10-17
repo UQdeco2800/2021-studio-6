@@ -32,6 +32,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private long invincibilityEndTime;
     private final int[] woundex = new int[] {7, 3, 0};
     private final int[] statex = new int[] {1, 2, 3, 4, 5};
+    private DarknessDetectionComponent lighting;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -196,6 +197,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 entity.getEvents().trigger("dead");
             }
         }
+
+
     }
 
 
@@ -306,7 +309,12 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Increases the players current health, unless health is full for their wound state
      */
     private void regenerate() {
-        if (!timeSource.isPaused()) {
+        if (lighting == null) {
+            lighting = this.entity.getComponent(DarknessDetectionComponent.class);
+        }
+
+        // only regens if in light
+        if (!timeSource.isPaused() && lighting.isInLight()) {
             setHealth(getHealth() + 1);
             entity.getEvents().trigger("health", getindex());
             if (getHealth() >= getStateMax()) {

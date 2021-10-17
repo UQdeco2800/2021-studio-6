@@ -90,12 +90,17 @@ public class ShopMenuDisplay extends UIComponent {
     private static final String INVINCIBILITY_TEXT = "This here is a handy piece of tech they cooked up just as everything" +
         " started to go downhill. No one quite understands how it works anymore but it should still help you out in a tight spot.";
     private static final Logger logger = LoggerFactory.getLogger(ShopMenuDisplay.class);
-    private static Image playerImage, playerFullArmorImage, playerHelmetImage, playerChestImage;
+    private static Image playerImage;
+    private Image playerFullArmorImage;
+    private Image playerHelmetImage;
+    private Image playerChestImage;
     private final GdxGame game;
     private boolean isEnabled = false;
     private Table container;
-    private Label itemSelectedTitleLabel, itemSelectedDescriptionLabel, pricingValueLabel,
-            itemSelectedMoreInfoLabel;
+    private Label itemSelectedTitleLabel;
+    private Label itemSelectedDescriptionLabel;
+    private Label pricingValueLabel;
+    private Label itemSelectedMoreInfoLabel;
     private Label bandageLabel, ammoLabel, coinLabel;
     private Image background;
     private static final float MAX_BOX_WIDTH = 1200;
@@ -105,7 +110,6 @@ public class ShopMenuDisplay extends UIComponent {
     private static final float PAD_LEFT = 40;
     private static final float EXTRA_PAD_TOP = 30;
     private static final float EXTRA_LARGE_PAD_TOP = 120;
-    private static final float EXTRA_PAD_BOTTOM = 30;
     private static final float PAD_TO_CENTER_PRICING = 38;
     private static final float TABLE_HEADER_HEIGHT = 50;
     private static final float COMMON_LABEL_HEIGHT = 50;
@@ -121,24 +125,40 @@ public class ShopMenuDisplay extends UIComponent {
     private static final int FOURTH_COL_NUM_TAKEN = 30;
     private static final int IMAGE_BUTTON_HEIGHT = 70;
     private static final float BANDAGE_SIDE_LENGTH = 50f;
-    private static final int NO_FUNDS_INDEX = 0;
-    private static final int EQUIPPED_INDEX = 1;
+
     private static final int ADD_TORCH = 100;
     private static final int OFFSET_X_IMG_GROUP = 20;
     private static final int OFFSET_Y_IMG_GROUP = 20;
-    private static final int PURCHASED_INDEX = 2;
-    private ImageButton crowbarImageButton, daggerImageButton, axeImageButton, armorImageButton,
-            helmetImageButton, fuelImageButton, fireCrackerImageButton, dashImageButton, invincibleImageButton,
-            macheteImageButton, baseballImageButton, sledgeImageButton;
+    private ImageButton crowbarImageButton;
+    private ImageButton daggerImageButton;
+    private ImageButton axeImageButton;
+    private ImageButton armorImageButton;
+    private ImageButton helmetImageButton;
+    private ImageButton fuelImageButton;
+    private ImageButton fireCrackerImageButton;
+    private ImageButton dashImageButton;
+    private ImageButton invincibleImageButton;
+    private ImageButton macheteImageButton;
+    private ImageButton baseballImageButton;
+    private ImageButton sledgeImageButton;
     private final ArrayList<ImageButton> imageButtons = new ArrayList<>();
     private final ArrayList<Image> images = new ArrayList<>();
-    private int itemPrice, itemDefenceLevel = 0;
-    private int FULL_ARMOR_LEVEL = 5;
+    private int itemPrice;
     private String itemName;
     private ImageButton storeButtonClicked = null;
     // values below will be checked and will load values from config file that saves player's states
-    private int playerAmmo, playerGold, playerBandage, playerDefenceLevel;
-    private String playerAbility, playerMeleeWeaponType, playerArmorType;
+    private int playerAmmo;
+    private int  playerGold;
+    private int  playerBandage;
+    private int  playerDefenceLevel;
+    private String playerAbility;
+    private String playerMeleeWeaponType;
+    private String playerArmorType;
+    private final String UPDATE = "updateItemDescription";
+    private final String WHITE_COLOR = "white";
+    private final String HUD_FORMAT = " x %d";
+    private final String HELMET = "HELMET";
+    private final String CHEST = "CHEST";
     private Items typeOfItem;
     private Entity playerState;
     private TextButton equipBtn;
@@ -155,7 +175,7 @@ public class ShopMenuDisplay extends UIComponent {
         addActors();
 
         entity.getEvents().addListener("toggleShopBox", this::toggleShopBox);
-        entity.getEvents().addListener("updateItemDescription", this::updateItemDetails);
+        entity.getEvents().addListener(UPDATE, this::updateItemDetails);
         entity.getEvents().addListener("purchaseItem", this::isItemPurchasable);
     }
 
@@ -240,7 +260,7 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void addHeaderToTable() {
         CharSequence titleText = "SHOP";
-        Label shopTitleLabel = new Label(titleText, skin, "white");
+        Label shopTitleLabel = new Label(titleText, skin, WHITE_COLOR);
         container.row().colspan(COL_NUM).height(TABLE_HEADER_HEIGHT);
         container.add(shopTitleLabel).colspan(119).expandX().padLeft(100);
 
@@ -270,7 +290,7 @@ public class ShopMenuDisplay extends UIComponent {
         CharSequence titleText = "BASEBALL";
         itemName = "BAT";
         typeOfItem = Items.MELEE_WEAPONS;
-        itemSelectedTitleLabel = new Label(titleText, skin, "white");
+        itemSelectedTitleLabel = new Label(titleText, skin, WHITE_COLOR);
         // for weapon label selected - default is baseball
         itemsLabelImages.row();
         itemSelectedTitleLabel.setAlignment(Align.center);
@@ -282,14 +302,14 @@ public class ShopMenuDisplay extends UIComponent {
         Drawable daggerUp = createImagesForButtons(DAGGER_UP_IMAGE_FILE_PATH);
         Drawable daggerDown = createImagesForButtons(DAGGER_DOWN_IMAGE_FILE_PATH);
         daggerImageButton = new ImageButton(daggerUp, daggerDown, daggerDown);
-        MenuUtility.addButtonSelectListener(entity, daggerImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, daggerImageButton, UPDATE,
                 "configs/ShopDaggerInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(daggerImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable baseballUp = createImagesForButtons(BASEBALL_UP_IMAGE_FILE_PATH);
         Drawable baseballDown = createImagesForButtons(BASEBALL_DOWN_IMAGE_FILE_PATH);
         baseballImageButton = new ImageButton(baseballUp, baseballDown, baseballDown);
-        MenuUtility.addButtonSelectListener(entity, baseballImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, baseballImageButton, UPDATE,
                 "configs/ShopBaseballInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(baseballImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
@@ -301,7 +321,7 @@ public class ShopMenuDisplay extends UIComponent {
         Drawable axeUp = createImagesForButtons(AXE_UP_IMAGE_FILE_PATH);
         Drawable axeDown = createImagesForButtons(AXE_DOWN_IMAGE_FILE_PATH);
         axeImageButton = new ImageButton(axeUp, axeDown, axeDown);
-        MenuUtility.addButtonSelectListener(entity, axeImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, axeImageButton, UPDATE,
                 "configs/ShopAxeInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(axeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
@@ -311,70 +331,70 @@ public class ShopMenuDisplay extends UIComponent {
         Drawable macheteUp = createImagesForButtons(MACHETE_UP_IMAGE_FILE_PATH);
         Drawable macheteDown = createImagesForButtons(MACHETE_DOWN_IMAGE_FILE_PATH);
         macheteImageButton = new ImageButton(macheteUp, macheteDown, macheteDown);
-        MenuUtility.addButtonSelectListener(entity, macheteImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, macheteImageButton, UPDATE,
                 "configs/ShopMacheteInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(macheteImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable crowbarUp = createImagesForButtons(CROWBAR_UP_IMAGE_FILE_PATH);
         Drawable crowbarDown = createImagesForButtons(CROWBAR_DOWN_IMAGE_FILE_PATH);
         crowbarImageButton = new ImageButton(crowbarUp, crowbarDown, crowbarDown);
-        MenuUtility.addButtonSelectListener(entity, crowbarImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, crowbarImageButton, UPDATE,
                 "configs/ShopCrowbarInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(crowbarImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable sledgeUp = createImagesForButtons(SLEDGE_UP_IMAGE_FILE_PATH);
         Drawable sledgeDown = createImagesForButtons(SLEDGE_DOWN_IMAGE_FILE_PATH);
         sledgeImageButton = new ImageButton(sledgeUp, sledgeDown, sledgeDown);
-        MenuUtility.addButtonSelectListener(entity, sledgeImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, sledgeImageButton, UPDATE,
                 "configs/ShopSledgeInfo.json", Items.MELEE_WEAPONS);
         itemsLabelImages.add(sledgeImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         // third row
         // long dash, fire cracker and invincibility
         // armor, bandage and invincibility
-        itemsLabelImages.row().padTop(PAD_TOP);;
+        itemsLabelImages.row().padTop(PAD_TOP);
         Drawable dashUp = createImagesForButtons(DASH_UP_IMAGE_FILE_PATH);
         Drawable dashDown = createImagesForButtons(DASH_DOWN_IMAGE_FILE_PATH);
         dashImageButton = new ImageButton(dashUp, dashDown, dashDown);
-        MenuUtility.addButtonSelectListener(entity, dashImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, dashImageButton, UPDATE,
                 "configs/ShopLongDashAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(dashImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable fireCrackerUp = createImagesForButtons(FIRECRACKER_UP_IMAGE_FILE_PATH);
         Drawable fireCrackerDown = createImagesForButtons(FIRECRACKER_DOWN_IMAGE_FILE_PATH);
         fireCrackerImageButton = new ImageButton(fireCrackerUp, fireCrackerDown, fireCrackerDown);
-        MenuUtility.addButtonSelectListener(entity, fireCrackerImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, fireCrackerImageButton, UPDATE,
                 "configs/ShopFireCrackerAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(fireCrackerImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable invincibleUp = createImagesForButtons(INVINCIBLE_UP_IMAGE_FILE_PATH);
         Drawable invincibleDown = createImagesForButtons(INVINCIBLE_DOWN_IMAGE_FILE_PATH);
         invincibleImageButton = new ImageButton(invincibleUp, invincibleDown, invincibleDown);
-        MenuUtility.addButtonSelectListener(entity, invincibleImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, invincibleImageButton, UPDATE,
                 "configs/ShopInvincibilityAbilityInfo.json", Items.OTHERS);
         itemsLabelImages.add(invincibleImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         // fourth row
         // helmet, chest and fuel
-        itemsLabelImages.row().padTop(PAD_TOP);;
+        itemsLabelImages.row().padTop(PAD_TOP);
         Drawable helmetUp = createImagesForButtons(HELMET_UP_IMAGE_FILE_PATH);
         Drawable helmetDown = createImagesForButtons(HELMET_DOWN_IMAGE_FILE_PATH);
         helmetImageButton = new ImageButton(helmetUp, helmetDown, helmetDown);
-        MenuUtility.addButtonSelectListener(entity, helmetImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, helmetImageButton, UPDATE,
                 "configs/ShopHelmetInfo.json", Items.SHIELDS);
         itemsLabelImages.add(helmetImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable armorUp = createImagesForButtons(ARMOR_UP_IMAGE_FILE_PATH);
         Drawable armorDown = createImagesForButtons(ARMOR_DOWN_IMAGE_FILE_PATH);
         armorImageButton = new ImageButton(armorUp, armorDown, armorDown);
-        MenuUtility.addButtonSelectListener(entity, armorImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, armorImageButton, UPDATE,
                 "configs/ShopArmourInfo.json", Items.SHIELDS);
         itemsLabelImages.add(armorImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
         Drawable fuelUp = createImagesForButtons(FUEL_UP_IMAGE_FILE_PATH);
         Drawable fuelDown = createImagesForButtons(FUEL_DOWN_IMAGE_FILE_PATH);
         fuelImageButton = new ImageButton(fuelUp, fuelDown, fuelDown);
-        MenuUtility.addButtonSelectListener(entity, fuelImageButton, "updateItemDescription",
+        MenuUtility.addButtonSelectListener(entity, fuelImageButton, UPDATE,
                 "configs/ShopTorchInfo.json", Items.OTHERS);
         itemsLabelImages.add(fuelImageButton).colspan(10).height(IMAGE_BUTTON_HEIGHT);
 
@@ -390,12 +410,11 @@ public class ShopMenuDisplay extends UIComponent {
 
         // title of item description col - first row of it
         CharSequence titleText = "ITEM DETAILS";
-        Label itemSelectedDescriptionTitle = new Label(titleText, skin, "white");
+        Label itemSelectedDescriptionTitle = new Label(titleText, skin, WHITE_COLOR);
         itemsDescriptionLabels.row().colspan(THIRD_COL_NUM_TAKEN).height(TABLE_BODY_HEIGHT);
         itemsDescriptionLabels.add(itemSelectedDescriptionTitle).colspan(THIRD_COL_NUM_TAKEN)
                 .height(COMMON_LABEL_HEIGHT);
 
-        // for description of item selected - default is for bat;
         // second row of item description col
         CharSequence itemDescriptionText = "The baseball is the most common weapon there is but it has decent range " +
                 "damage and it is versatile enough to fend off any enemies in the game - especially night crawlers!";
@@ -417,7 +436,7 @@ public class ShopMenuDisplay extends UIComponent {
         // price of item selected (clicked by user) - default is for sword; for now
         // fourth row of item description col
         CharSequence priceText = "PRICE: 50";
-        pricingValueLabel = new Label(priceText, skin, "white");
+        pricingValueLabel = new Label(priceText, skin, WHITE_COLOR);
 
         itemsDescriptionLabels.row().height(COMMON_LABEL_HEIGHT).padTop(EXTRA_PAD_TOP).center();
         itemsDescriptionLabels.add(pricingValueLabel).padLeft(PAD_TO_CENTER_PRICING);
@@ -509,9 +528,9 @@ public class ShopMenuDisplay extends UIComponent {
 
         // uses most current player state now
         Table playerInfo = new Table();
-        CharSequence bandageText = String.format(" x %d", playerBandage);
-        CharSequence ammoText = String.format(" x %d", playerAmmo);
-        CharSequence coinText = String.format(" x %d", playerGold);
+        CharSequence bandageText = String.format(HUD_FORMAT, playerBandage);
+        CharSequence ammoText = String.format(HUD_FORMAT, playerAmmo);
+        CharSequence coinText = String.format(HUD_FORMAT, playerGold);
 
         bandageLabel = new Label(bandageText, skin, "white-font");
         ammoLabel = new Label(ammoText, skin, "white-font");
@@ -546,7 +565,7 @@ public class ShopMenuDisplay extends UIComponent {
      */
     private void updateShopSpeech(String item){
         String[] items = {"DAGGER", "BAT", "AXE", "MACHETE", "CROWBAR", "SLEDGE",
-        "HELMET", "TORCH", "LONG_DASH", "CHEST","FIRE_CRACKER", "INVINCIBILITY"};
+        HELMET, "TORCH", "LONG_DASH", CHEST,"FIRE_CRACKER", "INVINCIBILITY"};
         String[] speech  = {DAGGER_TEXT,BAT_TEXT,AXE_TEXT,MACHETE_TEXT,CROWBAR_TEXT,SLEDGE_TEXT,HELMET_TEXT,TORCH_TEXT,
             LONG_DASH_TEXT,ARMOUR_TEXT,FIRE_CRACKER_TEXT,INVINCIBILITY_TEXT};
         int index = Arrays.asList(items).indexOf(item);
@@ -596,7 +615,7 @@ public class ShopMenuDisplay extends UIComponent {
             itemSelectedMoreInfoLabel.setText(itemMoreDescription);
 
         } else if (itemType == Items.SHIELDS) {
-            itemDefenceLevel = itemData.defenceLevel;
+            int itemDefenceLevel = itemData.defenceLevel;
             CharSequence itemMoreDescription = String.format("Effect: %s",
                     itemData.effects);
             itemSelectedMoreInfoLabel.setText(itemMoreDescription);
@@ -698,9 +717,10 @@ public class ShopMenuDisplay extends UIComponent {
             if (Items.checkShieldType(itemName)) {
 
                 // player currently has helmet or chest equipped only
-                if (playerDefenceLevel == Items.getDefenceLevel("HELMET") ||
-                        playerDefenceLevel == Items.getDefenceLevel("CHEST")) {
-                    playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(FULL_ARMOR_LEVEL);
+                if (playerDefenceLevel == Items.getDefenceLevel(HELMET) ||
+                        playerDefenceLevel == Items.getDefenceLevel(CHEST)) {
+                    int fullArmorLevel = 5;
+                    playerState.getComponent(PlayerCombatStatsComponent.class).setDefenceLevel(fullArmorLevel);
 
                 // player not equipped with anything
                 } else {
@@ -732,11 +752,11 @@ public class ShopMenuDisplay extends UIComponent {
             image.setVisible(false);
         }
 
-        if (defenceLevel == Items.getDefenceLevel("HELMET")) {
+        if (defenceLevel == Items.getDefenceLevel(HELMET)) {
             playerHelmetImage.setVisible(true);
         } else if (defenceLevel == Items.getDefenceLevel("ARMOUR")) {
             playerFullArmorImage.setVisible(true);
-        } else if (defenceLevel == Items.getDefenceLevel("CHEST")) {
+        } else if (defenceLevel == Items.getDefenceLevel(CHEST)) {
             playerChestImage.setVisible(true);
         } else {
             playerImage.setVisible(true);
@@ -792,14 +812,14 @@ public class ShopMenuDisplay extends UIComponent {
         playerGold = playerState.getComponent(InventoryComponent.class).getGold();
         playerBandage = playerState.getComponent(InventoryComponent.class).getBandages();
         playerDefenceLevel = playerState.getComponent(PlayerCombatStatsComponent.class).getDefenceLevel();
-        playerAbility = playerState.getComponent(PlayerAbilitiesComponent.class).getAbility().toString();;
+        playerAbility = playerState.getComponent(PlayerAbilitiesComponent.class).getAbility().toString();
         playerMeleeWeaponType = playerState.getComponent(PlayerMeleeAttackComponent.class).getMeleeWeaponType()
                 .toString();
         playerArmorType = Items.getArmorType(playerDefenceLevel);
 
-        CharSequence bandageText = String.format(" x %d", playerBandage);
-        CharSequence ammoText = String.format(" x %d", playerAmmo);
-        CharSequence coinText = String.format(" x %d", playerGold);
+        CharSequence bandageText = String.format(HUD_FORMAT, playerBandage);
+        CharSequence ammoText = String.format(HUD_FORMAT, playerAmmo);
+        CharSequence coinText = String.format(HUD_FORMAT, playerGold);
         bandageLabel.setText(bandageText);
         ammoLabel.setText(ammoText);
         coinLabel.setText(coinText);

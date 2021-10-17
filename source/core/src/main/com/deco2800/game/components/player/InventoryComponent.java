@@ -127,7 +127,7 @@ public class InventoryComponent extends Component {
   /**
    * Returns the player's gold.
    *
-   * @return entity's health
+   * @return entity's gold.
    */
   public int getGold() {
     return this.gold;

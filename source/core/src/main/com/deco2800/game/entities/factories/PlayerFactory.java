@@ -1,7 +1,6 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.DarknessDetectionComponent;
@@ -16,10 +15,6 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.items.Abilities;
 import com.deco2800.game.items.Items;
-import com.deco2800.game.lighting.ChainLightComponent;
-import com.deco2800.game.lighting.ConeLightComponent;
-import com.deco2800.game.lighting.DirectionalLightComponent;
-import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.memento.Player;
 import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsLayer;

@@ -9,7 +9,6 @@ import com.deco2800.game.components.FirecrackerAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.lighting.FlickerLightComponent;
-import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.IndependentAnimator;
@@ -27,7 +26,7 @@ public class PlayerRangeAOEComponent extends Component {
     private static final int EXPLOSION_COORDINATE = 5;
     private boolean fireCrackerLaunched = false;
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static long timeToExplode = 0;
+    private long timeToExplode = 0;
     private Entity fireCracker;
     private Vector2 fireCrackerTargetPos = new Vector2(0,0);
     private Directions direct;
@@ -112,6 +111,8 @@ public class PlayerRangeAOEComponent extends Component {
                 case MOVE_RIGHT:
                     scaledVector = new Vector2(xPosPlayer + EXPLOSION_COORDINATE,yPosPlayer);
                     break;
+                default:
+                    break;
             }
         }
         return scaledVector.cpy();
@@ -145,7 +146,7 @@ public class PlayerRangeAOEComponent extends Component {
         explosionAnimator.setScale(2, 2);
 
         fireCracker.getComponent(FirecrackerAnimationController.class).setAnimator(explosionAnimator);
-        logger.debug("Fire cracker ability activated and will explodie in " + explosionTime);
+        logger.debug("Fire cracker ability activated and will explode in {}", explosionTime);
     }
 }
 

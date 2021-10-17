@@ -16,18 +16,21 @@ import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
-  private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(74, 68);
-  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
-  private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
-  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
-  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
-  private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 30;
-  private static final int GRASS_TILE_COUNT = 123;
+ private static final Logger logger = LoggerFactory.getLogger(TerrainFactory.class);
+ private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+ private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(74, 68);
+ private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
+ private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
+ private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
+ private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(80, 40);
+ private static final int TUFT_TILE_COUNT = 30;
+ private static final int ROCK_TILE_COUNT = 30;
+ private static final int GRASS_TILE_COUNT = 123;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -246,7 +249,7 @@ public class TerrainFactory {
           float tileWorldSize, TextureRegion ground
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(ground.getRegionWidth() / 16, ground.getRegionHeight() / 9);
-    System.out.println(tilePixelSize);
+    logger.debug("Tile pixel size is {}", tilePixelSize);
     TiledMap tiledMap = createSafehouseTiles(tilePixelSize, ground);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
@@ -340,7 +343,6 @@ public class TerrainFactory {
     TerrainTile crackedSidewalkTile = new TerrainTile(crackedSidewalk);
     TerrainTile curbUpperTile = new TerrainTile(cityCurbUpper);
     TerrainTile curbLowerTile = new TerrainTile(cityCurbLower);
-    TerrainTile crackedRoadTile = new TerrainTile(crackedRoad);
     TerrainTile cityBackgroundTile = new TerrainTile(cityBackground1);
     TerrainTile laneMarkingTile = new TerrainTile(laneMarkings);
     TerrainTile cityBackgroundTile2 = new TerrainTile(cityBackground2);
@@ -623,9 +625,9 @@ public class TerrainFactory {
         cell.setTile(tile);
       } catch (NullPointerException e) {
         String errorMessage = e + " caught. tilePos coordinates are: " + tilePos;
-        System.out.println(errorMessage);
+        logger.debug(errorMessage);
         errorMessage = "Starting coordinates are: " + start + ", ending coordinates are: " + end;
-        System.out.println(errorMessage);
+        logger.debug(errorMessage);
       }
     }
   }

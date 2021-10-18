@@ -43,6 +43,7 @@ public class FlickerLightComponent extends Component implements Disposable {
   private long tickStartTimeMiddle = 0;
   private long tickStartTimeInner = 0;
   private boolean on = true;
+  private Random rand;
 
 
   public FlickerLightComponent(Color colorOut, Color colorBase, Color colorMid, Color colorInner, float distance, float offsetx, float offsety) {
@@ -101,6 +102,7 @@ public class FlickerLightComponent extends Component implements Disposable {
     tickStartTimeBase = ServiceLocator.getTimeSource().getTime();
     tickStartTimeMiddle = ServiceLocator.getTimeSource().getTime();
     tickStartTimeInner = ServiceLocator.getTimeSource().getTime();
+    rand = new Random();
   }
 
   @Override
@@ -115,7 +117,6 @@ public class FlickerLightComponent extends Component implements Disposable {
   public void update() {
     super.update();
     if (on && !ServiceLocator.getTimeSource().isPaused()) {
-      Random rand = new Random();
       if (timeSource.getTimeSince(tickStartTimeOuter) >= TICK_LENGTH_OUTER) {
         tickStartTimeOuter = ServiceLocator.getTimeSource().getTime();
         if (rand.nextInt(2) > 0) {

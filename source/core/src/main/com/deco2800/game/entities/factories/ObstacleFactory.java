@@ -12,9 +12,6 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.utils.math.RandomUtils;
-
-import java.awt.*;
 
 /**
  * Factory to create obstacle entities.
@@ -60,21 +57,39 @@ public class ObstacleFactory {
   }
 
   /**
-   * Creates a dead tree entity for level 1.
+   * Creates a vertical barrier
    * @return entity
    */
-  public static Entity createBarrier() {
-    Entity tree =
+  public static Entity createVerticalBarrier() {
+    Entity barrier =
         new Entity()
             .addComponent(new TextureRenderComponent("images/level_1/road_barrier.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(2f);
-    PhysicsUtils.setScaledCollider(tree, 0.4f, 1f);
-    return tree;
+    barrier.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    barrier.getComponent(TextureRenderComponent.class).scaleEntity();
+    barrier.scaleHeight(2f);
+    PhysicsUtils.setScaledCollider(barrier, 0.4f, 1f);
+    return barrier;
+  }
+
+  /**
+   * Creates a horizontal barrier
+   * @return entity
+   */
+  public static Entity createHorizontalBarrier() {
+    Entity barrier =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_1/horizontal_road_barrier.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    barrier.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    barrier.getComponent(TextureRenderComponent.class).scaleEntity();
+    barrier.scaleWidth(2f);
+    PhysicsUtils.setScaledCollider(barrier, 1f, 0.4f);
+    return barrier;
   }
 
   /**
@@ -135,9 +150,14 @@ public class ObstacleFactory {
     return bush;
   }
 
-  public static Entity createLamp() {
+  /**
+   * Create a lamp object
+   * @param type select the lamp texture (0=regular, 1=vined)
+   * @return Entity lamp
+   */
+  public static Entity createLamp(int type) {
     String lampPath;
-    if (RandomUtils.randomInt(2) == 1) {
+    if (type == 0) {
       lampPath = "images/level_1/street_lamp.png";
     } else {
       lampPath = "images/level_1/street_lamped_vined.png";
@@ -152,8 +172,7 @@ public class ObstacleFactory {
 
     lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     lamp.getComponent(TextureRenderComponent.class).scaleEntity();
-    lamp.scaleHeight(2.0f);
-    lamp.scaleWidth(1f);
+    lamp.scaleHeight(2f);
     PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
     return lamp;
   }
@@ -206,8 +225,8 @@ public class ObstacleFactory {
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
     building.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     building.getComponent(TextureRenderComponent.class).scaleEntity();
-    building.scaleHeight(10f);
-    PhysicsUtils.setScaledCollider(building, 0.7f, 0.6f);
+    building.scaleHeight(9f);
+    PhysicsUtils.setScaledCollider(building, 0.7f, 0.8f);
     return building;
   }
 

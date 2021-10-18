@@ -24,16 +24,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerRangeAOEComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PlayerRangeAOEComponent.class);
-    private Vector2 longAttackDir = new Vector2(1,0);
     private static final int EXPLOSION_COORDINATE = 5;
     private boolean fireCrackerLaunched = false;
-    private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private static long timeToExplode = 0;
-    private long AOE_END = 0;
     private Entity fireCracker;
     private Vector2 fireCrackerTargetPos = new Vector2(0,0);
-    private Vector2 playerPos = new Vector2(0,0);
     private Directions direct;
 
     /**
@@ -96,7 +92,7 @@ public class PlayerRangeAOEComponent extends Component {
      * @param playerCoord is the current player's position. It is used to launch bullet from player's position
      * @return coordinates used for bullet's target coordinates
      */
-    public Vector2 getFireCrackerTargetCoord(Vector2 playerCoord) {
+    private Vector2 getFireCrackerTargetCoord(Vector2 playerCoord) {
         float xPosPlayer = playerCoord.x;
         float yPosPlayer = playerCoord.y;
         Vector2 scaledVector = new Vector2();
@@ -127,7 +123,7 @@ public class PlayerRangeAOEComponent extends Component {
      * @param explosionTime it takes for explosion to occur
      */
     public void fire(long explosionTime) {
-        playerPos = entity.getPosition();
+        Vector2 playerPos = entity.getPosition();
         fireCrackerTargetPos = getFireCrackerTargetCoord(playerPos);
         fireCrackerLaunched = true;
         timeToExplode = timeSource.getTime() + explosionTime;
@@ -139,7 +135,6 @@ public class PlayerRangeAOEComponent extends Component {
         fireCracker.getComponent(PhysicsMovementComponent.class).setTarget(fireCrackerTargetPos.cpy());
         fireCracker.getEvents().trigger("firecrackerStart", direct);
 
-        logger.info("Fire cracker ability activated and will explode in " + explosionTime + "ms");
         IndependentAnimator explosionAnimator =
             new IndependentAnimator(
                 ServiceLocator.getResourceService()
@@ -150,7 +145,7 @@ public class PlayerRangeAOEComponent extends Component {
         explosionAnimator.setScale(2, 2);
 
         fireCracker.getComponent(FirecrackerAnimationController.class).setAnimator(explosionAnimator);
-        logger.info("Fire cracker ability activated and will explodie in " + explosionTime);
+        logger.debug("Fire cracker ability activated and will explodie in " + explosionTime);
     }
 }
 

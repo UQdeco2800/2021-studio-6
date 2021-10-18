@@ -53,7 +53,7 @@ public class InventoryComponent extends Component {
     super.update();
     if (!torchToggled) {
       if (torch > 0) {
-        if (timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
+        if (!timeSource.isPaused() && timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
           tickStartTime = ServiceLocator.getTimeSource().getTime();
           torch--;
         }

@@ -309,7 +309,7 @@ class PlayerCombatStatsComponentTest {
     }
 
     @Test
-    void shouldntAttackDuringInvinciblity() {
+    void shouldBeAbleToAttackDuringInvinciblity() {
         GameTime time = mock(GameTime.class);
         ServiceLocator.registerTimeSource(time);
         when(time.getTime()).thenReturn(0L);
@@ -318,11 +318,9 @@ class PlayerCombatStatsComponentTest {
 
         Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(3, 20, 3, 25, 0));
         player.create();
-        player.getEvents().addListener("disableAttack", listener);
         player.getEvents().addListener("enableAttack", listener_2);
 
         player.getComponent(PlayerCombatStatsComponent.class).invincibleStart(10L); // Arbitrary number to start invincibility
-        verify(listener).handle();
         verifyNoInteractions(listener_2);
         when(time.getTime()).thenReturn(10L); // End invincibility
         player.update();

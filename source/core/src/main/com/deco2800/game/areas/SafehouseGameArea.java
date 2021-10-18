@@ -26,12 +26,8 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class SafehouseGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SafehouseGameArea.class);
-  private static final int NUM_BULLETS = 5;
-  private static Entity door;
-  private final float WALL_WIDTH = 0.1f;
-  private final float LEVEL_ONE_SAFEHOUSE = 1.5f;
-  private final int BANDAGE_QUANTITY = 1;
-  private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
+  private Entity door;
+    private static final String NPC_PILOT_ATLAS_FILENAME = "images/npc_movement/pilot_injured_npc.atlas";
   private static final String[] safehouseTextures = {
       "images/safehouse/safehouse-interior-layout.png",
       "images/safehouse/shopkeeper/shopkeeperSprite.png",
@@ -48,15 +44,12 @@ public class SafehouseGameArea extends GameArea {
           "sounds/hurt.ogg",
           "sounds/item-pickup.ogg"
   };
-  private static final String backgroundMusic = "sounds/safehouse-music.mp3";
-  private static final String[] safehouseMusic = {backgroundMusic};
+  private static final String BACKGROUND_MUSIC = "sounds/safehouse-music.mp3";
+  private static final String[] safehouseMusic = {BACKGROUND_MUSIC};
 
   private final TerrainFactory terrainFactory;
 
-  private GridPoint2 tileBounds;
-  private Vector2 worldBounds;
-
-  public SafehouseGameArea(TerrainFactory terrainFactory) {
+    public SafehouseGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
   }
@@ -74,7 +67,8 @@ public class SafehouseGameArea extends GameArea {
     spawnBandages();
 
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
-    if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
+      float LEVEL_ONE_SAFEHOUSE = 1.5f;
+      if (playerManager.getPlayerState().getCurrentGameLevel() == LEVEL_ONE_SAFEHOUSE){
       spawnSafehouseIntro();
       spawnPilotNpc();
     } else {
@@ -99,12 +93,15 @@ public class SafehouseGameArea extends GameArea {
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
-    logger.info(String.valueOf(tileSize));
-    tileBounds = terrain.getMapBounds(0);
-    logger.info(String.valueOf(tileBounds));
-    worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    logger.debug("Tile size of safehouse game area is " + tileSize);
+
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    logger.debug("Tile bounds of safehouse game area is " + tileBounds);
+
+    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     // Left
+    float WALL_WIDTH = 0.1f;
     spawnEntityAt(
             ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
             new GridPoint2(1, 0), false,false);
@@ -143,7 +140,7 @@ public class SafehouseGameArea extends GameArea {
         new GridPoint2(10, 5), false,false);
   }
 
-  public void spawnDoor() {
+  private void spawnDoor() {
     // Create entity
     door = new Entity()
             .addComponent(new PhysicsComponent())
@@ -160,18 +157,19 @@ public class SafehouseGameArea extends GameArea {
   }
 
   private Entity spawnBandages() {
-      GridPoint2 BANDAGE_SPAWN = new GridPoint2(3, 1);
+      GridPoint2 bandageSpawn = new GridPoint2(3, 1);
 
+      int BANDAGE_QUANTITY = 1;
       Entity bandage = ItemFactory.createBandagePickup(BANDAGE_QUANTITY);
-      spawnEntityAt(bandage, BANDAGE_SPAWN, true, true);
+      spawnEntityAt(bandage, bandageSpawn, true, true);
       return bandage;
   }
 
   private Entity spawnShopKeeper() {
-    GridPoint2 SHOP_KEEPER_SPAWN = new GridPoint2(2, 7);
+    GridPoint2 shopKeeperSpawn = new GridPoint2(2, 7);
 
     Entity shopKeeperNPC = FriendlyNPCFactory.createShopkeeperNPC();
-    spawnEntityAt(shopKeeperNPC, SHOP_KEEPER_SPAWN, true, true);
+    spawnEntityAt(shopKeeperNPC, shopKeeperSpawn, true, true);
     return shopKeeperNPC;
   }
 
@@ -193,7 +191,7 @@ public class SafehouseGameArea extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     music.setVolume(ServiceLocator.getResourceService().getMusicVolume());
     music.setLooping(true);
     music.play();
@@ -227,14 +225,14 @@ public class SafehouseGameArea extends GameArea {
   }
 
   public void stopMusic() {
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
   }
 
   @Override
   public void dispose() {
     super.dispose();
     door.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
     this.unloadAssets();
   }
 }

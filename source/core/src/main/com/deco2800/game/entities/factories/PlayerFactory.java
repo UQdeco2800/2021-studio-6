@@ -28,6 +28,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -156,12 +157,23 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(meleeWeaponType));
     player.getComponent(PlayerRangeAttackComponent.class).setBulletMagazine(bulletMagazine);
+
+    IndependentAnimator invincibiltyAnimation =
+        new IndependentAnimator(
+            ServiceLocator.getResourceService()
+                .getAsset("images/playeritems/Bubble/invincibility.atlas", TextureAtlas.class), false);
+    invincibiltyAnimation.addAnimation("active", 0.1f, Animation.PlayMode.LOOP);
+    invincibiltyAnimation.setCamera(true);
+    player.getComponent(PlayerAnimationController.class).setAnimator(invincibiltyAnimation);
     return player;
   }
 
   private static void loadPlayerData() {
     // manages player states for carrying over and restoring in game
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
+    double levelSafehouse = 0.5;
+    int safehouseCheck = 1;
+    int addTorch = 50;
 
     if (playerManager.currentPlayerState() == null) {
       // set initial state of player when game starts for the very first time, load from config file
@@ -191,7 +203,6 @@ public class PlayerFactory {
       health = currentPlayerState.getHealth();
       ammo = currentPlayerState.getAmmo();
       bandages = currentPlayerState.getBandage();
-      torch = currentPlayerState.getTorch();
       gold = currentPlayerState.getGold();
       woundState = currentPlayerState.getWoundState();
       defenceLevel = currentPlayerState.getDefenceLevel();
@@ -200,6 +211,13 @@ public class PlayerFactory {
       meleeWeaponType = currentPlayerState.getMeleeWeaponType();
       armorType = currentPlayerState.getArmorType();
       bulletMagazine = currentPlayerState.getBulletMagazine();
+
+      // add more time to torch whenever player reaches safehouse game area level
+      if (currentPlayerState.getCurrentGameLevel() % safehouseCheck == levelSafehouse) {
+          torch = currentPlayerState.getTorch() + addTorch;
+      } else {
+          torch = currentPlayerState.getTorch();
+      }
     }
   }
 

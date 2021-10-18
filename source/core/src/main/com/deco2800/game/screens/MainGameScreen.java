@@ -11,6 +11,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
+import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.shopmenu.ShopMenuDisplay;
 import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.components.story.StoryManager;
@@ -411,8 +412,9 @@ public class MainGameScreen extends ScreenAdapter {
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
     int LEVEL_1 = 1;
-    double LEVEL_SAFEHOUSE = 0.5;
-    int SAFEHOUSE_CHECK = 1;
+
+    double levelSafehouse = 0.5;
+    int safehouseCheck = 1;
     if (gameLevel == LEVEL_1) {
       gameArea = new Level1(terrainFactory);
       gameArea.create();
@@ -434,15 +436,19 @@ public class MainGameScreen extends ScreenAdapter {
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
-    } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
+    } else if (gameLevel % safehouseCheck == levelSafehouse && gameLevel < LEVEL_4) {
       LIGHTINGON = false;
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
     }
-    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
-    gameArea.player.getEvents().trigger("resetPlayerMovements");
-    ServiceLocator.registerGameArea(gameArea);
-    this.gameArea.player.getEvents().addListener("dead", this::gameOver);
+
+    // this must always be checked - there should be no game level larger than 4.5
+    if (gameArea != null) {
+        this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+        gameArea.player.getEvents().trigger("resetPlayerMovements");
+        ServiceLocator.registerGameArea(gameArea);
+        this.gameArea.player.getEvents().addListener("dead", this::gameOver);
+    }
     levelChange = false;
   }
 

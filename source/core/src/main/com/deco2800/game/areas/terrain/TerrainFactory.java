@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
  private static final Logger logger = LoggerFactory.getLogger(TerrainFactory.class);
- private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
  private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(74, 68);
  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
  private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
@@ -38,7 +37,7 @@ public class TerrainFactory {
   /**
    * Create a terrain factory with Orthogonal orientation
    *
-   * @param cameraComponent Camera to render terrains to. Must be ortographic.
+   * @param cameraComponent Camera to render terrains to. Must be orthographic.
    */
   public TerrainFactory(CameraComponent cameraComponent) {
     this(cameraComponent, TerrainOrientation.ORTHOGONAL);
@@ -157,7 +156,7 @@ public class TerrainFactory {
 
         return createForest2Terrain(1f, baseGrass, lvl3grass1, lvl3grass2, lvl3grass3, lvl3grass4, waterFull, sandTile, waterBottom, backgroundTile2);
 
-      // Safehouse tiles
+      // Safehouse tile
       case SAFEHOUSE:
         TextureRegion orthoGround = new TextureRegion(resourceService
                         .getAsset("images/safehouse/safehouse-interior-layout.png", Texture.class));
@@ -182,16 +181,6 @@ public class TerrainFactory {
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
     TiledMap tiledMap = createBossTiles(tilePixelSize, grass, grassTuft, rocks);
-    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
-    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
-  }
-
-  // Delete this demo terrain component once we no longer need a placeholder for other gamearea levels.
-  private TerrainComponent createForestDemoTerrain(
-          float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks
-  ) {
-    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -298,26 +287,6 @@ public class TerrainFactory {
       default:
         return null;
     }
-  }
-
-  // Delete this tilemap function once we no longer need a placeholder for other gamearea levels.
-  private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
-    TiledMap tiledMap = new TiledMap();
-    TerrainTile grassTile = new TerrainTile(grass);
-    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
-    TerrainTile rockTile = new TerrainTile(rocks);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
-    // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
-
-    // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
-
-    tiledMap.getLayers().add(layer);
-    return tiledMap;
   }
 
   private TiledMap createBossTiles(
@@ -636,7 +605,6 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE_SAFEHOUSE.x, MAP_SIZE_SAFEHOUSE.y, tileSize.x, tileSize.y);
 
     // Create base ground
-//    fillTiles(layer, MAP_SIZE_SAFEHOUSE, groundTile);
     Cell cell = new Cell();
     cell.setTile(groundTile);
     layer.setCell(0, 0, cell);
@@ -778,9 +746,7 @@ public class TerrainFactory {
   }
 
   /**
-   * This enum should contain the different terrains in your game, e.g. forest, cave, home, all with
-   * the same oerientation. But for demonstration purposes, the base code has the same level in 3
-   * different orientations.
+   * An enum should containing the different terrains in the game
    */
   public enum TerrainType {
     FOREST_DEMO,

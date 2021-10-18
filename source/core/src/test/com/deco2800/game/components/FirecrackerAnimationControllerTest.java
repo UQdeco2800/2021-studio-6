@@ -1,10 +1,7 @@
 package com.deco2800.game.components;
 
-import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerAnimationController;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.events.listeners.EventListener0;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.AnimationRenderComponent;

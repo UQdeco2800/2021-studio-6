@@ -138,7 +138,7 @@ public class FinalBossFactory {
                 .addComponent(new LaserTimer());
 
         beam.getComponent(AnimationRenderComponent.class).scaleEntity();
-        beam.setScale(new Vector2(3f, 12f));
+        beam.setScale(new Vector2(3f, 20f));
         beam.getComponent(AnimationRenderComponent.class).startAnimation("default");
 
         return beam;

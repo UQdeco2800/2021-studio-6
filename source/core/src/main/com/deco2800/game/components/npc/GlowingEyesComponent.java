@@ -74,6 +74,9 @@ public class GlowingEyesComponent extends RenderComponent {
         }
     }
 
+    /**
+     * Adds the texture to be disposed
+     */
     @Override
     public void dispose() {
         super.dispose();

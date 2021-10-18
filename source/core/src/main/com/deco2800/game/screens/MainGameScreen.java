@@ -393,7 +393,8 @@ public class MainGameScreen extends ScreenAdapter {
     if (gameLevel == WIN) {
       logger.info("Victory epilogue");
       victory();
-      gameLevel += LEVEL_INCREMENT;
+      levelChange = false;
+      //gameLevel += LEVEL_INCREMENT;
       return;
     }
 

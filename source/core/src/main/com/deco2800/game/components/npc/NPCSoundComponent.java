@@ -40,37 +40,44 @@ public class NPCSoundComponent extends Component {
 
   public void playDead() {
     if (dead != null) {
-      dead.play();
+      long soundId = dead.play();
+      detectPlayer.setVolume(soundId, 0.6f);
     }
   }
 
   public void playDetectPlayer() {
     if (detectPlayer != null) {
-      detectPlayer.play();
+      long soundId = detectPlayer.play();
+      detectPlayer.setVolume(soundId, 0.1f);
+
     }
   }
 
   public void playShoot() {
     if (shoot != null) {
-      shoot.play();
+      long soundId = shoot.play();
+      shoot.setVolume(soundId, 0.1f);
     }
   }
 
   public void playMeleeAttack() {
     if (meleeAttack != null) {
       meleeAttack.play();
+
     }
   }
 
   public void playSpawn() {
     if (spawn != null) {
-      spawn.play();
+      long soundId = spawn.play();
+      spawn.setVolume(soundId, 0.3f);
     }
   }
 
   public void playHit() {
     if (hit != null) {
-      hit.play();
+      long soundId = hit.play();
+      hit.setVolume(soundId, 0.1f);
     }
   }
 }

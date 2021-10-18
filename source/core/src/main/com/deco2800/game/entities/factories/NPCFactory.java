@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
 import com.deco2800.game.components.npc.*;
@@ -180,11 +181,9 @@ public class NPCFactory {
     String atlasFileName = "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas";
     Entity longRange = createBaseNPC(config, atlasFileName);
 
-    // Setup the entities AI component
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
+    MultiAITaskComponent aiComponent = new MultiAITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    aiComponent.addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
 
     // Add additional specific components
     longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png"));
@@ -217,11 +216,10 @@ public class NPCFactory {
     String atlasFileName = "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas";
     Entity toughLongRangeEnemy = createBaseNPC(config, atlasFileName);
 
-    // Setup the entities AI component
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 4, 10, 8f));
+    // Create the ai component where both tasks run at the same time
+    MultiAITaskComponent aiComponent = new MultiAITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    aiComponent.addTask(new DistanceFireBulletTask(target, 4, 10, 8f));
 
     // Add additional specific components
     toughLongRangeEnemy.addComponent(new ToughFireBulletListener(target, gameArea, "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png"));

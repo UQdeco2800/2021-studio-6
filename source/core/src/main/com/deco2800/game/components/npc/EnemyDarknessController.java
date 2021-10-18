@@ -2,7 +2,9 @@ package com.deco2800.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
@@ -57,8 +59,14 @@ public class EnemyDarknessController extends Component {
     inDarkSpeed = new Vector2(defaultSpeed.x * SPEED_MULTIPLIER, defaultSpeed.y * SPEED_MULTIPLIER);
     movementComponent.setSpeed(inDarkSpeed);
 
-    List<PriorityTask> aiTasks = this.entity.getComponent(AITaskComponent.class).getTasks();
-    for (PriorityTask task : aiTasks) {
+    AITaskComponent aiTaskComponent = this.entity.getComponent(AITaskComponent.class);
+    List<Task> aiTasks;
+    if (aiTaskComponent != null) {
+      aiTasks = aiTaskComponent.getTasks();
+    } else {
+      aiTasks = this.entity.getComponent(MultiAITaskComponent.class).getParallelTasks();
+    }
+    for (Task task : aiTasks) {
       // If entity contains a fire bullet task then get the default fire duration and set the fire duration for in dark
       if (task instanceof DistanceFireBulletTask) {
         firingEntity = true;

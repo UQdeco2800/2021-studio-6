@@ -2,6 +2,7 @@ package com.deco2800.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.TouchAttackComponent;
@@ -221,7 +222,12 @@ public class NPCAnimationController extends Component {
 
       // Switch off all the components that would interfere with the player, as this entity is dead
       AITaskComponent aiTaskComponent = entity.getComponent(AITaskComponent.class);
-      aiTaskComponent.addTask(new DeadTask());
+      if (aiTaskComponent != null) {
+        aiTaskComponent.addTask(new DeadTask());
+      } else {
+        entity.getComponent(MultiAITaskComponent.class).removeAllTasks();
+      }
+
       ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
       TouchAttackComponent touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
       HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);

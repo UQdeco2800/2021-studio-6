@@ -229,6 +229,86 @@ right-run-hit
   offset: 0, 0
   index: -1
 
+glow-back.png
+size: 64, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+back-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+back-run-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+  
+glow-front.png
+size: 64, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+front-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+front-run-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+  
+glow-left.png
+size: 64, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+left-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+left-run-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+  
+glow-right.png
+size: 64, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+right-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+right-run-glow
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+
 dead_enemy.png
 size: 32, 32
 format: RGBA8888

@@ -38,6 +38,7 @@ public class NPCAnimationController extends Component {
   private static final long spawnDuration = 500;
   private CombatStatsComponent combatStatsComponent;
   private NPCSoundComponent npcSoundComponent;
+  private GlowingEyesComponent glowingEyesComponent;
   private String[] currentDirection;
   private Vector2 currentWalkingTarget;
   AnimationRenderComponent animator;
@@ -50,10 +51,15 @@ public class NPCAnimationController extends Component {
   @Override
   public void create() {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
+    glowingEyesComponent = this.entity.getComponent(GlowingEyesComponent.class);
     animator.startAnimation(ANIMATIONS_FRONT[STATIONARY]);
+    if (glowingEyesComponent != null) {
+      glowingEyesComponent.startAnimation(ANIMATIONS_FRONT[STATIONARY] + "-glow");
+    }
     currentDirection = ANIMATIONS_FRONT;
     currentDirectionAsText = "front";
     gameTime = ServiceLocator.getTimeSource();
+
 
     npcSoundComponent = this.entity.getComponent(NPCSoundComponent.class);
 
@@ -80,6 +86,9 @@ public class NPCAnimationController extends Component {
     if (isDead) {
       if (lastAnimation != "dead") {
         animator.startAnimation("dead");
+        if (glowingEyesComponent != null) {
+          glowingEyesComponent.deactivate();
+        }
         lastAnimation = "dead";
       }
       return;
@@ -183,6 +192,9 @@ public class NPCAnimationController extends Component {
     if (!direction.equals(lastAnimation)) {
       this.entity.getEvents().trigger(currentDirectionAsText);
       animator.startAnimation(direction);
+      if (glowingEyesComponent != null) {
+        glowingEyesComponent.startAnimation(direction + "-glow");
+      }
       lastAnimation = direction;
     }
   }

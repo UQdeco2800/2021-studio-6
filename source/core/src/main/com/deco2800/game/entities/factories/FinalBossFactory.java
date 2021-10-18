@@ -18,6 +18,7 @@ import com.deco2800.game.components.finalboss.LaserListener;
 import com.deco2800.game.components.player.PlayerLightingComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -114,12 +115,15 @@ public class FinalBossFactory {
                 .addComponent(new CombatStatsComponent(10, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new BossAnimationController())
+                .addComponent(new FlickerLightComponent(Color.WHITE, Color.WHITE, Color.WHITE,
+                        Color.WHITE, 1f, 2, 0))
                 .addComponent(new LaserListener());
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
         bossHead.setScale(new Vector2(5.3f, 4f));
-        //bossHead.getComponent(AnimationRenderComponent.class).startAnimation("default");
-
+        bossHead.getComponent(FlickerLightComponent.class).turnOnLights();
+        //bossHead.getComponent(FlickerLightComponent.class).changeOffsetX(-2f);
+        
         return bossHead;
     }
 
@@ -171,5 +175,9 @@ public class FinalBossFactory {
 
         spawner.setScale(1f, 1f);
         return spawner;
+    }
+
+    public void dispose() {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
@@ -16,6 +17,7 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -370,10 +372,13 @@ public class Level4 extends GameArea {
 
         Entity boat = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(animator);
+                .addComponent(animator)
+                .addComponent(new FlickerLightComponent(Color.WHITE, Color.WHITE, Color.WHITE,
+                        Color.WHITE, 0.5f, 0, 0));
 
         boat.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         boat.setScale(new Vector2(2f, 2f));
+        boat.getComponent(FlickerLightComponent.class).turnOnLights();
 
         GridPoint2 bounds = terrain.getMapBounds(0);
         GridPoint2 boatLocation = new GridPoint2(bounds.x/2, BOAT_LOCATION);

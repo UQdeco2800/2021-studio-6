@@ -41,7 +41,7 @@ public class Level4 extends GameArea {
     private static final int NUM_LARGE_ENEMY = 0;
     private static final int NUM_GHOSTS = 0;
     private static final int NUM_LONGRANGE = 0;
-    private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
+    private static final int NUM_BULLETS = 20; // Must be 5, to allow range-attack.
     private static final int NUM_SPAWNER_ENEMY = 0;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(20, 10);
     private static final float WALL_WIDTH = 0.1f;

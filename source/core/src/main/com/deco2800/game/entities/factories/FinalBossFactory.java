@@ -116,7 +116,7 @@ public class FinalBossFactory {
                 .addComponent(new DisposingComponent())
                 .addComponent(new BossAnimationController())
                 .addComponent(new FlickerLightComponent(Color.WHITE, Color.WHITE, Color.WHITE,
-                        Color.WHITE, 1f, 2, 0))
+                        Color.WHITE, 2f, 0, -1.5f))
                 .addComponent(new LaserListener());
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();

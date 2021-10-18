@@ -1,5 +1,6 @@
 package com.deco2800.game.components.tasks;
 
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
@@ -69,9 +70,8 @@ public class BossHealthListener extends Component {
                 bossState = BossState.PHASEFINAL;
                 boss.dispose();
                 darkness.dispose();
-                //MainGameScreen.changeLevel();
+                MainGameScreen.changeLevel();
                 logger.debug("Boss State change from {} to {}", BossState.PHASE3, bossState);
-
             }
         }
 

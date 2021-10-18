@@ -7,6 +7,7 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import java.util.HashMap;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -20,20 +21,24 @@ public class PlayerActions extends Component {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   // Speed Modification
-  private Vector2 maxSpeed; // Metres per second
-  private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f}; // Dead, MW, LW, Healthy
+  private Vector2 maxSpeed;   // Metres per second
+  private final float[] woundSpeeds = new float[] {0f, 5f, 4f, 3f};   // Dead, MW, LW, Healthy
+  // Speed Multiplier
+  // Map of entities applying various speed multipliers.
+  private HashMap<Integer, Integer> mapScaleSpeed = new HashMap<Integer, Integer>();
+  private int scaleSpeed = 100;   // in %.
   // Dashing
   private static final float DASH_SPEED = 20f;
   private boolean dashing = false;
   private Vector2 dashVelocity;
   // Timing for dashing
   private final GameTime timeSource = ServiceLocator.getTimeSource();
-  private static final int DELAY_LENGTH = 2000; // in milliseconds
-  private static final int DASH_LENGTH = 100; // in milliseconds
+  private static final int DELAY_LENGTH = 2000;         // in milliseconds
+  private static final int DASH_LENGTH = 100;           // in milliseconds
   private long delayEndTime = 0;
   private long dashEndTime = 0;
   // Timing for reloading along with additional variables relevant to reloading
-  private static final int DELAY_RELOAD_LENGTH = 2000; // in milliseconds
+  private static final int DELAY_RELOAD_LENGTH = 2000;  // in milliseconds
   private static long TIME_TO_START_RELOAD = 0;
   private boolean checkForReload = false;
   private static final int BULLET_MAGAZINE_FULL = 5;
@@ -76,8 +81,9 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateSpeed();
     }
+
     // check for reload ensures canReload method will not be called needlessly
-    // and will only be true when player has clicked R to reload
+    //    and will only be true when player has clicked R to reload
     if (checkForReload) {
       // display reloading text to player on interface
       entity.getEvents().trigger("gunMagazineReloading");
@@ -97,7 +103,7 @@ public class PlayerActions extends Component {
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 desiredVelocity = walkDirection.cpy().scl(maxSpeed);
+    Vector2 desiredVelocity = walkDirection.cpy().scl(maxSpeed).scl(scaleSpeed/100.0f);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
@@ -120,7 +126,8 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Set the players speed. Allows values from 0 to 3 inclusive, values being set to the closest valid number when outside the range (same logic as playercombatstats component)
+   * Set the players speed. Allows values from 0 to 3 inclusive, values being set to the closest valid number
+   * when outside the range (same logic as playercombatstats component)
    *
    * @param woundState new woundState of the player
    */
@@ -171,8 +178,68 @@ public class PlayerActions extends Component {
    * @return the players current speed
    */
   public Vector2 getCurrentSpeed() {
-    return maxSpeed;
+    return maxSpeed.scl(scaleSpeed/100.0f);
   }
+
+
+  /**
+   * Apply a speed multiplier onto player's speed.
+   * There's a minimum multiplier limit of 10%, as to not prevent player from moving.
+   *
+   * @param multiplier percentage speed multiplier
+   */
+
+  /**
+   * Apply a speed multiplier onto player's speed.
+   * There's a minimum multiplier limit of 10%, as to not prevent player from moving.
+   *
+   * @param id entity's effects on movement.
+   * @param multiplier percentage speed multiplier
+   */
+  public void setScaleSpeed(int id, int multiplier) {
+    mapScaleSpeed.put(id, multiplier);
+
+    int tempMultiplier = multiplier;
+    if(mapScaleSpeed.size() > 0) {
+      for(Integer value : mapScaleSpeed.values()) {
+        if(value < tempMultiplier) {
+          tempMultiplier = value;
+        }
+      }
+    }
+
+    scaleSpeed = (tempMultiplier < 10) ? 10 : tempMultiplier;
+  }
+
+
+  /**
+   * Clear speed multiplier, and refresh.
+   * @param id entity's effects on movement.
+   */
+  public void clearScaleSpeed(int id) {
+    mapScaleSpeed.remove(id);
+
+    int tempMultiplier = 100;
+    if(mapScaleSpeed.size() > 0) {
+      for(Integer value : mapScaleSpeed.values()) {
+        if(value < tempMultiplier) {
+          tempMultiplier = value;
+        }
+      }
+    }
+
+    scaleSpeed = (tempMultiplier < 10) ? 10 : tempMultiplier;
+  }
+
+
+  /**
+   * Get the current speed multiplier.
+   * @return percentage speed multiplier
+   */
+  public int getScaleSpeed() {
+    return scaleSpeed;
+  }
+
 
   /**
    * Sets the player to dashing if the current cooldown has passed

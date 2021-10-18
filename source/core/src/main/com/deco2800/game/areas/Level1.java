@@ -60,7 +60,6 @@ public class Level1 extends GameArea {
     "images/level_2/level2_grass_2.png",
     "images/level_2/level2_grass_4.png"
   };
-
   private static final String[] cityTextureAtlases = {
       NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
@@ -69,7 +68,6 @@ public class Level1 extends GameArea {
   };
 
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
-
   private static final String[] playerSounds = {
           "sounds/bandage-use.ogg",
           "sounds/hurt.ogg",
@@ -92,36 +90,39 @@ public class Level1 extends GameArea {
     // Loading in and setting up UI
     loadAssets();
     displayUI();
-    // Spawning Barriers
+
+    // Spawning Obstacles/Environment objects
     spawnTerrain();
     spawnBarriers();
     spawnBuildings();
     spawnSafehouse();
-
-    player = spawnPlayer();
-
+    spawnDeadTrees();
+    spawnLamps();
     spawnSigns();
-    spawnPrologue();
+    spawnPickupItems();
 
+    // Spawn in player and their projectiles
+    player = spawnPlayer();
     spawnBullet();
     spawnFireCracker();
+
+    // Spawn in enemies
     spawnLargeEnemy();
     spawnSmallEnemy();
     spawnSpawnerEnemy();
+    spawnLongRangeEnemies();
+    spawnToughLongRangeEnemies();
 
+    // Spawn in NPCs
     spawnPilotNpc();
     spawnInjuredNPC();
 
-    spawnLongRangeEnemies();
-    spawnToughLongRangeEnemies();
-    spawnDeadTrees();
-    spawnLamps();
+    // Start the prologue
+    spawnPrologue();
 
     //Listener for prologue finished to play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.PROLOGUE,
         this::startTutorialAndMusic);
-
-    spawnPickupItems();
   }
 
   private void displayUI() {
@@ -323,18 +324,18 @@ public class Level1 extends GameArea {
    */
   private void spawnDeadTrees() {
     GridPoint2[] treePositions = new GridPoint2[]{
-            new GridPoint2(42, 65), new GridPoint2(70, 65),
-            new GridPoint2(49, 56), new GridPoint2(64, 56),
-            new GridPoint2(47, 43), new GridPoint2(21, 43), new GridPoint2(64, 42),
-            new GridPoint2(72, 41), new GridPoint2(12, 37),
-            new GridPoint2(70, 24), new GridPoint2(67, 20),
-            new GridPoint2(59, 19), new GridPoint2(43, 19),
-            new GridPoint2(53, 14), new GridPoint2(44, 9),
-            new GridPoint2(72, 9), new GridPoint2(60, 8),
-            new GridPoint2(21, 8), new GridPoint2(66, 6),
-            new GridPoint2(18, 3), new GridPoint2(62, 2)
+            new GridPoint2(42, 64), new GridPoint2(70, 64),
+            new GridPoint2(49, 55), new GridPoint2(64, 55),
+            new GridPoint2(47, 42), new GridPoint2(21, 42), new GridPoint2(64, 41),
+            new GridPoint2(72, 40), new GridPoint2(12, 36),
+            new GridPoint2(70, 23), new GridPoint2(67, 19),
+            new GridPoint2(59, 18), new GridPoint2(43, 18),
+            new GridPoint2(53, 13), new GridPoint2(44, 8),
+            new GridPoint2(72, 8), new GridPoint2(60, 7),
+            new GridPoint2(21, 7), new GridPoint2(66, 5),
+            new GridPoint2(18, 2), new GridPoint2(62, 1)
     };
-
+    // Spawn the trees at the given positions
     for (GridPoint2 point: treePositions) {
       Entity tree = ObstacleFactory.createDeadTree();
       spawnEntityAt(tree, point, true, false);
@@ -534,12 +535,18 @@ public class Level1 extends GameArea {
     spawnEntityAt(npcTut, pos, true, true);
   }
 
+  /**
+   * Starting the tutorial sequence
+   */
   private void startTutorialAndMusic() {
     spawnTutorialNpc();
     spawnTutorial();
     playMusic();
   }
 
+  /**
+   * Used for playing the background music for the game
+   */
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
     music.setVolume(ServiceLocator.getResourceService().getMusicVolume());

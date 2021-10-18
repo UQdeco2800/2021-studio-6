@@ -3,6 +3,8 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.player.HurtEffectComponent;
+import com.deco2800.game.components.player.SlowEffectComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -10,7 +12,6 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 /**
@@ -121,7 +122,7 @@ public class ObstacleFactory {
                     .addComponent(new TextureRenderComponent("images/obstacle_sprite/cobweb.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent())
-                    .addComponent(new EntityEffectsComponent(PhysicsLayer.PLAYER, EntityEffectsComponent.Effect.MOVEMENT));
+                    .addComponent(new SlowEffectComponent(PhysicsLayer.PLAYER, 50));
 
     cobweb.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     cobweb.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -142,7 +143,7 @@ public class ObstacleFactory {
                     .addComponent(new TextureRenderComponent("images/obstacle_sprite/bush.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent())
-                    .addComponent(new EntityEffectsComponent(PhysicsLayer.PLAYER, EntityEffectsComponent.Effect.HEALTH));
+                    .addComponent(new HurtEffectComponent(PhysicsLayer.PLAYER, 1,2000));
 
     bush.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bush.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -176,6 +177,7 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
     return lamp;
   }
+
   /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units

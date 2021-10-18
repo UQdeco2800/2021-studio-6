@@ -101,7 +101,7 @@ public class NPCAnimationController extends Component {
     }
 
     // If the entity is spawning then start the spawn animation
-    if (spawning) {
+    if (spawning && !damagedActive) {
       if (lastAnimation != "spawn") {
         animator.startAnimation("spawn");
         lastAnimation = "spawn";

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
 import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * A ui component for displaying player stats, e.g. health.
  */
-public class PlayerInterfaceDisplay extends UIComponent {
+public class  PlayerInterfaceDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(PlayerInterfaceDisplay.class);
   Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload, tableTemp;
   private Image healthBar;
@@ -153,22 +154,22 @@ public class PlayerInterfaceDisplay extends UIComponent {
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
-    tableCoin.padTop(500f).padLeft(270f);
+    tableCoin.padRight(70f);
     tableCoin.add(coinImage);
     tableCoin.add(coinLabel);
 
     tableBandage = new Table();
-    tableBandage.padLeft(260f);
+    tableBandage.padRight(85f);
     tableBandage.add(bandageImage).size(bandageSideLength);
     tableBandage.add(bandageLabel);
 
     tableAmmo = new Table();
-    tableAmmo.padLeft(270f);
+    tableAmmo.padRight(85f);
     tableAmmo.add(ammoImage);
     tableAmmo.add(ammoLabel);
 
     tableGunMagazine = new Table();
-    tableGunMagazine.padLeft(270f).padTop(-20f);
+    tableGunMagazine.padRight(35f);
     tableGunMagazine.add(bulletImage1);
     tableGunMagazine.add(bulletImage2);
     tableGunMagazine.add(bulletImage3);
@@ -180,16 +181,16 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableReload.setVisible(false);
 
     table.row();
-    table.add(tableCoin).left();
+    table.add(tableCoin).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableBandage).left();
+    table.add(tableBandage).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableAmmo).left();
+    table.add(tableAmmo).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableReload).left().padLeft(600f);
+    table.add(tableReload).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableGunMagazine).left();
-
+    table.add(tableGunMagazine).width(Value.percentWidth(.55F, table));
+    table.bottom().padBottom(30F);
     stage.addActor(table);
   }
 

@@ -1,11 +1,13 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.player.PlayerSoundComponent;
 import com.deco2800.game.components.player.*;
 import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
 import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
@@ -145,7 +147,8 @@ public class PlayerFactory {
           .addComponent(new PlayerHealthAnimationController())
           .addComponent(new PlayerLightingComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
               Color.SCARLET, 6f, 0, 0))
-          .addComponent(new DarknessDetectionComponent());
+          .addComponent(new DarknessDetectionComponent())
+          .addComponent(new PlayerSoundComponent());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
@@ -160,6 +163,14 @@ public class PlayerFactory {
     invincibiltyAnimation.addAnimation("active", 0.1f, Animation.PlayMode.LOOP);
     invincibiltyAnimation.setCamera(true);
     player.getComponent(PlayerAnimationController.class).setAnimator(invincibiltyAnimation);
+
+    // Add the entity sound effects
+    PlayerSoundComponent playerSoundComponent = player.getComponent(PlayerSoundComponent.class);
+    playerSoundComponent.setVolume(ServiceLocator.getResourceService().getSfxVolume());
+    playerSoundComponent.setUseBandage(ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class));
+    playerSoundComponent.setWounded(ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class));
+    playerSoundComponent.setGenericItemPickup(ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class));
+
     return player;
   }
 

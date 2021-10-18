@@ -55,7 +55,6 @@ public class Level2 extends GameArea {
     "images/playeritems/bandage/bandage01.png",
       "images/level_2/brush.png",
       "images/level_2/brush2.png",
-      "images/level_2/campfire.png",
       "images/level_2/fallen_log.png",
       "images/level_2/stump.png",
       "images/level_2/log1.png",
@@ -73,6 +72,7 @@ public class Level2 extends GameArea {
    * Texture atlases file path for Level 2.
    */
   private static final String[] forestTextureAtlases = {
+      "images/level_2/campfire.atlas",
       "images/level_2/tree.atlas",
     NPC_DEAD_ATLAS_FILENAME
   };

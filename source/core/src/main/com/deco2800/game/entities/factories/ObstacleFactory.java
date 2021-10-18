@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.CampfireAnimationController;
 import com.deco2800.game.components.TreeAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
@@ -657,16 +658,23 @@ public class ObstacleFactory {
 
 
   public static Entity createCampfire() {
+
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/level_2/campfire.atlas", TextureAtlas.class));
+    animator.addAnimation("inactive", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("active", 0.4f, Animation.PlayMode.NORMAL);
+
     Entity asset =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/level_2/campfire.png"))
+            .addComponent(animator)
+            .addComponent(new CampfireAnimationController())
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    asset.getComponent(TextureRenderComponent.class).scaleEntity();
-    asset.scaleHeight(1.2f);
-    PhysicsUtils.setScaledCollider(asset, 0.7f, 0.7f);
+    asset.scaleHeight(1.4f);
+    PhysicsUtils.setScaledCollider(asset, 0.7f, 0.5f);
     return asset;
   }
 

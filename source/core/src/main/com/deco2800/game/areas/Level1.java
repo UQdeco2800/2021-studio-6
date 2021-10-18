@@ -334,11 +334,6 @@ public class Level1 extends GameArea {
    * Used to add tree entities to the game area
    */
   private void spawnDeadTrees() {
-
-    GridPoint2 position = new GridPoint2(14, 56);
-    Entity tree2 = ObstacleFactory.createAnimatedTree();
-    spawnEntityAt(tree2, position, true, false);
-
     GridPoint2[] treePositions = new GridPoint2[]{
             new GridPoint2(72, 41), new GridPoint2(70, 24),
             new GridPoint2(59, 19), new GridPoint2(43, 19),

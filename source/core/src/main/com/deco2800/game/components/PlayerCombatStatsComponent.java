@@ -309,18 +309,22 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Increases the players current health, unless health is full for their wound state
      */
     private void regenerate() {
-        if (lighting == null) {
-            lighting = this.entity.getComponent(DarknessDetectionComponent.class);
+        if (entity.getComponent(DarknessDetectionComponent.class) != null) {
+            if (lighting == null) {
+                lighting = this.entity.getComponent(DarknessDetectionComponent.class);
+            }
         }
 
         // only regens if in light
-        if (!timeSource.isPaused() && lighting.isInLight()) {
-            setHealth(getHealth() + 1);
-            entity.getEvents().trigger("health", getindex());
-            if (getHealth() >= getStateMax()) {
-                regenActive = false;
+        if (lighting != null) {
+            if (!timeSource.isPaused() && lighting.isInLight()) {
+                setHealth(getHealth() + 1);
+                entity.getEvents().trigger("health", getindex());
+                if (getHealth() >= getStateMax()) {
+                    regenActive = false;
+                }
+                nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
             }
-            nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
         }
     }
 }

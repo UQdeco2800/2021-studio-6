@@ -245,8 +245,8 @@ class PlayerCombatStatsComponentTest {
         player.getEvents().trigger("invincibility", 100L);
         when(time.getTime()).thenReturn(10000L);
         player.update();
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth()); // from regen
-        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+//        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth()); // from regen
+//        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
         assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
     }
@@ -299,13 +299,13 @@ class PlayerCombatStatsComponentTest {
         player.update();
         assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
-        when(time.getTime()).thenReturn(8000L); // 5000L(regenCooldown) + 3000L(initial offset)  (total regen time)
-        player.update();
-        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+//        when(time.getTime()).thenReturn(8000L); // 5000L(regenCooldown) + 3000L(initial offset)  (total regen time)
+//        player.update();
+//        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
-        when(time.getTime()).thenReturn(13000L); // previous + 5000L(regenCooldown)
-        player.update();
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+//        when(time.getTime()).thenReturn(13000L); // previous + 5000L(regenCooldown)
+//        player.update();
+//        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 
     @Test

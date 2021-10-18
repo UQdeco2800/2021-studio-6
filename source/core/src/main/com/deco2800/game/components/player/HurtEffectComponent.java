@@ -78,6 +78,10 @@ public class HurtEffectComponent extends Component {
         return this.delayTime;
     }
 
+    /**
+     * Returns true if effect is active.
+     */
+    public boolean isActive() { return this.active; }
 
     /**
      * On component creation.

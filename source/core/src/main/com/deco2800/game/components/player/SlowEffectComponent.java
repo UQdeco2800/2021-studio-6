@@ -53,6 +53,10 @@ public class SlowEffectComponent extends Component {
         return this.speedMultiplier;
     }
 
+    /**
+     * Returns true if effect is active.
+     */
+    public boolean isActive() { return this.active; }
 
     /**
      * On component creation.

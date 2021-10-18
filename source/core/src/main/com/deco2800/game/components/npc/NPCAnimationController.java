@@ -194,7 +194,8 @@ public class NPCAnimationController extends Component {
       this.entity.getEvents().trigger(currentDirectionAsText);
       animator.startAnimation(direction);
       if (glowingEyesComponent != null) {
-        glowingEyesComponent.startAnimation(direction + "-glow");
+        glowingEyesComponent.startAnimation(
+            direction.replace("-damaged", "").replace("-hit", "") + "-glow");
       }
       lastAnimation = direction;
     }

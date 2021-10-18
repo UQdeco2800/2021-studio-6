@@ -1,0 +1,230 @@
+
+TLENormal.png
+size: 2048, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+TLEBackRun1
+  rotate: false
+  xy: 2, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun2
+  rotate: false
+  xy: 68, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun3
+  rotate: false
+  xy: 134, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun4
+  rotate: false
+  xy: 200, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun5
+  rotate: false
+  xy: 266, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun7
+  rotate: false
+  xy: 332, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun8
+  rotate: false
+  xy: 398, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackRun6
+  rotate: false
+  xy: 398, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun1
+  rotate: false
+  xy: 464, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun5
+  rotate: false
+  xy: 464, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun2
+  rotate: false
+  xy: 530, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun3
+  rotate: false
+  xy: 596, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun4
+  rotate: false
+  xy: 662, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun6
+  rotate: false
+  xy: 728, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun7
+  rotate: false
+  xy: 794, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontrun8
+  rotate: false
+  xy: 860, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun1
+  rotate: false
+  xy: 926, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun2
+  rotate: false
+  xy: 992, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun3
+  rotate: false
+  xy: 1058, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun4
+  rotate: false
+  xy: 1124, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun5
+  rotate: false
+  xy: 1190, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun6
+  rotate: false
+  xy: 1256, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun7
+  rotate: false
+  xy: 1322, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftRun8
+  rotate: false
+  xy: 1388, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun1
+  rotate: false
+  xy: 1454, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun2
+  rotate: false
+  xy: 1520, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun3
+  rotate: false
+  xy: 1586, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun4
+  rotate: false
+  xy: 1652, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun5
+  rotate: false
+  xy: 1718, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun6
+  rotate: false
+  xy: 1784, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun7
+  rotate: false
+  xy: 1850, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightRun8
+  rotate: false
+  xy: 1916, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

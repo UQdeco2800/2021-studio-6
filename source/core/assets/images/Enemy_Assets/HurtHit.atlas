@@ -1,0 +1,230 @@
+
+HurtHit.png
+size: 4096, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+TLEBackHurtRunHit1
+  rotate: false
+  xy: 2, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit2
+  rotate: false
+  xy: 68, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit3
+  rotate: false
+  xy: 134, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit4
+  rotate: false
+  xy: 200, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit5
+  rotate: false
+  xy: 266, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit6
+  rotate: false
+  xy: 332, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit7
+  rotate: false
+  xy: 398, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEBackHurtRunHit8
+  rotate: false
+  xy: 464, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit1
+  rotate: false
+  xy: 530, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit5
+  rotate: false
+  xy: 530, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit2
+  rotate: false
+  xy: 596, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit3
+  rotate: false
+  xy: 662, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit4
+  rotate: false
+  xy: 728, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit6
+  rotate: false
+  xy: 794, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit7
+  rotate: false
+  xy: 860, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLEFrontHurtrunHit8
+  rotate: false
+  xy: 926, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit1
+  rotate: false
+  xy: 992, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit2
+  rotate: false
+  xy: 1058, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit3
+  rotate: false
+  xy: 1124, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit4
+  rotate: false
+  xy: 1190, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit5
+  rotate: false
+  xy: 1256, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit6
+  rotate: false
+  xy: 1322, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit7
+  rotate: false
+  xy: 1388, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLELeftHurtRunHit8
+  rotate: false
+  xy: 1454, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit1
+  rotate: false
+  xy: 1520, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit2
+  rotate: false
+  xy: 1586, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit3
+  rotate: false
+  xy: 1652, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit4
+  rotate: false
+  xy: 1718, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit5
+  rotate: false
+  xy: 1784, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit6
+  rotate: false
+  xy: 1850, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit7
+  rotate: false
+  xy: 1916, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+TLERightHurtRunHit8
+  rotate: false
+  xy: 1982, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

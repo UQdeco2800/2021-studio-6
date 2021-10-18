@@ -1,7 +1,5 @@
 package com.deco2800.game.components.finalboss;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.areas.GameArea;
@@ -45,7 +43,6 @@ public class FinalBossHealthBar extends DefaultTask {
 
         healthBackground = FinalBossFactory.createHealthBarBackground();
         healthForeground = FinalBossFactory.createHealthBarForeground();
-
     }
 
     /**
@@ -59,15 +56,12 @@ public class FinalBossHealthBar extends DefaultTask {
         this.gameArea.spawnEntity(healthForeground);
     }
 
-
     @Override
     public void start() {
         super.start();
 
         createHealthBar();
-
     }
-
 
     /**
      * Each update, the timer is checked to see if enough time has passed for the health bar to be updated
@@ -82,7 +76,6 @@ public class FinalBossHealthBar extends DefaultTask {
 
             endTime = timeSource.getTime() + (int)(INTERVAL * 1000);
         }
-
     }
 
     @Override

@@ -51,7 +51,7 @@ public class BossHealthListener extends Component {
         logger.debug("Boss health {}", health);
         if(bossState == BossState.PHASE1) {
             if(health < 80) {
-                bossState = BossState.PHASE2;
+                bossState = BossState.PHASE3; //currently skips phase 2
                 logger.debug("Boss State change from {} to {}", BossState.PHASE1, bossState);
 //                boss.getComponent(MultiAITaskComponent.class).removeAllTasks();
                 //change tasks

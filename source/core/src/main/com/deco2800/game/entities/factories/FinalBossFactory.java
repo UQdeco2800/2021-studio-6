@@ -11,6 +11,7 @@ import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.Level4;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.DisposingComponent;
+import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.finalboss.LaserTimer;
 import com.deco2800.game.components.npc.BossAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
@@ -70,7 +71,7 @@ public class FinalBossFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                          .addTask(new Stage2Task(1, gameArea, target));
+                          .addTask(new Stage2Task(1, gameArea, target)); //
         darkness.setScale(50, 7);
         darkness.addComponent(aiComponent);
 
@@ -143,10 +144,13 @@ public class FinalBossFactory {
         Entity beam = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
+                //.addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC).setDensity(100))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(1000, 5))
+                .addComponent(new CombatStatsComponent(1000, 1))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER))
                 .addComponent(new LaserTimer());
 
         beam.getComponent(AnimationRenderComponent.class).scaleEntity();

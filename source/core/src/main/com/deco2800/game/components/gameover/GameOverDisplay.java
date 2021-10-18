@@ -89,7 +89,7 @@ public class GameOverDisplay extends UIComponent {
   private void playMusic() {
     Music gameOverSong = ServiceLocator.getResourceService().getAsset(MUSIC_FILE_PATH, Music.class);
     gameOverSong.setLooping(true);
-    gameOverSong.setVolume(0.1f);
+    gameOverSong.setVolume(0.3f);
     gameOverSong.play();
   }
 

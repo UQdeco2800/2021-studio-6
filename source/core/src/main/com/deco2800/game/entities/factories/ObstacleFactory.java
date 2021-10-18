@@ -176,6 +176,7 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
     return lamp;
   }
+
   /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units

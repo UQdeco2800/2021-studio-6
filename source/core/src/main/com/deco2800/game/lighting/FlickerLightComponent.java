@@ -220,4 +220,8 @@ public class FlickerLightComponent extends Component implements Disposable {
     this.distance = distance;
     this.distanceInner = distance/2;
   }
+
+  public void changeOffsetX(float offsetx) {
+    this.offsetx = offsetx;
+  }
 }

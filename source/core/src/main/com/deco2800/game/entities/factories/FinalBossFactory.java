@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -10,11 +11,15 @@ import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.Level4;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.DisposingComponent;
+import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.finalboss.LaserTimer;
+import com.deco2800.game.components.npc.BossAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.finalboss.LaserListener;
+import com.deco2800.game.components.player.PlayerLightingComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -32,7 +37,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class FinalBossFactory {
 
 
-    public static Entity createFinalBossPhaseManager(Entity boss) {
+    public static Entity createFinalBossPhaseManager(Entity boss, Entity darkness) {
 
         //define boss entity
 
@@ -40,7 +45,7 @@ public class FinalBossFactory {
         //
 
         Entity phaseManager = new Entity()
-                .addComponent(new BossHealthListener(boss));
+                .addComponent(new BossHealthListener(boss, darkness));
 
         return phaseManager;
     }
@@ -66,7 +71,7 @@ public class FinalBossFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                          .addTask(new Stage2Task(1, gameArea, target));
+                          .addTask(new Stage2Task(1, gameArea, target)); //
         darkness.setScale(50, 7);
         darkness.addComponent(aiComponent);
 
@@ -83,7 +88,15 @@ public class FinalBossFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
-            animator.addAnimation("default", 1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_right", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float_left", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float_right", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float_left", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("angry_float_right", 0.3f, Animation.PlayMode.LOOP);
 
         //System.out.println(animator.getLayer());
 
@@ -100,14 +113,18 @@ public class FinalBossFactory {
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(10, 0))
+                .addComponent(new CombatStatsComponent(1, 0))
                 .addComponent(new DisposingComponent())
+                .addComponent(new BossAnimationController())
+                .addComponent(new FlickerLightComponent(Color.WHITE, Color.WHITE, Color.WHITE,
+                        Color.WHITE, 2f, 0, -1.5f))
                 .addComponent(new LaserListener());
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
-        bossHead.setScale(new Vector2(4f, 4f));
-        bossHead.getComponent(AnimationRenderComponent.class).startAnimation("default");
-
+        bossHead.setScale(new Vector2(5.3f, 4f));
+        bossHead.getComponent(FlickerLightComponent.class).turnOnLights();
+        //bossHead.getComponent(FlickerLightComponent.class).changeOffsetX(-2f);
+        
         return bossHead;
     }
 
@@ -127,10 +144,13 @@ public class FinalBossFactory {
         Entity beam = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
+                //.addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC).setDensity(100))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(1000, 5))
+                .addComponent(new CombatStatsComponent(1000, 1))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER))
                 .addComponent(new LaserTimer());
 
         beam.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -159,5 +179,9 @@ public class FinalBossFactory {
 
         spawner.setScale(1f, 1f);
         return spawner;
+    }
+
+    public void dispose() {
+
     }
 }

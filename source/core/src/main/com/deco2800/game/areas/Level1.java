@@ -336,16 +336,13 @@ public class Level1 extends GameArea {
    */
   private void spawnDeadTrees() {
     GridPoint2[] treePositions = new GridPoint2[]{
-            new GridPoint2(42, 64), new GridPoint2(70, 64),
-            new GridPoint2(49, 55), new GridPoint2(64, 55),
-            new GridPoint2(47, 42), new GridPoint2(21, 42), new GridPoint2(64, 41),
             new GridPoint2(72, 40), new GridPoint2(12, 36),
             new GridPoint2(70, 23), new GridPoint2(67, 19),
             new GridPoint2(59, 18), new GridPoint2(43, 18),
-            new GridPoint2(53, 13), new GridPoint2(44, 8),
             new GridPoint2(72, 8), new GridPoint2(60, 7),
             new GridPoint2(21, 7), new GridPoint2(66, 5),
-            new GridPoint2(18, 2), new GridPoint2(62, 1)
+            new GridPoint2(21, 42), new GridPoint2(53, 13),
+            new GridPoint2(18, 2)
     };
     // Spawn the trees at the given positions
     for (GridPoint2 point: treePositions) {

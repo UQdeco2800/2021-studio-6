@@ -16,7 +16,6 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.components.EntityEffectsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -197,9 +196,6 @@ public class ObstacleFactory {
     cobweb.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     cobweb.getComponent(TextureRenderComponent.class).scaleEntity();
     cobweb.scaleHeight(1.0f);
-
-    //TODO: Investigate ColliderComponent instead of HitboxComponent and different PhysicsLayers.
-
     return cobweb;
   }
 

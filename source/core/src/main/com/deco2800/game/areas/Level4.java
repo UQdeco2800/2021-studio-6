@@ -99,7 +99,9 @@ public class Level4 extends GameArea {
             "images/weapon/sledge.atlas",
             "images/weapon/machete.atlas",
             "images/weapon/baseball.atlas",
-            "images/weapon/dagger.atlas"  };
+            "images/weapon/dagger.atlas",
+            "images/playeritems/firecracker/firecracker.atlas"
+    };
 
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String[] playerSounds = {

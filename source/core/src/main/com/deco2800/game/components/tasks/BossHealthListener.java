@@ -69,7 +69,7 @@ public class BossHealthListener extends Component {
                 bossState = BossState.PHASEFINAL;
                 boss.dispose();
                 darkness.dispose();
-                MainGameScreen.changeLevel();
+                //MainGameScreen.changeLevel();
                 logger.debug("Boss State change from {} to {}", BossState.PHASE3, bossState);
 
             }

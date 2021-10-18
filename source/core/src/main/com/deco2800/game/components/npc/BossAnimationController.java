@@ -6,6 +6,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.DeadTask;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -86,10 +87,12 @@ public class BossAnimationController extends Component {
         if (xOffset > 0) {
             setDirection(ANIMATIONS_RIGHT[state]);
             currentDirection = ANIMATIONS_RIGHT;
+            this.getEntity().getComponent(FlickerLightComponent.class).changeOffsetX(2f);
         }
         else if (xOffset < 0) {
             setDirection(ANIMATIONS_LEFT[state]);
             currentDirection = ANIMATIONS_LEFT;
+            this.getEntity().getComponent(FlickerLightComponent.class).changeOffsetX(-2f);
         }
     }
 

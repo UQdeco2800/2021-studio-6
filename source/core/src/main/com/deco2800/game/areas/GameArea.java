@@ -107,6 +107,12 @@ public abstract class GameArea implements Disposable {
           "sounds/enemies/SpawnerEnemy/spawn.wav"
   };
 
+  protected static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg"
+  };
+
   protected GameArea() {
     areaEntities = new ArrayList<>();
   }

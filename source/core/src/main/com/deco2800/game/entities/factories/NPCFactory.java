@@ -312,7 +312,7 @@ public class NPCFactory {
   }
 
   /**
-   * Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.
+   * Creates a firefly bug NPC that wanders around the map and also provide a small light source to the map.
    * @param speedX Movement speed in X direction
    * @param speedY Movement speed in Y direction
    * @param wanderX Proximity X distance to move around in

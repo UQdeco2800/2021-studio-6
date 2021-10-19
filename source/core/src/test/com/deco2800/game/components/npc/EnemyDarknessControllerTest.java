@@ -43,9 +43,9 @@ class EnemyDarknessControllerTest {
   static final float LIGHT_FIRE_DURATION = 10F/2F;
   static final float PLAYER_LIGHT_CHASE_DISTANCE = 10;
   static final float PLAYER_DARK_CHASE_DISTANCE = (float) (10 * 1.7);
-  Entity npc;
-  Entity player;
-  PhysicsMovementComponent physicsMovementComponent;
+  private Entity npc;
+  private Entity player;
+  private PhysicsMovementComponent physicsMovementComponent;
 
   @BeforeEach
   void beforeEach() {

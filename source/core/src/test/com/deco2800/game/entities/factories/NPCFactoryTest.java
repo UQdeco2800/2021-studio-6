@@ -44,8 +44,8 @@ class NPCFactoryTest {
   @Mock
   ResourceService resourceService;
 
-  TextureAtlas normalTextureAtlas;
-  TextureAtlas spawnerTextureAtlas;
+  private TextureAtlas normalTextureAtlas;
+  private TextureAtlas spawnerTextureAtlas;
 
   @BeforeEach
   void beforeEach() {

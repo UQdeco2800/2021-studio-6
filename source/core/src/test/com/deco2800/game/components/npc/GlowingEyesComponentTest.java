@@ -27,8 +27,8 @@ class GlowingEyesComponentTest {
   @Mock
   SpriteBatch spriteBatch;
 
-  Entity npc;
-  GlowingEyesComponent glowingEyesComponent;
+  private Entity npc;
+  private GlowingEyesComponent glowingEyesComponent;
 
   @BeforeEach
   void beforeEach() {

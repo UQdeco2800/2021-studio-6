@@ -17,7 +17,7 @@ class NPCSoundComponentTest {
   @Mock
   Sound sound;
 
-  NPCSoundComponent soundComponent;
+  private NPCSoundComponent soundComponent;
 
   @BeforeEach
   void beforeEach() {

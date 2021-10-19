@@ -33,12 +33,12 @@ class EnemyMeleeAttackComponentTest {
   @Mock
   Filter filter;
 
-  GameTime time;
-  Entity npc;
+  private GameTime time;
+  private Entity npc;
 
-  EnemyMeleeAttackComponent enemyMeleeAttackComponent;
-  NPCSoundComponent soundComponent;
-  PlayerCombatStatsComponent playerCombatStatsComponent;
+  private EnemyMeleeAttackComponent enemyMeleeAttackComponent;
+  private NPCSoundComponent soundComponent;
+  private PlayerCombatStatsComponent playerCombatStatsComponent;
   static final int MAX_PLAYER_HEALTH = 5;
   static final int ENEMY_ATTACK = 1;
 

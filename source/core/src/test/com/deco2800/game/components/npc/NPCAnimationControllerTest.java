@@ -47,11 +47,11 @@ class NPCAnimationControllerTest {
   private static final String[] ANIMATIONS_BACK = {"back", "back-run"};
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
-  Entity friendlyNpc;
-  Entity enemyNpc;
-  TouchAttackComponent touchAttackComponentSpy;
-  GlowingEyesComponent glowingEyesComponentSpy;
-  GameTime time;
+  private Entity friendlyNpc;
+  private Entity enemyNpc;
+  private TouchAttackComponent touchAttackComponentSpy;
+  private GlowingEyesComponent glowingEyesComponentSpy;
+  private GameTime time;
   @Spy
   NPCAnimationController friendlyNpcAnimationController;
   @Spy

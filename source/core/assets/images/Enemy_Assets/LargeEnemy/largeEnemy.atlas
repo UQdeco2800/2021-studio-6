@@ -229,7 +229,7 @@ right-run-hit
   offset: 0, 0
   index: -1
 
-glow-back.png
+glow-back-transparent.png
 size: 64, 64
 format: RGBA8888
 filter: Nearest, Nearest
@@ -249,7 +249,7 @@ back-run-glow
   offset: 0, 0
   index: -1
   
-glow-front.png
+glow-front-transparent.png
 size: 64, 64
 format: RGBA8888
 filter: Nearest, Nearest
@@ -269,7 +269,7 @@ front-run-glow
   offset: 0, 0
   index: -1
   
-glow-left.png
+glow-left-transparent.png
 size: 64, 64
 format: RGBA8888
 filter: Nearest, Nearest
@@ -289,7 +289,7 @@ left-run-glow
   offset: 0, 0
   index: -1
   
-glow-right.png
+glow-right-transparent.png
 size: 64, 64
 format: RGBA8888
 filter: Nearest, Nearest

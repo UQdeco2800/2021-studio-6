@@ -235,7 +235,7 @@ front-run-damaged-hit
   offset: 0, 0
   index: 1
 
-glow-eye.png
+glow-eye-detailed.png
 size: 32, 32
 format: RGBA8888
 filter: Nearest, Nearest

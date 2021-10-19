@@ -40,16 +40,16 @@ public class Level1 extends GameArea {
     "images/level_1/sidewalk.png",
     "images/level_1/cracked_sidewalk.png",
     "images/level_1/curbUpper.png",
-      "images/level_1/pathHorizontal.png",
-      "images/level_1/pathHorizontalOld.png",
-      "images/level_1/pathHorizontalDecay.png",
-      "images/level_1/pathVertical.png",
-      "images/level_1/pathVerticalOld.png",
-      "images/level_1/pathVerticalDecay.png",
+    "images/level_1/pathHorizontal.png",
+    "images/level_1/pathHorizontalOld.png",
+    "images/level_1/pathHorizontalDecay.png",
+    "images/level_1/pathVertical.png",
+    "images/level_1/pathVerticalOld.png",
+    "images/level_1/pathVerticalDecay.png",
     "images/level_1/curbLower.png",
     "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
-      "images/level_1/rubble.png",
+    "images/level_1/rubble.png",
     "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
     "images/level_1/road_barrier.png",
@@ -77,7 +77,7 @@ public class Level1 extends GameArea {
       NPC_PILOT_ATLAS_FILENAME
   };
 
-  private static final String[] citySounds = {"sounds/Impact4.ogg"};
+  private static final String[] citySounds = {};
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] cityMusic = {BACKGROUND_MUSIC};
@@ -221,6 +221,82 @@ public class Level1 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, point, true, false);
     }
+    /*
+    // CREATED 3 ARMOURS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int armourQuantity = 1;
+      Entity armour = ItemFactory.createArmour(armourQuantity);
+      spawnEntityAt(armour, randomPos, true, false);
+    }
+
+    // CREATED 3 HELMETS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int helmetQuantity = 1;
+      Entity helmet = ItemFactory.createHelmet(helmetQuantity);
+      spawnEntityAt(helmet, randomPos, true, false);
+    }
+
+    // CREATED 3 DAGGERS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int daggerQuantity = 1;
+      Entity dagger = ItemFactory.createDagger(daggerQuantity);
+      spawnEntityAt(dagger, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int axeQuantity = 1;
+      Entity axe = ItemFactory.createAxe(axeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int swordQuantity = 1;
+      Entity sword = ItemFactory.createSword(swordQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int sledgeQuantity = 1;
+      Entity axe = ItemFactory.createSledge(sledgeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword = ItemFactory.createMachete(macheteQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword1 = ItemFactory.createBat(macheteQuantity);
+      spawnEntityAt(sword1, randomPos, true, false);
+    }
+  }
+
+  private void spawnTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
+
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createBigTree();
+      spawnEntityAt(tree, randomPos, true, false);
+    }
+    */
   }
 
   /**
@@ -327,7 +403,7 @@ public class Level1 extends GameArea {
   }
 
   /**
-   * Used to add tree entities to the game area
+   * Used to add dead tree entities to the game area
    */
   private void spawnDeadTrees() {
     GridPoint2[] treePositions = new GridPoint2[]{
@@ -351,7 +427,6 @@ public class Level1 extends GameArea {
    */
   private void spawnNiceTrees() {
     Entity tree;
-    GridPoint2 position;
 
     GridPoint2[] treePositions = new GridPoint2[]{
         new GridPoint2(49, 56), new GridPoint2(64, 56),
@@ -592,8 +667,6 @@ public class Level1 extends GameArea {
     resourceService.loadTextures(cityTextures);
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
-    resourceService.loadSounds(playerSounds);
-    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(cityMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -612,8 +685,6 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(cityTextures);
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
-    resourceService.unloadAssets(playerSounds);
-    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(cityMusic);
   }
 

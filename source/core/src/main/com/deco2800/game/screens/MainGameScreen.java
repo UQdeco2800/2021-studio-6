@@ -22,6 +22,7 @@ import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.Lighting;
 import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsEngine;
@@ -45,13 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-
-//  private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
-//  "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
-//  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png", "images/Player_Sprite/25.png",
-//  "images/playeritems/rock/pickupammo.png", "images/playeritems/coin/money bag.png",
-//  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
-//  "images/Ability_Sprites/invincibility.png" };
 
   private static final String[] safehouseTextures = {
       "images/safehouse/shopkeeper/portrait.png",
@@ -132,8 +126,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private static double gameLevel;
-  //private double gameLevel = 4;
+  private static double gameLevel = 1;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -143,8 +136,10 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private boolean LIGHTINGON = true;
+  private static boolean LIGHTINGON = true;
   private GameArea gameArea = null;
+  private static float BOSS_CAMERA_Y = 12f;
+  private static float BOAT_CAMERA_Y = 25f;
 
   private Entity ui;
 
@@ -276,8 +271,13 @@ public class MainGameScreen extends ScreenAdapter {
 
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
-          CAMERA_POSITION.set(new Vector2(20, 12));
+          CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
           renderer.setZoom(40);
+        } else if(gameLevel == 4.5) {
+          CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
+          if(BOSS_CAMERA_Y < BOAT_CAMERA_Y) {
+            BOSS_CAMERA_Y += 0.1f;
+          }
         }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -332,7 +332,6 @@ public class MainGameScreen extends ScreenAdapter {
     resourceService.loadTextures(mainGameTextures);
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadSounds(menuSounds);
-
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -397,11 +396,15 @@ public class MainGameScreen extends ScreenAdapter {
     logger.info("Generating game level " + gameLevel);
 
     // TODO: This should not be here as this should be for boss fight
-    double WIN = 4.5;
+    double WIN = 5;
     if (gameLevel == WIN) {
       logger.info("Victory epilogue");
       victory();
-      gameLevel += LEVEL_INCREMENT;
+      levelChange = false;
+      //gameLevel += LEVEL_INCREMENT;
+      return;
+    } else if(gameLevel == WIN - LEVEL_INCREMENT) {
+      levelChange = false;
       return;
     }
 

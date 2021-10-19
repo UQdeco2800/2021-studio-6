@@ -64,13 +64,31 @@ public class ObstacleFactory {
   }
 
   /**
-   * Creates a 'blue' tree entity.
+   * Creates a 'blue' branched tree entity.
    * @return entity
    */
   public static Entity createBlueTree() {
     Entity tree =
         new Entity()
             .addComponent(new TextureRenderComponent("images/level_2/treeBlue.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.8f);
+    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.55f);
+    return tree;
+  }
+
+  /**
+   * Creates a palm tree entity.
+   * @return entity
+   */
+  public static Entity createPalmTree() {
+    Entity tree =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_3/palm_tree-dying-day1-v1.0.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -104,7 +122,7 @@ public class ObstacleFactory {
 
     tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     tree.scaleHeight(3.5f);
-    PhysicsUtils.setScaledCollider(tree, 0.75f, 0.55f);
+    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.7f);
     return tree;
   }
 
@@ -436,7 +454,7 @@ public class ObstacleFactory {
   /**
    * Creates a left grass edge water tile (4).
    * |X|X|X|
-   * |4|X|X|
+   * |4|X|X|cr
    * |X|X|X|
    * @return entity
    */
@@ -654,8 +672,11 @@ public class ObstacleFactory {
     return waterTile;
   }
 
-
-
+  /**
+<<<<<<< HEAD
+   * Creates the campfire asset
+   * @return the campfire entity
+   */
   public static Entity createCampfire() {
 
     AnimationRenderComponent animator =
@@ -677,6 +698,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the tree stump asset
+   * @return the tree stump entity
+   */
   public static Entity createStump() {
     Entity asset =
         new Entity()
@@ -691,6 +716,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the fallen tree asset
+   * @return the fallen tree entity
+   */
   public static Entity createFallenTree() {
     Entity asset =
         new Entity()
@@ -705,6 +734,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the log stack asset
+   * @return the log stack entity
+   */
   public static Entity createLogStack() {
     Entity asset =
         new Entity()
@@ -719,6 +752,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the log asset
+   * @return the log entity
+   */
   public static Entity createLog() {
     Entity asset =
         new Entity()
@@ -733,8 +770,10 @@ public class ObstacleFactory {
     return asset;
   }
 
-
-
+  /**
+   * Creates the vertical twig asset
+   * @return the vertical twig entity
+   */
   public static Entity createTwigVertical() {
     Entity asset =
         new Entity()
@@ -749,6 +788,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the horizontal twig asset
+   * @return the horizontal twig entity
+   */
   public static Entity createTwigHorizontal() {
     Entity asset =
         new Entity()
@@ -763,6 +806,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the big bush asset
+   * @return the big bush entity
+   */
   public static Entity createBushBig() {
     Entity asset =
         new Entity()
@@ -777,6 +824,10 @@ public class ObstacleFactory {
     return asset;
   }
 
+  /**
+   * Creates the small bush asset
+   * @return the small bush entity
+   */
   public static Entity createBushSmall() {
     Entity asset =
         new Entity()
@@ -792,6 +843,26 @@ public class ObstacleFactory {
   }
 
 
+  /**
+   * Creates a bottom sand edge water tile (8).
+   * |X|X|X|
+   * |X|X|X|
+   * |X|8|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile8() {
+    Entity waterTile =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_3/sand_to_water.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
 
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");

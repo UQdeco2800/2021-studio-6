@@ -10,39 +10,41 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class SlowEffectComponentTest {
 
-//    /**
-//     * Simply alter parameters through constructor, and setters.
-//     */
-//    @Test
-//    void alterParameters() {
-//        ServiceLocator.registerPhysicsService(new PhysicsService());
-//
-//        // Create entity with HurtEffectComponent.
-//        Entity obstacle =
-//                new Entity()
-//                        .addComponent(new SlowEffectComponent(PhysicsLayer.PLAYER, 100))
-//                        .addComponent(new PhysicsComponent())
-//                        .addComponent(new HitboxComponent());
-//        obstacle.create();
-//        SlowEffectComponent component = obstacle.getComponent(SlowEffectComponent.class);
-//
-//        assertEquals(100, component.getSpeed());
-//
-//        component.setSpeed(50);
-//        assertEquals(50, component.getSpeed());
-//
-//        component.setSpeed(0);  // minimum limit of 10%
-//        assertEquals(10, component.getSpeed());
-//    }
+    /**
+     * Simply alter parameters through constructor, and setters.
+     */
+    @Test
+    void alterParameters() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+
+        // Create entity with HurtEffectComponent.
+        Entity obstacle =
+                new Entity()
+                        .addComponent(new SlowEffectComponent(PhysicsLayer.PLAYER, 100))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new HitboxComponent());
+        obstacle.create();
+        SlowEffectComponent component = obstacle.getComponent(SlowEffectComponent.class);
+
+        assertEquals(100, component.getSpeed());
+
+        component.setSpeed(50);
+        assertEquals(50, component.getSpeed());
+
+        component.setSpeed(0);  // minimum limit of 10%
+        assertEquals(10, component.getSpeed());
+    }
 
 
 //    /**

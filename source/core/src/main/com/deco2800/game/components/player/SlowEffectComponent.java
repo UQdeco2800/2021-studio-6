@@ -41,7 +41,12 @@ public class SlowEffectComponent extends Component {
      * @param speed percentage multiplier to apply to the player.
      */
     public void setSpeed(int speed) {
+        int minSpeed = 10;
         this.speedMultiplier = speed;
+
+        if (speedMultiplier < 10) {
+            speedMultiplier = minSpeed;
+        }
     }
 
 

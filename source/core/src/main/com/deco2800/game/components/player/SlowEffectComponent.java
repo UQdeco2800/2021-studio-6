@@ -30,7 +30,7 @@ public class SlowEffectComponent extends Component {
      */
     public SlowEffectComponent(short targetLayer, int speed) {
         this.targetLayer = targetLayer;
-        this.speedMultiplier = speed;
+        this.setSpeed(speed);
 
         this.active = false;
     }
@@ -38,15 +38,12 @@ public class SlowEffectComponent extends Component {
 
     /**
      * Set the speed multiplier to apply to player's speed on collision.
+     * Limit speed to anything over 10% as to not prevent halting the player's movements.
+     *
      * @param speed percentage multiplier to apply to the player.
      */
     public void setSpeed(int speed) {
-        int minSpeed = 10;
-        this.speedMultiplier = speed;
-
-        if (speedMultiplier < 10) {
-            speedMultiplier = minSpeed;
-        }
+        this.speedMultiplier = speed < 10 ? 10 : speed;
     }
 
 

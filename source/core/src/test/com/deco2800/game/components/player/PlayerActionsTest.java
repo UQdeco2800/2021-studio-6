@@ -35,48 +35,48 @@ class PlayerActionsTest {
         ServiceLocator.registerTimeSource(time);
     }
 
-//    @Test
-//    void shouldReload() {
-//        when(time.getTime()).thenReturn(0L);
-//        Entity player = new Entity();
-//        player.addComponent(new PlayerActions(3))
-//              .addComponent(new PlayerRangeAttackComponent())
-//              .addComponent(new InventoryComponent(150, 5, 10));
-//        player.create();
-//
-//        Array<Entity> bullets = new Array<>();
-//        int NUM_BULLETS = 5;
-//        for (int i = 0; i < NUM_BULLETS; i++) {
-//            Entity newBullet = new Entity()
-//                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
-//                    .addComponent(new BulletCollisionComponent());
-//            newBullet.create();
-//            // hide bullet out of game screen
-//            newBullet.setPosition(-10,-10);
-//            bullets.add(newBullet);
-//        }
-//        player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
-//        player.getComponent(PlayerRangeAttackComponent.class).fire(Vector2.Zero.cpy());
-//        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-//        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
-//
-//        // reloading period starts now, reloading status set to true
-//        player.getEvents().trigger("reload");
-//        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
-//        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-//
-//        // should still be reloading
-//        when(time.getTime()).thenReturn(1500L);
-//        player.update();
-//        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
-//        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-//
-//        // finished reloading
-//        when(time.getTime()).thenReturn(2100L);
-//        player.update();
-//        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
-//        assertEquals(5,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
-//    }
+    @Test
+    void shouldReload() {
+        when(time.getTime()).thenReturn(0L);
+        Entity player = new Entity();
+        player.addComponent(new PlayerActions(3))
+              .addComponent(new PlayerRangeAttackComponent())
+              .addComponent(new InventoryComponent(150, 5, 10, 1));
+        player.create();
+
+        Array<Entity> bullets = new Array<>();
+        int NUM_BULLETS = 5;
+        for (int i = 0; i < NUM_BULLETS; i++) {
+            Entity newBullet = new Entity()
+                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                    .addComponent(new BulletCollisionComponent());
+            newBullet.create();
+            // hide bullet out of game screen
+            newBullet.setPosition(-10,-10);
+            bullets.add(newBullet);
+        }
+        player.getComponent(PlayerRangeAttackComponent.class).addBullets(bullets);
+        player.getComponent(PlayerRangeAttackComponent.class).fire();
+        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
+
+        // reloading period starts now, reloading status set to true
+        player.getEvents().trigger("reload");
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
+        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+
+        // should still be reloading
+        when(time.getTime()).thenReturn(1500L);
+        player.update();
+        assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
+        assertEquals(4,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+
+        // finished reloading
+        when(time.getTime()).thenReturn(2100L);
+        player.update();
+        assertFalse(player.getComponent(PlayerRangeAttackComponent.class).getReloadingStatus());
+        assertEquals(5,player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());
+    }
 
     @Test
     void shouldSetSpeed() {
@@ -277,16 +277,13 @@ class PlayerActionsTest {
         // many mock returns to ensure sound, etc is triggered correctly
         PlayerMeleeAttackComponent melee = mock(PlayerMeleeAttackComponent.class);
         ResourceService resourceService = mock(ResourceService.class);
-        Sound sound = mock(Sound.class);
+
         ServiceLocator.registerResourceService(resourceService);
-        when(resourceService.getAsset("sounds/Impact4.ogg", Sound.class)).thenReturn(sound); // sound used by method
-        when(sound.play()).thenReturn(0L); // random return
 
         Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(melee);
         player.create();
         player.getEvents().trigger("attack");
-
-        verify(resourceService).getAsset("sounds/Impact4.ogg", Sound.class);
+        
         verify(melee).meleeAttackClicked(true);
     }
 }

@@ -11,7 +11,6 @@ import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,13 +18,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class PlayerRangeAttackComponentTest {
     @Mock GameTime gameTime;
-    @Mock World world;
 
     @BeforeEach
     void beforeEach() {
@@ -157,7 +154,6 @@ public class PlayerRangeAttackComponentTest {
         Entity bulletAlmostFired = PlayerRangeAttackComponent.getActiveBullets().get(NO_BULLETS_SHOT);
        // when(PlayerRangeAttackComponen).thenReturn(anim);
         player.getComponent(PlayerRangeAttackComponent.class).fire();
-        System.out.println(player.getComponent(PlayerRangeAttackComponent.class).getDirection());
         assertTrue(player.getComponent(PlayerRangeAttackComponent.class).getDirection().epsilonEquals(FACING_DOWN_DIR));
 
         assertEquals(BULLET_COUNT, player.getComponent(PlayerRangeAttackComponent.class).getGunMagazine());

@@ -1048,7 +1048,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsEngine.html#createBody(com.badlogic.gdx.physics.box2d.BodyDef)">createBody(BodyDef)</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsEngine.html" title="class in com.deco2800.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/FinalBossFactory.html#createBossHead(com.deco2800.game.entities.Entity,float)">createBossHead(Entity, float)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/FinalBossFactory.html" title="class in com.deco2800.game.entities.factories">FinalBossFactory</a></dt>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/FinalBossFactory.html#createBossHead(com.deco2800.game.entities.Entity,float,com.deco2800.game.areas.Level4)">createBossHead(Entity, float, Level4)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/FinalBossFactory.html" title="class in com.deco2800.game.entities.factories">FinalBossFactory</a></dt>
 <dd>
 <div class="block">createBossHead</div>
 </dd>
@@ -1138,6 +1138,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/input/InputFactory.html#createFromInputType(com.deco2800.game.input.InputFactory.InputType)">createFromInputType(InputFactory.InputType)</a></span> - Static method in class com.deco2800.game.input.<a href="com/deco2800/game/input/InputFactory.html" title="class in com.deco2800.game.input">InputFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html#createHealthBar()">createHealthBar()</a></span> - Method in class com.deco2800.game.components.finalboss.<a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html" title="class in com.deco2800.game.components.finalboss">FinalBossHealthBar</a></dt>
+<dd>
+<div class="block">Spawns the health bar into the game area</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/FinalBossFactory.html#createHealthBarBackground()">createHealthBarBackground()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/FinalBossFactory.html" title="class in com.deco2800.game.entities.factories">FinalBossFactory</a></dt>
+<dd>
+<div class="block">Creates the image for the health bar background</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/FinalBossFactory.html#createHealthBarForeground()">createHealthBarForeground()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/FinalBossFactory.html" title="class in com.deco2800.game.entities.factories">FinalBossFactory</a></dt>
+<dd>
+<div class="block">Creates the image for the health bar foreground</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ItemFactory.html#createHelmet(int)">createHelmet(int)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ItemFactory.html" title="class in com.deco2800.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Helmet is supposed to only be in safehouses but for now, it will spawn in forest game area for testing</div>
@@ -1965,6 +1977,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">FinalBossFireLaser
  initialises the FireLaser task</div>
+</dd>
+<dt><a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html" title="class in com.deco2800.game.components.finalboss"><span class="typeNameLink">FinalBossHealthBar</span></a> - Class in <a href="com/deco2800/game/components/finalboss/package-summary.html">com.deco2800.game.components.finalboss</a></dt>
+<dd>
+<div class="block">A class representing the final boss health bar</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html#%3Cinit%3E(com.deco2800.game.areas.GameArea,com.deco2800.game.entities.Entity)">FinalBossHealthBar(GameArea, Entity)</a></span> - Constructor for class com.deco2800.game.components.finalboss.<a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html" title="class in com.deco2800.game.components.finalboss">FinalBossHealthBar</a></dt>
+<dd>
+<div class="block">Constructs the final boss health bar</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ai/tasks/Task.Status.html#FINISHED">FINISHED</a></span> - com.deco2800.game.ai.tasks.<a href="com/deco2800/game/ai/tasks/Task.Status.html" title="enum in com.deco2800.game.ai.tasks">Task.Status</a></dt>
 <dd>&nbsp;</dd>
@@ -5211,6 +5231,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Start running this task.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html#start()">start()</a></span> - Method in class com.deco2800.game.components.finalboss.<a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html" title="class in com.deco2800.game.components.finalboss">FinalBossHealthBar</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/BossMovementTask.html#start()">start()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/BossMovementTask.html" title="class in com.deco2800.game.components.tasks">BossMovementTask</a></dt>
 <dd>
 <div class="block">start
@@ -5273,6 +5295,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Stop the task immediately.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html#stop()">stop()</a></span> - Method in class com.deco2800.game.components.finalboss.<a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html" title="class in com.deco2800.game.components.finalboss">FinalBossHealthBar</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/BossMovementTask.html#stop()">stop()</a></span> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/BossMovementTask.html" title="class in com.deco2800.game.components.tasks">BossMovementTask</a></dt>
 <dd>
 <div class="block">stop
@@ -5707,6 +5731,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/DarknessDetectionComponent.html#update()">update()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/DarknessDetectionComponent.html" title="class in com.deco2800.game.components">DarknessDetectionComponent</a></dt>
 <dd>
 <div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html#update()">update()</a></span> - Method in class com.deco2800.game.components.finalboss.<a href="com/deco2800/game/components/finalboss/FinalBossHealthBar.html" title="class in com.deco2800.game.components.finalboss">FinalBossHealthBar</a></dt>
+<dd>
+<div class="block">Each update, the timer is checked to see if enough time has passed for the health bar to be updated</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/finalboss/LaserTimer.html#update()">update()</a></span> - Method in class com.deco2800.game.components.finalboss.<a href="com/deco2800/game/components/finalboss/LaserTimer.html" title="class in com.deco2800.game.components.finalboss">LaserTimer</a></dt>
 <dd>

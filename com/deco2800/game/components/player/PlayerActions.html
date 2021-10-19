@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -172,12 +172,19 @@ extends <a href="../Component.html" title="class in com.deco2800.game.components
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearScaleSpeed(int)">clearScaleSpeed</a></span>&#8203;(int&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Clear speed multiplier, and refresh.</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Initial settings on creation such as adding listeners and collecting components references</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmmo(int,int,com.deco2800.game.components.player.InventoryComponent)">getAmmo</a></span>&#8203;(int&nbsp;magazineNum,
 int&nbsp;ammoLeft,
@@ -186,35 +193,50 @@ int&nbsp;ammoLeft,
 <div class="block">Gets ammo for reloading and updates ammo in player's inventory component</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentSpeed()">getCurrentSpeed</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the current max speed of the player</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelayTimeRemaining()">getDelayTimeRemaining</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Lets you know whether the player is currently able to dash or still needs to wait</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScaleSpeed()">getScaleSpeed</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the current speed multiplier.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDashing()">isDashing</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the whether the player is currently dashing</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isMoving()">isMoving</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Public function to return the movement status of the player</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="rowColor" id="i9">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setScaleSpeed(int,int)">setScaleSpeed</a></span>&#8203;(int&nbsp;id,
+int&nbsp;multiplier)</code></th>
+<td class="colLast">
+<div class="block">Apply a speed multiplier onto player's speed.</div>
+</td>
+</tr>
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -335,6 +357,42 @@ int&nbsp;ammoLeft,
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the players current speed</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setScaleSpeed(int,int)">setScaleSpeed</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setScaleSpeed</span>&#8203;(<span class="arguments">int&nbsp;id,
+int&nbsp;multiplier)</span></div>
+<div class="block">Apply a speed multiplier onto player's speed.
+ There's a minimum multiplier limit of 10%, as to not prevent player from moving.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - entity's effects on movement.</dd>
+<dd><code>multiplier</code> - percentage speed multiplier</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="clearScaleSpeed(int)">clearScaleSpeed</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">clearScaleSpeed</span>&#8203;(<span class="arguments">int&nbsp;id)</span></div>
+<div class="block">Clear speed multiplier, and refresh.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - entity's effects on movement.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getScaleSpeed()">getScaleSpeed</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getScaleSpeed</span>()</div>
+<div class="block">Get the current speed multiplier.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>percentage speed multiplier</dd>
 </dl>
 </section>
 </li>

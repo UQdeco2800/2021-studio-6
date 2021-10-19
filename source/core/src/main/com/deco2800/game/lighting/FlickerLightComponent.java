@@ -113,74 +113,52 @@ public class FlickerLightComponent extends Component implements Disposable {
     pointLightBase.remove();
   }
 
+
+  public float calculateDistance(float currentDistance, float refDis) {
+    if (rand.nextInt(2) > 0) {
+      currentDistance += (rand.nextFloat() / 4);
+    } else {
+      currentDistance -= (rand.nextFloat() / 4);
+    }
+    if (currentDistance > (refDis + 1)) {
+      currentDistance = refDis + 1;
+    } else if (currentDistance < (refDis - 1)) {
+      currentDistance = refDis - 1;
+    }
+    return currentDistance;
+  }
+
+
   @Override
   public void update() {
     super.update();
     if (on && !ServiceLocator.getTimeSource().isPaused()) {
+
+
       if (timeSource.getTimeSince(tickStartTimeOuter) >= TICK_LENGTH_OUTER) {
         tickStartTimeOuter = ServiceLocator.getTimeSource().getTime();
-        if (rand.nextInt(2) > 0) {
-          currentDistanceOuter += (rand.nextFloat() / 4);
-        } else {
-          currentDistanceOuter -= (rand.nextFloat() / 4);
-        }
-        if (currentDistanceOuter > (distance + 1)) {
-          currentDistanceOuter = distance + 1;
-        } else if (currentDistanceOuter < (distance - 1)) {
-          currentDistanceOuter = distance - 1;
-        }
+        currentDistanceOuter = calculateDistance(currentDistanceOuter, distance);
         pointLightOuter.setDistance(currentDistanceOuter);
         TICK_LENGTH_OUTER = (int) Math.floor(Math.random() * ((300) - (100) + 1) + (100));
       }
 
-
       if (timeSource.getTimeSince(tickStartTimeBase) >= TICK_LENGTH_BASE) {
         tickStartTimeBase = ServiceLocator.getTimeSource().getTime();
-        currentDistanceBase = distance - 1;
-        if (rand.nextInt(2) > 0) {
-          currentDistanceBase += (rand.nextFloat() / 4);
-        } else {
-          currentDistanceBase -= (rand.nextFloat() / 4);
-        }
-        if (currentDistanceBase > (distance)) {
-          currentDistanceBase = distance;
-        } else if (currentDistanceBase < (distance - 2)) {
-          currentDistanceBase = distance - 2;
-        }
+        currentDistanceBase = calculateDistance(currentDistanceBase, distance - 1);
         pointLightBase.setDistance(currentDistanceBase);
         TICK_LENGTH_BASE = (int) Math.floor(Math.random() * ((300) - (100) + 1) + (100));
       }
 
       if (timeSource.getTimeSince(tickStartTimeMiddle) >= TICK_LENGTH_MIDDLE) {
         tickStartTimeMiddle = ServiceLocator.getTimeSource().getTime();
-        currentDistanceMiddle = distanceInner;
-        if (rand.nextInt(2) > 0) {
-          currentDistanceMiddle += (rand.nextFloat() / 4);
-        } else {
-          currentDistanceMiddle -= (rand.nextFloat() / 4);
-        }
-        if (currentDistanceMiddle > (distanceInner + 1)) {
-          currentDistanceMiddle = distanceInner + 1;
-        } else if (currentDistanceMiddle < (distanceInner - 1)) {
-          currentDistanceMiddle = distanceInner - 1;
-        }
+        currentDistanceMiddle = calculateDistance(currentDistanceMiddle, distanceInner);
         pointLightMiddle.setDistance(currentDistanceMiddle);
         TICK_LENGTH_MIDDLE = (int) Math.floor(Math.random() * ((300) - (100) + 1) + (100));
       }
 
       if (timeSource.getTimeSince(tickStartTimeInner) >= TICK_LENGTH_INNER) {
         tickStartTimeInner = ServiceLocator.getTimeSource().getTime();
-        currentDistanceInner = distanceInner - 1;
-        if (rand.nextInt(2) > 0) {
-          currentDistanceInner += (rand.nextFloat() / 4);
-        } else {
-          currentDistanceInner -= (rand.nextFloat() / 4);
-        }
-        if (currentDistanceInner > (distanceInner)) {
-          currentDistanceInner = distanceInner;
-        } else if (currentDistanceInner < (distanceInner - 2)) {
-          currentDistanceInner = distanceInner - 2;
-        }
+        currentDistanceInner = calculateDistance(currentDistanceInner, distanceInner - 1);
         pointLightInner.setDistance(currentDistanceInner);
         TICK_LENGTH_INNER = (int) Math.floor(Math.random() * ((300) - (100) + 1) + (100));
       }

@@ -64,7 +64,6 @@ public class SafehouseGameArea extends GameArea {
     player = spawnPlayer(); // Always spawn player after spawning terrain, else NullPointerException
     player.getEvents().trigger("disableAttack");
     spawnShopKeeper();
-    spawnBandages();
 
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
       float LEVEL_ONE_SAFEHOUSE = 1.5f;
@@ -154,15 +153,6 @@ public class SafehouseGameArea extends GameArea {
 
     // Create in the world
     ServiceLocator.getEntityService().register(door);
-  }
-
-  private Entity spawnBandages() {
-      GridPoint2 bandageSpawn = new GridPoint2(3, 1);
-
-      int BANDAGE_QUANTITY = 1;
-      Entity bandage = ItemFactory.createBandagePickup(BANDAGE_QUANTITY);
-      spawnEntityAt(bandage, bandageSpawn, true, true);
-      return bandage;
   }
 
   private Entity spawnShopKeeper() {

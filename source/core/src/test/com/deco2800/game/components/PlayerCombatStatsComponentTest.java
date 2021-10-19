@@ -25,7 +25,10 @@ class PlayerCombatStatsComponentTest {
 
     @Test
     void shouldSetGetWoundState() {
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0); // settings other than wound state are random
+        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3,
+                25, 0); // settings other
+        // than
+        // wound state are random
         assertEquals(3, combat.getWoundState()); // w0und state can be between 0-3 inclusive
         combat.setWoundState(2);
         assertEquals(2, combat.getWoundState());

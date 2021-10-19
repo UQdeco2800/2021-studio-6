@@ -360,7 +360,7 @@ public class Level2 extends GameArea {
 
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 9f, 10f, this,
               spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
     }

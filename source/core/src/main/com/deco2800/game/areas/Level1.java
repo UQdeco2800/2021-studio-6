@@ -303,7 +303,7 @@ public class Level1 extends GameArea {
 
     for (GridPoint2 enemyPos : enemyPositions) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this, spawnerEnemy));
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 9f, 10f, this, spawnerEnemy));
       spawnEntityAt(spawnerEnemy, enemyPos, true, true);
     }
 

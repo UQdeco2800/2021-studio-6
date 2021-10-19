@@ -251,7 +251,7 @@ public class Level4 extends GameArea {
         for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
-            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 9f, 10f, this,
                     spawnerEnemy));
             spawnEntityAt(spawnerEnemy, randomPos, true, true);
         }

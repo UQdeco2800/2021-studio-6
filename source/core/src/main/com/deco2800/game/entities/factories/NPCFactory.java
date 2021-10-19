@@ -94,7 +94,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+                    .addTask(new ChaseTask(target, 10, 7f, 8f));
 
     // Add additional specific components
     smallEnemy.addComponent(new EnemyMeleeAttackComponent());
@@ -140,7 +140,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 4f, 5f));
+            .addTask(new ChaseTask(target, 10, 7f, 8f));
 
     // Add additional specific components
     largeEnemy.addComponent(new EnemyMeleeAttackComponent());
@@ -219,7 +219,7 @@ public class NPCFactory {
     // Create the ai component where both tasks run at the same time
     MultiAITaskComponent aiComponent = new MultiAITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-    aiComponent.addTask(new DistanceFireBulletTask(target, 4, 10, 8f));
+    aiComponent.addTask(new DistanceFireBulletTask(target, 4, 10, 10f));
 
     // Add additional specific components
     toughLongRangeEnemy.addComponent(new ToughFireBulletListener(target, gameArea, "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png"));

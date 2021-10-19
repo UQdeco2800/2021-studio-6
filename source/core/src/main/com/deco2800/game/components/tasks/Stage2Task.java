@@ -15,6 +15,7 @@ import com.deco2800.game.physics.raycast.RaycastHit;
 import com.deco2800.game.rendering.DebugRenderer;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.math.RandomUtils;
 
 public class Stage2Task extends DefaultTask implements PriorityTask {
     private final int priority;
@@ -57,10 +58,10 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
      */
     public void createSpawners() {
 
-        Vector2 pos1 = new Vector2(1, 4);
-        Vector2 pos2 = new Vector2(1,19);
-        Vector2 pos3 = new Vector2(38, 4);
-        Vector2 pos4 = new Vector2(38,19);
+        Vector2 pos1 = new Vector2(6, 2);
+        Vector2 pos2 = new Vector2(6,15);
+        Vector2 pos3 = new Vector2(33, 2);
+        Vector2 pos4 = new Vector2(33,15);
 
         spawner1.setPosition(pos1);
         spawner2.setPosition(pos2);
@@ -90,17 +91,19 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
     @Override
     public void update() {
         if (timeSource.getTime() >= endTime) {
+            int offset = RandomUtils.randomInt(5);
+
             Entity largeEnemy = NPCFactory.createLargeEnemy(target);
-            largeEnemy.setPosition(spawner1.getPosition().x + 1, spawner1.getPosition().y + 1);
+            largeEnemy.setPosition(spawner1.getPosition().x + offset, spawner1.getPosition().y + offset);
 
             Entity smallEnemy = NPCFactory.createSmallEnemy(target);
-            smallEnemy.setPosition(spawner2.getPosition().x + 1, spawner2.getPosition().y - 1);
+            smallEnemy.setPosition(spawner2.getPosition().x + offset, spawner2.getPosition().y - offset);
 
             Entity longRangeEnemy = NPCFactory.createLongRangeEnemy(target, gameArea);
-            longRangeEnemy.setPosition(spawner3.getPosition().x - 1, spawner3.getPosition().y + 1);
+            longRangeEnemy.setPosition(spawner3.getPosition().x - offset, spawner3.getPosition().y + offset);
 
             Entity toughLongRangeEnemy = NPCFactory.createToughLongRangeEnemy(target, gameArea);
-            toughLongRangeEnemy.setPosition(spawner4.getPosition().x - 1, spawner4.getPosition().y - 1);
+            toughLongRangeEnemy.setPosition(spawner4.getPosition().x - offset, spawner4.getPosition().y - offset);
 
             if (spawner1.getComponent(CombatStatsComponent.class).getHealth() > 0) {
                 this.gameArea.spawnEntity(largeEnemy);

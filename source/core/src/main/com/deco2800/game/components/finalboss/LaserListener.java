@@ -28,8 +28,8 @@ public class LaserListener extends Component {
     void fire() {
         Entity beam = FinalBossFactory.createBeam();
         beam.setPosition(
-                this.entity.getCenterPosition().x - (beam.getScale().x / 2),
-                this.entity.getCenterPosition().y - (beam.getScale().y / 2) - 8
+                this.entity.getCenterPosition().x - (beam.getScale().x/2),
+                this.entity.getPosition().y - (beam.getScale().y)
         );
 
         ServiceLocator.getGameArea().spawnEntity(beam);

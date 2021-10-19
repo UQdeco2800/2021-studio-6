@@ -22,6 +22,7 @@ import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.Lighting;
 import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsEngine;
@@ -135,8 +136,10 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
   private final TerrainFactory terrainFactory;
   private final Lighting lighting;
-  private boolean LIGHTINGON = true;
+  private static boolean LIGHTINGON = true;
   private GameArea gameArea = null;
+  private static float BOSS_CAMERA_Y = 12f;
+  private static float BOAT_CAMERA_Y = 25f;
 
   private Entity ui;
 
@@ -268,8 +271,13 @@ public class MainGameScreen extends ScreenAdapter {
 
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
-          CAMERA_POSITION.set(new Vector2(20, 12));
+          CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
           renderer.setZoom(40);
+        } else if(gameLevel == 4.5) {
+          CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
+          if(BOSS_CAMERA_Y < BOAT_CAMERA_Y) {
+            BOSS_CAMERA_Y += 0.1f;
+          }
         }
         ServiceLocator.getRenderService().setPos(CAMERA_POSITION);
         rendererUnlit.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -388,11 +396,15 @@ public class MainGameScreen extends ScreenAdapter {
     logger.info("Generating game level " + gameLevel);
 
     // TODO: This should not be here as this should be for boss fight
-    double WIN = 4.5;
+    double WIN = 5;
     if (gameLevel == WIN) {
       logger.info("Victory epilogue");
       victory();
-      gameLevel += LEVEL_INCREMENT;
+      levelChange = false;
+      //gameLevel += LEVEL_INCREMENT;
+      return;
+    } else if(gameLevel == WIN - LEVEL_INCREMENT) {
+      levelChange = false;
       return;
     }
 

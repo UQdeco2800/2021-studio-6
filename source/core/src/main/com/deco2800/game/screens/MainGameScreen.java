@@ -46,13 +46,6 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 
-//  private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
-//  "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
-//  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png", "images/Player_Sprite/25.png",
-//  "images/playeritems/rock/pickupammo.png", "images/playeritems/coin/money bag.png",
-//  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
-//  "images/Ability_Sprites/invincibility.png" };
-
   private static final String[] safehouseTextures = {
       "images/safehouse/shopkeeper/portrait.png",
       "images/safehouse/itemIcons/shopCrowbarSelected.png", "images/safehouse/itemIcons/shopCrowbar.png",
@@ -132,8 +125,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private static double gameLevel;
-  //private double gameLevel = 4;
+  private static double gameLevel = 1;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -332,7 +324,6 @@ public class MainGameScreen extends ScreenAdapter {
     resourceService.loadTextures(mainGameTextures);
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadSounds(menuSounds);
-
     ServiceLocator.getResourceService().loadAll();
   }
 

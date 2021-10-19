@@ -154,7 +154,8 @@ public class TerrainFactory {
         TextureRegion backgroundTile2 =
                 new TextureRegion(resourceService.getAsset("images/level_2/level2_background_tile.png", Texture.class));
 
-        return createForest2Terrain(1f, baseGrass, lvl3grass1, lvl3grass2, lvl3grass3, lvl3grass4, waterFull, sandTile, waterBottom, backgroundTile2);
+        return createForest2Terrain(1f, baseGrass, lvl3grass1, lvl3grass2, lvl3grass3, lvl3grass4,
+            waterFull, sandTile, waterBottom, backgroundTile2);
 
       // Safehouse tile
       case SAFEHOUSE:
@@ -248,7 +249,8 @@ public class TerrainFactory {
           TextureRegion waterBottom, TextureRegion backgroundTile
   ) {
     GridPoint2 tilePixelSize = new GridPoint2(grass1.getRegionWidth(), grass1.getRegionHeight());
-    TiledMap tiledMap = createForest2Tiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, waterFull, sandTile, waterBottom,backgroundTile);
+    TiledMap tiledMap = createForest2Tiles(tilePixelSize, grass1, grass2, grass3, grass4, grass5, waterFull, sandTile,
+        waterBottom,backgroundTile);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }

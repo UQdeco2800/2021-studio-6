@@ -4,6 +4,9 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 
 import java.util.Random;
 
+/**
+ * Handles animating the moving tree asset
+ */
 public class TreeAnimationController extends Component {
   AnimationRenderComponent animator;
   private boolean started = false;

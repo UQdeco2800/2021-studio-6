@@ -115,7 +115,8 @@ public abstract class GameArea implements Disposable {
           "sounds/weapon-sword.ogg",
           "sounds/weapon-dagger.wav",
           "sounds/slingshot.ogg",
-          "sounds/dash.ogg"
+          "sounds/dash.ogg",
+          "sounds/Impact4.ogg"
   };
 
   protected GameArea() {
@@ -195,6 +196,9 @@ public abstract class GameArea implements Disposable {
     spawnEntityAt(smallEnemy, randomPos, true, true);
   }
 
+  /**
+   * Used to load assets shared between all levels
+   */
   public void loadSharedAssets() {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(playerAssets);
@@ -205,7 +209,9 @@ public abstract class GameArea implements Disposable {
     resourceService.loadTextureAtlases(enemyAtlas);
   }
 
-
+  /**
+   * Used to unload assets shared between all levels
+   */
   public void unloadSharedAssets() {
       ResourceService resourceService = ServiceLocator.getResourceService();
       resourceService.unloadAssets(playerAssets);

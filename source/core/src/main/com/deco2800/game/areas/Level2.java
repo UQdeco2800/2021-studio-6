@@ -14,6 +14,8 @@ import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -52,19 +54,18 @@ public class Level2 extends GameArea {
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/dialogue/raw/npc_indicator.png",
     "images/level_2/fire-fly-bug-NPC.png",
-    "images/playeritems/bandage/bandage01.png",
-      "images/level_2/brush.png",
-      "images/level_2/brush2.png",
-      "images/level_2/fallen_log.png",
-      "images/level_2/stump.png",
-      "images/level_2/log1.png",
-      "images/level_2/logs.png",
-      "images/level_2/twig1.png",
-      "images/level_2/twig2.png",
-      "images/level_2/treeBlue.png",
-      "images/level_2/dirtLarge.png",
-      "images/level_2/dirtSmall.png",
-      "images/level_2/dirtMedium.png",
+    "images/level_2/brush.png",
+    "images/level_2/brush2.png",
+    "images/level_2/fallen_log.png",
+    "images/level_2/stump.png",
+    "images/level_2/log1.png",
+    "images/level_2/logs.png",
+    "images/level_2/twig1.png",
+    "images/level_2/twig2.png",
+    "images/level_2/treeBlue.png",
+    "images/level_2/dirtLarge.png",
+    "images/level_2/dirtSmall.png",
+    "images/level_2/dirtMedium.png",
 
   };
 
@@ -78,7 +79,7 @@ public class Level2 extends GameArea {
   };
 
   // Music and sound variables
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+  private static final String[] forestSounds = {};
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-woods2.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
@@ -99,7 +100,7 @@ public class Level2 extends GameArea {
     spawnTerrain();
     spawnObstacles();
     spawnSafehouse();
-//    spawnTorch();
+    spawnTorch();
     spawnFireFlyBugNPC();
 
     // Spawn player related entities
@@ -180,6 +181,9 @@ public class Level2 extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
+  /**
+   * Spawns all the assets, obstacles and other environmental objects
+   */
   private void spawnObstacles() {
     spawnTress();
     spawnCobweb();
@@ -187,6 +191,9 @@ public class Level2 extends GameArea {
     spawnFlavour();
   }
 
+  /**
+   * Handles spawning in the different types of trees.
+   */
   private void spawnTress() {
     spawnBlueTrees();
     spawnTerrainPineTrees();
@@ -195,6 +202,9 @@ public class Level2 extends GameArea {
     spawnAnimatedTrees();
   }
 
+  /**
+   * Handles spawning the 'blue' trees
+   */
   private void spawnBlueTrees() {
 
     GridPoint2[] spawnLocations = {
@@ -282,6 +292,10 @@ public class Level2 extends GameArea {
     }
   }
 
+
+  /**
+   * Handles spawning the animated trees
+   */
   private void spawnAnimatedTrees() {
 
     GridPoint2[] spawnLocations = {
@@ -298,6 +312,7 @@ public class Level2 extends GameArea {
 
     for (GridPoint2 spawnLocation : spawnLocations) {
       Entity wind = ObstacleFactory.createAnimatedTree();
+
       spawnEntityAt(wind, spawnLocation, false, false);
     }
   }
@@ -399,6 +414,9 @@ public class Level2 extends GameArea {
     }
   }
 
+  /**
+   * Handles spawning the fallen trees
+   */
   private void spawnFallenTree() {
     GridPoint2[] spawnLocations = {
         new GridPoint2(2, 36),
@@ -413,6 +431,11 @@ public class Level2 extends GameArea {
     }
   }
 
+
+  /**
+   * Handles spawning the flavour assets. These include the campfire, tree stump, log, log pile, big and small bush and
+   * the horizontal and vertical twigs
+   */
   private void spawnFlavour() {
     GridPoint2[] spawnLocations;
 
@@ -873,8 +896,6 @@ public class Level2 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
-    resourceService.loadSounds(playerSounds);
-    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -893,8 +914,6 @@ public class Level2 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(playerSounds);
-    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

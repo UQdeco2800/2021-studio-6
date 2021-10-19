@@ -77,7 +77,9 @@ public class Level4 extends GameArea {
             "images/grass_2.png",
             "images/grass_3.png",
             "images/Final_Boss/dock.png",
-            "images/Final_Boss/boat.png"
+            "images/Final_Boss/boat.png",
+            "images/Final_Boss/healthbar_background.png",
+            "images/Final_Boss/healthbar_foreground.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
@@ -311,7 +313,8 @@ public class Level4 extends GameArea {
 
         GridPoint2 bounds = terrain.getMapBounds(0);
 
-        Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
+        Entity boss = FinalBossFactory.createBossHead(player, bounds.x, this);
+        GridPoint2 pos = new GridPoint2(40, 35);
         Entity darkness = FinalBossFactory.createDarkness(player, this);
         Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss);
 

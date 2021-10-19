@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -10,6 +11,7 @@ import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.Level4;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.DisposingComponent;
+import com.deco2800.game.components.finalboss.FinalBossHealthBar;
 import com.deco2800.game.components.finalboss.LaserTimer;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.finalboss.LaserListener;
@@ -79,7 +81,7 @@ public class FinalBossFactory {
      * @param target Should be the player entity as AI is dependent on the player
      * @return the boss entity
      */
-    public static Entity createBossHead(Entity target, float bounds) {
+    public static Entity createBossHead(Entity target, float bounds, Level4 gameArea) {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
@@ -87,22 +89,24 @@ public class FinalBossFactory {
 
         //System.out.println(animator.getLayer());
 
-        MultiAITaskComponent aiComponent =
-                new MultiAITaskComponent()
-                        .addTask(new BossMovementTask(bounds))
-                        .addTask(new FinalBossFireLaser(target));
-
         Entity bossHead = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent(new Vector2(3, 3)))
                 .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                .addComponent(aiComponent)
                 .addComponent(new GhostAnimationController())
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(10, 0))
+                .addComponent(new CombatStatsComponent(100, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new LaserListener());
+
+        MultiAITaskComponent aiComponent =
+                new MultiAITaskComponent()
+                        .addTask(new BossMovementTask(bounds))
+                        .addTask(new FinalBossFireLaser(target))
+                        .addTask(new FinalBossHealthBar(gameArea, bossHead));
+
+        bossHead.addComponent(aiComponent);
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
         bossHead.setScale(new Vector2(4f, 4f));
@@ -159,5 +163,40 @@ public class FinalBossFactory {
 
         spawner.setScale(1f, 1f);
         return spawner;
+    }
+
+    /**
+     * Creates the image for the health bar background
+     * @return the health bar background
+     */
+    public static Entity createHealthBarBackground() {
+
+        TextureRenderComponent image = new TextureRenderComponent("images/Final_Boss/healthbar_background.png");
+        image.setUnlit();
+
+        Entity healthBar = new Entity()
+                .addComponent(image);
+
+        healthBar.setScale(10f,0.5f);
+
+        return healthBar;
+
+    }
+
+    /**
+     * Creates the image for the health bar foreground
+     * @return the health bar foreground
+     */
+    public static Entity createHealthBarForeground() {
+
+       TextureRenderComponent image = new TextureRenderComponent("images/Final_Boss/healthbar_foreground.png");
+       image.setUnlit();
+
+        Entity healthForeground = new Entity()
+                .addComponent(image);
+
+        healthForeground.setScale(10f, 0.5f);
+
+        return healthForeground;
     }
 }

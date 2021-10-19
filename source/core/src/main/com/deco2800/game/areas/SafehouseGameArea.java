@@ -149,7 +149,7 @@ public class SafehouseGameArea extends GameArea {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PARAPHERNALIA))
             .addComponent(new TouchTeleportComponent(PhysicsLayer.PLAYER));
     door.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-    door.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 2));
+    door.getComponent(HitboxComponent.class).setAsBox(new Vector2(2, 1));
     door.setPosition(5.5f, 5.5f);
 
     // Create in the world

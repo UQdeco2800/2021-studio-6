@@ -1,5 +1,8 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.areas.GameArea;
@@ -20,7 +23,6 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -36,40 +39,20 @@ class NPCFactoryTest {
   GameArea gameArea;
   @Mock
   Entity player;
+  @Mock
+  Sound sound;
+  @Mock
+  ResourceService resourceService;
 
-  static final String[] ENEMY_ATLAS = {
-      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-      "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
-      "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
-  };
-
-  static final String[] ENEMY_SOUNDS = {
-      "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
-      "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
-      "sounds/enemies/ToughLongRangeEnemy/shoot.wav",
-      "sounds/enemies/LongRangeEnemy/dead.mp3",
-      "sounds/enemies/LongRangeEnemy/shoot.mp3",
-      "sounds/enemies/LargeEnemy/hit.mp3",
-      "sounds/enemies/LargeEnemy/dead.mp3",
-      "sounds/enemies/LargeEnemy/detectPlayer.mp3",
-      "sounds/enemies/LargeEnemy/meleeAttack.mp3",
-      "sounds/enemies/SmallEnemy/dead.mp3",
-      "sounds/enemies/SmallEnemy/detectPlayer.wav",
-      "sounds/enemies/SmallEnemy/meleeAttack.mp3",
-      "sounds/enemies/SpawnerEnemy/hit.mp3",
-      "sounds/enemies/SpawnerEnemy/dead.mp3",
-      "sounds/enemies/SpawnerEnemy/spawn.wav"
-  };
+  TextureAtlas normalTextureAtlas;
+  TextureAtlas spawnerTextureAtlas;
 
   @BeforeEach
   void beforeEach() {
     // Setup resource locator to load speech bubble texture and npc movement atlas
-    ServiceLocator.registerResourceService(new ResourceService());
-    ServiceLocator.getResourceService().loadTextureAtlases(ENEMY_ATLAS);
-    ServiceLocator.getResourceService().loadSounds(ENEMY_SOUNDS);
-    ServiceLocator.getResourceService().loadAll();
+    ServiceLocator.registerResourceService(resourceService);
+    normalTextureAtlas = new TextureAtlas(Gdx.files.internal("images/Enemy_Assets/SmallEnemy/small_enemy.atlas"));
+    spawnerTextureAtlas = new TextureAtlas(Gdx.files.internal("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas"));
 
     // Register the physics service
     ServiceLocator.registerPhysicsService(new PhysicsService());
@@ -80,14 +63,13 @@ class NPCFactoryTest {
 
   }
 
-  @AfterEach
-  void afterEach() {
-    ServiceLocator.getResourceService().unloadAssets(ENEMY_ATLAS);
-    ServiceLocator.getResourceService().unloadAssets(ENEMY_SOUNDS);
-  }
-
   @Test
   void createNewSmallEnemyContainsAllComponentsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createSmallEnemy(player);
     
     assertNotNull(enemy.getComponent(PhysicsComponent.class));
@@ -110,6 +92,12 @@ class NPCFactoryTest {
   
   @Test
   void createNewLargeEnemyContainsAllComponentsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/LargeEnemy/largeEnemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/LargeEnemy/hit.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/LargeEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/LargeEnemy/detectPlayer.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/LargeEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createLargeEnemy(player);
     
     assertNotNull(enemy.getComponent(PhysicsComponent.class));
@@ -132,6 +120,11 @@ class NPCFactoryTest {
   
   @Test
   void createNewSpawnerContainsAllComponentsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class)).thenReturn(spawnerTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/spawn.wav", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createSpawnerEnemy();
     
     assertNotNull(enemy.getComponent(PhysicsComponent.class));
@@ -151,6 +144,10 @@ class NPCFactoryTest {
 
   @Test
   void createNewLongRangeContainsAllComponentsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/LongRangeEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/LongRangeEnemy/shoot.mp3", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createLongRangeEnemy(player, gameArea);
 
     assertNotNull(enemy.getComponent(PhysicsComponent.class));
@@ -173,6 +170,11 @@ class NPCFactoryTest {
 
   @Test
   void createNewToughLongRangeContainsAllComponentsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/hit.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.wav", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createToughLongRangeEnemy(player, gameArea);
 
     assertNotNull(enemy.getComponent(PhysicsComponent.class));
@@ -196,6 +198,11 @@ class NPCFactoryTest {
 
   @Test
   void createEnemyContainsAllAnimationsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createSmallEnemy(player);
     AnimationRenderComponent animator = enemy.getComponent(AnimationRenderComponent.class);
     assertTrue(animator.hasAnimation("left"));
@@ -235,6 +242,11 @@ class NPCFactoryTest {
 
   @Test
   void createSpanwerContainsAdditionalAnimationsTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class)).thenReturn(spawnerTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/spawn.wav", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createSpawnerEnemy();
     AnimationRenderComponent animator = enemy.getComponent(AnimationRenderComponent.class);
     assertTrue(animator.hasAnimation("spawn"));
@@ -242,6 +254,11 @@ class NPCFactoryTest {
 
   @Test
   void createNewFriendlyNPCHitboxLayerTest() {
+    when(resourceService.getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
+
     Entity enemy = NPCFactory.createSmallEnemy(player);
     HitboxComponent hitboxComponent = enemy.getComponent(HitboxComponent.class);
     assertEquals(PhysicsLayer.NPC, hitboxComponent.getLayer());

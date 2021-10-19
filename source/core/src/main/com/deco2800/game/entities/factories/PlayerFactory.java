@@ -180,6 +180,7 @@ public class PlayerFactory {
     double levelSafehouse = 0.5;
     int safehouseCheck = 1;
     int addTorch = 50;
+    int addBandage = 2;
 
     if (playerManager.currentPlayerState() == null) {
       // set initial state of player when game starts for the very first time, load from config file
@@ -208,7 +209,6 @@ public class PlayerFactory {
       baseRangedAttack = currentPlayerState.getBaseRangedAttack();
       health = currentPlayerState.getHealth();
       ammo = currentPlayerState.getAmmo();
-      bandages = currentPlayerState.getBandage();
       gold = currentPlayerState.getGold();
       woundState = currentPlayerState.getWoundState();
       defenceLevel = currentPlayerState.getDefenceLevel();
@@ -221,8 +221,10 @@ public class PlayerFactory {
       // add more time to torch whenever player reaches safehouse game area level
       if (currentPlayerState.getCurrentGameLevel() % safehouseCheck == levelSafehouse) {
           torch = currentPlayerState.getTorch() + addTorch;
+          bandages = currentPlayerState.getBandage() + addBandage;
       } else {
           torch = currentPlayerState.getTorch();
+          bandages = currentPlayerState.getBandage();
       }
     }
   }

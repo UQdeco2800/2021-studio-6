@@ -22,6 +22,7 @@ public class PlayerAbilitiesComponent extends Component {
     private static final long DASH_LENGTH = 200; // in milliseconds
     private static final long EXPLOSION_DELAY_LENGTH = 2000; // in milliseconds
     private static final long INVINCIBILITY_LENGTH = 3000;
+    private static final long COOLDOWN_REDUCTION = 2000; // in milliseconds
     private IndependentAnimator invincibiltyAnimation;
     /**
      * Basic constructor for setting the players chosen ability
@@ -76,5 +77,13 @@ public class PlayerAbilitiesComponent extends Component {
                 // default not required as all set enums should have function in switch
             }
         }
+    }
+
+    /**
+     * Used to reduce ability cooldown when you kill an enemy
+     */
+    void reduceCooldown() {
+        entity.getEvents().trigger("jumpAnimation");
+        this.delayEndTime -= COOLDOWN_REDUCTION;
     }
 }

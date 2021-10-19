@@ -293,6 +293,7 @@ public class PlayerMeleeAttackComponent extends Component {
 
                     if (targetStats.isDead()) {
                         removingEnemies.add(enemy);
+                        this.getEntity().getComponent(PlayerAbilitiesComponent.class).reduceCooldown();
                     } else {
                         // Apply knockback
                         PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);

@@ -26,8 +26,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private boolean regenActive = false;
     private boolean invincibleActive = false;
-    private static final long REGEN_COOLDOWN = 5000;
-    private static final long INITIAL_REGEN_OFFSET = 3000;
+    private static final long REGEN_COOLDOWN = 3000;
+    private static final long INITIAL_REGEN_OFFSET = 4000;
     private long nextRegen;
     private static final long INVINCIBILITY_LENGTH = 400; // in ms
     private long invincibilityEndTime;

@@ -15,8 +15,8 @@ public class NPCTutorialDialogue extends BasicDialogueConfig {
         "If you want to use your special ability you can press the Q key.",
         "Use it wisely as it has a long cooldown. When the blue bar in the bottom-left is full then you can use it again.",
         "If any Shadow Crawlers get close, press SPACE to use your melee weapon.",
-        "And if you're real hurt make sure to back up, you'll regenerate some health back and it may just keep you going"
-        "Finally, make sure to keep stocked on fuel, they get a lot stronger in the darkness and you won't regenerate once its out"
+        "And if you're real hurt make sure to back up, you'll regenerate some health back and it may just keep you going",
+        "Finally, make sure to keep stocked on fuel, they get a lot stronger in the darkness and you won't regenerate once its out",
         "Oh, and there is one other Firefly going out today, he's that guy in the jacket over there.",
         "I think you should go talk to him by pressing the E key.",
         "If you make it to the Safe Haven... Please get them to send help immediately.",

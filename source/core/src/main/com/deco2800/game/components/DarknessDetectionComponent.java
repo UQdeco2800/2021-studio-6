@@ -41,9 +41,7 @@ public class DarknessDetectionComponent extends Component{
         prevIsInLight = isInLight;
 
         isInLight = lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY);
-        if (entity.equals(ServiceLocator.getGameArea().getPlayer())) {
-            System.out.println(isInLight + ":" + entityPosX + "," + entityPosY);
-        }
+
         if (prevIsInLight != isInLight) {
             if (isInLight) {
                 entity.getEvents().trigger(EVENT_IN_LIGHT);

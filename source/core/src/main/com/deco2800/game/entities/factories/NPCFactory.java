@@ -94,7 +94,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 7f, 8f));
+                    .addTask(new ChaseTask(target, 10, 8f, 8f));
 
     // Add additional specific components
     smallEnemy.addComponent(new EnemyMeleeAttackComponent());
@@ -140,7 +140,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 7f, 8f));
+            .addTask(new ChaseTask(target, 10, 8f, 8f));
 
     // Add additional specific components
     largeEnemy.addComponent(new EnemyMeleeAttackComponent());

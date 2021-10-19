@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class EnemyDarknessController extends Component {
   // Multiplies the speed of the entity when in darkness
-  private static final float SPEED_MULTIPLIER = 2;
+  private static final float SPEED_MULTIPLIER = 3f;
   // Divides the time between firing when entity in darkness
-  private static final float FIRING_INTERVAL_DIVIDER = 2;
+  private static final float FIRING_INTERVAL_DIVIDER = 2f;
   // Multiplies the maximum distance that the entity can chase the player when player in darkness
-  private static final float MAX_DISTANCE_MULTIPLIER = 2.5f;
+  private static final float MAX_DISTANCE_MULTIPLIER = 1.7f;
   private boolean entityInDarkness = true;
   private boolean playerInDarkness = false;
   // Booleans that determine what type of entity this is
@@ -166,6 +166,7 @@ public class EnemyDarknessController extends Component {
    */
   void playerInLight() {
     if (chasingEntity && playerInDarkness) {
+      System.out.println("PLAYER IN LIGHT");
       playerInDarkness = false;
       chaseTask.setMaxChaseDistance(defaultChaseMaxDistance);
       chaseTask.setViewDistance(defaultViewDistance);

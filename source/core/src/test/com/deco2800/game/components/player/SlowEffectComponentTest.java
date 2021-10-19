@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -47,53 +48,56 @@ public class SlowEffectComponentTest {
     }
 
 
-//    /**
-//     * Test events to enable and disable component's effects.
-//     */
-//    @Test
-//    void testActive() {
-//        int speedModifier = 50;  // % speed modifier (>10%)
-//
-//        ServiceLocator.registerPhysicsService(new PhysicsService());
-//
-//        // Mock target function.
-//        PlayerActions pa = mock(PlayerActions.class);
-//        doNothing().when(pa).setScaleSpeed(any(), any());
-//        doNothing().when(pa).clearScaleSpeed(any());
-//
-//        // Construct entities required to trigger events.
-//        Entity player = new Entity()
-//                .addComponent(pa)
-//                .addComponent(new PhysicsComponent())
-//                .addComponent(new ColliderComponent())
-//                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
-//
-//        Entity obstacle = new Entity()
-//                .addComponent(new SlowEffectComponent(PhysicsLayer.PLAYER, speedModifier))
-//                .addComponent(new PhysicsComponent())
-//                .addComponent(new HitboxComponent());
-//
-//        player.create();
-//        obstacle.create();
-//        SlowEffectComponent component = obstacle.getComponent(SlowEffectComponent.class);
-//
-//        assertFalse(component.isActive());          // By default / initially, should be disabled.
-//
-//        // Start slowness effect.
-//        obstacle.getEvents().trigger("collisionStart",
-//                obstacle.getComponent(HitboxComponent.class).getFixture(),
-//                player.getComponent(HitboxComponent.class).getFixture());
-//        assertTrue(component.isActive());           // Collision event, should be doing damage.
-//        verify(pa, times(1)).setScaleSpeed(any(), speedModifier);
-//
-//        // Clear slowness effect.
-//        obstacle.getEvents().trigger("collisionEnd",
-//                obstacle.getComponent(HitboxComponent.class).getFixture(),
-//                player.getComponent(HitboxComponent.class).getFixture());
-//        assertFalse(component.isActive());          // No collision event, should be disabled.
-//        verify(pa, times(1)).clearScaleSpeed(any());
-//
-//    }
+    /**
+     * Test events to enable and disable component's effects.
+     */
+    @Test
+    void testActive() {
+        int speedModifier = 50;  // % speed modifier (>10%)
 
+        ServiceLocator.registerPhysicsService(new PhysicsService());
 
+        // Mock target function.
+        PlayerActions pa = mock(PlayerActions.class);
+        doNothing().when(pa).setScaleSpeed(anyInt(), anyInt());
+        doNothing().when(pa).clearScaleSpeed(anyInt());
+
+        // Construct entities required to trigger events.
+        Entity player = new Entity()
+                .addComponent(pa)
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent())
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+
+        // Add player and game area to mock
+        GameArea area = mock(GameArea.class);
+        ServiceLocator.registerGameArea(area);
+        when(area.getPlayer()).thenReturn(player);
+
+        Entity obstacle = new Entity()
+                .addComponent(new SlowEffectComponent(PhysicsLayer.PLAYER, speedModifier))
+                .addComponent(new PhysicsComponent())
+                .addComponent(new HitboxComponent());
+
+        player.create();
+        obstacle.create();
+        SlowEffectComponent component = obstacle.getComponent(SlowEffectComponent.class);
+
+        assertFalse(component.isActive());          // By default / initially, should be disabled.
+
+        // Start slowness effect.
+        obstacle.getEvents().trigger("collisionStart",
+                obstacle.getComponent(HitboxComponent.class).getFixture(),
+                player.getComponent(HitboxComponent.class).getFixture());
+        assertTrue(component.isActive());           // Collision event, should be doing damage.
+        verify(pa, times(1)).setScaleSpeed(anyInt(), anyInt());
+
+        // Clear slowness effect.
+        obstacle.getEvents().trigger("collisionEnd",
+                obstacle.getComponent(HitboxComponent.class).getFixture(),
+                player.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(component.isActive());          // No collision event, should be disabled.
+        verify(pa, times(1)).clearScaleSpeed(anyInt());
+
+    }
 }

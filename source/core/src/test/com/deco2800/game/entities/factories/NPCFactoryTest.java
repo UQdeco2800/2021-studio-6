@@ -20,6 +20,7 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,38 +37,38 @@ class NPCFactoryTest {
   @Mock
   Entity player;
 
+  static final String[] ENEMY_ATLAS = {
+      "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
+      "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
+      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
+      "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
+      "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
+  };
+
+  static final String[] ENEMY_SOUNDS = {
+      "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
+      "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
+      "sounds/enemies/ToughLongRangeEnemy/shoot.wav",
+      "sounds/enemies/LongRangeEnemy/dead.mp3",
+      "sounds/enemies/LongRangeEnemy/shoot.mp3",
+      "sounds/enemies/LargeEnemy/hit.mp3",
+      "sounds/enemies/LargeEnemy/dead.mp3",
+      "sounds/enemies/LargeEnemy/detectPlayer.mp3",
+      "sounds/enemies/LargeEnemy/meleeAttack.mp3",
+      "sounds/enemies/SmallEnemy/dead.mp3",
+      "sounds/enemies/SmallEnemy/detectPlayer.wav",
+      "sounds/enemies/SmallEnemy/meleeAttack.mp3",
+      "sounds/enemies/SpawnerEnemy/hit.mp3",
+      "sounds/enemies/SpawnerEnemy/dead.mp3",
+      "sounds/enemies/SpawnerEnemy/spawn.wav"
+  };
+
   @BeforeEach
   void beforeEach() {
     // Setup resource locator to load speech bubble texture and npc movement atlas
-    String[] enemyAtlas = {
-        "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-        "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
-        "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-        "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
-        "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
-    };
-
-    String[] enemySounds = {
-        "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
-        "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
-        "sounds/enemies/ToughLongRangeEnemy/shoot.wav",
-        "sounds/enemies/LongRangeEnemy/dead.mp3",
-        "sounds/enemies/LongRangeEnemy/shoot.mp3",
-        "sounds/enemies/LargeEnemy/hit.mp3",
-        "sounds/enemies/LargeEnemy/dead.mp3",
-        "sounds/enemies/LargeEnemy/detectPlayer.mp3",
-        "sounds/enemies/LargeEnemy/meleeAttack.mp3",
-        "sounds/enemies/SmallEnemy/dead.mp3",
-        "sounds/enemies/SmallEnemy/detectPlayer.wav",
-        "sounds/enemies/SmallEnemy/meleeAttack.mp3",
-        "sounds/enemies/SpawnerEnemy/hit.mp3",
-        "sounds/enemies/SpawnerEnemy/dead.mp3",
-        "sounds/enemies/SpawnerEnemy/spawn.wav"
-    };
-
     ServiceLocator.registerResourceService(new ResourceService());
-    ServiceLocator.getResourceService().loadTextureAtlases(enemyAtlas);
-    ServiceLocator.getResourceService().loadSounds(enemySounds);
+    ServiceLocator.getResourceService().loadTextureAtlases(ENEMY_ATLAS);
+    ServiceLocator.getResourceService().loadSounds(ENEMY_SOUNDS);
     ServiceLocator.getResourceService().loadAll();
 
     // Register the physics service
@@ -77,6 +78,12 @@ class NPCFactoryTest {
     ServiceLocator.registerUnlitRenderService(new RenderService());
     ServiceLocator.registerRenderService(new RenderService());
 
+  }
+
+  @AfterEach
+  void afterEach() {
+    ServiceLocator.getResourceService().unloadAssets(ENEMY_ATLAS);
+    ServiceLocator.getResourceService().unloadAssets(ENEMY_SOUNDS);
   }
 
   @Test

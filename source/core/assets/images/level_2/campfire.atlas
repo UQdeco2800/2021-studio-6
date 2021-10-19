@@ -1,0 +1,48 @@
+
+campfire.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+active
+  rotate: false
+  xy: 584, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+active
+  rotate: false
+  xy: 584, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+active
+  rotate: false
+  xy: 2, 584
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+active
+  rotate: false
+  xy: 1166, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+active
+  rotate: false
+  xy: 2, 2
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1
+inactive
+  rotate: false
+  xy: 2, 1166
+  size: 580, 580
+  orig: 580, 580
+  offset: 0, 0
+  index: -1

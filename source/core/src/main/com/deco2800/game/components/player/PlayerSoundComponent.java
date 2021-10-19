@@ -13,6 +13,11 @@ public class PlayerSoundComponent extends Component {
     private Sound useBandage;
     private Sound wounded;
     private Sound genericItemPickup;
+    private Sound swingAxe;
+    private Sound swingSword;
+    private Sound swingDagger;
+    private Sound shoot;
+    private Sound dash;
 
     /**
      * Initialize component with specified volume.
@@ -42,6 +47,16 @@ public class PlayerSoundComponent extends Component {
 
     public void setGenericItemPickup(Sound genericItemPickup) { this.genericItemPickup = genericItemPickup; }
 
+    public void setSwingAxe(Sound swingAxe) { this.swingAxe = swingAxe; }
+
+    public void setSwingSword(Sound swingSword) { this.swingSword = swingSword; }
+
+    public void setSwingDagger(Sound swingDagger) { this.swingDagger = swingDagger; }
+
+    public void setShoot(Sound shoot) { this.shoot = shoot; }
+
+    public void setDash(Sound dash) { this.dash = dash; }
+
 
     public void playUseBandage() {
         if (this.useBandage != null) {
@@ -64,7 +79,39 @@ public class PlayerSoundComponent extends Component {
         }
     }
 
-    //TODO: Add More Sound Effects.
+    public void playSwingAxe() {
+        if (this.swingAxe != null) {
+            long soundId = this.swingAxe.play();
+            this.swingAxe.setVolume(soundId, this.volume);
+        }
+    }
 
+    public void playSwingSword() {
+        if (this.swingSword != null) {
+            long soundId = this.swingSword.play();
+            this.swingSword.setVolume(soundId, this.volume);
+        }
+    }
+
+    public void playSwingDagger() {
+        if (this.swingDagger != null) {
+            long soundId = this.swingDagger.play();
+            this.swingDagger.setVolume(soundId, this.volume);
+        }
+    }
+
+    public void playShoot() {
+        if (this.shoot != null) {
+            long soundId = this.shoot.play();
+            this.shoot.setVolume(soundId, this.volume);
+        }
+    }
+
+    public void playDash() {
+        if (this.dash != null) {
+            long soundId = this.dash.play();
+            this.dash.setVolume(soundId, this.volume);
+        }
+    }
 
 }  // END: PlayerSoundComponent

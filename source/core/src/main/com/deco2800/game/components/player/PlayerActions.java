@@ -258,6 +258,9 @@ public class PlayerActions extends Component {
    * @param endTime is the time to end the dash according to the game clock
    */
   void longDash(long endTime) {
+    PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+    if(pcs != null) { pcs.playDash(); }
+
     dashEndTime = endTime;
     setDash(DASH_SPEED*2);
   }
@@ -360,8 +363,10 @@ public class PlayerActions extends Component {
    * Makes the player attack.
    */
   void attack() {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
+    //TODO: Separate weapons, and play specific-sound effect.
+    PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+    if(pcs != null) { pcs.playSwingAxe(); }
+
     playerMeleeAttackComponent.meleeAttackClicked(true);
   }
 

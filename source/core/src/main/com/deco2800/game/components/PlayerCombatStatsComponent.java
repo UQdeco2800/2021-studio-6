@@ -1,5 +1,6 @@
 package com.deco2800.game.components;
 import com.badlogic.gdx.audio.Sound;
+import com.deco2800.game.components.player.PlayerSoundComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -25,8 +26,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private boolean regenActive = false;
     private boolean invincibleActive = false;
-    private static final long REGEN_COOLDOWN = 5000;
-    private static final long INITIAL_REGEN_OFFSET = 3000;
+    private static final long REGEN_COOLDOWN = 3000;
+    private static final long INITIAL_REGEN_OFFSET = 4000;
     private long nextRegen;
     private static final long INVINCIBILITY_LENGTH = 400; // in ms
     private long invincibilityEndTime;
@@ -224,16 +225,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         } else {
             super.setHealth(0);
             if (getWoundState() != 0) {
-                setWoundState(getWoundState() - 1);
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playWounded(); }
 
-                // Bypass if ServiceLocator isn't loaded.
-                //TODO: Have to refactor this somehow...
-                Sound sound = ServiceLocator.getResourceService() != null
-                        ? ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class)
-                        : null;
-                if(sound != null) {
-                    sound.play();
-                }
+                setWoundState(getWoundState() - 1);
 
             }
         }

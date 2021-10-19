@@ -277,16 +277,13 @@ class PlayerActionsTest {
         // many mock returns to ensure sound, etc is triggered correctly
         PlayerMeleeAttackComponent melee = mock(PlayerMeleeAttackComponent.class);
         ResourceService resourceService = mock(ResourceService.class);
-        Sound sound = mock(Sound.class);
+
         ServiceLocator.registerResourceService(resourceService);
-        when(resourceService.getAsset("sounds/Impact4.ogg", Sound.class)).thenReturn(sound); // sound used by method
-        when(sound.play()).thenReturn(0L); // random return
 
         Entity player = new Entity().addComponent(new PlayerActions(3)).addComponent(melee);
         player.create();
         player.getEvents().trigger("attack");
-
-        verify(resourceService).getAsset("sounds/Impact4.ogg", Sound.class);
+        
         verify(melee).meleeAttackClicked(true);
     }
 }

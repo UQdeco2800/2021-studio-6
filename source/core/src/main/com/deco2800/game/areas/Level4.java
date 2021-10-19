@@ -1,6 +1,8 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
@@ -16,6 +18,8 @@ import com.deco2800.game.components.player.PlayerRangeAttackComponent;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.lighting.FlickerLightComponent;
+import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -41,7 +45,7 @@ public class Level4 extends GameArea {
     private static final int NUM_LARGE_ENEMY = 0;
     private static final int NUM_GHOSTS = 0;
     private static final int NUM_LONGRANGE = 0;
-    private static final int NUM_BULLETS = 5; // Must be 5, to allow range-attack.
+    private static final int NUM_BULLETS = 30; // Must be 5, to allow range-attack.
     private static final int NUM_SPAWNER_ENEMY = 0;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(20, 10);
     private static final float WALL_WIDTH = 0.1f;
@@ -77,7 +81,9 @@ public class Level4 extends GameArea {
             "images/grass_2.png",
             "images/grass_3.png",
             "images/Final_Boss/dock.png",
-            "images/Final_Boss/boat.png"
+            "images/Final_Boss/boat.png",
+            "images/Final_Boss/healthbar_background.png",
+            "images/Final_Boss/healthbar_foreground.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
@@ -99,7 +105,9 @@ public class Level4 extends GameArea {
             "images/weapon/sledge.atlas",
             "images/weapon/machete.atlas",
             "images/weapon/baseball.atlas",
-            "images/weapon/dagger.atlas"  };
+            "images/weapon/dagger.atlas",
+            "images/playeritems/firecracker/firecracker.atlas"
+    };
 
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String[] playerSounds = {
@@ -311,9 +319,10 @@ public class Level4 extends GameArea {
 
         GridPoint2 bounds = terrain.getMapBounds(0);
 
-        Entity boss = FinalBossFactory.createBossHead(player, bounds.x);
+        Entity boss = FinalBossFactory.createBossHead(player, bounds.x, this);
+        GridPoint2 pos = new GridPoint2(40, 35);
         Entity darkness = FinalBossFactory.createDarkness(player, this);
-        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss);
+        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss, darkness);
 
         GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2);
         GridPoint2 darknessPos = new GridPoint2(bounds.x/2, bounds.y/2);
@@ -360,7 +369,7 @@ public class Level4 extends GameArea {
     }
 
     private void spawnBoat() {
-        int BOAT_LOCATION = 30;
+        int BOAT_LOCATION = 31;
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset("images/Final_Boss/boat.atlas", TextureAtlas.class));
@@ -368,10 +377,11 @@ public class Level4 extends GameArea {
 
         Entity boat = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(animator);
+                .addComponent(animator)
+                .addComponent(new PointLightComponent(Color.WHITE, 0.5f, 0, 0));
 
         boat.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        boat.setScale(new Vector2(1f, 1f));
+        boat.setScale(new Vector2(2f, 2f));
 
         GridPoint2 bounds = terrain.getMapBounds(0);
         GridPoint2 boatLocation = new GridPoint2(bounds.x/2, BOAT_LOCATION);

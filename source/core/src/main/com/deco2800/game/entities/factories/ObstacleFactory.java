@@ -454,7 +454,7 @@ public class ObstacleFactory {
   /**
    * Creates a left grass edge water tile (4).
    * |X|X|X|
-   * |4|X|X|
+   * |4|X|X|cr
    * |X|X|X|
    * @return entity
    */
@@ -673,6 +673,7 @@ public class ObstacleFactory {
   }
 
   /**
+<<<<<<< HEAD
    * Creates the campfire asset
    * @return the campfire entity
    */
@@ -842,6 +843,26 @@ public class ObstacleFactory {
   }
 
 
+  /**
+   * Creates a bottom sand edge water tile (8).
+   * |X|X|X|
+   * |X|X|X|
+   * |X|8|X|
+   * @return entity
+   */
+  public static Entity createWaterSandTile8() {
+    Entity waterTile =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/level_3/sand_to_water.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    waterTile.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    waterTile.getComponent(TextureRenderComponent.class).scaleEntity();
+    waterTile.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
+    return waterTile;
+  }
 
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");

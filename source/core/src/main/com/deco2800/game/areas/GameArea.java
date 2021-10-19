@@ -174,6 +174,7 @@ public abstract class GameArea implements Disposable {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(playerAssets);
     resourceService.loadTextures(enemyAssets);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadTextureAtlases(playerAtlas);
     resourceService.loadTextureAtlases(enemyAtlas);
   }
@@ -183,6 +184,7 @@ public abstract class GameArea implements Disposable {
       ResourceService resourceService = ServiceLocator.getResourceService();
       resourceService.unloadAssets(playerAssets);
       resourceService.unloadAssets(enemyAssets);
+      resourceService.unloadAssets(enemySounds);
       resourceService.unloadAssets(playerAtlas);
       resourceService.unloadAssets(enemyAtlas);
   }

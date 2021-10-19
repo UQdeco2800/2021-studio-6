@@ -29,6 +29,7 @@ public class GlowingEyesComponent extends AnimationRenderComponent {
         addAnimation("front-run-glow", 0.1f, Animation.PlayMode.LOOP);
         addAnimation("back-run-glow", 0.1f, Animation.PlayMode.LOOP);
         active = true;
+        visible = true;
     }
 
     /**

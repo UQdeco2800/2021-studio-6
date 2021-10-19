@@ -66,10 +66,7 @@ public class Level4 extends GameArea {
             "images/level_3/grass_to_sand.png",
             "images/level_3/grass_sand_mix.png",
             "images/gunman.png",
-            "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png",
-            "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
             "images/player.png",
-            "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
             "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
             "images/iso_grass_3.png",
             "images/safehouse/exterior-day1-latest.png",
@@ -84,12 +81,7 @@ public class Level4 extends GameArea {
             "images/Final_Boss/boss_head.atlas",
             "images/Final_Boss/boat.atlas",
             "images/terrain_iso_grass.atlas",
-            "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-            "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
             "images/Player_Animations/player_movement.atlas",
-            "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-            "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
-            "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
             "images/Player_Sprite/player_movement.atlas",
             "images/playeritems/tourch/torch.atlas",
             "images/hud/dashbar.atlas",
@@ -416,7 +408,6 @@ public class Level4 extends GameArea {
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(forestSounds);
-        resourceService.loadSounds(enemySounds);
         resourceService.loadSounds(playerSounds);
 
         resourceService.loadMusic(LEVEL3_MUSIC);
@@ -434,7 +425,6 @@ public class Level4 extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(forestSounds);
-        resourceService.unloadAssets(enemySounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }
 

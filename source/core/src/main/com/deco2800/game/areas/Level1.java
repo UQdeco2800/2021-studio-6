@@ -448,7 +448,6 @@ public class Level1 extends GameArea {
     resourceService.loadTextureAtlases(cityTextureAtlases);
     resourceService.loadSounds(citySounds);
     resourceService.loadSounds(playerSounds);
-    resourceService.loadSounds(enemySounds);
     resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
@@ -465,7 +464,6 @@ public class Level1 extends GameArea {
     resourceService.unloadAssets(cityTextureAtlases);
     resourceService.unloadAssets(citySounds);
     resourceService.unloadAssets(playerSounds);
-    resourceService.unloadAssets(enemySounds);
     resourceService.unloadAssets(forestMusic);
   }
 

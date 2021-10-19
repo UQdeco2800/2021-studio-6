@@ -23,6 +23,7 @@ public class PlayerHudAnimationController extends Component{
         hudAnimator = statsDisplay.getDashAnimator();
         entity.getEvents().addListener("abilityCooldown", this::abilityStart);
         entity.getEvents().addListener("dispose", this::disposeAnimation);
+        entity.getEvents().addListener("jumpAnimation", this::jumpAnimation);
         hudAnimator.startAnimation("dashbarFull");
     }
 
@@ -31,6 +32,13 @@ public class PlayerHudAnimationController extends Component{
      */
     void abilityStart() {
         hudAnimator.startAnimation("dashbar");
+    }
+
+    /**
+     * Jumps the cooldown bar ahead for when it changes unnaturally (i.e. cooldown reduction)
+     */
+    void jumpAnimation() {
+        hudAnimator.setTime(hudAnimator.getAnimTime() + 2);
     }
 
     void disposeAnimation() {

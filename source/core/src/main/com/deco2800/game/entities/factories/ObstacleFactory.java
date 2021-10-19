@@ -228,6 +228,7 @@ public class ObstacleFactory {
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     torch.getComponent(TextureRenderComponent.class).scaleEntity();
     torch.scaleHeight(1.0f);
+    PhysicsUtils.setScaledCollider(torch, 0.3f, 0.5f);
     return torch;
   }
 

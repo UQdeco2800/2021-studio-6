@@ -748,6 +748,21 @@ public class TerrainFactory {
   }
 
   /**
+   * Given the size of a map and coordinates expressed in percentages of the total map size,
+   * calculate and returns the exact coordinates
+   * (e.g. take a map with size x = 200, y = 100, and xPos = 80% of the map's x size, yPos = 100% of the map's y size
+   * returns 160, 100)
+   * @param xSize Size of the map's x-axis
+   * @param ySize Size of the map's y-axis
+   * @param xPos Position of x-axis requested as a percentage of the map's x size
+   * @param yPos Position of y-axis requested as a percentage of the map's y size
+   * @return A GridPoint containing the exact coordinates requested
+   */
+  private static GridPoint2 calculatePosition(int xSize, int ySize, double xPos, double yPos) {
+    return new GridPoint2((int)(xSize * xPos), (int)(ySize * yPos));
+  }
+
+  /**
    * Given a start position and an end position of a region, fill all tiles in that region with the selected tile
    * @param start Start of region to fill
    * @param end End of region to fill

@@ -82,7 +82,6 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   }
 
   public void setMaxChaseDistance(float maxChaseDistance) {
-    System.out.println(maxChaseDistance);
     this.maxChaseDistance = maxChaseDistance;
   }
 
@@ -101,7 +100,6 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxChaseDistance || !isTargetVisible()) {
-      System.out.println("HERE");
       return -1; // Too far, stop chasing
     }
     return priority;

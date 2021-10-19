@@ -166,7 +166,6 @@ public class EnemyDarknessController extends Component {
    */
   void playerInLight() {
     if (chasingEntity && playerInDarkness) {
-      System.out.println("PLAYER IN LIGHT");
       playerInDarkness = false;
       chaseTask.setMaxChaseDistance(defaultChaseMaxDistance);
       chaseTask.setViewDistance(defaultViewDistance);

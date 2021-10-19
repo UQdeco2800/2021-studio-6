@@ -404,7 +404,7 @@ public class Level2 extends GameArea {
     GridPoint2[] spawnLocations = {
       new GridPoint2(31, 23),
       new GridPoint2(54, 23),
-      new GridPoint2(13, 22),
+      new GridPoint2(15, 22),
       new GridPoint2(31, 14),
       new GridPoint2(24, 7),
       new GridPoint2(41, 3),

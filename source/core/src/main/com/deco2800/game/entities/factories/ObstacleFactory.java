@@ -157,6 +157,7 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
     return lamp;
   }
+
   /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units
@@ -221,7 +222,8 @@ public class ObstacleFactory {
         .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
-        .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f));
+        .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f))
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     torch.getComponent(TextureRenderComponent.class).scaleEntity();

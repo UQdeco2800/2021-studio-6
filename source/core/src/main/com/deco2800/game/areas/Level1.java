@@ -78,11 +78,6 @@ public class Level1 extends GameArea {
   };
 
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
-  private static final String[] playerSounds = {
-          "sounds/bandage-use.ogg",
-          "sounds/hurt.ogg",
-          "sounds/item-pickup.ogg"
-  };
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] cityMusic = {BACKGROUND_MUSIC};

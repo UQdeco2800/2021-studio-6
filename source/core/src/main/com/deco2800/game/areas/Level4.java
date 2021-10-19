@@ -88,11 +88,6 @@ public class Level4 extends GameArea {
             "images/weapon/dagger.atlas"  };
 
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-    private static final String[] playerSounds = {
-            "sounds/bandage-use.ogg",
-            "sounds/hurt.ogg",
-            "sounds/item-pickup.ogg"
-    };
 
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
@@ -365,6 +360,7 @@ public class Level4 extends GameArea {
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(forestSounds);
         resourceService.unloadAssets(enemySounds);
+        resourceService.unloadAssets(playerSounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }
 

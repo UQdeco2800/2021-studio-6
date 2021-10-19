@@ -80,12 +80,6 @@ public class Level2 extends GameArea {
   // Music and sound variables
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
 
-  private static final String[] playerSounds = {
-          "sounds/bandage-use.ogg",
-          "sounds/hurt.ogg",
-          "sounds/item-pickup.ogg"
-  };
-
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-woods2.mp3";
   private static final String[] forestMusic = {BACKGROUND_MUSIC};
 

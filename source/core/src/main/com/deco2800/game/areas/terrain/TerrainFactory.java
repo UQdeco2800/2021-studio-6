@@ -23,17 +23,17 @@ import org.slf4j.LoggerFactory;
 public class TerrainFactory {
 
  private static final Logger logger = LoggerFactory.getLogger(TerrainFactory.class);
- private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
  private static final GridPoint2 MAP_SIZE_CITY = new GridPoint2(74, 68);
  private static final GridPoint2 MAP_SIZE_FOREST = new GridPoint2(64, 37);
  private static final GridPoint2 MAP_SIZE_FOREST2 = new GridPoint2(56, 46);
  private static final GridPoint2 MAP_SIZE_SAFEHOUSE = new GridPoint2(15, 15);
- private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(40, 40);
  private static final int TUFT_TILE_COUNT = 30;
  private static final int ROCK_TILE_COUNT = 30;
  private static final int GRASS_TILE_COUNT = 123;
- private static final int BOSS_GRASS_COUNT = 10;
- //private static final int GRASS_SAND_COUNT = 100;
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final GridPoint2 MAP_SIZE_BOSS = new GridPoint2(40, 40);
+  private static final int BOSS_GRASS_COUNT = 10;
+  //private static final int GRASS_SAND_COUNT = 100;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;

@@ -673,7 +673,6 @@ public class ObstacleFactory {
   }
 
   /**
-<<<<<<< HEAD
    * Creates the campfire asset
    * @return the campfire entity
    */
@@ -842,8 +841,6 @@ public class ObstacleFactory {
     return asset;
   }
 
-
-  /**
    * Creates a bottom sand edge water tile (8).
    * |X|X|X|
    * |X|X|X|

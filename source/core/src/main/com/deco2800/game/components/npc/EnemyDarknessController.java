@@ -3,7 +3,6 @@ package com.deco2800.game.components.npc;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.ai.tasks.MultiAITaskComponent;
-import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DarknessDetectionComponent;
@@ -29,7 +28,7 @@ public class EnemyDarknessController extends Component {
   // Booleans that determine what type of entity this is
   private boolean firingEntity = false;
   private boolean chasingEntity = false;
-  private boolean glowingEyeEntity = false;
+  private boolean glowingEntity = false;
   // In the light and dark walk speed
   private Vector2 defaultSpeed;
   private Vector2 inDarkSpeed;
@@ -88,7 +87,7 @@ public class EnemyDarknessController extends Component {
     // If the entity has a glowing eyes component then turn them on (as entity starts in darkness)
     glowingEyesComponent = this.entity.getComponent(GlowingEyesComponent.class);
     if (glowingEyesComponent != null) {
-      glowingEyeEntity = true;
+      glowingEntity = true;
       glowingEyesComponent.displayOn();
     }
 
@@ -128,7 +127,7 @@ public class EnemyDarknessController extends Component {
       if (firingEntity) {
         fireBulletTask.setFireDuration(inDarkFiringDuration);
       }
-      if (glowingEyeEntity) {
+      if (glowingEntity) {
         glowingEyesComponent.displayOn();
       }
     }
@@ -144,7 +143,7 @@ public class EnemyDarknessController extends Component {
       if (firingEntity) {
         fireBulletTask.setFireDuration(defaultFiringDuration);
       }
-      if (glowingEyeEntity) {
+      if (glowingEntity) {
         glowingEyesComponent.displayOff();
       }
     }

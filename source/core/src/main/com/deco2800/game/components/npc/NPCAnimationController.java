@@ -25,10 +25,10 @@ public class NPCAnimationController extends Component {
   private static final String[] ANIMATIONS_RIGHT = {"right", "right-run", "right-damaged", "right-run-damaged", "right-hit", "right-run-hit", "right-damaged-hit", "right-run-damaged-hit"};
   private static final String[] ANIMATIONS_FRONT = {"front", "front-run", "front-damaged", "front-run-damaged", "front-hit", "front-run-hit", "front-damaged-hit", "front-run-damaged-hit"};
   private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit", "back-damaged-hit", "back-run-damaged-hit"};
-  private static String currentDirectionAsText;
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
   private static final long hurtDuration = 200;
+  private static String currentDirectionAsText;
   private long hitTime;
   private int indexOffset = 0;
   private boolean hitActive = false;
@@ -230,16 +230,12 @@ public class NPCAnimationController extends Component {
       }
 
       ColliderComponent colliderComponent = entity.getComponent(ColliderComponent.class);
-      TouchAttackComponent touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
       HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);
       if (hitboxComponent != null) {
         hitboxComponent.setLayer(PhysicsLayer.NONE);
       }
       if (colliderComponent != null) {
         colliderComponent.setLayer(PhysicsLayer.NONE);
-      }
-      if (touchAttackComponent != null) {
-        touchAttackComponent.disable();
       }
     // If the entities life is now less than half health, then set them as damaged
     } else if (!damagedActive && combatStatsComponent.getHealth() <= combatStatsComponent.getMaxHealth()/2) {

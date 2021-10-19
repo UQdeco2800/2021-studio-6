@@ -14,7 +14,7 @@ public class DarknessDetectionComponent extends Component{
     public static final String EVENT_IN_LIGHT = "inLight";
     public static final String EVENT_NOT_LIGHT = "inShadow";
 
-    Lighting lightingService = ServiceLocator.getLightingService();
+    private Lighting lightingService = ServiceLocator.getLightingService();
     private boolean isInLight = false;
     private boolean prevIsInLight = false;
 

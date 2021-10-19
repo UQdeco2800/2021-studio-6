@@ -35,8 +35,6 @@ class NPCAnimationControllerTest {
   AnimationRenderComponent friendlyAnimator;
   @Mock
   AnimationRenderComponent enemyAnimator;
-  @Mock
-  TextureAtlas textureAtlas;
 
   private static final float NPC_X_POS = 0;
   private static final float NPC_Y_POS = 0;
@@ -49,7 +47,6 @@ class NPCAnimationControllerTest {
   private static final int WALKING = 1;
   private Entity friendlyNpc;
   private Entity enemyNpc;
-  private TouchAttackComponent touchAttackComponentSpy;
   private GlowingEyesComponent glowingEyesComponentSpy;
   private GameTime time;
   @Spy
@@ -89,10 +86,6 @@ class NPCAnimationControllerTest {
         .addComponent(friendlyNpcMovement)
         .addComponent(new PhysicsComponent());
 
-
-    TouchAttackComponent touchAttackComponent = new TouchAttackComponent((short) 0);
-    touchAttackComponentSpy = Mockito.spy(touchAttackComponent);
-
     GlowingEyesComponent glowingEyesComponent = new GlowingEyesComponent(textureAtlas);
     glowingEyesComponentSpy = Mockito.spy(glowingEyesComponent);
 
@@ -106,7 +99,6 @@ class NPCAnimationControllerTest {
         .addComponent(colliderComponent)
         .addComponent(hitboxComponent)
         .addComponent(glowingEyesComponentSpy)
-        .addComponent(touchAttackComponentSpy)
         .addComponent(new PhysicsComponent());
 
     // Set the initial position of the npc
@@ -454,7 +446,6 @@ class NPCAnimationControllerTest {
     verify(npcSoundComponent, Mockito.times(1)).playDead();
     verify(npcSoundComponent, Mockito.times(0)).playHit();
     verify(aiTaskComponent, Mockito.times(1)).addTask(any(PriorityTask.class));
-    verify(touchAttackComponentSpy, Mockito.times(1)).disable();
     verify(colliderComponent, Mockito.times(1)).setLayer(PhysicsLayer.NONE);
     verify(hitboxComponent, Mockito.times(1)).setLayer(PhysicsLayer.NONE);
   }

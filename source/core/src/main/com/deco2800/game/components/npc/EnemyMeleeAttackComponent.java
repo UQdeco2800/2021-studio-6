@@ -15,12 +15,12 @@ public class EnemyMeleeAttackComponent extends Component {
     private static final int ONE_SECOND = 1000;
     private boolean playerInAttackRange;
     private boolean playerInitialised = false;
-    short targetLayer = PhysicsLayer.PLAYER;
+    private short targetLayer = PhysicsLayer.PLAYER;
     private long endTime;
     private float attackInterval = 2f;
-    PlayerCombatStatsComponent playerStats;
-    CombatStatsComponent myStats;
-    NPCSoundComponent soundComponent;
+    private PlayerCombatStatsComponent playerStats;
+    private CombatStatsComponent myStats;
+    private NPCSoundComponent soundComponent;
 
     private final GameTime timeSource = ServiceLocator.getTimeSource();
 

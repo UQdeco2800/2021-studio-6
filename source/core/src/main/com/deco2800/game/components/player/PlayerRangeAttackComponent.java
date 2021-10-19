@@ -157,6 +157,9 @@ public class PlayerRangeAttackComponent extends Component {
 
             // bullet shot
             if (activeBullets != null) {
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playShoot(); }
+
                 Entity firedBullet = activeBullets.get(0);
                 activeBullets.removeIndex(0);
                 firedBullet.getComponent(BulletCollisionComponent.class).setBulletLaunchStatus(true);

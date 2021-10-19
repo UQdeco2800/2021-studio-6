@@ -165,11 +165,16 @@ public class PlayerFactory {
     player.getComponent(PlayerAnimationController.class).setAnimator(invincibiltyAnimation);
 
     // Add the entity sound effects
-    PlayerSoundComponent playerSoundComponent = player.getComponent(PlayerSoundComponent.class);
-    playerSoundComponent.setVolume(ServiceLocator.getResourceService().getSfxVolume());
-    playerSoundComponent.setUseBandage(ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class));
-    playerSoundComponent.setWounded(ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class));
-    playerSoundComponent.setGenericItemPickup(ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class));
+    PlayerSoundComponent pcs = player.getComponent(PlayerSoundComponent.class);
+    pcs.setVolume(ServiceLocator.getResourceService().getSfxVolume());
+    pcs.setUseBandage(ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class));
+    pcs.setWounded(ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class));
+    pcs.setGenericItemPickup(ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class));
+    pcs.setSwingAxe(ServiceLocator.getResourceService().getAsset("sounds/weapon-axe.wav", Sound.class));
+    pcs.setSwingSword(ServiceLocator.getResourceService().getAsset("sounds/weapon-sword.ogg", Sound.class));
+    pcs.setSwingDagger(ServiceLocator.getResourceService().getAsset("sounds/weapon-dagger.wav", Sound.class));
+    pcs.setShoot(ServiceLocator.getResourceService().getAsset("sounds/slingshot.ogg", Sound.class));
+    pcs.setDash(ServiceLocator.getResourceService().getAsset("sounds/dash.ogg", Sound.class));
 
     return player;
   }

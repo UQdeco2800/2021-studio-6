@@ -841,7 +841,7 @@ public class ObstacleFactory {
     return asset;
   }
 
-   * Creates a bottom sand edge water tile (8).
+   /* Creates a bottom sand edge water tile (8).
    * |X|X|X|
    * |X|X|X|
    * |X|8|X|

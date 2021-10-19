@@ -132,7 +132,8 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double gameLevel = 1;
+  private static double gameLevel;
+  //private double gameLevel = 4;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -182,6 +183,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     manageGameLevel(gameType);
   }
+
+  public static double getGameLevel() {
+    return gameLevel;
+  }
+
 
   /**
    * This method does logic to decide which level would be generated based on whether game is restarted, checkpoint
@@ -279,6 +285,7 @@ public class MainGameScreen extends ScreenAdapter {
       }
     }
   }
+  
 
   @Override
   public void resize(int width, int height) {
@@ -475,4 +482,7 @@ public class MainGameScreen extends ScreenAdapter {
   private void onOutroFinish() {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
+  
+
 }
+

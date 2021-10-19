@@ -1,11 +1,13 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
 import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
@@ -42,13 +44,15 @@ public class  PlayerInterfaceDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+
+    double level = MainGameScreen.getGameLevel();
+
     healthAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
                 .getAsset("images/hud/health.atlas", TextureAtlas.class), false);
+
     healthAnimator.setCamera(true);
-    healthAnimator.setPositions(9, (float) 4);
-    healthAnimator.setScale( 3, 1);
     healthAnimator.addAnimation("health1", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health2", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health3", 0.1f, Animation.PlayMode.NORMAL);
@@ -69,11 +73,7 @@ public class  PlayerInterfaceDisplay extends UIComponent {
                 .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), false);
     dashAnimator.addAnimation("dashbar", 0.4f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
-
     dashAnimator.setCamera(true);
-    dashAnimator.setPositions(9, (float) 4.7);
-    dashAnimator.setScale( 3, (float) 0.5);
-
     entity.getEvents().addListener("firstHit", this::removeHealth);
     entity.getEvents().addListener("updateBandageHUD", this::updatePlayerBandageUI);
     entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
@@ -87,6 +87,22 @@ public class  PlayerInterfaceDisplay extends UIComponent {
 
     int bulletCount = entity.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
     updateBulletImageHUD(bulletCount);
+
+    if (level != 4) {
+      healthAnimator.setPositions(9, (float) 4);
+      healthAnimator.setScale( 3, 1);
+      dashAnimator.setPositions(9, (float) 4.7);
+      dashAnimator.setScale( 3, (float) 0.5);
+    } else {
+      healthAnimator.setPositions(18, (float) 8.5);
+      healthAnimator.setScale( 6, 2);
+      dashAnimator.setPositions(19, (float) 10);
+      dashAnimator.setScale( 6, (float) 1);
+    }
+
+
+
+
   }
 
   public void setAnimations() {
@@ -109,7 +125,7 @@ public class  PlayerInterfaceDisplay extends UIComponent {
     tableHealth = new Table();
     tableHealth.top().left();
     tableHealth.setFillParent(true);
-    tableHealth.padTop(250f);
+    tableHealth.padTop(0f);
     tableHealth.add(healthBar).size(110f, 32f);
 
 

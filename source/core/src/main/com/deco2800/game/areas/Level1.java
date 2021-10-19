@@ -196,6 +196,82 @@ public class Level1 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, randomPos, true, false);
     }
+    /*
+    // CREATED 3 ARMOURS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int armourQuantity = 1;
+      Entity armour = ItemFactory.createArmour(armourQuantity);
+      spawnEntityAt(armour, randomPos, true, false);
+    }
+
+    // CREATED 3 HELMETS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int helmetQuantity = 1;
+      Entity helmet = ItemFactory.createHelmet(helmetQuantity);
+      spawnEntityAt(helmet, randomPos, true, false);
+    }
+
+    // CREATED 3 DAGGERS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int daggerQuantity = 1;
+      Entity dagger = ItemFactory.createDagger(daggerQuantity);
+      spawnEntityAt(dagger, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int axeQuantity = 1;
+      Entity axe = ItemFactory.createAxe(axeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int swordQuantity = 1;
+      Entity sword = ItemFactory.createSword(swordQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 AXES FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int sledgeQuantity = 1;
+      Entity axe = ItemFactory.createSledge(sledgeQuantity);
+      spawnEntityAt(axe, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword = ItemFactory.createMachete(macheteQuantity);
+      spawnEntityAt(sword, randomPos, true, false);
+    }
+
+    // CREATED 3 SWORDS FOR TESTING
+    for (int i = 0; i < 3; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      int macheteQuantity = 1;
+      Entity sword1 = ItemFactory.createBat(macheteQuantity);
+      spawnEntityAt(sword1, randomPos, true, false);
+    }
+  }
+
+  private void spawnTrees() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 6);
+
+    for (int i = 0; i < NUM_TREES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity tree = ObstacleFactory.createBigTree();
+      spawnEntityAt(tree, randomPos, true, false);
+    }
+    */
   }
 
   private void spawnBuildings() {

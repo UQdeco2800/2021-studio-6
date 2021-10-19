@@ -94,7 +94,7 @@ public class Level2 extends GameArea {
     spawnSafehouse();
     spawnCobweb();
     spawnBush();
-//    spawnTorch();
+    spawnTorch();
     spawnFireFlyBugNPC();
 
     // Spawn player related entities
@@ -581,13 +581,21 @@ public class Level2 extends GameArea {
    * Spawns the torch entity that can emit out light onto the map.
    */
   private void spawnTorch() {
-    GridPoint2[] spawnLocations = {
-            new GridPoint2(4,7)
+    GridPoint2[] spawnLocations = {new GridPoint2(54, 25),
+        new GridPoint2(2, 23),
+        new GridPoint2(9, 20),
+        new GridPoint2(54, 20),
+        new GridPoint2(12, 18),
+        new GridPoint2(17, 18),
+        new GridPoint2(38, 18),
+        new GridPoint2(43, 18),
+        new GridPoint2(27, 16),
+        new GridPoint2(27, 12)
     };
 
-    for (int i = 0; i < spawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createTorch();
-      spawnEntityAt(bush, spawnLocations[i], true, false);
+    for (GridPoint2 position : spawnLocations) {
+      Entity torch = ObstacleFactory.createTorch();
+      spawnEntityAt(torch, position, false, false);
     }
   }
 

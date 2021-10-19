@@ -84,11 +84,6 @@ public class Level3 extends GameArea {
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String[] playerSounds = {
-          "sounds/bandage-use.ogg",
-          "sounds/hurt.ogg",
-          "sounds/item-pickup.ogg"
-  };
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};

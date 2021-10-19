@@ -2,7 +2,11 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.CampfireAnimationController;
+import com.deco2800.game.components.TreeAnimationController;
 import com.deco2800.game.components.player.HurtEffectComponent;
 import com.deco2800.game.components.player.SlowEffectComponent;
 import com.deco2800.game.entities.Entity;
@@ -12,7 +16,9 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Factory to create obstacle entities.
@@ -58,6 +64,51 @@ public class ObstacleFactory {
   }
 
   /**
+   * Creates a 'blue' tree entity.
+   * @return entity
+   */
+  public static Entity createBlueTree() {
+    Entity tree =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/treeBlue.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(2.8f);
+    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.55f);
+    return tree;
+  }
+
+  /**
+   * Creates an animated tree entity.
+   * @return entity
+   */
+  public static Entity createAnimatedTree() {
+
+
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/level_2/tree.atlas", TextureAtlas.class));
+    animator.addAnimation("static", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("wind", 0.2f, Animation.PlayMode.NORMAL);
+
+
+    Entity tree =
+        new Entity()
+            .addComponent(animator)
+            .addComponent(new TreeAnimationController())
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.scaleHeight(3.5f);
+    PhysicsUtils.setScaledCollider(tree, 0.75f, 0.55f);
+    return tree;
+  }
+
+  /**
    * Creates a vertical barrier
    * @return entity
    */
@@ -73,6 +124,24 @@ public class ObstacleFactory {
     barrier.scaleHeight(2f);
     PhysicsUtils.setScaledCollider(barrier, 0.4f, 1f);
     return barrier;
+  }
+
+  /**
+   * Creates a vertical barrier
+   * @return entity
+   */
+  public static Entity createVerticalRubble() {
+    Entity rubble =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_1/rubble.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    rubble.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    rubble.getComponent(TextureRenderComponent.class).scaleEntity();
+    rubble.scaleHeight(3f);
+    PhysicsUtils.setScaledCollider(rubble, 1f, 1f);
+    return rubble;
   }
 
   /**
@@ -127,9 +196,6 @@ public class ObstacleFactory {
     cobweb.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     cobweb.getComponent(TextureRenderComponent.class).scaleEntity();
     cobweb.scaleHeight(1.0f);
-
-    //TODO: Investigate ColliderComponent instead of HitboxComponent and different PhysicsLayers.
-
     return cobweb;
   }
 
@@ -587,6 +653,145 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(waterTile, 1f, 1f);
     return waterTile;
   }
+
+
+
+  public static Entity createCampfire() {
+
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/level_2/campfire.atlas", TextureAtlas.class));
+    animator.addAnimation("inactive", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("active", 0.4f, Animation.PlayMode.NORMAL);
+
+    Entity asset =
+        new Entity()
+            .addComponent(animator)
+            .addComponent(new CampfireAnimationController())
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.scaleHeight(1.4f);
+    PhysicsUtils.setScaledCollider(asset, 0.7f, 0.5f);
+    return asset;
+  }
+
+  public static Entity createStump() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/stump.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1.3f);
+    PhysicsUtils.setScaledCollider(asset, 0.7f, 0.7f);
+    return asset;
+  }
+
+  public static Entity createFallenTree() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/fallen_log.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(2.5f);
+    PhysicsUtils.setScaledCollider(asset, 0.8f, 0.6f);
+    return asset;
+  }
+
+  public static Entity createLogStack() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/logs.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1.2f);
+    PhysicsUtils.setScaledCollider(asset, 0.7f, 0.7f);
+    return asset;
+  }
+
+  public static Entity createLog() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/log1.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1.2f);
+    PhysicsUtils.setScaledCollider(asset, 0.7f, 0.7f);
+    return asset;
+  }
+
+
+
+  public static Entity createTwigVertical() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/twig2.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(asset, 0f, 0f);
+    return asset;
+  }
+
+  public static Entity createTwigHorizontal() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/twig1.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(asset, 0f, 0f);
+    return asset;
+  }
+
+  public static Entity createBushBig() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/brush2.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1.2f);
+    PhysicsUtils.setScaledCollider(asset, 0f, 0f);
+    return asset;
+  }
+
+  public static Entity createBushSmall() {
+    Entity asset =
+        new Entity()
+            .addComponent(new TextureRenderComponent("images/level_2/brush.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    asset.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    asset.getComponent(TextureRenderComponent.class).scaleEntity();
+    asset.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(asset, 0f, 0f);
+    return asset;
+  }
+
+
 
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");

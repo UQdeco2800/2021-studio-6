@@ -40,9 +40,16 @@ public class Level1 extends GameArea {
     "images/level_1/sidewalk.png",
     "images/level_1/cracked_sidewalk.png",
     "images/level_1/curbUpper.png",
+      "images/level_1/pathHorizontal.png",
+      "images/level_1/pathHorizontalOld.png",
+      "images/level_1/pathHorizontalDecay.png",
+      "images/level_1/pathVertical.png",
+      "images/level_1/pathVerticalOld.png",
+      "images/level_1/pathVerticalDecay.png",
     "images/level_1/curbLower.png",
     "images/level_1/road_tile_cracked.png",
     "images/level_1/placeholder_road.png",
+      "images/level_1/rubble.png",
     "images/level_1/placeholder_curb.png",
     "images/level_1/road_tile_white.png",
     "images/level_1/road_barrier.png",
@@ -58,9 +65,12 @@ public class Level1 extends GameArea {
     "images/dialogue/raw/npc_indicator.png",
     "images/level_2/level2_grass_1.png", // adding grass
     "images/level_2/level2_grass_2.png",
-    "images/level_2/level2_grass_4.png"
+    "images/level_2/level2_grass_4.png",
+    "images/level_2/dirtSmall.png",
+    "images/level_2/treeBlue.png"
   };
   private static final String[] cityTextureAtlases = {
+      "images/level_2/tree.atlas",
       NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
@@ -68,11 +78,6 @@ public class Level1 extends GameArea {
   };
 
   private static final String[] citySounds = {"sounds/Impact4.ogg"};
-  private static final String[] playerSounds = {
-          "sounds/bandage-use.ogg",
-          "sounds/hurt.ogg",
-          "sounds/item-pickup.ogg"
-  };
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] cityMusic = {BACKGROUND_MUSIC};
@@ -97,6 +102,7 @@ public class Level1 extends GameArea {
     spawnBuildings();
     spawnSafehouse();
     spawnDeadTrees();
+    spawnNiceTrees();
     spawnLamps();
     spawnSigns();
     spawnPickupItems();
@@ -277,18 +283,19 @@ public class Level1 extends GameArea {
     // Vertical Barriers
     for (int y = 36; y <= 46; y += 2) { // top barrier on left
       GridPoint2 position = new GridPoint2(10, y);
-      Entity barrier = ObstacleFactory.createVerticalBarrier();
-      spawnEntityAt(barrier, position, true, false);
+      Entity rubble = ObstacleFactory.createVerticalRubble();
+      spawnEntityAt(rubble, position, true, false);
     }
+
     for (int y = 53; y <= 60; y += 2) { // top barrier on right
       GridPoint2 position = new GridPoint2(32, y);
-      Entity barrier = ObstacleFactory.createVerticalBarrier();
-      spawnEntityAt(barrier, position, true, false);
+      Entity rubble = ObstacleFactory.createVerticalRubble();
+      spawnEntityAt(rubble, position, true, false);
     }
     for (int y = 21; y <= 28; y += 2) { // bottom barrier on left
       GridPoint2 position = new GridPoint2(12, y);
-      Entity barrier = ObstacleFactory.createVerticalBarrier();
-      spawnEntityAt(barrier, position, true, false);
+      Entity rubble = ObstacleFactory.createVerticalRubble();
+      spawnEntityAt(rubble, position, true, false);
     }
     for (int y = 6; y <= 62; y += 2) { // Main right wall
       GridPoint2 position = new GridPoint2(61, y);
@@ -324,20 +331,41 @@ public class Level1 extends GameArea {
    */
   private void spawnDeadTrees() {
     GridPoint2[] treePositions = new GridPoint2[]{
-            new GridPoint2(42, 64), new GridPoint2(70, 64),
-            new GridPoint2(49, 55), new GridPoint2(64, 55),
-            new GridPoint2(47, 42), new GridPoint2(21, 42), new GridPoint2(64, 41),
             new GridPoint2(72, 40), new GridPoint2(12, 36),
             new GridPoint2(70, 23), new GridPoint2(67, 19),
             new GridPoint2(59, 18), new GridPoint2(43, 18),
-            new GridPoint2(53, 13), new GridPoint2(44, 8),
             new GridPoint2(72, 8), new GridPoint2(60, 7),
             new GridPoint2(21, 7), new GridPoint2(66, 5),
-            new GridPoint2(18, 2), new GridPoint2(62, 1)
+            new GridPoint2(21, 42), new GridPoint2(53, 13),
+            new GridPoint2(18, 2)
     };
     // Spawn the trees at the given positions
     for (GridPoint2 point: treePositions) {
       Entity tree = ObstacleFactory.createDeadTree();
+      spawnEntityAt(tree, point, true, false);
+    }
+  }
+
+  /**
+   * Used to add living tree entities to the game area
+   */
+  private void spawnNiceTrees() {
+    Entity tree;
+    GridPoint2 position;
+
+    GridPoint2[] treePositions = new GridPoint2[]{
+        new GridPoint2(49, 56), new GridPoint2(64, 56),
+        new GridPoint2(42, 65), new GridPoint2(70, 65),
+        new GridPoint2(64, 42), new GridPoint2(44, 9),
+        new GridPoint2(62, 2), new GridPoint2(47, 43)
+    };
+
+    for (GridPoint2 point : treePositions) {
+      if (point.y % 2 == 0) {
+        tree = ObstacleFactory.createAnimatedTree();
+      } else {
+        tree = ObstacleFactory.createBlueTree();
+      }
       spawnEntityAt(tree, point, true, false);
     }
   }

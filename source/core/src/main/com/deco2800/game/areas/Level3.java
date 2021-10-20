@@ -76,7 +76,8 @@ public class Level3 extends GameArea {
     "images/level_2/fallen_log.png",
     "images/level_2/stump.png",
     "images/level_2/treeBlue.png",
-      "images/level_3/palm_tree-dying-day1-v1.0.png"
+    "images/level_3/palm_tree-dying-day1-v1.0.png",
+    "images/level_2/level2_torch_frame1_ver1.png",
   };
 
   /**
@@ -110,6 +111,7 @@ public class Level3 extends GameArea {
     spawnObstacles();
     spawnSafehouse();
     spawnFireFlyBugNPC();
+    spawnTorch();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -795,6 +797,30 @@ public class Level3 extends GameArea {
       int randomCoinQuantity = RandomUtils.randomInt(5);
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, coinSpawnLocations[i], true, false);
+    }
+  }
+
+  /**
+   * Spawns torches that can emit out light onto the map.
+   */
+  private void spawnTorch() {
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(11, 36),
+        new GridPoint2(9, 29),
+        new GridPoint2(48, 28),
+        new GridPoint2(51, 28),
+        new GridPoint2(51, 19),
+        new GridPoint2(8, 18),
+        new GridPoint2(17, 17),
+        new GridPoint2(25, 17),
+        new GridPoint2(35, 11),
+        new GridPoint2(43, 10),
+
+    };
+
+    for (GridPoint2 position : spawnLocations) {
+      Entity torch = ObstacleFactory.createTorch();
+      spawnEntityAt(torch, position, false, false);
     }
   }
 

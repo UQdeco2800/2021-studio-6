@@ -126,7 +126,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private static double gameLevel = 1;
+  private static double gameLevel = 4;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -200,7 +200,7 @@ public class MainGameScreen extends ScreenAdapter {
         PlayerStateManager.getInstance().restorePlayerState();
       }
       //TODO:Revert this after done
-      gameArea = new Level1(terrainFactory);
+      gameArea = new Level4(terrainFactory);
 
       gameArea.create();
 

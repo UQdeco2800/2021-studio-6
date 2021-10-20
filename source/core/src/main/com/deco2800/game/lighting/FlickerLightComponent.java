@@ -203,4 +203,7 @@ public class FlickerLightComponent extends Component implements Disposable {
   public void changeOffsetX(float offsetx) {
     this.offsetx = offsetx;
   }
+  public void changeOffsetY(float offsety) {
+    this.offsety = offsety;
+  }
 }

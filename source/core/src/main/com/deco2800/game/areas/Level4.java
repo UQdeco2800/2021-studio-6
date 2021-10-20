@@ -52,7 +52,8 @@ public class Level4 extends GameArea {
     private static final String[] forestTextures = {
             "images/Final_Boss/boss_head.png",
             "images/Final_Boss/beam.png",
-            "images/Final_Boss/boss_head.png", "images/Final_Boss/beam.png",
+            "images/Final_Boss/laser.png",
+            "images/Final_Boss/boss_head.png",
             "images/obstacle_sprite/cobweb.png",
             "images/obstacle_sprite/bush.png",
             "images/level_2/level2_grass_1.png",
@@ -85,6 +86,7 @@ public class Level4 extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
+            "images/Final_Boss/final_beam.atlas",
             "images/Final_Boss/boss_head.atlas",
             "images/Final_Boss/boat.atlas",
             "images/terrain_iso_grass.atlas",
@@ -306,12 +308,12 @@ public class Level4 extends GameArea {
     private void spawnFinalBoss() {
 
         GridPoint2 bounds = terrain.getMapBounds(0);
-        Entity darkness = FinalBossFactory.createDarkness(player, this);
+        Entity darkness = FinalBossFactory.createDarkness(player, bounds, this);
         Entity boss = FinalBossFactory.createBossHead(player, bounds.x, this, darkness);
         GridPoint2 pos = new GridPoint2(40, 35);
 
 
-        GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2);
+        GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2 - 1);
         GridPoint2 darknessPos = new GridPoint2(bounds.x/2, bounds.y/2);
         spawnEntityAt(boss, bossPos, true, true);
         this.spawnEntityAt(darkness, darknessPos, true, true);

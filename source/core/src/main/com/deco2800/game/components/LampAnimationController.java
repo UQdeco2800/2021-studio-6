@@ -6,19 +6,24 @@ import java.util.Random;
 
 public class LampAnimationController extends Component{
   AnimationRenderComponent animator;
-  private boolean started = false;
+  private int mode = 0;
   private Random rand;
 
   @Override
   public void update() {
-    /*
-    if (started && animator.isFinished()) {
-      animator.startAnimation("static");
-      started = false;
-    } else if (rand.nextInt(300) == 1 && !started) {
-      started = true;
-      animator.startAnimation("wind");
-    }*/
+    if (mode == 3 && animator.isFinished()) {
+      animator.startAnimation("onlamp");
+      mode = 0;
+    } else if (rand.nextInt(300) == 1 && mode == 0) {
+      mode = 1;
+      animator.startAnimation("startflicker");
+    } else if (mode == 1 && animator.isFinished()) {
+      mode = 2;
+      animator.startAnimation("rapidflicker");
+    } else if (mode == 2 && animator.isFinished()) {
+      mode = 3;
+      animator.startAnimation("endflicker");
+    }
   }
 
   @Override

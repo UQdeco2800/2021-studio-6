@@ -107,11 +107,11 @@ public class Level2 extends GameArea {
     spawnDeadNPC();
 
     // Spawn enemy entities
-    //spawnSmallEnemy();
-    //spawnLargeEnemy();
-    //spawnLongRangeEnemies();
-    //spawnSpawnerEnemy();
-    //spawnToughLongRangeEnemies();
+    spawnSmallEnemy();
+    spawnLargeEnemy();
+    spawnLongRangeEnemies();
+    spawnSpawnerEnemy();
+    spawnToughLongRangeEnemies();
 
     // Listener for level 2 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,
@@ -591,15 +591,6 @@ public class Level2 extends GameArea {
         new GridPoint2(20, 17),
         new GridPoint2(28, 17),
     };
-    /*new GridPoint2(54, 25),
-        new GridPoint2(9, 20),
-        new GridPoint2(54, 20),
-        new GridPoint2(12, 18),
-        new GridPoint2(17, 18),
-        new GridPoint2(38, 18),
-        new GridPoint2(43, 18),
-        new GridPoint2(27, 16),
-        new GridPoint2(27, 12)*/
 
     for (GridPoint2 position : spawnLocations) {
       Entity torch = ObstacleFactory.createTorch();

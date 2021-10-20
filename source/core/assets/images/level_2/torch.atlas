@@ -1,0 +1,34 @@
+
+level2_torch_spritesheet_ver1.png
+size: 5248, 1312
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+moving
+  rotate: false
+  xy: 0, 0
+  size: 1312, 1312
+  orig: 1312, 1312
+  offset: 0, 0
+  index: -1
+moving
+  rotate: false
+  xy: 1312, 0
+  size: 1312, 1312
+  orig: 1312, 1312
+  offset: 0, 0
+  index: -1
+moving
+  rotate: false
+  xy: 2624, 0
+  size: 1312, 1312
+  orig: 1312, 1312
+  offset: 0, 0
+  index: -1
+moving
+  rotate: false
+  xy: 3936, 0
+  size: 1312, 1312
+  orig: 1312, 1312
+  offset: 0, 0
+  index: -1

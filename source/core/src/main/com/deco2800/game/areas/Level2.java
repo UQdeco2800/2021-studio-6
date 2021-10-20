@@ -107,11 +107,11 @@ public class Level2 extends GameArea {
     spawnDeadNPC();
 
     // Spawn enemy entities
-    spawnSmallEnemy();
-    spawnLargeEnemy();
-    spawnLongRangeEnemies();
-    spawnSpawnerEnemy();
-    spawnToughLongRangeEnemies();
+    //spawnSmallEnemy();
+    //spawnLargeEnemy();
+    //spawnLongRangeEnemies();
+    //spawnSpawnerEnemy();
+    //spawnToughLongRangeEnemies();
 
     // Listener for level 2 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL2_INTRO,

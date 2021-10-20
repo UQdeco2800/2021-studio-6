@@ -323,7 +323,7 @@ public class NPCFactory {
    * @param waitTime Time in seconds to hold the position after wandering to a spot
    * @return Firefly entity
    */
-  public static Entity createFireFlyBugNPC(float speedX, float speedY, float wanderX, float wanderY, float waitTime) {
+  public static Entity createFireFlyBugNPC(float speedX, float speedY, float wanderX, float wanderY, float lightRadius, float waitTime) {
     Vector2 speed = new Vector2(speedX, speedY);
     AITaskComponent aiComponent =
       new AITaskComponent()
@@ -349,7 +349,7 @@ public class NPCFactory {
         .addComponent(new DisposingComponent())
         .addComponent(aiComponent)
         .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
-                Color.SCARLET, 3f, 0, 0))
+                Color.SCARLET, lightRadius, 0, 0))
         .addComponent(animator);
 
     //fireflyBugNPC.getComponent(AnimationRenderComponent.class).scaleEntity();

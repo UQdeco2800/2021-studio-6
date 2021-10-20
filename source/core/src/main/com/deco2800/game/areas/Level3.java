@@ -1058,7 +1058,7 @@ public class Level3 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f, 3f,0.5f);
       spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }

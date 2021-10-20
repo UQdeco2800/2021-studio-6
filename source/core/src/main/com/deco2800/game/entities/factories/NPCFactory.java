@@ -61,7 +61,7 @@ public class NPCFactory {
     spawnerNPC.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
     // Add the spawn animation
-    spawnerNPC.getComponent(AnimationRenderComponent.class).addAnimation("spawn", 0.1f, Animation.PlayMode.LOOP);;
+    spawnerNPC.getComponent(AnimationRenderComponent.class).addAnimation("spawn", 0.1f, Animation.PlayMode.LOOP);
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = spawnerNPC.getComponent(NPCSoundComponent.class);

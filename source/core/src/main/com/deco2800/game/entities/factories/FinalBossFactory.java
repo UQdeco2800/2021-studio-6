@@ -39,7 +39,8 @@ import com.deco2800.game.services.ServiceLocator;
 public class FinalBossFactory {
 
 
-    public static Entity createFinalBossPhaseManager(Entity boss, Entity darkness) {
+    public static Entity createFinalBossPhaseManager(Entity boss, Entity darkness,
+                                                     Entity healthBackground, Entity healthForeground) {
 
         //define boss entity
 
@@ -47,7 +48,7 @@ public class FinalBossFactory {
         //
 
         Entity phaseManager = new Entity()
-                .addComponent(new BossHealthListener(boss, darkness));
+                .addComponent(new BossHealthListener(boss, darkness, healthBackground, healthForeground));
 
         return phaseManager;
     }
@@ -86,7 +87,7 @@ public class FinalBossFactory {
      * @param target Should be the player entity as AI is dependent on the player
      * @return the boss entity
      */
-    public static Entity createBossHead(Entity target, float bounds, Level4 gameArea) {
+    public static Entity createBossHead(Entity target, float bounds, Level4 gameArea, Entity darkness) {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/Final_Boss/boss_head.atlas", TextureAtlas.class));
@@ -116,13 +117,19 @@ public class FinalBossFactory {
                         Color.WHITE, 2f, 0, -1.5f))
                 .addComponent(new LaserListener());
 
+        Entity healthBackground = createHealthBarBackground();
+        Entity healthForeground = createHealthBarForeground();
+
+
         MultiAITaskComponent aiComponent =
                 new MultiAITaskComponent()
                         .addTask(new BossMovementTask(bounds))
                         .addTask(new FinalBossFireLaser(target))
-                        .addTask(new FinalBossHealthBar(gameArea, bossHead));
+                        .addTask(new FinalBossHealthBar(gameArea, bossHead, healthBackground, healthForeground));
 
         bossHead.addComponent(aiComponent);
+
+        gameArea.spawnEntity(createFinalBossPhaseManager(bossHead, darkness, healthBackground, healthForeground));
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
         bossHead.setScale(new Vector2(5.3f, 4f));

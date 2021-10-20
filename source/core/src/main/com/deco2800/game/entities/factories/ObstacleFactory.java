@@ -595,7 +595,8 @@ public class ObstacleFactory {
   public static Entity createBridgeVerticalLeftTile() {
     Entity bridge =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
+        .addComponent(new TextureRenderComponent(-100, "images/level_3/bridge_tile_left-vertical.png"))
+//        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent());
 
@@ -610,10 +611,11 @@ public class ObstacleFactory {
    */
   public static Entity createBridgeVerticalRightTile() {
     Entity bridge =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent());
+      new Entity()
+        .addComponent(new TextureRenderComponent(-100, "images/level_3/bridge_tile_right-vertical.png"))
+//        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent());
 
     bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bridge.getComponent(TextureRenderComponent.class).scaleEntity();

@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.TorchLightingComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -223,7 +224,8 @@ public class ObstacleFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
         .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f))
-        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER));
 
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     torch.getComponent(TextureRenderComponent.class).scaleEntity();

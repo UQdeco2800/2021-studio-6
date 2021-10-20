@@ -27,6 +27,8 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
+import java.util.ServiceConfigurationError;
+
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  *
@@ -326,19 +328,31 @@ public class NPCFactory {
       new AITaskComponent()
         .addTask(new WanderTask(new Vector2(wanderX, wanderY), waitTime));
 
+    TextureAtlas fireflyAtlas = ServiceLocator.getResourceService().getAsset("images/firefly/firefly.atlas", TextureAtlas.class);
+    AnimationRenderComponent animator = new AnimationRenderComponent(fireflyAtlas);
+
+    //animator.addAnimation("down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("firefly-front", 0.05f, Animation.PlayMode.LOOP);
+    animator.startAnimation("firefly-front");
+
+    //animator.addAnimation("left", 0.2f, Animation.PlayMode.LOOP);
+    //animator.addAnimation("right", 0.2f, Animation.PlayMode.LOOP);
+    animator.setUnlit();
+
     Entity fireflyBugNPC =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_2/fire-fly-bug-NPC.png"))
+        //.addComponent(new TextureRenderComponent("images/level_2/fire-fly-bug-NPC.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
         .addComponent(new PhysicsMovementComponent(speed))
         .addComponent(new DisposingComponent())
         .addComponent(aiComponent)
         .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
-                Color.SCARLET, 2f, 0, 0));
+                Color.SCARLET, 2f, 0, 0))
+        .addComponent(animator);
 
-    fireflyBugNPC.getComponent(TextureRenderComponent.class).scaleEntity();
-    fireflyBugNPC.scaleHeight(0.15f);
+    //fireflyBugNPC.getComponent(AnimationRenderComponent.class).scaleEntity();
+    //fireflyBugNPC.scaleHeight(0.15f);
 
     return fireflyBugNPC;
   }

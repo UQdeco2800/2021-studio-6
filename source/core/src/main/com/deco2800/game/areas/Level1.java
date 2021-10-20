@@ -1,6 +1,7 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -64,7 +65,8 @@ public class Level1 extends GameArea {
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/grass_1.png"
+    "images/grass_1.png",
+          "images/firefly/firefly.atlas"
   };
 
   private static final String[] cityTextureAtlases = {NPC_SAMPLE_ATLAS_FILENAME,

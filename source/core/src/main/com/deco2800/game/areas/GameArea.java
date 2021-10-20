@@ -106,6 +106,14 @@ public abstract class GameArea implements Disposable {
           "sounds/enemies/SpawnerEnemy/spawn.wav"
   };
 
+  protected static final String[] fireflyAssets = {
+          "images/firefly/firefly.png"
+  };
+
+  protected static final String[] fireflyAtlas = {
+          "images/firefly/firefly.atlas"
+  };
+
   protected GameArea() {
     areaEntities = new ArrayList<>();
   }
@@ -189,6 +197,8 @@ public abstract class GameArea implements Disposable {
     resourceService.loadTextures(enemyAssets);
     resourceService.loadTextureAtlases(playerAtlas);
     resourceService.loadTextureAtlases(enemyAtlas);
+    resourceService.loadTextures(fireflyAssets);
+    resourceService.loadTextureAtlases(fireflyAtlas);
   }
 
 
@@ -198,6 +208,8 @@ public abstract class GameArea implements Disposable {
       resourceService.unloadAssets(enemyAssets);
       resourceService.unloadAssets(playerAtlas);
       resourceService.unloadAssets(enemyAtlas);
+      resourceService.unloadAssets(fireflyAssets);
+      resourceService.unloadAssets(fireflyAtlas);
   }
 
   public Entity getPlayer() {

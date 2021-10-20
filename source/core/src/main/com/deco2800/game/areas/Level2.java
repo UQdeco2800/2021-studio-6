@@ -52,8 +52,10 @@ public class Level2 extends GameArea {
     "images/level_2/level2_torch_frame1_ver1.png",
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/level_2/fire-fly-bug-NPC.png",
-    "images/playeritems/bandage/bandage01.png"
+    "images/firefly/firefly.png",
+    "images/playeritems/bandage/bandage01.png",
+          "images/firefly/firefly.atlas",
+          "images/firefly/firefly.png"
   };
 
   /**

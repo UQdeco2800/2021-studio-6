@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -251,33 +251,40 @@ int&nbsp;torch)</code></th>
 </tr>
 <tr class="altColor" id="i12">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lightTorch(int)">lightTorch</a></span>&#8203;(int&nbsp;addTorch)</code></th>
+<td class="colLast">
+<div class="block">Adds additional time (in seconds) to the torch, up to a maximum of 100 seconds</div>
+</td>
+</tr>
+<tr class="rowColor" id="i13">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmmo(int)">setAmmo</a></span>&#8203;(int&nbsp;ammo)</code></th>
 <td class="colLast">
 <div class="block">Sets the player's ammo.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i13">
+<tr class="altColor" id="i14">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBandages(int)">setBandages</a></span>&#8203;(int&nbsp;bandages)</code></th>
 <td class="colLast">
 <div class="block">Sets the player's bandage.</div>
 </td>
 </tr>
-<tr class="altColor" id="i14">
+<tr class="rowColor" id="i15">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGold(int)">setGold</a></span>&#8203;(int&nbsp;gold)</code></th>
 <td class="colLast">
 <div class="block">Sets the player's gold.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i15">
+<tr class="altColor" id="i16">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#torchToggle()">torchToggle</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Toggles the torch on and off.</div>
 </td>
 </tr>
-<tr class="altColor" id="i16">
+<tr class="rowColor" id="i17">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -506,6 +513,17 @@ int&nbsp;torch)</span></div>
 <h3><a id="addTorch(int)">addTorch</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">addTorch</span>&#8203;(<span class="arguments">int&nbsp;addTorch)</span></div>
 <div class="block">Adds additional time (in seconds) to the torch</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>addTorch</code> - the time to add to the torch timer</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="lightTorch(int)">lightTorch</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">lightTorch</span>&#8203;(<span class="arguments">int&nbsp;addTorch)</span></div>
+<div class="block">Adds additional time (in seconds) to the torch, up to a maximum of 100 seconds</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>addTorch</code> - the time to add to the torch timer</dd>

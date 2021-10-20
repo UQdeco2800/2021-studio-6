@@ -263,10 +263,8 @@ public class ObstacleFactory {
       AnimationRenderComponent animator =
           new AnimationRenderComponent(
               ServiceLocator.getResourceService().getAsset("images/level_1/lamp.atlas", TextureAtlas.class));
-      animator.addAnimation("onlamp", 0.2f, Animation.PlayMode.LOOP);
-      animator.addAnimation("rapidflicker", 0.22f, Animation.PlayMode.NORMAL);
-      animator.addAnimation("startflicker", 0.4f, Animation.PlayMode.NORMAL);
-      animator.addAnimation("endflicker", 0.4f, Animation.PlayMode.NORMAL);
+      animator.addAnimation("on", 1f, Animation.PlayMode.LOOP);
+      animator.addAnimation("off", 1f, Animation.PlayMode.LOOP);
       Entity lamp =
           new Entity()
               .addComponent(animator)
@@ -275,6 +273,9 @@ public class ObstacleFactory {
               .addComponent(new PhysicsComponent())
               .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
               .addComponent(new HitboxComponent());
+
+      lamp.getComponent(LampAnimationController.class)
+          .giveLightComponent(lamp.getComponent(PointLightComponent.class));
 
       lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
       //lamp.getComponent(TextureRenderComponent.class).scaleEntity();

@@ -582,16 +582,16 @@ public class Level2 extends GameArea {
    */
   private void spawnTorch() {
     GridPoint2[] spawnLocations = {
-        new GridPoint2(41, 29),
-        new GridPoint2(47, 28),
-        new GridPoint2(35, 27),
-        new GridPoint2(54, 25),
-        new GridPoint2(10, 19),
-        new GridPoint2(11, 18),
-        new GridPoint2(37, 18),
+        new GridPoint2(48, 28),
+        new GridPoint2(36, 27),
+        new GridPoint2(54, 26),
+        new GridPoint2(59, 22),
+        new GridPoint2(11, 19),
+        new GridPoint2(38, 19),
         new GridPoint2(20, 17),
-        new GridPoint2(27, 17),
-        new GridPoint2(27, 17),
+        new GridPoint2(28, 17),
+
+
     };
     /*new GridPoint2(54, 25),
         new GridPoint2(9, 20),

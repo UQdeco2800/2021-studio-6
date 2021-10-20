@@ -1,5 +1,6 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.GameTime;
@@ -8,9 +9,8 @@ import com.deco2800.game.services.ServiceLocator;
 import java.awt.*;
 import java.util.Random;
 
-public class LampAnimationController extends Component{
+public class LampAnimationController extends Component implements Disposable {
   AnimationRenderComponent animator;
-  private boolean animationFinished = true;
   private Random rand;
   private PointLightComponent pointLightComponent;
   private final GameTime timeSource = ServiceLocator.getTimeSource();
@@ -69,5 +69,11 @@ public class LampAnimationController extends Component{
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     rand = new Random();
     animator.startAnimation("on");
+  }
+
+  @Override
+  public void dispose() {
+    this.pointLightComponent.dispose();
+    this.animator.dispose();
   }
 }

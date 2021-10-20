@@ -123,11 +123,12 @@ public class Level3 extends GameArea {
     spawnLevelThreeIntro();
 
     // Spawn enemy entities
+    /*
     spawnSmallEnemy();
     spawnLongRangeEnemies();
     spawnLargeEnemy();
     spawnSpawnerEnemy();
-    spawnToughLongRangeEnemies();
+    spawnToughLongRangeEnemies();*/
 
     // Listener for level 3 intro to finish and then play music
     StoryManager.getInstance().getEntity().getEvents().addListener("story-finished:" + StoryNames.LEVEL3_INTRO,

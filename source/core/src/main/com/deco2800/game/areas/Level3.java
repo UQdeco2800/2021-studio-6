@@ -825,6 +825,7 @@ public class Level3 extends GameArea {
     }
     Entity torch = ObstacleFactory.createTorch();
     spawnEntityAt(torch, new GridPoint2(48, 28), true, false);
+    torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");
   }
 
   private void spawnPilotNpc() {

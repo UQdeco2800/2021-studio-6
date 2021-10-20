@@ -154,9 +154,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBossHead(com.deco2800.game.entities.Entity,float,com.deco2800.game.areas.Level4)">createBossHead</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBossHead(com.deco2800.game.entities.Entity,float,com.deco2800.game.areas.Level4,com.deco2800.game.entities.Entity)">createBossHead</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
 float&nbsp;bounds,
-<a href="../../areas/Level4.html" title="class in com.deco2800.game.areas">Level4</a>&nbsp;gameArea)</code></th>
+<a href="../../areas/Level4.html" title="class in com.deco2800.game.areas">Level4</a>&nbsp;gameArea,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;darkness)</code></th>
 <td class="colLast">
 <div class="block">createBossHead</div>
 </td>
@@ -171,8 +172,10 @@ float&nbsp;bounds,
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFinalBossPhaseManager(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity)">createFinalBossPhaseManager</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;boss,
-<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;darkness)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFinalBossPhaseManager(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity)">createFinalBossPhaseManager</a></span>&#8203;(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;boss,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;darkness,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;healthBackground,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;healthForeground)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor" id="i4">
@@ -237,9 +240,11 @@ float&nbsp;bounds,
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="createFinalBossPhaseManager(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity)">createFinalBossPhaseManager</a></h3>
+<h3><a id="createFinalBossPhaseManager(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity)">createFinalBossPhaseManager</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createFinalBossPhaseManager</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;boss,
-<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;darkness)</span></div>
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;darkness,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;healthBackground,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;healthForeground)</span></div>
 </section>
 </li>
 <li class="blockList">
@@ -259,10 +264,11 @@ float&nbsp;bounds,
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="createBossHead(com.deco2800.game.entities.Entity,float,com.deco2800.game.areas.Level4)">createBossHead</a></h3>
+<h3><a id="createBossHead(com.deco2800.game.entities.Entity,float,com.deco2800.game.areas.Level4,com.deco2800.game.entities.Entity)">createBossHead</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createBossHead</span>&#8203;(<span class="arguments"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
 float&nbsp;bounds,
-<a href="../../areas/Level4.html" title="class in com.deco2800.game.areas">Level4</a>&nbsp;gameArea)</span></div>
+<a href="../../areas/Level4.html" title="class in com.deco2800.game.areas">Level4</a>&nbsp;gameArea,
+<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;darkness)</span></div>
 <div class="block">createBossHead</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

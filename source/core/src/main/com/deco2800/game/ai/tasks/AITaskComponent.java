@@ -52,8 +52,8 @@ public class AITaskComponent extends Component implements TaskRunner {
     currentTask.update();
   }
 
-  public List<PriorityTask> getTasks() {
-    return priorityTasks;
+  public List<Task> getTasks() {
+    return new ArrayList<>(priorityTasks);
   }
 
   @Override

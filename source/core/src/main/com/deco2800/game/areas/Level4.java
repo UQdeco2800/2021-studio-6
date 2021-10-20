@@ -73,6 +73,7 @@ public class Level4 extends GameArea {
             "images/level_3/sand_to_water.png",
             "images/level_3/grass_to_sand.png",
             "images/level_3/grass_sand_mix.png",
+            "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
             "images/safehouse/exterior-day1-latest.png",
             "images/grass_1.png",
             "images/grass_2.png",
@@ -87,12 +88,7 @@ public class Level4 extends GameArea {
             "images/Final_Boss/boss_head.atlas",
             "images/Final_Boss/boat.atlas",
             "images/terrain_iso_grass.atlas",
-            "images/Enemy_Assets/LargeEnemy/largeEnemy.atlas",
-            "images/Enemy_Assets/SmallEnemy/small_enemy.atlas",
             "images/Player_Animations/player_movement.atlas",
-            "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas",
-            "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas",
-            "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas",
             "images/Player_Sprite/player_movement.atlas",
             "images/playeritems/tourch/torch.atlas",
             "images/hud/dashbar.atlas",
@@ -251,7 +247,7 @@ public class Level4 extends GameArea {
         for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
-            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 9f, 10f, this,
                     spawnerEnemy));
             spawnEntityAt(spawnerEnemy, randomPos, true, true);
         }
@@ -418,7 +414,6 @@ public class Level4 extends GameArea {
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(forestSounds);
-        resourceService.loadSounds(enemySounds);
         resourceService.loadSounds(playerSounds);
 
         resourceService.loadMusic(LEVEL3_MUSIC);
@@ -436,7 +431,6 @@ public class Level4 extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(forestSounds);
-        resourceService.unloadAssets(enemySounds);
         resourceService.unloadAssets(playerSounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }

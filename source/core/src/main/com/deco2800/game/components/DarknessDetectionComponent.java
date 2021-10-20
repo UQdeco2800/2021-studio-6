@@ -14,7 +14,7 @@ public class DarknessDetectionComponent extends Component{
     public static final String EVENT_IN_LIGHT = "inLight";
     public static final String EVENT_NOT_LIGHT = "inShadow";
 
-    Lighting lightingService = ServiceLocator.getLightingService();
+    private Lighting lightingService = ServiceLocator.getLightingService();
     private boolean isInLight = false;
     private boolean prevIsInLight = false;
 
@@ -34,13 +34,14 @@ public class DarknessDetectionComponent extends Component{
     @Override
     public void update() {
         super.update();
-        float entityPosX = entity.getCenterPosition().x;
-        float entityPosY = entity.getCenterPosition().y;
+
+        // Minor offset is added otherwise it considers player in light when standing still
+        float entityPosX = entity.getCenterPosition().x + 0.01f;
+        float entityPosY = entity.getCenterPosition().y + 0.01f;
         prevIsInLight = isInLight;
 
-        // detects whether the entity and points offset from the entity are in light. This is a compromise due to
-        // libgdx returning a boolean rather than a float point number for whether a point is in light.
         isInLight = lightingService.getRayHandler().pointAtLight(entityPosX, entityPosY);
+
         if (prevIsInLight != isInLight) {
             if (isInLight) {
                 entity.getEvents().trigger(EVENT_IN_LIGHT);

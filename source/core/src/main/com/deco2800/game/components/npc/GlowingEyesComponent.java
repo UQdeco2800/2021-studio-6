@@ -1,33 +1,55 @@
 package com.deco2800.game.components.npc;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.rendering.RenderComponent;
-import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.components.DarknessDetectionComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
- * Creates a glowing red eye image for the entity
+ * Creates a glowing red eye animation for the entity
  */
-public class GlowingEyesComponent extends RenderComponent {
-    private final Texture glowingEyesTexture;
+public class GlowingEyesComponent extends AnimationRenderComponent {
     private Boolean visible;
-    private CombatStatsComponent combatStatsComponent;
+    private Boolean active;
 
     /**
-     * Creates a glowing red eye image for the entity
+     * Creates a glowing red eye animation for the entity
+     * @param atlas - the texture atlas that contains the stationary and walking animations
      */
-    public GlowingEyesComponent(String imageFileName) {
-        glowingEyesTexture = ServiceLocator.getResourceService().getAsset(imageFileName, Texture.class);
-        this.visible = true;
+    public GlowingEyesComponent(TextureAtlas atlas) {
+        super(atlas);
+
+        addAnimation("left-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("right-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("front-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("back-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("left-run-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("right-run-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("front-run-glow", 0.1f, Animation.PlayMode.LOOP);
+        addAnimation("back-run-glow", 0.1f, Animation.PlayMode.LOOP);
+        active = true;
+        visible = true;
     }
 
     /**
-     * Links the combat stats component to detect whether the enemy is dead
+     * Calls the super create and turns the animation on/off depending if the entity starts in the dark
      */
-    public void initialise() {
-        combatStatsComponent = entity.getComponent(CombatStatsComponent.class);
+    @Override
+    public void create() {
+        super.create();
+        if (this.entity.getComponent(DarknessDetectionComponent.class).isInLight()) {
+            visible = false;
+        } else {
+            visible = true;
+        }
+    }
+
+    /**
+     * Completely turns off the component
+     */
+    public void deactivate() {
+        active = false;
     }
 
     /**
@@ -50,36 +72,8 @@ public class GlowingEyesComponent extends RenderComponent {
      */
     @Override
     public void draw(SpriteBatch batch) {
-        if (visible && combatStatsComponent != null && !combatStatsComponent.isDead()) {
-            Vector2 npcPos = entity.getPosition();
-            Vector2 npcScale = entity.getScale();
-
-            batch.draw(
-                glowingEyesTexture,
-                npcPos.x,
-                npcPos.y,
-                npcScale.x/2,
-                npcScale.y/2,
-                npcScale.x,
-                npcScale.y,
-                1.0f,
-                1.0f,
-                0f,
-                0,
-                0,
-                glowingEyesTexture.getWidth(),
-                glowingEyesTexture.getHeight(),
-                false,
-                false);
+        if (visible && active) {
+            super.draw(batch);
         }
-    }
-
-    /**
-     * Adds the texture to be disposed
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
-        glowingEyesTexture.dispose();
     }
 }

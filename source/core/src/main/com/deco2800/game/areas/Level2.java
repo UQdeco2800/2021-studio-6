@@ -628,7 +628,7 @@ public class Level2 extends GameArea {
 
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
-      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 5f, 6f, this,
+      spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 9f, 10f, this,
               spawnerEnemy));
       spawnEntityAt(spawnerEnemy, spawnLocations[i], true, true);
     }
@@ -673,7 +673,7 @@ public class Level2 extends GameArea {
     GridPoint2[] spawnLocations = {
       new GridPoint2(31, 23),
       new GridPoint2(54, 23),
-      new GridPoint2(13, 22),
+      new GridPoint2(15, 22),
       new GridPoint2(31, 14),
       new GridPoint2(24, 7),
       new GridPoint2(41, 3),

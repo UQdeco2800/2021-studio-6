@@ -1,193 +1,250 @@
-spawnerEgg.png
-size: 32, 64
+spawner.png
+size: 256, 64
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Nearest, Nearest
 repeat: none
 default
   rotate: false
-  xy: 0, 0
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 0
-left
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-left-run
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-right
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-right-run
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-back
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-back-run
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
+  index: -1
 front
   rotate: false
-  xy: 0, 0
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: -1
+left
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 front-run
   rotate: false
-  xy: 0, 0
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: -1
+left-run
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 left-hit
   rotate: false
-  xy: 0, 0
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
-left-run-hit
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
+  index: -1
 right-hit
   rotate: false
-  xy: 0, 0
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
-right-run-hit
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-back-hit
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-back-run-hit
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
+  index: -1
 front-hit
   rotate: false
-  xy: 0, 0
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: -1
+back-hit
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run-hit
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run-hit
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 front-run-hit
   rotate: false
-  xy: 0, 0
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: -1
+back-run-hit
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 left-damaged
   rotate: false
-  xy: 0, 0
+  xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
-left-run-damaged
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
+  index: -1
 right-damaged
   rotate: false
-  xy: 0, 0
+  xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
-right-run-damaged
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-back-damaged
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-back-run-damaged
-  rotate: false
-  xy: 0, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
+  index: -1
 front-damaged
   rotate: false
-  xy: 0, 0
+  xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: -1
+back-damaged
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run-damaged
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run-damaged
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 front-run-damaged
   rotate: false
-  xy: 0, 0
+  xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
-  
-dead_enemy.png
-size: 32, 32
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
+  index: -1
+back-run-damaged
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-run-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-run-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+front-run-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+back-run-damaged-hit
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 dead
   rotate: false
-  xy: 0, 0
+  xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 0
+  index: -1
+spawn
+  rotate: false
+  xy: 172, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

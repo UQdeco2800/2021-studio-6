@@ -581,7 +581,19 @@ public class Level2 extends GameArea {
    * Spawns the torch entity that can emit out light onto the map.
    */
   private void spawnTorch() {
-    GridPoint2[] spawnLocations = {new GridPoint2(54, 25),
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(41, 29),
+        new GridPoint2(47, 28),
+        new GridPoint2(35, 27),
+        new GridPoint2(54, 25),
+        new GridPoint2(10, 19),
+        new GridPoint2(11, 18),
+        new GridPoint2(37, 18),
+        new GridPoint2(20, 17),
+        new GridPoint2(27, 17),
+        new GridPoint2(27, 17),
+    };
+    /*new GridPoint2(54, 25),
         new GridPoint2(9, 20),
         new GridPoint2(54, 20),
         new GridPoint2(12, 18),
@@ -589,8 +601,7 @@ public class Level2 extends GameArea {
         new GridPoint2(38, 18),
         new GridPoint2(43, 18),
         new GridPoint2(27, 16),
-        new GridPoint2(27, 12)
-    };
+        new GridPoint2(27, 12)*/
 
     for (GridPoint2 position : spawnLocations) {
       Entity torch = ObstacleFactory.createTorch();

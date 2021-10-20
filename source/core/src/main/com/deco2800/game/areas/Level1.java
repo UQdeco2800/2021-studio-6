@@ -453,13 +453,13 @@ public class Level1 extends GameArea {
    */
   private void spawnLamps() {
     GridPoint2[] lampPositions = new GridPoint2[]{
-            new GridPoint2(12, 59), new GridPoint2(24, 53),
+            new GridPoint2(24, 53),
             new GridPoint2(28, 45), new GridPoint2(31, 38),
             new GridPoint2(30, 27), new GridPoint2(40, 21),
             new GridPoint2(50, 27), new GridPoint2(59, 31)
     };
     GridPoint2[] vinedLampPositions = new GridPoint2[]{
-            new GridPoint2(58, 44),
+            new GridPoint2(12, 59), new GridPoint2(58, 44),
             new GridPoint2(49, 54), new GridPoint2(59, 60)
     };
     // Spawning in regular lamps

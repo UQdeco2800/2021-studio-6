@@ -11,6 +11,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.KeyboardLevelInputComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
+import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.shopmenu.ShopMenuDisplay;
 import com.deco2800.game.components.story.StoryInputComponent;
 import com.deco2800.game.components.story.StoryManager;
@@ -45,13 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-
-//  private static final String[] mainGameTextures = {"images/placeholder.png", "images/heart.png","images/hud/22highbar6.png",
-//  "images/hud/22highbar1.png","images/hud/27highbar7.png","images/hud/27highbar6.png","images/hud/27highbar1.png",
-//  "images/hud/32highbar8.png","images/hud/32highbar7.png","images/hud/32highbar6.png","images/hud/32highbar1.png", "images/Player_Sprite/25.png",
-//  "images/playeritems/rock/pickupammo.png", "images/playeritems/coin/money bag.png",
-//  "images/playeritems/coin/coin1.png", "images/Ability_Sprites/invincibility.png", "images/Ability_Sprites/dash.png",
-//  "images/Ability_Sprites/invincibility.png" };
 
   private static final String[] safehouseTextures = {
       "images/safehouse/shopkeeper/portrait.png",
@@ -132,7 +126,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private double gameLevel = 3;
+  private static double gameLevel = 1;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -184,6 +178,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     manageGameLevel(gameType);
   }
+
+  public static double getGameLevel() {
+    return gameLevel;
+  }
+
 
   /**
    * This method does logic to decide which level would be generated based on whether game is restarted, checkpoint
@@ -287,6 +286,7 @@ public class MainGameScreen extends ScreenAdapter {
     }
   }
 
+
   @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
@@ -332,7 +332,6 @@ public class MainGameScreen extends ScreenAdapter {
     resourceService.loadTextures(mainGameTextures);
     resourceService.loadTextures(safehouseTextures);
     resourceService.loadSounds(menuSounds);
-
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -422,8 +421,9 @@ public class MainGameScreen extends ScreenAdapter {
     int LEVEL_3 = 3;
     int LEVEL_2 = 2;
     int LEVEL_1 = 1;
-    double LEVEL_SAFEHOUSE = 0.5;
-    int SAFEHOUSE_CHECK = 1;
+
+    double levelSafehouse = 0.5;
+    int safehouseCheck = 1;
     if (gameLevel == LEVEL_1) {
       gameArea = new Level1(terrainFactory);
       gameArea.create();
@@ -445,15 +445,19 @@ public class MainGameScreen extends ScreenAdapter {
     // for safehouse - created in between every level
     // #TODO: Will need to have specific else if statement right after final boss fight level that will call
     // #TODO: victory() method
-    } else if (gameLevel % SAFEHOUSE_CHECK == LEVEL_SAFEHOUSE && gameLevel < LEVEL_4) {
+    } else if (gameLevel % safehouseCheck == levelSafehouse && gameLevel < LEVEL_4) {
       LIGHTINGON = false;
       gameArea = new SafehouseGameArea(terrainFactory);
       gameArea.create();
     }
-    this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
-    gameArea.player.getEvents().trigger("resetPlayerMovements");
-    ServiceLocator.registerGameArea(gameArea);
-    this.gameArea.player.getEvents().addListener("dead", this::gameOver);
+
+    // this must always be checked - there should be no game level larger than 4.5
+    if (gameArea != null) {
+        this.gameArea.player.getEvents().addListener("toggleShopBox", this::createShopBox);
+        gameArea.player.getEvents().trigger("resetPlayerMovements");
+        ServiceLocator.registerGameArea(gameArea);
+        this.gameArea.player.getEvents().addListener("dead", this::gameOver);
+    }
     levelChange = false;
   }
 
@@ -481,4 +485,7 @@ public class MainGameScreen extends ScreenAdapter {
   private void onOutroFinish() {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
+
+
 }
+

@@ -61,29 +61,23 @@ public class PlayerPickupComponent extends Component {
             int itemQuantity = item.getItemQuantity();
 
             if (item.getItemType() == Items.AMMO) {
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playGenericItemPickup(); }
+
                 inventory.setAmmo(ammoLeft + itemQuantity);
-                // Bypass if ServiceLocator isn't loaded.
-                //TODO: Have to refactor this somehow...
-                Sound sound = ServiceLocator.getResourceService() != null
-                    ? ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class)
-                    : null;
-                if(sound != null) {
-                    sound.play();
-                }
+
             } else if (item.getItemType() == Items.COINS) {
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playGenericItemPickup(); }
+
                 inventory.setGold(coinLeft + itemQuantity);
-                // Bypass if ServiceLocator isn't loaded.
-                //TODO: Have to refactor this somehow...
-                Sound sound = ServiceLocator.getResourceService() != null
-                    ? ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class)
-                    : null;
-                if(sound != null) {
-                    sound.play();
-                }
+
             } else if (item.getItemType() == Items.BANDAGE) {
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playGenericItemPickup(); }
+
                 inventory.setBandages(bandageLeft + itemQuantity);
-                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class);
-                sound.play();
+
             }
 
 

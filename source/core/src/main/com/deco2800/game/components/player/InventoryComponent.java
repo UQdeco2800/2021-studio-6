@@ -51,7 +51,7 @@ public class InventoryComponent extends Component {
   @Override
   public void update() {
     super.update();
-    if (!torchToggled) {
+    if (!torchToggled && !timeSource.isPaused()) {
       if (torch > 0) {
         if (timeSource.getTimeSince(tickStartTime) >= TICK_LENGTH) {
           tickStartTime = ServiceLocator.getTimeSource().getTime();
@@ -127,7 +127,7 @@ public class InventoryComponent extends Component {
   /**
    * Returns the player's gold.
    *
-   * @return entity's health
+   * @return entity's gold.
    */
   public int getGold() {
     return this.gold;

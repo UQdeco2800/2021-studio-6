@@ -1,5 +1,6 @@
 package com.deco2800.game.components;
 import com.badlogic.gdx.audio.Sound;
+import com.deco2800.game.components.player.PlayerSoundComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -25,13 +26,14 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     private final GameTime timeSource = ServiceLocator.getTimeSource();
     private boolean regenActive = false;
     private boolean invincibleActive = false;
-    private static final long REGEN_COOLDOWN = 5000;
-    private static final long INITIAL_REGEN_OFFSET = 3000;
+    private static final long REGEN_COOLDOWN = 3000;
+    private static final long INITIAL_REGEN_OFFSET = 4000;
     private long nextRegen;
     private static final long INVINCIBILITY_LENGTH = 400; // in ms
     private long invincibilityEndTime;
     private final int[] woundex = new int[] {7, 3, 0};
     private final int[] statex = new int[] {1, 2, 3, 4, 5};
+    private DarknessDetectionComponent lighting;
 
     public PlayerCombatStatsComponent(int health, int baseAttack, int woundState, int baseRangedAttack, int defenceLevel) {
         super(health, baseAttack); // Sets initial health/baseAttack in parent
@@ -56,7 +58,7 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     }
 
     /**
-     * Allowing invincibility to be called without knowing about this classF
+     * Allowing invincibility to be called without knowing about this class
      */
     @Override
     public void create() {
@@ -196,6 +198,8 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
                 entity.getEvents().trigger("dead");
             }
         }
+
+
     }
 
 
@@ -221,16 +225,10 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
         } else {
             super.setHealth(0);
             if (getWoundState() != 0) {
-                setWoundState(getWoundState() - 1);
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playWounded(); }
 
-                // Bypass if ServiceLocator isn't loaded.
-                //TODO: Have to refactor this somehow...
-                Sound sound = ServiceLocator.getResourceService() != null
-                        ? ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class)
-                        : null;
-                if(sound != null) {
-                    sound.play();
-                }
+                setWoundState(getWoundState() - 1);
 
             }
         }
@@ -294,11 +292,11 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
     /**
      * Sets the invincibility check to momentarily prevent player damage
      *
-     * @param length parameter for how long to set inivisibility for (in milliseconds)
+     * @param length parameter for how long to set invincibility for (in milliseconds)
      */
     public void invincibleStart(long length) {
         invincibilityEndTime = timeSource.getTime() + length;
-        entity.getEvents().trigger("disableAttack");
+        //entity.getEvents().trigger("disableAttack");
         invincibleActive = true;
     }
 
@@ -306,13 +304,22 @@ public class PlayerCombatStatsComponent extends CombatStatsComponent {
      * Increases the players current health, unless health is full for their wound state
      */
     private void regenerate() {
-        if (!timeSource.isPaused()) {
-            setHealth(getHealth() + 1);
-            entity.getEvents().trigger("health", getindex());
-            if (getHealth() >= getStateMax()) {
-                regenActive = false;
+        if (entity.getComponent(DarknessDetectionComponent.class) != null) {
+            if (lighting == null) {
+                lighting = this.entity.getComponent(DarknessDetectionComponent.class);
             }
-            nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
+        }
+
+        // only regens if in light
+        if (lighting != null) {
+            if (!timeSource.isPaused() && lighting.isInLight()) {
+                setHealth(getHealth() + 1);
+                entity.getEvents().trigger("health", getindex());
+                if (getHealth() >= getStateMax()) {
+                    regenActive = false;
+                }
+                nextRegen = timeSource.getTime() + REGEN_COOLDOWN;
+            }
         }
     }
 }

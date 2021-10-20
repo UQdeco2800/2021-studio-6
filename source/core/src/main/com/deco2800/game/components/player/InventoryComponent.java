@@ -208,6 +208,22 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Adds additional time (in seconds) to the torch, up to a maximum of 100 seconds
+   * @param addTorch the time to add to the torch timer
+   */
+  public void lightTorch(int addTorch) {
+    if (this.torch >= 100) {
+      //Don't do anything if torch is already > 100 seconds
+      return;
+    }
+    this.torch += addTorch;
+    if (this.torch > 100) {
+      this.torch = 100;
+    }
+    logger.debug("Setting torch to {}", this.torch);
+  }
+
+  /**
    * Gets the time left on the torch in secs
    * @return seconds left on the torch
    */

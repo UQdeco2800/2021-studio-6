@@ -807,15 +807,8 @@ public class Level3 extends GameArea {
    */
   private void spawnTorch() {
     GridPoint2[] spawnLocations = {
-        new GridPoint2(12, 36),
         new GridPoint2(51, 28),
-        new GridPoint2(9, 27),
-        new GridPoint2(51, 19),
-        new GridPoint2(9, 17),
-        new GridPoint2(17, 17),
         new GridPoint2(25, 17),
-        new GridPoint2(35, 11),
-        new GridPoint2(44, 10),
     };
 
     for (GridPoint2 position : spawnLocations) {

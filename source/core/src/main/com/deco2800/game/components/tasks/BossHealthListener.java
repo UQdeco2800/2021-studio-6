@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.finalboss.FinalBossHealthBar;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.services.ServiceLocator;
@@ -28,11 +29,16 @@ public class BossHealthListener extends Component {
     private static final Logger logger = LoggerFactory.getLogger(BossHealthListener.class);
     private Entity boss;
     private Entity darkness;
+    private Entity healthBackground;
+    private Entity healthForeground;
     private BossState bossState = BossState.PHASE1;
 
-    public BossHealthListener(Entity boss, Entity darkness) {
+    public BossHealthListener(Entity boss, Entity darkness,
+                              Entity healthBackground, Entity healthForeground) {
         this.boss = boss;
         this.darkness = darkness;
+        this.healthBackground = healthBackground;
+        this.healthForeground = healthForeground;
     }
     /**
      * Adds the fireLaser listener to the entity
@@ -66,8 +72,9 @@ public class BossHealthListener extends Component {
             }
         } else if(bossState == BossState.PHASE3) {
             if(health <= 0) {
-
                 bossState = BossState.PHASEFINAL;
+                healthBackground.dispose();
+                healthForeground.dispose();
                 boss.dispose();
                 darkness.dispose();
                 MainGameScreen.changeLevel();

@@ -26,23 +26,23 @@ public class FinalBossHealthBar extends DefaultTask {
     private final Entity boss;
     private long endTime;
     private static final float INTERVAL = 0.1f;
-    private Entity healthBackground;
-    private Entity healthForeground;
+    private final Entity healthBackground;
+    private final Entity healthForeground;
 
     /**
      * Constructs the final boss health bar
      * @param gameArea the game area to create the health bar in
      * @param boss the final boss entity
      */
-    public FinalBossHealthBar(GameArea gameArea, Entity boss) {
+    public FinalBossHealthBar(GameArea gameArea, Entity boss, Entity healthBackground, Entity healthForeground) {
 
         timeSource = ServiceLocator.getTimeSource();
 
         this.gameArea = gameArea;
         this.boss = boss;
 
-        healthBackground = FinalBossFactory.createHealthBarBackground();
-        healthForeground = FinalBossFactory.createHealthBarForeground();
+        this.healthBackground = healthBackground;
+        this.healthForeground = healthForeground;
     }
 
     /**

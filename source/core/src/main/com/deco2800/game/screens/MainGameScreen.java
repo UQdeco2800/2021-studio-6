@@ -286,7 +286,7 @@ public class MainGameScreen extends ScreenAdapter {
       }
     }
   }
-  
+
 
   @Override
   public void resize(int width, int height) {
@@ -486,7 +486,7 @@ public class MainGameScreen extends ScreenAdapter {
   private void onOutroFinish() {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
-  
+
 
 }
 

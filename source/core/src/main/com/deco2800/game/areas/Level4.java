@@ -306,17 +306,15 @@ public class Level4 extends GameArea {
     private void spawnFinalBoss() {
 
         GridPoint2 bounds = terrain.getMapBounds(0);
-
-        Entity boss = FinalBossFactory.createBossHead(player, bounds.x, this);
-        GridPoint2 pos = new GridPoint2(40, 35);
         Entity darkness = FinalBossFactory.createDarkness(player, this);
-        Entity phase = FinalBossFactory.createFinalBossPhaseManager(boss, darkness);
+        Entity boss = FinalBossFactory.createBossHead(player, bounds.x, this, darkness);
+        GridPoint2 pos = new GridPoint2(40, 35);
+
 
         GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2);
         GridPoint2 darknessPos = new GridPoint2(bounds.x/2, bounds.y/2);
         spawnEntityAt(boss, bossPos, true, true);
         this.spawnEntityAt(darkness, darknessPos, true, true);
-        this.spawnEntity(phase);
 
     }
 

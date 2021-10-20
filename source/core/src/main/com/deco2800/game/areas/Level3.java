@@ -14,6 +14,7 @@ import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -86,6 +87,7 @@ public class Level3 extends GameArea {
   private static final String[] forestTextureAtlases = {
       "images/level_2/campfire.atlas",
       "images/level_2/tree.atlas",
+      "images/level_2/torch.atlas",
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {};
@@ -820,6 +822,7 @@ public class Level3 extends GameArea {
     for (GridPoint2 position : spawnLocations) {
       Entity torch = ObstacleFactory.createTorch();
       spawnEntityAt(torch, position, false, false);
+      torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");
     }
     Entity torch = ObstacleFactory.createTorch();
     spawnEntityAt(torch, new GridPoint2(48, 28), true, false);

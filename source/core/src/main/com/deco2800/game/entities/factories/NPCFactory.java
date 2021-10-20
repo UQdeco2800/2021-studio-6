@@ -349,7 +349,7 @@ public class NPCFactory {
         .addComponent(new DisposingComponent())
         .addComponent(aiComponent)
         .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
-                Color.SCARLET, 2f, 0, 0))
+                Color.SCARLET, 3f, 0, 0))
         .addComponent(animator);
 
     //fireflyBugNPC.getComponent(AnimationRenderComponent.class).scaleEntity();

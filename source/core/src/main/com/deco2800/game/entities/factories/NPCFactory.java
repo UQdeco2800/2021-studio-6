@@ -24,7 +24,6 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -60,7 +59,7 @@ public class NPCFactory {
     spawnerNPC.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
     // Add the spawn animation
-    spawnerNPC.getComponent(AnimationRenderComponent.class).addAnimation("spawn", 0.1f, Animation.PlayMode.LOOP);;
+    spawnerNPC.getComponent(AnimationRenderComponent.class).addAnimation("spawn", 0.1f, Animation.PlayMode.LOOP);
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = spawnerNPC.getComponent(NPCSoundComponent.class);
@@ -316,7 +315,7 @@ public class NPCFactory {
   }
 
   /**
-   * Creates a fire fly bug NPC that wanders around the map and also provide a small light source to the map.
+   * Creates a firefly bug NPC that wanders around the map and also provide a small light source to the map.
    * @param speedX Movement speed in X direction
    * @param speedY Movement speed in Y direction
    * @param wanderX Proximity X distance to move around in
@@ -330,19 +329,31 @@ public class NPCFactory {
       new AITaskComponent()
         .addTask(new WanderTask(new Vector2(wanderX, wanderY), waitTime));
 
+    TextureAtlas fireflyAtlas = ServiceLocator.getResourceService().getAsset("images/firefly/firefly.atlas", TextureAtlas.class);
+    AnimationRenderComponent animator = new AnimationRenderComponent(fireflyAtlas);
+
+    //animator.addAnimation("down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("firefly-front", 0.05f, Animation.PlayMode.LOOP);
+    animator.startAnimation("firefly-front");
+
+    //animator.addAnimation("left", 0.2f, Animation.PlayMode.LOOP);
+    //animator.addAnimation("right", 0.2f, Animation.PlayMode.LOOP);
+    animator.setUnlit();
+
     Entity fireflyBugNPC =
       new Entity()
-        .addComponent(new TextureRenderComponent(75,"images/level_2/fire-fly-bug-NPC.png"))
+        //.addComponent(new TextureRenderComponent("images/level_2/fire-fly-bug-NPC.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
         .addComponent(new PhysicsMovementComponent(speed))
         .addComponent(new DisposingComponent())
         .addComponent(aiComponent)
         .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
-                Color.SCARLET, 2f, 0, 0));
+                Color.SCARLET, 2f, 0, 0))
+        .addComponent(animator);
 
-    fireflyBugNPC.getComponent(TextureRenderComponent.class).scaleEntity();
-    fireflyBugNPC.scaleHeight(0.15f);
+    //fireflyBugNPC.getComponent(AnimationRenderComponent.class).scaleEntity();
+    //fireflyBugNPC.scaleHeight(0.15f);
 
     return fireflyBugNPC;
   }

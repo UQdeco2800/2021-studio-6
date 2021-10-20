@@ -63,6 +63,8 @@ public class Level1 extends GameArea {
     "images/level_1/leaving_city_sign.png",
     "images/level_1/forest_sign.png",
     "images/dialogue/raw/npc_indicator.png",
+    "images/grass_1.png",
+    "images/firefly/firefly.atlas",
     "images/level_2/level2_grass_1.png", // adding grass
     "images/level_2/level2_grass_2.png",
     "images/level_2/level2_grass_4.png",

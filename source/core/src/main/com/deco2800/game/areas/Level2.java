@@ -16,6 +16,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -53,7 +54,6 @@ public class Level2 extends GameArea {
     "images/level_2/level2_torch_frame1_ver1.png",
     "images/level_2/level2_tree_2_group_ver1.png",
     "images/dialogue/raw/npc_indicator.png",
-    "images/level_2/fire-fly-bug-NPC.png",
     "images/level_2/brush.png",
     "images/level_2/brush2.png",
     "images/level_2/fallen_log.png",
@@ -65,8 +65,10 @@ public class Level2 extends GameArea {
     "images/level_2/treeBlue.png",
     "images/level_2/dirtLarge.png",
     "images/level_2/dirtSmall.png",
-    "images/level_2/dirtMedium.png",
-
+    "images/level_2/dirtMedium.png", 
+          "images/playeritems/bandage/bandage01.png",
+          "images/firefly/firefly.atlas",
+          "images/firefly/firefly.png"
   };
 
   /**
@@ -75,6 +77,7 @@ public class Level2 extends GameArea {
   private static final String[] forestTextureAtlases = {
       "images/level_2/campfire.atlas",
       "images/level_2/tree.atlas",
+      "images/level_2/torch.atlas",
     NPC_DEAD_ATLAS_FILENAME
   };
 
@@ -851,19 +854,14 @@ public class Level2 extends GameArea {
    */
   private void spawnTorch() {
     GridPoint2[] spawnLocations = {
-        new GridPoint2(48, 28),
-        new GridPoint2(36, 27),
-        new GridPoint2(54, 26),
         new GridPoint2(59, 22),
-        new GridPoint2(12, 19),
         new GridPoint2(38, 19),
-        new GridPoint2(20, 17),
-        new GridPoint2(28, 17),
     };
 
     for (GridPoint2 position : spawnLocations) {
       Entity torch = ObstacleFactory.createTorch();
       spawnEntityAt(torch, position, false, false);
+      torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");
     }
   }
 

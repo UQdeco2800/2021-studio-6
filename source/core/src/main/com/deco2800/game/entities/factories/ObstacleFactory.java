@@ -322,17 +322,21 @@ public class ObstacleFactory {
    * @return entity
    */
   public static Entity createTorch() {
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/level_2/torch.atlas", TextureAtlas.class));
+    animator.addAnimation("moving", 0.8f, Animation.PlayMode.LOOP);
+
     Entity torch =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
         .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-        .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER));
+        .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER))
+        .addComponent(animator);
 
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    torch.getComponent(TextureRenderComponent.class).scaleEntity();
     torch.scaleHeight(1.0f);
     PhysicsUtils.setScaledCollider(torch, 0.3f, 0.5f);
     return torch;

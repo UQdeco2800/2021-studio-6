@@ -5,7 +5,6 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.DeadTask;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -27,16 +26,15 @@ public class NPCAnimationController extends Component {
   private static final String[] ANIMATIONS_BACK = {"back", "back-run", "back-damaged", "back-run-damaged", "back-hit", "back-run-hit", "back-damaged-hit", "back-run-damaged-hit"};
   private static final int STATIONARY = 0;
   private static final int WALKING = 1;
-  private static final long hurtDuration = 200;
-  private static String currentDirectionAsText;
+  private static final long HURT_DURATION = 200;
+  private static final long SPAWN_DURATION = 500;
+  private String currentDirectionAsText;
   private long hitTime;
-  private int indexOffset = 0;
   private boolean hitActive = false;
   private boolean damagedActive = false;
   private boolean isDead = false;
   private boolean spawning = false;
   private long spawnTime;
-  private static final long spawnDuration = 500;
   private CombatStatsComponent combatStatsComponent;
   private NPCSoundComponent npcSoundComponent;
   private GlowingEyesComponent glowingEyesComponent;
@@ -79,13 +77,15 @@ public class NPCAnimationController extends Component {
    */
   @Override
   public void update() {
+    int indexOffset;
+
     // If game paused then don't update anything
     if (gameTime.isPaused()) {
       return;
     }
     // If the entity is dead then start the dead animation
     if (isDead) {
-      if (lastAnimation != "dead") {
+      if (lastAnimation == null || !lastAnimation.equals("dead")) {
         animator.startAnimation("dead");
         if (glowingEyesComponent != null) {
           glowingEyesComponent.deactivate();
@@ -96,13 +96,13 @@ public class NPCAnimationController extends Component {
     }
 
     // If the enemy spawn time has expired then switch off spawn variable
-    if (spawning && gameTime.getTimeSince(spawnTime) >= spawnDuration) {
+    if (spawning && gameTime.getTimeSince(spawnTime) >= SPAWN_DURATION) {
       spawning = false;
     }
 
     // If the entity is spawning then start the spawn animation
     if (spawning && !damagedActive) {
-      if (lastAnimation != "spawn") {
+      if (lastAnimation == null || !lastAnimation.equals("spawn")) {
         animator.startAnimation("spawn");
         lastAnimation = "spawn";
       }
@@ -110,7 +110,7 @@ public class NPCAnimationController extends Component {
     }
 
     // If the enemy hit time has expired then switch off hit variable
-    if (hitActive && gameTime.getTimeSince(hitTime) >= hurtDuration) {
+    if (hitActive && gameTime.getTimeSince(hitTime) >= HURT_DURATION) {
       hitActive = false;
     }
 
@@ -217,7 +217,7 @@ public class NPCAnimationController extends Component {
     hitTime = gameTime.getTime();
 
     // If the entity wasn't dead but they are dead now then set entity as dead
-    if (!isDead && combatStatsComponent.isDead()) {
+    if (!isDead && Boolean.TRUE.equals(combatStatsComponent.isDead())) {
       isDead = true;
       npcSoundComponent.playDead();
 

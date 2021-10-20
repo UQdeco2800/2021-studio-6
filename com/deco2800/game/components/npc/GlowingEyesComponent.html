@@ -94,7 +94,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
 <div class="inheritance"><a href="../Component.html" title="class in com.deco2800.game.components">com.deco2800.game.components.Component</a>
 <div class="inheritance"><a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">com.deco2800.game.rendering.RenderComponent</a>
+<div class="inheritance"><a href="../../rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">com.deco2800.game.rendering.AnimationRenderComponent</a>
 <div class="inheritance">com.deco2800.game.components.npc.GlowingEyesComponent</div>
+</div>
 </div>
 </div>
 </div>
@@ -105,8 +107,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">GlowingEyesComponent</span>
-extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></pre>
-<div class="block">Creates a glowing red eye image for the entity</div>
+extends <a href="../../rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></pre>
+<div class="block">Creates a glowing red eye animation for the entity</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -140,9 +142,9 @@ extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">GlowingEyesComponent</a></span>&#8203;(java.lang.String&nbsp;imageFileName)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas)">GlowingEyesComponent</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas)</code></th>
 <td class="colLast">
-<div class="block">Creates a glowing red eye image for the entity</div>
+<div class="block">Creates a glowing red eye animation for the entity</div>
 </td>
 </tr>
 </tbody>
@@ -170,37 +172,37 @@ extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Calls the super create and turns the animation on/off depending if the entity starts in the dark</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deactivate()">deactivate</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Completely turns off the component</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayOff()">displayOff</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Turn the red eyes off</div>
 </td>
 </tr>
-<tr class="rowColor" id="i1">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayOn()">displayOn</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Turn the red eyes on</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Adds the texture to be disposed</div>
-</td>
-</tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/SpriteBatch.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">SpriteBatch</a>&nbsp;batch)</code></th>
 <td class="colLast">
 <div class="block">Draws the red eyes at the location and size relative to the entity</div>
-</td>
-</tr>
-<tr class="altColor" id="i4">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initialise()">initialise</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Links the combat stats component to detect whether the enemy is dead</div>
 </td>
 </tr>
 </tbody>
@@ -208,10 +210,15 @@ extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2
 </div>
 </div>
 <div class="inheritedList">
+<h3>Methods inherited from class&nbsp;com.deco2800.game.rendering.<a href="../../rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></h3>
+<a id="methods.inherited.from.class.com.deco2800.game.rendering.AnimationRenderComponent">
+<!--   -->
+</a><code><a href="../../rendering/AnimationRenderComponent.html#addAnimation(java.lang.String,float)">addAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#addAnimation(java.lang.String,float,com.badlogic.gdx.graphics.g2d.Animation.PlayMode)">addAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#dispose()">dispose</a>, <a href="../../rendering/AnimationRenderComponent.html#getAnimTime()">getAnimTime</a>, <a href="../../rendering/AnimationRenderComponent.html#getAtlas()">getAtlas</a>, <a href="../../rendering/AnimationRenderComponent.html#getCurrentAnimation()">getCurrentAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#getFullAnimation()">getFullAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#getTime()">getTime</a>, <a href="../../rendering/AnimationRenderComponent.html#hasAnimation(java.lang.String)">hasAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#isFinished()">isFinished</a>, <a href="../../rendering/AnimationRenderComponent.html#removeAnimation(java.lang.String)">removeAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#scaleEntity()">scaleEntity</a>, <a href="../../rendering/AnimationRenderComponent.html#setPaused(boolean)">setPaused</a>, <a href="../../rendering/AnimationRenderComponent.html#setTime(float)">setTime</a>, <a href="../../rendering/AnimationRenderComponent.html#startAnimation(java.lang.String)">startAnimation</a>, <a href="../../rendering/AnimationRenderComponent.html#stopAnimation()">stopAnimation</a></code></div>
+<div class="inheritedList">
 <h3>Methods inherited from class&nbsp;com.deco2800.game.rendering.<a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.rendering.RenderComponent">
 <!--   -->
-</a><code><a href="../../rendering/RenderComponent.html#compareTo(com.deco2800.game.rendering.Renderable)">compareTo</a>, <a href="../../rendering/RenderComponent.html#create()">create</a>, <a href="../../rendering/RenderComponent.html#getLayer()">getLayer</a>, <a href="../../rendering/RenderComponent.html#getZIndex()">getZIndex</a>, <a href="../../rendering/RenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render</a>, <a href="../../rendering/RenderComponent.html#setLayer(int)">setLayer</a>, <a href="../../rendering/RenderComponent.html#setLit()">setLit</a>, <a href="../../rendering/RenderComponent.html#setUnlit()">setUnlit</a></code></div>
+</a><code><a href="../../rendering/RenderComponent.html#compareTo(com.deco2800.game.rendering.Renderable)">compareTo</a>, <a href="../../rendering/RenderComponent.html#getLayer()">getLayer</a>, <a href="../../rendering/RenderComponent.html#getZIndex()">getZIndex</a>, <a href="../../rendering/RenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render</a>, <a href="../../rendering/RenderComponent.html#setLayer(int)">setLayer</a>, <a href="../../rendering/RenderComponent.html#setLit()">setLit</a>, <a href="../../rendering/RenderComponent.html#setUnlit()">setUnlit</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;com.deco2800.game.components.<a href="../Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.components.Component">
@@ -237,9 +244,13 @@ extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(java.lang.String)">GlowingEyesComponent</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">GlowingEyesComponent</span>&#8203;(<span class="arguments">java.lang.String&nbsp;imageFileName)</span></div>
-<div class="block">Creates a glowing red eye image for the entity</div>
+<h3><a id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas)">GlowingEyesComponent</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">GlowingEyesComponent</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureAtlas.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">TextureAtlas</a>&nbsp;atlas)</span></div>
+<div class="block">Creates a glowing red eye animation for the entity</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>atlas</code> - - the texture atlas that contains the stationary and walking animations</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -254,9 +265,20 @@ extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="initialise()">initialise</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">initialise</span>()</div>
-<div class="block">Links the combat stats component to detect whether the enemy is dead</div>
+<h3><a id="create()">create</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
+<div class="block">Calls the super create and turns the animation on/off depending if the entity starts in the dark</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../rendering/RenderComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="deactivate()">deactivate</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">deactivate</span>()</div>
+<div class="block">Completely turns off the component</div>
 </section>
 </li>
 <li class="blockList">
@@ -279,23 +301,10 @@ extends <a href="../../rendering/RenderComponent.html" title="class in com.deco2
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">draw</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/SpriteBatch.html?is-external=true" title="class or interface in com.badlogic.gdx.graphics.g2d" class="externalLink">SpriteBatch</a>&nbsp;batch)</span></div>
 <div class="block">Draws the red eyes at the location and size relative to the entity</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../rendering/AnimationRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>batch</code> - Batch to render to.</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="dispose()">dispose</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">dispose</span>()</div>
-<div class="block">Adds the texture to be disposed</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true#dispose()" title="class or interface in com.badlogic.gdx.utils" class="externalLink">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/utils/Disposable.html?is-external=true" title="class or interface in com.badlogic.gdx.utils" class="externalLink">Disposable</a></code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../rendering/RenderComponent.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></code></dd>
 </dl>
 </section>
 </li>

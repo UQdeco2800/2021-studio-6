@@ -4,9 +4,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,18 +22,11 @@ public class BulletCollisionComponent extends Component {
     private boolean launchStatus = false;
     private PlayerCombatStatsComponent bulletCombatStats;
 
-    public BulletCollisionComponent() {
-    }
-
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::bulletHit);
         entity.getEvents().addListener("rockDone", this::disposeRock);
         bulletCombatStats = entity.getComponent(PlayerCombatStatsComponent.class);
-    }
-
-    @Override
-    public void update() {
     }
 
     /**
@@ -79,12 +70,10 @@ public class BulletCollisionComponent extends Component {
                 entity.getEvents().trigger("breakRock");
                 logger.debug("Bullet collided with obstacle's or level wall's layer");
 
-                //entity.getComponent(DisposingComponent.class).toBeReused();
-
             } else if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
                 this.entity.getComponent(PhysicsMovementComponent.class).setMoving(false);
                 entity.getEvents().trigger("breakRock");
-                //entity.getEvents().trigger("stopRock", this);
+
                 // bullet collides with NPC
                 logger.debug("Bullet collided with NPC's layer");
 

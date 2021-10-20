@@ -7,12 +7,14 @@ import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.npc.BulletCollider;
+import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.*;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Factory to create 'bullets' from a source entity to a dest entity
@@ -22,11 +24,10 @@ public class EnemyBulletFactory {
 
     /** Creates a bullet entity firing from a source entity through a  target entity
      * @param target the target entity to be fired at
-     * @param gameArea need to spawn the entity in
      * @param source the source of the bullet
      * @param textureFileName the filename for the texture
      */
-    public static void createBullet(Entity source, Entity target, GameArea gameArea, String textureFileName) {
+    public static void createBullet(Entity source, Entity target, String textureFileName) {
 
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;
@@ -35,9 +36,10 @@ public class EnemyBulletFactory {
 
         Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
-        Entity bullet = makeBullet(rotateTexture(newTarget, source, x1, y1), newTarget, target, gameArea,
-                source, x1, y1, true, textureFileName);
+        Entity bullet = makeBullet(rotateTexture(newTarget, source, x1, y1), newTarget, target,
+                source, x1, y1, textureFileName);
 
+        GameArea gameArea = ServiceLocator.getGameArea();
         gameArea.spawnEntity(bullet);
     }
 
@@ -46,10 +48,9 @@ public class EnemyBulletFactory {
      * is shifted up 45 degrees from the straight vector and the other is shifted down 45 degrees from the straight vectpr.
      * @param source the source of the bullet
      * @param target the target entity to be fired at
-     * @param gameArea need to spawn the entity in
      * @param textureFileName the filename for the texture
      */
-    public static void createToughBullet(Entity source, Entity target, GameArea gameArea, String textureFileName) {
+    public static void createToughBullet(Entity source, Entity target, String textureFileName) {
         float x1 = source.getPosition().x;
         float y1 = source.getPosition().y;
         float x2 = target.getPosition().x;
@@ -63,15 +64,16 @@ public class EnemyBulletFactory {
         //Shifted down 45 degrees from the straight vector
         Vector2 downRotate = rotateVector(straightTarget, -(Math.PI)/4);
 
-        Entity bulletStraight = makeBullet(rotateTexture(straightTarget, source, x1, y1), straightTarget, target, gameArea,
-                source, x1, y1, false, textureFileName);
+        Entity bulletStraight = makeBullet(rotateTexture(straightTarget, source, x1, y1), straightTarget, target,
+                source, x1, y1, textureFileName);
 
-        Entity bulletUp = makeBullet(rotateTexture(upRotate, source, x1, y1), upRotate, target, gameArea,
-                source, x1, y1, false, textureFileName);
+        Entity bulletUp = makeBullet(rotateTexture(upRotate, source, x1, y1), upRotate, target,
+                source, x1, y1, textureFileName);
 
-        Entity bulletDown = makeBullet(rotateTexture(downRotate, source, x1, y1), downRotate, target, gameArea,
-                source, x1, y1, false, textureFileName);
+        Entity bulletDown = makeBullet(rotateTexture(downRotate, source, x1, y1), downRotate, target,
+                source, x1, y1, textureFileName);
 
+        GameArea gameArea = ServiceLocator.getGameArea();
         gameArea.spawnEntity(bulletStraight);
         gameArea.spawnEntity(bulletUp);
         gameArea.spawnEntity(bulletDown);
@@ -82,15 +84,15 @@ public class EnemyBulletFactory {
      * Calculates the rotation of the bullet texture to point at its target
      * @param rotate the vector to the target
      * @param source the source of the bullet
-     * @param x_1 the x coordinate of the source
-     * @param y_1 the y coordinate of the source
+     * @param x1 the x coordinate of the source
+     * @param y1 the y coordinate of the source
      * @return the rotation of the texture
      */
-    private static float rotateTexture(Vector2 rotate, Entity source, float x_1, float y_1) {
+    private static float rotateTexture(Vector2 rotate, Entity source, float x1, float y1) {
         rotate = rotate.scl(100);
         rotate = rotate.add(source.getPosition());
 
-        return (MathUtils.radiansToDegrees * MathUtils.atan2(rotate.y - y_1, rotate.x - x_1));
+        return (MathUtils.radiansToDegrees * MathUtils.atan2(rotate.y - y1, rotate.x - x1));
     }
 
     /**
@@ -113,16 +115,14 @@ public class EnemyBulletFactory {
      * @param rotation the rotation of the bullet in radians
      * @param destination the vector the bullet follows
      * @param target the target of the bullet
-     * @param gameArea the area to spawn the entity in
      * @param source the source of the bullet
-     * @param x_1 the x coordinate of the source
-     * @param y_1 the y coordinate of the source
+     * @param x1 the x coordinate of the source
+     * @param y1 the y coordinate of the source
      * @param imagePath the image path for the bullet texture
-     * @param bloodBall whether it is a bloodball or not
      * @return the bullet entity
      */
-    private static Entity makeBullet(float rotation, Vector2 destination, Entity target, GameArea gameArea,
-                                     Entity source, float x_1, float y_1, boolean bloodBall, String imagePath) {
+    private static Entity makeBullet(float rotation, Vector2 destination, Entity target,
+                                     Entity source, float x1, float y1, String imagePath) {
 
         // Create the bullet entity
         Entity bullet = new Entity()
@@ -133,13 +133,13 @@ public class EnemyBulletFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMYBULLET))
                 .addComponent(new CombatStatsComponent(1, 2))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0.2f))
-                .addComponent(new BulletCollider(target, gameArea, PhysicsLayer.PLAYER));
+                .addComponent(new BulletCollider(target, ServiceLocator.getGameArea(), PhysicsLayer.PLAYER));
 
         // If it is a bloodball then add the light component
-        if (bloodBall) {
+        if (source.getComponent(ToughFireBulletListener.class) == null) {
             bullet.addComponent(new PointLightComponent(new Color(0x691e47aa), 0.5f, 0, 0));
             PhysicsUtils.setEntityPhysics(bullet, 0f, 0.2f, 0.2f, 0f, 0f);
-        } {
+        } else {
             PhysicsUtils.setEntityPhysics(bullet, 0f, 0.1f, 0.1f, 0f, 0f);
         }
 
@@ -152,10 +152,13 @@ public class EnemyBulletFactory {
         bullet.getComponent(ColliderComponent.class).setSensor(true);
 
         bullet.setPosition(
-                x_1 - bullet.getScale().x / 2 + source.getScale().x / 2,
-                y_1  - bullet.getScale().y / 2  + source.getScale().y / 2);
+                x1 - bullet.getScale().x / 2 + source.getScale().x / 2,
+                y1  - bullet.getScale().y / 2  + source.getScale().y / 2);
 
         return bullet;
     }
 
+    private EnemyBulletFactory() {
+        throw new IllegalStateException("Factory class");
+    }
 }

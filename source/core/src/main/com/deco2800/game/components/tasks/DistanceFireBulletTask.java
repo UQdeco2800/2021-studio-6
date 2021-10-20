@@ -76,11 +76,6 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
     }
 
     @Override
-    public void stop() {
-        super.stop();
-    }
-
-    @Override
     public int getPriority() {
         if (status == Status.ACTIVE) {
             return getActivePriority();

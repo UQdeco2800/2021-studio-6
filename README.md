@@ -13,6 +13,8 @@ SPACE - Melee Attack
 
 ENTER - Throw a rock
 
+SHIFT - Short dash
+
 Q - Special ability
 
 E - Talk to NPCs

@@ -199,6 +199,7 @@ public class MainGameScreen extends ScreenAdapter {
       if (PlayerStateManager.getInstance().currentPlayerState() != null) {
         PlayerStateManager.getInstance().restorePlayerState();
       }
+
       gameArea = new Level1(terrainFactory);
 
       gameArea.create();

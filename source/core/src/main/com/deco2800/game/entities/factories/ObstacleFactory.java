@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.TorchLightingComponent;
 import com.deco2800.game.components.CampfireAnimationController;
 import com.deco2800.game.components.TreeAnimationController;
 import com.deco2800.game.components.player.HurtEffectComponent;
@@ -326,11 +327,14 @@ public class ObstacleFactory {
         .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
-        .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f));
+        .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
+        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+        .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER));
 
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     torch.getComponent(TextureRenderComponent.class).scaleEntity();
     torch.scaleHeight(1.0f);
+    PhysicsUtils.setScaledCollider(torch, 0.3f, 0.5f);
     return torch;
   }
 

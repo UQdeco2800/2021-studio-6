@@ -851,12 +851,19 @@ public class Level2 extends GameArea {
    */
   private void spawnTorch() {
     GridPoint2[] spawnLocations = {
-            new GridPoint2(4,7)
+        new GridPoint2(48, 28),
+        new GridPoint2(36, 27),
+        new GridPoint2(54, 26),
+        new GridPoint2(59, 22),
+        new GridPoint2(12, 19),
+        new GridPoint2(38, 19),
+        new GridPoint2(20, 17),
+        new GridPoint2(28, 17),
     };
 
-    for (int i = 0; i < spawnLocations.length; i++) {
-      Entity bush = ObstacleFactory.createTorch();
-      spawnEntityAt(bush, spawnLocations[i], true, false);
+    for (GridPoint2 position : spawnLocations) {
+      Entity torch = ObstacleFactory.createTorch();
+      spawnEntityAt(torch, position, false, false);
     }
   }
 

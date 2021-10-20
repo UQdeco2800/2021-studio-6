@@ -4,119 +4,14 @@ size: 2006, 1004
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-onlamp
+on
   rotate: false
   xy: 2, 2
   size: 1000, 1000
   orig: 1000, 1000
   offset: 0, 0
   index: -1
-rapidflicker
-  rotate: false
-  xy: 1004, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 1004, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 1004, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 1004, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-rapidflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-startflicker
-  rotate: false
-  xy: 1004, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-startflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-startflicker
-  rotate: false
-  xy: 1004, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-startflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-endflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-endflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-endflicker
-  rotate: false
-  xy: 2, 2
-  size: 1000, 1000
-  orig: 1000, 1000
-  offset: 0, 0
-  index: -1
-endflicker
+off
   rotate: false
   xy: 1004, 2
   size: 1000, 1000

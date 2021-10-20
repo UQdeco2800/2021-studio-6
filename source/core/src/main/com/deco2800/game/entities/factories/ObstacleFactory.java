@@ -264,7 +264,9 @@ public class ObstacleFactory {
           new AnimationRenderComponent(
               ServiceLocator.getResourceService().getAsset("images/level_1/lamp.atlas", TextureAtlas.class));
       animator.addAnimation("onlamp", 0.2f, Animation.PlayMode.LOOP);
-      animator.addAnimation("offlamp", 0.2f, Animation.PlayMode.LOOP);
+      animator.addAnimation("rapidflicker", 0.22f, Animation.PlayMode.NORMAL);
+      animator.addAnimation("startflicker", 0.4f, Animation.PlayMode.NORMAL);
+      animator.addAnimation("endflicker", 0.4f, Animation.PlayMode.NORMAL);
       Entity lamp =
           new Entity()
               .addComponent(animator)

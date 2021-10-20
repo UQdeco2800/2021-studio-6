@@ -293,13 +293,14 @@ public class PlayerMeleeAttackComponent extends Component {
 
                     if (targetStats.isDead()) {
                         removingEnemies.add(enemy);
+                        this.getEntity().getComponent(PlayerAbilitiesComponent.class).reduceCooldown();
                     } else {
                         // Apply knockback
                         PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
                         if (physicsComponent != null && knockback > 0f) {
                             Body targetBody = physicsComponent.getBody();
                             Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
-                            Vector2 impulse = direction.setLength(knockback * 100);
+                            Vector2 impulse = direction.setLength(knockback * 100f);
                             targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
                         }
                     }

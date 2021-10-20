@@ -18,9 +18,9 @@ public class PrologueCutScene extends CutSceneConfig {
                     //Screen 2
                     "You don't want to be left in the dark...",
                     "That's where the Shadow Crawlers thrive.",
-                    "Creatures of the unknown.",
+                    "Creepy crawlies from the unknown.",
                     "Minions of some greater evil.",
-                    "They destroy light, take it away, leaving darkness in their wake - killing anything in their way.",
+                    "Devouring anything in their way.",
 
                     //Screen 3
                     "They went for the smaller towns first, forcing many to abandon their homes.",

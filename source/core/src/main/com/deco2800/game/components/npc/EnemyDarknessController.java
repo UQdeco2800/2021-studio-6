@@ -2,7 +2,8 @@ package com.deco2800.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.ai.tasks.MultiAITaskComponent;
+import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
@@ -17,17 +18,17 @@ import java.util.List;
  */
 public class EnemyDarknessController extends Component {
   // Multiplies the speed of the entity when in darkness
-  private static final float SPEED_MULTIPLIER = 2;
+  private static final float SPEED_MULTIPLIER = 3f;
   // Divides the time between firing when entity in darkness
-  private static final float FIRING_INTERVAL_DIVIDER = 2;
+  private static final float FIRING_INTERVAL_DIVIDER = 2f;
   // Multiplies the maximum distance that the entity can chase the player when player in darkness
-  private static final float MAX_DISTANCE_MULTIPLIER = 2.5f;
+  private static final float MAX_DISTANCE_MULTIPLIER = 1.7f;
   private boolean entityInDarkness = true;
   private boolean playerInDarkness = false;
   // Booleans that determine what type of entity this is
   private boolean firingEntity = false;
   private boolean chasingEntity = false;
-  private boolean glowingEyeEntity = false;
+  private boolean glowingEntity = false;
   // In the light and dark walk speed
   private Vector2 defaultSpeed;
   private Vector2 inDarkSpeed;
@@ -57,8 +58,14 @@ public class EnemyDarknessController extends Component {
     inDarkSpeed = new Vector2(defaultSpeed.x * SPEED_MULTIPLIER, defaultSpeed.y * SPEED_MULTIPLIER);
     movementComponent.setSpeed(inDarkSpeed);
 
-    List<PriorityTask> aiTasks = this.entity.getComponent(AITaskComponent.class).getTasks();
-    for (PriorityTask task : aiTasks) {
+    AITaskComponent aiTaskComponent = this.entity.getComponent(AITaskComponent.class);
+    List<Task> aiTasks;
+    if (aiTaskComponent != null) {
+      aiTasks = aiTaskComponent.getTasks();
+    } else {
+      aiTasks = this.entity.getComponent(MultiAITaskComponent.class).getParallelTasks();
+    }
+    for (Task task : aiTasks) {
       // If entity contains a fire bullet task then get the default fire duration and set the fire duration for in dark
       if (task instanceof DistanceFireBulletTask) {
         firingEntity = true;
@@ -80,7 +87,7 @@ public class EnemyDarknessController extends Component {
     // If the entity has a glowing eyes component then turn them on (as entity starts in darkness)
     glowingEyesComponent = this.entity.getComponent(GlowingEyesComponent.class);
     if (glowingEyesComponent != null) {
-      glowingEyeEntity = true;
+      glowingEntity = true;
       glowingEyesComponent.displayOn();
     }
 
@@ -120,7 +127,7 @@ public class EnemyDarknessController extends Component {
       if (firingEntity) {
         fireBulletTask.setFireDuration(inDarkFiringDuration);
       }
-      if (glowingEyeEntity) {
+      if (glowingEntity) {
         glowingEyesComponent.displayOn();
       }
     }
@@ -136,7 +143,7 @@ public class EnemyDarknessController extends Component {
       if (firingEntity) {
         fireBulletTask.setFireDuration(defaultFiringDuration);
       }
-      if (glowingEyeEntity) {
+      if (glowingEntity) {
         glowingEyesComponent.displayOff();
       }
     }

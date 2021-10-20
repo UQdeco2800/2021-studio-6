@@ -1,9 +1,9 @@
 {
  "largeEnemy": {
-	"health": 30,
+	"health": 40,
 	"baseAttack": 4,
-	"speed_x": 1,
-	"speed_y": 1,
+	"speed_x": 1.2,
+	"speed_y": 1.2,
    "rangedAttack": 0
   },
   "smallEnemy": {
@@ -30,8 +30,8 @@
   "rangedToughEnemy": {
     "health": 20,
     "baseAttack": 0,
-    "speed_x": 0.7,
-    "speed_y": 0.7,
+    "speed_x": 1,
+    "speed_y": 1,
     "rangedAttack": 3
   }
 }

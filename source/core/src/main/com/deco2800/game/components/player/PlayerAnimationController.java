@@ -4,6 +4,7 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -43,7 +44,11 @@ public class PlayerAnimationController extends Component {
   private final String[][] animationsUpChest= {{"back-chest", "back-run-chest"}, {"back-hurt-chest", "back-run-hurt-chest"}};
   private final String[][] animationsDownChest = {{"front-chest", "front-run-chest"}, {"front-hurt-chest", "front-run-hurt-chest"}};
   private final String[][][] animationChest = {animationsLeftChest, animationsRightChest, animationsDownChest, animationsUpChest};
-  private final String[][][][] animations = {animationNoArmor, animationHelmet, animationArmour, animationChest};
+  private final String[][][][] animations = {animationNoArmor, animationHelmet, animationArmour, animationChest
+  };
+  private IndependentAnimator invincbilityAnimator;
+  private boolean invinceStatus = false;
+  private long invincibilityEndTime;
 
   /**
    * Sets up relevant event trigger for getting hurt and starts default animation.
@@ -53,6 +58,7 @@ public class PlayerAnimationController extends Component {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     entity.getEvents().addListener("hurt",this::animateHurt);
     animator.startAnimation("front");
+    entity.getEvents().addListener("invincibility", this::invincibleStart);
   }
 
   /**
@@ -115,6 +121,11 @@ public class PlayerAnimationController extends Component {
       animator.startAnimation(anim);
       lastAnimation = anim;
     }
+
+    if (invinceStatus && (timeSource.getTime() >= invincibilityEndTime)) {
+      invinceStatus = false;
+      invincbilityAnimator.stopAnimation();
+    }
   }
 
   /**
@@ -123,5 +134,33 @@ public class PlayerAnimationController extends Component {
   void animateHurt() {
     hurtActive = true;
     hurtTime = timeSource.getTime();
+  }
+
+  /**
+   * Sets the local independent animator for the invincibility
+   * @param newAnimator the IndependentAnimator for the invincibility animation
+   */
+  public void setAnimator(IndependentAnimator newAnimator) {
+    this.invincbilityAnimator = newAnimator;
+  }
+
+  /**
+   * Sets the invincibility check to play the invinciblity animation
+   *
+   * @param length parameter for how long to set invincibility for (in milliseconds)
+   */
+  public void invincibleStart(long length) {
+    invincibilityEndTime = timeSource.getTime() + length;
+    invinceStatus = true;
+    invincbilityAnimator.startAnimation("active");
+  }
+
+
+  @Override
+  public void dispose() {
+    animator.dispose();
+    if (invincbilityAnimator != null) {
+      invincbilityAnimator.dispose();
+    }
   }
 }

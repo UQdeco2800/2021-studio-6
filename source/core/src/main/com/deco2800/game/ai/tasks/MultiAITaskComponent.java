@@ -78,5 +78,7 @@ public class MultiAITaskComponent extends Component implements TaskRunner {
         }
     }
 
-
+    public List<Task> getParallelTasks() {
+        return parallelTasks;
+    }
 }

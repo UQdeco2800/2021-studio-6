@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.ai.tasks.MultiAITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
 import com.deco2800.game.components.npc.*;
@@ -26,8 +27,6 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-
-import java.util.ServiceConfigurationError;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -61,11 +60,13 @@ public class NPCFactory {
     // Make this entity completely static
     spawnerNPC.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
 
+    // Add the spawn animation
+    spawnerNPC.getComponent(AnimationRenderComponent.class).addAnimation("spawn", 0.1f, Animation.PlayMode.LOOP);;
+
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = spawnerNPC.getComponent(NPCSoundComponent.class);
-    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.wav", Sound.class));
-    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/dead.wav", Sound.class));
-    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/detectPlayer.mp3", Sound.class));
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class));
     npcSoundComponent.setSpawn(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/spawn.wav", Sound.class));
 
     // Change size of entity and size of hitbox
@@ -89,11 +90,12 @@ public class NPCFactory {
     String atlasFileName = "images/Enemy_Assets/SmallEnemy/small_enemy.atlas";
     Entity smallEnemy = createBaseNPC(config, atlasFileName);
 
+
     // Setup the entities AI component
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 3f, 4f));
+                    .addTask(new ChaseTask(target, 10, 7f, 7f));
 
     // Add additional specific components
     smallEnemy.addComponent(new EnemyMeleeAttackComponent());
@@ -101,17 +103,16 @@ public class NPCFactory {
     smallEnemy.addComponent(new EnemyDarknessController());
     smallEnemy.addComponent(aiComponent);
     smallEnemy.addComponent(new LootComponent("coins", 1,2, 0.3f));
-    smallEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    smallEnemy.addComponent(new GlowingEyesComponent(
+        ServiceLocator.getResourceService().getAsset(atlasFileName, TextureAtlas.class)));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = smallEnemy.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = smallEnemy.getComponent(NPCSoundComponent.class);
-    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/hit.wav", Sound.class));
-    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/dead.wav", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class));
     npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class));
     npcSoundComponent.setMeleeAttack(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class));
 
@@ -140,7 +141,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 4f, 5f));
+            .addTask(new ChaseTask(target, 10, 7f, 7f));
 
     // Add additional specific components
     largeEnemy.addComponent(new EnemyMeleeAttackComponent());
@@ -148,17 +149,17 @@ public class NPCFactory {
     largeEnemy.addComponent(new EnemyDarknessController());
     largeEnemy.addComponent(aiComponent);
     largeEnemy.addComponent(new LootComponent("coins",5, 10, 1));
-    largeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    largeEnemy.addComponent(new GlowingEyesComponent(
+        ServiceLocator.getResourceService().getAsset(atlasFileName, TextureAtlas.class)));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = largeEnemy.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = largeEnemy.getComponent(NPCSoundComponent.class);
-    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/hit.wav", Sound.class));
-    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/dead.wav", Sound.class));
+    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/hit.mp3", Sound.class));
+    npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/dead.mp3", Sound.class));
     npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/detectPlayer.mp3", Sound.class));
     npcSoundComponent.setMeleeAttack(ServiceLocator.getResourceService().getAsset("sounds/enemies/LargeEnemy/meleeAttack.mp3", Sound.class));
 
@@ -181,34 +182,30 @@ public class NPCFactory {
     String atlasFileName = "images/Enemy_Assets/LongRangeEnemy/longRangeEnemy.atlas";
     Entity longRange = createBaseNPC(config, atlasFileName);
 
-    // Setup the entities AI component
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
+    MultiAITaskComponent aiComponent = new MultiAITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    aiComponent.addTask(new DistanceFireBulletTask(target, 2, 10, 8f));
 
     // Add additional specific components
-    longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"));
+    longRange.addComponent(new FireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png"));
     longRange.addComponent(new DarknessDetectionComponent());
     longRange.addComponent(new EnemyDarknessController());
     longRange.addComponent(aiComponent);
     longRange.addComponent(new LootComponent("coins",1, 3, 0.5f));
-    longRange.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    longRange.addComponent(new GlowingEyesComponent(
+        ServiceLocator.getResourceService().getAsset(atlasFileName, TextureAtlas.class)));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = longRange.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = longRange.getComponent(NPCSoundComponent.class);
-    npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/hit.mp3", Sound.class));
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/dead.mp3", Sound.class));
-    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/detectPlayer.mp3", Sound.class));
-    npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/shoot.wav", Sound.class));
+    npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/LongRangeEnemy/shoot.mp3", Sound.class));
 
     // Change size of entity and size of hitbox
-    longRange.setScale(new Vector2(1.5f, 1.5f));
+    longRange.setScale(new Vector2(1f, 1f));
     PhysicsUtils.setEntityPhysics(longRange, 6f, 0.8f, 0.8f, 0f, 0f);
 
     return longRange;
@@ -220,11 +217,10 @@ public class NPCFactory {
     String atlasFileName = "images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas";
     Entity toughLongRangeEnemy = createBaseNPC(config, atlasFileName);
 
-    // Setup the entities AI component
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new DistanceFireBulletTask(target, 4, 10, 8f));
+    // Create the ai component where both tasks run at the same time
+    MultiAITaskComponent aiComponent = new MultiAITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    aiComponent.addTask(new DistanceFireBulletTask(target, 4, 10, 10f));
 
     // Add additional specific components
     toughLongRangeEnemy.addComponent(new ToughFireBulletListener(target, gameArea, "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png"));
@@ -232,18 +228,17 @@ public class NPCFactory {
     toughLongRangeEnemy.addComponent(new EnemyDarknessController());
     toughLongRangeEnemy.addComponent(aiComponent);
     toughLongRangeEnemy.addComponent(new LootComponent("coins",3, 7, 1));
-    toughLongRangeEnemy.addComponent(new GlowingEyesComponent("images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"));
+    toughLongRangeEnemy.addComponent(new GlowingEyesComponent(
+        ServiceLocator.getResourceService().getAsset(atlasFileName, TextureAtlas.class)));
 
     // Add the render component to display glowing features when they are in the dark
     GlowingEyesComponent glowingEyesComponent = toughLongRangeEnemy.getComponent(GlowingEyesComponent.class);
-    glowingEyesComponent.initialise();
     glowingEyesComponent.setUnlit();
 
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = toughLongRangeEnemy.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/hit.mp3", Sound.class));
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/dead.mp3", Sound.class));
-    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3", Sound.class));
     npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.wav", Sound.class));
 
     // Change size of entity and size of hitbox
@@ -290,6 +285,14 @@ public class NPCFactory {
     animator.addAnimation("right-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("back-run-damaged", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("front-run-damaged", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("back-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("front-run-damaged-hit", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("dead", 0.1f, Animation.PlayMode.LOOP);
 
     // Create the base entity with standard components in each NPC

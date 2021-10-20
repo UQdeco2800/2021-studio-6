@@ -62,7 +62,7 @@ public class DistanceFireBulletTask extends DefaultTask implements PriorityTask 
      */
     @Override
     public void update() {
-        if (!timeSource.isPaused() && timeSource.getTime() >= endTime) {
+        if (!timeSource.isPaused() && timeSource.getTime() >= endTime && getActivePriority() != -1) {
             this.owner.getEntity().getEvents().trigger("fire");
 
             endTime = timeSource.getTime() + (int)(duration * ONE_SECOND);

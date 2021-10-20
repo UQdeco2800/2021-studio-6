@@ -15,11 +15,12 @@ public class EnemyMeleeAttackComponent extends Component {
     private static final int ONE_SECOND = 1000;
     private boolean playerInAttackRange;
     private boolean playerInitialised = false;
-    short targetLayer = PhysicsLayer.PLAYER;
+    private short targetLayer = PhysicsLayer.PLAYER;
     private long endTime;
     private float attackInterval = 2f;
-    PlayerCombatStatsComponent playerStats;
-    CombatStatsComponent myStats;
+    private PlayerCombatStatsComponent playerStats;
+    private CombatStatsComponent myStats;
+    private NPCSoundComponent soundComponent;
 
     private final GameTime timeSource = ServiceLocator.getTimeSource();
 
@@ -31,6 +32,7 @@ public class EnemyMeleeAttackComponent extends Component {
         entity.getEvents().addListener("collisionStart", this::onPlayerClose);
         entity.getEvents().addListener("collisionEnd", this::onPlayerFar);
         myStats = entity.getComponent(CombatStatsComponent.class);
+        soundComponent = entity.getComponent(NPCSoundComponent.class);
     }
 
     /**
@@ -48,6 +50,7 @@ public class EnemyMeleeAttackComponent extends Component {
 
         // If the player is in attack range and the attack is not on cooldown then hit the player and start cooldown
         if (!timeSource.isPaused() && playerInAttackRange && timeSource.getTime() >= endTime) {
+            soundComponent.playMeleeAttack();
             playerStats.hit(myStats);
             endTime = timeSource.getTime() + (int)(attackInterval * ONE_SECOND);
         }

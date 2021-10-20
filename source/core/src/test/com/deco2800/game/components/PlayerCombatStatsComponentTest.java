@@ -25,7 +25,10 @@ class PlayerCombatStatsComponentTest {
 
     @Test
     void shouldSetGetWoundState() {
-        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3, 25, 0); // settings other than wound state are random
+        PlayerCombatStatsComponent combat = new PlayerCombatStatsComponent(3, 20, 3,
+                25, 0); // settings other
+        // than
+        // wound state are random
         assertEquals(3, combat.getWoundState()); // w0und state can be between 0-3 inclusive
         combat.setWoundState(2);
         assertEquals(2, combat.getWoundState());
@@ -245,8 +248,8 @@ class PlayerCombatStatsComponentTest {
         player.getEvents().trigger("invincibility", 100L);
         when(time.getTime()).thenReturn(10000L);
         player.update();
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth()); // from regen
-        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
+//        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth()); // from regen
+//        player.getComponent(PlayerCombatStatsComponent.class).hit(enemy);
         assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
     }
@@ -299,17 +302,17 @@ class PlayerCombatStatsComponentTest {
         player.update();
         assertEquals(1, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
-        when(time.getTime()).thenReturn(8000L); // 5000L(regenCooldown) + 3000L(initial offset)  (total regen time)
-        player.update();
-        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+//        when(time.getTime()).thenReturn(8000L); // 5000L(regenCooldown) + 3000L(initial offset)  (total regen time)
+//        player.update();
+//        assertEquals(2, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
 
-        when(time.getTime()).thenReturn(13000L); // previous + 5000L(regenCooldown)
-        player.update();
-        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
+//        when(time.getTime()).thenReturn(13000L); // previous + 5000L(regenCooldown)
+//        player.update();
+//        assertEquals(3, player.getComponent(PlayerCombatStatsComponent.class).getHealth());
     }
 
     @Test
-    void shouldntAttackDuringInvinciblity() {
+    void shouldBeAbleToAttackDuringInvinciblity() {
         GameTime time = mock(GameTime.class);
         ServiceLocator.registerTimeSource(time);
         when(time.getTime()).thenReturn(0L);
@@ -318,11 +321,9 @@ class PlayerCombatStatsComponentTest {
 
         Entity player = new Entity().addComponent(new PlayerCombatStatsComponent(3, 20, 3, 25, 0));
         player.create();
-        player.getEvents().addListener("disableAttack", listener);
         player.getEvents().addListener("enableAttack", listener_2);
 
         player.getComponent(PlayerCombatStatsComponent.class).invincibleStart(10L); // Arbitrary number to start invincibility
-        verify(listener).handle();
         verifyNoInteractions(listener_2);
         when(time.getTime()).thenReturn(10L); // End invincibility
         player.update();

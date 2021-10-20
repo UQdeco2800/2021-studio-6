@@ -58,20 +58,14 @@ public abstract class GameArea implements Disposable {
       "images/playeritems/tourch/torch.atlas",
       "images/weapon/baseball.atlas",
       "images/playeritems/rock/rock.atlas",
-      "images/playeritems/firecracker/firecracker.atlas"
+      "images/playeritems/firecracker/firecracker.atlas",
+      "images/playeritems/Bubble/invincibility.atlas"
   };
 
 
   protected static final String[] enemyAssets = {
-      "images/Enemy_Assets/LongRangeEnemy/eye.png",
-      "images/Enemy_Assets/LongRangeEnemy/blood_ball.png",
-      "images/Enemy_Assets/LargeEnemy/largeEnemy.png",
-      "images/Enemy_Assets/ToughLongRangeEnemy/short-rangeEnemy.png",
-      "images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.png",
-      "images/Enemy_Assets/SmallEnemy/SmallEnemy.png",
-      "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
-      "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png",
-      "images/Enemy_Assets/SmallEnemy/small_enemy_redeyes.png"
+      "images/Enemy_Assets/LongRangeEnemy/bloodball_purple.png",
+      "images/Enemy_Assets/ToughLongRangeEnemy/tough-projectile.png"
   };
 
   protected static final String[] enemyAtlas = {
@@ -86,23 +80,18 @@ public abstract class GameArea implements Disposable {
   protected static final String[] enemySounds = {
           "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
           "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
-          "sounds/enemies/ToughLongRangeEnemy/detectPlayer.mp3",
           "sounds/enemies/ToughLongRangeEnemy/shoot.wav",
-          "sounds/enemies/LongRangeEnemy/hit.mp3",
           "sounds/enemies/LongRangeEnemy/dead.mp3",
-          "sounds/enemies/LongRangeEnemy/detectPlayer.mp3",
-          "sounds/enemies/LongRangeEnemy/shoot.wav",
-          "sounds/enemies/LargeEnemy/hit.wav",
-          "sounds/enemies/LargeEnemy/dead.wav",
+          "sounds/enemies/LongRangeEnemy/shoot.mp3",
+          "sounds/enemies/LargeEnemy/hit.mp3",
+          "sounds/enemies/LargeEnemy/dead.mp3",
           "sounds/enemies/LargeEnemy/detectPlayer.mp3",
           "sounds/enemies/LargeEnemy/meleeAttack.mp3",
-          "sounds/enemies/SmallEnemy/hit.wav",
-          "sounds/enemies/SmallEnemy/dead.wav",
+          "sounds/enemies/SmallEnemy/dead.mp3",
           "sounds/enemies/SmallEnemy/detectPlayer.wav",
           "sounds/enemies/SmallEnemy/meleeAttack.mp3",
-          "sounds/enemies/SpawnerEnemy/hit.wav",
-          "sounds/enemies/SpawnerEnemy/dead.wav",
-          "sounds/enemies/SpawnerEnemy/detectPlayer.mp3",
+          "sounds/enemies/SpawnerEnemy/hit.mp3",
+          "sounds/enemies/SpawnerEnemy/dead.mp3",
           "sounds/enemies/SpawnerEnemy/spawn.wav"
   };
 
@@ -112,6 +101,18 @@ public abstract class GameArea implements Disposable {
 
   protected static final String[] fireflyAtlas = {
           "images/firefly/firefly.atlas"
+  };
+
+  protected static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg",
+          "sounds/weapon-axe.wav",
+          "sounds/weapon-sword.ogg",
+          "sounds/weapon-dagger.wav",
+          "sounds/slingshot.ogg",
+          "sounds/dash.ogg",
+          "sounds/Impact4.ogg"
   };
 
   protected GameArea() {
@@ -191,23 +192,33 @@ public abstract class GameArea implements Disposable {
     spawnEntityAt(smallEnemy, randomPos, true, true);
   }
 
+  /**
+   * Used to load assets shared between all levels
+   */
   public void loadSharedAssets() {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(playerAssets);
     resourceService.loadTextures(enemyAssets);
+    resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadTextureAtlases(playerAtlas);
     resourceService.loadTextureAtlases(enemyAtlas);
     resourceService.loadTextures(fireflyAssets);
     resourceService.loadTextureAtlases(fireflyAtlas);
   }
 
-
+  /**
+   * Used to unload assets shared between all levels
+   */
   public void unloadSharedAssets() {
       ResourceService resourceService = ServiceLocator.getResourceService();
       resourceService.unloadAssets(playerAssets);
       resourceService.unloadAssets(enemyAssets);
+      resourceService.unloadAssets(enemySounds);
       resourceService.unloadAssets(playerAtlas);
       resourceService.unloadAssets(enemyAtlas);
+    resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
       resourceService.unloadAssets(fireflyAssets);
       resourceService.unloadAssets(fireflyAtlas);
   }

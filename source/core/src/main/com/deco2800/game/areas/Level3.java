@@ -823,6 +823,8 @@ public class Level3 extends GameArea {
       spawnEntityAt(torch, position, false, false);
       torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");
     }
+    //Torch left of bridge near end
+    //Centered so it doesn't look weirdly offset from other torch
     Entity torch = ObstacleFactory.createTorch();
     spawnEntityAt(torch, new GridPoint2(48, 28), true, false);
     torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");

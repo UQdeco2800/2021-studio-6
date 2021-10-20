@@ -327,7 +327,7 @@ public class ObstacleFactory {
         .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
-        .addComponent(new PointLightComponent(Colors.get("BLACK"), 4f, 0f, 0.25f))
+        .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER));
 

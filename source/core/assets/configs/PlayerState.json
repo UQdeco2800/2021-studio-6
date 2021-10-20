@@ -1,18 +1,18 @@
 {
   "woundState": 3,
   "baseAttack": 10,
-  "baseRangedAttack": 5,
+  "baseRangedAttack": 3,
   "defenceLevel": 0,
   "gold": 100,
-  "ammo": 10,
+  "ammo": 5,
   "bulletMagazine": 5,
   "favouriteColour": "peach",
   "health" : 3,
-  "bandages": 3,
-  "ability": "FIRE_CRACKER",
+  "bandages": 2,
+  "ability": "LONG_DASH",
   "meleeWeaponType": "BAT",
   "armorType": "NONE",
   "meleeFilePath": "configs/Baseball.json",
   "currentGameLevel": 1,
-  "torch": 100
+  "torch": 200
 }

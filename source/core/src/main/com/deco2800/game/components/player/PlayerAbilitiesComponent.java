@@ -1,8 +1,11 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.items.Abilities;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -19,6 +22,8 @@ public class PlayerAbilitiesComponent extends Component {
     private static final long DASH_LENGTH = 200; // in milliseconds
     private static final long EXPLOSION_DELAY_LENGTH = 2000; // in milliseconds
     private static final long INVINCIBILITY_LENGTH = 3000;
+    private static final long COOLDOWN_REDUCTION = 2000; // in milliseconds
+    private IndependentAnimator invincibiltyAnimation;
     /**
      * Basic constructor for setting the players chosen ability
      * @param ability is the ability state to set the player to
@@ -72,5 +77,13 @@ public class PlayerAbilitiesComponent extends Component {
                 // default not required as all set enums should have function in switch
             }
         }
+    }
+
+    /**
+     * Used to reduce ability cooldown when you kill an enemy
+     */
+    void reduceCooldown() {
+        entity.getEvents().trigger("jumpAnimation");
+        this.delayEndTime -= COOLDOWN_REDUCTION;
     }
 }

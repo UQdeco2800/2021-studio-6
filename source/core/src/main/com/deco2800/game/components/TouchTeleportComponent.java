@@ -1,9 +1,6 @@
 package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.areas.Level1;
-import com.deco2800.game.areas.SafehouseGameArea;
-import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.screens.MainGameScreen;

@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.FlickerLightComponent;
-import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -26,17 +25,15 @@ import java.util.Set;
 public class FireCrackerCollisionComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(FireCrackerCollisionComponent.class);
     short targetLayer = PhysicsLayer.NPC;
-    short playerLayer = PhysicsLayer.PLAYER;
     short wallLayer = PhysicsLayer.WALL;
     private boolean explosionStatus = false;
     private boolean inflictDamageOnce = true;
     private PlayerCombatStatsComponent playerCombatStatsComponent;
     private HitboxComponent hitboxComponent;
     private ColliderComponent colliderComponent;
-    private PhysicsMovementComponent physicsComponent;
     private final GameTime timeSource = ServiceLocator.getTimeSource();
-    private static long endTimeFlameAOE = 0;
-    private static long intervalFlameAOE = 0;
+    private long endTimeFlameAOE = 0;
+    private long intervalFlameAOE = 0;
     private static final Vector2 HIDDEN_COORD = new Vector2(-10,-10);
 
     // duration lasts for 6s but only damages enemies every 2s
@@ -48,9 +45,9 @@ public class FireCrackerCollisionComponent extends Component {
     private final Set<Fixture> uneffectedEnemies = new HashSet<>();
     private int light = 8;
 
-    private final int EXPLOSION_MULTIPLIER = 2;
-    private final int DAMAGE_MULTIPLIER = 1;
-
+    /**
+     * Used to give behavior to fire cracker when it is thrown - like explosion, animation and inflicting damage
+     */
     public FireCrackerCollisionComponent() {
     }
 
@@ -61,7 +58,6 @@ public class FireCrackerCollisionComponent extends Component {
         playerCombatStatsComponent = entity.getComponent(PlayerCombatStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
         colliderComponent = entity.getComponent(ColliderComponent.class);
-        physicsComponent = entity.getComponent(PhysicsMovementComponent.class);
     }
 
     @Override
@@ -77,23 +73,25 @@ public class FireCrackerCollisionComponent extends Component {
             if (inflictDamageOnce) {
                 light = 8;
                 this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light);
-                inflictDamage(EXPLOSION_MULTIPLIER);
+                int explosionMultiplier = 2;
+                inflictDamage(explosionMultiplier);
                 inflictDamageOnce = false;
             }
 
             // AOE is still around after explosion
             if (timeSource.getTime() < endTimeFlameAOE) {
-
+                int decreaseLight = light -= 2;
 
                 if (timeSource.getTime() ==(intervalFlameAOE/2)) {
-                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light -= 2);
+                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(decreaseLight);
                 }
 
                 // AOE flame damages NPCs every 2 seconds
                 if (timeSource.getTime() > intervalFlameAOE) {
-                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(light -= 2);
+                    this.getEntity().getComponent(FlickerLightComponent.class).changeDistance(decreaseLight);
                     logger.debug("Has been 2 seconds in game, damage will be dealt");
-                    inflictDamage(DAMAGE_MULTIPLIER);
+                    int damageMultiplier = 1;
+                    inflictDamage(damageMultiplier);
                     intervalFlameAOE = timeSource.getTime() + DAMAGE_INTERVAL;
                 }
 
@@ -163,14 +161,13 @@ public class FireCrackerCollisionComponent extends Component {
 
         // this will only be activated once fire cracker stops moving - no damage will be dealt to enemy NPCs but
         // will track anything that is within the vicinity of AOE
-        if (hitboxComponent.getFixture() == me) {
+        // if enemy NPC is not registered yet, register it for damage inflicting later
+        if ((hitboxComponent.getFixture() == me) &&
+                (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) &&
+                (!effectedEnemies.contains(other))) {
 
-            // if enemy NPC is not registered yet, register it for damage inflicting later
-            if (PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits) && !
-                    effectedEnemies.contains(other)) {
-                logger.debug("Enemy should be added to be inflicted with damage");
-                effectedEnemies.add(other);
-            }
+            logger.debug("Enemy should be added to be inflicted with damage");
+            effectedEnemies.add(other);
         }
     }
 
@@ -207,7 +204,7 @@ public class FireCrackerCollisionComponent extends Component {
 
             targetStats.hit(playerCombatStatsComponent.getBaseRangedAttack() * multiplier);
 
-            if (targetStats.isDead()) {
+            if (Boolean.TRUE.equals(targetStats.isDead())) {
                 uneffectedEnemies.add(fixture);
             }
         }

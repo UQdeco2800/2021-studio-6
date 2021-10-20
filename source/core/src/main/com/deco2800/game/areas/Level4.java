@@ -53,12 +53,16 @@ public class Level4 extends GameArea {
             "images/Final_Boss/boss_head.png",
             "images/Final_Boss/beam.png",
             "images/Final_Boss/boss_head.png", "images/Final_Boss/beam.png",
-            "images/playeritems/coin/coin1.png", "images/playeritems/coin/coin2.png",
-            "images/Player_Sprite/25.png", "images/playeritems/bandage/bandage01.png", "images/playeritems/armour.png",
-            "images/playeritems/halmet.png", "images/playeritems/sword/sword1.png",
-            "images/playeritems/firecracker/firecracker.png",
             "images/obstacle_sprite/cobweb.png",
             "images/obstacle_sprite/bush.png",
+            "images/level_2/level2_grass_1.png",
+            "images/level_2/level2_grass_2.png",
+            "images/level_2/level2_grass_3.png",
+            "images/level_2/level2_grass_4.png",
+            "images/level_2/level2_grass_5.png",
+            "images/level_2/level2_grass_6.png",
+            "images/level_2/level2_tree_1-1.png",
+            "images/level_2/level2_tree_2-1.png",
             "images/level_3/level3_grass_tiles/grass-base.png",
             "images/level_3/level3_grass_tiles/grass-1.png",
             "images/level_3/level3_grass_tiles/grass-2.png",
@@ -69,10 +73,7 @@ public class Level4 extends GameArea {
             "images/level_3/sand_to_water.png",
             "images/level_3/grass_to_sand.png",
             "images/level_3/grass_sand_mix.png",
-            "images/gunman.png",
-            "images/player.png",
             "images/Enemy_Assets/SpawnerEnemy/spawnerEgg.png",
-            "images/iso_grass_3.png",
             "images/safehouse/exterior-day1-latest.png",
             "images/grass_1.png",
             "images/grass_2.png",
@@ -102,11 +103,6 @@ public class Level4 extends GameArea {
     };
 
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-    private static final String[] playerSounds = {
-            "sounds/bandage-use.ogg",
-            "sounds/hurt.ogg",
-            "sounds/item-pickup.ogg"
-    };
 
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
@@ -435,6 +431,7 @@ public class Level4 extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(forestSounds);
+        resourceService.unloadAssets(playerSounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }
 

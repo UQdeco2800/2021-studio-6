@@ -1,10 +1,13 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
 import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
 import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
@@ -23,7 +26,7 @@ import java.util.List;
 /**
  * A ui component for displaying player stats, e.g. health.
  */
-public class PlayerInterfaceDisplay extends UIComponent {
+public class  PlayerInterfaceDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(PlayerInterfaceDisplay.class);
   Table table, tableCoin, tableBandage, tableAmmo, tableGunMagazine, tableHealth, tableReload, tableTemp;
   private Image healthBar;
@@ -41,13 +44,15 @@ public class PlayerInterfaceDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+
+    double level = MainGameScreen.getGameLevel();
+
     healthAnimator =
         new IndependentAnimator(
             ServiceLocator.getResourceService()
                 .getAsset("images/hud/health.atlas", TextureAtlas.class), false);
+
     healthAnimator.setCamera(true);
-    healthAnimator.setPositions(9, (float) 4);
-    healthAnimator.setScale( 3, 1);
     healthAnimator.addAnimation("health1", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health2", 0.1f, Animation.PlayMode.NORMAL);
     healthAnimator.addAnimation("health3", 0.1f, Animation.PlayMode.NORMAL);
@@ -68,11 +73,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
                 .getAsset("images/hud/dashbar.atlas", TextureAtlas.class), false);
     dashAnimator.addAnimation("dashbar", 0.4f, Animation.PlayMode.NORMAL);
     dashAnimator.addAnimation("dashbarFull", 0.1f, Animation.PlayMode.NORMAL);
-
     dashAnimator.setCamera(true);
-    dashAnimator.setPositions(9, (float) 4.7);
-    dashAnimator.setScale( 3, (float) 0.5);
-
     entity.getEvents().addListener("firstHit", this::removeHealth);
     entity.getEvents().addListener("updateBandageHUD", this::updatePlayerBandageUI);
     entity.getEvents().addListener("updateAmmoHUD", this::updatePlayerAmmoUI);
@@ -86,6 +87,22 @@ public class PlayerInterfaceDisplay extends UIComponent {
 
     int bulletCount = entity.getComponent(PlayerRangeAttackComponent.class).getGunMagazine();
     updateBulletImageHUD(bulletCount);
+
+    if (level != 4) {
+      healthAnimator.setPositions(9, (float) 4);
+      healthAnimator.setScale( 3, 1);
+      dashAnimator.setPositions(9, (float) 4.7);
+      dashAnimator.setScale( 3, (float) 0.5);
+    } else {
+      healthAnimator.setPositions(18, (float) 8.5);
+      healthAnimator.setScale( 6, 2);
+      dashAnimator.setPositions(19, (float) 10);
+      dashAnimator.setScale( 6, (float) 1);
+    }
+
+
+
+
   }
 
   public void setAnimations() {
@@ -108,7 +125,7 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableHealth = new Table();
     tableHealth.top().left();
     tableHealth.setFillParent(true);
-    tableHealth.padTop(250f);
+    tableHealth.padTop(0f);
     tableHealth.add(healthBar).size(110f, 32f);
 
 
@@ -153,22 +170,22 @@ public class PlayerInterfaceDisplay extends UIComponent {
     reloadLabel = new Label(reloadText, skin, "large");
 
     tableCoin = new Table();
-    tableCoin.padTop(500f).padLeft(270f);
+    tableCoin.padRight(70f);
     tableCoin.add(coinImage);
     tableCoin.add(coinLabel);
 
     tableBandage = new Table();
-    tableBandage.padLeft(260f);
+    tableBandage.padRight(85f);
     tableBandage.add(bandageImage).size(bandageSideLength);
     tableBandage.add(bandageLabel);
 
     tableAmmo = new Table();
-    tableAmmo.padLeft(270f);
+    tableAmmo.padRight(85f);
     tableAmmo.add(ammoImage);
     tableAmmo.add(ammoLabel);
 
     tableGunMagazine = new Table();
-    tableGunMagazine.padLeft(270f).padTop(-20f);
+    tableGunMagazine.padRight(35f);
     tableGunMagazine.add(bulletImage1);
     tableGunMagazine.add(bulletImage2);
     tableGunMagazine.add(bulletImage3);
@@ -180,16 +197,16 @@ public class PlayerInterfaceDisplay extends UIComponent {
     tableReload.setVisible(false);
 
     table.row();
-    table.add(tableCoin).left();
+    table.add(tableCoin).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableBandage).left();
+    table.add(tableBandage).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableAmmo).left();
+    table.add(tableAmmo).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableReload).left().padLeft(600f);
+    table.add(tableReload).width(Value.percentWidth(.45F, table));
     table.row();
-    table.add(tableGunMagazine).left();
-
+    table.add(tableGunMagazine).width(Value.percentWidth(.55F, table));
+    table.bottom().padBottom(30F);
     stage.addActor(table);
   }
 

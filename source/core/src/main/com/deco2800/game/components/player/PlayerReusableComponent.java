@@ -42,20 +42,15 @@ public class PlayerReusableComponent extends Component {
         if (inventory.hasBandages(MIN_BANDAGE_NUM)) {
             // if player is at max wound state, do not do anything
             if (!playerStats.atMax()) {
+                PlayerSoundComponent pcs = entity.getComponent(PlayerSoundComponent.class);
+                if(pcs != null) { pcs.playUseBandage(); }
+
                 int currentWoundState = playerStats.getWoundState();
                 int bandageCount = inventory.getBandages();
 
                 updateBandageCount(bandageCount - BANDAGE_USED);
                 playerStats.setWoundState(currentWoundState + INCREASE_WOUND_STATE);
 
-                // Bypass if ServiceLocator isn't loaded.
-                //TODO: Have to refactor this somehow...
-                Sound sound = ServiceLocator.getResourceService() != null
-                        ? ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class)
-                        : null;
-                if(sound != null) {
-                    sound.play();
-                }
 
             }
         }

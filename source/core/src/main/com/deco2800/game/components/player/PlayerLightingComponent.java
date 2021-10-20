@@ -35,7 +35,7 @@ public class PlayerLightingComponent extends FlickerLightComponent {
         torchAnimator.addAnimation("back", 0.2f, Animation.PlayMode.LOOP);
         torchAnimator.addAnimation("right", 0.2f, Animation.PlayMode.LOOP);
         torchAnimator.addAnimation("front", 0.2f, Animation.PlayMode.LOOP);
-        torchAnimator.setCamera(true);
+        torchAnimator.setCamera(false);
         torchAnimator.setScale(1, 1);
         torch.setter();
     }

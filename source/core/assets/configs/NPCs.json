@@ -1,6 +1,6 @@
 {
  "largeEnemy": {
-	"health": 30,
+	"health": 40,
 	"baseAttack": 4,
 	"speed_x": 1.2,
 	"speed_y": 1.2,

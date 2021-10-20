@@ -43,9 +43,6 @@ public class Level3 extends GameArea {
     "images/level_2/level2_tree_2-1.png",
     "images/level_2/level2_background_tile.png",
     "images/safehouse/exterior-day1-latest.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
     "images/level_3/level3_dead_group_pine_tree.png",
     "images/level_3/level3_brown_group_pine_tree.png",
     "images/level_2/level2_tree_2_group_ver1.png",
@@ -74,21 +71,23 @@ public class Level3 extends GameArea {
     "images/level_3/new_darker_water_tiles/water-top-sand.png",
     "images/dialogue/raw/npc_indicator.png",
     "images/level_2/fire-fly-bug-NPC.png",
-    "images/playeritems/bandage/bandage01.png"
+    "images/level_2/brush.png",
+    "images/level_2/brush2.png",
+    "images/level_2/fallen_log.png",
+    "images/level_2/stump.png",
+    "images/level_2/treeBlue.png",
+      "images/level_3/palm_tree-dying-day1-v1.0.png"
   };
 
   /**
    * Texture atlases file path for Level 3.
    */
   private static final String[] forestTextureAtlases = {
+      "images/level_2/campfire.atlas",
+      "images/level_2/tree.atlas",
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String[] playerSounds = {
-          "sounds/bandage-use.ogg",
-          "sounds/hurt.ogg",
-          "sounds/item-pickup.ogg"
-  };
+  private static final String[] forestSounds = {};
 
   private static final String BACKGROUND_MUSIC = "sounds/fireflies-theme-sneak.mp3";
   private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
@@ -108,14 +107,8 @@ public class Level3 extends GameArea {
 
     // Spawn terrain/assets entities
     spawnTerrain();
-    spawnTerrainTriGreenPineTrees();
-    spawnTerrainTriBrownPineTrees();
+    spawnObstacles();
     spawnSafehouse();
-    spawnCobweb();
-    spawnBush();
-    spawnWaterGreenTiles();
-    spawnBridge();
-    spawnWaterSandTiles();
     spawnFireFlyBugNPC();
 
     // Spawn player related entities
@@ -196,62 +189,134 @@ public class Level3 extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
+
+
+  /**
+   * Spawns all the assets, obstacles and other environmental objects
+   */
+  private void spawnObstacles() {
+    spawnTress();
+    spawnCobweb();
+    spawnBush();
+    spawnWaterGreenTiles();
+    spawnBridge();
+    spawnWaterSandTiles();
+    spawnFlavour();
+  }
+
+
+  /**
+   * Handles spawning the flavour assets. These include the campfire, tree stump, log, log pile, big and small bush and
+   * the horizontal and vertical twigs
+   */
+  private void spawnFlavour() {
+    GridPoint2[] spawnLocations;
+
+    spawnLocations = new GridPoint2[]{
+        new GridPoint2(5, 39),
+        new GridPoint2(16, 4),
+        new GridPoint2(44, 4),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity campfire = ObstacleFactory.createCampfire();
+      spawnEntityAt(campfire, spawnLocation, false, false);
+    }
+
+    spawnLocations = new GridPoint2[]{
+        new GridPoint2(3, 34),
+        new GridPoint2(11, 21),
+        new GridPoint2(18, 11),
+        new GridPoint2(3, 7),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity stump = ObstacleFactory.createStump();
+      spawnEntityAt(stump, spawnLocation, false, false);
+    }
+
+    spawnLocations = new GridPoint2[]{
+        new GridPoint2(22, 22),
+        new GridPoint2(8, 21),
+        new GridPoint2(18, 12),
+        new GridPoint2(35, 12),
+        new GridPoint2(3, 11),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity bushSmall = ObstacleFactory.createBushSmall();
+      spawnEntityAt(bushSmall, spawnLocation, false, false);
+    }
+
+    spawnLocations = new GridPoint2[]{
+        new GridPoint2(5, 44),
+        new GridPoint2(2, 29),
+        new GridPoint2(25, 20),
+        new GridPoint2(10, 16),
+        new GridPoint2(11, 9),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity bushBig = ObstacleFactory.createBushBig();
+      spawnEntityAt(bushBig, spawnLocation, false, false);
+    }
+  }
+
+  /**
+   * Handles spawning in the different types of trees.
+   */
+  private void spawnTress() {
+    spawnTerrainTriGreenPineTrees();
+    spawnTerrainTriBrownPineTrees();
+    spawnBlueTrees();
+    spawnFallenTree();
+    spawnAnimatedTrees();
+    spawnPalmTrees();
+  }
+
   /**
    * Spawns the group green pine trees that act as a visual terrain boundary.
    */
   private void spawnTerrainTriGreenPineTrees() {
     // This looks pretty ugly right now I know, this was generated with excel
     GridPoint2[] spawnLocations = {
-      new GridPoint2(0, 45), new GridPoint2(1, 45), new GridPoint2(2, 45),
-      new GridPoint2(3, 45), new GridPoint2(4, 45), new GridPoint2(5, 45),
-      new GridPoint2(6, 45), new GridPoint2(7, 45), new GridPoint2(8, 45),
-      new GridPoint2(9, 45), new GridPoint2(10, 45), new GridPoint2(11, 45),
-      new GridPoint2(12, 45), new GridPoint2(13, 45), new GridPoint2(14, 45),
-      new GridPoint2(15, 45), new GridPoint2(16, 45), new GridPoint2(17, 45),
-      new GridPoint2(18, 45), new GridPoint2(0, 44), new GridPoint2(18, 44),
-      new GridPoint2(0, 43), new GridPoint2(18, 43), new GridPoint2(18, 42),
-      new GridPoint2(18, 41), new GridPoint2(18, 40), new GridPoint2(18, 39),
-      new GridPoint2(0, 38), new GridPoint2(18, 38), new GridPoint2(0, 37),
-      new GridPoint2(18, 37), new GridPoint2(0, 36), new GridPoint2(1, 36),
-      new GridPoint2(2, 36), new GridPoint2(3, 36), new GridPoint2(4, 36),
-      new GridPoint2(5, 36), new GridPoint2(6, 36), new GridPoint2(7, 36),
-      new GridPoint2(8, 36), new GridPoint2(9, 36), new GridPoint2(18, 36),
-      new GridPoint2(0, 35), new GridPoint2(18, 35), new GridPoint2(0, 34),
-      new GridPoint2(18, 34), new GridPoint2(0, 33), new GridPoint2(18, 33),
-      new GridPoint2(0, 32), new GridPoint2(18, 32), new GridPoint2(0, 31),
-      new GridPoint2(18, 31), new GridPoint2(0, 30), new GridPoint2(18, 30),
-      new GridPoint2(0, 29), new GridPoint2(18, 29), new GridPoint2(0, 28),
-      new GridPoint2(18, 28), new GridPoint2(0, 27), new GridPoint2(9, 27),
-      new GridPoint2(10, 27), new GridPoint2(11, 27), new GridPoint2(12, 27),
-      new GridPoint2(13, 27), new GridPoint2(14, 27), new GridPoint2(15, 27),
-      new GridPoint2(16, 27), new GridPoint2(17, 27), new GridPoint2(18, 27),
-      new GridPoint2(0, 26), new GridPoint2(18, 26), new GridPoint2(0, 25),
-      new GridPoint2(18, 25), new GridPoint2(0, 24), new GridPoint2(18, 24),
-      new GridPoint2(0, 23), new GridPoint2(18, 23), new GridPoint2(0, 22),
-      new GridPoint2(18, 22), new GridPoint2(0, 21), new GridPoint2(18, 21),
-      new GridPoint2(0, 20), new GridPoint2(18, 20), new GridPoint2(0, 19),
-      new GridPoint2(18, 19), new GridPoint2(0, 18), new GridPoint2(9, 18),
-      new GridPoint2(10, 18), new GridPoint2(11, 18), new GridPoint2(12, 18),
-      new GridPoint2(13, 18), new GridPoint2(14, 18), new GridPoint2(15, 18),
-      new GridPoint2(16, 18), new GridPoint2(17, 18), new GridPoint2(18, 18),
-      new GridPoint2(0, 17), new GridPoint2(0, 16), new GridPoint2(0, 15),
-      new GridPoint2(0, 14), new GridPoint2(0, 13), new GridPoint2(0, 12),
-      new GridPoint2(0, 11), new GridPoint2(0, 10), new GridPoint2(0, 9),
-      new GridPoint2(9, 9), new GridPoint2(0, 8), new GridPoint2(9, 8),
-      new GridPoint2(18, 8), new GridPoint2(0, 7), new GridPoint2(9, 7),
-      new GridPoint2(18, 7), new GridPoint2(0, 6), new GridPoint2(9, 6),
-      new GridPoint2(18, 6), new GridPoint2(0, 5), new GridPoint2(9, 5),
-      new GridPoint2(18, 5), new GridPoint2(0, 4), new GridPoint2(9, 4),
-      new GridPoint2(18, 4), new GridPoint2(0, 3), new GridPoint2(9, 3),
-      new GridPoint2(18, 3), new GridPoint2(0, 2), new GridPoint2(9, 2),
-      new GridPoint2(18, 2), new GridPoint2(0, 1), new GridPoint2(9, 1),
-      new GridPoint2(18, 1), new GridPoint2(0, 0), new GridPoint2(1, 0),
-      new GridPoint2(2, 0), new GridPoint2(3, 0), new GridPoint2(4, 0),
-      new GridPoint2(5, 0), new GridPoint2(6, 0), new GridPoint2(7, 0),
-      new GridPoint2(8, 0), new GridPoint2(9, 0), new GridPoint2(10, 0),
-      new GridPoint2(11, 0), new GridPoint2(12, 0), new GridPoint2(13, 0),
-      new GridPoint2(14, 0), new GridPoint2(15, 0), new GridPoint2(16, 0),
-      new GridPoint2(17, 0), new GridPoint2(18, 0),
+        new GridPoint2(3, 45), new GridPoint2(4, 45), new GridPoint2(5, 45),
+        new GridPoint2(6, 45), new GridPoint2(7, 45), new GridPoint2(8, 45),
+        new GridPoint2(9, 45), new GridPoint2(10, 45), new GridPoint2(18, 44),
+        new GridPoint2(18, 43), new GridPoint2(0, 42), new GridPoint2(18, 42),
+        new GridPoint2(18, 41), new GridPoint2(18, 40), new GridPoint2(18, 39),
+        new GridPoint2(0, 38), new GridPoint2(18, 38), new GridPoint2(0, 37),
+        new GridPoint2(18, 37), new GridPoint2(0, 36), new GridPoint2(1, 36),
+        new GridPoint2(2, 36), new GridPoint2(3, 36), new GridPoint2(4, 36),
+        new GridPoint2(5, 36), new GridPoint2(18, 36), new GridPoint2(0, 35),
+        new GridPoint2(18, 35), new GridPoint2(0, 34), new GridPoint2(18, 34),
+        new GridPoint2(0, 33), new GridPoint2(18, 33), new GridPoint2(0, 32),
+        new GridPoint2(18, 32), new GridPoint2(0, 31), new GridPoint2(18, 31),
+        new GridPoint2(0, 30), new GridPoint2(18, 30), new GridPoint2(18, 29),
+        new GridPoint2(18, 28), new GridPoint2(11, 27), new GridPoint2(12, 27),
+        new GridPoint2(13, 27), new GridPoint2(14, 27), new GridPoint2(15, 27),
+        new GridPoint2(16, 27), new GridPoint2(17, 27), new GridPoint2(18, 27),
+        new GridPoint2(18, 26), new GridPoint2(18, 25), new GridPoint2(18, 24),
+        new GridPoint2(0, 23), new GridPoint2(18, 23), new GridPoint2(0, 22),
+        new GridPoint2(18, 22), new GridPoint2(0, 21), new GridPoint2(18, 21),
+        new GridPoint2(0, 20), new GridPoint2(18, 20), new GridPoint2(0, 19),
+        new GridPoint2(18, 19), new GridPoint2(0, 18), new GridPoint2(9, 18),
+        new GridPoint2(10, 18), new GridPoint2(11, 18), new GridPoint2(12, 18),
+        new GridPoint2(13, 18), new GridPoint2(14, 18), new GridPoint2(15, 18),
+        new GridPoint2(16, 18), new GridPoint2(17, 18), new GridPoint2(18, 18),
+        new GridPoint2(0, 17), new GridPoint2(0, 16), new GridPoint2(0, 15),
+        new GridPoint2(0, 14), new GridPoint2(0, 13), new GridPoint2(0, 9),
+        new GridPoint2(0, 8), new GridPoint2(9, 8), new GridPoint2(18, 8),
+        new GridPoint2(0, 7), new GridPoint2(9, 7), new GridPoint2(18, 7),
+        new GridPoint2(0, 6), new GridPoint2(9, 6), new GridPoint2(18, 6),
+        new GridPoint2(0, 5), new GridPoint2(9, 5), new GridPoint2(18, 5),
+        new GridPoint2(0, 4), new GridPoint2(9, 4), new GridPoint2(18, 4),
+        new GridPoint2(0, 3), new GridPoint2(9, 3), new GridPoint2(18, 3),
+        new GridPoint2(0, 2), new GridPoint2(9, 2), new GridPoint2(18, 2),
+        new GridPoint2(0, 1), new GridPoint2(9, 1), new GridPoint2(18, 1),
+        new GridPoint2(7, 0), new GridPoint2(8, 0), new GridPoint2(9, 0),
+        new GridPoint2(10, 0), new GridPoint2(16, 0), new GridPoint2(17, 0),
+        new GridPoint2(18, 0),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -266,68 +331,178 @@ public class Level3 extends GameArea {
   private void spawnTerrainTriBrownPineTrees() {
     // This looks pretty ugly right now I know, this was generated with excel
     GridPoint2[] spawnLocations = {
-      new GridPoint2(36, 45), new GridPoint2(37, 45), new GridPoint2(43, 45),
-      new GridPoint2(44, 45), new GridPoint2(45, 45), new GridPoint2(46, 45),
-      new GridPoint2(47, 45), new GridPoint2(48, 45), new GridPoint2(49, 45),
-      new GridPoint2(50, 45), new GridPoint2(51, 45), new GridPoint2(52, 45),
-      new GridPoint2(53, 45), new GridPoint2(54, 45), new GridPoint2(36, 44),
-      new GridPoint2(54, 44), new GridPoint2(36, 43), new GridPoint2(54, 43),
-      new GridPoint2(36, 42), new GridPoint2(54, 42), new GridPoint2(54, 41),
-      new GridPoint2(54, 40), new GridPoint2(54, 39), new GridPoint2(54, 38),
-      new GridPoint2(54, 37), new GridPoint2(19, 36), new GridPoint2(20, 36),
-      new GridPoint2(21, 36), new GridPoint2(22, 36), new GridPoint2(23, 36),
-      new GridPoint2(24, 36), new GridPoint2(25, 36), new GridPoint2(26, 36),
-      new GridPoint2(27, 36), new GridPoint2(28, 36), new GridPoint2(29, 36),
-      new GridPoint2(30, 36), new GridPoint2(31, 36), new GridPoint2(32, 36),
-      new GridPoint2(33, 36), new GridPoint2(34, 36), new GridPoint2(35, 36),
-      new GridPoint2(36, 36), new GridPoint2(54, 36), new GridPoint2(54, 35),
-      new GridPoint2(24, 30), new GridPoint2(25, 30), new GridPoint2(26, 30),
-      new GridPoint2(27, 30), new GridPoint2(28, 30), new GridPoint2(29, 30),
-      new GridPoint2(30, 30), new GridPoint2(31, 30), new GridPoint2(32, 30),
-      new GridPoint2(33, 30), new GridPoint2(34, 30), new GridPoint2(35, 30),
-      new GridPoint2(36, 30), new GridPoint2(36, 29), new GridPoint2(36, 28),
-      new GridPoint2(54, 28), new GridPoint2(36, 27), new GridPoint2(54, 27),
-      new GridPoint2(36, 26), new GridPoint2(54, 26), new GridPoint2(36, 25),
-      new GridPoint2(54, 25), new GridPoint2(19, 24), new GridPoint2(20, 24),
-      new GridPoint2(21, 24), new GridPoint2(22, 24), new GridPoint2(23, 24),
-      new GridPoint2(24, 24), new GridPoint2(25, 24), new GridPoint2(26, 24),
-      new GridPoint2(27, 24), new GridPoint2(28, 24), new GridPoint2(29, 24),
-      new GridPoint2(30, 24), new GridPoint2(36, 24), new GridPoint2(54, 24),
-      new GridPoint2(36, 23), new GridPoint2(54, 23), new GridPoint2(36, 22),
-      new GridPoint2(54, 22), new GridPoint2(36, 21), new GridPoint2(54, 21),
-      new GridPoint2(36, 20), new GridPoint2(36, 19), new GridPoint2(24, 18),
-      new GridPoint2(25, 18), new GridPoint2(26, 18), new GridPoint2(27, 18),
-      new GridPoint2(28, 18), new GridPoint2(29, 18), new GridPoint2(30, 18),
-      new GridPoint2(31, 18), new GridPoint2(32, 18), new GridPoint2(33, 18),
-      new GridPoint2(34, 18), new GridPoint2(35, 18), new GridPoint2(36, 18),
-      new GridPoint2(37, 18), new GridPoint2(38, 18), new GridPoint2(39, 18),
-      new GridPoint2(40, 18), new GridPoint2(41, 18), new GridPoint2(54, 18),
-      new GridPoint2(54, 17), new GridPoint2(54, 16), new GridPoint2(54, 15),
-      new GridPoint2(54, 14), new GridPoint2(54, 13), new GridPoint2(54, 12),
-      new GridPoint2(54, 11), new GridPoint2(54, 10), new GridPoint2(18, 9),
-      new GridPoint2(19, 9), new GridPoint2(20, 9), new GridPoint2(21, 9),
-      new GridPoint2(22, 9), new GridPoint2(23, 9), new GridPoint2(24, 9),
-      new GridPoint2(25, 9), new GridPoint2(26, 9), new GridPoint2(27, 9),
-      new GridPoint2(28, 9), new GridPoint2(29, 9), new GridPoint2(30, 9),
-      new GridPoint2(31, 9), new GridPoint2(32, 9), new GridPoint2(33, 9),
-      new GridPoint2(34, 9), new GridPoint2(35, 9), new GridPoint2(36, 9),
-      new GridPoint2(54, 9), new GridPoint2(36, 8), new GridPoint2(54, 8),
-      new GridPoint2(36, 7), new GridPoint2(54, 7), new GridPoint2(36, 6),
-      new GridPoint2(54, 6), new GridPoint2(36, 5), new GridPoint2(54, 5),
-      new GridPoint2(36, 4), new GridPoint2(54, 4), new GridPoint2(36, 3),
-      new GridPoint2(54, 3), new GridPoint2(36, 2), new GridPoint2(54, 2),
-      new GridPoint2(36, 1), new GridPoint2(54, 1), new GridPoint2(36, 0),
-      new GridPoint2(37, 0), new GridPoint2(38, 0), new GridPoint2(39, 0),
-      new GridPoint2(40, 0), new GridPoint2(41, 0), new GridPoint2(42, 0),
-      new GridPoint2(43, 0), new GridPoint2(44, 0), new GridPoint2(45, 0),
-      new GridPoint2(46, 0), new GridPoint2(47, 0), new GridPoint2(48, 0),
-      new GridPoint2(49, 0), new GridPoint2(50, 0), new GridPoint2(51, 0),
-      new GridPoint2(52, 0), new GridPoint2(53, 0), new GridPoint2(54, 0),
+        new GridPoint2(19, 36), new GridPoint2(20, 36), new GridPoint2(21, 36),
+        new GridPoint2(22, 36), new GridPoint2(23, 36), new GridPoint2(24, 36),
+        new GridPoint2(25, 36), new GridPoint2(26, 36), new GridPoint2(27, 36),
+        new GridPoint2(28, 36), new GridPoint2(29, 36), new GridPoint2(30, 36),
+        new GridPoint2(31, 36), new GridPoint2(32, 36), new GridPoint2(33, 36),
+        new GridPoint2(34, 36), new GridPoint2(35, 36), new GridPoint2(36, 36),
+        new GridPoint2(24, 30), new GridPoint2(25, 30), new GridPoint2(26, 30),
+        new GridPoint2(27, 30), new GridPoint2(28, 30), new GridPoint2(29, 30),
+        new GridPoint2(30, 30), new GridPoint2(31, 30), new GridPoint2(32, 30),
+        new GridPoint2(33, 30), new GridPoint2(34, 30), new GridPoint2(35, 30),
+        new GridPoint2(36, 30), new GridPoint2(36, 29), new GridPoint2(36, 28),
+        new GridPoint2(54, 28), new GridPoint2(36, 27), new GridPoint2(54, 27),
+        new GridPoint2(36, 26), new GridPoint2(54, 26), new GridPoint2(36, 25),
+        new GridPoint2(54, 25), new GridPoint2(19, 24), new GridPoint2(20, 24),
+        new GridPoint2(21, 24), new GridPoint2(22, 24), new GridPoint2(23, 24),
+        new GridPoint2(24, 24), new GridPoint2(25, 24), new GridPoint2(26, 24),
+        new GridPoint2(27, 24), new GridPoint2(28, 24), new GridPoint2(29, 24),
+        new GridPoint2(30, 24), new GridPoint2(36, 24), new GridPoint2(54, 24),
+        new GridPoint2(36, 23), new GridPoint2(54, 23), new GridPoint2(36, 22),
+        new GridPoint2(54, 22), new GridPoint2(36, 21), new GridPoint2(54, 21),
+        new GridPoint2(36, 20), new GridPoint2(36, 19), new GridPoint2(24, 18),
+        new GridPoint2(25, 18), new GridPoint2(26, 18), new GridPoint2(27, 18),
+        new GridPoint2(28, 18), new GridPoint2(29, 18), new GridPoint2(30, 18),
+        new GridPoint2(31, 18), new GridPoint2(32, 18), new GridPoint2(33, 18),
+        new GridPoint2(34, 18), new GridPoint2(35, 18), new GridPoint2(36, 18),
+        new GridPoint2(37, 18), new GridPoint2(38, 18), new GridPoint2(39, 18),
+        new GridPoint2(40, 18), new GridPoint2(41, 18), new GridPoint2(54, 18),
+        new GridPoint2(54, 17), new GridPoint2(54, 16), new GridPoint2(54, 15),
+        new GridPoint2(54, 14), new GridPoint2(54, 13), new GridPoint2(54, 12),
+        new GridPoint2(54, 11), new GridPoint2(54, 10), new GridPoint2(18, 9),
+        new GridPoint2(19, 9), new GridPoint2(20, 9), new GridPoint2(21, 9),
+        new GridPoint2(22, 9), new GridPoint2(23, 9), new GridPoint2(24, 9),
+        new GridPoint2(25, 9), new GridPoint2(26, 9), new GridPoint2(27, 9),
+        new GridPoint2(28, 9), new GridPoint2(29, 9), new GridPoint2(30, 9),
+        new GridPoint2(31, 9), new GridPoint2(32, 9), new GridPoint2(33, 9),
+        new GridPoint2(34, 9), new GridPoint2(35, 9), new GridPoint2(36, 9),
+        new GridPoint2(54, 9), new GridPoint2(36, 8), new GridPoint2(54, 8),
+        new GridPoint2(36, 7), new GridPoint2(54, 7), new GridPoint2(36, 6),
+        new GridPoint2(54, 6), new GridPoint2(36, 5), new GridPoint2(54, 5),
+        new GridPoint2(36, 4), new GridPoint2(54, 4), new GridPoint2(36, 3),
+        new GridPoint2(54, 3), new GridPoint2(36, 2), new GridPoint2(54, 2),
+        new GridPoint2(36, 1), new GridPoint2(54, 1), new GridPoint2(36, 0),
+        new GridPoint2(37, 0), new GridPoint2(38, 0), new GridPoint2(39, 0),
+        new GridPoint2(40, 0), new GridPoint2(41, 0), new GridPoint2(42, 0),
+        new GridPoint2(43, 0), new GridPoint2(44, 0), new GridPoint2(45, 0),
+        new GridPoint2(46, 0), new GridPoint2(47, 0), new GridPoint2(48, 0),
+        new GridPoint2(49, 0), new GridPoint2(50, 0), new GridPoint2(51, 0),
+        new GridPoint2(52, 0), new GridPoint2(53, 0), new GridPoint2(54, 0),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
       Entity pineTriTree = ObstacleFactory.createTriBrownPineTree();
       spawnEntityAt(pineTriTree, spawnLocations[i], false, false);
+    }
+  }
+
+  /**
+   * Handles spawning the 'blue' trees
+   */
+  private void spawnBlueTrees() {
+
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(0, 45),
+        new GridPoint2(1, 45),
+        new GridPoint2(2, 45),
+        new GridPoint2(15, 45),
+        new GridPoint2(16, 45),
+        new GridPoint2(17, 45),
+        new GridPoint2(18, 45),
+        new GridPoint2(0, 44),
+        new GridPoint2(0, 43),
+        new GridPoint2(6, 36),
+        new GridPoint2(7, 36),
+        new GridPoint2(8, 36),
+        new GridPoint2(0, 29),
+        new GridPoint2(0, 28),
+        new GridPoint2(0, 27),
+        new GridPoint2(0, 26),
+        new GridPoint2(0, 25),
+        new GridPoint2(0, 24),
+        new GridPoint2(0, 12),
+        new GridPoint2(0, 11),
+        new GridPoint2(0, 10),
+        new GridPoint2(0, 0),
+        new GridPoint2(1, 0),
+        new GridPoint2(2, 0),
+        new GridPoint2(3, 0),
+        new GridPoint2(4, 0),
+        new GridPoint2(5, 0),
+        new GridPoint2(6, 0),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity blueTree = ObstacleFactory.createBlueTree();
+      spawnEntityAt(blueTree, spawnLocation, false, false);
+    }
+  }
+
+  /**
+   * Handles spawning the palm trees
+   */
+  private void spawnPalmTrees() {
+
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(36, 45),
+        new GridPoint2(37, 45),
+        new GridPoint2(43, 45),
+        new GridPoint2(44, 45),
+        new GridPoint2(45, 45),
+        new GridPoint2(46, 45),
+        new GridPoint2(47, 45),
+        new GridPoint2(48, 45),
+        new GridPoint2(49, 45),
+        new GridPoint2(50, 45),
+        new GridPoint2(51, 45),
+        new GridPoint2(52, 45),
+        new GridPoint2(53, 45),
+        new GridPoint2(54, 45),
+        new GridPoint2(36, 44),
+        new GridPoint2(54, 44),
+        new GridPoint2(36, 43),
+        new GridPoint2(54, 43),
+        new GridPoint2(36, 42),
+        new GridPoint2(54, 42),
+        new GridPoint2(54, 41),
+        new GridPoint2(54, 40),
+        new GridPoint2(54, 39),
+        new GridPoint2(54, 38),
+        new GridPoint2(54, 37),
+        new GridPoint2(54, 36),
+        new GridPoint2(54, 35),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity palmTree = ObstacleFactory.createPalmTree();
+      spawnEntityAt(palmTree, spawnLocation, false, false);
+    }
+  }
+
+  /**
+   * Handles spawning the animated trees
+   */
+  private void spawnAnimatedTrees() {
+
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(9, 36),
+        new GridPoint2(22, 35),
+        new GridPoint2(16, 33),
+        new GridPoint2(9, 27),
+        new GridPoint2(2, 17),
+        new GridPoint2(26, 12),
+        new GridPoint2(9, 9),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity wind = ObstacleFactory.createAnimatedTree();
+      spawnEntityAt(wind, spawnLocation, false, false);
+    }
+  }
+
+  /**
+   * Handles spawning the fallen trees
+   */
+  private void spawnFallenTree() {
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(12, 45),
+        new GridPoint2(12, 0),
+    };
+
+    for (GridPoint2 spawnLocation : spawnLocations) {
+      Entity fallen = ObstacleFactory.createFallenTree();
+      spawnEntityAt(fallen, spawnLocation, false, false);
     }
   }
 
@@ -883,7 +1058,6 @@ public class Level3 extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
-    resourceService.loadSounds(playerSounds);
     resourceService.loadMusic(LEVEL3_MUSIC);
 
     while (!resourceService.loadForMillis(10)) {
@@ -902,7 +1076,6 @@ public class Level3 extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(playerSounds);
     resourceService.unloadAssets(LEVEL3_MUSIC);
   }
 

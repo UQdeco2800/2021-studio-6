@@ -212,13 +212,13 @@ public class InventoryComponent extends Component {
    * @param addTorch the time to add to the torch timer
    */
   public void lightTorch(int addTorch) {
-    if (this.torch >= 100) {
+    if (this.torch >= 70) {
       //Don't do anything if torch is already > 100 seconds
       return;
     }
     this.torch += addTorch;
-    if (this.torch > 100) {
-      this.torch = 100;
+    if (this.torch > 70) {
+      this.torch = 70;
     }
     logger.debug("Setting torch to {}", this.torch);
   }

@@ -855,7 +855,7 @@ public class Level2 extends GameArea {
         new GridPoint2(36, 27),
         new GridPoint2(54, 26),
         new GridPoint2(59, 22),
-        new GridPoint2(11, 19),
+        new GridPoint2(12, 19),
         new GridPoint2(38, 19),
         new GridPoint2(20, 17),
         new GridPoint2(28, 17),

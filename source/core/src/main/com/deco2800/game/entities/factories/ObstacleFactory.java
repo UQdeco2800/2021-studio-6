@@ -12,6 +12,7 @@ import com.deco2800.game.components.TreeAnimationController;
 import com.deco2800.game.components.player.HurtEffectComponent;
 import com.deco2800.game.components.player.SlowEffectComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -354,7 +355,9 @@ public class ObstacleFactory {
       new Entity()
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
-        .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
+        .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
+                      Color.SCARLET, 4f, 0, 0))
+//        .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
         .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER))
         .addComponent(animator);
@@ -615,7 +618,8 @@ public class ObstacleFactory {
   public static Entity createBridgeVerticalLeftTile() {
     Entity bridge =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
+        .addComponent(new TextureRenderComponent(-100, "images/level_3/bridge_tile_left-vertical.png"))
+//        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent());
 
@@ -630,10 +634,11 @@ public class ObstacleFactory {
    */
   public static Entity createBridgeVerticalRightTile() {
     Entity bridge =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent());
+      new Entity()
+        .addComponent(new TextureRenderComponent(-100, "images/level_3/bridge_tile_right-vertical.png"))
+//        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent());
 
     bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bridge.getComponent(TextureRenderComponent.class).scaleEntity();

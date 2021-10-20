@@ -107,6 +107,7 @@ public class IndependentAnimator  extends AnimationRenderComponent {
       if (cameraFollow) {
         Vector2 current = ServiceLocator.getRenderService().getPos();
         if (current != null) {
+
           batch.draw(region, current.x - xPos, current.y - yPos, xScale, yScale);
           super.setTime(super.getAnimTime() + super.getTime().getDeltaTime());
         }

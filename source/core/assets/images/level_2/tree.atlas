@@ -1,0 +1,62 @@
+
+tree.png
+size: 8192, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+static
+  rotate: false
+  xy: 6154, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 6154, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 3078, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 2, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 4616, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 6154, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 1540, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+wind
+  rotate: false
+  xy: 6154, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1

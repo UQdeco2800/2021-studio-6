@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.items.Directions;
 import com.deco2800.game.rendering.AnimationRenderComponent;
@@ -12,6 +13,7 @@ public class PlayerTorchAnimationController extends Component {
   private PlayerLightingComponent lightingComponent;
   private Directions previous;
   private boolean on = true;
+  private Vector2 offsets = new Vector2(0, 0);
 
   @Override
   public void create() {
@@ -40,7 +42,9 @@ public class PlayerTorchAnimationController extends Component {
   @Override
   public void update() {
     if (on) {
-      torchAnimator.setPositions(0, 0);
+      torchAnimator.setPositions(
+          offsets.x + this.entity.getPosition().x,
+          offsets.y + this.entity.getPosition().y);
 
       KeyboardPlayerInputComponent key = this.getEntity().getComponent(KeyboardPlayerInputComponent.class);
       Directions direct = key.getDirection();

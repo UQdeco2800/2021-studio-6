@@ -1,12 +1,13 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.DarknessDetectionComponent;
 import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.PlayerCombatStatsComponent;
+import com.deco2800.game.components.player.PlayerSoundComponent;
 import com.deco2800.game.components.player.*;
 import com.deco2800.game.components.player.hud.PlayerHealthAnimationController;
 import com.deco2800.game.components.player.hud.PlayerHudAnimationController;
@@ -16,10 +17,6 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.items.Abilities;
 import com.deco2800.game.items.Items;
-import com.deco2800.game.lighting.ChainLightComponent;
-import com.deco2800.game.lighting.ConeLightComponent;
-import com.deco2800.game.lighting.DirectionalLightComponent;
-import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.memento.Player;
 import com.deco2800.game.memento.PlayerStateManager;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -28,6 +25,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.IndependentAnimator;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -149,19 +147,45 @@ public class PlayerFactory {
           .addComponent(new PlayerHealthAnimationController())
           .addComponent(new PlayerLightingComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
               Color.SCARLET, 6f, 0, 0))
-          .addComponent(new DarknessDetectionComponent());
+          .addComponent(new DarknessDetectionComponent())
+          .addComponent(new PlayerSoundComponent());
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(PlayerMeleeAttackComponent.class).setMeleeWeaponType(Items.getMeleeWeapon(meleeWeaponType));
     player.getComponent(PlayerRangeAttackComponent.class).setBulletMagazine(bulletMagazine);
+
+    IndependentAnimator invincibiltyAnimation =
+        new IndependentAnimator(
+            ServiceLocator.getResourceService()
+                .getAsset("images/playeritems/Bubble/invincibility.atlas", TextureAtlas.class), false);
+    invincibiltyAnimation.addAnimation("active", 0.1f, Animation.PlayMode.LOOP);
+    invincibiltyAnimation.setCamera(true);
+    player.getComponent(PlayerAnimationController.class).setAnimator(invincibiltyAnimation);
+
+    // Add the entity sound effects
+    PlayerSoundComponent pcs = player.getComponent(PlayerSoundComponent.class);
+    pcs.setVolume(ServiceLocator.getResourceService().getSfxVolume());
+    pcs.setUseBandage(ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class));
+    pcs.setWounded(ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class));
+    pcs.setGenericItemPickup(ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class));
+    pcs.setSwingAxe(ServiceLocator.getResourceService().getAsset("sounds/weapon-axe.wav", Sound.class));
+    pcs.setSwingSword(ServiceLocator.getResourceService().getAsset("sounds/weapon-sword.ogg", Sound.class));
+    pcs.setSwingDagger(ServiceLocator.getResourceService().getAsset("sounds/weapon-dagger.wav", Sound.class));
+    pcs.setShoot(ServiceLocator.getResourceService().getAsset("sounds/slingshot.ogg", Sound.class));
+    pcs.setDash(ServiceLocator.getResourceService().getAsset("sounds/dash.ogg", Sound.class));
+
     return player;
   }
 
   private static void loadPlayerData() {
     // manages player states for carrying over and restoring in game
     PlayerStateManager playerManager = PlayerStateManager.getInstance();
+    double levelSafehouse = 0.5;
+    int safehouseCheck = 1;
+    int addTorch = 50;
+    int addBandage = 2;
 
     if (playerManager.currentPlayerState() == null) {
       // set initial state of player when game starts for the very first time, load from config file
@@ -190,8 +214,6 @@ public class PlayerFactory {
       baseRangedAttack = currentPlayerState.getBaseRangedAttack();
       health = currentPlayerState.getHealth();
       ammo = currentPlayerState.getAmmo();
-      bandages = currentPlayerState.getBandage();
-      torch = currentPlayerState.getTorch();
       gold = currentPlayerState.getGold();
       woundState = currentPlayerState.getWoundState();
       defenceLevel = currentPlayerState.getDefenceLevel();
@@ -200,6 +222,15 @@ public class PlayerFactory {
       meleeWeaponType = currentPlayerState.getMeleeWeaponType();
       armorType = currentPlayerState.getArmorType();
       bulletMagazine = currentPlayerState.getBulletMagazine();
+
+      // add more time to torch whenever player reaches safehouse game area level
+      if (currentPlayerState.getCurrentGameLevel() % safehouseCheck == levelSafehouse) {
+          torch = currentPlayerState.getTorch() + addTorch;
+          bandages = currentPlayerState.getBandage() + addBandage;
+      } else {
+          torch = currentPlayerState.getTorch();
+          bandages = currentPlayerState.getBandage();
+      }
     }
   }
 

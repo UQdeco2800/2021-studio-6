@@ -58,7 +58,8 @@ public abstract class GameArea implements Disposable {
       "images/playeritems/tourch/torch.atlas",
       "images/weapon/baseball.atlas",
       "images/playeritems/rock/rock.atlas",
-      "images/playeritems/firecracker/firecracker.atlas"
+      "images/playeritems/firecracker/firecracker.atlas",
+      "images/playeritems/Bubble/invincibility.atlas"
   };
 
 
@@ -104,6 +105,18 @@ public abstract class GameArea implements Disposable {
           "sounds/enemies/SpawnerEnemy/dead.wav",
           "sounds/enemies/SpawnerEnemy/detectPlayer.mp3",
           "sounds/enemies/SpawnerEnemy/spawn.wav"
+  };
+
+  protected static final String[] playerSounds = {
+          "sounds/bandage-use.ogg",
+          "sounds/hurt.ogg",
+          "sounds/item-pickup.ogg",
+          "sounds/weapon-axe.wav",
+          "sounds/weapon-sword.ogg",
+          "sounds/weapon-dagger.wav",
+          "sounds/slingshot.ogg",
+          "sounds/dash.ogg",
+          "sounds/Impact4.ogg"
   };
 
   protected GameArea() {
@@ -183,21 +196,30 @@ public abstract class GameArea implements Disposable {
     spawnEntityAt(smallEnemy, randomPos, true, true);
   }
 
+  /**
+   * Used to load assets shared between all levels
+   */
   public void loadSharedAssets() {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(playerAssets);
     resourceService.loadTextures(enemyAssets);
+    resourceService.loadSounds(playerSounds);
+    resourceService.loadSounds(enemySounds);
     resourceService.loadTextureAtlases(playerAtlas);
     resourceService.loadTextureAtlases(enemyAtlas);
   }
 
-
+  /**
+   * Used to unload assets shared between all levels
+   */
   public void unloadSharedAssets() {
       ResourceService resourceService = ServiceLocator.getResourceService();
       resourceService.unloadAssets(playerAssets);
       resourceService.unloadAssets(enemyAssets);
       resourceService.unloadAssets(playerAtlas);
       resourceService.unloadAssets(enemyAtlas);
+    resourceService.unloadAssets(playerSounds);
+    resourceService.unloadAssets(enemySounds);
   }
 
   public Entity getPlayer() {

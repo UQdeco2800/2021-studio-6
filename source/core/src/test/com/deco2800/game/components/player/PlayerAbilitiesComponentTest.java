@@ -72,7 +72,13 @@ class PlayerAbilitiesComponentTest {
         player.getEvents().trigger("tryAbility", sample);
         verify(listener1).handle(3000L); // 3000L is length of invincibility
 
-        when(time.getTime()).thenReturn(120005L); // after the next ability delay (60000L long)
+        when(time.getTime()).thenReturn(120005L); // after ability delay (60000L long)
+        player.getComponent(PlayerAbilitiesComponent.class).setAbility(Abilities.FIRE_CRACKER);
+        player.getEvents().addListener("fireCracker", listener1);
+        player.getEvents().trigger("tryAbility", sample);
+        verify(listener1).handle(2000L); // 3000L is length of invincibility
+
+        when(time.getTime()).thenReturn(180005L); // after the next ability delay (60000L long)
         player.getComponent(PlayerAbilitiesComponent.class).setAbility(Abilities.NONE);
         player.getEvents().trigger("tryAbility", sample);
         verifyNoMoreInteractions(listener1);

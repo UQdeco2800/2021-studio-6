@@ -8,7 +8,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 public class TorchLightingComponent extends Component{
-  private static final int ADD_TORCH = 100;
+  private static final int ADD_TORCH = 70;
   private HitboxComponent hitboxComponent;
   private short targetLayer;
   private Entity playerState;

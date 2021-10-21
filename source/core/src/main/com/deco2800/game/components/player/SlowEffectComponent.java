@@ -2,10 +2,8 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
-import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -95,16 +93,15 @@ public class SlowEffectComponent extends Component {
             return;
         }
 
-        // Disable slowness on player.
-        PlayerActions playerActions = null;
+        // Retrieve PlayerActions component from player.
+        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null
+                && ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class) != null) {
+            PlayerActions playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
 
-        // Retrieve Player.
-        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null) {
-            playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
+            // Enable slowness on player.
+            playerActions.setScaleSpeed(entity.getId(), this.speedMultiplier);
         }
 
-        // Enable slowness on player.
-        playerActions.setScaleSpeed(entity.getId(), this.speedMultiplier);
         this.active = true;
     }
 
@@ -117,16 +114,15 @@ public class SlowEffectComponent extends Component {
      * @param other the targeted entity (usually the player)
      */
     private void onCollisionEnd(Fixture me, Fixture other) {
-        // Disable slowness on player.
-        PlayerActions playerActions = null;
+        // Retrieve PlayerActions component from player.
+        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null
+                && ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class) != null) {
+            PlayerActions playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
 
-        // Retrieve Player.
-        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null) {
-            playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
+            // Enable slowness on player.
+            playerActions.clearScaleSpeed(entity.getId());
         }
 
-        // Remove speed multiplier.
-        playerActions.clearScaleSpeed(entity.getId());
         this.active = false;
     }
 

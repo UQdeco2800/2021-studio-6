@@ -73,7 +73,6 @@ public class LampAnimationController extends Component implements Disposable {
 
   @Override
   public void dispose() {
-    this.pointLightComponent.dispose();
     this.animator.dispose();
   }
 }

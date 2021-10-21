@@ -52,7 +52,7 @@ public class PointLightComponent extends Component implements Disposable {
         pointLight.setIgnoreAttachedBody(true);
         pointLight.setContactFilter(PhysicsLayer.NONE, PhysicsLayer.NONE, PhysicsLayer.NONE);
         pointLight.setSoftnessLength(8f);
-        logger.info("Chain light added to scene");
+        logger.debug("Chain light added to scene");
     }
     @Override
     public void dispose() {
@@ -66,6 +66,14 @@ public class PointLightComponent extends Component implements Disposable {
     public void changeDistance(int distance) {
         this.distance = distance;
         pointLight.setDistance(distance);
+    }
+
+    public void turnOffLight() {
+        pointLight.setDistance(0);
+    }
+
+    public void turnOnLight() {
+        pointLight.setDistance(this.distance);
     }
 
 }

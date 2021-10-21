@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.LampAnimationController;
 import com.deco2800.game.components.TorchLightingComponent;
 import com.deco2800.game.components.CampfireAnimationController;
 import com.deco2800.game.components.TreeAnimationController;
 import com.deco2800.game.components.player.HurtEffectComponent;
 import com.deco2800.game.components.player.SlowEffectComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.lighting.FlickerLightComponent;
 import com.deco2800.game.lighting.PointLightComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -242,25 +244,45 @@ public class ObstacleFactory {
    * @return Entity lamp
    */
   public static Entity createLamp(int type) {
-    String lampPath;
     if (type == 0) {
-      lampPath = "images/level_1/street_lamp.png";
-    } else {
-      lampPath = "images/level_1/street_lamped_vined.png";
-    }
-    Entity lamp =
-            new Entity()
-                    .addComponent(new TextureRenderComponent(lampPath))
-                    .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                    .addComponent(new HitboxComponent());
+      Entity lamp =
+          new Entity()
+              .addComponent(new TextureRenderComponent("images/level_1/street_lamp.png"))
+              .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
+              .addComponent(new PhysicsComponent())
+              .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+              .addComponent(new HitboxComponent());
 
-    lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    lamp.getComponent(TextureRenderComponent.class).scaleEntity();
-    lamp.scaleHeight(2f);
-    PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
-    return lamp;
+      lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+      lamp.getComponent(TextureRenderComponent.class).scaleEntity();
+      lamp.scaleHeight(2f);
+      PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
+      return lamp;
+    } else {
+      AnimationRenderComponent animator =
+          new AnimationRenderComponent(
+              ServiceLocator.getResourceService().getAsset("images/level_1/lamp.atlas", TextureAtlas.class));
+      animator.addAnimation("on", 1f, Animation.PlayMode.LOOP);
+      animator.addAnimation("off", 1f, Animation.PlayMode.LOOP);
+      Entity lamp =
+          new Entity()
+              .addComponent(animator)
+              .addComponent(new LampAnimationController())
+              .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
+              .addComponent(new PhysicsComponent())
+              .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+              .addComponent(new HitboxComponent());
+
+      lamp.getComponent(LampAnimationController.class)
+          .giveLightComponent(lamp.getComponent(PointLightComponent.class));
+
+      lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+      //lamp.getComponent(TextureRenderComponent.class).scaleEntity();
+      lamp.scaleHeight(2f);
+      PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
+      return lamp;
+    }
+
   }
 
   /**
@@ -322,17 +344,23 @@ public class ObstacleFactory {
    * @return entity
    */
   public static Entity createTorch() {
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/level_2/torch.atlas", TextureAtlas.class));
+    animator.addAnimation("moving", 0.8f, Animation.PlayMode.LOOP);
+
     Entity torch =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_2/level2_torch_frame1_ver1.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent())
-        .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
+        .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
+                      Color.SCARLET, 4f, 0, 0))
+//        .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0f, 0.25f))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-        .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER));
+        .addComponent(new TorchLightingComponent(PhysicsLayer.PLAYER))
+        .addComponent(animator);
 
     torch.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    torch.getComponent(TextureRenderComponent.class).scaleEntity();
     torch.scaleHeight(1.0f);
     PhysicsUtils.setScaledCollider(torch, 0.3f, 0.5f);
     return torch;
@@ -588,7 +616,8 @@ public class ObstacleFactory {
   public static Entity createBridgeVerticalLeftTile() {
     Entity bridge =
       new Entity()
-        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
+        .addComponent(new TextureRenderComponent(-100, "images/level_3/bridge_tile_left-vertical.png"))
+//        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_left-vertical.png"))
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent());
 
@@ -603,10 +632,11 @@ public class ObstacleFactory {
    */
   public static Entity createBridgeVerticalRightTile() {
     Entity bridge =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent());
+      new Entity()
+        .addComponent(new TextureRenderComponent(-100, "images/level_3/bridge_tile_right-vertical.png"))
+//        .addComponent(new TextureRenderComponent("images/level_3/bridge_tile_right-vertical.png"))
+        .addComponent(new PhysicsComponent())
+        .addComponent(new HitboxComponent());
 
     bridge.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     bridge.getComponent(TextureRenderComponent.class).scaleEntity();

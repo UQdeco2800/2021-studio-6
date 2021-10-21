@@ -14,6 +14,7 @@ import com.deco2800.game.components.story.StoryNames;
 import com.deco2800.game.components.tasks.SpawnerEnemyTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -76,7 +77,8 @@ public class Level3 extends GameArea {
     "images/level_2/fallen_log.png",
     "images/level_2/stump.png",
     "images/level_2/treeBlue.png",
-      "images/level_3/palm_tree-dying-day1-v1.0.png"
+    "images/level_3/palm_tree-dying-day1-v1.0.png",
+    "images/level_2/level2_torch_frame1_ver1.png",
   };
 
   /**
@@ -85,6 +87,7 @@ public class Level3 extends GameArea {
   private static final String[] forestTextureAtlases = {
       "images/level_2/campfire.atlas",
       "images/level_2/tree.atlas",
+      "images/level_2/torch.atlas",
     NPC_DEAD_PILOT_ATLAS_FILENAME
   };
   private static final String[] forestSounds = {};
@@ -110,6 +113,7 @@ public class Level3 extends GameArea {
     spawnObstacles();
     spawnSafehouse();
     spawnFireFlyBugNPC();
+    spawnTorch();
 
     // Spawn player related entities
     player = spawnPlayer();
@@ -562,6 +566,7 @@ public class Level3 extends GameArea {
       new GridPoint2(45, 22),
       new GridPoint2(13, 13),
       new GridPoint2(44, 6),
+      new GridPoint2(50, 38),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -592,7 +597,6 @@ public class Level3 extends GameArea {
       new GridPoint2(28, 15),
       new GridPoint2(51, 14),
       new GridPoint2(21, 12),
-      new GridPoint2(32, 12),
       new GridPoint2(6, 9),
       new GridPoint2(50, 8),
     };
@@ -608,10 +612,9 @@ public class Level3 extends GameArea {
    */
   private void spawnLargeEnemy() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(48, 42),
+      new GridPoint2(49, 34),
       new GridPoint2(13, 31),
       new GridPoint2(3, 27),
-      new GridPoint2(21, 27),
       new GridPoint2(39, 25),
       new GridPoint2(49, 22),
       new GridPoint2(33, 21),
@@ -629,8 +632,7 @@ public class Level3 extends GameArea {
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(42, 38),
-      new GridPoint2(46, 40),
-      new GridPoint2(48, 40),
+      new GridPoint2(43, 43),
       new GridPoint2(25, 34),
       new GridPoint2(28, 32),
       new GridPoint2(3, 31),
@@ -796,6 +798,27 @@ public class Level3 extends GameArea {
       Entity pickupCoin = ItemFactory.createCoinPickup(randomCoinQuantity);
       spawnEntityAt(pickupCoin, coinSpawnLocations[i], true, false);
     }
+  }
+
+  /**
+   * Spawns torches that can emit out light onto the map.
+   */
+  private void spawnTorch() {
+    GridPoint2[] spawnLocations = {
+        new GridPoint2(51, 28),
+        new GridPoint2(25, 17),
+    };
+
+    for (GridPoint2 position : spawnLocations) {
+      Entity torch = ObstacleFactory.createTorch();
+      spawnEntityAt(torch, position, false, false);
+      torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");
+    }
+    //Torch left of bridge near end
+    //Centered so it doesn't look weirdly offset from other torch
+    Entity torch = ObstacleFactory.createTorch();
+    spawnEntityAt(torch, new GridPoint2(48, 28), true, false);
+    torch.getComponent(AnimationRenderComponent.class).startAnimation("moving");
   }
 
   private void spawnPilotNpc() {
@@ -1033,7 +1056,7 @@ public class Level3 extends GameArea {
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
-      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f,0.5f);
+      Entity fireFlyBugNPC = NPCFactory.createFireFlyBugNPC(1f,1f,10f,10f, 3f,0.5f);
       spawnEntityAt(fireFlyBugNPC, spawnLocations[i], true, false);
     }
   }

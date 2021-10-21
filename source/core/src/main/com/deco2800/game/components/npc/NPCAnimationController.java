@@ -86,7 +86,6 @@ public class NPCAnimationController extends Component {
     // If the entity is dead then start the dead animation
     if (isDead) {
       if (lastAnimation == null || !lastAnimation.equals("dead")) {
-        System.out.println("DEAD");
         animator.startAnimation("dead");
         if (glowingEyesComponent != null) {
           glowingEyesComponent.deactivate();

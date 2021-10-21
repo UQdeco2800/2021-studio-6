@@ -21,7 +21,7 @@ public class CooldownState extends LaserState {
     }
 
     public void startTimer() {
-        endTime = timeSource.getTime() + (int) (5000);
+        endTime = timeSource.getTime() + (int) (1000);
     }
 
     /**

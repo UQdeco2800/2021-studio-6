@@ -21,7 +21,7 @@ public class FiringState extends LaserState {
     }
 
     public void startTimer() {
-        endTime = timeSource.getTime() + (int) (3000);
+        endTime = timeSource.getTime() + (int) (1000);
     }
 
     /**

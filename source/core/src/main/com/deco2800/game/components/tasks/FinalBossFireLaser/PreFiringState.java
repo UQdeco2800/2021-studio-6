@@ -21,7 +21,7 @@ public class PreFiringState extends LaserState {
     }
 
     public void startTimer() {
-        endTime = timeSource.getTime() + (int) (1500);
+        endTime = timeSource.getTime() + (int) (800);
     }
 
     /**

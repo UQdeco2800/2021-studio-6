@@ -33,7 +33,7 @@ public class PlayerInRangeState extends LaserState {
      */
     @Override
     public void update() {
-        if (Math.abs(laser.target.getCenterPosition().x - owner.getCenterPosition().x) >= 3) {
+        if (Math.abs(laser.target.getCenterPosition().x - owner.getCenterPosition().x) >= 2) {
             logger.debug("Final boss Player out of range stopping timer");
 
             laser.changeState(new FreeMovingState(laser, owner));

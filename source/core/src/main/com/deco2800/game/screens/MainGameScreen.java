@@ -138,8 +138,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Lighting lighting;
   private static boolean LIGHTINGON = true;
   private GameArea gameArea = null;
-  private static float BOSS_CAMERA_Y = 12f;
-  private static float BOAT_CAMERA_Y = 25f;
+  private static float BOSS_CAMERA_Y = 16f;
+  private static float BOAT_CAMERA_Y = 27f;
 
   private Entity ui;
 
@@ -273,7 +273,7 @@ public class MainGameScreen extends ScreenAdapter {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
           CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
-          renderer.setZoom(40);
+          renderer.setZoom(25);
         } else if(gameLevel == 4.5) {
           CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
           if(BOSS_CAMERA_Y < BOAT_CAMERA_Y) {

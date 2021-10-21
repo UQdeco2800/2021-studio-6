@@ -16,9 +16,12 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.finalboss.FinalBossHealthBar;
 import com.deco2800.game.components.finalboss.LaserTimer;
 import com.deco2800.game.components.npc.BossAnimationController;
+import com.deco2800.game.components.npc.FireBulletListener;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.finalboss.LaserListener;
+import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.components.tasks.*;
+import com.deco2800.game.components.tasks.FinalBossFireBullets.FinalBossFireBullets;
 import com.deco2800.game.components.tasks.FinalBossFireLaser.FinalBossFireLaser;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.lighting.FlickerLightComponent;
@@ -40,10 +43,10 @@ public class FinalBossFactory {
 
 
     public static Entity createFinalBossPhaseManager(Entity boss, Entity darkness,
-                                                     Entity healthBackground, Entity healthForeground) {
+                                                     Entity healthBackground, Entity healthForeground, Entity target) {
 
         Entity phaseManager = new Entity()
-                .addComponent(new BossHealthListener(boss, darkness, healthBackground, healthForeground));
+                .addComponent(new BossHealthListener(boss, darkness, healthBackground, healthForeground, target));
 
         return phaseManager;
     }
@@ -68,11 +71,9 @@ public class FinalBossFactory {
                 .addComponent(texture);
 
         MultiAITaskComponent aiComponent =
-                new MultiAITaskComponent()
-                        .addTask(new ItemSpawner(bounds));
-//                        .addTask(new SpawnerSpawner(target, bounds));
+                new MultiAITaskComponent();
 
-        darkness.setScale(50, 7);
+        darkness.setScale(50, 8);
         darkness.addComponent(aiComponent);
 
 
@@ -111,7 +112,9 @@ public class FinalBossFactory {
                 .addComponent(new BossAnimationController())
                 .addComponent(new FlickerLightComponent(Color.WHITE, Color.WHITE, Color.WHITE,
                         Color.WHITE, 2f, 0, -1.5f))
-                .addComponent(new LaserListener());
+                .addComponent(new LaserListener())
+                .addComponent(new ToughFireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"));
+
 
         Entity healthBackground = createHealthBarBackground();
         Entity healthForeground = createHealthBarForeground();
@@ -125,7 +128,7 @@ public class FinalBossFactory {
 
         bossHead.addComponent(aiComponent);
 
-        gameArea.spawnEntity(createFinalBossPhaseManager(bossHead, darkness, healthBackground, healthForeground));
+        gameArea.spawnEntity(createFinalBossPhaseManager(bossHead, darkness, healthBackground, healthForeground, target));
 
         bossHead.getComponent(AnimationRenderComponent.class).scaleEntity();
         bossHead.setScale(new Vector2(5.3f, 4f));

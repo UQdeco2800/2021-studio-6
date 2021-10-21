@@ -82,7 +82,8 @@ public class Level4 extends GameArea {
             "images/Final_Boss/dock.png",
             "images/Final_Boss/boat.png",
             "images/Final_Boss/healthbar_background.png",
-            "images/Final_Boss/healthbar_foreground.png"
+            "images/Final_Boss/healthbar_foreground.png",
+            "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/Final_Boss/beam.atlas",
@@ -107,7 +108,8 @@ public class Level4 extends GameArea {
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
 
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
-    private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
+    private static final String BOSS_DEATH_SOUND = "sounds/final_boss/boss-death-sound.mp3";
+    private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC, BOSS_DEATH_SOUND};
         
     private final TerrainFactory terrainFactory;
 
@@ -126,19 +128,16 @@ public class Level4 extends GameArea {
         spawnTerrain();
         spawnTrees();
         player = spawnPlayer();
-        //spawnSafehouse();
+
         spawnBullet();
         spawnFireCracker();
-        spawnCobweb();
-        spawnBush();
-        //playMusic();
-        spawnLargeEnemy();
-        spawnSmallEnemy();
-        spawnBullet();
-        spawnSpawnerEnemy();
 
-        spawnLongRangeEnemies();
-        spawnToughLongRangeEnemies();
+        playMusic();
+
+        spawnBullet();
+
+
+
         spawnFinalBoss();
         spawnWaterTiles();
         spawnDock();
@@ -206,14 +205,6 @@ public class Level4 extends GameArea {
         }
     }
 
-    public void spawnSafehouse() {
-        GridPoint2 center = new GridPoint2(15, 15);
-
-        Entity safehouse = SafehouseFactory.createSafehouse();
-        // Position is currently procedurally (kidding, just randomly) generated.
-        spawnEntityAt(safehouse, center, true, false);
-    }
-
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
@@ -239,71 +230,6 @@ public class Level4 extends GameArea {
         player.getComponent(PlayerRangeAOEComponent.class).addFireCracker(fireCracker);
     }
 
-    /**
-     * Spawns the spawner enemy
-     */
-    private void spawnSpawnerEnemy() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_SPAWNER_ENEMY; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity spawnerEnemy = NPCFactory.createSpawnerEnemy();
-            spawnerEnemy.getComponent(AITaskComponent.class).addTask(new SpawnerEnemyTask(player, 10, 9f, 10f, this,
-                    spawnerEnemy));
-            spawnEntityAt(spawnerEnemy, randomPos, true, true);
-        }
-    }
-    /**
-     * Spawns a small enemy from the appropriate spawner's position
-     */
-    public void spawnFromSpawner(Vector2 position, int maxSpawnDistance) {
-        super.spawnFromSpawner(position, maxSpawnDistance);
-    }
-
-
-    private void spawnSmallEnemy() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_GHOSTS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity smallEnemy = NPCFactory.createSmallEnemy(player);
-            spawnEntityAt(smallEnemy, randomPos, true, true);
-        }
-    }
-
-
-    private void spawnLargeEnemy() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_LARGE_ENEMY; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity largeEnemy = NPCFactory.createLargeEnemy(player);
-            spawnEntityAt(largeEnemy, randomPos, true, true);
-        }
-    }
-
-    private void spawnLongRangeEnemies() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-        for (int i = 0; i < NUM_LONGRANGE; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity archer = NPCFactory.createLongRangeEnemy(player, this);
-            spawnEntityAt(archer, randomPos, true, true);
-        }
-    }
-
-    private void spawnToughLongRangeEnemies() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-        for (int i = 0; i < NUM_LONGRANGE; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity touchArcher = NPCFactory.createToughLongRangeEnemy(player, this);
-            spawnEntityAt(touchArcher, randomPos, true, true);
-        }
-    }
 
     private void spawnFinalBoss() {
 
@@ -313,7 +239,7 @@ public class Level4 extends GameArea {
         GridPoint2 pos = new GridPoint2(40, 35);
 
 
-        GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2 - 1);
+        GridPoint2 bossPos = new GridPoint2(bounds.x/2, bounds.y/2 - 2);
         GridPoint2 darknessPos = new GridPoint2(bounds.x/2, bounds.y/2);
         spawnEntityAt(boss, bossPos, true, true);
         this.spawnEntityAt(darkness, darknessPos, true, true);
@@ -377,34 +303,25 @@ public class Level4 extends GameArea {
         animator.startAnimation("float");
     }
 
-    private void spawnCobweb() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-        for (int i = 0; i < NUM_COBWEBS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity cobweb = ObstacleFactory.createCobweb();
-            spawnEntityAt(cobweb, randomPos, true, false);
 
-        }
-    }
 
-    private void spawnBush() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_BUSH; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity bush = ObstacleFactory.createBush();
-            spawnEntityAt(bush, randomPos, true, false);
-        }
-    }
 
     private void playMusic() {
         Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
         gameOverSong.setLooping(true);
         gameOverSong.setVolume(0.07f);
         gameOverSong.play();
+    }
+
+    @Override
+    public void stopMusic() {
+        ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
+        Music deathSound = ServiceLocator.getResourceService().getAsset(BOSS_DEATH_SOUND, Music.class);
+
+        deathSound.setVolume(0.07f);
+        deathSound.play();
+
     }
 
     private void loadAssets() {

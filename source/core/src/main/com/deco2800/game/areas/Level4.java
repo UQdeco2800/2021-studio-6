@@ -327,7 +327,6 @@ public class Level4 extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
-        resourceService.loadSounds(forestSounds);
         resourceService.loadSounds(playerSounds);
 
         resourceService.loadMusic(LEVEL3_MUSIC);
@@ -344,7 +343,6 @@ public class Level4 extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
-        resourceService.unloadAssets(forestSounds);
         resourceService.unloadAssets(playerSounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }

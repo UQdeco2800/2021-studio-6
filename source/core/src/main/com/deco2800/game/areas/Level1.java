@@ -73,6 +73,7 @@ public class Level1 extends GameArea {
   };
   private static final String[] cityTextureAtlases = {
       "images/level_2/tree.atlas",
+      "images/level_1/lamp.atlas",
       NPC_SAMPLE_ATLAS_FILENAME,
       NPC_TUT_1_ATLAS_FILENAME,
       NPC_INJURED_ATLAS_FILENAME,
@@ -452,23 +453,23 @@ public class Level1 extends GameArea {
    */
   private void spawnLamps() {
     GridPoint2[] lampPositions = new GridPoint2[]{
-            new GridPoint2(12, 59), new GridPoint2(24, 53),
+            new GridPoint2(12, 59),
             new GridPoint2(28, 45), new GridPoint2(31, 38),
             new GridPoint2(30, 27), new GridPoint2(40, 21),
             new GridPoint2(50, 27), new GridPoint2(59, 31)
     };
     GridPoint2[] vinedLampPositions = new GridPoint2[]{
-            new GridPoint2(58, 44),
+            new GridPoint2(20, 53), new GridPoint2(58, 44),
             new GridPoint2(49, 54), new GridPoint2(59, 60)
     };
     // Spawning in regular lamps
     for (GridPoint2 point: lampPositions) {
-      Entity lamp = ObstacleFactory.createLamp(1);
+      Entity lamp = ObstacleFactory.createLamp(0);
       spawnEntityAt(lamp, point, true, false);
     }
     // Spawning in vined lamps
     for (GridPoint2 point: vinedLampPositions) {
-      Entity lamp = ObstacleFactory.createLamp(2);
+      Entity lamp = ObstacleFactory.createLamp(1);
       spawnEntityAt(lamp, point, true, false);
     }
   }

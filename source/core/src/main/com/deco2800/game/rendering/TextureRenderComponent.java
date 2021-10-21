@@ -45,7 +45,7 @@ public class TextureRenderComponent extends RenderComponent {
   }
 
   /**
-   * For the firefly bug to render on top of the tree and water tiles.
+   * For the entities to render on top of other entities.
    * @param ZIndex Zindex of the firefly bug NPC.
    * @param texturePath Internal path of static texture to render.
    */

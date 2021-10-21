@@ -32,6 +32,8 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
     private Entity spawner2;
     private Entity spawner3;
     private Entity spawner4;
+    private int LARGE_ENEMY_NUM = 0;
+    private int TOUGH_ENEMY_NUM = 0;
 
     /**
      *
@@ -105,8 +107,9 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
             Entity toughLongRangeEnemy = NPCFactory.createToughLongRangeEnemy(target, gameArea);
             toughLongRangeEnemy.setPosition(spawner4.getPosition().x - offset, spawner4.getPosition().y - offset);
 
-            if (spawner1.getComponent(CombatStatsComponent.class).getHealth() > 0) {
+            if (spawner1.getComponent(CombatStatsComponent.class).getHealth() > 0 && LARGE_ENEMY_NUM <= 2) {
                 this.gameArea.spawnEntity(largeEnemy);
+                LARGE_ENEMY_NUM++;
             }
             if (spawner2.getComponent(CombatStatsComponent.class).getHealth() > 0) {
                 this.gameArea.spawnEntity(smallEnemy);
@@ -114,8 +117,9 @@ public class Stage2Task extends DefaultTask implements PriorityTask {
             if (spawner3.getComponent(CombatStatsComponent.class).getHealth() > 0) {
                 this.gameArea.spawnEntity(longRangeEnemy);
             }
-            if (spawner4.getComponent(CombatStatsComponent.class).getHealth() > 0) {
+            if (spawner4.getComponent(CombatStatsComponent.class).getHealth() > 0 && TOUGH_ENEMY_NUM <= 2) {
                 this.gameArea.spawnEntity(toughLongRangeEnemy);
+                TOUGH_ENEMY_NUM++;
             }
 
             endTime = timeSource.getTime() + (int)(INTERVAL * 1000);

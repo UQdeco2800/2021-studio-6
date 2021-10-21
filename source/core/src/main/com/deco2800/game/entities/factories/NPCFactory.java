@@ -65,7 +65,7 @@ public class NPCFactory {
     NPCSoundComponent npcSoundComponent = spawnerNPC.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class));
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class));
-    npcSoundComponent.setSpawn(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/spawn.wav", Sound.class));
+    npcSoundComponent.setSpawn(ServiceLocator.getResourceService().getAsset("sounds/enemies/SpawnerEnemy/spawn.mp3", Sound.class));
 
     // Change size of entity and size of hitbox
     spawnerNPC.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -111,7 +111,7 @@ public class NPCFactory {
     // Add the entity sound effects
     NPCSoundComponent npcSoundComponent = smallEnemy.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class));
-    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class));
+    npcSoundComponent.setDetectPlayer(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/detectPlayer.mp3", Sound.class));
     npcSoundComponent.setMeleeAttack(ServiceLocator.getResourceService().getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class));
 
     // Change size of entity and size of hitbox
@@ -237,7 +237,7 @@ public class NPCFactory {
     NPCSoundComponent npcSoundComponent = toughLongRangeEnemy.getComponent(NPCSoundComponent.class);
     npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/hit.mp3", Sound.class));
     npcSoundComponent.setDead(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/dead.mp3", Sound.class));
-    npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.wav", Sound.class));
+    npcSoundComponent.setShoot(ServiceLocator.getResourceService().getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.mp3", Sound.class));
 
     // Change size of entity and size of hitbox
     toughLongRangeEnemy.setScale(new Vector2(2f, 2f));
@@ -320,10 +320,11 @@ public class NPCFactory {
    * @param speedY Movement speed in Y direction
    * @param wanderX Proximity X distance to move around in
    * @param wanderY Proximity Y distance to move around in
+   * @param lightRadius The circle radius of the light emitted by the bug
    * @param waitTime Time in seconds to hold the position after wandering to a spot
    * @return Firefly entity
    */
-  public static Entity createFireFlyBugNPC(float speedX, float speedY, float wanderX, float wanderY, float waitTime) {
+  public static Entity createFireFlyBugNPC(float speedX, float speedY, float wanderX, float wanderY, float lightRadius, float waitTime) {
     Vector2 speed = new Vector2(speedX, speedY);
     AITaskComponent aiComponent =
       new AITaskComponent()
@@ -349,7 +350,7 @@ public class NPCFactory {
         .addComponent(new DisposingComponent())
         .addComponent(aiComponent)
         .addComponent(new FlickerLightComponent(new Color(0xffa500aa), Color.ORANGE, Color.FIREBRICK,
-                Color.SCARLET, 2f, 0, 0))
+                Color.SCARLET, lightRadius, 0, 0))
         .addComponent(animator);
 
     //fireflyBugNPC.getComponent(AnimationRenderComponent.class).scaleEntity();

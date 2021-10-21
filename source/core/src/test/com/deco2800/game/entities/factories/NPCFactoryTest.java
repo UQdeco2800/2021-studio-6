@@ -67,7 +67,7 @@ class NPCFactoryTest {
   void createNewSmallEnemyContainsAllComponentsTest() {
     when(resourceService.getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
     when(resourceService.getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class)).thenReturn(sound);
-    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.mp3", Sound.class)).thenReturn(sound);
     when(resourceService.getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
 
     Entity enemy = NPCFactory.createSmallEnemy(player);
@@ -123,7 +123,7 @@ class NPCFactoryTest {
     when(resourceService.getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class)).thenReturn(spawnerTextureAtlas);
     when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class)).thenReturn(sound);
     when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class)).thenReturn(sound);
-    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/spawn.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/spawn.mp3", Sound.class)).thenReturn(sound);
 
     Entity enemy = NPCFactory.createSpawnerEnemy();
     
@@ -173,7 +173,7 @@ class NPCFactoryTest {
     when(resourceService.getAsset("images/Enemy_Assets/ToughLongRangeEnemy/toughLongRangeEnemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
     when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/hit.mp3", Sound.class)).thenReturn(sound);
     when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/dead.mp3", Sound.class)).thenReturn(sound);
-    when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/ToughLongRangeEnemy/shoot.mp3", Sound.class)).thenReturn(sound);
 
     Entity enemy = NPCFactory.createToughLongRangeEnemy(player, gameArea);
 
@@ -200,7 +200,7 @@ class NPCFactoryTest {
   void createEnemyContainsAllAnimationsTest() {
     when(resourceService.getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
     when(resourceService.getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class)).thenReturn(sound);
-    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.mp3", Sound.class)).thenReturn(sound);
     when(resourceService.getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
 
     Entity enemy = NPCFactory.createSmallEnemy(player);
@@ -245,7 +245,7 @@ class NPCFactoryTest {
     when(resourceService.getAsset("images/Enemy_Assets/SpawnerEnemy/spawnerEnemy.atlas", TextureAtlas.class)).thenReturn(spawnerTextureAtlas);
     when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/hit.mp3", Sound.class)).thenReturn(sound);
     when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/dead.mp3", Sound.class)).thenReturn(sound);
-    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/spawn.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SpawnerEnemy/spawn.mp3", Sound.class)).thenReturn(sound);
 
     Entity enemy = NPCFactory.createSpawnerEnemy();
     AnimationRenderComponent animator = enemy.getComponent(AnimationRenderComponent.class);
@@ -256,7 +256,7 @@ class NPCFactoryTest {
   void createNewFriendlyNPCHitboxLayerTest() {
     when(resourceService.getAsset("images/Enemy_Assets/SmallEnemy/small_enemy.atlas", TextureAtlas.class)).thenReturn(normalTextureAtlas);
     when(resourceService.getAsset("sounds/enemies/SmallEnemy/dead.mp3", Sound.class)).thenReturn(sound);
-    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.wav", Sound.class)).thenReturn(sound);
+    when(resourceService.getAsset("sounds/enemies/SmallEnemy/detectPlayer.mp3", Sound.class)).thenReturn(sound);
     when(resourceService.getAsset("sounds/enemies/SmallEnemy/meleeAttack.mp3", Sound.class)).thenReturn(sound);
 
     Entity enemy = NPCFactory.createSmallEnemy(player);

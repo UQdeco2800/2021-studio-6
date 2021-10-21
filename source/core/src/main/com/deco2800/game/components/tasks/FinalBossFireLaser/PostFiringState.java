@@ -32,7 +32,7 @@ public class PostFiringState extends LaserState {
     public void update() {
         if (timeSource.getTime() >= endTime) {
             logger.debug("Final boss post fire complete, Boss laser cooling down");
-            owner.getEvents().trigger("postFireLaser");
+
             owner.getEvents().trigger("startMoving");
             laser.changeState(new CooldownState(laser, owner));
         }

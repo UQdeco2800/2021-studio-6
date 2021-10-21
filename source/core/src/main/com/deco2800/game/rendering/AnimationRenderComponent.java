@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.services.GameTime;
@@ -42,6 +43,7 @@ public class AnimationRenderComponent extends RenderComponent {
   private String currentAnimationName;
   private float animationPlayTime;
   private boolean paused = false;
+  ShaderProgram shader;
 
   /**
    * Create the component for a given texture atlas.
@@ -51,6 +53,34 @@ public class AnimationRenderComponent extends RenderComponent {
     this.atlas = atlas;
     this.animations = new HashMap<>(4);
     this.timeSource = ServiceLocator.getTimeSource();
+    String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+            + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+            + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+            + "uniform mat4 u_projTrans;\n" //
+            + "varying vec4 v_color;\n" //
+            + "varying vec2 v_texCoords;\n" //
+            + "\n" //
+            + "void main()\n" //
+            + "{\n" //
+            + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+            + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+            + "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+            + "}\n";
+    String fragmentShader = "#ifdef GL_ES\n" //
+            + "#define LOWP lowp\n" //
+            + "precision mediump float;\n" //
+            + "#else\n" //
+            + "#define LOWP \n" //
+            + "#endif\n" //
+            + "varying LOWP vec4 v_color;\n" //
+            + "varying vec2 v_texCoords;\n" //
+            + "uniform sampler2D u_texture;\n" //
+            + "void main()\n"//
+            + "{\n" //
+            + "  gl_FragColor = v_color * texture2D(u_texture, v_texCoords).a;\n" //
+            + "}";
+
+    shader = new ShaderProgram(vertexShader, fragmentShader);
   }
 
   /**
@@ -219,7 +249,16 @@ public class AnimationRenderComponent extends RenderComponent {
       TextureRegion region = this.currentAnimation.getKeyFrame(animationPlayTime);
       Vector2 pos = entity.getPosition();
       Vector2 scale = entity.getScale();
+      System.out.println("animation  " + entity.isHurt());
+      System.out.println("animation boss " + entity);
+      if(entity.isHurt()){
+
+        batch.setShader(shader);
+      } else {
+        batch.setShader(null);
+      }
       batch.draw(region, pos.x, pos.y, scale.x, scale.y);
+
       if (!paused) {
         animationPlayTime += timeSource.getDeltaTime();
       }

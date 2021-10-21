@@ -94,10 +94,10 @@ public class  PlayerInterfaceDisplay extends UIComponent {
       dashAnimator.setPositions(9, (float) 4.7);
       dashAnimator.setScale( 3, (float) 0.5);
     } else {
-      healthAnimator.setPositions(18, (float) 8.5);
-      healthAnimator.setScale( 6, 2);
-      dashAnimator.setPositions(19, (float) 10);
-      dashAnimator.setScale( 6, (float) 1);
+      healthAnimator.setPositions(12, (float) 6);
+      healthAnimator.setScale( 4, 1.5f);
+      dashAnimator.setPositions(12, (float) 6.5);
+      dashAnimator.setScale( 4, (float) 0.4);
     }
 
 

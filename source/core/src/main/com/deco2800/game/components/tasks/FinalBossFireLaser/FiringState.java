@@ -21,7 +21,7 @@ public class FiringState extends LaserState {
     }
 
     public void startTimer() {
-        endTime = timeSource.getTime() + (int) (1000);
+        endTime = timeSource.getTime() + (int) (1500);
     }
 
     /**
@@ -32,7 +32,7 @@ public class FiringState extends LaserState {
     public void update() {
         if (timeSource.getTime() >= endTime) {
             logger.debug("Final boss laser fired, moving to post fire state");
-
+            owner.getEvents().trigger("postFireLaser");
             laser.changeState(new PostFiringState(laser, owner));
 
         }

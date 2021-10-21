@@ -34,6 +34,8 @@ public class BossHealthListener extends Component {
     private Entity healthForeground;
     private BossState bossState = BossState.PHASE1;
     private Entity target;
+    private long endTime;
+    private boolean localHurt;
 
     public BossHealthListener(Entity boss, Entity darkness,
                               Entity healthBackground, Entity healthForeground, Entity target) {
@@ -52,12 +54,26 @@ public class BossHealthListener extends Component {
         boss.getEvents().addListener("updateHealth", this::state);
 
     }
-
+    @Override
+    public void update() {
+        if(boss.isHurt()){
+            if(localHurt == false){
+                localHurt = true;
+                endTime = ServiceLocator.getTimeSource().getTime() + 200;
+            } else {
+                if (ServiceLocator.getTimeSource().getTime() > endTime){
+                    boss.setHurt(false);
+                    localHurt = false;
+                }
+            }
+        }
+    }
     /**
      * 'fires' a beam from the boss
      */
     void state(int health) {
         logger.info("Boss health {}", health);
+        boss.setHurt(true);
         if(bossState == BossState.PHASE1) {
             if(health < 80) {
                 bossState = BossState.PHASE2; //currently skips phase 2

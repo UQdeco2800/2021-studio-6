@@ -105,11 +105,12 @@ public class Level4 extends GameArea {
             "images/playeritems/firecracker/firecracker.atlas"
     };
 
-    private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+    private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/final_boss/boss_hit.mp3", "sounds/final_boss/fire_laser.mp3"};
 
-    private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
+    private static final String BACKGROUND_MUSIC = "sounds/final_boss/boss_music.mp3";
+    private static final String OCEAN_AMBIENT = "sounds/final_boss/ocean_waves.mp3";
     private static final String BOSS_DEATH_SOUND = "sounds/final_boss/boss-death-sound.mp3";
-    private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC, BOSS_DEATH_SOUND};
+    private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC, BOSS_DEATH_SOUND, OCEAN_AMBIENT};
         
     private final TerrainFactory terrainFactory;
 
@@ -135,9 +136,6 @@ public class Level4 extends GameArea {
         playMusic();
 
         spawnBullet();
-
-
-
         spawnFinalBoss();
         spawnWaterTiles();
         spawnDock();
@@ -303,10 +301,6 @@ public class Level4 extends GameArea {
         animator.startAnimation("float");
     }
 
-
-
-
-
     private void playMusic() {
         Music gameOverSong = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
         gameOverSong.setLooping(true);
@@ -317,10 +311,13 @@ public class Level4 extends GameArea {
     @Override
     public void stopMusic() {
         ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
+        Music oceanAmbient = ServiceLocator.getResourceService().getAsset(OCEAN_AMBIENT, Music.class);
         Music deathSound = ServiceLocator.getResourceService().getAsset(BOSS_DEATH_SOUND, Music.class);
 
         deathSound.setVolume(0.07f);
         deathSound.play();
+        oceanAmbient.play();
+
 
     }
 

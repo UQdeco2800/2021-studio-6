@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,11 +16,8 @@ import com.deco2800.game.components.DisposingComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.finalboss.FinalBossHealthBar;
 import com.deco2800.game.components.finalboss.LaserTimer;
-import com.deco2800.game.components.npc.BossAnimationController;
-import com.deco2800.game.components.npc.FireBulletListener;
-import com.deco2800.game.components.npc.GhostAnimationController;
+import com.deco2800.game.components.npc.*;
 import com.deco2800.game.components.finalboss.LaserListener;
-import com.deco2800.game.components.npc.ToughFireBulletListener;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.components.tasks.FinalBossFireBullets.FinalBossFireBullets;
 import com.deco2800.game.components.tasks.FinalBossFireLaser.FinalBossFireLaser;
@@ -110,11 +108,12 @@ public class FinalBossFactory {
                 .addComponent(new CombatStatsComponent(100, 0))
                 .addComponent(new DisposingComponent())
                 .addComponent(new BossAnimationController())
-                .addComponent(new FlickerLightComponent(Color.WHITE, Color.WHITE, Color.WHITE,
-                        Color.WHITE, 2f, 0, -1.5f))
+                .addComponent(new FlickerLightComponent(Color.RED, Color.RED, Color.RED,
+                        Color.RED, 2f, 0, 0))
                 .addComponent(new LaserListener())
+                .addComponent(new NPCSoundComponent())
+                .addComponent(new NPCAnimationController())
                 .addComponent(new ToughFireBulletListener(target, gameArea, "images/Enemy_Assets/LongRangeEnemy/blood_ball.png"));
-
 
         Entity healthBackground = createHealthBarBackground();
         Entity healthForeground = createHealthBarForeground();
@@ -127,6 +126,9 @@ public class FinalBossFactory {
                         .addTask(new FinalBossHealthBar(gameArea, bossHead, healthBackground, healthForeground));
 
         bossHead.addComponent(aiComponent);
+
+        NPCSoundComponent npcSoundComponent = bossHead.getComponent(NPCSoundComponent.class);
+        npcSoundComponent.setHit(ServiceLocator.getResourceService().getAsset("sounds/final_boss/boss_hit.mp3", Sound.class));
 
         gameArea.spawnEntity(createFinalBossPhaseManager(bossHead, darkness, healthBackground, healthForeground, target));
 

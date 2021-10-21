@@ -320,6 +320,7 @@ public class NPCFactory {
    * @param speedY Movement speed in Y direction
    * @param wanderX Proximity X distance to move around in
    * @param wanderY Proximity Y distance to move around in
+   * @param lightRadius The circle radius of the light emitted by the bug
    * @param waitTime Time in seconds to hold the position after wandering to a spot
    * @return Firefly entity
    */

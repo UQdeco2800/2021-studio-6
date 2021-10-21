@@ -566,6 +566,7 @@ public class Level3 extends GameArea {
       new GridPoint2(45, 22),
       new GridPoint2(13, 13),
       new GridPoint2(44, 6),
+      new GridPoint2(50, 38),
     };
 
     for (int i = 0; i < spawnLocations.length; i++) {
@@ -596,7 +597,6 @@ public class Level3 extends GameArea {
       new GridPoint2(28, 15),
       new GridPoint2(51, 14),
       new GridPoint2(21, 12),
-      new GridPoint2(32, 12),
       new GridPoint2(6, 9),
       new GridPoint2(50, 8),
     };
@@ -612,10 +612,9 @@ public class Level3 extends GameArea {
    */
   private void spawnLargeEnemy() {
     GridPoint2[] spawnLocations = {
-      new GridPoint2(48, 42),
+      new GridPoint2(49, 34),
       new GridPoint2(13, 31),
       new GridPoint2(3, 27),
-      new GridPoint2(21, 27),
       new GridPoint2(39, 25),
       new GridPoint2(49, 22),
       new GridPoint2(33, 21),
@@ -633,8 +632,7 @@ public class Level3 extends GameArea {
   private void spawnLongRangeEnemies() {
     GridPoint2[] spawnLocations = {
       new GridPoint2(42, 38),
-      new GridPoint2(46, 40),
-      new GridPoint2(48, 40),
+      new GridPoint2(43, 43),
       new GridPoint2(25, 34),
       new GridPoint2(28, 32),
       new GridPoint2(3, 31),

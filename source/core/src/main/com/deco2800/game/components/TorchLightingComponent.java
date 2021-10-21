@@ -27,7 +27,6 @@ public class TorchLightingComponent extends Component implements Disposable {
   @Override
   public void dispose() {
     this.hitboxComponent.dispose();
-    this.playerState.dispose();
   }
 
   private void onCollisionStart(Fixture me, Fixture other) {

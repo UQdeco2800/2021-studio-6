@@ -80,7 +80,7 @@ public abstract class GameArea implements Disposable {
   protected static final String[] enemySounds = {
           "sounds/enemies/ToughLongRangeEnemy/hit.mp3",
           "sounds/enemies/ToughLongRangeEnemy/dead.mp3",
-          "sounds/enemies/ToughLongRangeEnemy/shoot.wav",
+          "sounds/enemies/ToughLongRangeEnemy/shoot.mp3",
           "sounds/enemies/LongRangeEnemy/dead.mp3",
           "sounds/enemies/LongRangeEnemy/shoot.mp3",
           "sounds/enemies/LargeEnemy/hit.mp3",
@@ -88,11 +88,11 @@ public abstract class GameArea implements Disposable {
           "sounds/enemies/LargeEnemy/detectPlayer.mp3",
           "sounds/enemies/LargeEnemy/meleeAttack.mp3",
           "sounds/enemies/SmallEnemy/dead.mp3",
-          "sounds/enemies/SmallEnemy/detectPlayer.wav",
+          "sounds/enemies/SmallEnemy/detectPlayer.mp3",
           "sounds/enemies/SmallEnemy/meleeAttack.mp3",
           "sounds/enemies/SpawnerEnemy/hit.mp3",
           "sounds/enemies/SpawnerEnemy/dead.mp3",
-          "sounds/enemies/SpawnerEnemy/spawn.wav"
+          "sounds/enemies/SpawnerEnemy/spawn.mp3"
   };
 
   protected static final String[] fireflyAssets = {

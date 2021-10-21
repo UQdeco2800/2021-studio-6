@@ -102,8 +102,6 @@ public class Level4 extends GameArea {
             "images/playeritems/firecracker/firecracker.atlas"
     };
 
-    private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-
     private static final String BACKGROUND_MUSIC = "sounds/final-boss-music.mp3";
     private static final String[] LEVEL3_MUSIC = {BACKGROUND_MUSIC};
         
@@ -411,7 +409,6 @@ public class Level4 extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
-        resourceService.loadSounds(forestSounds);
         resourceService.loadSounds(playerSounds);
 
         resourceService.loadMusic(LEVEL3_MUSIC);
@@ -428,7 +425,6 @@ public class Level4 extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
-        resourceService.unloadAssets(forestSounds);
         resourceService.unloadAssets(playerSounds);
         resourceService.unloadAssets(LEVEL3_MUSIC);
     }

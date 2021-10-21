@@ -245,7 +245,6 @@ public class ObstacleFactory {
    */
   public static Entity createLamp(int type) {
     if (type == 0) {
-      System.out.println("Normal lamp created");
       Entity lamp =
           new Entity()
               .addComponent(new TextureRenderComponent("images/level_1/street_lamp.png"))
@@ -260,7 +259,6 @@ public class ObstacleFactory {
       PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
       return lamp;
     } else {
-      System.out.println("Vined lamp created");
       AnimationRenderComponent animator =
           new AnimationRenderComponent(
               ServiceLocator.getResourceService().getAsset("images/level_1/lamp.atlas", TextureAtlas.class));

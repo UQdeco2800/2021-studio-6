@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.entities.Entity;
@@ -141,13 +142,12 @@ public class ObstacleFactoryTest {
 
     }
 
-    /*
     @Test
     void shouldCreateVinedLamp() {
-        when(resources.getAsset("images/level_1/street_lamped_vined.png", Texture.class)).thenReturn(texture);
+        TextureAtlas textureAtlas = new TextureAtlas("images/level_1/lamp.atlas");
+        when(resources.getAsset("images/level_1/lamp.atlas", TextureAtlas.class)).thenReturn(textureAtlas);
         Entity lamp = ObstacleFactory.createLamp(1);
         // Check it switches the asset correctly
-        verify(resources).getAsset("images/level_1/street_lamped_vined.png", Texture.class);
+        verify(resources).getAsset("images/level_1/lamp.atlas", TextureAtlas.class);
     }
-    */
 }

@@ -167,14 +167,14 @@ public class PlayerFactory {
     // Add the entity sound effects
     PlayerSoundComponent pcs = player.getComponent(PlayerSoundComponent.class);
     pcs.setVolume(ServiceLocator.getResourceService().getSfxVolume());
-    pcs.setUseBandage(ServiceLocator.getResourceService().getAsset("sounds/bandage-use.ogg", Sound.class));
-    pcs.setWounded(ServiceLocator.getResourceService().getAsset("sounds/hurt.ogg", Sound.class));
-    pcs.setGenericItemPickup(ServiceLocator.getResourceService().getAsset("sounds/item-pickup.ogg", Sound.class));
-    pcs.setSwingAxe(ServiceLocator.getResourceService().getAsset("sounds/weapon-axe.wav", Sound.class));
-    pcs.setSwingSword(ServiceLocator.getResourceService().getAsset("sounds/weapon-sword.ogg", Sound.class));
-    pcs.setSwingDagger(ServiceLocator.getResourceService().getAsset("sounds/weapon-dagger.wav", Sound.class));
-    pcs.setShoot(ServiceLocator.getResourceService().getAsset("sounds/slingshot.ogg", Sound.class));
-    pcs.setDash(ServiceLocator.getResourceService().getAsset("sounds/dash.ogg", Sound.class));
+    pcs.setUseBandage(ServiceLocator.getResourceService().getAsset("sounds/player/bandage-use.ogg", Sound.class));
+    pcs.setWounded(ServiceLocator.getResourceService().getAsset("sounds/player/hurt.ogg", Sound.class));
+    pcs.setGenericItemPickup(ServiceLocator.getResourceService().getAsset("sounds/player/item-pickup.ogg", Sound.class));
+    pcs.setSwingAxe(ServiceLocator.getResourceService().getAsset("sounds/player/weapon-axe.ogg", Sound.class));
+    pcs.setSwingSword(ServiceLocator.getResourceService().getAsset("sounds/player/weapon-sword.ogg", Sound.class));
+    pcs.setSwingDagger(ServiceLocator.getResourceService().getAsset("sounds/player/weapon-dagger.ogg", Sound.class));
+    pcs.setShoot(ServiceLocator.getResourceService().getAsset("sounds/player/slingshot.ogg", Sound.class));
+    pcs.setDash(ServiceLocator.getResourceService().getAsset("sounds/player/dash.ogg", Sound.class));
 
     return player;
   }

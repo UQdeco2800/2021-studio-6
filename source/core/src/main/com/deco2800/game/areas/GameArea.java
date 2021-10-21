@@ -104,15 +104,14 @@ public abstract class GameArea implements Disposable {
   };
 
   protected static final String[] playerSounds = {
-          "sounds/bandage-use.ogg",
-          "sounds/hurt.ogg",
-          "sounds/item-pickup.ogg",
-          "sounds/weapon-axe.wav",
-          "sounds/weapon-sword.ogg",
-          "sounds/weapon-dagger.wav",
-          "sounds/slingshot.ogg",
-          "sounds/dash.ogg",
-          "sounds/Impact4.ogg"
+          "sounds/player/bandage-use.ogg",
+          "sounds/player/hurt.ogg",
+          "sounds/player/item-pickup.ogg",
+          "sounds/player/weapon-axe.ogg",
+          "sounds/player/weapon-sword.ogg",
+          "sounds/player/weapon-dagger.ogg",
+          "sounds/player/slingshot.ogg",
+          "sounds/player/dash.ogg"
   };
 
   protected GameArea() {

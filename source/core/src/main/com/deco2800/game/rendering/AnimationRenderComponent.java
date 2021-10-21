@@ -249,8 +249,6 @@ public class AnimationRenderComponent extends RenderComponent {
       TextureRegion region = this.currentAnimation.getKeyFrame(animationPlayTime);
       Vector2 pos = entity.getPosition();
       Vector2 scale = entity.getScale();
-      System.out.println("animation  " + entity.isHurt());
-      System.out.println("animation boss " + entity);
       if(entity.isHurt()){
 
         batch.setShader(shader);

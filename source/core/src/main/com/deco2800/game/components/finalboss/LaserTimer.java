@@ -23,7 +23,7 @@ public class LaserTimer extends Component {
     public void create() {
         super.create();
         gameTime = ServiceLocator.getTimeSource();
-        endTime = gameTime.getTime() + 3000;
+        endTime = gameTime.getTime() + 1500;
     }
 
     /**

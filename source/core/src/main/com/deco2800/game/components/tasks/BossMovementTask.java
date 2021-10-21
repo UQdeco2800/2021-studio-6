@@ -51,7 +51,7 @@ public class BossMovementTask extends DefaultTask implements Task {
         this.setTarget(randomXAxisTarget());
 
         movementComponent.setMoving(true);
-        logger.debug("Boss starting movement towards {}", target);
+        logger.info("Boss starting movement towards {}", target);
         lastTimeMoved = gameTime.getTime();
         lastPos = owner.getEntity().getPosition();
 
@@ -66,9 +66,9 @@ public class BossMovementTask extends DefaultTask implements Task {
     @Override
     public void update() {
         if (isAtTarget()) {
-            logger.debug("Boss reached target {}", target);
+//            logger.info("Boss reached target {}", target);
             this.setTarget(randomXAxisTarget());
-            logger.debug("Boss new target {}", target);
+//            logger.info("Boss new target {}", target);
 
         }
     }
@@ -91,7 +91,7 @@ public class BossMovementTask extends DefaultTask implements Task {
     public void stop() {
         super.stop();
         movementComponent.setMoving(false);
-        logger.debug("Stopping movement");
+        logger.info("Final boss Stopping movement");
     }
 
     /**
@@ -99,7 +99,9 @@ public class BossMovementTask extends DefaultTask implements Task {
      * starts the boss's movement
      */
     public void startMoving() {
+
         movementComponent.setMoving(true);
+        logger.info("Final boss Starting movement");
     }
 
     /**
@@ -108,7 +110,7 @@ public class BossMovementTask extends DefaultTask implements Task {
      * @return true if the boss has reached the target false if not
      */
     private boolean isAtTarget() {
-        return owner.getEntity().getComponent(PhysicsComponent.class).getBody().getWorldCenter().dst(this.target) <= 2f;
+        return owner.getEntity().getComponent(PhysicsComponent.class).getBody().getWorldCenter().dst(this.target) <= 3.5f;
     }
 
     /**
@@ -118,7 +120,6 @@ public class BossMovementTask extends DefaultTask implements Task {
      * @return vector for the randomly generated target
      */
     private Vector2 randomXAxisTarget() {
-        System.out.println(this.bounds);
 
         int dice = MathUtils.random(10);
         float newXpos = MathUtils.random(10, 30);

@@ -1,0 +1,63 @@
+laser.png
+size: 448, 600
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+default
+  rotate: false
+  xy: 0, 0
+  size: 32, 6
+  orig: 32, 6
+  offset: 0, 0
+  index: 0
+default
+  rotate: false
+  xy: 32, 0
+  size: 32, 12
+  orig: 32, 12
+  offset: 0, 0
+  index: 1
+default
+  rotate: false
+  xy: 64, 0
+  size: 32, 18
+  orig: 32, 18
+  offset: 0, 0
+  index: 2
+default
+  rotate: false
+  xy: 96, 0
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: 3
+default
+  rotate: false
+  xy: 128, 0
+  size: 32, 30
+  orig: 32, 30
+  offset: 0, 0
+  index: 4
+default
+  rotate: false
+  xy: 160, 0
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: 5
+default
+  rotate: false
+  xy: 192, 0
+  size: 32, 42
+  orig: 32, 42
+  offset: 0, 0
+  index: 6
+default
+  rotate: false
+  xy: 224, 0
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: 7
+  
+  

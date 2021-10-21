@@ -1,5 +1,6 @@
 package com.deco2800.game.components.finalboss;
 
+import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
@@ -12,6 +13,7 @@ import com.deco2800.game.services.ServiceLocator;
  * Listens for "fireLaser" events then spawns a laser beam
  */
 public class LaserListener extends Component {
+    private Sound fire = ServiceLocator.getResourceService().getAsset("sounds/final_boss/fire_laser.mp3", Sound.class);
 
     /**
      * Adds the fireLaser listener to the entity
@@ -31,7 +33,7 @@ public class LaserListener extends Component {
                 this.entity.getCenterPosition().x - (beam.getScale().x/2),
                 this.entity.getPosition().y - (beam.getScale().y)
         );
-
+        fire.play();
         ServiceLocator.getGameArea().spawnEntity(beam);
     }
 

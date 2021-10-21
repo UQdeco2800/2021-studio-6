@@ -37,6 +37,7 @@ public class Entity {
   private Vector2 position = Vector2.Zero.cpy();
   private Vector2 scale = new Vector2(1, 1);
   private Array<Component> createdComponents;
+  private boolean hurt;
 
   public Entity() {
     id = nextId;
@@ -44,6 +45,14 @@ public class Entity {
 
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
+    hurt = false;
+  }
+
+  public boolean isHurt() {
+    return hurt;
+  }
+  public void setHurt(boolean hurt) {
+    this.hurt = hurt;
   }
 
   /**

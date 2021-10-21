@@ -126,7 +126,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] menuSounds = {"sounds/rollover.mp3","sounds/click.mp3"};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-  private static double gameLevel = 1;
+  private static double gameLevel = 4;
   public static boolean levelChange = false;
   private static boolean revert = false;
   private GameTime timeSource;
@@ -138,8 +138,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Lighting lighting;
   private static boolean LIGHTINGON = true;
   private GameArea gameArea = null;
-  private static float BOSS_CAMERA_Y = 12f;
-  private static float BOAT_CAMERA_Y = 25f;
+  private static float BOSS_CAMERA_Y = 16f;
+  private static float BOAT_CAMERA_Y = 27f;
 
   private Entity ui;
 
@@ -200,7 +200,7 @@ public class MainGameScreen extends ScreenAdapter {
         PlayerStateManager.getInstance().restorePlayerState();
       }
       //TODO:Revert this after done
-      gameArea = new Level1(terrainFactory);
+      gameArea = new Level4(terrainFactory);
 
       gameArea.create();
 
@@ -273,7 +273,7 @@ public class MainGameScreen extends ScreenAdapter {
         CAMERA_POSITION.set(gameArea.player.getPosition());
         if(gameLevel == 4) {
           CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
-          renderer.setZoom(40);
+          renderer.setZoom(25);
         } else if(gameLevel == 4.5) {
           CAMERA_POSITION.set(new Vector2(20, BOSS_CAMERA_Y));
           if(BOSS_CAMERA_Y < BOAT_CAMERA_Y) {

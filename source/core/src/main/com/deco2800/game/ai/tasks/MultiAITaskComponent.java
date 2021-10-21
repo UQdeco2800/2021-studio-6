@@ -28,6 +28,13 @@ public class MultiAITaskComponent extends Component implements TaskRunner {
         return this;
     }
 
+    public MultiAITaskComponent addMidStep(Task task) {
+        parallelTasks.add(task);
+        task.create(this);
+        task.start();
+        return this;
+    }
+
     /**
      * create
      * starts all attached tasks

@@ -42,7 +42,11 @@ public class BossAnimationController extends Component {
         animator.startAnimation(ANIMATIONS_LEFT[STATIONARY]);
         currentDirection = ANIMATIONS_LEFT;
         gameTime = ServiceLocator.getTimeSource();
+        this.entity.getEvents().addListener("preFireLaser", () -> angry = 1);
+        this.entity.getEvents().addListener("postFireLaser", () -> angry = 0);
     }
+
+
 
     /**
      * Extracts the current target coordinates and changes the animation to face that direction. For example if the

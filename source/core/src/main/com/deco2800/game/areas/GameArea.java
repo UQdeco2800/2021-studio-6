@@ -221,6 +221,7 @@ public abstract class GameArea implements Disposable {
       resourceService.unloadAssets(fireflyAssets);
       resourceService.unloadAssets(fireflyAtlas);
   }
+  public void stopMusic() {};
 
   public Entity getPlayer() {
     return player;

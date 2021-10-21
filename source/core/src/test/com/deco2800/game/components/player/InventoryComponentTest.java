@@ -165,6 +165,29 @@ class InventoryComponentTest {
   }
 
   @Test
+  void shouldLightTorch() {
+    Entity player = new Entity()
+        .addComponent(new InventoryComponent(150, 5, 10, 50))
+        .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+    inventory.lightTorch(100);
+    assertEquals(70, inventory.getTorch());
+    inventory.addTorch(-70);
+    inventory.lightTorch(50);
+    assertEquals(50, inventory.getTorch());
+  }
+
+  @Test
+  void shouldNotLightTorch() {
+    Entity player = new Entity()
+        .addComponent(new InventoryComponent(150, 5, 10, 100))
+        .addComponent(new PlayerInterfaceDisplay());
+    InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+    inventory.lightTorch(100);
+    assertEquals(100, inventory.getTorch());
+  }
+
+  @Test
   void shouldTorchDecrease() {
     when(time.getTime()).thenReturn(0L);
     Entity player = new Entity()

@@ -68,4 +68,12 @@ public class PointLightComponent extends Component implements Disposable {
         pointLight.setDistance(distance);
     }
 
+    public void turnOffLight() {
+        pointLight.setDistance(0);
+    }
+
+    public void turnOnLight() {
+        pointLight.setDistance(this.distance);
+    }
+
 }

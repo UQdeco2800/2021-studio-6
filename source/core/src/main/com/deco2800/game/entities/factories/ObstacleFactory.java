@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.deco2800.game.components.LampAnimationController;
 import com.deco2800.game.components.TorchLightingComponent;
 import com.deco2800.game.components.CampfireAnimationController;
 import com.deco2800.game.components.TreeAnimationController;
@@ -243,25 +244,45 @@ public class ObstacleFactory {
    * @return Entity lamp
    */
   public static Entity createLamp(int type) {
-    String lampPath;
     if (type == 0) {
-      lampPath = "images/level_1/street_lamp.png";
-    } else {
-      lampPath = "images/level_1/street_lamped_vined.png";
-    }
-    Entity lamp =
-            new Entity()
-                    .addComponent(new TextureRenderComponent(lampPath))
-                    .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                    .addComponent(new HitboxComponent());
+      Entity lamp =
+          new Entity()
+              .addComponent(new TextureRenderComponent("images/level_1/street_lamp.png"))
+              .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
+              .addComponent(new PhysicsComponent())
+              .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+              .addComponent(new HitboxComponent());
 
-    lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    lamp.getComponent(TextureRenderComponent.class).scaleEntity();
-    lamp.scaleHeight(2f);
-    PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
-    return lamp;
+      lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+      lamp.getComponent(TextureRenderComponent.class).scaleEntity();
+      lamp.scaleHeight(2f);
+      PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
+      return lamp;
+    } else {
+      AnimationRenderComponent animator =
+          new AnimationRenderComponent(
+              ServiceLocator.getResourceService().getAsset("images/level_1/lamp.atlas", TextureAtlas.class));
+      animator.addAnimation("on", 1f, Animation.PlayMode.LOOP);
+      animator.addAnimation("off", 1f, Animation.PlayMode.LOOP);
+      Entity lamp =
+          new Entity()
+              .addComponent(animator)
+              .addComponent(new LampAnimationController())
+              .addComponent(new PointLightComponent(Color.ORANGE, 4f, 0, 0))
+              .addComponent(new PhysicsComponent())
+              .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+              .addComponent(new HitboxComponent());
+
+      lamp.getComponent(LampAnimationController.class)
+          .giveLightComponent(lamp.getComponent(PointLightComponent.class));
+
+      lamp.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+      //lamp.getComponent(TextureRenderComponent.class).scaleEntity();
+      lamp.scaleHeight(2f);
+      PhysicsUtils.setScaledCollider(lamp, 0.5f, 0.5f);
+      return lamp;
+    }
+
   }
 
   /**

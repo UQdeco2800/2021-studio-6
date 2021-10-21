@@ -156,22 +156,23 @@ public class HurtEffectComponent extends Component {
      * This is triggered by the update() method to perform repetitive damage if still colliding.
      */
     private void perform() {
-        PlayerCombatStatsComponent playerStats = null;
-        CombatStatsComponent damageStats = null;
-
-        // Retrieve Player.
-        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null) {
-            playerStats = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerCombatStatsComponent.class);
+        if(
+                ServiceLocator.getGameArea() == null
+                || ServiceLocator.getGameArea().getPlayer() == null
+                || ServiceLocator.getGameArea().getPlayer().getComponent(PlayerCombatStatsComponent.class) == null) {
+            // Unable to get PlayerCombatStatsComponent.
+            return;
         }
+
+        // Retrieve playerStats.
+        PlayerCombatStatsComponent playerStats = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerCombatStatsComponent.class);
 
         // Use CombatStatsComponent privately to cast damage.
-        damageStats = new CombatStatsComponent(0, this.attackDamage);
+        CombatStatsComponent damageStats = new CombatStatsComponent(0, this.attackDamage);
 
-        // Perform damage.
-        if(playerStats != null && damageStats != null) {
-            playerStats.hit(damageStats);
-            lastEventTime = timeSource.getTime();
-        }
+        // Damage player using hit().
+        playerStats.hit(damageStats);
+        lastEventTime = timeSource.getTime();
     }
 
 } // END: HurtEffectComponent

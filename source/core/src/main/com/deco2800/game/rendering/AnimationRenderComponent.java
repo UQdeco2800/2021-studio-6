@@ -258,7 +258,7 @@ public class AnimationRenderComponent extends RenderComponent {
         batch.setShader(null);
       }
       batch.draw(region, pos.x, pos.y, scale.x, scale.y);
-
+      batch.setShader(null);
       if (!paused) {
         animationPlayTime += timeSource.getDeltaTime();
       }

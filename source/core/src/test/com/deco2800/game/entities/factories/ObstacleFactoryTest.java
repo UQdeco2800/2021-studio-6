@@ -141,6 +141,7 @@ public class ObstacleFactoryTest {
 
     }
 
+    /*
     @Test
     void shouldCreateVinedLamp() {
         when(resources.getAsset("images/level_1/street_lamped_vined.png", Texture.class)).thenReturn(texture);
@@ -148,4 +149,5 @@ public class ObstacleFactoryTest {
         // Check it switches the asset correctly
         verify(resources).getAsset("images/level_1/street_lamped_vined.png", Texture.class);
     }
+    */
 }

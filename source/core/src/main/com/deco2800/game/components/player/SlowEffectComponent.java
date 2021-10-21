@@ -93,14 +93,19 @@ public class SlowEffectComponent extends Component {
             return;
         }
 
-        // Retrieve PlayerActions component from player.
-        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null
-                && ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class) != null) {
-            PlayerActions playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
-
-            // Enable slowness on player.
-            playerActions.setScaleSpeed(entity.getId(), this.speedMultiplier);
+        if(
+                ServiceLocator.getGameArea() == null
+                || ServiceLocator.getGameArea().getPlayer() == null
+                || ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class) == null) {
+            // Unable to get PlayerActions.
+            return;
         }
+
+        // Retrieve playerActions.
+        PlayerActions playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
+
+        // Enable slowness on player.
+        playerActions.setScaleSpeed(entity.getId(), this.speedMultiplier);
 
         this.active = true;
     }
@@ -114,14 +119,18 @@ public class SlowEffectComponent extends Component {
      * @param other the targeted entity (usually the player)
      */
     private void onCollisionEnd(Fixture me, Fixture other) {
-        // Retrieve PlayerActions component from player.
-        if(ServiceLocator.getGameArea() != null && ServiceLocator.getGameArea().getPlayer() != null
-                && ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class) != null) {
-            PlayerActions playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
-
-            // Enable slowness on player.
-            playerActions.clearScaleSpeed(entity.getId());
+        if(
+                ServiceLocator.getGameArea() == null
+                || ServiceLocator.getGameArea().getPlayer() == null
+                || ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class) == null) {
+            // Unable to get PlayerActions.
+            return;
         }
+
+        PlayerActions playerActions = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class);
+
+        // Enable slowness on player.
+        playerActions.clearScaleSpeed(entity.getId());
 
         this.active = false;
     }

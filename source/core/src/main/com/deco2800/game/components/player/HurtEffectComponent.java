@@ -156,12 +156,11 @@ public class HurtEffectComponent extends Component {
      * This is triggered by the update() method to perform repetitive damage if still colliding.
      */
     private void perform() {
-        // Check for PlayerCombatStatsComponent.
         if(
                 ServiceLocator.getGameArea() == null
                 || ServiceLocator.getGameArea().getPlayer() == null
                 || ServiceLocator.getGameArea().getPlayer().getComponent(PlayerCombatStatsComponent.class) == null) {
-            // Unable to get playerStatus.
+            // Unable to get PlayerCombatStatsComponent.
             return;
         }
 
